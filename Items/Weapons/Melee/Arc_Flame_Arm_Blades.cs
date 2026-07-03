@@ -5,6 +5,7 @@ using Origins.Dev;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs;
+using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -27,14 +28,15 @@ namespace Origins.Items.Weapons.Melee {
 		public string[] Categories => [
 			WikiCategories.Sword
 		];
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [ModContent.BuffType<Arc_Burn>(), BuffID.OnFire3, BuffID.ShadowFlame];
+		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Terragrim);/*
+			Item.CloneDefaults(ItemID.Arkhalis);/*
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
-			Item.noUseGraphic = true;*/
-			Item.width = 24;
-			Item.height = 26;/*
+			Item.noUseGraphic = true;
 			Item.useTime = 14;
 			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -45,7 +47,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.crit = 14;
 			if (CritType.ModEnabled) Item.crit += 4;
 			Item.shoot = ModContent.ProjectileType<Arc_Flame_Arm_Blades_Slash>();
-			Item.rare = ItemRarityID.Cyan;
+			//Item.rare = ItemRarityID.Cyan;
 			//Item.UseSound = SoundID.Item1;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
@@ -59,11 +61,11 @@ namespace Origins.Items.Weapons.Melee {
 					break;
 				}
 			}
-			if (!CritType.ModEnabled) tooltips.Insert("Tooltip1", Language.GetText("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type"), "Tooltip2");
+			if (!CritType.ModEnabled) tooltips.Add(new(Mod, "Tooltip2", Language.GetTextValue("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type")));
 		}
 	}
 	public class Arc_Flame_Arm_Blades_Slash : ModProjectile {
-		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Terragrim}";
+		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Arkhalis}";
 		static int[] debuffs = [];
 		static RangeRandom rand;
 		public override void SetStaticDefaults() {
@@ -72,15 +74,13 @@ namespace Origins.Items.Weapons.Melee {
 			Main.projFrames[Type] = 28;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Terragrim);
+			Projectile.CloneDefaults(ProjectileID.Arkhalis);
 		}
 		public override void AI() {
 			float num = 0f;
-			if (Projectile.spriteDirection == -1)
-				num = (float)Math.PI;
+			if (Projectile.spriteDirection == -1) num = (float)Math.PI;
 
-			if (++Projectile.frame >= Main.projFrames[Type])
-				Projectile.frame = 0;
+			if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
 
 			Projectile.soundDelay--;
 			if (Projectile.soundDelay <= 0) {
@@ -97,17 +97,14 @@ namespace Origins.Items.Weapons.Melee {
 
 					Vector2 vec2 = Main.MouseWorld - vector;
 					vec2.Normalize();
-					if (vec2.HasNaNs())
-						vec2 = Vector2.UnitX * player.direction;
+					if (vec2.HasNaNs()) vec2 = Vector2.UnitX * player.direction;
 
 					vec2 *= num44;
 					if (vec2.X != Projectile.velocity.X || vec2.Y != Projectile.velocity.Y)
 						Projectile.netUpdate = true;
 
 					Projectile.velocity = vec2;
-				} else {
-					Projectile.Kill();
-				}
+				} else Projectile.Kill();
 
 				Projectile.position = player.RotatedRelativePoint(player.MountedCenter, addGfxOffY: false) - Projectile.Size / 2f;
 				Projectile.rotation = Projectile.velocity.ToRotation() + num;
@@ -122,7 +119,7 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 vector21 = Projectile.Center + Projectile.velocity * 3f;
 			Lighting.AddLight(vector21, 0.8f, 0.8f, 0.8f);
 			if (Main.rand.NextBool(3)) {
-				int num45 = Dust.NewDust(vector21 - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.Terragrim, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
+				int num45 = Dust.NewDust(vector21 - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
 				Main.dust[num45].noGravity = true;
 				Main.dust[num45].position -= Projectile.velocity;
 			}
@@ -139,9 +136,9 @@ namespace Origins.Items.Weapons.Melee {
 			if (target.HasBuff(Arc_Burn.ID)) target.DelBuff(target.FindBuffIndex(Arc_Burn.ID));
 			else if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
 				rand.Reset();
-				rand.Multiply(0, 1, 0.3);
 				for (int i = 0; i < debuffs.Length; i++) {
-					if (target.HasBuff(debuffs[i])) rand.Multiply(i, i + 1, 0.3);
+					if (debuffs[i] == Arc_Burn.ID || target.HasBuff(debuffs[i]))
+						rand.Multiply(i, i + 1, 0.3);
 				}
 				target.AddBuff(debuffs[rand.Get()], 3 * 60);
 			}
@@ -149,9 +146,9 @@ namespace Origins.Items.Weapons.Melee {
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
 				rand.Reset();
-				rand.Multiply(0, 1, 0.3);
 				for (int i = 0; i < debuffs.Length; i++) {
-					if (target.HasBuff(debuffs[i])) rand.Multiply(i, i + 1, 0.3);
+					if (debuffs[i] == Arc_Burn.ID || target.HasBuff(debuffs[i]))
+						rand.Multiply(i, i + 1, 0.3);
 				}
 				target.AddBuff(debuffs[rand.Get()], 3 * 60);
 			}
@@ -168,6 +165,7 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			Buff_Hint_Handler.ModifyTip(Type, 15);
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) => npc.GetGlobalNPC<OriginGlobalNPC>().arcBurn = true;

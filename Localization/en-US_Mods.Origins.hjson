@@ -1475,7 +1475,6 @@ Buffs: {
 	Arc_Burn: {
 		DisplayName: Arc Burn
 		Description: Plasma is melding your flesh
-		EffectDescription: Losing 15 life a second
 	}
 }
 
