@@ -61,7 +61,10 @@ namespace Origins.Items.Weapons.Melee {
 					break;
 				}
 			}
-			if (!CritType.ModEnabled) tooltips.Add(new(Mod, "Tooltip2", Language.GetTextValue("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type")));
+			if (!CritType.ModEnabled) {
+				int index = tooltips.FindLastIndex(tip => tip.Name.StartsWith("Tooltip")) + 1;
+				tooltips.Insert(index, new(Mod, "CritCondition", Language.GetTextValue("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type")));
+			}
 		}
 	}
 	public class Arc_Flame_Arm_Blades_Slash : ModProjectile {
