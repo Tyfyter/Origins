@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
 using Origins.Projectiles;
 using System;
@@ -36,6 +35,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.channel = true;
 			Item.UseSound = SoundID.Item82.WithPitchRange(0.8f, 1f);
 			Item.scale = 1f;
+			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override bool? CanHitNPC(Player player, NPC target) => player.altFunctionUse == 2 ? null : false;
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
@@ -109,7 +109,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class The_Bird_Swing : ModProjectile, IDrawOverArmProjectile, ILoadExtraTextures {
 		public static int PerfectFrames => 15;
-		static AutoLoadingAsset<Texture2D> frontTexture = typeof(The_Bird_Swing).GetDefaultTMLName() + "_Front";
+		static AutoLoadingTexture frontTexture = typeof(The_Bird_Swing).GetDefaultTMLName() + "_Front";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			Main.projFrames[Type] = 5;
