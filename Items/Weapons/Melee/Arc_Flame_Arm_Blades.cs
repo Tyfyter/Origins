@@ -25,11 +25,13 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Arc_Flame_Arm_Blades : ModItem, ICustomWikiStat {
 		public override string Texture => typeof(Broken_Fiberglass_Sword).GetDefaultTMLName();
+		public static int SoundTime = 0;
 		public string[] Categories => [
-			WikiCategories.Sword
+			WikiCategories.Sword,
+			WikiCategories.DeveloperItem
 		];
 		public override void SetStaticDefaults() {
-			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [ModContent.BuffType<Arc_Burn>(), BuffID.OnFire3, BuffID.ShadowFlame];
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [ModContent.BuffType<Arc_Burn_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Arkhalis);/*
@@ -44,11 +46,19 @@ namespace Origins.Items.Weapons.Melee {
 			Item.autoReuse = true;
 			Item.useTurn = true;*/
 			//Item.shootSpeed = 50;
-			Item.crit = 14;
-			if (CritType.ModEnabled) Item.crit += 4;
+			Item.crit = 16;
 			Item.shoot = ModContent.ProjectileType<Arc_Flame_Arm_Blades_Slash>();
 			//Item.rare = ItemRarityID.Cyan;
 			//Item.UseSound = SoundID.Item1;
+		}
+		public override bool AltFunctionUse(Player player) => !player.HasBuff(Blade_Dance_Cooldown_Debuff.ID);
+		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
+		public override bool CanUseItem(Player player) {
+			if (player.altFunctionUse == 2) {
+				BladeDance(player);
+				return false;
+			}
+			return true;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = 0; i < tooltips.Count; i++) {
@@ -66,13 +76,19 @@ namespace Origins.Items.Weapons.Melee {
 				tooltips.Insert(index, new(Mod, "CritCondition", Language.GetTextValue("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type")));
 			}
 		}
+		public static void BladeDance(Player player) {
+			SoundTime = 1;
+			player.AddBuff(Blade_Dance_Buff.ID, 5 * 60);
+			player.AddBuff(Blade_Dance_Cooldown_Debuff.ID, 5 * 60);
+			SoundEngine.PlaySound(SoundID.Item37 with { PitchRange = (0.3f, 0.6f) }, player.Center);
+		}
 	}
 	public class Arc_Flame_Arm_Blades_Slash : ModProjectile {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Arkhalis}";
 		static int[] debuffs = [];
 		static RangeRandom rand;
 		public override void SetStaticDefaults() {
-			debuffs = [ModContent.BuffType<Arc_Burn>(), BuffID.OnFire3, BuffID.ShadowFlame]; // think of a fitting 4th debuff
+			debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame]; // think of a fitting 4th debuff
 			rand = new(Main.rand, 0, debuffs.Length);
 			Main.projFrames[Type] = 28;
 		}
@@ -98,6 +114,10 @@ namespace Origins.Items.Weapons.Melee {
 					float num44 = 1f;
 					if (player.inventory[player.selectedItem].shoot == Type)
 						num44 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
+
+					if (Main.mouseRight && Main.mouseRightRelease && !player.HasBuff<Blade_Dance_Cooldown_Debuff>()) {
+						Arc_Flame_Arm_Blades.BladeDance(player);
+					}
 
 					Vector2 vec2 = Main.MouseWorld - vector;
 					vec2.Normalize();
@@ -130,18 +150,18 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (!CritType.ModEnabled) {
-				if (target.HasBuff<Arc_Burn>()) {
+				if (target.HasBuff<Arc_Burn_Debuff>()) {
 					modifiers.CritDamage *= 5;
 					modifiers.SetCrit();
 				} else modifiers.DisableCrit();
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.HasBuff(Arc_Burn.ID)) target.DelBuff(target.FindBuffIndex(Arc_Burn.ID));
+			if (target.HasBuff(Arc_Burn_Debuff.ID)) target.DelBuff(target.FindBuffIndex(Arc_Burn_Debuff.ID));
 			else if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
 				rand.Reset();
 				for (int i = 0; i < debuffs.Length; i++) {
-					if (debuffs[i] == Arc_Burn.ID || target.HasBuff(debuffs[i]))
+					if (debuffs[i] == Arc_Burn_Debuff.ID || target.HasBuff(debuffs[i]))
 						rand.Multiply(i, i + 1, 0.3);
 				}
 				target.AddBuff(debuffs[rand.Get()], 3 * 60);
@@ -151,7 +171,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
 				rand.Reset();
 				for (int i = 0; i < debuffs.Length; i++) {
-					if (debuffs[i] == Arc_Burn.ID || target.HasBuff(debuffs[i]))
+					if (debuffs[i] == Arc_Burn_Debuff.ID || target.HasBuff(debuffs[i]))
 						rand.Multiply(i, i + 1, 0.3);
 				}
 				target.AddBuff(debuffs[rand.Get()], 3 * 60);
@@ -159,12 +179,12 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Arc_Flame_Arm_Blades_Crit_Type : CritType<Arc_Flame_Arm_Blades> {
-		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => target.HasBuff(Arc_Burn.ID);
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => target.HasBuff(Arc_Burn_Debuff.ID);
 		public override float CritMultiplier(Player player, Item item) => 10;
 	}
 }
 namespace Origins.Buffs {
-	public class Arc_Burn : ModBuff {
+	public class Arc_Burn_Debuff : ModBuff {
 		public override string Texture => typeof(Broken_Fiberglass_Sword).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -174,5 +194,36 @@ namespace Origins.Buffs {
 		}
 		public override void Update(NPC npc, ref int buffIndex) => npc.GetGlobalNPC<OriginGlobalNPC>().arcBurn = true;
 		public override void Update(Player player, ref int buffIndex) => player.OriginPlayer().arcBurn = true;
+	}
+	public class Blade_Dance_Buff : ModBuff {
+		public override string Texture => typeof(Fiberglass_Sword).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
+			ID = Type;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.GetDamage(DamageClass.Melee) += 0.5f;
+		}
+	}
+	public class Blade_Dance_Cooldown_Debuff : ModBuff {
+		public override string Texture => typeof(Fiberglass_Sword).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public static ref int SoundTime => ref Arc_Flame_Arm_Blades.SoundTime;
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+			Main.buffNoTimeDisplay[Type] = true;
+			BuffID.Sets.TimeLeftDoesNotDecrease[Type] = true;
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+			ID = Type;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			bool hasBuff = player.HasBuff(Blade_Dance_Buff.ID);
+			Main.buffNoTimeDisplay[Type] = hasBuff;
+			BuffID.Sets.TimeLeftDoesNotDecrease[Type] = hasBuff;
+			if (SoundTime >= 1 && SoundTime.CycleUp(10)) {
+				SoundEngine.PlaySound(SoundID.Item37 with { PitchRange = (0.3f, 0.6f) }, player.Center);
+			}
+		}
 	}
 }

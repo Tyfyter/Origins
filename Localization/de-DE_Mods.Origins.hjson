@@ -1472,9 +1472,20 @@ Buffs: {
 		// Description: Mods.Origins.Buffs.Frozen_Debuff.Description
 	}
 
-	Arc_Burn: {
+	Arc_Burn_Debuff: {
 		// DisplayName: Arc Burn
 		// Description: Plasma is melding your flesh
+	}
+
+	Blade_Dance_Buff: {
+		// DisplayName: Blade dance
+		// Description: Your blades have been sharpened
+		// EffectDescription: Increases Melee Damage by +50%
+	}
+
+	Blade_Dance_Cooldown_Debuff: {
+		// DisplayName: Blade Dance Cooldown
+		// Description: Your blades don't need further sharpening
 	}
 }
 
@@ -3544,7 +3555,7 @@ CritType: {
 	// Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 	// Pharaohs_Turquoise_Crit_Type: Critically strikes when hitting the same target with all {0} shots
 	// Vorpal_Crit_Type: Critically strikes [diffselect:1|1|5]% of the time
-	// Arc_Flame_Arm_Blades_Crit_Type: Critically strikes when the target is inflicted with {§Mods.Origins.Buffs.Arc_Burn.DisplayName}
+	// Arc_Flame_Arm_Blades_Crit_Type: Critically strikes when the target is inflicted with {§Mods.Origins.Buffs.Arc_Burn_Debuff.DisplayName}
 }
 
 BuilderToggle: {
