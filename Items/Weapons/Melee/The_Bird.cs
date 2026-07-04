@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Melee {
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);
