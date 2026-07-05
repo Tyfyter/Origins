@@ -1,4 +1,6 @@
 ﻿using Origins.Items.Weapons.Ammo;
+using Origins.Tiles.Other;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,9 +11,18 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(FromHexRGB(0x2c212a));
+			Main.tileMerge[Type][ModContent.TileType<Ashen_Grass>()] = true;
+			Main.tileMerge[ModContent.TileType<Ashen_Grass>()][Type] = true;
+			Main.tileMerge[Type][ModContent.TileType<Ashen_Jungle_Grass>()] = true;
+			Main.tileMerge[ModContent.TileType<Ashen_Jungle_Grass>()][Type] = true;
+			AddMapEntry(FromHexRGB(0x854A4A));
 			DustType = DustID.Copper;
 			HitSound = SoundID.NPCHit42.WithPitch(1.5f).WithVolume(0.5f);
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Sludge_Overlay", ModContent.TileType<Super_Sludge>());
+			yield return new TileMergeOverlay(merge + "Murk_Overlay", ModContent.TileType<Murky_Sludge>());
+			yield return new TileMergeOverlay(merge + "Murk_Overlay", ModContent.TileType<Ashen_Murky_Sludge_Grass>());
 		}
 	}
 	public class Scrap_Heap_Item : ModItem {
