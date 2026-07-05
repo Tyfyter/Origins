@@ -1358,7 +1358,7 @@ Buffs: {
 	Choice_Paralysis_Debuff: {
 		EffectDescription: Movement is intermitently reversed
 		DisplayName: Choice Paralysis
-		Description: Right or left, right or left...
+		Description: Right or left, left or right...
 	}
 
 	Ocean_Buff: {
