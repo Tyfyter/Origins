@@ -25,13 +25,15 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Arc_Flame_Arm_Blades : ModItem, ICustomWikiStat {
 		public override string Texture => typeof(Broken_Fiberglass_Sword).GetDefaultTMLName();
+		public static int[] Debuffs = [];
 		public static int SoundTime = 0;
 		public string[] Categories => [
 			WikiCategories.Sword,
 			WikiCategories.DeveloperItem
 		];
 		public override void SetStaticDefaults() {
-			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [ModContent.BuffType<Arc_Burn_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame];
+			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Choice_Paralysis_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame]; // think of a fitting 4th debuff
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Arkhalis);/*
@@ -85,11 +87,10 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Arc_Flame_Arm_Blades_Slash : ModProjectile {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Arkhalis}";
-		static int[] debuffs = [];
+		static ref int[] Debuffs => ref Arc_Flame_Arm_Blades.Debuffs;
 		static RangeRandom rand;
 		public override void SetStaticDefaults() {
-			debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame]; // think of a fitting 4th debuff
-			rand = new(Main.rand, 0, debuffs.Length);
+			rand = new(Main.rand, 0, Debuffs.Length);
 			Main.projFrames[Type] = 28;
 		}
 		public override void SetDefaults() {
@@ -97,8 +98,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.hide = true;
 		}
 		public override void AI() {
-			float num = 0f;
-			if (Projectile.spriteDirection == -1) num = (float)Math.PI;
+			float offsetRot = 0f;
+			if (Projectile.spriteDirection == -1) offsetRot = (float)Math.PI;
 
 			if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
 
@@ -109,29 +110,29 @@ namespace Origins.Items.Weapons.Melee {
 			}
 
 			if (Main.myPlayer == Projectile.owner && Projectile.TryGetOwner(out Player player)) {
-				Vector2 vector = player.RotatedRelativePoint(player.MountedCenter);
+				Vector2 playerPos = player.RotatedRelativePoint(player.MountedCenter);
 				if (player.channel && !player.noItems && !player.CCed) {
-					float num44 = 1f;
+					float speed = 1f;
 					if (player.inventory[player.selectedItem].shoot == Type)
-						num44 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
+						speed = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
 
-					if (Main.mouseRight && Main.mouseRightRelease && !player.HasBuff<Blade_Dance_Cooldown_Debuff>()) {
+					if (player.controlUseTile && !player.tileInteractionHappened && !player.HasBuff<Blade_Dance_Cooldown_Debuff>()) {
 						Arc_Flame_Arm_Blades.BladeDance(player);
 					}
 
-					Vector2 vec2 = Main.MouseWorld - vector;
-					vec2.Normalize();
-					if (vec2.HasNaNs()) vec2 = Vector2.UnitX * player.direction;
+					Vector2 velocity = Main.MouseWorld - playerPos;
+					velocity.Normalize();
+					if (velocity.HasNaNs()) velocity = Vector2.UnitX * player.direction;
 
-					vec2 *= num44;
-					if (vec2.X != Projectile.velocity.X || vec2.Y != Projectile.velocity.Y)
+					velocity *= speed;
+					if (velocity.X != Projectile.velocity.X || velocity.Y != Projectile.velocity.Y)
 						Projectile.netUpdate = true;
 
-					Projectile.velocity = vec2;
+					Projectile.velocity = velocity;
 				} else Projectile.Kill();
 
 				Projectile.position = player.RotatedRelativePoint(player.MountedCenter, addGfxOffY: false) - Projectile.Size / 2f;
-				Projectile.rotation = Projectile.velocity.ToRotation() + num;
+				Projectile.rotation = Projectile.velocity.ToRotation() + offsetRot;
 				Projectile.spriteDirection = Projectile.direction;
 				Projectile.timeLeft = 2;
 				player.ChangeDir(Projectile.direction);
@@ -140,12 +141,12 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemRotation = MathHelper.WrapAngle((float)Math.Atan2(Projectile.velocity.Y * Projectile.direction, Projectile.velocity.X * Projectile.direction));
 			}
 
-			Vector2 vector21 = Projectile.Center + Projectile.velocity * 3f;
-			Lighting.AddLight(vector21, 0.8f, 0.8f, 0.8f);
+			Vector2 dustPos = Projectile.Center + Projectile.velocity * 3f;
+			Lighting.AddLight(dustPos, 0.8f, 0.8f, 0.8f);
 			if (Main.rand.NextBool(3)) {
-				int num45 = Dust.NewDust(vector21 - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
-				Main.dust[num45].noGravity = true;
-				Main.dust[num45].position -= Projectile.velocity;
+				Dust dust = Dust.NewDustDirect(dustPos - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
+				dust.noGravity = true;
+				dust.position -= Projectile.velocity;
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -157,26 +158,36 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.HasBuff(Arc_Burn_Debuff.ID)) target.DelBuff(target.FindBuffIndex(Arc_Burn_Debuff.ID));
-			else if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
+			if (target.HasBuff(Arc_Burn_Debuff.ID) && hit.Crit) {
+				//if ((CritType.ModEnabled && ) || !CritType.ModEnabled)
+					target.DelBuff(target.FindBuffIndex(Arc_Burn_Debuff.ID));
+			} else if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
 				rand.Reset();
-				for (int i = 0; i < debuffs.Length; i++) {
-					if (debuffs[i] == Arc_Burn_Debuff.ID || target.HasBuff(debuffs[i]))
+				for (int i = 0; i < Debuffs.Length; i++) {
+					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Choice_Paralysis_Debuff.ID || target.HasBuff(Debuffs[i]))
 						rand.Multiply(i, i + 1, 0.3);
+					if (target.buffImmune[Debuffs[i]] || target.HasBuff<Choice_Paralysis_Debuff>())
+						rand.Multiply(i, i + 1, 0);
 				}
-				target.AddBuff(debuffs[rand.Get()], 3 * 60);
+				int selectedDebuff = Debuffs[rand.Get()];
+				target.AddBuff(selectedDebuff, (selectedDebuff == Choice_Paralysis_Debuff.ID ? Main.rand.Next(1, 3) : 3) * 60);
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
 				rand.Reset();
-				for (int i = 0; i < debuffs.Length; i++) {
-					if (debuffs[i] == Arc_Burn_Debuff.ID || target.HasBuff(debuffs[i]))
+				for (int i = 0; i < Debuffs.Length; i++) {
+					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Choice_Paralysis_Debuff.ID || target.HasBuff(Debuffs[i]))
 						rand.Multiply(i, i + 1, 0.3);
+					if (target.buffImmune[Debuffs[i]] || target.HasBuff<Choice_Paralysis_Debuff>())
+						rand.Multiply(i, i + 1, 0);
 				}
-				target.AddBuff(debuffs[rand.Get()], 3 * 60);
+				int selectedDebuff = Debuffs[rand.Get()];
+				target.AddBuff(selectedDebuff, (selectedDebuff == Choice_Paralysis_Debuff.ID ? Main.rand.Next(1, 3) : 3) * 60);
 			}
-		}
+		}/*
+		[JITWhenModsEnabled(CritType.CritMod.Name)]
+		public bool*/
 	}
 	public class Arc_Flame_Arm_Blades_Crit_Type : CritType<Arc_Flame_Arm_Blades> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => target.HasBuff(Arc_Burn_Debuff.ID);
