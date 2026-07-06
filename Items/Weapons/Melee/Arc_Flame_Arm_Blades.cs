@@ -122,10 +122,6 @@ namespace Origins.Items.Weapons.Melee {
 					if (player.inventory[player.selectedItem].shoot == Type)
 						speed = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
 
-					if (player.controlUseTile && !player.tileInteractionHappened && !player.HasBuff<Blade_Dance_Cooldown_Debuff>()) {
-						Arc_Flame_Arm_Blades.BladeDance(player);
-					}
-
 					Vector2 velocity = Main.MouseWorld - playerPos;
 					velocity.Normalize();
 					if (velocity.HasNaNs()) velocity = Vector2.UnitX * player.direction;
