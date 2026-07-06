@@ -61,7 +61,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public float FuelMult => Utils.Remap(Projectile.ai[0], 0, FreeFuel, 1, 0);
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
-			ProjectileID.Sets.IsARocketThatDealsDoubleDamageToPrimaryEnemy[Type] = true;
 			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
