@@ -8,6 +8,7 @@ using Origins.NPCs;
 using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
@@ -31,9 +32,11 @@ namespace Origins.Items.Weapons.Melee {
 			WikiCategories.Sword,
 			WikiCategories.DeveloperItem
 		];
+		public static string GenerateEmptyTag(int buffID) => $"[buffhint/dn\u200B:{(BuffID.Search.TryGetName(buffID, out string name) ? name : buffID)}]";
+		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(string.Join("", Debuffs.Skip(1).Select(GenerateEmptyTag)));
 		public override void SetStaticDefaults() {
 			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Choice_Paralysis_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame]; // think of a fitting 4th debuff
-			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
+			//PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Arkhalis);/*

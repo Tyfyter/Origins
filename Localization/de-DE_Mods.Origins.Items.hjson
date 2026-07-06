@@ -8438,7 +8438,7 @@ Arc_Flame_Arm_Blades: {
 	// DisplayName: Arc-Flame Arm Blades
 	/* Tooltip:
 		'''
-		Has a chance to inflict various [buffhint/dnflame and plasma debuffs:Origins/Arc_Burn_Debuff]
+		Has a chance to inflict various [buffhint/dnflame and plasma debuffs:Origins/Arc_Burn_Debuff]{0}
 		<right> to increase [buffhint/selfdnMelee Damage:Origins/Blade_Dance_Buff]
 		Cannot critically strike normally
 		''' */
