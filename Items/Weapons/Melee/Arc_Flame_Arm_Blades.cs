@@ -2,6 +2,7 @@ using Humanizer;
 using Origins.Buffs;
 using Origins.CrossMod;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs;
@@ -33,9 +34,9 @@ namespace Origins.Items.Weapons.Melee {
 			WikiCategories.DeveloperItem
 		];
 		public static string GenerateEmptyTag(int buffID) => $"[buffhint/dn\u200B:{(BuffID.Search.TryGetName(buffID, out string name) ? name : buffID)}]";
-		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(string.Join("", Debuffs.Skip(1).Select(GenerateEmptyTag)));
+		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(string.Join("", Debuffs.Skip(1).Select(GenerateEmptyTag)), CritType.ModEnabled ? string.Empty : this.GetLocalization("NoCSOTooltip"));
 		public override void SetStaticDefaults() {
-			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Choice_Paralysis_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame]; // think of a fitting 4th debuff
+			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Weak_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame];
 			//PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 		}
 		public override void SetDefaults() {
@@ -66,6 +67,7 @@ namespace Origins.Items.Weapons.Melee {
 			return true;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 			for (int i = 0; i < tooltips.Count; i++) {
 				switch (tooltips[i].Name) {
 					case "CritChance":
@@ -148,7 +150,7 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 dustPos = Projectile.Center + Projectile.velocity * 3f;
 			Lighting.AddLight(dustPos, 0.8f, 0.8f, 0.8f);
 			if (Main.rand.NextBool(3)) {
-				Dust dust = Dust.NewDustDirect(dustPos - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
+				Dust dust = EfficientDust.NewDustDirect(dustPos - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
 				dust.noGravity = true;
 				dust.position -= Projectile.velocity;
 			}
@@ -161,40 +163,52 @@ namespace Origins.Items.Weapons.Melee {
 				} else modifiers.DisableCrit();
 			}
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.HasBuff(Arc_Burn_Debuff.ID) && hit.Crit) {
-				//if ((CritType.ModEnabled && ) || !CritType.ModEnabled)
-					target.DelBuff(target.FindBuffIndex(Arc_Burn_Debuff.ID));
-			} else if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
+		public void NonCritEffect(NPC target) {
+			if (Main.rand.Next(100) < Projectile.CritChance) {
 				rand.Reset();
 				for (int i = 0; i < Debuffs.Length; i++) {
-					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Choice_Paralysis_Debuff.ID || target.HasBuff(Debuffs[i]))
+					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Weak_Debuff.ID || target.HasBuff(Debuffs[i]))
 						rand.Multiply(i, i + 1, 0.3);
-					if (target.buffImmune[Debuffs[i]] || target.HasBuff<Choice_Paralysis_Debuff>())
+					if (target.buffImmune[Debuffs[i]])
 						rand.Multiply(i, i + 1, 0);
 				}
 				int selectedDebuff = Debuffs[rand.Get()];
-				target.AddBuff(selectedDebuff, (selectedDebuff == Choice_Paralysis_Debuff.ID ? Main.rand.Next(1, 3) : 3) * 60);
+				target.AddBuff(selectedDebuff, 3 * 60);
 			}
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (!CritType.ModEnabled) {
+				if (target.HasBuff<Arc_Burn_Debuff>()) target.DelBuff<Arc_Burn_Debuff>();
+				else NonCritEffect(target);
+			} else {
+				if (hit.Crit && Projectile.ai[0] == 1 && target.HasBuff<Arc_Burn_Debuff>()) target.DelBuff<Arc_Burn_Debuff>();
+				else NonCritEffect(target);
+			}
+			Projectile.ai[0] = 0;
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if (Main.rand.Next(100) > 100 - Projectile.CritChance) {
+			if (Main.rand.Next(100) < Projectile.CritChance) {
 				rand.Reset();
 				for (int i = 0; i < Debuffs.Length; i++) {
-					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Choice_Paralysis_Debuff.ID || target.HasBuff(Debuffs[i]))
+					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Weak_Debuff.ID || target.HasBuff(Debuffs[i]))
 						rand.Multiply(i, i + 1, 0.3);
-					if (target.buffImmune[Debuffs[i]] || target.HasBuff<Choice_Paralysis_Debuff>())
+					if (target.buffImmune[Debuffs[i]])
 						rand.Multiply(i, i + 1, 0);
 				}
 				int selectedDebuff = Debuffs[rand.Get()];
-				target.AddBuff(selectedDebuff, (selectedDebuff == Choice_Paralysis_Debuff.ID ? Main.rand.Next(1, 3) : 3) * 60);
+				if (selectedDebuff == Weak_Debuff.ID) selectedDebuff = BuffID.Weak;
+				target.AddBuff(selectedDebuff, 3 * 60);
 			}
-		}/*
-		[JITWhenModsEnabled(CritType.CritMod.Name)]
-		public bool*/
+		}
 	}
 	public class Arc_Flame_Arm_Blades_Crit_Type : CritType<Arc_Flame_Arm_Blades> {
-		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => target.HasBuff(Arc_Burn_Debuff.ID);
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			if (target.HasBuff<Arc_Burn_Debuff>()) {
+				projectile.ai[0] = 1;
+				return true;
+			}
+			return false;
+		}
 		public override float CritMultiplier(Player player, Item item) => 10 / (1f + player.GetWeaponCrit(item) / 100f);
 	}
 }

@@ -3555,7 +3555,11 @@ CritType: {
 	// Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 	// Pharaohs_Turquoise_Crit_Type: Critically strikes when hitting the same target with all {0} shots
 	// Vorpal_Crit_Type: Critically strikes [diffselect:1|1|5]% of the time
-	// Arc_Flame_Arm_Blades_Crit_Type: Critically strikes when the target is inflicted with {§Mods.Origins.Buffs.Arc_Burn_Debuff.DisplayName}
+	/* Arc_Flame_Arm_Blades_Crit_Type:
+		'''
+		Critically strikes when the target is inflicted with {§Mods.Origins.Buffs.Arc_Burn_Debuff.DisplayName}
+		Removes {§Mods.Origins.Buffs.Arc_Burn_Debuff.DisplayName} upon successful crit
+		''' */
 }
 
 BuilderToggle: {

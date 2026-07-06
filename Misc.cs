@@ -5457,6 +5457,10 @@ namespace Origins {
 				if (npc.extraValue > 0) NPC.RevengeManager.CacheEnemy(npc);
 			}
 		}
+		public static int FindBuffIndex<TBuff>(this NPC target) where TBuff : ModBuff => target.FindBuffIndex(ModContent.BuffType<TBuff>());
+		public static int FindBuffIndex<TBuff>(this Player target) where TBuff : ModBuff => target.FindBuffIndex(ModContent.BuffType<TBuff>());
+		public static void DelBuff<TBuff>(this NPC target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
+		public static void DelBuff<TBuff>(this Player target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
 	}
 	public static class TileExtenstions {
 		public static bool IsBrokenBottomAnchor(int i, int j) {

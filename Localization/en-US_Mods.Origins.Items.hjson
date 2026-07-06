@@ -8439,7 +8439,11 @@ Arc_Flame_Arm_Blades: {
 	Tooltip:
 		'''
 		Has a chance to inflict various [buffhint/dnflame and plasma debuffs:Origins/Arc_Burn_Debuff]{0}
-		<right> to increase [buffhint/selfdnMelee Damage:Origins/Blade_Dance_Buff]
+		<right> to increase [buffhint/selfdnMelee Damage:Origins/Blade_Dance_Buff]{1}
+		'''
+	NoCSOTooltip:
+		'''
+
 		Cannot critically strike normally
 		'''
 	CritTooltip: "{0} debuff chance"
