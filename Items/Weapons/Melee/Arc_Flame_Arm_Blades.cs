@@ -194,7 +194,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Arc_Flame_Arm_Blades_Crit_Type : CritType<Arc_Flame_Arm_Blades> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => target.HasBuff(Arc_Burn_Debuff.ID);
-		public override float CritMultiplier(Player player, Item item) => 10;
+		public override float CritMultiplier(Player player, Item item) => 10 / (1f + player.GetWeaponCrit(item) / 100f);
 	}
 }
 namespace Origins.Buffs {
