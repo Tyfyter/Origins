@@ -99,6 +99,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Arkhalis);
 			Projectile.hide = true;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 		}
 		public override void AI() {
 			float offsetRot = 0f;
