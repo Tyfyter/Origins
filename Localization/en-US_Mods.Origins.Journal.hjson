@@ -1176,5 +1176,5 @@ Worn_Paper: {
 		Contributions:
 			- aiding the Terrarian
 		'''
-	Classified_Blueprint.Text: "[jimage/2xcfff:Origins/UI/Lore/Journal_Use_Back]<PH> put actual blueprint image(s) here instead"
+	Classified_Blueprint.Text: "[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]<PH> put actual blueprint image(s) here instead"
 }

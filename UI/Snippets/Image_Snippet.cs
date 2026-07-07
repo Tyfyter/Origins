@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
@@ -14,7 +15,7 @@ namespace Origins.UI.Snippets {
 	public class Image_Handler : ITagHandler {
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		public class Image_Snippet : TextSnippet {
-			Asset<Texture2D> image;
+			public readonly Asset<Texture2D> image;
 			public readonly Options options;
 			public Image_Snippet(string text, Options options) : base(text, options.Color ?? Color.White, options.Scale) {
 				this.options = options;
@@ -33,7 +34,8 @@ namespace Origins.UI.Snippets {
 					shaderOroboros.Capture(spriteBatch);
 					spriteBatch.Restart(spriteBatch.GetState().FixedCulling());
 				}
-				spriteBatch?.Draw(image.Value, position, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale * scale, SpriteEffects.None, 0);
+				//spriteBatch?.Draw(TextureAssets.MagicPixel.Value, position, image.Value.Bounds, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale * scale, SpriteEffects.None, 0);
+				spriteBatch?.Draw(image.Value, position + options.Offset * scale, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale * scale, SpriteEffects.None, 0);
 				switch (options.Shader) {
 					case JournalImageShader.Sketch:
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
@@ -50,7 +52,15 @@ namespace Origins.UI.Snippets {
 				return true;
 			}
 		}
-		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color? Color = null, float Scale = 1f, Rectangle? Frame = null, bool TwoPage = false) {
+		public record struct Options(
+			JournalImageShader Shader = JournalImageShader.None,
+			float Sharpness = 1,
+			Color? Color = null,
+			float Scale = 1f,
+			Rectangle? Frame = null,
+			bool TwoPage = false,
+			Vector2 Offset = default
+		) {
 			public readonly bool Sketch => Shader == JournalImageShader.Sketch;
 		}
 		record struct SnippetOption(string Name, [StringSyntax(StringSyntaxAttribute.Regex)] string Data, Action<string> Action) {
@@ -79,6 +89,12 @@ namespace Origins.UI.Snippets {
 					}
 				});
 			}
+			public static SnippetOption CreateVector2Option(string name, Action<Vector2> setter) {
+				return new(name, "(?:-?[\\d\\.]+,)-?[\\d\\.]+", match => {
+					string[] args = match.Split(',');
+					setter(new(float.Parse(args[0]), float.Parse(args[1])));
+				});
+			}
 		}
 		static void ParseOptions(string optionsText, params SnippetOption[] options) {
 			Regex regex = new($"(?:{string.Join("|", options.Select(so => $"({so.Pattern})"))})+");
@@ -98,7 +114,8 @@ namespace Origins.UI.Snippets {
 				new SnippetOption("s", "[\\d\\.]+", match => settings.Sharpness = float.Parse(match)),
 				new SnippetOption("d", "", match => settings.Shader = JournalImageShader.Sketch),
 				new SnippetOption("t", "", match => settings.Shader = JournalImageShader.Transparent),
-				SnippetOption.CreateColorOption("c", value => settings.Color = value)
+				SnippetOption.CreateColorOption("c", value => settings.Color = value),
+				SnippetOption.CreateVector2Option("o", value => settings.Offset = value)
 			);
 			return new Image_Snippet(text, settings);
 		}

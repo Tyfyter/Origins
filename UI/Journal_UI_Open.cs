@@ -123,12 +123,13 @@ namespace Origins.UI {
 					ctrl.Process(new(this, finishPage, ref i, ref telemetryLength, (int)(height / lineSpace), (int)width));
 					continue;
 				}
-				if (textSnippet is Image_Handler.Image_Snippet { options.TwoPage: true }) {
+				if (textSnippet is Image_Handler.Image_Snippet { options.TwoPage: true } imageSnippet) {
 					if (currentText.Length > 0 || currentText.Length > 0) finishPage();
 					if (snippetPages.Count % 2 != 0) finishPage();
 					currentPage.Add(textSnippet);
 					finishPage();
-					pageScale[^1] = scale;
+					imageSnippet.image.Wait();
+					pageScale[^1] = Math.Min((bounds.Width - XMarginTotal) / (float)imageSnippet.image.Width(), height / (float)imageSnippet.image.Height());
 					finishPage();
 					continue;
 				}
