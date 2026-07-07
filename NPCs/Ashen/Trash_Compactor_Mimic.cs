@@ -3,6 +3,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
 using Origins.NPCs.Defiled;
@@ -50,7 +51,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				//ModContent.ItemType<The_Claw>(),
+				ModContent.ItemType<The_Claw>(),
 				ModContent.ItemType<Laser_Target_Locator>(),
 				ModContent.ItemType<AMRSL_Skewer>(),
 				ModContent.ItemType<Pacemaker>(),
