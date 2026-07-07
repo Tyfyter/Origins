@@ -835,8 +835,10 @@ namespace Origins {
 		public static double ApplyManaShielding(double damage) => manaShieldedDamage;
 		public override void OnHurt(Player.HurtInfo info) {
 			if (crystalHeart) crystalHeartCounter += info.Damage;
+			oldNaturalRegen = Player.lifeRegenTime;
 		}
 		public override void PostHurt(Player.HurtInfo info) {
+			Player.lifeRegenTime += keepNaturalRegenMult.ApplyTo(oldNaturalRegen);
 			lifeRegenTimeSinceHit = 0;
 			timeSinceHit = 0;
 			pacemakerTime = 0;

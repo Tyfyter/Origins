@@ -158,6 +158,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		}
 		public override void UpdateBuff(Player player, ref int buffIndex) {
 			player.lifeRegen += 3 * 2; // 3 HP/sec
+			player.OriginPlayer().keepNaturalRegenMult += 0.5f;
 			if (player.potionDelay <= 0) player.DelBuff(buffIndex--);
 		}
 		public override void PostModifyTooltips(List<TooltipLine> tooltips) {

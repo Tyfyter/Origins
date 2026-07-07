@@ -583,6 +583,8 @@ namespace Origins {
 		[LinearReset(0.0001f)] public float neutronSoupAcceleration;
 		[LinearReset(0.001f)] public float neutronSoupSpeed;
 		[LinearReset(0.005f)] public float neutronSoupOffset;
+		[AutoReset] public float oldNaturalRegen;
+		[AutoReset] public StatModifier keepNaturalRegenMult = new(0, 1);
 		#endregion
 
 		#region visuals
