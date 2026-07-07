@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using ShootAction = System.Action<Terraria.Player, Terraria.DataStructures.EntitySource_ItemUse_WithAmmo, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, int, int, float>;
 
@@ -32,6 +34,36 @@ namespace Origins.Items.Weapons.Demolitionist {
 				return false;
 			}
 			return true;
+		}
+		class Hand_Grenade_Launcher_Tooltip : GlobalItem {
+			public override bool AppliesToEntity(Item entity, bool lateInstantiation) => lateInstantiation && entity.ammo == ItemID.Grenade;
+			public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
+				if (Main.LocalPlayer?.HeldItem?.ModItem is not Hand_Grenade_Launcher || AltFireAction[item.shoot] is null) return;
+				void InsertTooltip(ref int i) {
+					tooltips.Insert(i + 1, new(Mod, "CanAltFireTooltip", Language.GetTextValue("Mods.Origins.Items.Hand_Grenade_Launcher.CanAltFireTooltip")));
+					i = 0;
+				}
+				for (int i = tooltips.Count - 1; i >= 0; i--) {
+					switch (tooltips[i].Name) {
+						case "Ammo":
+						case "Consumable":
+						case "Material":
+						InsertTooltip(ref i);
+						break;
+						default:
+						if (tooltips[i].Name.StartsWith("Tooltip")) {
+							InsertTooltip(ref i);
+							break;
+						}
+						if (i < tooltips.Count - 1 && !tooltips[i].Name.StartsWith("Prefix") && tooltips[i + 1].Name.StartsWith("Prefix")) {
+							i--;
+							InsertTooltip(ref i);
+							break;
+						}
+						break;
+					}
+				}
+			}
 		}
 	}
 }

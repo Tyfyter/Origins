@@ -2448,6 +2448,7 @@ Hand_Grenade_Launcher: {
 		{$GenericTooltip.AltAttack}
 		'Doesn't this defeat the purpose of a hand grenade?'
 		'''
+	CanAltFireTooltip: Has an alternate attack with {$DisplayName}
 }
 
 Happy_Bomb: {
