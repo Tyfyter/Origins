@@ -76,6 +76,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		};
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
+			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
+				position += velocity.SafeNormalize(Vector2.Zero) * 40;
+				type = ModContent.ProjectileType<Crystal_Grenade_Shard>();
+				damage -= 10;
+				for (int i = Main.rand.Next(3); ++i < 10;) {
+					int p = Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.025 * i) * 0.6f, type, damage / 2, knockback, player.whoAmI);
+					Main.projectile[p].timeLeft += 90;
+					Main.projectile[p].extraUpdates++;
+				}
+			};
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

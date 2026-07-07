@@ -34,6 +34,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Alkaline_Grenade";
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
+			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
+				position += velocity.SafeNormalize(Vector2.Zero) * 40;
+				type = ModContent.ProjectileType<Brine_Droplet>();
+				damage -= 20;
+				for (int i = Main.rand.Next(2); ++i < 5;) {
+					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 2, knockback, player.whoAmI).scale = 0.85f;
+				}
+			};
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

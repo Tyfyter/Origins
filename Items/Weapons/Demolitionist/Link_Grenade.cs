@@ -1,11 +1,11 @@
-using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Tiles.Ashen;
-using PegasusLib;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Link_Grenade : ModItem {
         public override void SetStaticDefaults() {
@@ -32,9 +32,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Link_Grenade_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Link_Grenade";
+		public override string Texture => typeof(Link_Grenade).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 0;
+			Hand_Grenade_Launcher.AltFireAction[Type] = LauncherAltFire;
+		}
+		public static void LauncherAltFire(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Link_Trigger_P>(), damage * 2, knockback, player.whoAmI);
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
@@ -65,10 +69,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			float defFactor = 1;
 			Rectangle targetHitbox = target.Hitbox;
 			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (other.type == projectile.type && other.whoAmI != projectile.whoAmI && other.Center.IsWithin(center, 16 * 12) && other.Colliding(other.Hitbox, targetHitbox)) {
-					float factor = 1 / MathF.Pow(++n, 0.5f);
+				if (other.ModProjectile is Link_Grenade_P && other.whoAmI != projectile.whoAmI && other.Center.IsWithin(center, 16 * 12) && other.Colliding(other.Hitbox, targetHitbox)) {
+					float factor = 1 / MathF.Pow(++n, 0.25f);
 					modifiers.SourceDamage.Base += other.damage * factor;
-					defFactor += factor * factor;
+					defFactor += factor * factor * factor;
 				}
 			}
 			modifiers.DefenseEffectiveness *= defFactor;
@@ -94,6 +98,46 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
+		}
+		public class Link_Trigger_P : Link_Grenade_P, IIsExplodingProjectile {
+			public override string Texture => typeof(Link_Grenade).GetDefaultTMLName();
+			public bool IsExploding => Projectile.ai[0] != 0;
+			public override void SetStaticDefaults() {
+				Origins.MagicTripwireRange[Type] = 32;
+			}
+			public override void SetDefaults() {
+				base.SetDefaults();
+				Projectile.aiStyle = 0;
+				Projectile.extraUpdates = 1;
+			}
+			public override void AI() {
+				if (Projectile.ai[0] != 0) {
+					Projectile.Kill();
+					return;
+				}
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RedTorch);
+				Rectangle hitbox = Projectile.Hitbox;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (!npc.friendly && hitbox.Intersects(npc.Hitbox)) {
+						Projectile.ai[0] = 1;
+						Projectile.netUpdate = true;
+						ProjectileLoader.ModifyDamageHitbox(Projectile, ref hitbox);
+						break;
+					}
+				}
+			}
+			public override bool OnTileCollide(Vector2 oldVelocity) {
+				Projectile.ai[0] = 1;
+				Projectile.netUpdate = true;
+				Rectangle hitbox = Projectile.Hitbox;
+				ProjectileLoader.ModifyDamageHitbox(Projectile, ref hitbox);
+				return false;
+			}
+			public override bool? CanDamage() => false;
+			public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) { }
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
+			public override bool PreDraw(ref Color lightColor) => false;
+			public override void OnKill(int timeLeft) { }
 		}
 	}
 }

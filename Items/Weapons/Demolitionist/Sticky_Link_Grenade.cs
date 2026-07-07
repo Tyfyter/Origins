@@ -31,22 +31,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.Register();
 		}
 	}
-	public class Sticky_Link_Grenade_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sticky_Link_Grenade";
-		public override void SetStaticDefaults() {
-			Origins.MagicTripwireRange[Type] = 0;
-		}
+	public class Sticky_Link_Grenade_P : Link_Grenade_P {
+		public override string Texture => typeof(Sticky_Link_Grenade).GetDefaultTMLName();
 		Vector2 stickPos = default;
 		float stickRot = 0;
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.timeLeft = 60 * 20;
-			Projectile.friendly = false;
-			Projectile.penetrate = 1;
-			/*Projectile.appliesImmunityTimeOnSingleHits = true;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = -1;*/
-		}
 		public override void AI() {
 			if (Projectile.ai[2] == 0) {
 				Rectangle hitbox = Projectile.Hitbox;
@@ -88,12 +76,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
 			return null;
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			Link_Grenade_P.AccumulateDamageFromKin(Projectile, target, ref modifiers);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;
-		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.ai[2] = -1;
 			stickPos = Projectile.Center;
@@ -110,19 +92,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			stickPos.X = reader.ReadSingle();
 			stickPos.Y = reader.ReadSingle();
 			stickRot = reader.ReadSingle();
-		}
-		public override void OnKill(int timeLeft) {
-			Projectile.friendly = true;
-			Projectile.penetrate = -1;
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 128;
-			Projectile.height = 128;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
-			Projectile.Damage();
-			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
-			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 		}
 	}
 }
