@@ -99,6 +99,7 @@ namespace Origins.Items.Weapons.Melee {
 			base.GrappleTargetPoint(player, ref grappleX, ref grappleY);
 		}
 		int hookTarget = -1;
+		public override bool? CanDamage() => hookTarget == -1;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.aiStyle = -1;
 			Projectile.ai[0] = 2;
@@ -216,6 +217,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return base.Colliding(projHitbox, targetHitbox);
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
 	}
 	public struct AutoGlowingTexture(string asset) : IUnloadable, IBatchLoadable {
 		AutoLoadingTexture texture = asset;
