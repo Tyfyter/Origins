@@ -2302,6 +2302,7 @@ Projectiles: {
 	The_Claw_Flail_P.DisplayName: The Claw Flail P
 	The_Claw_Hook.DisplayName: The Claw Hook
 	Link_Trigger_P.DisplayName: Link Trigger P
+	Hellfire_Grenade_Flamethrower.DisplayName: Hellfire Grenade Flamethrower
 }
 
 Prefixes: {

@@ -11,6 +11,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem {
 		public static ShootAction[] AltFireAction = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Hand_Grenade_Launcher)}_{nameof(AltFireAction)}")
 		.RegisterCustomSet<ShootAction>(null);
+		public static float[] AltUseTimeMultiplier = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Hand_Grenade_Launcher)}_{nameof(AltUseTimeMultiplier)}")
+		.RegisterFloatSet(1);
+		public static float[] AltAnimationMultiplier = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Hand_Grenade_Launcher)}_{nameof(AltAnimationMultiplier)}")
+		.RegisterFloatSet(1);
+		public static int?[] AltUseCount = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Hand_Grenade_Launcher)}_{nameof(AltUseCount)}")
+		.RegisterCustomSet<int?>(null);
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
@@ -22,11 +28,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 5f;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
+			Item.consumeAmmoOnLastShotOnly = true;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool? CanChooseAmmo(Item ammo, Player player) {
 			if (player.altFunctionUse == 2 && AltFireAction[ammo.shoot] is null) return false;
 			return base.CanChooseAmmo(ammo, player);
+		}
+		static int selectedProjType;
+		public override float UseTimeMultiplier(Player player) {
+			if (player.altFunctionUse == 2) return AltUseTimeMultiplier[selectedProjType];
+			return base.UseTimeMultiplier(player);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2 && AltFireAction[type] is ShootAction shootAction) {
@@ -37,6 +49,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		class Hand_Grenade_Launcher_Tooltip : GlobalItem {
 			public override bool AppliesToEntity(Item entity, bool lateInstantiation) => lateInstantiation && entity.ammo == ItemID.Grenade;
+			public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+				weapon.useLimitPerAnimation = AltUseCount[type];
+				if (player.altFunctionUse == 2 && player.ItemUsesThisAnimation == 0) {
+					player.itemAnimation = player.itemAnimationMax = (int)(player.itemAnimationMax * AltAnimationMultiplier[type]);
+				}
+				selectedProjType = type;
+			}
 			public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 				if (Main.LocalPlayer?.HeldItem?.ModItem is not Hand_Grenade_Launcher || AltFireAction[item.shoot] is null) return;
 				void InsertTooltip(ref int i) {
