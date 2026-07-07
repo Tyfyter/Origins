@@ -8453,3 +8453,8 @@ Rei_Set: {
 	// DisplayName: Plasma Knight Set
 	// Tooltip: ""
 }
+
+The_Claw: {
+	// DisplayName: The Claw
+	// Tooltip: ""
+}

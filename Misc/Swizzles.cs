@@ -1,5 +1,9 @@
 ﻿namespace Origins.Misc {
 	public static class Swizzles {
+		public static Vector2 XX(this Vector2 v) => new(v.X, v.X);
+		public static Vector2 XY(this Vector2 v) => new(v.X, v.Y);
+		public static Vector2 YX(this Vector2 v) => new(v.Y, v.X);
+		public static Vector2 YY(this Vector2 v) => new(v.Y, v.Y);
 		public static Vector2 XX(this Vector3 v) => new(v.X, v.X);
 		public static Vector2 XY(this Vector3 v) => new(v.X, v.Y);
 		public static Vector2 XZ(this Vector3 v) => new(v.X, v.Z);

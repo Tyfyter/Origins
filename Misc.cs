@@ -2150,10 +2150,11 @@ namespace Origins {
 				}
 			}
 		}
-		public static void DrawChain(this Texture2D texture, Vector2 start, Vector2 end, Func<int, Rectangle> frameFunc, float linkLength, Func<Vector2, Color> lighting = null, FastRandom fastRandom = default) {
+		public static void DrawChain(this Texture2D texture, Vector2 start, Vector2 end, Func<int, Rectangle> frameFunc, float linkLength, Func<Vector2, Color> lighting = null, FastRandom fastRandom = default, bool verticalChainTexture = false) {
 			lighting ??= pos => Lighting.GetColor(pos.ToTileCoordinates());
 			Vector2 distToProj = end - start;
-			float projRotation = distToProj.ToRotation() - MathHelper.PiOver2;
+			float projRotation = distToProj.ToRotation();
+			if (!verticalChainTexture) projRotation -= MathHelper.PiOver2;
 			float distance = distToProj.Length();
 			distToProj.Normalize();
 			distToProj *= linkLength;

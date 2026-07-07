@@ -2299,6 +2299,9 @@ Projectiles: {
 	Pirate_Eye_Venom_Dropper.DisplayName: Pirate Eye Venom
 	Cupids_Arrow_P.DisplayName: Cupid's Arrow
 	Arc_Flame_Arm_Blades_Slash.DisplayName: "{§Mods.Origins.Items.Arc_Flame_Arm_Blades}"
+	The_Claw_Flail_P.DisplayName: The Claw Flail P
+	The_Claw_Hook.DisplayName: The Claw Hook
+	Link_Trigger_P.DisplayName: Link Trigger P
 }
 
 Prefixes: {
