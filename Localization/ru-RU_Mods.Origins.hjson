@@ -2841,6 +2841,11 @@ Configs: {
 			// Label: Flashbang Color
 			// Tooltip: ""
 		}
+
+		PreferSelectedHook: {
+			// Label: Prefer Selected Hook
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

@@ -148,6 +148,9 @@ namespace Origins {
 		public Adjusto_Hook.ControlSetting adjustoHookControlSetting = Adjusto_Hook.ControlSetting.Default;
 
 		[DefaultValue(true)]
+		public bool PreferSelectedHook = true;
+
+		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
 
 		[DefaultValue(0.2f), Range(0f, 1f), Increment(0.05f)]

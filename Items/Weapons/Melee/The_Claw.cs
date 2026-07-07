@@ -1,17 +1,7 @@
-using CalamityMod.Items.Accessories;
-using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Tools;
 using Origins.Misc;
-using Origins.NPCs.Brine.Boss;
-using Origins.Projectiles;
-using PegasusLib;
-using PegasusLib.Sets;
-using ReLogic.Content;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -20,6 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Claw : ModItem, ICustomWikiStat {
+		public static int HookCount => 3;
 		public string[] Categories => [
 			WikiCategories.Flail
 		];
@@ -53,7 +44,11 @@ namespace Origins.Items.Weapons.Melee {
 				player.StartChanneling(type);
 			}
 		}
-		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
+		public static void LimitClaws() => OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<The_Claw_Hook>()], HookCount - Main.LocalPlayer.ownedProjectileCounts[ModContent.ProjectileType<The_Claw_Flail_P>()], 0);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			LimitClaws();
+			return true;
+		}
 	}
 	public class The_Claw_Hook : ModProjectile {
 		protected static AutoLoadingTexture chainTexture = typeof(The_Claw).GetDefaultTMLName("_Cable");
@@ -72,11 +67,15 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 		}
-		public override void NumGrappleHooks(Player player, ref int numHooks) => numHooks = 1;
-		public override void GrappleRetreatSpeed(Player player, ref float speed) => speed = 6f;
+		public override bool? CanUseGrapple(Player player) {
+			The_Claw.LimitClaws();
+			return null;
+		}
+		public override void NumGrappleHooks(Player player, ref int numHooks) => numHooks = The_Claw.HookCount;
+		public override void GrappleRetreatSpeed(Player player, ref float speed) => speed = 8f;
 		public override void GrapplePullSpeed(Player player, ref float speed) {
-			speed = 8f;
 			if (hookTarget != -1) {
+				speed = 8f;
 				NPC hookTarget = Main.npc.GetIfInRange(this.hookTarget);
 				if (hookTarget?.active != true) return;
 				speed *= Utils.Remap(
@@ -88,6 +87,8 @@ namespace Origins.Items.Weapons.Melee {
 				);
 				float preventContactFactor = ((hookTarget.Center.Clamp(player.Hitbox) - player.MountedCenter.Clamp(hookTarget.Hitbox)) / 32).LengthSquared();
 				if (preventContactFactor < 1) speed *= float.Sqrt(preventContactFactor) * 2 - 1;
+			} else {
+				speed = 12f;
 			}
 		}
 		public override float GrappleRange() => 440;
@@ -119,6 +120,16 @@ namespace Origins.Items.Weapons.Melee {
 							return;
 						}
 						Vector2 newCenter = hookTarget.Center + new Vector2(Projectile.ai[1], Projectile.ai[2]).RotatedBy(hookTarget.rotation);
+						switch (hookTarget.type) {
+							case NPCID.WallofFlesh:
+							case NPCID.WallofFleshEye:
+							if (hookTarget.direction >= 0) {
+								Max(ref newCenter.X, hookTarget.Right.X);
+							} else {
+								Min(ref newCenter.X, hookTarget.Left.X);
+							}
+							break;
+						}
 						Projectile.Center = newCenter;
 						Vector2 ownerDiff = Projectile.Center - Main.player[Projectile.owner].MountedCenter;
 						break;

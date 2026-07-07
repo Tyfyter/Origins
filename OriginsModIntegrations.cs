@@ -354,6 +354,7 @@ namespace Origins {
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_P>());
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_P_Alt>());
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_Explosion>());
+				instance.thorium.Call("AddFlailProjectileID", ProjectileType<The_Claw_Flail_P>());
 
 				for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) instance.thorium.Call("AddGemStoneTileID", Chambersite_Ore.chambersiteTiles[i].Type);
 
