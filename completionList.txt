@@ -1673,7 +1673,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 |---
-(@2, ^3) Classified Blueprint !!!
+(☻) Classified Blueprint !!!
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection
