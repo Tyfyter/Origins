@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				type = ModContent.ProjectileType<The_Claw_Flail_P>();
-				damage /= 2;
+				damage += damage / 2;
 				player.StartChanneling(type);
 			}
 		}
@@ -199,7 +199,8 @@ namespace Origins.Items.Weapons.Melee {
 			return projHitbox.Add((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 16).Intersects(targetHitbox);
 		}
 	}
-	public class The_Claw_Flail_P : The_Claw_Hook {
+	public class The_Claw_Flail_P : The_Claw_Hook, IShadedProjectile {
+		public int Shader => Main.player[Projectile.owner].cGrapple;
 		const int ai_state_spinning = 0;
 		const int ai_state_launching_forward = 1;
 		const int ai_state_retracting = 2;
