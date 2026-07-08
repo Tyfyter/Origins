@@ -4,7 +4,7 @@ displayName = Terraria Origins
 
 buildIgnore = .git\*, *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Effects\*.dll, Effects\*.exe, Effects\*.exe.config, Effects\*.bat, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Music\Legacy\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
 includePDB = false
-sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas, AlchemistNPCLite, miningcracks_take_on_luiafk, ModLiquidLib, WaasephisFishingPlus
+sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas, AlchemistNPCLite, miningcracks_take_on_luiafk, ModLiquidLib, WaasephisFishingPlus, Avalon
 sortBefore = CritRework
 modReferences = AltLibrary, BetterDialogue, PegasusLib, ModLiquidLib
-weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas
+weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas, Avalon

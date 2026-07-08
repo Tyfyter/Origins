@@ -79,6 +79,10 @@ using static Terraria.ModLoader.ModContent;
 using SetsTiles = Origins.OriginsSets.Tiles;
 using ThoriumTiles = ThoriumMod.Tiles;
 using ThoriumWalls = ThoriumMod.Walls;
+using AvalonSets = Avalon.Data.Sets;
+using AvalonHerbology = Avalon.Data.HerbologyData;
+using Origins.NPCs.Felnum;
+using Origins.Items.Weapons.Summoner.Minions;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -192,7 +196,10 @@ namespace Origins {
 		}
 		public static void SetupContent() {
 			if (Thorium is not null) AddThorium();
-			if (Avalon is not null) AddAvalon();
+			if (Avalon is not null) {
+				AddAvalon();
+				SetAvalonStaticDefaults();
+			}
 			[JITWhenModsEnabled("ThoriumMod")]
 			static void AddThorium() {
 				Chambersite_Stone_Wall.baseWallTypes.Add((ushort)WallType<ThoriumWalls.AquamarineWall>());
@@ -404,6 +411,45 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("InfoSlot", out Mod infoSlot)) {
 				infoSlot.Call("AddInfoItem", ItemType<Eitrite_Watch>());
+			}
+			if (instance.avalon is not null) {
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Alkahest_Torch>(), typeof(Alkahest_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Ashen_Torch>(), typeof(Ashen_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Bile_Torch>(), typeof(Bile_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Defiled_Torch>(), typeof(Defiled_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Phoenum_Torch>(), typeof(Phoenum_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Riven_Torch>(), typeof(Riven_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherTexture", ItemType<Shadow_Torch>(), typeof(Shadow_Torch_Tile).GetDefaultTMLName());
+				Avalon.Call("AddTorchLauncherFlameTexture", ItemType<Alkahest_Torch>(), typeof(Alkahest_Torch_Tile).GetDefaultTMLName() + "_Flame");
+				Avalon.Call("AddTorchLauncherFlameTexture", ItemType<Bile_Torch>(), typeof(Bile_Torch_Tile).GetDefaultTMLName() + "_Flame");
+				Avalon.Call("AddTorchLauncherFlameTexture", ItemType<Defiled_Torch>(), typeof(Defiled_Torch_Tile).GetDefaultTMLName() + "_Flame");
+				Avalon.Call("AddTorchLauncherFlameTexture", ItemType<Phoenum_Torch>(), typeof(Phoenum_Torch_Tile).GetDefaultTMLName() + "_Flame");
+				Avalon.Call("AddTorchLauncherFlameTexture", ItemType<Riven_Torch>(), typeof(Riven_Torch_Tile).GetDefaultTMLName() + "_Flame");
+				Avalon.Call("AddTorchLauncherFlameTexture", ItemType<Shadow_Torch>(), typeof(Shadow_Torch_Tile).GetDefaultTMLName() + "_Flame");
+				Avalon.Call("AddTorchLauncherDust", ItemType<Alkahest_Torch>(), GetInstance<Alkahest_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherDust", ItemType<Ashen_Torch>(), GetInstance<Ashen_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherDust", ItemType<Bile_Torch>(), GetInstance<Bile_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherDust", ItemType<Defiled_Torch>(), GetInstance<Defiled_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherDust", ItemType<Phoenum_Torch>(), GetInstance<Phoenum_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherDust", ItemType<Riven_Torch>(), GetInstance<Riven_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherDust", ItemType<Shadow_Torch>(), GetInstance<Shadow_Torch_Tile>().DustType);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Alkahest_Torch>(), Alkahest_Torch.Light);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Ashen_Torch>(), Ashen_Torch.Light);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Bile_Torch>(), Bile_Torch.Light);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Defiled_Torch>(), Defiled_Torch.Light);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Phoenum_Torch>(), Phoenum_Torch.Light);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Riven_Torch>(), Riven_Torch.Light);
+				Avalon.Call("AddTorchLauncherLightColor", ItemType<Shadow_Torch>(), Shadow_Torch.Light);
+				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Alkahest_Torch>(), BuffType<Goo_Wall_Debuff>());
+				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Bile_Torch>(), BuffType<Rasterized_Debuff>());
+				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Phoenum_Torch>(), BuffType<Impeding_Shrapnel_Debuff>());
+				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Shadow_Torch>(), BuffType<Blind_Debuff>());
+
+				Avalon.Call("AddBiomeChest", new List<int> { ItemID.HallowedKey, ItemType<The_Calibrator>() });
+				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Ashen_Key>(), ItemType<Ashen_Torch>() });
+				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Brine_Key>(), ItemType<The_Foot>() });
+				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Defiled_Key>(), ItemType<Missing_File>() });
+				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Riven_Key>(), ItemType<Plasma_Cutter>() });
 			}
 		}
 		public static void LateLoad() {
@@ -1097,6 +1143,144 @@ namespace Origins {
 					crimson.ValidItems.Add(item);
 				}
 			}
+		}
+		[JITWhenModsEnabled(nameof(Avalon))]
+		static void SetAvalonStaticDefaults() {
+			#region NPCs
+			AvalonSets.NPCSets.NoAcidDamage[NPCType<Cellarkeep>()] = true;
+			AvalonSets.NPCSets.NoAcidDamage[NPCType<Catacomb_Clearer>()] = true;
+			AvalonSets.NPCSets.NoAcidDamage[NPCType<Etherealizer>()] = true;
+
+			foreach (Enchanted_Fiberglass_Slime slime in Origins.instance.GetContent<Enchanted_Fiberglass_Slime>())
+				AvalonSets.NPCSets.Slimes[slime.Type] = true;
+			AvalonSets.NPCSets.Slimes[NPCType<Slime_Worm_Head>()] = true;
+			AvalonSets.NPCSets.Slimes[NPCType<Amebic_Slime>()] = true;
+
+			AvalonSets.NPCSets.Earthen[NPCType<Abandoned_Bomb>()] = true;
+			AvalonSets.NPCSets.Earthen[NPCType<Creme_Filled_Bat>()] = true;
+
+			AvalonSets.NPCSets.Flyer[NPCType<Felnum_Einheri>()] = true;
+			AvalonSets.NPCSets.Flyer[NPCType<Felnum_Guardian>()] = true;
+			AvalonSets.NPCSets.Flyer[NPCType<Cloud_Elemental>()] = true;
+
+			AvalonSets.NPCSets.Frozen[NPCType<Defiled_Pigron>()] = true;
+			AvalonSets.NPCSets.Frozen[NPCType<Riven_Pigron>()] = true;
+
+			AvalonSets.NPCSets.Toxic[NPCType<Brine_Latcher>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<Shotgunfish>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<Nasty_Crawdad>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<Sea_Dragon>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<Carpalfish>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<Brine_Serpent_Head>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<King_Crab>()] = true;
+			AvalonSets.NPCSets.Toxic[NPCType<Mildew_Creeper>()] = true;
+
+			AvalonSets.NPCSets.Undead[NPCType<Conehead_Zombie>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Graveshield_Zombie>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Buckethead_Zombie>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Catacomb_Clearer>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Etherealizer>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Power_Suit_Zombie>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Shattered_Mummy>()] = true;
+			AvalonSets.NPCSets.Undead[NPCType<Riven_Mummy>()] = true;
+			foreach (Gas_Mask_Zombie zombie in Origins.instance.GetContent<Gas_Mask_Zombie>())
+				AvalonSets.NPCSets.Undead[zombie.Type] = true;
+
+			AvalonSets.NPCSets.Wicked[NPCType<BlotopusNPC>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Optiphage>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Cranivore>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Cannihound>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Pinwheel>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Robot_Penguin>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Barnacle_Bunny>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Riven_Penguin>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Scraptooth>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Bottomfeeder>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Crimbrain>()] = true;
+			foreach (Cartwheeler cartwheeler in Origins.instance.GetContent<Cartwheeler>())
+				AvalonSets.NPCSets.Wicked[cartwheeler.Type] = true;
+
+			AvalonSets.NPCSets.Wicked[NPCType<Wind_Pail>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Reject_1>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Reject_2>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Reject_3>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Repairboy>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Packhunter>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Springjumper>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Defensive_Turret>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Fearmaker>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Hammerhand>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Scrapyard_Stryder>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Oil_Ghoul>()] = true;
+			for (int i = NPCID.Count; i < NPCLoader.NPCCount; i++) {
+				ModNPC npc = NPCLoader.GetNPC(i);
+				if (npc.Banner == NPCType<Defiled_Banner_NPC>() && !(npc.NPC.boss || NPCID.Sets.ShouldBeCountedAsBoss[i]) && npc is not Defiled_Swarmer) {
+					AvalonSets.NPCSets.Wicked[i] = true;
+				}
+			}
+			AvalonSets.NPCSets.Wicked[NPCType<Defiled_Pigron>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Aqueoua>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Shelly_Aqueoua>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Goo_Wall>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Amebic_Slime>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Riven_Pigron>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Trijaw_Shark>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Riven_Mummy>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Torn_Ghoul>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Trash_Compactor_Mimic>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Enchanted_Trident>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Defiled_Mimic>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Cleaver_Head>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Pustule_Jelly>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Barnacle_Mound>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Savage_Whip>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Ancient_Riven_Fighter>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Riven_Fighter>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Spider_Amoeba>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Spider_Amoeba_Wall>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Rivenator_Head>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Flagellant>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Barnacleback>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Amoebeye>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Single_Cellular_Nautilus>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Riven_Mimic>()] = true;
+			#endregion
+			#region Projectiles
+			AvalonSets.ProjectileSets.MinionProjectiles[Shimmer_Guardian_Shard.ID] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Broken_Terratotem_Mask_Small>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Broken_Terratotem_Mask_Medium>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Broken_Terratotem_Mask_Big>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Terratotem_Mask_Small>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Terratotem_Mask_Medium>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Terratotem_Mask_Big>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[Sand_Elemental_Sand.ID] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[Fresh_Meat_Dog.ID] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Friendly_Guardian_P>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Rotting_Worm_Body>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Rotting_Worm_Tail>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Smart_Turret_Canister_P>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Sunflower_Sunny_P>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Vampire_Sunflower_P>()] = true;
+			AvalonSets.ProjectileSets.MinionProjectiles[ProjectileType<Woodsprite_Lifesteal>()] = true;
+
+			AvalonSets.ProjectileSets.TrapProjectiles[ProjectileType<Potato_Mine_Melee_Explosion>()] = true;
+			#endregion
+			#region Items
+			AvalonHerbology.PotionIds.AddRange([
+				ItemType<Absorption_Potion>(), ItemType<Ambition_Potion>(), ItemType<Antisolve_Potion>(), ItemType<Fervor_Potion>(), ItemType<Focus_Potion>(),
+				ItemType<Greater_Summoning_Potion>(), ItemType<Protean_Potion>(), ItemType<Purification_Potion>()
+			]);
+
+			AvalonHerbology.HerbIdByLargeHerbId.Add(ItemType<Wilting_Rose_Item>(), ItemType<Wilting_Rose_Item>());
+			AvalonHerbology.HerbIdByLargeHerbId.Add(ItemType<Wrycoral_Item>(), ItemType<Wrycoral_Item>());
+			AvalonHerbology.HerbIdByLargeHerbId.Add(ItemType<Surveysprout_Item>(), ItemType<Surveysprout_Item>());
+			AvalonHerbology.LargeHerbIdByLargeHerbSeedId.Add(ItemType<Wilting_Rose_Seeds>(), ItemType<Wilting_Rose_Item>());
+			AvalonHerbology.LargeHerbIdByLargeHerbSeedId.Add(ItemType<Surveysprout_Seeds>(), ItemType<Surveysprout_Item>());
+			AvalonHerbology.LargeHerbSeedIdByHerbId.Add(ItemType<Wilting_Rose_Item>(), ItemType<Wilting_Rose_Seeds>());
+			AvalonHerbology.LargeHerbSeedIdByHerbId.Add(ItemType<Surveysprout_Item>(), ItemType<Surveysprout_Seeds>());
+			AvalonHerbology.LargeHerbSeedIdByHerbSeedId.Add(ItemType<Wilting_Rose_Seeds>(), ItemType<Wilting_Rose_Seeds>());
+			AvalonHerbology.LargeHerbSeedIdByHerbSeedId.Add(ItemType<Surveysprout_Seeds>(), ItemType<Surveysprout_Seeds>());
+			#endregion
 		}
 	}
 	public interface ICustomWikiDestination {

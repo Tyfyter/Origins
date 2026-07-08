@@ -19,6 +19,9 @@
 		<Reference Include="AltLibrary">
 			<HintPath>..\ModAssemblies\AltLibrary_v2.2.dll</HintPath>
 		</Reference>
+		<Reference Include="Avalon">
+		  <HintPath>..\ModAssemblies\Avalon_v1.3.6.dll</HintPath>
+		</Reference>
 		<Reference Include="BetterDialogue">
 			<HintPath>..\ModAssemblies\BetterDialogue_v1.1.6.3.dll</HintPath>
 		</Reference>
