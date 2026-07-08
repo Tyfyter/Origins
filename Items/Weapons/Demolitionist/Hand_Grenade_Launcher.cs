@@ -84,5 +84,26 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 		}
+		class Hand_Grenade_Launcher_Vanilla_AltFire : GlobalProjectile {
+			public override void SetDefaults(Projectile entity) {
+				int ProjType = entity.type;
+				switch (ProjType) {
+					case ProjectileID.Beenade:
+					AltUseTimeMultiplier[ProjType] = 0.1f;
+					AltAnimationMultiplier[ProjType] = 0.5f;
+					AltUseCount[ProjType] = 4;
+					AltFireAction[ProjType] = (player, source, position, velocity, type, damage, knockback) => {
+						position += velocity.SafeNormalize(Vector2.Zero);
+						for (int i = Main.rand.Next(2); ++i < 6;) {
+							type = player.beeType();
+							damage = player.beeDamage(damage);
+							knockback = player.beeKB(knockback);
+							Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage, knockback, player.whoAmI);
+						}
+					};
+					break;
+				}
+			}
+		}
 	}
 }
