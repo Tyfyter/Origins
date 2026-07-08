@@ -1389,7 +1389,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#2, ^2) Delay Component !!! (missing ticking for visual indicator)
+(#2?, ^2) Delay Component !!! (missing ticking(?) for visual indicator)
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector

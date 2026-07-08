@@ -25,6 +25,7 @@ namespace Origins.NPCs.Ashen {
 		public Vector2 PlatformOffset => new(NPC.direction * -28 - NPC.width * 0.5f, -22);
 		public float PlatformWidth => 134;
 		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
+		static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(15, 45), PortraitPositionXOverride = -5, PortraitPositionYOverride = 0 };
@@ -76,17 +77,25 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.Common(ItemType<Phoenum>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemType<The_Muffler>(), 80));
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			base.HitEffect(hit);
+		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			spriteBatch.Draw(
+			Color glowColor = Color.White;
+			NPCLoader.DrawEffects(NPC, ref glowColor);
+			glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
+			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
+				glowTexture,
 				NPC.Bottom - screenPos,
 				NPC.frame,
 				NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor)),
+				glowColor,
 				NPC.rotation,
 				NPC.frame.Size() * new Vector2(0.5f + (NPC.spriteDirection * 0.15f), 1),
 				NPC.scale,
-				NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-			0f);
+				NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+			);
 			return false;
 		}
 #if DRAWPLATFORM
