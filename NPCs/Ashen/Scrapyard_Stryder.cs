@@ -22,7 +22,7 @@ namespace Origins.NPCs.Ashen {
 		public int AnimationFrames => 3;
 		public int FrameDuration => 3;
 		public static int PowerUpTime => 18;
-		public Vector2 PlatformOffset => new(NPC.direction * -28 - NPC.width * 0.5f, -22);
+		public Vector2 PlatformOffset => new(NPC.direction * -28 - NPC.width * 0.5f, -20);
 		public float PlatformWidth => 134;
 		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 		static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
@@ -87,7 +87,7 @@ namespace Origins.NPCs.Ashen {
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
-				NPC.Bottom - screenPos,
+				NPC.Bottom + Vector2.UnitY * 2 - screenPos,
 				NPC.frame,
 				NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor)),
 				glowColor,
