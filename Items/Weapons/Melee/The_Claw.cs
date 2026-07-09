@@ -21,13 +21,13 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Item.damage = 55;
-			Item.DamageType = DamageClass.MeleeNoSpeed;
+			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.width = 66;
 			Item.height = 68;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
+			Item.useTime = 16;
+			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<The_Claw_Hook>();
@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override bool AltFunctionUse(Player player) => true;
+		public override bool CanUseItem(Player player) => player.altFunctionUse != 2 || player.OriginPlayer().hookCooldown <= 0;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				type = ModContent.ProjectileType<The_Claw_Flail_P>();
@@ -68,8 +69,14 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool? CanUseGrapple(Player player) {
+			if (player.OriginPlayer().hookCooldown > 0) return false;
 			The_Claw.LimitClaws();
 			return null;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (Main.projHook[Type] && source is EntitySource_ItemUse { Player: Player player, Item: Item item}) {
+				player.OriginPlayer().hookCooldown = CombinedHooks.TotalUseTime(item.useTime, player, item);
+			}
 		}
 		public override void NumGrappleHooks(Player player, ref int numHooks) => numHooks = The_Claw.HookCount;
 		public override void GrappleRetreatSpeed(Player player, ref float speed) => speed = 8f;

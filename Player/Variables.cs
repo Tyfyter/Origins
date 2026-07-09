@@ -585,6 +585,7 @@ namespace Origins {
 		[LinearReset(0.005f)] public float neutronSoupOffset;
 		[AutoReset] public float oldNaturalRegen;
 		[AutoReset] public StatModifier keepNaturalRegenMult = new(0, 1);
+		[DecrementReset] public int hookCooldown;
 		#endregion
 
 		#region visuals
@@ -1493,6 +1494,7 @@ namespace Origins {
 
 			foreach (FieldInfo field in typeof(TEntity).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 				if (field.GetCustomAttribute<AutoResetAttribute>() is not AutoResetAttribute resetAttribute) continue;
+				if (!resetAttribute.IsValidOnField(field)) throw new InvalidOperationException($"{resetAttribute} is not valid on field {field}");
 				Action generate = () => resetAttribute.EmitReset(gen, field, @default);
 				foreach (AutoResetIfAttribute item in field.GetCustomAttributes<AutoResetIfAttribute>()) {
 					if (!item.IsValidOnType(typeof(TEntity))) throw new InvalidOperationException($"{item} is not valid on type {typeof(TEntity)}");
@@ -1552,5 +1554,66 @@ namespace Origins {
 			gen.Emit(OpCodes.Pop);
 		}
 		public override bool IsValidOnField(FieldInfo field) => field.FieldType == typeof(float) || field.FieldType == typeof(Vector2);
+	}
+	public sealed class DecrementResetAttribute : AutoResetAttribute {
+		MethodInfo resetter;
+		MethodInfo GetResetter(Type fieldType) => resetter ??= typeof(DecrementResetAttribute).GetMethod(nameof(DoReset), [fieldType.MakeByRefType(), fieldType]);
+		public override void EmitReset(ILGenerator gen, FieldInfo field, LocalBuilder defaultInstance) {
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldflda, field);
+			gen.Emit(OpCodes.Ldloc, defaultInstance);
+			gen.Emit(OpCodes.Ldfld, field);
+			gen.Emit(OpCodes.Call, GetResetter(field.FieldType));
+			resetter = null;
+		}
+		public static void DoReset(ref byte real, byte template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref sbyte real, sbyte template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref short real, short template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref ushort real, ushort template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref int real, int template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref uint real, uint template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref long real, long template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public static void DoReset(ref ulong real, ulong template) {
+			if (real != template) {
+				if (real > template) real--;
+				else real++;
+			}
+		}
+		public override bool IsValidOnField(FieldInfo field) => GetResetter(field.FieldType) is not null;
 	}
 }
