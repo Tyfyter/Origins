@@ -132,8 +132,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.timeLeft = 2 * 60;
 				Projectile.friendly = true;
 				Projectile.appliesImmunityTimeOnSingleHits = true;
-				Projectile.usesLocalNPCImmunity = true;
-				Projectile.localNPCHitCooldown = -1;
+				Projectile.usesIDStaticNPCImmunity = true;
+				Projectile.idStaticNPCHitCooldown = 10;
 			}
 			public override void OnSpawn(IEntitySource source) {
 				Projectile.scale = Projectile.ai[0] = 1f + Main.rand.Next(-20, 21) * 0.01f;
