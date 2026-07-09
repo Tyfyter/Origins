@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			SetupVanillaAltFires();
 		}
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(16, 50, 44, 18);
@@ -87,37 +88,32 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 		}
-		class Hand_Grenade_Launcher_Vanilla_AltFire : GlobalProjectile {
-			public override void SetDefaults(Projectile entity) {
-				int ProjType = entity.type;
-				switch (ProjType) {
-					case ProjectileID.Beenade:
-					AltUseTimeMultiplier[ProjType] = 0.1f;
-					AltAnimationMultiplier[ProjType] = 0.5f;
-					AltUseCount[ProjType] = 4;
-					AltFireAction[ProjType] = (player, source, position, velocity, type, damage, knockback) => {
-						position += velocity.SafeNormalize(Vector2.Zero);
-						for (int i = Main.rand.Next(2); ++i < 6;) {
-							type = player.beeType();
-							damage = player.beeDamage(damage);
-							knockback = player.beeKB(knockback);
-							Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage, knockback, player.whoAmI);
-						}
-					};
-					break;
-					case ProjectileID.PartyGirlGrenade:
-					AltUseTimeMultiplier[ProjType] = 0.1f;
-					AltAnimationMultiplier[ProjType] = 1;
-					AltUseCount[ProjType] = 4;
-					AltFireAction[ProjType] = (player, source, position, velocity, type, damage, knockback) => {
-						position += velocity.SafeNormalize(Vector2.Zero);
-						for (int i = Main.rand.Next(2); ++i < 12;) {
-							Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * (i % 8)) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<Happy_Grenade_Confetti>(), (int)(damage * 0.4f), knockback * 0.3f, player.whoAmI);
-						}
-					};
-					break;
+		static void SetupVanillaAltFires() {
+			#region beenades
+			AltUseTimeMultiplier[ProjectileID.Beenade] = 0.1f;
+			AltAnimationMultiplier[ProjectileID.Beenade] = 0.5f;
+			AltUseCount[ProjectileID.Beenade] = 4;
+			AltFireAction[ProjectileID.Beenade] = (player, source, position, velocity, type, damage, knockback) => {
+				position += velocity.SafeNormalize(Vector2.Zero);
+				for (int i = Main.rand.Next(2); ++i < 6;) {
+					type = player.beeType();
+					damage = player.beeDamage(damage);
+					knockback = player.beeKB(knockback);
+					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage, knockback, player.whoAmI);
 				}
-			}
+			};
+			#endregion beenades
+			#region happy grenades
+			AltUseTimeMultiplier[ProjectileID.PartyGirlGrenade] = 0.1f;
+			AltAnimationMultiplier[ProjectileID.PartyGirlGrenade] = 1;
+			AltUseCount[ProjectileID.PartyGirlGrenade] = 4;
+			AltFireAction[ProjectileID.PartyGirlGrenade] = (player, source, position, velocity, type, damage, knockback) => {
+				position += velocity.SafeNormalize(Vector2.Zero);
+				for (int i = Main.rand.Next(2); ++i < 12;) {
+					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * (i % 8)) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<Happy_Grenade_Confetti>(), (int)(damage * 0.4f), knockback * 0.3f, player.whoAmI);
+				}
+			};
+			#endregion happy grenades
 		}
 		public class Happy_Grenade_Confetti : ModProjectile, IIsExplodingProjectile {
 			public override string Texture => "Terraria/Images/Dust";
