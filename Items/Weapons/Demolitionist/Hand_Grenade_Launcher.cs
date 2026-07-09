@@ -1,6 +1,8 @@
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -102,7 +104,86 @@ namespace Origins.Items.Weapons.Demolitionist {
 						}
 					};
 					break;
+					case ProjectileID.PartyGirlGrenade:
+					AltUseTimeMultiplier[ProjType] = 0.1f;
+					AltAnimationMultiplier[ProjType] = 1;
+					AltUseCount[ProjType] = 4;
+					AltFireAction[ProjType] = (player, source, position, velocity, type, damage, knockback) => {
+						position += velocity.SafeNormalize(Vector2.Zero);
+						for (int i = Main.rand.Next(2); ++i < 12;) {
+							Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * (i % 8)) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<Happy_Grenade_Confetti>(), (int)(damage * 0.4f), knockback * 0.3f, player.whoAmI);
+						}
+					};
+					break;
 				}
+			}
+		}
+		public class Happy_Grenade_Confetti : ModProjectile, IIsExplodingProjectile {
+			public override string Texture => "Terraria/Images/Dust";
+			public bool IsExploding => Projectile.timeLeft <= 0;
+			public override void SetStaticDefaults() {
+				Origins.MagicTripwireRange[Type] = 32;
+			}
+			public override void SetDefaults() {
+				Projectile.DamageType = DamageClasses.ThrownExplosive;
+				Projectile.width = 5;
+				Projectile.height = 5;
+				Projectile.timeLeft = 2 * 60;
+				Projectile.friendly = true; ;
+				Projectile.appliesImmunityTimeOnSingleHits = true;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = -1;
+			}
+			public override void OnSpawn(IEntitySource source) {
+				Projectile.localAI[0] = Main.rand.Next(DustID.Confetti_Blue, DustID.Confetti_Yellow + 1);
+				Projectile.localAI[1] = Main.rand.Next(3);
+				Projectile.scale = Projectile.ai[0] = 1f + Main.rand.Next(-20, 21) * 0.01f;
+			}
+			public override void AI() {
+				Projectile.velocity *= 0.98f;
+				if (Projectile.velocity.Y < 1f) Projectile.velocity.Y += 0.05f;
+
+				if (Projectile.scale < Projectile.ai[0] * 1.5f) Projectile.scale += 0.009f;
+				Projectile.rotation -= Projectile.velocity.X * 0.4f;
+
+				if (Projectile.velocity.X > 0f) Projectile.rotation += 0.005f;
+				else Projectile.rotation -= 0.005f;
+
+				Projectile.rotation += Projectile.velocity.X * 0.5f;
+				Projectile.velocity.X *= 0.99f;
+			}
+			public override bool OnTileCollide(Vector2 oldVelocity) {
+				Projectile.velocity *= 0.9f;
+				return false;
+			}
+			public override bool PreKill(int timeLeft) {
+				Projectile.type = ProjectileID.Grenade;
+				return true;
+			}
+			public override void OnKill(int timeLeft) {
+				Projectile.position.X += Projectile.width / 2;
+				Projectile.position.Y += Projectile.height / 2;
+				Projectile.width = 128;
+				Projectile.height = 128;
+				Projectile.position.X -= Projectile.width / 2;
+				Projectile.position.Y -= Projectile.height / 2;
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Texture2D tex = TextureAssets.Projectile[Type].Value;
+				Rectangle frame = tex.Frame(100, 12,
+					(10 * (int)Projectile.localAI[0]) - 1000,
+					(10 * (int)Projectile.localAI[1]) + 30);
+
+				Main.EntitySpriteDraw(tex,
+					Projectile.Center - Main.screenPosition,
+					frame,
+					lightColor,
+					Projectile.rotation,
+					frame.Size() * 0.5f,
+					Projectile.scale,
+					SpriteEffects.None
+				);
+				return false;
 			}
 		}
 	}
