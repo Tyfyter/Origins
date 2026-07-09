@@ -2303,7 +2303,7 @@ Projectiles: {
 	// The_Claw_Hook.DisplayName: The Claw Hook
 	// Link_Trigger_P.DisplayName: Link Trigger P
 	// Hellfire_Grenade_Flamethrower.DisplayName: Hellfire Grenade Flamethrower
-	// Happy_Grenade_Confetti.DisplayName: Happy Grenade Confetti
+	// Happy_Grenade_Confetti.DisplayName: Explosive Confetti
 }
 
 Prefixes: {

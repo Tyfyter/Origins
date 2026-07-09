@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -129,14 +130,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.width = 5;
 				Projectile.height = 5;
 				Projectile.timeLeft = 2 * 60;
-				Projectile.friendly = true; ;
+				Projectile.friendly = true;
 				Projectile.appliesImmunityTimeOnSingleHits = true;
 				Projectile.usesLocalNPCImmunity = true;
 				Projectile.localNPCHitCooldown = -1;
 			}
 			public override void OnSpawn(IEntitySource source) {
-				Projectile.localAI[0] = Main.rand.Next(DustID.Confetti_Blue, DustID.Confetti_Yellow + 1);
-				Projectile.localAI[1] = Main.rand.Next(3);
 				Projectile.scale = Projectile.ai[0] = 1f + Main.rand.Next(-20, 21) * 0.01f;
 			}
 			public override void AI() {
@@ -156,23 +155,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.velocity *= 0.9f;
 				return false;
 			}
-			public override bool PreKill(int timeLeft) {
-				Projectile.type = ProjectileID.Grenade;
-				return true;
-			}
 			public override void OnKill(int timeLeft) {
-				Projectile.position.X += Projectile.width / 2;
-				Projectile.position.Y += Projectile.height / 2;
-				Projectile.width = 128;
-				Projectile.height = 128;
-				Projectile.position.X -= Projectile.width / 2;
-				Projectile.position.Y -= Projectile.height / 2;
+				ExplosiveGlobalProjectile.DoExplosion(Projectile, 128, sound: SoundID.Item14, fireDustAmount: 4, smokeDustAmount: 6, smokeGoreAmount: Main.rand.NextBool(2).ToInt());
 			}
 			public override bool PreDraw(ref Color lightColor) {
+				if (Projectile.localAI[0] == 0) {
+					Projectile.localAI[0] = Main.rand.Next(DustID.Confetti_Blue, DustID.Confetti_Yellow + 1);
+					Projectile.localAI[1] = Main.rand.Next(3) + 3;
+				}
 				Texture2D tex = TextureAssets.Projectile[Type].Value;
-				Rectangle frame = tex.Frame(100, 12,
-					(10 * (int)Projectile.localAI[0]) - 1000,
-					(10 * (int)Projectile.localAI[1]) + 30);
+				Rectangle frame = tex.Frame(
+					100,
+					12,
+					(int)Projectile.localAI[0] % 100,
+					(int)Projectile.localAI[1]
+				);
 
 				Main.EntitySpriteDraw(tex,
 					Projectile.Center - Main.screenPosition,
