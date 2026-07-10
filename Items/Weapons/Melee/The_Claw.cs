@@ -55,6 +55,8 @@ namespace Origins.Items.Weapons.Melee {
 		protected static AutoLoadingTexture chainTexture = typeof(The_Claw).GetDefaultTMLName("_Cable");
 		protected static AutoGlowingTexture mandibleTextures = typeof(The_Claw).GetDefaultTMLName("_Mandible");
 		public override string Texture => typeof(The_Claw_Hook).GetDefaultTMLName();
+		protected virtual float ForwardOffset => -Math.Min(22, Projectile.Center.Distance(Main.player[Projectile.owner].MountedCenter) - 16);
+		protected Vector2 CenterOffset => (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * ForwardOffset;
 		public override void SetDefaults() {
 			Projectile.netImportant = true;
 			Projectile.width = Projectile.height = 18;
@@ -156,7 +158,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool PreDrawExtras() {
 			Rectangle frame = chainTexture.Value.Bounds;
 			chainTexture.Value.DrawChain(
-				Projectile.Center, Main.player[Projectile.owner].MountedCenter,
+				Projectile.Center + CenterOffset, Main.player[Projectile.owner].MountedCenter,
 				i => frame,
 				10,
 				verticalChainTexture: true
@@ -165,7 +167,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			const float close_rot = 0.4f;
-			Vector2 position = Projectile.Center - Main.screenPosition;
+			Vector2 position = Projectile.Center + CenterOffset - Main.screenPosition;
 			float rotation = Projectile.rotation + MathHelper.Pi;
 			DrawData data = new(
 				TextureAssets.Projectile[Type].Value,
@@ -204,11 +206,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			projHitbox.Inflate(12, 12);
-			return projHitbox.Add((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 16).Intersects(targetHitbox);
+			return projHitbox.Add((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * (16 + ForwardOffset)).Intersects(targetHitbox);
 		}
 	}
 	public class The_Claw_Flail_P : The_Claw_Hook, IShadedProjectile {
-		public int Shader => Main.player[Projectile.owner].cGrapple;
 		const int ai_state_spinning = 0;
 		const int ai_state_launching_forward = 1;
 		const int ai_state_retracting = 2;
@@ -216,6 +217,8 @@ namespace Origins.Items.Weapons.Melee {
 		const int ai_state_forced_retracting = 4;
 		const int ai_state_ricochet = 5;
 		const int ai_state_dropping = 6;
+		public int Shader => Main.player[Projectile.owner].cGrapple;
+		protected override float ForwardOffset => 0;
 		public override string Texture => typeof(The_Claw_Hook).GetDefaultTMLName();
 		public override void SetDefaults() {
 			base.SetDefaults();
