@@ -93,7 +93,12 @@ namespace Origins.Items.Weapons.Melee {
 					1 + Math.Min(npcSpeed / 8, 4)
 				);
 				float preventContactFactor = ((hookTarget.Center.Clamp(player.Hitbox) - player.MountedCenter.Clamp(hookTarget.Hitbox)) / 32).LengthSquared();
-				if (preventContactFactor < 1) speed *= float.Sqrt(preventContactFactor) * 2 - 1;
+				Min(ref preventContactFactor, (((hookTarget.Center + hookTarget.velocity).Clamp(player.Hitbox) - player.MountedCenter.Clamp(hookTarget.Hitbox.Add(hookTarget.velocity))) / 32).LengthSquared());
+				if (preventContactFactor < 1) {
+					preventContactFactor = float.Sqrt(preventContactFactor) * 2 - 1;
+					if (preventContactFactor > 0 && preventContactFactor < 0.1f) preventContactFactor = 0;
+					speed *= preventContactFactor;
+				}
 			} else {
 				speed = 12f;
 			}
@@ -223,8 +228,22 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.extraUpdates = 0;
 		}
+		static bool controlUseItem;
+		public override bool PreAI() {
+			// this won't change anything outside of this projectile unless an exception is thrown, because this runs after the global version
+			Player player = Main.player[Projectile.owner];
+			controlUseItem = player.controlUseItem;
+			player.controlUseItem = player.controlUseTile;
+			return base.PreAI();
+		}
 		public override void AI() {
-			Projectile.rotation = (Projectile.Center - Main.player[Projectile.owner].MountedCenter).ToRotation() + MathHelper.PiOver2;
+			Player player = Main.player[Projectile.owner];
+			player.controlUseItem = controlUseItem;
+			Projectile.rotation = (Projectile.Center - player.MountedCenter).ToRotation() + MathHelper.PiOver2;
+			if (Projectile.ai[0] == ai_state_retracting) {
+				if (Projectile.ai[1] == 0) Array.Clear(Projectile.localNPCImmunity);
+				Projectile.ai[1]++;
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (Projectile.ai[0] == 0f) {
