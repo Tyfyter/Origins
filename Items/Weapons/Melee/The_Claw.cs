@@ -152,10 +152,6 @@ namespace Origins.Items.Weapons.Melee {
 					break;
 				}
 			}
-			if (Projectile.velocity != default) {
-				Projectile.localAI[1] = Projectile.rotation - MathHelper.PiOver2;
-			}
-			Projectile.rotation = Projectile.localAI[1] + MathHelper.PiOver2;
 		}
 		public override bool PreDrawExtras() {
 			Rectangle frame = chainTexture.Value.Bounds;
