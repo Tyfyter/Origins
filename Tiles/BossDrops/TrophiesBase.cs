@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -9,7 +8,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using ThoriumMod.Items.Placeable.Relics;
 
 namespace Origins.Tiles.BossDrops {
 	[Autoload(false)]
@@ -129,7 +127,7 @@ namespace Origins.Tiles.BossDrops {
 			// Since this tile does not have the hovering part on its sheet, we have to animate it ourselves
 			// Therefore we register the top-left of the tile as a "special point"
 			// This allows us to draw things in SpecialDraw
-			if (drawData.tileFrameX == 0 && drawData.tileFrameY == 0) {
+			if (TileObjectData.IsTopLeft(i, j)) {
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, Terraria.GameContent.Drawing.TileDrawing.TileCounterType.CustomNonSolid);
 			}
 		}
