@@ -99,18 +99,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 					type = player.beeType();
 					damage = player.beeDamage(damage);
 					knockback = player.beeKB(knockback);
-					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage, knockback, player.whoAmI);
+					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * Main.rand.NextFloat(0.4f, 0.8f), type, damage, knockback, player.whoAmI);
 				}
 			};
 			#endregion beenades
 			#region happy grenades
 			AltUseTimeMultiplier[ProjectileID.PartyGirlGrenade] = 0.1f;
-			AltAnimationMultiplier[ProjectileID.PartyGirlGrenade] = 1;
 			AltUseCount[ProjectileID.PartyGirlGrenade] = 4;
 			AltFireAction[ProjectileID.PartyGirlGrenade] = (player, source, position, velocity, type, damage, knockback) => {
 				position += velocity.SafeNormalize(Vector2.Zero);
 				for (int i = Main.rand.Next(2); ++i < 12;) {
-					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * (i % 8)) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<Happy_Grenade_Confetti>(), (int)(damage * 0.4f), knockback * 0.3f, player.whoAmI);
+					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * (i % 8)) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<Happy_Grenade_Confetti>(), (int)(damage * 0.4f), 0, player.whoAmI);
 				}
 			};
 			#endregion happy grenades
@@ -125,11 +124,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.DamageType = DamageClasses.ThrownExplosive;
 				Projectile.width = 5;
 				Projectile.height = 5;
-				Projectile.timeLeft = 2 * 60;
+				Projectile.timeLeft = 10 * 60;
 				Projectile.friendly = true;
 				Projectile.appliesImmunityTimeOnSingleHits = true;
 				Projectile.usesIDStaticNPCImmunity = true;
-				Projectile.idStaticNPCHitCooldown = 10;
+				Projectile.idStaticNPCHitCooldown = 5;
 			}
 			public override void OnSpawn(IEntitySource source) {
 				Projectile.scale = Projectile.ai[0] = 1f + Main.rand.Next(-20, 21) * 0.01f;
@@ -152,7 +151,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				return false;
 			}
 			public override void OnKill(int timeLeft) {
-				ExplosiveGlobalProjectile.DoExplosion(Projectile, 128, sound: SoundID.Item14, fireDustAmount: 4, smokeDustAmount: 6, smokeGoreAmount: Main.rand.NextBool(2).ToInt());
+				ExplosiveGlobalProjectile.DoExplosion(Projectile, 128, sound: SoundID.Item14, fireDustAmount: 4, smokeDustAmount: 6, smokeGoreAmount: Main.rand.NextBool(5).ToInt());
 			}
 			public override bool PreDraw(ref Color lightColor) {
 				if (Projectile.localAI[0] == 0) {

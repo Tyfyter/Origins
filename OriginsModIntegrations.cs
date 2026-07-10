@@ -445,11 +445,14 @@ namespace Origins {
 				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Phoenum_Torch>(), BuffType<Impeding_Shrapnel_Debuff>());
 				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Shadow_Torch>(), BuffType<Blind_Debuff>());
 
-				Avalon.Call("AddBiomeChest", new List<int> { ItemID.HallowedKey, ItemType<The_Calibrator>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Ashen_Key>(), ItemType<Ashen_Torch>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Brine_Key>(), ItemType<The_Foot>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Defiled_Key>(), ItemType<Missing_File>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Riven_Key>(), ItemType<Plasma_Cutter>() });
+
+				Type type = Avalon.Code.GetType("Avalon.Data.Sets.ItemSets");
+				List<int> list = (List<int>)type.GetField("HallowedChest", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+				list[1] = ItemType<The_Calibrator>();
 			}
 		}
 		public static void LateLoad() {
