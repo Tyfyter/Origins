@@ -116,8 +116,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
-	public class Ameballoon_Bubble : ModProjectile {
+	public class Ameballoon_Bubble : ModProjectile, IBroken {
 		public override string Texture => typeof(Amoebeye_P).GetDefaultTMLName();
+		public static string BrokenReason => "needs balancing, needs sound on bouncing";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 4;
 		}

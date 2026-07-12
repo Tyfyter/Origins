@@ -2305,6 +2305,7 @@ Projectiles: {
 	// Hellfire_Grenade_Flamethrower.DisplayName: Hellfire Grenade Flamethrower
 	// Happy_Grenade_Confetti.DisplayName: Explosive Confetti
 	// Ameballoon_Bubble.DisplayName: Ameballoon Bubble
+	// Flashbang_Sun.DisplayName: Flashbang Sun
 }
 
 Prefixes: {

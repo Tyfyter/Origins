@@ -11,7 +11,9 @@ using ShootAction = System.Action<Terraria.Player, Terraria.DataStructures.Entit
 
 namespace Origins.Items.Weapons.Demolitionist {
 	[ReinitializeDuringResizeArrays]
-	public class Hand_Grenade_Launcher : ModItem {
+	public class Hand_Grenade_Launcher : ModItem, IBroken {
+		public static string BrokenReason => "beenade alt-fire needs balancing";
+
 		public static ShootAction[] AltFireAction = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Hand_Grenade_Launcher)}_{nameof(AltFireAction)}")
 		.RegisterCustomSet<ShootAction>(null);
 		public static float[] AltUseTimeMultiplier = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Hand_Grenade_Launcher)}_{nameof(AltUseTimeMultiplier)}")
@@ -22,6 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		.RegisterCustomSet<int?>(null);
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
+			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			SetupVanillaAltFires();
 		}
@@ -33,6 +36,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
 			Item.consumeAmmoOnLastShotOnly = true;
+			Item.channel = true;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool? CanChooseAmmo(Item ammo, Player player) {
@@ -114,9 +118,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			};
 			#endregion happy grenades
 		}
-		public class Happy_Grenade_Confetti : ModProjectile, IIsExplodingProjectile {
+		public class Happy_Grenade_Confetti : ModProjectile, IIsExplodingProjectile, IBroken {
 			public override string Texture => "Terraria/Images/Dust";
 			public bool IsExploding => Projectile.timeLeft <= 0;
+			public static string BrokenReason => "needs balancing";
 			public override void SetStaticDefaults() {
 				Origins.MagicTripwireRange[Type] = 32;
 			}
