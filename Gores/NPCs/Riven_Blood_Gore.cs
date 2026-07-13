@@ -215,8 +215,10 @@ namespace Origins.Gores.NPCs {
 		static void DrawAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
 			string biomeName = "Origins:RivenBloodCoating";
-			if (OriginsModIntegrations.CheckAprilFools()) biomeName = "Origins:ChineseRivenBloodCoating";
+			string inactiveBiomeName = "Origins:ChineseRivenBloodCoating";
+			if (OriginsModIntegrations.CheckAprilFools()) Utils.Swap(ref biomeName, ref inactiveBiomeName);
 			Main.LocalPlayer.ManageSpecialBiomeVisuals(biomeName, anyActive, Main.LocalPlayer.Center);
+			Main.LocalPlayer.ManageSpecialBiomeVisuals(inactiveBiomeName, false, Main.LocalPlayer.Center);
 			if (anyActive) {
 				ScreenShaderData shader = Filters.Scene[biomeName].GetShader();
 				shader.UseImage(SlimeTarget.RenderTarget, 1, SamplerState.PointClamp);
