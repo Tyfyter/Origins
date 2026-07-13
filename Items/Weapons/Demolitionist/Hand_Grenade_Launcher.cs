@@ -36,7 +36,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
 			Item.consumeAmmoOnLastShotOnly = true;
-			Item.channel = true;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool? CanChooseAmmo(Item ammo, Player player) {

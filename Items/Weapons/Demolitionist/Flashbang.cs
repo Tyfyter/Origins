@@ -37,7 +37,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
 			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
-				Projectile.NewProjectileDirect(source, position, velocity * 0.6f, ModContent.ProjectileType<Flashbang_Sun>(), damage, knockback, player.whoAmI);
+				type = ModContent.ProjectileType<Flashbang_Sun>();
+				player.StartChanneling(type);
+				Projectile.NewProjectileDirect(source, position, velocity * 0.6f, type, damage, knockback, player.whoAmI);
 			};
 		}
 		public override void SetDefaults() {
