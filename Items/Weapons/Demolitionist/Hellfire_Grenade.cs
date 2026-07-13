@@ -32,7 +32,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.Register();
 		}
 	}
-	public class Hellfire_Grenade_P : ModProjectile {
+	public class Hellfire_Grenade_P : ModProjectile, IBroken {
+		public static string BrokenReason => "needs alt fire balancing";
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Hellfire_Grenade";
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;

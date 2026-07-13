@@ -31,7 +31,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.Register();
 		}
 	}
-	public class Link_Grenade_P : ModProjectile {
+	public class Link_Grenade_P : ModProjectile, IBroken {
+		public static string BrokenReason => "needs alt fire balancing";
 		public override string Texture => typeof(Link_Grenade).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 0;
