@@ -2306,6 +2306,8 @@ Projectiles: {
 	// Happy_Grenade_Confetti.DisplayName: Explosive Confetti
 	// Ameballoon_Bubble.DisplayName: Ameballoon Bubble
 	// Flashbang_Sun.DisplayName: The Sun
+	// Abrasion_Blaster_Explosion_Hostile.DisplayName: Abrasion Blaster
+	// Abrasion_Blaster_Hostile.DisplayName: Abrasion Blaster
 }
 
 Prefixes: {
