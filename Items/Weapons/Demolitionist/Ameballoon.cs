@@ -199,13 +199,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			modifiers.SourceDamage *= 1 - Projectile.ai[1] / 10;
 		}
 		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, (int)(128 * Projectile.scale), sound: SoundID.NPCDeath1.WithPitch(0.15f), fireDustAmount: 0, smokeDustAmount: 8, smokeGoreAmount: 2);
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, (int)(128 * Projectile.scale), sound: SoundID.NPCDeath1.WithPitch(0.15f), fireDustAmount: 0, smokeDustAmount: 8, smokeGoreAmount: (int)float.Round(2 * Projectile.scale));
 			if (Projectile.owner == Main.myPlayer) {
-				PolarVec2 vel = new(4, Main.rand.NextFloat(MathHelper.TwoPi));
-				for (int i = (int)(Main.rand.Next(12, 16) + (4 * Main.gfxQuality)); i-- > 0;) {
+				PolarVec2 vel = new(4 * Projectile.scale, Main.rand.NextFloat(MathHelper.TwoPi));
+				for (int i = (int)(Main.rand.Next(12, 16) * (2f + Main.gfxQuality * 2.5f) * Projectile.scale * Projectile.scale); i-- > 0;) {
 					Gore.NewGore(Projectile.GetSource_Death(), Projectile.Center, (Vector2)vel, Main.rand.Next(R_Effect_Blood1.GoreIDs));
 					vel.Theta += Main.rand.NextFloat(0.5f) + 1.618033988749894848204586834f;
-					vel.R += Main.rand.NextFloat(0.5f);
+					vel.R += Main.rand.NextFloat(0.25f * Projectile.scale);
 				}
 			}
 			for (int i = 0; i < 10; i++) {
