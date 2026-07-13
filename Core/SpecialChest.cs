@@ -675,6 +675,10 @@ namespace Origins.Core {
 				Dictionary<Point16, ChestData> tileEntities = ModContent.GetInstance<SpecialChestSystem>().tileEntities;
 				if (!tileEntities.TryGetValue(Position, out ChestData chest)) return;
 				if (!chest.CanDestroy()) {
+					ModContent.GetInstance<Origins>().Logger.Warn($"Attempted to destroy Special Chest {chest} at position {Position}, but it cannot be destroyed");
+					return;
+				}
+				if (chest.DropsItemsWhenDestroyed) {
 					foreach (Item item in chest.Items()) {
 						if (item?.IsAir ?? true) continue;
 						Item.NewItem(
@@ -683,8 +687,6 @@ namespace Origins.Core {
 							item
 						);
 					}
-					ModContent.GetInstance<Origins>().Logger.Warn($"Attempted to destroy Special Chest {chest} at position {Position}, but it cannot be destroyed");
-					return;
 				}
 				tileEntities.Remove(Position);
 				Player localPlayer = Main.LocalPlayer;
