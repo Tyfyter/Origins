@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.Projectiles;
@@ -58,6 +59,7 @@ namespace Origins.Items.Accessories {
 			Projectile.tileCollide = false;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.UseOutwardsHitDirection() = true;
 		}
 		public override void AI() {
 			if (Projectile.soundDelay <= 0) {

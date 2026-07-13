@@ -1,5 +1,6 @@
 ﻿using MonoMod.Utils;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Items;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
@@ -651,6 +652,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch, bool hostile = false, bool alsoFriendly = false) {
+			using var _ = projectile.UseOutwardsHitDirection().ScopedOverride(true);
 			projectile.friendly = !hostile || alsoFriendly;
 			projectile.hostile = hostile;
 			projectile.penetrate = -1;
@@ -793,6 +795,7 @@ namespace Origins.Projectiles {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.hide = true;
+			Projectile.UseOutwardsHitDirection() = true;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
