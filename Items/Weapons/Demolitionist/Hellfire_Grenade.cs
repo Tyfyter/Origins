@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Hand_Grenade_Launcher.AltUseTimeMultiplier[Type] = 0.1f;
 			Hand_Grenade_Launcher.AltAnimationMultiplier[Type] = 0.6f;
 			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
-				Projectile.NewProjectile(source, position, velocity * 0.5f, ModContent.ProjectileType<Hellfire_Grenade_Flamethrower>(), damage, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity * 0.5f, ModContent.ProjectileType<Hellfire_Grenade_Flamethrower>(), damage / 4, knockback, player.whoAmI);
 			};
 		}
 		public override void SetDefaults() {
