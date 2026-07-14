@@ -22,3 +22,4 @@ Items/Armor/Felnum/Charged
 Items/Armor/Vanity/Terlet/PlagueCowboy(Old)
 *.csproj.user
 *.sln
+Tiles/FromIndex/*

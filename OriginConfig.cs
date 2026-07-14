@@ -613,6 +613,11 @@ namespace Origins {
 			get => default;
 			set {
 				if (value) {
+					foreach (ModTree tree in Origins.instance.GetContent<ModTree>()) {
+						tree.GetTexture();
+						tree.GetTopTextures();
+						tree.GetBranchTextures();
+					}
 					MethodInfo doLoad = ((Delegate)LoadAsset<Texture2D>).Method.GetGenericMethodDefinition();
 					foreach (ILoadable content in Origins.instance.GetContent()) {
 						if (content is ModItem item) {
@@ -663,19 +668,46 @@ namespace Origins {
 					loadedAssets.Add("icon");
 					loadedAssets.Add("Buffs/BuffTemplate");
 					loadedAssets.Add("Buffs/DebuffTemplate");
+					loadedAssets.Add("Hair/HairSource/ExampleHair");
+					loadedAssets.Add("Hair/HairSource/Hair_Template");
 					loadedAssets.Add("Items/Armor/Armor_Conversion");
 					loadedAssets.Add("Items/Armor/ArmorTemplate_v1");
+					loadedAssets.Add("Items/Armor/index");
 					loadedAssets.Add("NPCs/BossBarTemplate");
+					loadedAssets.Add("NPCs/Brine/Food_Chain");
 					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty");
 					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Item_Empty");
 					loadedAssets.Add("Tiles/BossDrops/Relic_Examples");
 					loadedAssets.Add("Tiles/interesting_tile");
 					loadedAssets.Add("Tiles/Tile_Template");
+					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty_Item");
+					foreach (ModSceneEffect biome in Origins.instance.GetContent<ModSceneEffect>()) {
+						if (biome.MapBackground is not null) loadedAssets.Add(biome.MapBackground["Origins/".Length..]);
+						if (biome is ModBiome { BackgroundPath: string backgroundPath }) loadedAssets.Add(backgroundPath["Origins/".Length..]);
+						if (biome is ModBiome { BestiaryIcon: string bestiaryIcon }) loadedAssets.Add(bestiaryIcon["Origins/".Length..]);
+					}
+					foreach (FieldInfo @field in typeof(Origins.Sounds).GetFields()) {
+						if (@field.FieldType != typeof(SoundStyle)) continue;
+						SoundStyle sound = (SoundStyle)@field.GetValue(null);
+						string soundPath = sound.SoundPath["Origins/".Length..];
+						if (sound.Variants.Length > 0) {
+							for (int i = 0; i < sound.Variants.Length; i++) {
+								loadedAssets.Add(soundPath + sound.Variants[i]);
+							}
+						} else {
+							loadedAssets.Add(soundPath);
+						}
+					}
 					foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
 						string _asset = Path.ChangeExtension(asset, null);
-						if ((_asset.EndsWith('_') || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
+						if ((_asset.EndsWith('_') || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Vanity/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
 							continue;
 						}
+						if (_asset.StartsWith("Icons/")) continue;
+						if (_asset.StartsWith("NPCs/Boss_Controller_")) continue;
+						if (_asset.StartsWith("Hair/HairSource/")) continue;
+						if (_asset.Contains("Unused/")) continue;
+						if (Terraria.UI.ItemSlot.ShiftInUse && _asset.StartsWith("CrossMod/")) continue;
 						if (!loadedAssets.Contains(_asset)) {
 							unused.Add(_asset);
 						}

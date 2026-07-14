@@ -6,45 +6,19 @@ Buffs/Contagion_Assimilation
 Buffs/Hallow_Assimilation
 Buffs/Huff_Puff_Buff
 Buffs/Hunger_Debuff
-Buffs/Icon_Tags_Shadow
 Buffs/Sprockey_Buff
 Buffs/Stress_Ball_Buff
 Buffs/Sugar_Crash_Debuff
 Buffs/Sugar_Rush_Debuff
 Buffs/Sugarcoat_Debuff
 
-CrossMod/Fargos/Items/High_Powered_Green_Laser
-CrossMod/Fargos/Items/Mech_Figurine
-
+Gores/NPCs/Amoebeye2_Gore
+Gores/NPCs/Amoebeye3_Gore
 Gores/Brine_Drip
-
-Hair/HairSource/ExampleHair
-Hair/HairSource/Hair_Template
-Hair/HairSource/Hair1
-Hair/HairSource/Hair1_Hatted
-Hair/HairSource/Hair2
-Hair/HairSource/Hair2_Hatted
-Hair/HairSource/Hair3
-Hair/HairSource/Hair3_Hatted
-Hair/HairSource/Hair4
-Hair/HairSource/Hair4_Hatted
-Hair/HairSource/Hair5
-Hair/HairSource/Hair5_Hatted
-Hair/HairSource/Hair6
-Hair/HairSource/Hair6_Hatted
-
-Icons/icon1
-Icons/icon2
-Icons/icon3
 
 Items/Accessories/Binding_Book_P2
 Items/Accessories/Bug_Trapper_Bug
-Items/Accessories/CSTAA_Jacket
-Items/Accessories/CSTAA_Jacket_Front
 Items/Accessories/Drill_Ravel
-Items/Accessories/Exo_Suit_Body
-Items/Accessories/Exo_Suit_Head
-Items/Accessories/Exo_Suit_Head_Glow
 Items/Accessories/Full_Send_Balloon_Glow
 Items/Accessories/Full_Send_Glow
 Items/Accessories/Gun_Glove_HandsOn_Glow
@@ -54,6 +28,7 @@ Items/Accessories/Protomind_P_Glow
 Items/Accessories/Retool_Arm_Glow
 Items/Accessories/Robo_Tail_Tail_Glow
 Items/Accessories/Smog_Pod_4_Rod_Glow
+Items/Accessories/Space_Pirates_Eye_Iris
 Items/Accessories/Speed_Booster_Back
 Items/Accessories/Speed_Booster_Back_Glow
 Items/Accessories/Speed_Booster_Glow
@@ -100,11 +75,30 @@ Items/Armor/Myth/Wings_46
 
 Items/Armor/Ruby/ArmorTemplate_v1
 Items/Armor/Ruby/Item_178
-Items/Armor/index
 
 Items/Materials/Tangela_Bud_Glow
 Items/Materials/Valkyrum_Bar_WIP
 
+Items/Mounts/Star Soldier/Star_Soldier
+Items/Mounts/Star Soldier/Star_Soldier_Blade
+Items/Mounts/Star Soldier/Star_Soldier_Blade_Glow
+Items/Mounts/Star Soldier/Star_Soldier_Calf
+Items/Mounts/Star Soldier/Star_Soldier_Drone
+Items/Mounts/Star Soldier/Star_Soldier_Drone_Glow
+Items/Mounts/Star Soldier/Star_Soldier_Droner
+Items/Mounts/Star Soldier/Star_Soldier_Droner_Glow
+Items/Mounts/Star Soldier/Star_Soldier_Foot
+Items/Mounts/Star Soldier/Star_Soldier_Forearm
+Items/Mounts/Star Soldier/Star_Soldier_Glow
+Items/Mounts/Star Soldier/Star_Soldier_Gun
+Items/Mounts/Star Soldier/Star_Soldier_Laser
+Items/Mounts/Star Soldier/Star_Soldier_Laser_Glow
+Items/Mounts/Star Soldier/Star_Soldier_Pod
+Items/Mounts/Star Soldier/Star_Soldier_Pod_Missile
+Items/Mounts/Star Soldier/Star_Soldier_Pod_Missile_Glow
+Items/Mounts/Star Soldier/Star_Soldier_Shoulder
+Items/Mounts/Star Soldier/Star_Soldier_Thigh
+Items/Mounts/Star Soldier/Star_Soldier_Wagon
 Items/Mounts/LancerWIP
 Items/Mounts/Star_Soldier_WIP
 
@@ -121,9 +115,6 @@ Items/Other/Consumables/Potion_of_Projection
 Items/Other/Consumables/Sweet_Tooth_Shake
 Items/Other/Consumables/Tasty_Booger
 
-Items/Other/Fish/Hazardous_Waste_Crate
-Items/Other/Fish/Waste_Crate
-
 Items/Pets/Dysfunctional_Table_Saw
 Items/Pets/Dysfunctional_Table_Saw_Use
 Items/Pets/Meberoid_Glow
@@ -132,8 +123,13 @@ Items/Pets/Salty_Seed
 Items/Pets/Self_Contained_Universe_Glow
 Items/Pets/Sprockey
 Items/Pets/Sprockey_Glow
+Items/Pets/Toy_Trenchmaker
 Items/Pets/Walking_Furnace_Glow
 
+Items/Tools/Liquids/Amebic_Gel_Bottomless_Bucket
+
+Items/Tools/Wiring/Ashen_Logic_Gates - Copy
+Items/Tools/Wiring/Mini_Wire_Extra_Icons
 Items/Tools/Chambersite_Hook_P_Chain
 Items/Tools/Hydrolantern_Use_Glow
 Items/Tools/Impactaxe_Glow
@@ -141,40 +137,22 @@ Items/Tools/Miter_Saw_Arm
 Items/Tools/Miter_Saw_Blade
 Items/Tools/Parasitic_Manipulator_Glow
 
-Items/Vanity/BossMasks/Defiled_Amalgamation_Mask_
-Items/Vanity/BossMasks/Fiberglass_Weaver_Head_
 Items/Vanity/BossMasks/Head_Temp
-Items/Vanity/BossMasks/Lost_Diver_
-Items/Vanity/BossMasks/Shimmer_Construct_Mask_
-Items/Vanity/BossMasks/Trenchmaker_Mask_
-Items/Vanity/BossMasks/World_Cracker_Mask_
-Items/Vanity/BossMasks/World_Cracker_Mask2_
 
-Items/Vanity/Dev/cher/Bytelost_
-Items/Vanity/Dev/cher/Chrersis_
-Items/Vanity/Dev/cher/Diver_
-
-Items/Vanity/Dev/KonoDioDa/Dio_
-
-Items/Vanity/Dev/PlagueTexan/Plague_Texan_
 Items/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Wings_AF
 
-Items/Vanity/Other/Sets/PEE/PEE_
-
-Items/Weapons/Ammo/Canisters/Oil_Canister_I
 Items/Weapons/Ammo/Canisters/Oil_Canister_II
 Items/Weapons/Ammo/Canisters/Resizable_Mine_P
 Items/Weapons/Ammo/Scrap_2
 Items/Weapons/Ammo/Scrap_3
 
 Items/Weapons/Demolitionist/Awe_Bomb_P
-Items/Weapons/Demolitionist/Big_Bang
 Items/Weapons/Demolitionist/Big_Bang_Glow
-Items/Weapons/Demolitionist/Big_Bang_P
 Items/Weapons/Demolitionist/Bloodshot
 Items/Weapons/Demolitionist/Bomb_Example
 Items/Weapons/Demolitionist/Crystal_Grenade_Blue
 Items/Weapons/Demolitionist/Crystal_Grenade_Pink
+Items/Weapons/Demolitionist/Crystal_Grenade_Purple
 Items/Weapons/Demolitionist/Example_Dyna
 Items/Weapons/Demolitionist/Firework_Cannon
 Items/Weapons/Demolitionist/Grenade_Lawnchair_Alt
@@ -236,13 +214,8 @@ Items/Weapons/Melee/Defiled_Biome_Blade
 Items/Weapons/Melee/Riven_Biome_Blade
 Items/Weapons/Melee/Rocket_Lance
 Items/Weapons/Melee/Soul_Snatcher_ELaunch
-Items/Weapons/Melee/The_Claw
-Items/Weapons/Melee/The_Claw_Cable
-Items/Weapons/Melee/The_Claw_Hook
-Items/Weapons/Melee/The_Claw_Mandible_Left
-Items/Weapons/Melee/The_Claw_Mandible_Left_Glow
-Items/Weapons/Melee/The_Claw_Mandible_Right
-Items/Weapons/Melee/The_Claw_Mandible_Right_Glow
+Items/Weapons/Melee/The_Claw_Mandible
+Items/Weapons/Melee/The_Claw_Mandible_Glow
 Items/Weapons/Melee/The_Foot_Flail_Glow
 Items/Weapons/Melee/Tyrfing_Shard
 
@@ -250,6 +223,7 @@ Items/Weapons/Ranged/Boat_Rocker_Chain
 Items/Weapons/Ranged/Constellation_Fill
 Items/Weapons/Ranged/Firespit_Old
 Items/Weapons/Ranged/Laser_Line_Bow_Glow
+Items/Weapons/Ranged/Ritualmaker
 Items/Weapons/Ranged/Tendon_Tear_Old
 Items/Weapons/Ranged/Welding_Torch_Use
 
@@ -262,16 +236,11 @@ Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Run
 Items/Weapons/Summoner/Minions/Happy_Boi_Glow
 Items/Weapons/Summoner/Minions/Ocean_Elemental
 Items/Weapons/Summoner/Minions/Ocean_Elemental_Glow
-Items/Weapons/Summoner/Minions/SmartTurretIdle
-Items/Weapons/Summoner/Minions/SmartTurretIdleHead
-Items/Weapons/Summoner/Minions/SmartTurretSkate
-Items/Weapons/Summoner/Minions/SmartTurretSkateHead
-Items/Weapons/Summoner/Minions/SmartTurretWalk
-Items/Weapons/Summoner/Minions/SmartTurretWalkHead
+Items/Weapons/Summoner/Minions/Smart_Turret_Head_Glow
+Items/Weapons/Summoner/Minions/Smart_Turret_Idle
 Items/Weapons/Summoner/Minions/Stardust_Elemental
 Items/Weapons/Summoner/Minions/Terratotem_Orb
 Items/Weapons/Summoner/Minions/Terratotem_Tab_Mask_Side
-Items/Weapons/Summoner/Minions/TurretHead
 Items/Weapons/Summoner/Minions/Woodsprite_Glow
 Items/Weapons/Summoner/Accretion_Ribbon_P
 Items/Weapons/Summoner/Acrid_Spout_Glow
@@ -285,7 +254,9 @@ Items/Weapons/Summoner/Hibernal_Incantation_Smol
 Items/Weapons/Summoner/Inject_Incantation_Smol
 Items/Weapons/Summoner/Maelstrom_Incantation_Smol
 Items/Weapons/Summoner/Mildew_Incantation_Smol
-Items/Weapons/Summoner/Neutron_Soup
+Items/Weapons/Summoner/Neutron_Soup_Flames
+Items/Weapons/Summoner/Neutron_Soup_Flames_Stars
+Items/Weapons/Summoner/Neutron_Soup_Flames_Stars_Colormap
 Items/Weapons/Summoner/Neutron_Soup_Smol
 Items/Weapons/Summoner/Pharaohs_Turquoise_Smol
 Items/Weapons/Summoner/Star_Harvest
@@ -300,39 +271,40 @@ NPCs/Ashen/Boss/AF/Trenchmaker_RCalf_Front_AF
 NPCs/Ashen/Boss/AF/Trenchmaker_RThigh_Front_AF
 NPCs/Ashen/Boss/AF/Trenchmaker_Thigh_AF
 
-NPCs/Ashen/Boss/Front/Trenchmaker_Foot_Front
-NPCs/Ashen/Boss/Front/Trenchmaker_Front
 NPCs/Ashen/Boss/Front/Trenchmaker_Front_Glow
-NPCs/Ashen/Boss/Front/Trenchmaker_Hip_Front
 NPCs/Ashen/Boss/Front/Trenchmaker_Hip_Front_Glow
-NPCs/Ashen/Boss/Front/Trenchmaker_LArm_Front
 NPCs/Ashen/Boss/Front/Trenchmaker_LArm_Front_Glow
-NPCs/Ashen/Boss/Front/Trenchmaker_LCalf_Front
-NPCs/Ashen/Boss/Front/Trenchmaker_LExhaust_Front
-NPCs/Ashen/Boss/Front/Trenchmaker_LThigh_Front
-NPCs/Ashen/Boss/Front/Trenchmaker_RArm_Front
 NPCs/Ashen/Boss/Front/Trenchmaker_RArm_Front_Glow
-NPCs/Ashen/Boss/Front/Trenchmaker_RCalf_Front
-NPCs/Ashen/Boss/Front/Trenchmaker_RExhaust_Front
-NPCs/Ashen/Boss/Front/Trenchmaker_RThigh_Front
+NPCs/Ashen/Boss/Boss_Bar_TM
+NPCs/Ashen/Boss/Laser_Claymore
+NPCs/Ashen/Boss/Laser_Claymore_Glow
+NPCs/Ashen/Boss/Trenchmaker_Arm_Glow
 NPCs/Ashen/Boss/Trenchmaker_Carpetbomb_Glow
 NPCs/Ashen/Boss/Trenchmaker_Core
 NPCs/Ashen/Boss/Trenchmaker_Gonnablow
 NPCs/Ashen/Boss/Trenchmaker_Mine
 NPCs/Ashen/Boss/Trenchmaker_Missile1
-NPCs/Ashen/Boss/Trenchmaker_Turret_Base
 NPCs/Ashen/Boss/Trenchmaker_Turret_Cannon
+NPCs/Ashen/Boss/Trenchmaker_Turret_Flamer
+NPCs/Ashen/Boss/Trenchmaker_Turret_Flamer_Glow
+NPCs/Ashen/Boss/Trenchmaker_Turret_Laser
+NPCs/Ashen/Boss/Trenchmaker_Turret_Laser_Glow
 NPCs/Ashen/Boss/Trenchmaker_Turret_Launcher
-NPCs/Ashen/Cartwheeler_Eye
-NPCs/Ashen/Cartwheeler_Eye_Glow
-NPCs/Ashen/Cartwheeler1
-NPCs/Ashen/Cartwheeler2
-NPCs/Ashen/Cartwheeler3
-NPCs/Ashen/Defensive_Turret_Arm
-NPCs/Ashen/Defensive_Turret_Base
-NPCs/Ashen/Defensive_Turret_Base_Glow
-NPCs/Ashen/Defensive_Turret_Gun
-NPCs/Ashen/Defensive_Turret_Gun_Glow
+NPCs/Ashen/CM_17
+NPCs/Ashen/CM_17_Drillbit
+NPCs/Ashen/CM_17_Glow
+NPCs/Ashen/CM_17_Lower
+NPCs/Ashen/CM_17_Spiderling
+NPCs/Ashen/CM_17_Spiderling_Glow
+NPCs/Ashen/CM_17_Spiderling_Wall
+NPCs/Ashen/CM_17_Upper
+NPCs/Ashen/D2L2
+NPCs/Ashen/D2L2_Calf
+NPCs/Ashen/D2L2_Foot
+NPCs/Ashen/D2L2_Glow
+NPCs/Ashen/D2L2_Gun
+NPCs/Ashen/D2L2_Thigh
+NPCs/Ashen/D2L2_Thigh_Glow
 NPCs/Ashen/HA_24
 NPCs/Ashen/HA_24_AF
 NPCs/Ashen/HA_24_AF_Giggle
@@ -348,33 +320,26 @@ NPCs/Ashen/HA_24_Mode_Switch
 NPCs/Ashen/HA_24_Mode_Switch_Glow
 NPCs/Ashen/HA_24_Mode_Switch2
 NPCs/Ashen/HA_24_Mode_Switch2_Glow
-NPCs/Ashen/Packhunter
-NPCs/Ashen/Packhunter_Glow
-NPCs/Ashen/Packhunter_Head
-NPCs/Ashen/Packhunter_Head_Glow
-NPCs/Ashen/Quakemaker_Body
+NPCs/Ashen/Malfunctioning_Missile
+NPCs/Ashen/Malfunctioning_Missile_Glow
 NPCs/Ashen/Quakemaker_Body_Glow
-NPCs/Ashen/Quakemaker_Head
-NPCs/Ashen/Quakemaker_Tail
-NPCs/Ashen/Reject1
-NPCs/Ashen/Reject1_Glow
-NPCs/Ashen/Reject2
-NPCs/Ashen/Reject2_Glow
-NPCs/Ashen/Reject3
-NPCs/Ashen/Reject3_Glow
-NPCs/Ashen/Scrapyard_Stryder
-NPCs/Ashen/Scrapyard_Stryder_Glow
-NPCs/Ashen/Springjumper
-NPCs/Ashen/Wind_Pail1
-NPCs/Ashen/Wind_Pail1_Glow
-NPCs/Ashen/Wind_Pail2
-NPCs/Ashen/Wind_Pail2_Glow
-NPCs/Ashen/Wind_Pail3
-NPCs/Ashen/Wind_Pail3_Glow
+NPCs/Ashen/Quakemaker_Head_Alt
+NPCs/Ashen/Reject_1_Glow
+NPCs/Ashen/Reject_2_Glow
+NPCs/Ashen/Reject_3_Glow
+NPCs/Ashen/VV13
+NPCs/Ashen/VV13_Arm
+NPCs/Ashen/VV13_Drill
+NPCs/Ashen/VV13_Drill_Glow
+NPCs/Ashen/VV13_Glow
+NPCs/Ashen/VV13_Puncher
+NPCs/Ashen/VV13_Saw
+NPCs/Ashen/VV13_Saw_Glow
+NPCs/Ashen/VV13_Torch
+NPCs/Ashen/VV13_Torch_Glow
 
 NPCs/Brine/Boss/Lost_Diver_
 NPCs/Brine/Boss/Lost_Diver_Dancing
-NPCs/Brine/Food_Chain
 NPCs/Brine/Thing_of_nightmares_Ill_keep_in_the_backlog
 
 NPCs/Cubekon/Blox
@@ -403,7 +368,6 @@ NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Springy
 NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Springy_Glow
 NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Torso
 NPCs/Defiled/Boss/DA_Spike_Base
-NPCs/Defiled/Boss/Defiled_Amalgamation_Boss_Checklist
 NPCs/Defiled/Boss/Defiled_Amalgamation_Portal
 NPCs/Defiled/Defiled_Asphyxiator_P1_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P2_Glow
@@ -435,16 +399,11 @@ NPCs/Riven/World_Cracker/World_Cracker_Jelly
 NPCs/Riven/World_Cracker/World_Cracker_Tail_Glow
 NPCs/Riven/Amoebeye_AF
 NPCs/Riven/Amoebeye_AF_Glow
+NPCs/Riven/Barnacle_Mound_Glow
 NPCs/Riven/Riven_Fighter_AF
 NPCs/Riven/Riven_Fighter_AF_Glow
 
 NPCs/TownNPCs/The_Author
-NPCs/Boss_Controller_Active_0
-NPCs/Boss_Controller_Active_1
-NPCs/Boss_Controller_Idle_0
-NPCs/Boss_Controller_Idle_1
-NPCs/Boss_Controller_Inactive_0
-NPCs/Boss_Controller_Inactive_1
 
 Projectiles/Ammo/Acorn_P
 Projectiles/Ammo/Defiled_Bolt_P
@@ -466,13 +425,11 @@ Projectiles/Weapons/Seam_Beam_Mid
 Projectiles/Weapons/Seam_Beam_Start
 Projectiles/Weapons/Water_Cast_P
 
+Sounds/Custom/Ambience/AshenAmbience
 Sounds/Custom/Ambience/AshenSuspense
 Sounds/Custom/Ambience/DefiledAmbience
 Sounds/Custom/Ambience/RivenAmbience
 Sounds/Custom/Ambience/SCP3_Ambience
-Sounds/Custom/Ambience/SCP3_Ambience_End
-Sounds/Custom/Ambience/SCP3_Ambience_Mid
-Sounds/Custom/Ambience/SCP3_Ambience_Start
 
 Sounds/Custom/LaserTag/Death
 Sounds/Custom/LaserTag/Hurt
@@ -481,85 +438,42 @@ Sounds/Custom/LaserTag/Score
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask1
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask2
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask3
-Sounds/Custom/ModifiedPlayer/Male_Hit_Mask1
-Sounds/Custom/ModifiedPlayer/Male_Hit_Mask2
-Sounds/Custom/ModifiedPlayer/Male_Hit_Mask3
+
+Sounds/Custom/Screwdriver/Sprockey_ImpatientPoint1
+Sounds/Custom/Screwdriver/Sprockey_ImpatientPoint2
+Sounds/Custom/Screwdriver/Sprockey_ImpatientWrong
+Sounds/Custom/Screwdriver/Sprockey_Inquire
+Sounds/Custom/Screwdriver/Sprockey_Point
+Sounds/Custom/Screwdriver/Sprockey_Right
+Sounds/Custom/Screwdriver/Sprockey_Wrong
 Sounds/Custom/Air_Vent1
 Sounds/Custom/Air_Vent2
 Sounds/Custom/Air_Vent3
 Sounds/Custom/Air_Vent4
-Sounds/Custom/BeckoningRoar
-Sounds/Custom/BikeHorn
-Sounds/Custom/BlockusLand
-Sounds/Custom/Bone_Break_By_SoundEffectsFactory
-Sounds/Custom/Bonk
+Sounds/Custom/Black_Hole
 Sounds/Custom/BubblyBlast
-Sounds/Custom/BurstCannon
-Sounds/Custom/ChainZap
-Sounds/Custom/ChargedUpSmol
-Sounds/Custom/ChorusRoar
-Sounds/Custom/DeepBoom
-Sounds/Custom/Defiled_Hurt1
-Sounds/Custom/Defiled_Hurt2
-Sounds/Custom/Defiled_Kill1
 Sounds/Custom/Defiled_Sample
 Sounds/Custom/DefiledWave
-Sounds/Custom/EnergyRipple
 Sounds/Custom/EvilFish
-Sounds/Custom/GrandSlam
-Sounds/Custom/HawkenThrusterDistant
-Sounds/Custom/HeavyCannon
-Sounds/Custom/HolyHandGrenade
-Sounds/Custom/Hyrax_Call1
-Sounds/Custom/Hyrax_Call2
-Sounds/Custom/Hyrax_Idle1
-Sounds/Custom/Hyrax_Idle2
-Sounds/Custom/Hyrax_Kill1
-Sounds/Custom/Hyrax_Kill2
-Sounds/Custom/Hyrax_Wawa1
-Sounds/Custom/Hyrax_Wawa2
-Sounds/Custom/IMustScream
+Sounds/Custom/Haha24
 Sounds/Custom/KeytarBass
 Sounds/Custom/KeytarLead
 Sounds/Custom/KeytarSynth
-Sounds/Custom/MaskedZombie1
-Sounds/Custom/MaskedZombie2
-Sounds/Custom/MaskedZombie3
-Sounds/Custom/MaskKilled
-Sounds/Custom/MechStompies1
-Sounds/Custom/MechStompies2
-Sounds/Custom/MechStompies3
-Sounds/Custom/MetalBoxOpen
-Sounds/Custom/MetalCreakClose
-Sounds/Custom/MetalCreakOpen
 Sounds/Custom/MetalDoorClose
 Sounds/Custom/MetalDoorOpen
-Sounds/Custom/PhaserCrash
-Sounds/Custom/PowerStomp
-Sounds/Custom/PowerStompCharge
-Sounds/Custom/PowerUp
-Sounds/Custom/RivenBass
+Sounds/Custom/Packhunter_Chatter1
+Sounds/Custom/Packhunter_Chatter2
+Sounds/Custom/Packhunter_Chatter3
+Sounds/Custom/Packhunter_Death
 Sounds/Custom/Saw
 Sounds/Custom/SawEnd
 Sounds/Custom/SawStart
-Sounds/Custom/ShrapnelFest
-Sounds/Custom/SmallSaw
-Sounds/Custom/SmallSawEnd
-Sounds/Custom/SmallSawStart
-Sounds/Custom/SoftCharge
 Sounds/Custom/SonarPing
-Sounds/Custom/ThrusterChargeUp
-Sounds/Custom/ThrusterLoop
-Sounds/Custom/ThunderShot
-Sounds/Custom/WCScream
-Sounds/Custom/WeldingTorch
-Sounds/Custom/WeldingTorchCancel
-Sounds/Custom/WindPail1
-Sounds/Custom/WindPail2
-Sounds/Custom/WindPail3
+Sounds/Custom/VV13_Idle1
+Sounds/Custom/VV13_Idle2
+Sounds/Custom/VV13_Idle3
 Sounds/Custom/WindUpToy
 Sounds/Custom/WindUpToyStart
-Sounds/Custom/WritingFire
 
 Sounds/Seer/SeerAlarm
 Sounds/Seer/SeerHum
@@ -570,6 +484,8 @@ Sounds/Seer/SeerScan
 Textures/Procedural/Hole
 Textures/All_Torn
 Textures/Cell_Noise
+Textures/Cell_Noise_Inverted
+Textures/DSTNoise
 Textures/Example
 Textures/Glow_Intensity
 Textures/Green_Channel
@@ -581,14 +497,6 @@ Textures/Strikethrough_Font
 Textures/Time
 Textures/Torn_Example
 
-Tiles/Ashen/Unused/Fortified_Steel_Wall1_BG_withdepth
-Tiles/Ashen/Unused/Murky_Sludge_Ash
-Tiles/Ashen/Unused/Murky_Sludge_Dirt
-Tiles/Ashen/Unused/Tainted_Stone
-Tiles/Ashen/Unused/Tainted_Stone_Ash
-Tiles/Ashen/Unused/Tainted_Stone_Mud
-Tiles/Ashen/Unused/Tainted_Stone_Murk
-Tiles/Ashen/Unused/thatcoolthingiwantedtosave
 Tiles/Ashen/Artifiber_Tree_Tops_Glow
 Tiles/Ashen/Ashen_Cactus
 Tiles/Ashen/Ashen_Cactus_Fruit
@@ -597,14 +505,12 @@ Tiles/Ashen/Ashen_Icicle
 Tiles/Ashen/Beacon_Light_Glow
 Tiles/Ashen/Cargo_Elevator_Door_Backend
 Tiles/Ashen/Fortified_Steel_WIPs
-Tiles/Ashen/Gas_Generator
-Tiles/Ashen/Gas_Generator_Glow
-Tiles/Ashen/Gas_Generator_Item
+Tiles/Ashen/Incinerator_Pit_Resource
 Tiles/Ashen/Mechanical_Key_Node_State_Glow
+Tiles/Ashen/Mother_Unit_Robot
+Tiles/Ashen/Mother_Unit_Robot_Head
 Tiles/Ashen/Purple_Mechanical_Switch
 Tiles/Ashen/Purple_Mechanical_Switch_Glow
-Tiles/Ashen/Solar_Battery
-Tiles/Ashen/Solar_Battery_Item
 Tiles/Ashen/Sootgrass
 Tiles/Ashen/Sootgrass_Dirt
 Tiles/Ashen/Sootgrass_Foliage
@@ -616,14 +522,10 @@ Tiles/Ashen/Wave_Energy_Converter_Glow
 Tiles/Ashen/Wave_Energy_Converter_Item
 Tiles/Ashen/Wave_Energy_Converter_Pieces
 
-Tiles/Banners/Brine_Serpent_Banner
-Tiles/Banners/Brine_Serpent_Banner_Item
-Tiles/Banners/Cloud_Elemental_Banner
-Tiles/Banners/Cloud_Elemental_Banner_Item
-Tiles/Banners/Fae_Nymph_Banner
-Tiles/Banners/Fae_Nymph_Banner_Item
-
-Tiles/BossDrops/Boss_Trophy_Empty_Item
+Tiles/Banners/Malfunctioning_Missile_Banner
+Tiles/Banners/Malfunctioning_Missile_Banner_Item
+Tiles/Banners/VV13_Banner
+Tiles/Banners/VV13_Banner_Item
 
 Tiles/Brine/Brineglow_Item_Glow
 Tiles/Brine/FrameNumGuide
@@ -639,13 +541,9 @@ Tiles/Defiled/Defiled_Cactus
 Tiles/Defiled/Defiled_Cactus_Fruit
 Tiles/Defiled/Defiled_Cactus_Item
 Tiles/Defiled/Defiled_Campfire_Flame
-Tiles/Defiled/Defiled_Dungeon_Chest_Item_Glow
 Tiles/Defiled/Defiled_Heart_Glow
 Tiles/Defiled/Defiled_Icicle
-Tiles/Defiled/Petrified_Tree
-Tiles/Defiled/Petrified_Tree_Branches
 Tiles/Defiled/Petrified_Tree_Glow
-Tiles/Defiled/Petrified_Tree_Tops
 Tiles/Defiled/Tangela_Bramble_Item_Glow
 Tiles/Defiled/Tangela_Bramble_Smol
 Tiles/Defiled/Tangela_Bramble_Smol_Tangela
@@ -653,63 +551,9 @@ Tiles/Defiled/Tangela_Bramble_Smol_Tangela
 Tiles/Dusk/Bleeding_Obsidian_Glow
 Tiles/Dusk/Dusk_Stone_Item
 
-Tiles/FromIndex/Banner
-Tiles/FromIndex/Banner_Item
-Tiles/FromIndex/Bathtub
-Tiles/FromIndex/Bathtub_Item
-Tiles/FromIndex/Bed
-Tiles/FromIndex/Bed_Item
-Tiles/FromIndex/Bookcase
-Tiles/FromIndex/Bookcase_Item
-Tiles/FromIndex/Candelabra
-Tiles/FromIndex/Candelabra_Item
-Tiles/FromIndex/Candle
-Tiles/FromIndex/Candle_Item
-Tiles/FromIndex/Chair
-Tiles/FromIndex/Chair_Item
-Tiles/FromIndex/Chandelier
-Tiles/FromIndex/Chandelier_Item
-Tiles/FromIndex/Chest
-Tiles/FromIndex/Chest_Item
-Tiles/FromIndex/Door
-Tiles/FromIndex/Door_Closed
-Tiles/FromIndex/Door_Item
-Tiles/FromIndex/Dresser
-Tiles/FromIndex/Dresser_Item
-Tiles/FromIndex/Grandfather_Clock
-Tiles/FromIndex/Grandfather_Clock_Item
-Tiles/FromIndex/Lamp
-Tiles/FromIndex/Lamp_Item
-Tiles/FromIndex/Lantern
-Tiles/FromIndex/Lantern_Item
-Tiles/FromIndex/Piano
-Tiles/FromIndex/Piano_Item
-Tiles/FromIndex/Platform
-Tiles/FromIndex/Platform_Item
-Tiles/FromIndex/Sofa
-Tiles/FromIndex/Sofa_Item
-Tiles/FromIndex/Table
-Tiles/FromIndex/Table_Item
-Tiles/FromIndex/Tile_659
-Tiles/FromIndex/TOILET_ITEM
-Tiles/FromIndex/Work_Bench
-Tiles/FromIndex/Work_Bench_Item
-
 Tiles/MusicBoxes/Music_Box_DW_Old_Item
 Tiles/MusicBoxes/Otherworldly_Music_Box_DW_Glow
 
-Tiles/Other/Unused/Chambersite_Ore
-Tiles/Other/Unused/Chambersite_Ore_Chunkrock_Item
-Tiles/Other/Unused/Chambersite_Ore_Crimstone
-Tiles/Other/Unused/Chambersite_Ore_Crimstone_Item
-Tiles/Other/Unused/Chambersite_Ore_Defiled_Stone
-Tiles/Other/Unused/Chambersite_Ore_Ebonstone
-Tiles/Other/Unused/Chambersite_Ore_Ebonstone_Item
-Tiles/Other/Unused/Chambersite_Ore_Item
-Tiles/Other/Unused/Chambersite_Ore_Riven_Flesh
-Tiles/Other/Unused/Chambersite_Ore_Spug_Item
-Tiles/Other/Unused/Chambersite_Ore_Tainted_Stone
-Tiles/Other/Unused/Chambersite_Ore_Tainted_Stone_Item
 Tiles/Other/Chambersite_Gemcorn
 Tiles/Other/Chambersite_Sapling
 Tiles/Other/Chambersite_Tree
@@ -736,47 +580,47 @@ Tiles/Riven/Riven_Cactus
 Tiles/Riven/Riven_Cactus_Fruit
 Tiles/Riven/Riven_Campfire_Flame
 
+UI/Logos/Ashen_Terraria
+UI/Logos/Ashen_Terraria_Glow
+UI/Logos/Defiled_Terraria
 UI/Logos/ExampleLogo
-UI/Logos/Neutral_Origins
+UI/Logos/Riven_Terraria
 UI/Logos/Shimmer_Terraria
 
 UI/Lore/Journal_Scroll
 UI/Lore/Journal_Search
 
-UI/MapBGs/Brine_Pool
-UI/MapBGs/Defiled_Ocean
-UI/MapBGs/Defiled_Snow
-UI/MapBGs/Defiled_Wastelands_Desert
-UI/MapBGs/Eutrophic_Sea
-UI/MapBGs/Fiberglass_Caverns
-UI/MapBGs/Riven_Desert
-UI/MapBGs/Riven_Snow
-
-UI/WorldGen/IconDefiledCrimson
+UI/WorldGen/IconAshenHallow
+UI/WorldGen/IconAshenNormal
 UI/WorldGen/IconDefiledHallow
 UI/WorldGen/IconDefiledNormal
-UI/WorldGen/IconDefiledRiven
-UI/WorldGen/IconHallowDefiledCrimson
-UI/WorldGen/IconRivenCorruption
 UI/WorldGen/IconRivenHallow
 UI/WorldGen/IconRivenNormal
-UI/WorldGen/IconTemplate
+UI/WorldGen/PreviewEvilAshen
 UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven
 UI/Bestiary_Stat_Background
 UI/Brine_Serpent
+UI/Cleaver_Preview
 UI/Defiled_Digger_Preview
 UI/Floppy_Disk
+UI/Logic_BG_Template
 UI/Quakemaker
+UI/Rivenator_Preview
+UI/Savage_Whip_Preview
 UI/Slime_Worm_Preview
+UI/Sprockey
+UI/Star_Soldier_Select
 UI/Ticking_Explosives_UI
+UI/Trenchmaker_Drawing
+UI/World_Cracker_Preview
 
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Chunk
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Flesh
-
-Walls/Unused/Chambersite_Defiled_Stone_Wall
-Walls/Unused/Chambersite_Defiled_Stone_Wall_Item
-Walls/Unused/Chambersite_Riven_Flesh_Wall
-Walls/Unused/Chambersite_Riven_Flesh_Wall_Item
-Walls/Unused/Chambersite_Tainted_Stone_Wall
-Walls/Unused/Chambersite_Tainted_Stone_Wall_Item
+Walls/Fortified_Steel_Wall1_BG0
+Walls/Fortified_Steel_Wall1_BG1
+Walls/Fortified_Steel_Wall1_BG2
+Walls/Fortified_Steel_Wall2_BG
+Walls/Fortified_Steel_Wall3_BG
+Walls/Molten_Steel_Wall_BG
+Untitled1246_20260615214754
