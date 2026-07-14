@@ -451,16 +451,16 @@ namespace Origins.NPCs {
 			Vector2 targetPosition = ForcedTargetPosition ?? (NPC.HasValidTarget ? NPC.GetTargetData().Center : NPC.Center + NPC.velocity * 16);
 
 			Vector2 diff = targetPosition.Quantize(16) - NPC.Center.Quantize(16);
-			float length = diff.Length();
+			float distance = diff.Length();
 
 			// If we do not have any type of collision, we want the NPC to fall down and de-accelerate along the X axis.
 			if (!collision && !CanFly) {
 				HeadAI_Movement_HandleFallingFromNoCollision(diff.X, speed, acceleration);
 			} else {
 				// Else we want to play some audio (soundDelay) and move towards our target.
-				if (collision) HeadAI_Movement_PlayDigSounds(length);
+				if (collision) HeadAI_Movement_PlayDigSounds(distance);
 
-				HeadAI_Movement_HandleMovement(diff.X, diff.Y, length, speed, acceleration);
+				HeadAI_Movement_HandleMovement(diff.X, diff.Y, distance, speed, acceleration);
 			}
 
 			HeadAI_Movement_SetRotation(collision);
@@ -499,20 +499,20 @@ namespace Origins.NPCs {
 			}
 		}
 
-		protected void HeadAI_Movement_PlayDigSounds(float length) {
+		protected virtual void HeadAI_Movement_PlayDigSounds(float distance) {
 			if (NPC.soundDelay == 0 && DigSound.HasValue) {
 				// Play sounds quicker the closer the NPC is to the target location
-				float num1 = length / 40f;
+				float delay = distance / 40f;
 
-				if (num1 < 10)
-					num1 = 10f;
+				if (delay < 10)
+					delay = 10f;
 
-				if (num1 > 20)
-					num1 = 20f;
+				if (delay > 20)
+					delay = 20f;
 
-				NPC.soundDelay = (int)num1;
+				NPC.soundDelay = (int)delay;
 
-				SoundEngine.PlaySound(DigSound, NPC.position);
+				SoundEngine.PlaySound(DigSound, NPC.Center);
 			}
 		}
 
