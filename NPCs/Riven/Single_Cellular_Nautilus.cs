@@ -87,6 +87,7 @@ namespace Origins.NPCs.Riven {
 			data.texture = GlowTexture;
 			data.color = Riven_Hive.GetGlowAlpha(drawColor);
 			data.Draw(spriteBatch);
+			NPC.DrawConfused();
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }

@@ -244,6 +244,7 @@ namespace Origins.NPCs.Brine {
 				NPC.scale,
 				spriteEffects,
 			0);
+			NPC.DrawConfused();
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

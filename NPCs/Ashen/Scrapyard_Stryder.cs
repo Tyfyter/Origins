@@ -219,6 +219,7 @@ namespace Origins.NPCs.Ashen {
 					0
 				);
 			}
+			NPC.DrawConfused();
 			return false;
 		}
 #if DRAWPLATFORM

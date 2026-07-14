@@ -265,6 +265,7 @@ namespace Origins.NPCs.Dungeon {
 				1,
 				effects,
 			0);
+			NPC.DrawConfused();
 			return false;
 		}
 	}

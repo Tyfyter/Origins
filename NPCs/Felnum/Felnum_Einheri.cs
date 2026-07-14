@@ -292,6 +292,7 @@ namespace Origins.NPCs.Felnum {
 					spriteEffects,
 				0);
 			}
+			NPC.DrawConfused();
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

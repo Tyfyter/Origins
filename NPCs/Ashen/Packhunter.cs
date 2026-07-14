@@ -311,6 +311,7 @@ namespace Origins.NPCs.Ashen {
 					NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None
 				);
 			}
+			NPC.DrawConfused();
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

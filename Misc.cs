@@ -5462,6 +5462,26 @@ namespace Origins {
 		public static int FindBuffIndex<TBuff>(this Player target) where TBuff : ModBuff => target.FindBuffIndex(ModContent.BuffType<TBuff>());
 		public static void DelBuff<TBuff>(this NPC target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
 		public static void DelBuff<TBuff>(this Player target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
+		public static void DrawConfused(this NPC npc) {
+			if (npc.confused && !npc.IsABestiaryIconDummy) {
+				Texture2D confuse = TextureAssets.Confuse.Value;
+				int type = npc.type;
+				Vector2 halfSize = npc.Size * npc.scale * 0.5f;
+				Main.spriteBatch.Draw(
+					confuse,
+					new Vector2(
+						npc.position.X - Main.screenPosition.X + (npc.width / 2) - TextureAssets.Npc[type].Width() * npc.scale / 2f + halfSize.X,
+						npc.position.Y - Main.screenPosition.Y + npc.height - TextureAssets.Npc[type].Height() * npc.scale / Main.npcFrameCount[type] + 4f + halfSize.Y - confuse.Height - 20f
+					),
+					null,
+					npc.GetShimmerColor(new Color(250, 250, 250, 70)),
+					npc.velocity.X * -0.05f,
+					new Vector2(confuse.Width / 2, confuse.Height / 2),
+					Main.essScale + 0.2f,
+					SpriteEffects.None,
+				0f);
+			}
+		}
 	}
 	public static class TileExtenstions {
 		public static bool IsBrokenBottomAnchor(int i, int j) {

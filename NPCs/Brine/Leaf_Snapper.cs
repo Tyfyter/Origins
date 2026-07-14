@@ -220,6 +220,7 @@ namespace Origins.NPCs.Brine {
 				NPC.scale,
 				spriteEffects,
 			0);
+			NPC.DrawConfused();
 			return false;
 		}
 	}

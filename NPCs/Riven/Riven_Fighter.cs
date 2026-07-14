@@ -244,6 +244,7 @@ namespace Origins.NPCs.Riven {
 				data.texture = tailTexture;
 				data.Draw(spriteBatch);
 			}
+			NPC.DrawConfused();
 			return false;
 		}
 	}

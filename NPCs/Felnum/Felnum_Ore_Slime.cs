@@ -101,6 +101,7 @@ namespace Origins.NPCs.Felnum {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			MainReflection.DrawNPC_SlimeItem(NPC, NPC.type, drawColor, 0);
+			NPC.DrawConfused();
 			return true;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

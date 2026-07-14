@@ -164,6 +164,7 @@ namespace Origins.NPCs.Corrupt {
 				NPC.scale,
 				SpriteEffects.None
 			);
+			NPC.DrawConfused();
 			return false;
 		}
 	}

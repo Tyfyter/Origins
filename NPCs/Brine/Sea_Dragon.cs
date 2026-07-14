@@ -287,6 +287,7 @@ namespace Origins.NPCs.Brine {
 					startPoint = chain.links[j].position;
 				}
 			}
+			NPC.DrawConfused();
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

@@ -159,6 +159,7 @@ namespace Origins.NPCs.Ashen {
 				NPC.scale,
 				NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
 			0);
+			NPC.DrawConfused();
 			return false;
 		}
 	}

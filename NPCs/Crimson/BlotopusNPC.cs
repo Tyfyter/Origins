@@ -209,6 +209,7 @@ namespace Origins.NPCs.Crimson {
 			SpriteEffects effect = NPC.directionY == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
 			if (NPC.IsABestiaryIconDummy) effect ^= SpriteEffects.FlipHorizontally;
 			Main.EntitySpriteDraw(texture, NPC.Center - screenPos, null, drawColor, NPC.rotation, texture.Size() * 0.5f, NPC.scale, effect);
+			NPC.DrawConfused();
 			return false;
 		}
 		public override void FindFrame(int frameHeight) {

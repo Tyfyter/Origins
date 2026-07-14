@@ -110,6 +110,7 @@ namespace Origins.NPCs.Corrupt {
 					NPC.scale,
 					targetPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);
+				NPC.DrawConfused();
 				return false;
 			}
 			return true;
