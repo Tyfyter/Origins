@@ -71,6 +71,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override float FlySpeed => 16;
 		public override int BuffToCheck => Vampire_Sunflower_Buff.ID;
 		public override bool CanRunAndGun => true;
+		public override bool CanFlyAndGun => true;
 		public override float ForceFlyDist => base.ForceFlyDist;// just overridden so an override can be applied via hot reload, in case it should be changed for balance
 		public static new int ID { get; private set; }
 		public override void SetDefaults() {

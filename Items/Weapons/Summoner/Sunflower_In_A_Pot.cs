@@ -77,6 +77,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual int BuffToCheck => Sunny_Sunflower_Buff.ID;
 		public virtual float ForceFlyDist => HasTarget ? 600 : 300;// 600 with a target, 400 without one
 		public virtual bool CanRunAndGun => false;
+		public virtual bool CanFlyAndGun => false;
 		public bool HasTarget => Projectile.ai[0] != -2;
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -151,6 +152,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => false;
 		public override void AI() {
+			bool canWalk = true;
 			Player player = Main.player[Projectile.owner];
 
 			#region Active check
@@ -197,15 +199,20 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.tileCollide = false;
 				if (++Projectile.frameCounter >= 20) Projectile.frameCounter = 0;
 				Projectile.frame = 9;
-				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
+				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) goto remainFlying;
 				if (!Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height + 16)) {
 					Rectangle floorbox = Projectile.Hitbox;
 					floorbox.Offset(0, Projectile.height);
 					floorbox.Height = 16 * 4;
-					if (!floorbox.OverlapsAnyTiles(false)) return;
+					if (!floorbox.OverlapsAnyTiles(false)) goto remainFlying;
 				}
 				Projectile.ai[2] = 0;
 				Projectile.netUpdate = true;
+				goto stoppedFlying;
+				remainFlying:
+				if (!CanFlyAndGun) return;
+				canWalk = false;
+				stoppedFlying:;
 			}
 			Projectile.localAI[1]--;
 			Projectile.tileCollide = true;
@@ -284,19 +291,21 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						);
 						Projectile.ai[0] = -1;
 					}
-					if (CanRunAndGun && Math.Sign(diff.X) == Math.Sign(vectorToIdlePosition.X) && distanceToIdlePosition > ForceFlyDist * 0.5f) {
+					if (canWalk && CanRunAndGun && Math.Sign(diff.X) == Math.Sign(vectorToIdlePosition.X) && distanceToIdlePosition > ForceFlyDist * 0.5f) {
 						Projectile.velocity.X += walkSpeed * Math.Sign(diff.X);
 					}
-				} else {
+				} else if (canWalk) {
 					Projectile.velocity.X += walkSpeed * Math.Sign(diff.X);
 				}
-				Projectile.velocity.X *= walkDrag;
+				if (canWalk) Projectile.velocity.X *= walkDrag;
 			} else {
-				if (distanceToIdlePosition > 100) {
-					Projectile.velocity.X += walkSpeed * Math.Sign(vectorToIdlePosition.X);
+				if (canWalk) {
+					if (distanceToIdlePosition > 100) {
+						Projectile.velocity.X += walkSpeed * Math.Sign(vectorToIdlePosition.X);
+					}
+					Projectile.velocity.X *= walkDrag;
+					OriginExtensions.AngularSmoothing(ref Projectile.rotation, MathHelper.PiOver2 - 1.6f * Math.Sign(vectorToIdlePosition.X), 0.05f);
 				}
-				Projectile.velocity.X *= walkDrag;
-				OriginExtensions.AngularSmoothing(ref Projectile.rotation, MathHelper.PiOver2 - 1.6f * Math.Sign(vectorToIdlePosition.X), 0.05f);
 				Projectile.ai[0] = -2;
 			}
 			/*if (Projectile.velocity.Y < 0.8f && Projectile.velocity.Y >= 0f && !CanWalkOnto(Projectile.position + Projectile.velocity, Projectile.direction)) {
@@ -307,14 +316,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 			if (Math.Abs(Projectile.velocity.X) <= 0.1f) Projectile.velocity.X = 0;
 			// This is a simple "loop through all frames from top to bottom" animation
-			if (Projectile.velocity.X == 0 || foundTarget && bestTargetIsVisible) {
-				if (++Projectile.frameCounter >= 5) {
+			if (canWalk) {
+				if (Projectile.velocity.X == 0 || foundTarget && bestTargetIsVisible) {
+					if (++Projectile.frameCounter >= 5) {
+						Projectile.frameCounter = 0;
+						if (++Projectile.frame >= 8) Projectile.frame = 0;
+					}
+				} else if (++Projectile.frameCounter >= 5) {
 					Projectile.frameCounter = 0;
-					if (++Projectile.frame >= 8) Projectile.frame = 0;
+					if (++Projectile.frame >= Main.projFrames[Projectile.type]) Projectile.frame = 8;
 				}
-			} else if (++Projectile.frameCounter >= 5) {
-				Projectile.frameCounter = 0;
-				if (++Projectile.frame >= Main.projFrames[Projectile.type]) Projectile.frame = 8;
 			}
 			#endregion
 
@@ -331,7 +342,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				this.DamageArtifactMinion(200, new TileDamageSource());
 			}
 			BuffAllies(player.team);
-			if (Projectile.velocity.Y != 0) {
+			if (canWalk && Projectile.velocity.Y != 0) {
 				Projectile.frameCounter = 0;
 				Projectile.frame = 9;
 				if (++Projectile.localAI[0] > 60) {
@@ -341,7 +352,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			} else {
 				Projectile.localAI[0] = 0;
 			}
-			if (Projectile.velocity.Y == 0 && vectorToIdlePosition.Y < 16 * 2) {
+			if (canWalk && Projectile.velocity.Y == 0 && vectorToIdlePosition.Y < 16 * 2) {
 				Rectangle floorbox = Projectile.Hitbox;
 				floorbox.Inflate(-8, 0);
 				floorbox.Offset((int)(Projectile.velocity.X * 4 + Projectile.direction * 8), Projectile.height - 16);
@@ -351,7 +362,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.velocity.X = 0;
 				}
 			}
-			Projectile.velocity.Y += 0.4f;
+			if (canWalk) Projectile.velocity.Y += 0.4f;
 		}
 
 		protected virtual void BuffAllies(int team) {
