@@ -126,7 +126,6 @@ namespace Origins.NPCs.Fiberglass {
 			}
 			oldDir[0] = NPC.spriteDirection;
 			oldColor[0] = drawColor;
-			NPC.DrawConfused();
 			return true;
 		}
 		public override int SpawnNPC(int tileX, int tileY) {

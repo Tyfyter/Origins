@@ -133,7 +133,6 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 			oldColor[0] = drawColor * NPC.Opacity;
-			NPC.DrawConfused();
 			return true;
 		}
 	}
