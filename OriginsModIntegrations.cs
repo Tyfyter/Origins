@@ -809,11 +809,65 @@ namespace Origins {
 			OriginsSets.Mounts.EyePosition[MountType<CyberneticSphereMount>()] = player => player.Center;
 			OriginsSets.Mounts.EyePosition[MountType<VampireCatalystMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(1, 12);
 			OriginsSets.Mounts.EyePosition[MountType<MagmaCharmMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(13, 4);
-			OriginsSets.Mounts.EyePosition[MountType<GoldenScaleMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(3, 2);
-			OriginsSets.Mounts.EyePosition[MountType<FakeCoinMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(-2, 10);
 			OriginsSets.Mounts.EyePosition[MountType<AmphibianEggMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(0, 11);
-			OriginsSets.Mounts.EyePosition[MountType<ColeopteraKeepsakeMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(10, 13);
-			OriginsSets.Mounts.EyePosition[MountType<SinisterAcornMount>()] = OriginsSets.Mounts.Create.SimpleEyePosition(12, 10);
+
+			OriginsSets.Mounts.EyePosition[MountType<GoldenScaleMount>()] = player => {
+				Vector2 offsets = new(3, 2);
+				switch (player.mount._frame) {
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+					offsets += new Vector2(0, 4);
+					break;
+				}
+				return player.MountedCenter + player.Directions(2 + offsets.X, 12 - player.height * 0.5f + offsets.Y);
+			};
+			OriginsSets.Mounts.EyePosition[MountType<FakeCoinMount>()] = player => {
+				Vector2 offsets = new(-2, 10);
+				switch (player.mount._frame) {
+					case 3:
+					offsets += new Vector2(-2, -1);
+					break;
+					case 4:
+					offsets += new Vector2(-2, -3);
+					break;
+					case 5:
+					offsets += new Vector2(-3, -8);
+					break;
+				}
+				return player.MountedCenter + player.Directions(2 + offsets.X, 12 - player.height * 0.5f + offsets.Y);
+			};
+			OriginsSets.Mounts.EyePosition[MountType<ColeopteraKeepsakeMount>()] = player => {
+				Vector2 offsets = new(10, 13);
+				switch (player.mount._frame) {
+					case 3:
+					case 4:
+					case 5:
+					offsets.Y -= 6;
+					break;
+				}
+				return player.MountedCenter + player.Directions(2 + offsets.X, 12 - player.height * 0.5f + offsets.Y);
+			};
+			OriginsSets.Mounts.EyePosition[MountType<SinisterAcornMount>()] = player => {
+				Vector2 offsets = new(12, 10);
+				switch (player.mount._frame) {
+					case 0:
+					offsets += new Vector2(-10, -11);
+					break;
+					case 2:
+					offsets += new Vector2(2, -5);
+					break;
+					case 3:
+					offsets += new Vector2(2, -5);
+					break;
+					case 4:
+					case 5:
+					offsets += new Vector2(2, -1);
+					break;
+				}
+				return player.MountedCenter + player.Directions(2 + offsets.X, 12 - player.height * 0.5f + offsets.Y);
+			};
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {

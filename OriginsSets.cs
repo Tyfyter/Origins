@@ -570,9 +570,38 @@ namespace Origins {
 		[ReinitializeDuringResizeArrays]
 		public static class Mounts {
 			public static Func<Player, Vector2>[] EyePosition = MountID.Sets.Factory.CreateNamedSet(nameof(EyePosition))
-			.RegisterSet(default,
-				(MountID.Wolf, Create.SimpleEyePosition(16, -4))
-			);
+			.RegisterSet<Func<Player, Vector2>>(default,
+				(MountID.Wolf, player => {
+					Vector2 offsets = new(16, -2);
+					int frameNum = 0;
+					if (player.itemAnimation > 0) {
+						Rectangle bodyFrame = player.bodyFrame;
+						int bodyFrameNum = bodyFrame.Y / bodyFrame.Height;
+						int useStyle = player.lastVisualizedSelectedItem.useStyle;
+						frameNum = Utils.Clamp(bodyFrameNum, 1, 4);
+						if (frameNum == 3 || bodyFrameNum == 0 || useStyle == 13) frameNum = player.mount._frame;
+						if (useStyle == 12 && player.itemAnimation > player.itemAnimationMax / 2) frameNum = 3;
+					} else {
+						frameNum = player.mount._frame;
+					}
+					switch (frameNum) {
+						case 1:
+						offsets += new Vector2(-15, -16);
+						break;
+						case 2:
+						offsets += new Vector2(-4, -13);
+						break;
+						case 3:
+						offsets += new Vector2(2, 0);
+						break;
+						case 4:
+						offsets += new Vector2(2, 32);
+						break;
+					}
+					Vector2 dirOffset = player.direction > 0 ? new Vector2(-1.5f, -1) : new Vector2(0.5f, -1);
+					return player.MountedCenter + player.Directions(2 + offsets.X, 12 - player.height * 0.5f + offsets.Y) + dirOffset;
+				})
+			); 
 			public static class Create {
 				public static Func<Player, Vector2> SimpleEyePosition(int xOffset, int yOffset) => player => player.MountedCenter + player.Directions(2 + xOffset, 12 - player.height * 0.5f + yOffset);
 			}
