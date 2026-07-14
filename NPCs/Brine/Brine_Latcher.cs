@@ -98,7 +98,7 @@ namespace Origins.NPCs.Brine {
 			Lighting.AddLight(NPC.Center, 0f, 0.4f, 0f);
 			DoTargeting();
 			Vector2 direction = default;
-			if (NPC.GetWet(Liquids.Brine.ID)) {
+			if (NPC.wet) {
 				NPC.noGravity = true;
 				bool targetIsPrey = TargetPos != default && !TargetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
 				if (TargetPos != default) {
@@ -155,7 +155,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			if (NPC.GetWet(Liquids.Brine.ID) || NPC.IsABestiaryIconDummy) NPC.DoFrames(6);
+			if (NPC.wet || NPC.IsABestiaryIconDummy) NPC.DoFrames(6);
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
 			if (NPC.ai[0] > 0) {

@@ -83,7 +83,7 @@ namespace Origins.NPCs.Brine {
 		public override void AI() {
 			DoTargeting();
 			Vector2 direction;
-			if (NPC.GetWet(Liquids.Brine.ID)) {
+			if (NPC.wet) {
 				NPC.noGravity = true;
 				if (TargetPos != default && !(NPC.HasValidTarget || TargetIsRipple)) TargetPos = default;
 				if (TargetPos != default) {

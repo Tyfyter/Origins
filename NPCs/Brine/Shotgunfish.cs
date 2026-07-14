@@ -76,7 +76,7 @@ namespace Origins.NPCs.Brine {
 		public override void AI() {
 			DoTargeting();
 			Vector2 direction;
-			if (NPC.GetWet(Liquids.Brine.ID)) {
+			if (NPC.wet) {
 				bool flipTargetRotation = false;
 				NPC.noGravity = true;
 				bool targetIsPrey = TargetPos != default && !TargetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
@@ -198,7 +198,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-            if (NPC.GetWet(Liquids.Brine.ID) || NPC.IsABestiaryIconDummy) NPC.DoFrames(6);
+            if (NPC.wet || NPC.IsABestiaryIconDummy) NPC.DoFrames(6);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

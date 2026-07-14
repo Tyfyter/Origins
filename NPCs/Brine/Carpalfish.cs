@@ -77,7 +77,7 @@ namespace Origins.NPCs.Brine {
 			DoTargeting();
 			Vector2 direction;
 			bool canCharge = false;
-			if (NPC.GetWet(Liquids.Brine.ID)) {
+			if (NPC.wet) {
 				NPC.noGravity = true;
 				if (TargetPos != default) {
 					direction = NPC.DirectionTo(TargetPos);
