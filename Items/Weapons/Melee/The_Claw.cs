@@ -41,7 +41,6 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				type = ModContent.ProjectileType<The_Claw_Flail_P>();
-				damage += damage / 2;
 				player.StartChanneling(type);
 			}
 		}
@@ -239,8 +238,21 @@ namespace Origins.Items.Weapons.Melee {
 			Player player = Main.player[Projectile.owner];
 			player.controlUseItem = controlUseItem;
 			Projectile.rotation = (Projectile.Center - player.MountedCenter).ToRotation() + MathHelper.PiOver2;
-			if (Projectile.ai[0] == ai_state_retracting) {
-				if (Projectile.ai[1] == 0) Array.Clear(Projectile.localNPCImmunity);
+			if (Projectile.ai[0] is ai_state_retracting or ai_state_forced_retracting) {
+				Rectangle hitbox = Projectile.Hitbox.Add((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 16);
+				float maxSpeed = 0.2f;
+				if (Projectile.ai[1] == 0) {
+					Array.Clear(Projectile.localNPCImmunity);
+					hitbox.Inflate(4, 4);
+					maxSpeed = 4;
+				}
+				hitbox.Inflate(4, 4);
+				foreach (Item item in Main.ActiveItems) {
+					if (hitbox.Intersects(item.Hitbox)) {
+						item.position += Projectile.velocity;
+						item.velocity += (hitbox.Center() - item.Center).WithMaxLength(maxSpeed);
+					}
+				}
 				Projectile.ai[1]++;
 			}
 		}
