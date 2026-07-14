@@ -32,6 +32,7 @@ namespace Origins.NPCs.Felnum {
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadViking;
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.UsesNewTargetting[Type] = true;

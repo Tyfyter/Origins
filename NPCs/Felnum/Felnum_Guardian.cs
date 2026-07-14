@@ -32,6 +32,7 @@ namespace Origins.NPCs.Felnum {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
 		public override void SetStaticDefaults() {
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.FairyCritterBlue;
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
