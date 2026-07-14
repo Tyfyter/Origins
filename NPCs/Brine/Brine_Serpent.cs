@@ -221,6 +221,7 @@ namespace Origins.NPCs.Brine {
 				1,
 				effects,
 			0);
+			NPC.DrawConfused();
 			return false;
 		}
 		Color GetLightColor(float progress) {

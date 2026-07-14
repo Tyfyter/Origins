@@ -100,6 +100,7 @@ namespace Origins.NPCs.Crimson {
 					Vector2 diffDir = targetDiff / absDiff;
 					Vector2 targetVelocity = new(0, 0);
 					float targetRot = targetDiff.ToRotation();
+					if (NPC.confused) targetRot += MathHelper.Pi;
 					GeometryUtils.AngularSmoothing(ref NPC.rotation, targetRot, 0.15f);
 					float distance = (absDiff * new Vector2(0.8f, 1)).Length();
 					float range = 400;

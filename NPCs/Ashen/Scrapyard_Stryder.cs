@@ -73,6 +73,7 @@ namespace Origins.NPCs.Ashen {
 			NPCAimedTarget target = NPC.GetTargetData();
 			Vector2 gunPos = GunPos;
 			Vector2 targetPos = gunPos.Clamp(target.Hitbox);
+			if (NPC.confused) targetPos = targetPos.RotatedBy(MathHelper.Pi, gunPos);
 			switch ((int)NPC.ai[2]) {
 				default:
 				if (NPC.ai[2] == 0) {

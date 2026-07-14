@@ -96,6 +96,7 @@ namespace Origins.NPCs.Defiled {
 					target = pathTarget;
 				}
 				direction = NPC.DirectionTo(target);
+				if (NPC.confused) direction *= -1;
 				float oldRot = NPC.rotation;
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
 				float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int dir) * 0.75f;

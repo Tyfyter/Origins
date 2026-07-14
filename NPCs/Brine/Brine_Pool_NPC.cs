@@ -194,6 +194,7 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
+			if (NPC.confused) self.TargetPos = self.TargetPos.RotatedBy(MathHelper.Pi, NPC.Center);
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;

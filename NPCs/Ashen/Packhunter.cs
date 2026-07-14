@@ -53,7 +53,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
-			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilter);
+			TargetSearchResults searchResults = SearchForTarget(NPC, NPC.confused ? TargetSearchFlag.NPCs : TargetSearchFlag.Players, SearchFilter, ConfusedSearchFilter);
 			seesTarget = searchResults.FoundTarget;
 			if (searchResults.FoundTarget) {
 				NPC.target = searchResults.NearestTargetIndex;
@@ -81,6 +81,10 @@ namespace Origins.NPCs.Ashen {
 		bool SearchFilter(Player player) {
 			Rectangle playerHitbox = player.Hitbox;
 			return NPC.Hitbox.Intersects(playerHitbox) || GetViewTriangle(GetPlayerAggro(player)).Intersects(playerHitbox);
+		}
+		bool ConfusedSearchFilter(NPC player) {
+			Rectangle playerHitbox = player.Hitbox;
+			return NPC.Hitbox.Intersects(playerHitbox) || GetViewTriangle(0).Intersects(playerHitbox);
 		}
 
 		Vector2 viewPos;

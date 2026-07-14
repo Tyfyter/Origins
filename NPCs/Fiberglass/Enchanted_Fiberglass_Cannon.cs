@@ -61,7 +61,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.velocity *= 0.85f;
 			NPC.TargetClosest();
 			NPC.spriteDirection = NPC.direction;
-			float? angle = GeometryUtils.AngleToTarget(Main.player[NPC.target].Center - NPC.Center, 11f, grav: 0.08f);
+			float? angle = GeometryUtils.AngleToTarget((Main.player[NPC.target].Center - NPC.Center) * (!NPC.confused).ToDirectionInt(), 11f, grav: 0.08f);
 			if (NPC.localAI[0] > 120 || (angle.HasValue && Collision.CanHit(NPC.Center, 1, 1, Main.player[NPC.target].Center, 1, 1) && Main.netMode != NetmodeID.MultiplayerClient)) {
 				NPC.rotation = angle ?? NPC.rotation;
 				NPC.localAI[0] += 1f;
