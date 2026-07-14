@@ -1,17 +1,18 @@
 using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
+using Origins.NPCs.Riven.World_Cracker;
+using Origins.Tiles.Banners;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
 using ThoriumMod.Empowerments;
-using Origins.NPCs.Riven.World_Cracker;
-using System.Collections.Generic;
+using static Origins.Misc.Physics;
 
 //from ExampleMod, meant to be copied into other mods
 namespace Origins.NPCs {
@@ -684,6 +685,8 @@ namespace Origins.NPCs {
 				// And set this NPCs position accordingly to that of this NPCs parent NPC.
 				worm.NPC.position.X += posX;
 				worm.NPC.position.Y += posY;
+				worm.Banner = following.ModNPC.Banner;
+				worm.BannerItem = following.ModNPC.BannerItem;
 			}
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {

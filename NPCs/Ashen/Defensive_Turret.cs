@@ -52,6 +52,7 @@ namespace Origins.NPCs.Ashen {
 			get => NPC.target - 500;
 			set => NPC.target = value + 500;
 		}
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
 				Rotation = MathHelper.Pi,

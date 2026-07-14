@@ -31,6 +31,7 @@ namespace Origins.NPCs.Ashen {
 		private Vector2 GunPos => NPC.Center + new Vector2(NPC.spriteDirection * 28, -20);
 		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 		static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(15, 45), PortraitPositionXOverride = -5, PortraitPositionYOverride = 0 };

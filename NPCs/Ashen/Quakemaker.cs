@@ -14,6 +14,7 @@ namespace Origins.NPCs.Ashen {
 		public override int BodyType => ModContent.NPCType<Quakemaker_Body>();
 		public override int TailType => ModContent.NPCType<Quakemaker_Tail>();
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 2;

@@ -108,6 +108,7 @@ namespace Origins.Tiles.Banners {
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 2);
 		}
+		public override string ToString() => $"{tile.NPC.FullName} banner";
 	}
 	public class BannerGlobalNPC : GlobalNPC {
 		public static HashSet<Type> NPCTypesWithBanners { get; private set; } = [];

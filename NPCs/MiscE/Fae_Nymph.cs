@@ -12,6 +12,7 @@ namespace Origins.NPCs.MiscE {
 		public int AnimationFrames => 36;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.Nymph] = Type;
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Nymph];

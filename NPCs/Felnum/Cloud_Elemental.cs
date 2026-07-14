@@ -24,7 +24,7 @@ namespace Origins.NPCs.Felnum {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		//public override void Load() => this.AddBanner();
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.DD2DarkMageT1;
 			Main.npcFrameCount[NPC.type] = 4;

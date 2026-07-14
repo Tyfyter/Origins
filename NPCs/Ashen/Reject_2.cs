@@ -39,6 +39,7 @@ namespace Origins.NPCs.Ashen {
 			SpawnModBiomes = [
 				GetInstance<Smog_Storm>().Type,
 			];
+			this.CopyBanner<Reject_1>();
 		}
 		public override bool PreAI() {
 			NPC.spriteDirection = NPC.direction;

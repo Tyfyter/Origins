@@ -33,7 +33,7 @@ namespace Origins.NPCs.Brine {
 		public static HashSet<int> SegmentTypes { get; private set; } = [];
 		public override bool SharesDebuffs => true;
 		public override bool HasCustomBodySegments => true;
-		//public override void Load() => this.AddBanner();
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 9;
