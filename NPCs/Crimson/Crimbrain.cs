@@ -22,6 +22,7 @@ namespace Origins.NPCs.Crimson {
 		public static float AccelMult => 0.99f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
 			AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(Type, 0.04f);

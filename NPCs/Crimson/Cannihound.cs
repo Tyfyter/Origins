@@ -92,6 +92,7 @@ namespace Origins.NPCs.Crimson {
 			NPCAimedTarget target = NPC.GetTargetData();
 			if (projTarget is not null && (!projTarget.active || projTarget.ModProjectile is not GoreProjectile)) projTarget = null;
 			NPC.targetRect = projTarget?.Hitbox ?? target.Hitbox;
+			if (NPC.confused) NPC.targetRect = NPC.targetRect.Recentered(NPC.targetRect.Center().RotatedBy(double.Pi, NPC.Center));
 
 			// most ai styles use the ai variables, so we should treat them as uninitialized whenever the AI runs with one
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
