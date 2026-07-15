@@ -574,6 +574,7 @@ namespace Origins.Items.Weapons.Magic {
 			thornID = ModContent.ProjectileType<Amnestic_Rose_Alt_Thorn>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Amnestic_Rose>()] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Amnestic_Rose>();
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

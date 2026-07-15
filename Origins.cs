@@ -886,6 +886,8 @@ namespace Origins {
 			if (Main.netMode != NetmodeID.Server) {
 				string name = texture;
 				if (MC.RequestIfExists(name, out Asset<Texture2D> asset)) {
+					int id = Array.IndexOf(TextureAssets.GlowMask, asset);
+					if (id != -1) return (short)id;
 					int index = TextureAssets.GlowMask.Length;
 					Array.Resize(ref TextureAssets.GlowMask, index + 1);
 					TextureAssets.GlowMask[^1] = asset;

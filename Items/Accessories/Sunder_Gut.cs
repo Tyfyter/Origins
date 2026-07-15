@@ -7,6 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.Waist)]
 	public class Sunder_Gut : ModItem, ICustomWikiStat, IJournalEntrySource<Sunder_Gut_Entry> {
 		public string[] Categories => [
 			WikiCategories.Combat

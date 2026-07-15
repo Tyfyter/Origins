@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Acrid_Spout : ModItem {
 		public override void SetStaticDefaults() {
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Toxic_Shock_Debuff.ID];
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToWhip(ModContent.ProjectileType<Acrid_Spout_P>(), 34, 5, 4, 28);

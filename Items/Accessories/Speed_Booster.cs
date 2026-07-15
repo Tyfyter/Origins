@@ -1,5 +1,6 @@
 ﻿using MonoMod.Cil;
 using Origins.Dev;
+using Origins.Layers;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	//TODO: add fast conveyor belts with TileID.Sets.ConveyorDirection = 2
+	[AutoloadEquip(EquipType.Back)]
 	public class Speed_Booster : ModItem, ICustomWikiStat {
 		public delegate void ConveyorBeltModifier(ref Vector2 movement, Player player);
 		public string[] Categories => [
@@ -16,6 +18,8 @@ namespace Origins.Items.Accessories {
 			WikiCategories.GenericBoostAcc
 		];
 		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Back);
 			try {
 				IL_Collision.StepConveyorBelt += EnableFastConveyors;
 			} catch (Exception e) {

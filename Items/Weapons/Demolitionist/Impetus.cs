@@ -19,6 +19,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		float ITornSource.Severity => TornSeverity;
 		AutoLoadingAsset<Texture2D> UseTexture = typeof(Impetus).GetDefaultTMLName() + "_Use";
 		AutoLoadingAsset<Texture2D> UseGlowTexture = typeof(Impetus).GetDefaultTMLName() + "_Use_Glow";
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Impetus_P>(10, 24, 14, 60, 24);
 			Item.reuseDelay = 8;

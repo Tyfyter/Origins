@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
@@ -6,20 +5,20 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Items.Weapons.Magic;
-using Origins.Projectiles.Weapons;
 using Terraria.Graphics.Shaders;
+
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
         public string[] Categories => [
 			WikiCategories.ToxicSource
         ];
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Toxic_Shock_Debuff.ID];
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gungnir);

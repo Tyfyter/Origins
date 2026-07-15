@@ -35,6 +35,7 @@ public abstract class Retool_Arm : ModItem, IItemObtainabilityProvider {
 			}
 		}
 		arms.Add(this);
+		Origins.AddGlowMask(this);
 	}
 	static bool ReplaceAltFunctionUse(orig_AltFunctionUse orig, Item item, Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();

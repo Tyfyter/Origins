@@ -16,6 +16,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Big_Bang : ModItem {
 		public static int BarrelLength => 64;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Big_Bang_P>(128, 34, 7.5f, 48, 32);
 			Item.knockBack = 4f;

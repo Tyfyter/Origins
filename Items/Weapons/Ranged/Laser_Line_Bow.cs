@@ -12,6 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.laserBow = true;
 			});
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.damage = 53;

@@ -590,6 +590,10 @@ public class Tangela_Bud : MaterialItem {
 	public override int Value => Item.sellPrice(copper: 18);
 	public override bool HasTooltip => true;
 	public override bool Hardmode => false;
+	public override void SetStaticDefaults() {
+		base.SetStaticDefaults();
+		Origins.AddGlowMask(this);
+	}
 	public override void AddRecipes() {
 		Recipe.Create(Type, 3)
 		.AddIngredient(ModContent.ItemType<Tangela_Bramble_Item>())

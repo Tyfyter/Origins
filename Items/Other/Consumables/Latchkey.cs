@@ -15,12 +15,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Latchkey : ModItem {
+	public class Latchkey : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.ExpendableTool
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.useStyle = ItemUseStyleID.HiddenAnimation;

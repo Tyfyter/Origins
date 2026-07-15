@@ -1,14 +1,17 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Origins.Core;
 using Origins.CrossMod;
+using Origins.CrossMod.Thorium.Items.Weapons.Bard;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Tools;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Origins.LootConditions;
@@ -41,6 +44,7 @@ using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
 using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins {
 	public class OriginConfig : ModConfig {
@@ -648,6 +652,13 @@ namespace Origins {
 								foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)@field.GetValue(content)) {
 									tex.LoadAsset();
 								}
+							} else if (@field.FieldType == typeof(AutoGlowingTexture)) {
+								((IBatchLoadable)@field.GetValue(content)).Load();
+							}
+						}
+						foreach (PropertyInfo property in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
+							if (property.PropertyType  == typeof(Texture2D)) {
+								property.GetValue(content);
 							}
 						}
 #endif
@@ -655,6 +666,7 @@ namespace Origins {
 #if DEBUG
 					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
 						if (type.Name.Contains('<')) continue;
+						if (type == typeof(Dismay_Spike)) ;
 						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
 							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
 								Type assetType = @field.FieldType.GenericTypeArguments[0];
@@ -694,16 +706,38 @@ namespace Origins {
 						if (biome is ModBiome { BackgroundPath: string backgroundPath }) loadedAssets.Add(backgroundPath["Origins/".Length..]);
 						if (biome is ModBiome { BestiaryIcon: string bestiaryIcon }) loadedAssets.Add(bestiaryIcon["Origins/".Length..]);
 					}
-					foreach (FieldInfo @field in typeof(Origins.Sounds).GetFields()) {
-						if (@field.FieldType != typeof(SoundStyle)) continue;
-						SoundStyle sound = (SoundStyle)@field.GetValue(null);
-						string soundPath = sound.SoundPath["Origins/".Length..];
-						if (sound.Variants.Length > 0) {
-							for (int i = 0; i < sound.Variants.Length; i++) {
-								loadedAssets.Add(soundPath + sound.Variants[i]);
+					Span<string> altLibWorldVariants = [
+						"Normal",
+						"ForTheWorthy",
+						"NotTheBees",
+						"Anniversary",
+						"DontStarve",
+						"RemixWorld"
+					];
+					foreach (AltBiome biome in Origins.instance.GetContent<AltBiome>()) {
+						if (biome.IconSmall is not null) loadedAssets.Add(biome.IconSmall["Origins/".Length..]);
+						if (biome.WorldIcon is not null) {
+							string @base = biome.WorldIcon["Origins/".Length..];
+							for (int i = 0; i < altLibWorldVariants.Length; i++) {
+								loadedAssets.Add(@base + altLibWorldVariants[i]);
 							}
-						} else {
-							loadedAssets.Add(soundPath);
+						}
+					}
+					LoadSounds(typeof(Origins.Sounds));
+					foreach (Type type in typeof(Origins.Sounds).GetNestedTypes()) LoadSounds(type);
+					LoadSounds(typeof(Keytar));
+					void LoadSounds(Type type) {
+						foreach (FieldInfo @field in type.GetFields()) {
+							if (@field.FieldType != typeof(SoundStyle)) continue;
+							SoundStyle sound = (SoundStyle)@field.GetValue(null);
+							string soundPath = sound.SoundPath["Origins/".Length..];
+							if (sound.Variants.Length > 0) {
+								for (int i = 0; i < sound.Variants.Length; i++) {
+									loadedAssets.Add(soundPath + sound.Variants[i]);
+								}
+							} else {
+								loadedAssets.Add(soundPath);
+							}
 						}
 					}
 					foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
@@ -732,6 +766,7 @@ namespace Origins {
 							}
 						}
 					}
+					unused.Insert(0, $"Total Unused Assets: {unused.Count(s => !string.IsNullOrWhiteSpace(s))}");
 					string directory = Path.Combine(Program.SavePathShared, "ModSources", nameof(Origins));
 					Directory.CreateDirectory(directory);
 					string path = Path.Combine(directory, "Unused_Assets.txt");

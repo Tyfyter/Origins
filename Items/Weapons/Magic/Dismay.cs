@@ -77,6 +77,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Dismay_Spike : ModProjectile {
+		static AutoLoadingTexture midTexture = "Origins/Projectiles/Weapons/Dismay_Mid";
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
@@ -119,7 +120,7 @@ namespace Origins.Items.Weapons.Magic {
 			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
 			totalLength -= 58;
 			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
+			Texture2D texture = midTexture;
 			int c = 0;
 			Vector2 pos;
 			for (int i = (int)totalLength; i > 0; i -= 58) {

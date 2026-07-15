@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen {
-	public class Reject_1 : ModNPC, IWikiNPC, IAshenEnemy, IReplaceAITypeSounds {
+	public class Reject_1 : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IReplaceAITypeSounds {
 		public Rectangle DrawRect => new(0, 0, 34, 46);
 		public int AnimationFrames => 3;
 		public int FrameDuration => 3;

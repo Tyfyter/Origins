@@ -169,6 +169,7 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
 			Origins.AddBreastplateGlowmask(this);
+			Origins.AddGlowMask(this);
 			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = false;
 		}
         public override void SetDefaults() {

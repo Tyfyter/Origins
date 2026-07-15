@@ -1,3 +1,4 @@
+Total Unused Assets: 479
 Achievements/The_Signal
 
 Buffs/Brine_Latcher_Debuff
@@ -18,18 +19,11 @@ Items/Accessories/Binding_Book_P2
 Items/Accessories/Bug_Trapper_Bug
 Items/Accessories/Drill_Ravel
 Items/Accessories/Gun_Glove_HandsOn_Glow
-Items/Accessories/Retool_Arm_Glow
 Items/Accessories/Space_Pirates_Eye_Iris
-Items/Accessories/Speed_Booster_Back
-Items/Accessories/Speed_Booster_Back_Glow
-Items/Accessories/Speed_Booster_Glow
 Items/Accessories/Strange_Computer_Laser
 Items/Accessories/Stress_Ball_Beat_UI
-Items/Accessories/Sunder_Gut_Waist
 Items/Accessories/Timbre_of_Hell_HandsOff - Copy
 Items/Accessories/Timbre_of_Hell_HandsOff_Glow
-
-Items/Armor/Acrid/Acrid_Breastplate_Glow
 
 Items/Armor/Amber/Explosive_Resin
 Items/Armor/Amber/Explosive_Resin_Gore1
@@ -46,8 +40,6 @@ Items/Armor/Encrusted/Encrusted_Coat_Female_Glow
 
 Items/Armor/Eyndum/Armor_Temp3
 
-Items/Armor/Felnum/Felnum_Glow_Eye
-
 Items/Armor/Fiberglass/Fiberglass_Armor
 Items/Armor/Fiberglass/Fiberglass_Body_Arms
 Items/Armor/Fiberglass/Fiberglass_Body_Body_still
@@ -62,7 +54,6 @@ Items/Armor/Myth/Wings_46
 Items/Armor/Ruby/ArmorTemplate_v1
 Items/Armor/Ruby/Item_178
 
-Items/Materials/Tangela_Bud_Glow
 Items/Materials/Valkyrum_Bar_WIP
 
 Items/Mounts/Star Soldier/Star_Soldier
@@ -96,7 +87,6 @@ Items/Other/Consumables/HolidayHairs/MentalHealthAwarenessDay_Hair
 Items/Other/Consumables/HolidayHairs/Player_Hair_Example
 Items/Other/Consumables/Bowl_of_Soup
 Items/Other/Consumables/Budget_Fairy_Dust
-Items/Other/Consumables/Latchkey_Glow
 Items/Other/Consumables/Potion_of_Projection
 Items/Other/Consumables/Sweet_Tooth_Shake
 Items/Other/Consumables/Tasty_Booger
@@ -116,7 +106,6 @@ Items/Tools/Wiring/Mini_Wire_Extra_Icons
 Items/Tools/Chambersite_Hook_P_Chain
 Items/Tools/Miter_Saw_Arm
 Items/Tools/Miter_Saw_Blade
-Items/Tools/Parasitic_Manipulator_Glow
 
 Items/Vanity/BossMasks/Head_Temp
 
@@ -128,7 +117,6 @@ Items/Weapons/Ammo/Scrap_2
 Items/Weapons/Ammo/Scrap_3
 
 Items/Weapons/Demolitionist/Awe_Bomb_P
-Items/Weapons/Demolitionist/Big_Bang_Glow
 Items/Weapons/Demolitionist/Bloodshot
 Items/Weapons/Demolitionist/Bomb_Example
 Items/Weapons/Demolitionist/Crystal_Grenade_Blue
@@ -138,7 +126,6 @@ Items/Weapons/Demolitionist/Example_Dyna
 Items/Weapons/Demolitionist/Firework_Cannon
 Items/Weapons/Demolitionist/Grenade_Lawnchair_Alt
 Items/Weapons/Demolitionist/Holy_Hand_Grenade_Alt
-Items/Weapons/Demolitionist/Impetus_Glow
 Items/Weapons/Demolitionist/Impetus_Goo
 Items/Weapons/Demolitionist/Internal_Combustionfish_P
 Items/Weapons/Demolitionist/Meteor_P2
@@ -171,7 +158,6 @@ Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_8
 Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_9
 Items/Weapons/Felnum/Felnum_Wand_Dark
 
-Items/Weapons/Magic/Amnestic_Rose_Alt_Glow
 Items/Weapons/Magic/Communion_P
 Items/Weapons/Magic/Defiled_Wave
 Items/Weapons/Magic/Defiled_Wave_P1
@@ -180,12 +166,10 @@ Items/Weapons/Magic/Defiled_Wave_P3
 Items/Weapons/Magic/Defiled_Wave_P4
 Items/Weapons/Magic/Defiled_Wave_P5
 Items/Weapons/Magic/Defiled_Wave_P6
-Items/Weapons/Magic/Dream_Catcher_P
 Items/Weapons/Magic/Missing_File_Use
 Items/Weapons/Magic/Nerve_Flan_P
 
 Items/Weapons/Melee/_Tyrfing
-Items/Weapons/Melee/Amenonuhoko_Glow
 Items/Weapons/Melee/Chromakama
 Items/Weapons/Melee/Chromtain_Smasher
 Items/Weapons/Melee/Defiled_Biome_Blade
@@ -198,7 +182,6 @@ Items/Weapons/Melee/Tyrfing_Shard
 
 Items/Weapons/Ranged/Constellation_Fill
 Items/Weapons/Ranged/Firespit_Old
-Items/Weapons/Ranged/Laser_Line_Bow_Glow
 Items/Weapons/Ranged/Ritualmaker
 Items/Weapons/Ranged/Tendon_Tear_Old
 Items/Weapons/Ranged/Welding_Torch_Use
@@ -217,22 +200,11 @@ Items/Weapons/Summoner/Minions/Stardust_Elemental
 Items/Weapons/Summoner/Minions/Terratotem_Orb
 Items/Weapons/Summoner/Minions/Terratotem_Tab_Mask_Side
 Items/Weapons/Summoner/Accretion_Ribbon_P
-Items/Weapons/Summoner/Acrid_Spout_Glow
-Items/Weapons/Summoner/Amebolize_Incantation_Smol
-Items/Weapons/Summoner/Amebolize_Incantation_Smol_Glow
-Items/Weapons/Summoner/Bee_Afraid_Incantation_Smol
-Items/Weapons/Summoner/Brine_Convergence_Incantation_Smol
 Items/Weapons/Summoner/Forsaken_Desire
 Items/Weapons/Summoner/Forsaken_Desire_Use
-Items/Weapons/Summoner/Hibernal_Incantation_Smol
-Items/Weapons/Summoner/Inject_Incantation_Smol
-Items/Weapons/Summoner/Maelstrom_Incantation_Smol
-Items/Weapons/Summoner/Mildew_Incantation_Smol
 Items/Weapons/Summoner/Neutron_Soup_Flames
 Items/Weapons/Summoner/Neutron_Soup_Flames_Stars
 Items/Weapons/Summoner/Neutron_Soup_Flames_Stars_Colormap
-Items/Weapons/Summoner/Neutron_Soup_Smol
-Items/Weapons/Summoner/Pharaohs_Turquoise_Smol
 Items/Weapons/Summoner/Star_Harvest
 Items/Weapons/Generic_Weapon_P
 
@@ -298,9 +270,6 @@ NPCs/Ashen/Malfunctioning_Missile
 NPCs/Ashen/Malfunctioning_Missile_Glow
 NPCs/Ashen/Quakemaker_Body_Glow
 NPCs/Ashen/Quakemaker_Head_Alt
-NPCs/Ashen/Reject_1_Glow
-NPCs/Ashen/Reject_2_Glow
-NPCs/Ashen/Reject_3_Glow
 NPCs/Ashen/VV13
 NPCs/Ashen/VV13_Arm
 NPCs/Ashen/VV13_Drill
@@ -367,10 +336,8 @@ NPCs/Repentance/Supine
 
 NPCs/Riven/World_Cracker/World_Cracker_Husk
 NPCs/Riven/World_Cracker/World_Cracker_Jelly
-NPCs/Riven/World_Cracker/World_Cracker_Tail_Glow
 NPCs/Riven/Amoebeye_AF
 NPCs/Riven/Amoebeye_AF_Glow
-NPCs/Riven/Barnacle_Mound_Glow
 NPCs/Riven/Riven_Fighter_AF
 NPCs/Riven/Riven_Fighter_AF_Glow
 
@@ -389,7 +356,6 @@ Projectiles/Misc/Smol_Bubbel
 Projectiles/Weapons/Black_Hole_Bomb_P
 Projectiles/Weapons/Bright_Sword_Cast_P
 Projectiles/Weapons/Defiled_Spike
-Projectiles/Weapons/Dismay_Mid
 Projectiles/Weapons/Lava_Cast_P_Alt
 Projectiles/Weapons/Seam_Beam_End
 Projectiles/Weapons/Seam_Beam_Mid
@@ -401,10 +367,6 @@ Sounds/Custom/Ambience/AshenSuspense
 Sounds/Custom/Ambience/DefiledAmbience
 Sounds/Custom/Ambience/RivenAmbience
 Sounds/Custom/Ambience/SCP3_Ambience
-
-Sounds/Custom/LaserTag/Death
-Sounds/Custom/LaserTag/Hurt
-Sounds/Custom/LaserTag/Score
 
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask1
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask2
@@ -427,9 +389,6 @@ Sounds/Custom/Defiled_Sample
 Sounds/Custom/DefiledWave
 Sounds/Custom/EvilFish
 Sounds/Custom/Haha24
-Sounds/Custom/KeytarBass
-Sounds/Custom/KeytarLead
-Sounds/Custom/KeytarSynth
 Sounds/Custom/MetalDoorClose
 Sounds/Custom/MetalDoorOpen
 Sounds/Custom/Packhunter_Chatter1
