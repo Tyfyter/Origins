@@ -615,6 +615,7 @@ namespace Origins {
 		#endregion
 		static readonly Dictionary<Type, MethodInfo> loads = [];
 		static void LoadAsset<T>(AutoLoadingAsset<T> asset) where T : class => asset.LoadAsset();
+		[NoJIT]
 		static void ExpectedUnusedAssets(StringBuilder builder) {
 			string expectedUnusedAssets =
 			"""
