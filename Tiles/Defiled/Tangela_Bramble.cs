@@ -123,6 +123,10 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Tangela_Bramble_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 30;
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Tangela_Bramble>());
 		}

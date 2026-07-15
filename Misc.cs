@@ -3411,12 +3411,13 @@ namespace Origins {
 			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - (spacing * (scale.Value * 0.5f)), color ?? Color.White, 0, orig, scale.Value);
 		}
 		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null, float scale = 1) => DrawDebugTextAbove(spritebatch, obj, position, origin, color, new Vector2(scale));
+		static AutoLoadingTexture constellationFill = "Origins/Items/Weapons/Ranged/Constellation_Fill";
 		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20) {
 			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
 			shader.UseSaturation(width);
 			shader.UseOpacity(distort);
 
-			Asset<Texture2D> space = ModContent.Request<Texture2D>("Origins/Items/Weapons/Ranged/Constellation_Fill");
+			Asset<Texture2D> space = constellationFill;
 
 			Vector2 screenPos = Main.screenPosition / new Vector2(Main.screenWidth, Main.screenHeight);
 			Rectangle source = new(0, 0, space.Width(), space.Height());

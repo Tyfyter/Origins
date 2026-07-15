@@ -1,17 +1,8 @@
-Total Unused Assets: 479
+Total Unused Assets: 297
 Achievements/The_Signal
 
-Buffs/Brine_Latcher_Debuff
-Buffs/Confection_Assimilation
-Buffs/Contagion_Assimilation
-Buffs/Hallow_Assimilation
-Buffs/Huff_Puff_Buff
-Buffs/Hunger_Debuff
 Buffs/Sprockey_Buff
 Buffs/Stress_Ball_Buff
-Buffs/Sugar_Crash_Debuff
-Buffs/Sugar_Rush_Debuff
-Buffs/Sugarcoat_Debuff
 
 Gores/Brine_Drip
 
@@ -24,15 +15,6 @@ Items/Accessories/Strange_Computer_Laser
 Items/Accessories/Stress_Ball_Beat_UI
 Items/Accessories/Timbre_of_Hell_HandsOff - Copy
 Items/Accessories/Timbre_of_Hell_HandsOff_Glow
-
-Items/Armor/Amber/Explosive_Resin
-Items/Armor/Amber/Explosive_Resin_Gore1
-Items/Armor/Amber/Explosive_Resin_Gore2
-Items/Armor/Amber/Explosive_Resin_Gore3
-
-Items/Armor/Chambersite/Chambersite
-
-Items/Armor/Defiled/Defiled_Helmet_Head_EyesClosed
 
 Items/Armor/Encrusted/Encrusted_Coat_Arms
 Items/Armor/Encrusted/Encrusted_Coat_Female
@@ -82,8 +64,6 @@ Items/Mounts/Star_Soldier_WIP
 Items/Other/Consumables/Broths/Broth_Example
 Items/Other/Consumables/Broths/BrothTemplate
 
-Items/Other/Consumables/HolidayHairs/AntiCorruptionDay_Hair
-Items/Other/Consumables/HolidayHairs/MentalHealthAwarenessDay_Hair
 Items/Other/Consumables/HolidayHairs/Player_Hair_Example
 Items/Other/Consumables/Bowl_of_Soup
 Items/Other/Consumables/Budget_Fairy_Dust
@@ -104,59 +84,23 @@ Items/Tools/Liquids/Amebic_Gel_Bottomless_Bucket
 Items/Tools/Wiring/Ashen_Logic_Gates - Copy
 Items/Tools/Wiring/Mini_Wire_Extra_Icons
 Items/Tools/Chambersite_Hook_P_Chain
-Items/Tools/Miter_Saw_Arm
-Items/Tools/Miter_Saw_Blade
 
 Items/Vanity/BossMasks/Head_Temp
 
-Items/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Wings_AF
-
-Items/Weapons/Ammo/Canisters/Oil_Canister_II
 Items/Weapons/Ammo/Canisters/Resizable_Mine_P
 Items/Weapons/Ammo/Scrap_2
 Items/Weapons/Ammo/Scrap_3
 
-Items/Weapons/Demolitionist/Awe_Bomb_P
 Items/Weapons/Demolitionist/Bloodshot
 Items/Weapons/Demolitionist/Bomb_Example
-Items/Weapons/Demolitionist/Crystal_Grenade_Blue
-Items/Weapons/Demolitionist/Crystal_Grenade_Pink
-Items/Weapons/Demolitionist/Crystal_Grenade_Purple
 Items/Weapons/Demolitionist/Example_Dyna
 Items/Weapons/Demolitionist/Firework_Cannon
-Items/Weapons/Demolitionist/Grenade_Lawnchair_Alt
-Items/Weapons/Demolitionist/Holy_Hand_Grenade_Alt
 Items/Weapons/Demolitionist/Impetus_Goo
 Items/Weapons/Demolitionist/Internal_Combustionfish_P
-Items/Weapons/Demolitionist/Meteor_P2
-Items/Weapons/Demolitionist/Meteor_P2_Cooling_Effect
 Items/Weapons/Demolitionist/Mine_Flayer_Use
 Items/Weapons/Demolitionist/Nuclear_Arm_HandsOn_Glow
-Items/Weapons/Demolitionist/Shrapnel_Dust
-Items/Weapons/Demolitionist/Shrapnel_Dust_2
-Items/Weapons/Demolitionist/Shrapnel_Dust_3
-Items/Weapons/Demolitionist/Sonar_Dynamite_Sonar
 Items/Weapons/Demolitionist/Starburst
 Items/Weapons/Demolitionist/Starburst_Glow
-
-Items/Weapons/Felnum/Tier2/Felnum_Broadsword
-Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B
-Items/Weapons/Felnum/Tier2/Felnum_Broadsword_Shard
-Items/Weapons/Felnum/Tier2/Felnum_Staff
-Items/Weapons/Felnum/Tier2/Tolruk
-
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_0
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_1
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_10
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_2
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_3
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_4
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_5
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_6
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_7
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_8
-Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_9
-Items/Weapons/Felnum/Felnum_Wand_Dark
 
 Items/Weapons/Magic/Communion_P
 Items/Weapons/Magic/Defiled_Wave
@@ -167,28 +111,15 @@ Items/Weapons/Magic/Defiled_Wave_P4
 Items/Weapons/Magic/Defiled_Wave_P5
 Items/Weapons/Magic/Defiled_Wave_P6
 Items/Weapons/Magic/Missing_File_Use
-Items/Weapons/Magic/Nerve_Flan_P
 
 Items/Weapons/Melee/_Tyrfing
 Items/Weapons/Melee/Chromakama
-Items/Weapons/Melee/Chromtain_Smasher
-Items/Weapons/Melee/Defiled_Biome_Blade
-Items/Weapons/Melee/Riven_Biome_Blade
-Items/Weapons/Melee/Rocket_Lance
-Items/Weapons/Melee/Soul_Snatcher_ELaunch
 Items/Weapons/Melee/The_Claw_Mandible
 Items/Weapons/Melee/The_Claw_Mandible_Glow
-Items/Weapons/Melee/Tyrfing_Shard
 
-Items/Weapons/Ranged/Constellation_Fill
-Items/Weapons/Ranged/Firespit_Old
 Items/Weapons/Ranged/Ritualmaker
-Items/Weapons/Ranged/Tendon_Tear_Old
 Items/Weapons/Ranged/Welding_Torch_Use
 
-Items/Weapons/Summoner/Minions/Cluesy_Attack
-Items/Weapons/Summoner/Minions/Cluesy_Fall
-Items/Weapons/Summoner/Minions/Cluesy_Walk
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Attac
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Look
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Run
@@ -196,17 +127,7 @@ Items/Weapons/Summoner/Minions/Ocean_Elemental
 Items/Weapons/Summoner/Minions/Ocean_Elemental_Glow
 Items/Weapons/Summoner/Minions/Smart_Turret_Head_Glow
 Items/Weapons/Summoner/Minions/Smart_Turret_Idle
-Items/Weapons/Summoner/Minions/Stardust_Elemental
-Items/Weapons/Summoner/Minions/Terratotem_Orb
-Items/Weapons/Summoner/Minions/Terratotem_Tab_Mask_Side
-Items/Weapons/Summoner/Accretion_Ribbon_P
-Items/Weapons/Summoner/Forsaken_Desire
-Items/Weapons/Summoner/Forsaken_Desire_Use
-Items/Weapons/Summoner/Neutron_Soup_Flames
-Items/Weapons/Summoner/Neutron_Soup_Flames_Stars
-Items/Weapons/Summoner/Neutron_Soup_Flames_Stars_Colormap
 Items/Weapons/Summoner/Star_Harvest
-Items/Weapons/Generic_Weapon_P
 
 NPCs/Ashen/Boss/AF/Trenchmaker_Calf_AF
 NPCs/Ashen/Boss/AF/Trenchmaker_Foot_AF
@@ -281,67 +202,15 @@ NPCs/Ashen/VV13_Saw_Glow
 NPCs/Ashen/VV13_Torch
 NPCs/Ashen/VV13_Torch_Glow
 
-NPCs/Brine/Boss/Lost_Diver_
-NPCs/Brine/Boss/Lost_Diver_Dancing
-NPCs/Brine/Thing_of_nightmares_Ill_keep_in_the_backlog
-
-NPCs/Cubekon/Blox
-NPCs/Cubekon/Blox_Glow
-NPCs/Cubekon/Cubix
-NPCs/Cubekon/Cubix_Glow
-NPCs/Cubekon/Quantux
-NPCs/Cubekon/Quantux_Glow
-NPCs/Cubekon/Tetrix
-NPCs/Cubekon/Tetrix_Glow
-
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Arm
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Arm_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Body
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Body_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Forearm
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Forearm_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Head
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Head_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Bouncy
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Bouncy_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Dash_Arm
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Dash_Arm_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Shooter_Arm
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Springy
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Springy_Glow
-NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Torso
 NPCs/Defiled/Boss/DA_Spike_Base
 NPCs/Defiled/Boss/Defiled_Amalgamation_Portal
-NPCs/Defiled/Defiled_Brute_Old
-NPCs/Defiled/Defiled_Cyclops_Old
-NPCs/Defiled/Defiled_Cyclops_Old2
-NPCs/Defiled/Defiled_SRCWIP
-NPCs/Defiled/Defiled_Weaver
-NPCs/Defiled/Defiled_Weaver_Glow
-NPCs/Defiled/Defiled_Weaver_Tangela
-NPCs/Defiled/Tangela_Portrayal_Concept2
 
 NPCs/Dungeon/Cellarkeep_Throw
-NPCs/Dungeon/Electromancer
-NPCs/Dungeon/Illusionary
-NPCs/Dungeon/Illusionary_Copy
-NPCs/Dungeon/Illusionary_Glow
 
-NPCs/MiscB/Ichor_Storm
-
-NPCs/Nova Pillar/Nova_Pillar_Glow
-NPCs/Nova Pillar/Nova_Pillar_Head_Boss
-
-NPCs/Repentance/Supine
-
-NPCs/Riven/World_Cracker/World_Cracker_Husk
-NPCs/Riven/World_Cracker/World_Cracker_Jelly
 NPCs/Riven/Amoebeye_AF
 NPCs/Riven/Amoebeye_AF_Glow
 NPCs/Riven/Riven_Fighter_AF
 NPCs/Riven/Riven_Fighter_AF_Glow
-
-NPCs/TownNPCs/The_Author
 
 Projectiles/Ammo/Acorn_P
 Projectiles/Ammo/Defiled_Bolt_P
@@ -350,23 +219,7 @@ Projectiles/Ammo/Leaf2_P
 Projectiles/Ammo/Leaf3_P
 Projectiles/Ammo/Starburst1_P
 
-Projectiles/Misc/Amoeba_Chain_End
-Projectiles/Misc/Smol_Bubbel
-
-Projectiles/Weapons/Black_Hole_Bomb_P
-Projectiles/Weapons/Bright_Sword_Cast_P
 Projectiles/Weapons/Defiled_Spike
-Projectiles/Weapons/Lava_Cast_P_Alt
-Projectiles/Weapons/Seam_Beam_End
-Projectiles/Weapons/Seam_Beam_Mid
-Projectiles/Weapons/Seam_Beam_Start
-Projectiles/Weapons/Water_Cast_P
-
-Sounds/Custom/Ambience/AshenAmbience
-Sounds/Custom/Ambience/AshenSuspense
-Sounds/Custom/Ambience/DefiledAmbience
-Sounds/Custom/Ambience/RivenAmbience
-Sounds/Custom/Ambience/SCP3_Ambience
 
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask1
 Sounds/Custom/ModifiedPlayer/Female_Hit_Mask2
@@ -405,28 +258,6 @@ Sounds/Custom/VV13_Idle3
 Sounds/Custom/WindUpToy
 Sounds/Custom/WindUpToyStart
 
-Sounds/Seer/SeerAlarm
-Sounds/Seer/SeerHum
-Sounds/Seer/SeerNearby
-Sounds/Seer/SeerPatrol
-Sounds/Seer/SeerScan
-
-Textures/Procedural/Hole
-Textures/All_Torn
-Textures/Cell_Noise
-Textures/Cell_Noise_Inverted
-Textures/DSTNoise
-Textures/Example
-Textures/Glow_Intensity
-Textures/Green_Channel
-Textures/Pale_Background
-Textures/Red_Channel
-Textures/SC_Mask
-Textures/Shimmer_Construct_Stars
-Textures/Strikethrough_Font
-Textures/Time
-Textures/Torn_Example
-
 Tiles/Ashen/Artifiber_Tree_Tops_Glow
 Tiles/Ashen/Ashen_Cactus
 Tiles/Ashen/Ashen_Cactus_Fruit
@@ -456,48 +287,18 @@ Tiles/Banners/Malfunctioning_Missile_Banner_Item
 Tiles/Banners/VV13_Banner
 Tiles/Banners/VV13_Banner_Item
 
-Tiles/Brine/Brineglow_Item_Glow
-Tiles/Brine/FrameNumGuide
-
-Tiles/Cubekon/Cubekon_Chest
-
-Tiles/Decoration/Sheet_Metal_1
-Tiles/Decoration/Sheet_Metal_2
-Tiles/Decoration/Sheet_Metal_3
-Tiles/Decoration/Sheet_Metal_4
-
 Tiles/Defiled/Defiled_Cactus
 Tiles/Defiled/Defiled_Cactus_Fruit
 Tiles/Defiled/Defiled_Cactus_Item
 Tiles/Defiled/Defiled_Heart_Glow
 Tiles/Defiled/Defiled_Icicle
 Tiles/Defiled/Petrified_Tree_Glow
-Tiles/Defiled/Tangela_Bramble_Item_Glow
 Tiles/Defiled/Tangela_Bramble_Smol
 Tiles/Defiled/Tangela_Bramble_Smol_Tangela
 
 Tiles/Dusk/Bleeding_Obsidian_Glow
-Tiles/Dusk/Dusk_Stone_Item
 
-Tiles/MusicBoxes/Music_Box_DW_Old_Item
 Tiles/MusicBoxes/Otherworldly_Music_Box_DW_Glow
-
-Tiles/Other/Chambersite_Gemcorn
-Tiles/Other/Chambersite_Sapling
-Tiles/Other/Chambersite_Tree
-Tiles/Other/Chambersite_Tree_Branches
-Tiles/Other/Chambersite_Tree_Tops
-Tiles/Other/Eyndum_Bar_Tile
-Tiles/Other/Fiber_Back_Grid
-Tiles/Other/Fiberglass_Tile_Ish
-Tiles/Other/Fiberglass_Tile_New_Frames
-Tiles/Other/Fiberglass_Vines
-Tiles/Other/Formium_Bar_Tile
-Tiles/Other/Glass
-Tiles/Other/Nova_Accumulator_Glow
-Tiles/Other/Nova_Monolith_Item
-Tiles/Other/Pincushion_Tile
-Tiles/Other/Pincushion_Tile_Highlight
 
 Tiles/Overlays/Merge/Tainted_Overlay
 
@@ -513,9 +314,6 @@ UI/Logos/Defiled_Terraria
 UI/Logos/ExampleLogo
 UI/Logos/Riven_Terraria
 UI/Logos/Shimmer_Terraria
-
-UI/Lore/Journal_Scroll
-UI/Lore/Journal_Search
 
 UI/WorldGen/IconAshenHallow
 UI/WorldGen/IconDefiledHallow
@@ -540,4 +338,3 @@ UI/World_Cracker_Preview
 
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Chunk
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Flesh
-Untitled1246_20260615214754

@@ -363,6 +363,7 @@ namespace Origins.Tiles.Brine {
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.maxStack = Item.CommonMaxStack;

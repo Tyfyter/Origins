@@ -33,6 +33,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
@@ -614,10 +615,145 @@ namespace Origins {
 		#endregion
 		static readonly Dictionary<Type, MethodInfo> loads = [];
 		static void LoadAsset<T>(AutoLoadingAsset<T> asset) where T : class => asset.LoadAsset();
+		static void ExpectedUnusedAssets(StringBuilder builder) {
+			string expectedUnusedAssets =
+			"""
+			Items/Armor/Amber/Explosive_Resin*
+			Items/Armor/Chambersite/Chambersite
+			Items/Armor/Defiled/Defiled_Helmet_Head_EyesClosed
+			Buffs/Brine_Latcher_Debuff
+			Buffs/Confection_Assimilation
+			Buffs/Contagion_Assimilation
+			Buffs/Hallow_Assimilation
+			Buffs/Huff_Puff_Buff
+			Buffs/Hunger_Debuff
+			Buffs/Sugar_Crash_Debuff
+			Buffs/Sugar_Rush_Debuff
+			Buffs/Sugarcoat_Debuff
+			Items/Other/Consumables/HolidayHairs/AntiCorruptionDay_Hair
+			Items/Other/Consumables/HolidayHairs/MentalHealthAwarenessDay_Hair
+			Items/Tools/Miter_Saw_Arm
+			Items/Tools/Miter_Saw_Blade
+			Items/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Wings_AF
+			Items/Weapons/Ammo/Canisters/Oil_Canister_II
+			Items/Weapons/Demolitionist/Awe_Bomb_P
+			Items/Weapons/Demolitionist/Crystal_Grenade_*
+			Items/Weapons/Demolitionist/Grenade_Lawnchair_Alt
+			Items/Weapons/Demolitionist/Holy_Hand_Grenade_Alt
+			Items/Weapons/Demolitionist/Meteor_P2*
+			Items/Weapons/Demolitionist/Shrapnel_Dust*
+			Items/Weapons/Demolitionist/Sonar_Dynamite_Sonar
+			Items/Weapons/Felnum/*
+			Items/Weapons/Magic/Nerve_Flan_P
+			Items/Weapons/Melee/Chromtain_Smasher
+			Items/Weapons/Melee/Defiled_Biome_Blade
+			Items/Weapons/Melee/Riven_Biome_Blade
+			Items/Weapons/Melee/Rocket_Lance
+			Items/Weapons/Melee/Soul_Snatcher_ELaunch
+			Items/Weapons/Melee/Tyrfing_Shard
+			Items/Weapons/Ranged/Firespit_Old
+			Items/Weapons/Ranged/Tendon_Tear_Old
+			Items/Weapons/Summoner/Minions/Cluesy_*
+			Items/Weapons/Summoner/Minions/Stardust_Elemental
+			Items/Weapons/Summoner/Minions/Terratotem_Orb
+			Items/Weapons/Summoner/Minions/Terratotem_Tab_Mask_Side
+			Items/Weapons/Summoner/Accretion_Ribbon_P
+			Items/Weapons/Summoner/Forsaken_Desire*
+			Items/Weapons/Summoner/Neutron_Soup_Flames*
+			Items/Weapons/Generic_Weapon_P
+			NPCs/Brine/Boss/Lost_Diver_
+			NPCs/Brine/Boss/Lost_Diver_Dancing
+			NPCs/Brine/Thing_of_nightmares_Ill_keep_in_the_backlog
+			NPCs/Cubekon/*
+			NPCs/Defiled/Boss/New/*
+			NPCs/Dungeon/Electromancer
+			NPCs/Dungeon/Illusionary
+			NPCs/Dungeon/Illusionary_Copy
+			NPCs/Dungeon/Illusionary_Glow
+			NPCs/Defiled/Defiled_Brute_Old
+			NPCs/Defiled/Defiled_Cyclops_Old
+			NPCs/Defiled/Defiled_Cyclops_Old2
+			NPCs/Defiled/Defiled_SRCWIP
+			NPCs/Defiled/Defiled_Weaver
+			NPCs/Defiled/Defiled_Weaver_Glow
+			NPCs/Defiled/Defiled_Weaver_Tangela
+			NPCs/Defiled/Tangela_Portrayal_Concept2
+			NPCs/MiscB/Ichor_Storm
+			NPCs/Nova Pillar/*
+			NPCs/Repentance/*
+			NPCs/Riven/World_Cracker/World_Cracker_Husk
+			NPCs/Riven/World_Cracker/World_Cracker_Jelly
+			NPCs/TownNPCs/The_Author
+			Projectiles/Misc/Amoeba_Chain_End
+			Projectiles/Misc/Smol_Bubbel
+			Projectiles/Weapons/Black_Hole_Bomb_P
+			Projectiles/Weapons/Bright_Sword_Cast_P
+			Projectiles/Weapons/Lava_Cast_P_Alt
+			Projectiles/Weapons/Seam_Beam_End
+			Projectiles/Weapons/Seam_Beam_Mid
+			Projectiles/Weapons/Seam_Beam_Start
+			Projectiles/Weapons/Water_Cast_P
+			Sounds/Custom/Ambience/AshenAmbience
+			Sounds/Custom/Ambience/AshenSuspense
+			Sounds/Custom/Ambience/DefiledAmbience
+			Sounds/Custom/Ambience/RivenAmbience
+			Sounds/Custom/Ambience/SCP3_Ambience
+			Sounds/Seer/*
+			Textures/Procedural/*
+			Textures/All_Torn
+			Textures/Cell_Noise
+			Textures/Cell_Noise_Inverted
+			Textures/DSTNoise
+			Textures/Example
+			Textures/Glow_Intensity
+			Textures/Green_Channel
+			Textures/Pale_Background
+			Textures/Red_Channel
+			Textures/SC_Mask
+			Textures/Shimmer_Construct_Stars
+			Textures/Strikethrough_Font
+			Textures/Time
+			Textures/Torn_Example
+			Tiles/Brine/FrameNumGuide
+			Tiles/Cubekon/*
+			Tiles/Decoration/Sheet_Metal_1
+			Tiles/Decoration/Sheet_Metal_2
+			Tiles/Decoration/Sheet_Metal_3
+			Tiles/Decoration/Sheet_Metal_4
+			Tiles/Dusk/Dusk_Stone_Item
+			Tiles/MusicBoxes/Music_Box_DW_Old_Item
+			Tiles/Other/Chambersite_Gemcorn
+			Tiles/Other/Chambersite_Sapling
+			Tiles/Other/Chambersite_Tree
+			Tiles/Other/Chambersite_Tree_Branches
+			Tiles/Other/Chambersite_Tree_Tops
+			Tiles/Other/Eyndum_Bar_Tile
+			Tiles/Other/Fiber_Back_Grid
+			Tiles/Other/Fiberglass_Tile_Ish
+			Tiles/Other/Fiberglass_Tile_New_Frames
+			Tiles/Other/Fiberglass_Vines
+			Tiles/Other/Formium_Bar_Tile
+			Tiles/Other/Glass
+			Tiles/Other/Nova_Accumulator_Glow
+			Tiles/Other/Nova_Monolith_Item
+			Tiles/Other/Pincushion_Tile
+			Tiles/Other/Pincushion_Tile_Highlight
+			UI/Lore/Journal_Scroll
+			UI/Lore/Journal_Search
+			Untitled1246_20260615214754
+			""";
+			builder.Append(Regex.Escape(expectedUnusedAssets));
+			builder.Replace("\\n", "|");
+			builder.Replace("\\*", ".*");
+		}
 		public bool CheckTextureUsage {
 			get => default;
 			set {
 				if (value) {
+					StringBuilder builder = new();
+					// check version so we don't forget that the list may be outdated
+					if (Origins.instance.Version <= new Version(0, 5, 3, 21)) ExpectedUnusedAssets(builder);
+					Regex expected = new(builder.ToString(), RegexOptions.Compiled);
 					Assembly thisAssembly = GetType().Assembly;
 					foreach (ModTree tree in Origins.instance.GetContent<ModTree>()) {
 						tree.GetTexture();
@@ -750,6 +886,7 @@ namespace Origins {
 						if (_asset.StartsWith("Hair/HairSource/")) continue;
 						if (_asset.Contains("Unused/")) continue;
 						if (Terraria.UI.ItemSlot.ShiftInUse && _asset.StartsWith("CrossMod/")) continue;
+						if (expected.IsMatch(_asset)) continue;
 						if (!loadedAssets.Contains(_asset)) {
 							unused.Add(_asset);
 						}
