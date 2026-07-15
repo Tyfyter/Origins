@@ -1,4 +1,5 @@
 ﻿using Origins.Gores;
+using Origins.Layers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
@@ -7,6 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Full_Send : ModItem {
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Balloon);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);
 			Item.shoot = ModContent.ProjectileType<Razorwire_P>();

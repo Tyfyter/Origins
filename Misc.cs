@@ -3754,6 +3754,12 @@ namespace Origins {
 			];
 		}
 		public static T Get<T>(this T[] array, int index) => array[index];
+		public static IEnumerable<T> WalkWhile<T>(this T item, Predicate<T> predicate, Func<T, T> step) {
+			while (predicate(item)) {
+				yield return item;
+				item = step(item);
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

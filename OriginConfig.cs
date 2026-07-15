@@ -12,6 +12,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Origins.LootConditions;
+using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
@@ -613,6 +614,7 @@ namespace Origins {
 			get => default;
 			set {
 				if (value) {
+					Assembly thisAssembly = GetType().Assembly;
 					foreach (ModTree tree in Origins.instance.GetContent<ModTree>()) {
 						tree.GetTexture();
 						tree.GetTopTextures();
@@ -624,8 +626,10 @@ namespace Origins {
 							Main.instance.LoadItem(item.Type);
 						} else if (content is ModProjectile proj) {
 							Main.instance.LoadProjectile(proj.Type);
+							ModContent.RequestIfExists<Texture2D>(proj.GlowTexture, out _);
 						} else if (content is ModNPC npc) {
 							Main.instance.LoadNPC(npc.Type);
+							if (npc is Glowing_Mod_NPC glowingNPC) _ = glowingNPC.GlowTexture;
 						} else if (content is ModTile tile) {
 							Main.instance.LoadTiles(tile.Type);
 						} else if (content is ModWall wall) {
@@ -635,11 +639,15 @@ namespace Origins {
 							extras.LoadTextures();
 						}
 #if DEBUG
-						foreach (FieldInfo @field in content.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+						foreach (FieldInfo @field in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
 							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
 								Type assetType = @field.FieldType.GenericTypeArguments[0];
 								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
 								load.Invoke(null, [@field.GetValue(content)]);
+							} else if (@field.FieldType.IsAssignableTo(typeof(IEnumerable<AutoLoadingTexture>))) {
+								foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)@field.GetValue(content)) {
+									tex.LoadAsset();
+								}
 							}
 						}
 #endif

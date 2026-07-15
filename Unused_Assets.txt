@@ -12,33 +12,19 @@ Buffs/Sugar_Crash_Debuff
 Buffs/Sugar_Rush_Debuff
 Buffs/Sugarcoat_Debuff
 
-Gores/NPCs/Amoebeye2_Gore
-Gores/NPCs/Amoebeye3_Gore
 Gores/Brine_Drip
 
 Items/Accessories/Binding_Book_P2
 Items/Accessories/Bug_Trapper_Bug
 Items/Accessories/Drill_Ravel
-Items/Accessories/Full_Send_Balloon_Glow
-Items/Accessories/Full_Send_Glow
 Items/Accessories/Gun_Glove_HandsOn_Glow
-Items/Accessories/Lazy_Cloak_P_Glow
-Items/Accessories/Otherworldly_Cloak_P_Glow
-Items/Accessories/Protomind_P_Glow
 Items/Accessories/Retool_Arm_Glow
-Items/Accessories/Robo_Tail_Tail_Glow
-Items/Accessories/Smog_Pod_4_Rod_Glow
 Items/Accessories/Space_Pirates_Eye_Iris
 Items/Accessories/Speed_Booster_Back
 Items/Accessories/Speed_Booster_Back_Glow
 Items/Accessories/Speed_Booster_Glow
 Items/Accessories/Strange_Computer_Laser
 Items/Accessories/Stress_Ball_Beat_UI
-Items/Accessories/Stress_Ball_UI_Charge1
-Items/Accessories/Stress_Ball_UI_Charge2
-Items/Accessories/Stress_Ball_UI_Charge3
-Items/Accessories/Stress_Ball_UI_Charge4
-Items/Accessories/Stress_Ball_UI_Charge5
 Items/Accessories/Sunder_Gut_Waist
 Items/Accessories/Timbre_of_Hell_HandsOff - Copy
 Items/Accessories/Timbre_of_Hell_HandsOff_Glow
@@ -117,22 +103,17 @@ Items/Other/Consumables/Tasty_Booger
 
 Items/Pets/Dysfunctional_Table_Saw
 Items/Pets/Dysfunctional_Table_Saw_Use
-Items/Pets/Meberoid_Glow
 Items/Pets/Robot_Toy_Controller
 Items/Pets/Salty_Seed
-Items/Pets/Self_Contained_Universe_Glow
 Items/Pets/Sprockey
 Items/Pets/Sprockey_Glow
 Items/Pets/Toy_Trenchmaker
-Items/Pets/Walking_Furnace_Glow
 
 Items/Tools/Liquids/Amebic_Gel_Bottomless_Bucket
 
 Items/Tools/Wiring/Ashen_Logic_Gates - Copy
 Items/Tools/Wiring/Mini_Wire_Extra_Icons
 Items/Tools/Chambersite_Hook_P_Chain
-Items/Tools/Hydrolantern_Use_Glow
-Items/Tools/Impactaxe_Glow
 Items/Tools/Miter_Saw_Arm
 Items/Tools/Miter_Saw_Blade
 Items/Tools/Parasitic_Manipulator_Glow
@@ -190,9 +171,7 @@ Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_8
 Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_9
 Items/Weapons/Felnum/Felnum_Wand_Dark
 
-Items/Weapons/Magic/Amnestic_Rose_Alt_Flower
 Items/Weapons/Magic/Amnestic_Rose_Alt_Glow
-Items/Weapons/Magic/Amnestic_Rose_Alt_Stem
 Items/Weapons/Magic/Communion_P
 Items/Weapons/Magic/Defiled_Wave
 Items/Weapons/Magic/Defiled_Wave_P1
@@ -207,7 +186,6 @@ Items/Weapons/Magic/Nerve_Flan_P
 
 Items/Weapons/Melee/_Tyrfing
 Items/Weapons/Melee/Amenonuhoko_Glow
-Items/Weapons/Melee/Amenonuhoko_P_Glow
 Items/Weapons/Melee/Chromakama
 Items/Weapons/Melee/Chromtain_Smasher
 Items/Weapons/Melee/Defiled_Biome_Blade
@@ -216,10 +194,8 @@ Items/Weapons/Melee/Rocket_Lance
 Items/Weapons/Melee/Soul_Snatcher_ELaunch
 Items/Weapons/Melee/The_Claw_Mandible
 Items/Weapons/Melee/The_Claw_Mandible_Glow
-Items/Weapons/Melee/The_Foot_Flail_Glow
 Items/Weapons/Melee/Tyrfing_Shard
 
-Items/Weapons/Ranged/Boat_Rocker_Chain
 Items/Weapons/Ranged/Constellation_Fill
 Items/Weapons/Ranged/Firespit_Old
 Items/Weapons/Ranged/Laser_Line_Bow_Glow
@@ -233,7 +209,6 @@ Items/Weapons/Summoner/Minions/Cluesy_Walk
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Attac
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Look
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Run
-Items/Weapons/Summoner/Minions/Happy_Boi_Glow
 Items/Weapons/Summoner/Minions/Ocean_Elemental
 Items/Weapons/Summoner/Minions/Ocean_Elemental_Glow
 Items/Weapons/Summoner/Minions/Smart_Turret_Head_Glow
@@ -241,7 +216,6 @@ Items/Weapons/Summoner/Minions/Smart_Turret_Idle
 Items/Weapons/Summoner/Minions/Stardust_Elemental
 Items/Weapons/Summoner/Minions/Terratotem_Orb
 Items/Weapons/Summoner/Minions/Terratotem_Tab_Mask_Side
-Items/Weapons/Summoner/Minions/Woodsprite_Glow
 Items/Weapons/Summoner/Accretion_Ribbon_P
 Items/Weapons/Summoner/Acrid_Spout_Glow
 Items/Weapons/Summoner/Amebolize_Incantation_Smol
@@ -369,9 +343,6 @@ NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Springy_Glow
 NPCs/Defiled/Boss/New/Defiled_Amalgamation_Split_Torso
 NPCs/Defiled/Boss/DA_Spike_Base
 NPCs/Defiled/Boss/Defiled_Amalgamation_Portal
-NPCs/Defiled/Defiled_Asphyxiator_P1_Glow
-NPCs/Defiled/Defiled_Asphyxiator_P2_Glow
-NPCs/Defiled/Defiled_Asphyxiator_P3_Glow
 NPCs/Defiled/Defiled_Brute_Old
 NPCs/Defiled/Defiled_Cyclops_Old
 NPCs/Defiled/Defiled_Cyclops_Old2
@@ -500,7 +471,6 @@ Textures/Torn_Example
 Tiles/Ashen/Artifiber_Tree_Tops_Glow
 Tiles/Ashen/Ashen_Cactus
 Tiles/Ashen/Ashen_Cactus_Fruit
-Tiles/Ashen/Ashen_Campfire_Flame
 Tiles/Ashen/Ashen_Icicle
 Tiles/Ashen/Beacon_Light_Glow
 Tiles/Ashen/Cargo_Elevator_Door_Backend
@@ -540,7 +510,6 @@ Tiles/Decoration/Sheet_Metal_4
 Tiles/Defiled/Defiled_Cactus
 Tiles/Defiled/Defiled_Cactus_Fruit
 Tiles/Defiled/Defiled_Cactus_Item
-Tiles/Defiled/Defiled_Campfire_Flame
 Tiles/Defiled/Defiled_Heart_Glow
 Tiles/Defiled/Defiled_Icicle
 Tiles/Defiled/Petrified_Tree_Glow
@@ -578,7 +547,6 @@ Tiles/Riven/Calcified_Spug_Flesh_Jelly
 Tiles/Riven/Primordial_Permafrost_Icicle
 Tiles/Riven/Riven_Cactus
 Tiles/Riven/Riven_Cactus_Fruit
-Tiles/Riven/Riven_Campfire_Flame
 
 UI/Logos/Ashen_Terraria
 UI/Logos/Ashen_Terraria_Glow
@@ -591,11 +559,8 @@ UI/Lore/Journal_Scroll
 UI/Lore/Journal_Search
 
 UI/WorldGen/IconAshenHallow
-UI/WorldGen/IconAshenNormal
 UI/WorldGen/IconDefiledHallow
-UI/WorldGen/IconDefiledNormal
 UI/WorldGen/IconRivenHallow
-UI/WorldGen/IconRivenNormal
 UI/WorldGen/PreviewEvilAshen
 UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven
@@ -611,16 +576,9 @@ UI/Savage_Whip_Preview
 UI/Slime_Worm_Preview
 UI/Sprockey
 UI/Star_Soldier_Select
-UI/Ticking_Explosives_UI
 UI/Trenchmaker_Drawing
 UI/World_Cracker_Preview
 
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Chunk
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Flesh
-Walls/Fortified_Steel_Wall1_BG0
-Walls/Fortified_Steel_Wall1_BG1
-Walls/Fortified_Steel_Wall1_BG2
-Walls/Fortified_Steel_Wall2_BG
-Walls/Fortified_Steel_Wall3_BG
-Walls/Molten_Steel_Wall_BG
 Untitled1246_20260615214754
