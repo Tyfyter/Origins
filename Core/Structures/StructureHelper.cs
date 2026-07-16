@@ -45,6 +45,7 @@ public class StructureHelperUI : UIState {
 		return CurrentView?.room is null && base.ContainsPoint(point);
 	}
 	static StructureHelperUI instance;
+	static AutoLoadingTexture saveIcon = "Origins/UI/Floppy_Disk";
 	public override void OnInitialize() {
 		instance = this;
 		refreshButton = new(TextureAssets.Flame) {
@@ -80,7 +81,8 @@ public class StructureHelperUI : UIState {
 		};
 		Append(selectFileButton);
 
-		saveFileButton = new(ModContent.Request<Texture2D>("Origins/UI/Floppy_Disk", AssetRequestMode.ImmediateLoad)) {
+		saveIcon.Wait();
+		saveFileButton = new(saveIcon) {
 			Left = new(48, 0),
 			Top = new(8, 0.1f),
 			HAlign = 0.25f * 0.5f

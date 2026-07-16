@@ -625,9 +625,12 @@ namespace Origins {
 			*Example
 			*Template
 			*/Example*
+			Items/Accessories/Timbre_of_Hell_HandsOff - Copy
+			Items/Accessories/Timbre_of_Hell_HandsOff_Glow
 			Items/Armor/Amber/Explosive_Resin*
 			Items/Armor/Chambersite/Chambersite
 			Items/Armor/Defiled/Defiled_Helmet_Head_EyesClosed
+			Items/Armor/Eyndum/Armor_Temp3
 			Items/Armor/Fiberglass/Fiberglass_Armor
 			Items/Armor/Lost/Defiled_Exhaustion_Buff
 			Items/Armor/Lost/Lost_Breastplate_Tangela
@@ -726,6 +729,9 @@ namespace Origins {
 			Textures/Strikethrough_Font
 			Textures/Time
 			Textures/Torn_Example
+			Tiles/Ashen/Cargo_Elevator_Door_Backend
+			Tiles/Ashen/Mechanical_Key_Node_State_Glow
+			Tiles/Ashen/Purple_Mechanical_Switch*
 			Tiles/Brine/FrameNumGuide
 			Tiles/Cubekon/*
 			Tiles/Decoration/Sheet_Metal_1
@@ -871,6 +877,13 @@ namespace Origins {
 					loadedAssets.Add("Tiles/BossDrops/Relic_Examples");
 					loadedAssets.Add("Tiles/interesting_tile");
 					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty_Item");
+					Regex jimageRegex = new("(?<!\\\\)\\[(?<tag>jimage)(\\/(?<options>[^:]+))?:(?<text>.+?)(?<!\\\\)\\]", RegexOptions.Compiled);
+					foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins.Journal").GetDescendants()) {
+						foreach (Match match in jimageRegex.Matches(branch.TextValue)) {
+							string text = match.Groups["text"].Value;
+							if (text.StartsWith("Origins/")) loadedAssets.Add(text["Origins/".Length..]);
+						}
+					}
 					foreach (ModSceneEffect biome in Origins.instance.GetContent<ModSceneEffect>()) {
 						if (biome.MapBackground is not null) loadedAssets.Add(biome.MapBackground["Origins/".Length..]);
 						if (biome is ModBiome { BackgroundPath: string backgroundPath }) loadedAssets.Add(backgroundPath["Origins/".Length..]);
@@ -895,12 +908,14 @@ namespace Origins {
 					}
 					LoadSounds(typeof(Origins.Sounds));
 					foreach (Type type in typeof(Origins.Sounds).GetNestedTypes()) LoadSounds(type);
-					foreach (AEnvironmentSound sound in EnvironmentSounds.AllSounds) LoadSounds(sound.GetType());
+					foreach (AEnvironmentSound sound in EnvironmentSounds.AllSounds) {
+						LoadSounds(sound.GetType(), sound);
+					}
 					LoadSounds(typeof(Keytar));
-					void LoadSounds(Type type) {
-						foreach (FieldInfo @field in type.GetFields()) {
+					void LoadSounds(Type type, object instance = null) {
+						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)) {
 							if (@field.FieldType != typeof(SoundStyle)) continue;
-							SoundStyle sound = (SoundStyle)@field.GetValue(null);
+							SoundStyle sound = (SoundStyle)@field.GetValue(@field.IsStatic ? null : instance);
 							string soundPath = sound.SoundPath["Origins/".Length..];
 							if (sound.Variants.Length > 0) {
 								for (int i = 0; i < sound.Variants.Length; i++) {

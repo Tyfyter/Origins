@@ -1,4 +1,4 @@
-Total Unused Assets: 234
+Total Unused Assets: 199
 Achievements/The_Signal
 
 Buffs/Sprockey_Buff
@@ -6,16 +6,7 @@ Buffs/Sprockey_Buff
 Gores/Brine_Drip
 
 Items/Accessories/Binding_Book_P2
-Items/Accessories/Bug_Trapper_Bug
 Items/Accessories/Drill_Ravel
-Items/Accessories/Gun_Glove_HandsOn_Glow
-Items/Accessories/Space_Pirates_Eye_Iris
-Items/Accessories/Strange_Computer_Laser
-Items/Accessories/Stress_Ball_Beat_UI
-Items/Accessories/Timbre_of_Hell_HandsOff - Copy
-Items/Accessories/Timbre_of_Hell_HandsOff_Glow
-
-Items/Armor/Eyndum/Armor_Temp3
 
 Items/Mounts/Star Soldier/Star_Soldier
 Items/Mounts/Star Soldier/Star_Soldier_Blade
@@ -53,11 +44,9 @@ Items/Pets/Toy_Trenchmaker
 
 Items/Tools/Liquids/Amebic_Gel_Bottomless_Bucket
 
-Items/Tools/Wiring/Ashen_Logic_Gates - Copy
+Items/Tools/Wiring/Ashen_Component_Highlight
 Items/Tools/Wiring/Mini_Wire_Extra_Icons
 Items/Tools/Chambersite_Hook_P_Chain
-
-Items/Vanity/BossMasks/Head_Temp
 
 Items/Weapons/Ammo/Canisters/Resizable_Mine_P
 Items/Weapons/Ammo/Scrap_2
@@ -68,7 +57,6 @@ Items/Weapons/Demolitionist/Firework_Cannon
 Items/Weapons/Demolitionist/Impetus_Goo
 Items/Weapons/Demolitionist/Internal_Combustionfish_P
 Items/Weapons/Demolitionist/Mine_Flayer_Use
-Items/Weapons/Demolitionist/Nuclear_Arm_HandsOn_Glow
 Items/Weapons/Demolitionist/Starburst
 Items/Weapons/Demolitionist/Starburst_Glow
 
@@ -156,9 +144,6 @@ NPCs/Ashen/VV13_Torch_Glow
 NPCs/Defiled/Boss/DA_Spike_Base
 NPCs/Defiled/Boss/Defiled_Amalgamation_Portal
 
-NPCs/Riven/Riven_Fighter_AF
-NPCs/Riven/Riven_Fighter_AF_Glow
-
 Projectiles/Ammo/Acorn_P
 Projectiles/Ammo/Defiled_Bolt_P
 Projectiles/Ammo/Leaf1_P
@@ -168,10 +153,6 @@ Projectiles/Ammo/Starburst1_P
 
 Projectiles/Weapons/Defiled_Spike
 
-Sounds/Custom/ModifiedPlayer/Female_Hit_Mask1
-Sounds/Custom/ModifiedPlayer/Female_Hit_Mask2
-Sounds/Custom/ModifiedPlayer/Female_Hit_Mask3
-
 Sounds/Custom/Screwdriver/Sprockey_ImpatientPoint1
 Sounds/Custom/Screwdriver/Sprockey_ImpatientPoint2
 Sounds/Custom/Screwdriver/Sprockey_ImpatientWrong
@@ -179,11 +160,6 @@ Sounds/Custom/Screwdriver/Sprockey_Inquire
 Sounds/Custom/Screwdriver/Sprockey_Point
 Sounds/Custom/Screwdriver/Sprockey_Right
 Sounds/Custom/Screwdriver/Sprockey_Wrong
-Sounds/Custom/Air_Vent1
-Sounds/Custom/Air_Vent2
-Sounds/Custom/Air_Vent3
-Sounds/Custom/Air_Vent4
-Sounds/Custom/Black_Hole
 Sounds/Custom/BubblyBlast
 Sounds/Custom/DefiledWave
 Sounds/Custom/EvilFish
@@ -205,20 +181,10 @@ Sounds/Custom/WindUpToy
 Sounds/Custom/WindUpToyStart
 
 Tiles/Ashen/Artifiber_Tree_Tops_Glow
-Tiles/Ashen/Ashen_Icicle
 Tiles/Ashen/Beacon_Light_Glow
-Tiles/Ashen/Cargo_Elevator_Door_Backend
 Tiles/Ashen/Incinerator_Pit_Resource
-Tiles/Ashen/Mechanical_Key_Node_State_Glow
 Tiles/Ashen/Mother_Unit_Robot
 Tiles/Ashen/Mother_Unit_Robot_Head
-Tiles/Ashen/Purple_Mechanical_Switch
-Tiles/Ashen/Purple_Mechanical_Switch_Glow
-Tiles/Ashen/Sootgrass
-Tiles/Ashen/Sootgrass_Dirt
-Tiles/Ashen/Sootgrass_Foliage
-Tiles/Ashen/Sootgrass_Mud
-Tiles/Ashen/Sootgrass_Seeds
 Tiles/Ashen/Truss_Block_Inverse_Edges
 Tiles/Ashen/Wave_Energy_Converter
 Tiles/Ashen/Wave_Energy_Converter_Glow
@@ -255,13 +221,8 @@ UI/WorldGen/IconRivenHallow
 UI/WorldGen/PreviewEvilAshen
 UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven
-UI/Bestiary_Stat_Background
-UI/Brine_Serpent
-UI/Floppy_Disk
-UI/Quakemaker
 UI/Sprockey
 UI/Star_Soldier_Select
-UI/Trenchmaker_Drawing
 
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Chunk
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Flesh

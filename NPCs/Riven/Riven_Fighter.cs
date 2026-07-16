@@ -1,5 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riven;
@@ -9,8 +8,6 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.World.BiomeData;
-using PegasusLib;
-using System.Collections.Generic;
 using System;
 using System.IO;
 using Terraria;
@@ -21,10 +18,12 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
+using Origins.Core;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Fighter : ModNPC, IRivenEnemy, IWikiNPC, IJournalEntrySource {
+		public static AutoLoadingAsset<Texture2D> glowTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_Glow";
+		public static AutoLoadingAsset<Texture2D> tailTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_Tail";
 		public string EntryName => "Origins/" + typeof(Riven_Protoform_Entry).Name;
 		public class Riven_Protoform_Entry : JournalEntry {
 			public override string TextKey => "Riven_Protoform";
@@ -40,6 +39,8 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
+			AprilFoolsTextures.AddNPC(this);
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref glowTexture, Texture + "_Glow_AF");
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -221,8 +222,6 @@ namespace Origins.NPCs.Riven {
 			NPC.frame.Y = NPC.frame.Height * 0;
 			NPC.frameCounter = 0;
 		}
-		public static AutoLoadingAsset<Texture2D> glowTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_Glow";
-		public static AutoLoadingAsset<Texture2D> tailTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_Tail";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			SpriteEffects effects = NPC.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;

@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Layers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,8 +14,9 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.FeralClaws] = ModContent.ItemType<Gun_Glove>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Gun_Glove>()] = ItemID.FeralClaws;
-            glowmask = Origins.AddGlowMask(this);
+            Origins.AddGlowMask(this);
 			On_Player.ItemCheck_UseArtisanLoaf += On_Player_ItemCheck_UseArtisanLoaf;
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.HandsOn);
 
 		}
 		private void On_Player_ItemCheck_UseArtisanLoaf(On_Player.orig_ItemCheck_UseArtisanLoaf orig, Player self, Item sItem) {
@@ -23,8 +25,6 @@ namespace Origins.Items.Accessories {
 				if (self.ItemAnimationActive && OriginsSets.Items.SwungNoMeleeMelees[sItem.type]) self.OriginPlayer().DoGunGlove();
 			} catch { }
 		}
-
-		static short glowmask;
         public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 18);
 			Item.value = Item.sellPrice(gold: 2);
@@ -36,7 +36,6 @@ namespace Origins.Items.Accessories {
 			Item.shootSpeed = 5;
 			Item.useAmmo = AmmoID.Bullet;
 			Item.UseSound = SoundID.Item10;
-            Item.glowMask = glowmask;
         }
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

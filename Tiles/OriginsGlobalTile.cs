@@ -19,7 +19,7 @@ using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.Tiles {
 	public class OriginsGlobalTile : GlobalTile, IItemObtainabilityProvider {
-		static Dictionary<int, AutoLoadingAsset<Texture2D>> stalactiteTextures;
+		static Dictionary<int, AutoLoadingTexture> stalactiteTextures;
 		public override void Load() {
 			MonoModHooks.Add(typeof(TileLoader).GetMethod(nameof(TileLoader.GetItemDrops)), static (orig_GetItemDrops orig, int x, int y, Tile tileCache, bool includeLargeObjectDrops = false, bool includeAllModdedLargeObjectDrops = false) => {
 				orig(x, y, tileCache, includeLargeObjectDrops, includeAllModdedLargeObjectDrops);
@@ -33,6 +33,9 @@ namespace Origins.Tiles {
 				[ModContent.TileType<Defiled_Ice>()] = "Origins/Tiles/Defiled/Defiled_Icicle",
 				[ModContent.TileType<Primordial_Permafrost>()] = "Origins/Tiles/Riven/Primordial_Permafrost_Icicle"
 			};
+#if DEBUG
+			foreach ((int key, AutoLoadingTexture value) in stalactiteTextures) if (!Main.dedServ && !value.Exists) throw new Exception($"Incorrect (nonexistent) texture for {TileLoader.GetTile(key)} icicle");
+#endif
 		}
 		public override void Unload() {
 			stalactiteTextures = null;

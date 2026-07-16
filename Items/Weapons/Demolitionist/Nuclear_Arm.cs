@@ -1,18 +1,17 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 using Origins.Tiles.Other;
+using Origins.Layers;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Nuclear_Arm : ModItem {
-		static short glowmask;
         public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
+			Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.HandsOn);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.TerraBlade);
@@ -29,7 +28,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = SoundID.Item45;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
-			Item.glowMask = glowmask;
             Item.ArmorPenetration += 3;
         }
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {

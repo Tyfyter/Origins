@@ -19,9 +19,10 @@ namespace Origins.NPCs.Ashen {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 2;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
-				CustomTexturePath = "Origins/UI/Quakemaker_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(0f, 8f),
-				PortraitPositionYOverride = 0f
+				CustomTexturePath = "Origins/UI/Quakemaker", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				Position = new Vector2(25f, 32f),
+				PortraitPositionXOverride = 4,
+				PortraitPositionYOverride = 16f
 			};
 			ModContent.GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
