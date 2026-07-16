@@ -1,8 +1,7 @@
-Total Unused Assets: 235
+Total Unused Assets: 234
 Achievements/The_Signal
 
 Buffs/Sprockey_Buff
-Buffs/Stress_Ball_Buff
 
 Gores/Brine_Drip
 

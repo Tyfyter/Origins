@@ -1487,6 +1487,11 @@ Buffs: {
 		DisplayName: Blade Dance Cooldown
 		Description: Your blades don't need further sharpening
 	}
+
+	Stress_Ball_Buff: {
+		DisplayName: <PH>Stress Ball Buff
+		Description: Mods.Origins.Buffs.Stress_Ball_Buff.Description
+	}
 }
 
 DamageClassName: {

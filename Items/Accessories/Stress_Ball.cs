@@ -72,6 +72,7 @@ namespace Origins.Items.Accessories {
 					if (originPlayer.stressBallStrength >= SqueezeCount) {
 						originPlayer.stressBallStrength = 1;
 						originPlayer.stressBallTimer = 0;
+						player.AddBuff(ModContent.BuffType<Stress_Ball_Buff>(), 1);
 					}
 				}
 			}
@@ -104,6 +105,25 @@ namespace Origins.Items.Accessories {
 			data.sourceRect = null;
 			data.color *= 0.5f + (originPlayer.stressBallStrength + 1 - strength) * 0.5f;
 			data.Draw(spriteBatch);
+		}
+	}
+	public class Stress_Ball_Buff : ModBuff {
+		public override string Texture => "Origins/Buffs/Stress_Ball_Buff";
+		public override void SetStaticDefaults() {
+			BuffID.Sets.TimeLeftDoesNotDecrease[Type] = true;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			float stressBallStrength = player.OriginPlayer().stressBallStrength;
+			if (stressBallStrength <= 0) {
+				player.DelBuff(buffIndex--);
+			} else {
+				int time = (int)(stressBallStrength * Stress_Ball.BuffDuration);
+				Max(ref time, 1);
+				player.buffTime[buffIndex] = time;
+			}
+		}
+		public override bool RightClick(int buffIndex) {
+			return base.RightClick(buffIndex);
 		}
 	}
 }
