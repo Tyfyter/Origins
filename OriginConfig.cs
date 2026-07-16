@@ -232,7 +232,7 @@ namespace Origins {
 			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
 		}
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
-		public DebugConfig DebugMenuButton { get; set; }  = new();
+		public DebugConfig DebugMenuButton { get; set; } = new();
 		internal static bool forceReloadLanguage = false;
 		public override void OnChanged() {
 			if (forceReloadLanguage) {
@@ -742,7 +742,7 @@ namespace Origins {
 			UI/Lore/Journal_Scroll
 			UI/Lore/Journal_Search
 			Untitled1246_20260615214754
-			""";
+			""";//*/ github desktop doesn't recognize """ as string delimiters, so this will hopefully make it stop thinking the entire rest of the file is a comment
 			builder.Append(Regex.Escape(expectedUnusedAssets));
 			builder.Replace("\\n", "|");
 			builder.Replace("\\*", ".*");
@@ -756,32 +756,49 @@ namespace Origins {
 					if (Origins.instance.Version <= new Version(0, 5, 3, 21)) ExpectedUnusedAssets(builder);
 					Regex expected = new(builder.ToString(), RegexOptions.Compiled);
 					Assembly thisAssembly = GetType().Assembly;
-					foreach (ModTree tree in Origins.instance.GetContent<ModTree>()) {
-						tree.GetTexture();
-						tree.GetTopTextures();
-						tree.GetBranchTextures();
-					}
 					MethodInfo doLoad = ((Delegate)LoadAsset<Texture2D>).Method.GetGenericMethodDefinition();
 					foreach (ILoadable content in Origins.instance.GetContent()) {
-						if (content is ModItem item) {
+						switch (content) {
+							case ModItem item:
 							Main.instance.LoadItem(item.Type);
-						} else if (content is ModProjectile proj) {
+							break;
+
+							case ModProjectile proj:
 							Main.instance.LoadProjectile(proj.Type);
 							ModContent.RequestIfExists<Texture2D>(proj.GlowTexture, out _);
-						} else if (content is ModNPC npc) {
+							break;
+
+							case ModNPC npc:
 							Main.instance.LoadNPC(npc.Type);
 							if (npc is Glowing_Mod_NPC glowingNPC) _ = glowingNPC.GlowTexture;
-						} else if (content is ModTile tile) {
+							if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(npc.Type, out NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers) && drawModifiers.CustomTexturePath is string texPath) ModContent.RequestIfExists<Texture2D>(texPath, out _);
+							break;
+
+							case ModTile tile:
 							Main.instance.LoadTiles(tile.Type);
-						} else if (content is ModWall wall) {
+							break;
+
+							case ModWall wall:
 							Main.instance.LoadWall(wall.Type);
+							break;
+
+							case ModTree tree:
+							tree.GetTexture();
+							tree.GetTopTextures();
+							tree.GetBranchTextures();
+							break;
+
+							case ModCactus cactus:
+							cactus.GetTexture();
+							cactus.GetFruitTexture();
+							break;
 						}
 						if (content is ILoadExtraTextures extras) {
 							extras.LoadTextures();
 						}
 #if DEBUG
 						foreach (FieldInfo @field in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
-							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
+							if (@field.FieldType.IsGeneric(typeof(AutoLoadingAsset<>))) {
 								Type assetType = @field.FieldType.GenericTypeArguments[0];
 								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
 								load.Invoke(null, [@field.GetValue(content)]);
@@ -789,12 +806,19 @@ namespace Origins {
 								foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)@field.GetValue(content)) {
 									tex.LoadAsset();
 								}
+							} else if (@field.FieldType.IsGeneric(typeof(Dictionary<,>)) && @field.FieldType.GenericTypeArguments[1].IsGeneric(typeof(AutoLoadingAsset<>))) {
+								Type assetType = @field.FieldType.GenericTypeArguments[1].GenericTypeArguments[0];
+								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+								object dict = @field.GetValue(content);
+								foreach (object tex in (IEnumerable)@field.FieldType.GetProperty(nameof(Dictionary<,>.Values)).GetValue(dict)) {
+									load.Invoke(null, [tex]);
+								}
 							} else if (@field.FieldType == typeof(AutoGlowingTexture)) {
 								((IBatchLoadable)@field.GetValue(content)).Load();
 							}
 						}
 						foreach (PropertyInfo property in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
-							if (property.PropertyType  == typeof(Texture2D)) {
+							if (property.PropertyType == typeof(Texture2D)) {
 								property.GetValue(content);
 							}
 						}
@@ -803,7 +827,6 @@ namespace Origins {
 #if DEBUG
 					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
 						if (type.Name.Contains('<')) continue;
-						if (type == typeof(Dismay_Spike)) ;
 						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
 							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
 								Type assetType = @field.FieldType.GenericTypeArguments[0];
@@ -1032,7 +1055,7 @@ namespace Origins {
 			}
 			List<string> unobtainable = [];
 			foreach (ModItem item in Origins.instance.GetContent<ModItem>()) {
-				if (!includeExpected && ShouldBeUnobtainable(item)) continue; 
+				if (!includeExpected && ShouldBeUnobtainable(item)) continue;
 				if (!obtainableItems.Contains(item.Type)) {
 					if (missingIngredients.TryGetValue(item.Type, out HashSet<int> missing)) {
 						unobtainable.Add($"{item.Name}: [{string.Join(", ", missing.Select(Lang.GetItemName))}]");

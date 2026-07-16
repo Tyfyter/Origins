@@ -1,4 +1,4 @@
-Total Unused Assets: 297
+Total Unused Assets: 285
 Achievements/The_Signal
 
 Buffs/Sprockey_Buff
@@ -259,8 +259,6 @@ Sounds/Custom/WindUpToy
 Sounds/Custom/WindUpToyStart
 
 Tiles/Ashen/Artifiber_Tree_Tops_Glow
-Tiles/Ashen/Ashen_Cactus
-Tiles/Ashen/Ashen_Cactus_Fruit
 Tiles/Ashen/Ashen_Icicle
 Tiles/Ashen/Beacon_Light_Glow
 Tiles/Ashen/Cargo_Elevator_Door_Backend
@@ -287,8 +285,6 @@ Tiles/Banners/Malfunctioning_Missile_Banner_Item
 Tiles/Banners/VV13_Banner
 Tiles/Banners/VV13_Banner_Item
 
-Tiles/Defiled/Defiled_Cactus
-Tiles/Defiled/Defiled_Cactus_Fruit
 Tiles/Defiled/Defiled_Cactus_Item
 Tiles/Defiled/Defiled_Heart_Glow
 Tiles/Defiled/Defiled_Icicle
@@ -305,8 +301,6 @@ Tiles/Overlays/Merge/Tainted_Overlay
 Tiles/Riven/Calcified_Spug_Flesh
 Tiles/Riven/Calcified_Spug_Flesh_Jelly
 Tiles/Riven/Primordial_Permafrost_Icicle
-Tiles/Riven/Riven_Cactus
-Tiles/Riven/Riven_Cactus_Fruit
 
 UI/Logos/Ashen_Terraria
 UI/Logos/Ashen_Terraria_Glow
@@ -323,18 +317,12 @@ UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven
 UI/Bestiary_Stat_Background
 UI/Brine_Serpent
-UI/Cleaver_Preview
-UI/Defiled_Digger_Preview
 UI/Floppy_Disk
 UI/Logic_BG_Template
 UI/Quakemaker
-UI/Rivenator_Preview
-UI/Savage_Whip_Preview
-UI/Slime_Worm_Preview
 UI/Sprockey
 UI/Star_Soldier_Select
 UI/Trenchmaker_Drawing
-UI/World_Cracker_Preview
 
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Chunk
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Flesh

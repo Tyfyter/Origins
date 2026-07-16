@@ -3107,6 +3107,9 @@ namespace Origins {
 		}
 		public static string GetDefaultTMLName(this Type type) => PegasusExt.GetDefaultTMLName(type);
 		public static string GetDefaultTMLName(this Type type, string suffix) => PegasusExt.GetDefaultTMLName(type) + suffix;
+		public static bool IsGeneric(this Type self, Type expectedType) {
+			return self.IsGenericType && self.GetGenericTypeDefinition() == expectedType;
+		}
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
 			T[] possibleFlags = Enum.GetValues<T>();
 			for (int i = 0; i < possibleFlags.Length; i++) {

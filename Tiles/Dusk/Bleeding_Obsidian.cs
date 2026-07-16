@@ -1,16 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
-	public class Bleeding_Obsidian : OriginTile {
+	public class Bleeding_Obsidian : OriginTile, IGlowingModTile {
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public sealed override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color.DoFancyGlow(new(0.372f, 0.067f, 0.492f), tile.TileColor);
+		}
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -28,7 +37,11 @@ namespace Origins.Tiles.Dusk {
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			yield return new Item(ItemType<Bleeding_Obsidian_Shard>(), Main.rand.Next(4, 7));
 		}
-
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
+		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			float m = 0.05f;
 			r = 37.2f * m;
