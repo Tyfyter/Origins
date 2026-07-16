@@ -21,6 +21,7 @@ namespace Origins.Tiles.Dusk {
 			color.DoFancyGlow(new(0.372f, 0.067f, 0.492f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;

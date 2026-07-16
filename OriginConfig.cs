@@ -619,9 +619,19 @@ namespace Origins {
 		static void ExpectedUnusedAssets(StringBuilder builder) {
 			string expectedUnusedAssets =
 			"""
+			*/ArmorTemplate_v1
+			*WIP
+			*WIPs
+			*Example
+			*Template
+			*/Example*
 			Items/Armor/Amber/Explosive_Resin*
 			Items/Armor/Chambersite/Chambersite
 			Items/Armor/Defiled/Defiled_Helmet_Head_EyesClosed
+			Items/Armor/Fiberglass/Fiberglass_Armor
+			Items/Armor/Lost/Defiled_Exhaustion_Buff
+			Items/Armor/Lost/Lost_Breastplate_Tangela
+			Items/Armor/Lost/Lost_Helm_Tangela
 			Buffs/Brine_Latcher_Debuff
 			Buffs/Confection_Assimilation
 			Buffs/Contagion_Assimilation
@@ -637,7 +647,6 @@ namespace Origins {
 			Items/Tools/Miter_Saw_Blade
 			Items/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Wings_AF
 			Items/Weapons/Ammo/Canisters/Oil_Canister_II
-			Items/Weapons/Demolitionist/Awe_Bomb_P
 			Items/Weapons/Demolitionist/Crystal_Grenade_*
 			Items/Weapons/Demolitionist/Grenade_Lawnchair_Alt
 			Items/Weapons/Demolitionist/Holy_Hand_Grenade_Alt
@@ -646,6 +655,7 @@ namespace Origins {
 			Items/Weapons/Demolitionist/Sonar_Dynamite_Sonar
 			Items/Weapons/Felnum/*
 			Items/Weapons/Magic/Nerve_Flan_P
+			Items/Weapons/Melee/_Tyrfing
 			Items/Weapons/Melee/Chromtain_Smasher
 			Items/Weapons/Melee/Defiled_Biome_Blade
 			Items/Weapons/Melee/Riven_Biome_Blade
@@ -700,6 +710,7 @@ namespace Origins {
 			Sounds/Custom/Ambience/RivenAmbience
 			Sounds/Custom/Ambience/SCP3_Ambience
 			Sounds/Seer/*
+			Sounds/*/*_Sample
 			Textures/Procedural/*
 			Textures/All_Torn
 			Textures/Cell_Noise
@@ -744,7 +755,9 @@ namespace Origins {
 			Untitled1246_20260615214754
 			""";//*/ github desktop doesn't recognize """ as string delimiters, so this will hopefully make it stop thinking the entire rest of the file is a comment
 			builder.Append(Regex.Escape(expectedUnusedAssets));
-			builder.Replace("\\n", "|");
+			builder.Insert(0, '^');
+			builder.Append('$');
+			builder.Replace("\\n", "$|^");
 			builder.Replace("\\*", ".*");
 		}
 		public bool CheckTextureUsage {
@@ -798,24 +811,7 @@ namespace Origins {
 						}
 #if DEBUG
 						foreach (FieldInfo @field in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
-							if (@field.FieldType.IsGeneric(typeof(AutoLoadingAsset<>))) {
-								Type assetType = @field.FieldType.GenericTypeArguments[0];
-								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-								load.Invoke(null, [@field.GetValue(content)]);
-							} else if (@field.FieldType.IsAssignableTo(typeof(IEnumerable<AutoLoadingTexture>))) {
-								foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)@field.GetValue(content)) {
-									tex.LoadAsset();
-								}
-							} else if (@field.FieldType.IsGeneric(typeof(Dictionary<,>)) && @field.FieldType.GenericTypeArguments[1].IsGeneric(typeof(AutoLoadingAsset<>))) {
-								Type assetType = @field.FieldType.GenericTypeArguments[1].GenericTypeArguments[0];
-								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-								object dict = @field.GetValue(content);
-								foreach (object tex in (IEnumerable)@field.FieldType.GetProperty(nameof(Dictionary<,>.Values)).GetValue(dict)) {
-									load.Invoke(null, [tex]);
-								}
-							} else if (@field.FieldType == typeof(AutoGlowingTexture)) {
-								((IBatchLoadable)@field.GetValue(content)).Load();
-							}
+							TryLoadFieldAssets(@field, content);
 						}
 						foreach (PropertyInfo property in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
 							if (property.PropertyType == typeof(Texture2D)) {
@@ -828,13 +824,33 @@ namespace Origins {
 					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
 						if (type.Name.Contains('<')) continue;
 						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
-							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
-								Type assetType = @field.FieldType.GenericTypeArguments[0];
-								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-								load.Invoke(null, [@field.GetValue(null)]);
-							}
+							TryLoadFieldAssets(@field, null);
 						}
 					}
+					void TryLoadFieldAssets(FieldInfo @field, object instance) {
+						if (@field.FieldType.IsGenericTypeDefinition) return;
+						if (@field.DeclaringType.IsGenericTypeDefinition) return;
+						object GetFieldValue() => @field.GetValue(instance);
+						if (@field.FieldType.IsGeneric(typeof(AutoLoadingAsset<>))) {
+							Type assetType = @field.FieldType.GenericTypeArguments[0];
+							if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+							load.Invoke(null, [GetFieldValue()]);
+						} else if (@field.FieldType.IsAssignableTo(typeof(IEnumerable<AutoLoadingTexture>))) {
+							foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)GetFieldValue()) {
+								tex.LoadAsset();
+							}
+						} else if (@field.FieldType.IsGeneric(typeof(Dictionary<,>)) && @field.FieldType.GenericTypeArguments[1].IsGeneric(typeof(AutoLoadingAsset<>))) {
+							Type assetType = @field.FieldType.GenericTypeArguments[1].GenericTypeArguments[0];
+							if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+							object dict = GetFieldValue();
+							foreach (object tex in (IEnumerable)@field.FieldType.GetProperty(nameof(Dictionary<,>.Values)).GetValue(dict)) {
+								load.Invoke(null, [tex]);
+							}
+						} else if (@field.FieldType == typeof(AutoGlowingTexture)) {
+							((IBatchLoadable)GetFieldValue()).Load();
+						}
+					}
+					AprilFoolsAssetSwitcher<AutoLoadingTexture>.ForAllAFAssets(a => a.LoadAsset());
 #endif
 
 					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
@@ -846,20 +862,14 @@ namespace Origins {
 					List<string> unused = [];
 					HashSet<string> loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
 					loadedAssets.Add("icon");
-					loadedAssets.Add("Buffs/BuffTemplate");
-					loadedAssets.Add("Buffs/DebuffTemplate");
 					loadedAssets.Add("Hair/HairSource/ExampleHair");
-					loadedAssets.Add("Hair/HairSource/Hair_Template");
 					loadedAssets.Add("Items/Armor/Armor_Conversion");
-					loadedAssets.Add("Items/Armor/ArmorTemplate_v1");
 					loadedAssets.Add("Items/Armor/index");
-					loadedAssets.Add("NPCs/BossBarTemplate");
 					loadedAssets.Add("NPCs/Brine/Food_Chain");
 					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty");
 					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Item_Empty");
 					loadedAssets.Add("Tiles/BossDrops/Relic_Examples");
 					loadedAssets.Add("Tiles/interesting_tile");
-					loadedAssets.Add("Tiles/Tile_Template");
 					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty_Item");
 					foreach (ModSceneEffect biome in Origins.instance.GetContent<ModSceneEffect>()) {
 						if (biome.MapBackground is not null) loadedAssets.Add(biome.MapBackground["Origins/".Length..]);
@@ -885,6 +895,7 @@ namespace Origins {
 					}
 					LoadSounds(typeof(Origins.Sounds));
 					foreach (Type type in typeof(Origins.Sounds).GetNestedTypes()) LoadSounds(type);
+					foreach (AEnvironmentSound sound in EnvironmentSounds.AllSounds) LoadSounds(sound.GetType());
 					LoadSounds(typeof(Keytar));
 					void LoadSounds(Type type) {
 						foreach (FieldInfo @field in type.GetFields()) {

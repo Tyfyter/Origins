@@ -48,6 +48,7 @@ namespace Origins.Core {
 				}
 			}
 		}
+		internal static IEnumerable<AEnvironmentSound> AllSounds => Sounds;
 	}
 	public abstract class AEnvironmentSound {
 		public int Type { get; private set; } = -1;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using PegasusLib;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -24,6 +25,9 @@ namespace Origins.Core {
 				(RefGet<TAsset> slot, TAsset afOn, TAsset afOff) = options[i];
 				slot() = lastAF ? afOn : afOff;
 			}
+		}
+		public static void ForAllAFAssets(Action<TAsset> action) {
+			foreach ((_, TAsset afOn, _) in options) action(afOn);
 		}
 	}
 	/// <summary>

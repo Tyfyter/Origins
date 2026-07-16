@@ -13,6 +13,13 @@
 		<UpToDateCheckInput Include="effects/*.fx" />
 	</ItemGroup>
 	<ItemGroup>
+	  <AdditionalFiles Remove=".vs\**" />
+	  <Compile Remove=".vs\**" />
+	  <EmbeddedResource Remove=".vs\**" />
+	  <None Remove=".vs\**" />
+	  <UpToDateCheckInput Remove=".vs\**" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="AlchemistNPCLite">
 			<HintPath>..\ModAssemblies\AlchemistNPCLite_v1.9.8.dll</HintPath>
 		</Reference>

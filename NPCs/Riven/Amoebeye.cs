@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Gores.NPCs;
 using Origins.Items.Materials;
@@ -34,6 +35,8 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			ID = Type;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
+			AprilFoolsTextures.AddNPC(this);
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref glowTexture, Texture + "_Glow_AF");
 		}
 		public bool? Hardmode => true;
 		public override void SetDefaults() {
