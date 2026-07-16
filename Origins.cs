@@ -1044,6 +1044,15 @@ namespace Origins {
 				stopwatch.Stop();
 				instance.Logger.Info($"Finished querying unobtainable items in {stopwatch.Elapsed}");
 
+				RestartStopwatch();
+				List<string> unused = DebugConfig.ListUnusedAssets();
+				if (unused.Count > 0) {
+					AddReason("Unused assets:");
+					unused.ForEach(AddReason);
+				}
+				stopwatch.Stop();
+				instance.Logger.Info($"Finished querying unused assets in {stopwatch.Elapsed}");
+
 				Regex locIssue = new Regex("<(PH|SIC)>", RegexOptions.Compiled);
 				RestartStopwatch();
 				foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins").GetDescendants()) {

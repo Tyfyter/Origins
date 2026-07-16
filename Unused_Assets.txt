@@ -1,33 +1,35 @@
-Total Unused Assets: 199
+Total Unused Assets: 200
 Achievements/The_Signal
 
 Buffs/Sprockey_Buff
+
+CrossMod/Fargos/Items/Mech_Figurine
 
 Gores/Brine_Drip
 
 Items/Accessories/Binding_Book_P2
 Items/Accessories/Drill_Ravel
 
-Items/Mounts/Star Soldier/Star_Soldier
-Items/Mounts/Star Soldier/Star_Soldier_Blade
-Items/Mounts/Star Soldier/Star_Soldier_Blade_Glow
-Items/Mounts/Star Soldier/Star_Soldier_Calf
-Items/Mounts/Star Soldier/Star_Soldier_Drone
-Items/Mounts/Star Soldier/Star_Soldier_Drone_Glow
-Items/Mounts/Star Soldier/Star_Soldier_Droner
-Items/Mounts/Star Soldier/Star_Soldier_Droner_Glow
-Items/Mounts/Star Soldier/Star_Soldier_Foot
-Items/Mounts/Star Soldier/Star_Soldier_Forearm
-Items/Mounts/Star Soldier/Star_Soldier_Glow
-Items/Mounts/Star Soldier/Star_Soldier_Gun
-Items/Mounts/Star Soldier/Star_Soldier_Laser
-Items/Mounts/Star Soldier/Star_Soldier_Laser_Glow
-Items/Mounts/Star Soldier/Star_Soldier_Pod
-Items/Mounts/Star Soldier/Star_Soldier_Pod_Missile
-Items/Mounts/Star Soldier/Star_Soldier_Pod_Missile_Glow
-Items/Mounts/Star Soldier/Star_Soldier_Shoulder
-Items/Mounts/Star Soldier/Star_Soldier_Thigh
-Items/Mounts/Star Soldier/Star_Soldier_Wagon
+Items/Mounts/Star_Soldier/Star_Soldier
+Items/Mounts/Star_Soldier/Star_Soldier_Blade
+Items/Mounts/Star_Soldier/Star_Soldier_Blade_Glow
+Items/Mounts/Star_Soldier/Star_Soldier_Calf
+Items/Mounts/Star_Soldier/Star_Soldier_Drone
+Items/Mounts/Star_Soldier/Star_Soldier_Drone_Glow
+Items/Mounts/Star_Soldier/Star_Soldier_Droner
+Items/Mounts/Star_Soldier/Star_Soldier_Droner_Glow
+Items/Mounts/Star_Soldier/Star_Soldier_Foot
+Items/Mounts/Star_Soldier/Star_Soldier_Forearm
+Items/Mounts/Star_Soldier/Star_Soldier_Glow
+Items/Mounts/Star_Soldier/Star_Soldier_Gun
+Items/Mounts/Star_Soldier/Star_Soldier_Laser
+Items/Mounts/Star_Soldier/Star_Soldier_Laser_Glow
+Items/Mounts/Star_Soldier/Star_Soldier_Pod
+Items/Mounts/Star_Soldier/Star_Soldier_Pod_Missile
+Items/Mounts/Star_Soldier/Star_Soldier_Pod_Missile_Glow
+Items/Mounts/Star_Soldier/Star_Soldier_Shoulder
+Items/Mounts/Star_Soldier/Star_Soldier_Thigh
+Items/Mounts/Star_Soldier/Star_Soldier_Wagon
 
 Items/Other/Consumables/Budget_Fairy_Dust
 Items/Other/Consumables/Potion_of_Projection

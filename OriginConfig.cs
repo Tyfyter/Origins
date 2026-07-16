@@ -766,182 +766,217 @@ namespace Origins {
 			builder.Replace("\\n", "$|^");
 			builder.Replace("\\*", ".*");
 		}
-		public bool CheckTextureUsage {
-			get => default;
-			set {
-				if (value) {
-					StringBuilder builder = new();
-					// check version so we don't forget that the list may be outdated
-					if (Origins.instance.Version <= new Version(0, 5, 3, 21)) ExpectedUnusedAssets(builder);
-					Regex expected = new(builder.ToString(), RegexOptions.Compiled);
-					Assembly thisAssembly = GetType().Assembly;
-					MethodInfo doLoad = ((Delegate)LoadAsset<Texture2D>).Method.GetGenericMethodDefinition();
-					foreach (ILoadable content in Origins.instance.GetContent()) {
-						switch (content) {
-							case ModItem item:
-							Main.instance.LoadItem(item.Type);
-							break;
+		public static List<string> ListUnusedAssets(bool includeCrossMod = false) {
+			StringBuilder builder = new();
+			// check version so we don't forget that the list may be outdated
+			if (Origins.instance.Version <= new Version(0, 5, 3, 21)) ExpectedUnusedAssets(builder);
+			Regex expected = new(builder.ToString(), RegexOptions.Compiled);
+			Assembly thisAssembly = Origins.instance.Code;
+			MethodInfo doLoad = ((Delegate)LoadAsset<Texture2D>).Method.GetGenericMethodDefinition();
+			foreach (ILoadable content in Origins.instance.GetContent()) {
+				switch (content) {
+					case ModItem item:
+					Main.instance.LoadItem(item.Type);
+					break;
 
-							case ModProjectile proj:
-							Main.instance.LoadProjectile(proj.Type);
-							ModContent.RequestIfExists<Texture2D>(proj.GlowTexture, out _);
-							break;
+					case ModProjectile proj:
+					Main.instance.LoadProjectile(proj.Type);
+					ModContent.RequestIfExists<Texture2D>(proj.GlowTexture, out _);
+					break;
 
-							case ModNPC npc:
-							Main.instance.LoadNPC(npc.Type);
-							if (npc is Glowing_Mod_NPC glowingNPC) _ = glowingNPC.GlowTexture;
-							if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(npc.Type, out NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers) && drawModifiers.CustomTexturePath is string texPath) ModContent.RequestIfExists<Texture2D>(texPath, out _);
-							break;
+					case ModNPC npc:
+					Main.instance.LoadNPC(npc.Type);
+					if (npc is Glowing_Mod_NPC glowingNPC) _ = glowingNPC.GlowTexture;
+					if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(npc.Type, out NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers) && drawModifiers.CustomTexturePath is string texPath) ModContent.RequestIfExists<Texture2D>(texPath, out _);
+					break;
 
-							case ModTile tile:
-							Main.instance.LoadTiles(tile.Type);
-							break;
+					case ModTile tile:
+					Main.instance.LoadTiles(tile.Type);
+					break;
 
-							case ModWall wall:
-							Main.instance.LoadWall(wall.Type);
-							break;
+					case ModWall wall:
+					Main.instance.LoadWall(wall.Type);
+					break;
 
-							case ModTree tree:
-							tree.GetTexture();
-							tree.GetTopTextures();
-							tree.GetBranchTextures();
-							break;
+					case ModTree tree:
+					tree.GetTexture();
+					tree.GetTopTextures();
+					tree.GetBranchTextures();
+					break;
 
-							case ModCactus cactus:
-							cactus.GetTexture();
-							cactus.GetFruitTexture();
-							break;
-						}
-						if (content is ILoadExtraTextures extras) {
-							extras.LoadTextures();
-						}
+					case ModCactus cactus:
+					cactus.GetTexture();
+					cactus.GetFruitTexture();
+					break;
+				}
+				if (content is ILoadExtraTextures extras) {
+					extras.LoadTextures();
+				}
 #if DEBUG
-						foreach (FieldInfo @field in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
-							TryLoadFieldAssets(@field, content);
-						}
-						foreach (PropertyInfo property in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
-							if (property.PropertyType == typeof(Texture2D)) {
-								property.GetValue(content);
-							}
-						}
+				foreach (FieldInfo @field in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
+					TryLoadFieldAssets(@field, content);
+				}
+				foreach (PropertyInfo property in content.GetType().WalkWhile(t => t.Assembly == thisAssembly, t => t.BaseType).SelectMany(t => t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))) {
+					if (property.PropertyType == typeof(Texture2D)) {
+						property.GetValue(content);
+					}
+				}
 #endif
-					}
+			}
 #if DEBUG
-					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
-						if (type.Name.Contains('<')) continue;
-						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
-							TryLoadFieldAssets(@field, null);
-						}
+			foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
+				if (type.Name.Contains('<')) continue;
+				foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+					TryLoadFieldAssets(@field, null);
+				}
+			}
+			void TryLoadFieldAssets(FieldInfo @field, object instance) {
+				if (@field.FieldType.IsGenericTypeDefinition) return;
+				if (@field.DeclaringType.IsGenericTypeDefinition) return;
+				object GetFieldValue() => @field.GetValue(instance);
+				if (@field.FieldType.IsGeneric(typeof(AutoLoadingAsset<>))) {
+					Type assetType = @field.FieldType.GenericTypeArguments[0];
+					if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+					load.Invoke(null, [GetFieldValue()]);
+				} else if (@field.FieldType.IsAssignableTo(typeof(IEnumerable<AutoLoadingTexture>))) {
+					foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)GetFieldValue()) {
+						tex.LoadAsset();
 					}
-					void TryLoadFieldAssets(FieldInfo @field, object instance) {
-						if (@field.FieldType.IsGenericTypeDefinition) return;
-						if (@field.DeclaringType.IsGenericTypeDefinition) return;
-						object GetFieldValue() => @field.GetValue(instance);
-						if (@field.FieldType.IsGeneric(typeof(AutoLoadingAsset<>))) {
-							Type assetType = @field.FieldType.GenericTypeArguments[0];
-							if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-							load.Invoke(null, [GetFieldValue()]);
-						} else if (@field.FieldType.IsAssignableTo(typeof(IEnumerable<AutoLoadingTexture>))) {
-							foreach (AutoLoadingTexture tex in (IEnumerable<AutoLoadingTexture>)GetFieldValue()) {
-								tex.LoadAsset();
-							}
-						} else if (@field.FieldType.IsGeneric(typeof(Dictionary<,>)) && @field.FieldType.GenericTypeArguments[1].IsGeneric(typeof(AutoLoadingAsset<>))) {
-							Type assetType = @field.FieldType.GenericTypeArguments[1].GenericTypeArguments[0];
-							if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-							object dict = GetFieldValue();
-							foreach (object tex in (IEnumerable)@field.FieldType.GetProperty(nameof(Dictionary<,>.Values)).GetValue(dict)) {
-								load.Invoke(null, [tex]);
-							}
-						} else if (@field.FieldType == typeof(AutoGlowingTexture)) {
-							((IBatchLoadable)GetFieldValue()).Load();
-						}
+				} else if (@field.FieldType.IsGeneric(typeof(Dictionary<,>)) && @field.FieldType.GenericTypeArguments[1].IsGeneric(typeof(AutoLoadingAsset<>))) {
+					Type assetType = @field.FieldType.GenericTypeArguments[1].GenericTypeArguments[0];
+					if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+					object dict = GetFieldValue();
+					foreach (object tex in (IEnumerable)@field.FieldType.GetProperty(nameof(Dictionary<,>.Values)).GetValue(dict)) {
+						load.Invoke(null, [tex]);
 					}
-					AprilFoolsAssetSwitcher<AutoLoadingTexture>.ForAllAFAssets(a => a.LoadAsset());
+				} else if (@field.FieldType == typeof(AutoGlowingTexture)) {
+					((IBatchLoadable)GetFieldValue()).Load();
+				}
+			}
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.ForAllAFAssets(a => a.LoadAsset());
 #endif
 
-					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
-						glowLayer.LoadAllTextures();
-					}
-					foreach (Accessory_Tangela_Layer tangelaLayer in Origins.instance.GetContent<Accessory_Tangela_Layer>()) {
-						tangelaLayer.LoadAllTextures();
-					}
-					List<string> unused = [];
-					HashSet<string> loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
-					loadedAssets.Add("icon");
-					loadedAssets.Add("Hair/HairSource/ExampleHair");
-					loadedAssets.Add("Items/Armor/Armor_Conversion");
-					loadedAssets.Add("Items/Armor/index");
-					loadedAssets.Add("NPCs/Brine/Food_Chain");
-					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty");
-					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Item_Empty");
-					loadedAssets.Add("Tiles/BossDrops/Relic_Examples");
-					loadedAssets.Add("Tiles/interesting_tile");
-					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty_Item");
-					Regex jimageRegex = new("(?<!\\\\)\\[(?<tag>jimage)(\\/(?<options>[^:]+))?:(?<text>.+?)(?<!\\\\)\\]", RegexOptions.Compiled);
-					foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins.Journal").GetDescendants()) {
-						foreach (Match match in jimageRegex.Matches(branch.TextValue)) {
-							string text = match.Groups["text"].Value;
-							if (text.StartsWith("Origins/")) loadedAssets.Add(text["Origins/".Length..]);
-						}
-					}
-					foreach (ModSceneEffect biome in Origins.instance.GetContent<ModSceneEffect>()) {
-						if (biome.MapBackground is not null) loadedAssets.Add(biome.MapBackground["Origins/".Length..]);
-						if (biome is ModBiome { BackgroundPath: string backgroundPath }) loadedAssets.Add(backgroundPath["Origins/".Length..]);
-						if (biome is ModBiome { BestiaryIcon: string bestiaryIcon }) loadedAssets.Add(bestiaryIcon["Origins/".Length..]);
-					}
-					Span<string> altLibWorldVariants = [
-						"Normal",
+			foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
+				glowLayer.LoadAllTextures();
+			}
+			foreach (Accessory_Tangela_Layer tangelaLayer in Origins.instance.GetContent<Accessory_Tangela_Layer>()) {
+				tangelaLayer.LoadAllTextures();
+			}
+			List<string> unused = [];
+			HashSet<string> loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
+			loadedAssets.Add("icon");
+			loadedAssets.Add("Hair/HairSource/ExampleHair");
+			loadedAssets.Add("Items/Armor/Armor_Conversion");
+			loadedAssets.Add("Items/Armor/index");
+			loadedAssets.Add("NPCs/Brine/Food_Chain");
+			loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty");
+			loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Item_Empty");
+			loadedAssets.Add("Tiles/BossDrops/Relic_Examples");
+			loadedAssets.Add("Tiles/interesting_tile");
+			loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty_Item");
+
+			#region cross mod
+			// Has to be done manually to some degree
+			loadedAssets.Add("CrossMod/Fargos/Items/Aether_Orb");
+			loadedAssets.Add("CrossMod/Fargos/Items/Ashen_Chest");
+			loadedAssets.Add("CrossMod/Fargos/Items/AshenRenewal");
+			loadedAssets.Add("CrossMod/Fargos/Items/AshenSupremeRenewal");
+			loadedAssets.Add("CrossMod/Fargos/Items/Defiled_Chest");
+			loadedAssets.Add("CrossMod/Fargos/Items/DefiledRenewal");
+			loadedAssets.Add("CrossMod/Fargos/Items/DefiledSupremeRenewal");
+			loadedAssets.Add("CrossMod/Fargos/Items/High_Powered_Green_Laser");
+			loadedAssets.Add("CrossMod/Fargos/Items/Riven_Chest");
+			loadedAssets.Add("CrossMod/Fargos/Items/RivenRenewal");
+			loadedAssets.Add("CrossMod/Fargos/Items/RivenSupremeRenewal");
+
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Defiled_Storage_Core");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit_Glow");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit_Item");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Defiled_Storage_Upgrade");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Encrusted_Storage_Core");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit_Glow");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit_Item");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Encrusted_Storage_Upgrade");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Core");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit_Glow");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit_Item");
+			loadedAssets.Add("CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Upgrade");
+			#endregion
+			Regex jimageRegex = new("(?<!\\\\)\\[(?<tag>jimage)(\\/(?<options>[^:]+))?:(?<text>.+?)(?<!\\\\)\\]", RegexOptions.Compiled);
+			foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins.Journal").GetDescendants()) {
+				foreach (Match match in jimageRegex.Matches(branch.TextValue)) {
+					string text = match.Groups["text"].Value;
+					if (text.StartsWith("Origins/")) loadedAssets.Add(text["Origins/".Length..]);
+				}
+			}
+			foreach (ModSceneEffect biome in Origins.instance.GetContent<ModSceneEffect>()) {
+				if (biome.MapBackground is not null) loadedAssets.Add(biome.MapBackground["Origins/".Length..]);
+				if (biome is ModBiome { BackgroundPath: string backgroundPath }) loadedAssets.Add(backgroundPath["Origins/".Length..]);
+				if (biome is ModBiome { BestiaryIcon: string bestiaryIcon }) loadedAssets.Add(bestiaryIcon["Origins/".Length..]);
+			}
+			Span<string> altLibWorldVariants = [
+				"Normal",
 						"ForTheWorthy",
 						"NotTheBees",
 						"Anniversary",
 						"DontStarve",
 						"RemixWorld"
-					];
-					foreach (AltBiome biome in Origins.instance.GetContent<AltBiome>()) {
-						if (biome.IconSmall is not null) loadedAssets.Add(biome.IconSmall["Origins/".Length..]);
-						if (biome.WorldIcon is not null) {
-							string @base = biome.WorldIcon["Origins/".Length..];
-							for (int i = 0; i < altLibWorldVariants.Length; i++) {
-								loadedAssets.Add(@base + altLibWorldVariants[i]);
-							}
-						}
+			];
+			foreach (AltBiome biome in Origins.instance.GetContent<AltBiome>()) {
+				if (biome.IconSmall is not null) loadedAssets.Add(biome.IconSmall["Origins/".Length..]);
+				if (biome.WorldIcon is not null) {
+					string @base = biome.WorldIcon["Origins/".Length..];
+					for (int i = 0; i < altLibWorldVariants.Length; i++) {
+						loadedAssets.Add(@base + altLibWorldVariants[i]);
 					}
-					LoadSounds(typeof(Origins.Sounds));
-					foreach (Type type in typeof(Origins.Sounds).GetNestedTypes()) LoadSounds(type);
-					foreach (AEnvironmentSound sound in EnvironmentSounds.AllSounds) {
-						LoadSounds(sound.GetType(), sound);
-					}
-					LoadSounds(typeof(Keytar));
-					void LoadSounds(Type type, object instance = null) {
-						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)) {
-							if (@field.FieldType != typeof(SoundStyle)) continue;
-							SoundStyle sound = (SoundStyle)@field.GetValue(@field.IsStatic ? null : instance);
-							string soundPath = sound.SoundPath["Origins/".Length..];
-							if (sound.Variants.Length > 0) {
-								for (int i = 0; i < sound.Variants.Length; i++) {
-									loadedAssets.Add(soundPath + sound.Variants[i]);
-								}
-							} else {
-								loadedAssets.Add(soundPath);
-							}
+				}
+			}
+			LoadSounds(typeof(Origins.Sounds));
+			foreach (Type type in typeof(Origins.Sounds).GetNestedTypes()) LoadSounds(type);
+			foreach (AEnvironmentSound sound in EnvironmentSounds.AllSounds) {
+				LoadSounds(sound.GetType(), sound);
+			}
+			LoadSounds(typeof(Keytar));
+			void LoadSounds(Type type, object instance = null) {
+				foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)) {
+					if (@field.FieldType != typeof(SoundStyle)) continue;
+					SoundStyle sound = (SoundStyle)@field.GetValue(@field.IsStatic ? null : instance);
+					string soundPath = sound.SoundPath["Origins/".Length..];
+					if (sound.Variants.Length > 0) {
+						for (int i = 0; i < sound.Variants.Length; i++) {
+							loadedAssets.Add(soundPath + sound.Variants[i]);
 						}
+					} else {
+						loadedAssets.Add(soundPath);
 					}
-					foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
-						string _asset = Path.ChangeExtension(asset, null);
-						if ((_asset.EndsWith('_') || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Vanity/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
-							continue;
-						}
-						if (_asset.StartsWith("Icons/")) continue;
-						if (_asset.StartsWith("NPCs/Boss_Controller_")) continue;
-						if (_asset.StartsWith("Hair/HairSource/")) continue;
-						if (_asset.Contains("Unused/")) continue;
-						if (Terraria.UI.ItemSlot.ShiftInUse && _asset.StartsWith("CrossMod/")) continue;
-						if (expected.IsMatch(_asset)) continue;
-						if (!loadedAssets.Contains(_asset)) {
-							unused.Add(_asset);
-						}
-					}
-					unused.Sort(new AssetPathComparer());
+				}
+			}
+			foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
+				string _asset = Path.ChangeExtension(asset, null);
+				if ((_asset.EndsWith('_') || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Vanity/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
+					continue;
+				}
+				if (_asset.StartsWith("Icons/")) continue;
+				if (_asset.StartsWith("NPCs/Boss_Controller_")) continue;
+				if (_asset.StartsWith("Hair/HairSource/")) continue;
+				if (_asset.Contains("Unused/")) continue;
+				if (!includeCrossMod && _asset.StartsWith("CrossMod/")) continue;
+				if (expected.IsMatch(_asset)) continue;
+				if (!loadedAssets.Contains(_asset)) {
+					unused.Add(_asset);
+				}
+			}
+			unused.Sort(new AssetPathComparer());
+			return unused;
+		}
+		public bool CheckTextureUsage {
+			get => default;
+			set {
+				if (value) {
+					List<string> unused = ListUnusedAssets(!Terraria.UI.ItemSlot.ShiftInUse);
 					for (int i = 0; i < unused.Count - 1; i++) {
 						string[] a = unused[i].Split('/');
 						string[] b = unused[i + 1].Split('/');
