@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Gores;
 using Origins.Items.Accessories;
 using Origins.World.BiomeData;
@@ -15,6 +16,7 @@ namespace Origins.NPCs.Ashen {
 		public override int TailType => ModContent.NPCType<Quakemaker_Tail>();
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void Load() => this.AddBanner();
+		public override bool SharesDebuffs => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 2;
@@ -55,8 +57,8 @@ namespace Origins.NPCs.Ashen {
 		public override void Init() {
 			MinSegmentLength = 10;
 			MaxSegmentLength = 10;
-			MoveSpeed = 5.5f;
-			Acceleration = 0.045f;
+			MoveSpeed = 8.5f;
+			Acceleration = 0.085f;
 		}
 		protected override void HeadAI_Movement_PlayDigSounds(float distance) {
 			if (NPC.soundDelay == 0 && DigSound.HasValue) {
@@ -76,10 +78,44 @@ namespace Origins.NPCs.Ashen {
 				hitbox.Inflate(-12, -12);
 				if (hitbox.OverlapsAnyTiles()) {
 					Main.instance.CameraModifiers.Add(new CameraShakeModifier(
-						NPC.Center, 2f, 1f, 10, 500f, -1f, "Quakemaker"
+						NPC.Center, 2f, 1f, 10, 750f, -1f, "Quakemaker"
 					));
 				}
 			}
+		}
+		protected internal override void HeadAI() {
+			bool isAlreadyAttacking = false;
+			float totalSegs = 0;
+			float groundedSegs = 0;
+			foreach (NPC segment in IterateWorm()) {
+				if (segment != NPC && (segment.ai[2] != 0 || segment.localAI[3] != 0)) isAlreadyAttacking = true;
+				totalSegs++;
+				if (segment.Hitbox.OverlapsAnyTiles(false)) groundedSegs++;
+			}
+			if (NPC.velocity != default) NPC.GravityMultiplier *= float.Pow(1 - groundedSegs / totalSegs, 1);
+
+			Vector2 target = NPC.GetTargetData().Center;
+			float attackRot = (target - NPC.Center).ToRotation();
+			float diff = GeometryUtils.AngleDif(attackRot, NPC.rotation - MathHelper.PiOver2, out int dir);
+			if (diff < 0.7f && target.WithinRange(NPC.Center, 16 * 30)) {
+				ForcedTargetPosition = target;
+			} else {
+				ForcedTargetPosition = target + (attackRot + dir * MathHelper.PiOver2).ToRotationVector2() * (16 * 10 + target.Distance(NPC.Center) * 0.1f);
+			}
+			if (!isAlreadyAttacking && NPC.ai[2].CycleDown(90)) {
+				if (diff < 1) {
+					NPC.ai[2] = 5;
+					goto skipAttack;
+				}
+				if (NPC.Hitbox.OverlapsAnyTiles() || !CollisionExt.CanHitRay(NPC.Center, target)) {
+					NPC.ai[2] = 10;
+					goto skipAttack;
+				}
+				(FollowerNPC.ai[2], FollowerNPC.localAI[3]) = NPC.Center;
+				FollowerNPC.localAI[2] = attackRot;
+			}
+			skipAttack:
+			base.HeadAI();
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			TryDeathEffect();
@@ -110,10 +146,12 @@ namespace Origins.NPCs.Ashen {
 		}
 	}
 	public class Quakemaker_Body : WormBody {
+		public override bool SharesImmunityFrames => true;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -127,6 +165,31 @@ namespace Origins.NPCs.Ashen {
 			NPC.color = HeadSegment.color;
 			NPC.alpha = HeadSegment.alpha;
 			NPC.GivenName = HeadSegment.GivenName;
+			if (NPC.ai[2] != 0 || NPC.localAI[3] != 0) {
+				Vector2 pos = new(NPC.ai[2], NPC.localAI[3]);
+				if (NPC.Hitbox.Contains(pos)) {
+					NPC.SpawnProjectile(
+						NPC.GetSource_FromAI(),
+						pos,
+						NPC.localAI[2].ToRotationVector2() * 8,
+						ProjectileID.BulletSnowman,
+						1,
+						0
+					);
+					if (FollowerNPC is not null) {
+						Rectangle region = NPC.Hitbox;
+						region.Inflate(-region.Width / 4, -region.Height / 4);
+						(FollowerNPC.ai[2], FollowerNPC.localAI[3]) = pos.Clamp(region);
+						FollowerNPC.localAI[2] = NPC.localAI[2];
+					}
+					NPC.ai[2] = 0;
+					NPC.localAI[3] = 0;
+				} else if (!NPC.Hitbox.IsWithin(pos, 16 * 5)) {
+					NPC.ai[2] = 0;
+					NPC.localAI[3] = 0;
+				}
+			}
+			if (NPC.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal)) blindGlobal.blindable = true;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			(HeadSegment.ModNPC as Quakemaker_Head)?.TryDeathEffect();
@@ -135,13 +198,20 @@ namespace Origins.NPCs.Ashen {
 			MoveSpeed = 5.5f;
 			Acceleration = 0.045f;
 		}
+		public override void UpdateLifeRegen(ref int damage) {
+			damage = ushort.MaxValue;
+			NPC.lifeRegen = 0;
+			NPC.lifeRegenCount = 0;
+		}
 	}
 
 	internal class Quakemaker_Tail : WormTail {
+		public override bool SharesImmunityFrames => true;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -155,6 +225,9 @@ namespace Origins.NPCs.Ashen {
 			NPC.color = HeadSegment.color;
 			NPC.alpha = HeadSegment.alpha;
 			NPC.GivenName = HeadSegment.GivenName;
+			NPC.ai[2] = 0;
+			NPC.localAI[3] = 0;
+			if (NPC.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal)) blindGlobal.blindable = true;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			(HeadSegment.ModNPC as Quakemaker_Head)?.TryDeathEffect();
@@ -162,6 +235,11 @@ namespace Origins.NPCs.Ashen {
 		public override void Init() {
 			MoveSpeed = 5.5f;
 			Acceleration = 0.045f;
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			damage = ushort.MaxValue;
+			NPC.lifeRegen = 0;
+			NPC.lifeRegenCount = 0;
 		}
 	}
 }

@@ -5473,7 +5473,7 @@ namespace Origins {
 		public static void DelBuff<TBuff>(this NPC target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
 		public static void DelBuff<TBuff>(this Player target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
 		public static void DrawConfused(this NPC npc) {
-			if (npc.confused && !npc.IsABestiaryIconDummy) {
+			if (npc.confused && !npc.IsABestiaryIconDummy && !OriginsSets.NPCs.HideDebuffIndicators[npc.type]) {
 				Texture2D confuse = TextureAssets.Confuse.Value;
 				int type = npc.type;
 				Vector2 halfSize = npc.Size * npc.scale * 0.5f;

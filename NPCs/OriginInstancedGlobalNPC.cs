@@ -427,6 +427,7 @@ namespace Origins.NPCs {
 		AutoLoadingAsset<Texture2D> weakIndicator = "Origins/Buffs/Indicators/Enemy_Weak";
 		AutoLoadingAsset<Texture2D> brokenArmorIndicator = "Origins/Buffs/Indicators/Enemy_Broken_Armor";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsSets.NPCs.HideDebuffIndicators[npc.type]) return;
 			List<Texture2D> indicators = [];
 			Vector2 pos = Vector2.Zero;
 			void AddIndicator(Texture2D indicator) {

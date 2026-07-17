@@ -41,6 +41,7 @@ namespace Origins.NPCs {
 		 *  
 		 *  ai[0] = "follower" segment, the segment that's following this segment
 		 *  ai[1] = "following" segment, the segment that this segment is following
+		 *  ai[3] = duplicate of NPC.realLife, used by vanilla worm AI, not this
 		 *  
 		 *  localAI[0] = used when syncing changes to collision detection
 		 *  localAI[1] = checking if Init() was called
@@ -145,6 +146,23 @@ namespace Origins.NPCs {
 		protected bool isHighestIndex;
 		protected static void SetHighestSegment(int highestSegment) {
 			if (Main.npc[highestSegment].ModNPC is Worm highestWorm) highestWorm.isHighestIndex = true;
+		}
+		public IEnumerable<NPC> IterateWorm() {
+			NPC current = Main.npc.GetIfInRange(NPC.realLife, NPC);
+			int index = current.whoAmI;
+			do {
+				yield return current;
+				current = Main.npc.GetIfInRange((int)current.ai[0]);
+			} while (current?.realLife == index);
+		}
+		public static IEnumerable<NPC> IterateWorm(NPC start) {
+			NPC current = Main.npc.GetIfInRange(start.realLife, start);
+			int index = current.whoAmI;
+			current = start;
+			do {
+				yield return current;
+				current = Main.npc.GetIfInRange((int)current.ai[0]);
+			} while (current?.realLife == index);
 		}
 	}
 
@@ -685,8 +703,10 @@ namespace Origins.NPCs {
 				// And set this NPCs position accordingly to that of this NPCs parent NPC.
 				worm.NPC.position.X += posX;
 				worm.NPC.position.Y += posY;
-				worm.Banner = following.ModNPC.Banner;
-				worm.BannerItem = following.ModNPC.BannerItem;
+				if (following.ModNPC is not null) {
+					worm.Banner = following.ModNPC.Banner;
+					worm.BannerItem = following.ModNPC.BannerItem;
+				}
 			}
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {
