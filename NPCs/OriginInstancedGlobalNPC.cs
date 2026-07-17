@@ -421,11 +421,11 @@ namespace Origins.NPCs {
 			}
 			return true;
 		}
-		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Buffs/Indicators/Enemy_Slow";
-		AutoLoadingAsset<Texture2D> silencedIndicator = "Origins/Buffs/Indicators/Enemy_Silenced";
-		AutoLoadingAsset<Texture2D> blindIndicator = "Origins/Buffs/Indicators/Enemy_Blind";
-		AutoLoadingAsset<Texture2D> weakIndicator = "Origins/Buffs/Indicators/Enemy_Weak";
-		AutoLoadingAsset<Texture2D> brokenArmorIndicator = "Origins/Buffs/Indicators/Enemy_Broken_Armor";
+		AutoLoadingTexture slowIndicator = "Origins/Buffs/Indicators/Enemy_Slow";
+		AutoLoadingTexture silencedIndicator = "Origins/Buffs/Indicators/Enemy_Silenced";
+		AutoLoadingTexture blindIndicator = "Origins/Buffs/Indicators/Enemy_Blind";
+		AutoLoadingTexture weakIndicator = "Origins/Buffs/Indicators/Enemy_Weak";
+		AutoLoadingTexture brokenArmorIndicator = "Origins/Buffs/Indicators/Enemy_Broken_Armor";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (OriginsSets.NPCs.HideDebuffIndicators[npc.type]) return;
 			List<Texture2D> indicators = [];
