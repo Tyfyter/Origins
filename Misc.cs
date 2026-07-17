@@ -1480,6 +1480,7 @@ namespace Origins {
 			}
 		}
 		#endregion
+		[Pure]
 		public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
 			return new StatModifier(
 				(statModifier.Additive - 1) * additive + 1,
@@ -1488,6 +1489,7 @@ namespace Origins {
 				statModifier.Base * @base
 			);
 		}
+		[Pure]
 		public static StatModifier ScaleMatrix(this StatModifier statModifier,
 			(float additive, float multiplicative) additive,
 			(float additive, float multiplicative) multiplicative,
@@ -1501,9 +1503,11 @@ namespace Origins {
 				(statModifier.Flat * @base.flat) + (statModifier.Base * @base.@base)
 			);
 		}
+		[Pure]
 		public static StatModifier GetInverse(this StatModifier statModifier) {
 			return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
 		}
+		[Pure]
 		public static Vector2 GetKnockbackFromHit(this NPC.HitInfo hit, bool nerf = true, bool includeDirection = true, float xMult = 1, float yMult = -0.75f) {
 			float knockback = hit.Knockback;
 			if (nerf) {
@@ -1558,6 +1562,7 @@ namespace Origins {
 			OnIncreaseMaxBreath?.Invoke(player, amount);
 		}
 		public static event Action<Player, int> OnIncreaseMaxBreath;
+		[Pure]
 		public static ref int GetCooldownCounter(this Player player, int cooldownCounter) {
 			switch (cooldownCounter) {
 				case -1:
@@ -1572,6 +1577,7 @@ namespace Origins {
 			return ref discard;
 		}
 		static int discard = 0;
+		[Pure]
 		public static Vector2 GetCompositeArmPosition(this Player player, bool back) {
 			if (player.gravDir == -1) {
 				if (back) {
@@ -1629,6 +1635,7 @@ namespace Origins {
 				}
 			}
 		}
+		[Pure]
 		public static Vector2 GetHandPosition(this Player player) {
 			if (player.compositeFrontArm.enabled) {
 				return player.GetCompositeArmPosition(false);
@@ -1701,6 +1708,7 @@ namespace Origins {
 				return false;
 			}
 		}
+		[Pure]
 		public static int CountItem(this Player player, int type, Item[] inventory, int stopCountingAt = 0) {
 			int num = 0;
 			for (int i = 0; i != inventory.Length; i++) {
@@ -1713,6 +1721,7 @@ namespace Origins {
 
 			return num;
 		}
+		[Pure]
 		public static int CountItemInInventoryOrOpenVoidBag(this Player player, int type, int stopCountingAt = 0) {
 			int num = player.CountItem(type, stopCountingAt);
 			if (num < stopCountingAt && player.useVoidBag()) num += player.CountItem(type, player.bank4.item, stopCountingAt - num);
@@ -1764,6 +1773,7 @@ namespace Origins {
 			}
 			return (int)value;
 		}
+		[Pure]
 		public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			if (mod.TryFind(name, out ModGore modGore)) return modGore.Type;
@@ -1777,7 +1787,7 @@ namespace Origins {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			return Gore.NewGore(source, Position, Velocity, type, Scale);
 		}
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 		public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
 			return drawPlayerItemPos(gravdir, itemtype);
 		}
@@ -1795,21 +1805,27 @@ namespace Origins {
 			return pos;
 		}
 		#endregion
+		[Pure]
 		public static Rectangle Add(this Rectangle a, Vector2 b) {
 			return new Rectangle(a.X + (int)b.X, a.Y + (int)b.Y, a.Width, a.Height);
 		}
+		[Pure]
 		public static Rectangle Recentered(this Rectangle a, Vector2 b) {
 			return new Rectangle((int)b.X - a.Width / 2, (int)b.Y - a.Height / 2, a.Width, a.Height);
 		}
+		[Pure]
 		public static Vector4 FrameToUV(this Rectangle frame, Vector2 save) {
 			return new Vector4(frame.X / save.X, frame.Y / save.Y, frame.Width / save.X, frame.Height / save.Y);
 		}
+		[Pure]
 		public static bool Contains(this Rectangle area, int x, int y, int xPadding, int yPadding) {
 			return (area.X <= x + xPadding) && (x < area.Right + xPadding) && (area.Y <= y + yPadding) && (y < area.Bottom + yPadding);
 		}
+		[Pure]
 		public static Vector4 UVFrame(this Asset<Texture2D> frame, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			return frame.Value.UVFrame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
 		}
+		[Pure]
 		public static Vector4 UVFrame(this Texture2D frame, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			Vector2 sizeOffset = new Vector2(sizeOffsetX, sizeOffsetY) / frame.Size();
 			Vector2 frameSize = new(1f / horizontalFrames, 1f / verticalFrames);
@@ -1820,14 +1836,17 @@ namespace Origins {
 				frameSize.Y + sizeOffset.Y
 			);
 		}
+		[Pure]
 		public static Rectangle Frame(this AutoLoadingAsset<Texture2D> asset, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			return asset.Value.Frame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
 		}
+		[Pure]
 		public static Rectangle Frame(this Texture2D texture, Projectile projectile, int horizontalFrames = 1, int frameX = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) =>
 			texture.Frame(horizontalFrames, Main.projFrames[projectile.type], frameX, projectile.frame, sizeOffsetX, sizeOffsetY);
 		public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
 			return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
 		}
+		[Pure]
 		public static Vector2 Quantize(this Vector2 vector, float size) {
 			return (vector / size).Floor() * size;
 		}
@@ -1841,19 +1860,25 @@ namespace Origins {
 			if (magnitude > 0) vector /= magnitude;
 			return vector;
 		}
+		[Pure]
 		public static Vector2 Abs(this Vector2 vector, out Vector2 signs) {
 			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
 			return vector * signs;
 		}
+		[Pure]
 		public static T Abs<T>(this T value, out int sign) where T : INumber<T> {
 			sign = T.Sign(value);
 			return T.Abs(value);
 		}
+		[Pure]
 		public static float Min(this Vector2 vector) => Math.Min(vector.X, vector.Y);
+		[Pure]
 		public static float Max(this Vector2 vector) => Math.Max(vector.X, vector.Y);
+		[Pure]
 		public static float Average(this Vector2 vector) {
 			return (vector.X + vector.Y) * 0.5f;
 		}
+		[Pure]
 		public static Vector2 Perpendicular(this Vector2 vector, int direction = 1) => new(vector.Y * direction, vector.X * -direction);
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox) {
 			float xoffset = 10f;
@@ -1989,12 +2014,15 @@ namespace Origins {
 		}
 		#endregion
 		#region vectors
+		[Pure]
 		public static Vector2 Clamp(this Vector2 value, Vector2 min, Vector2 max) {
 			return new Vector2(MathHelper.Clamp(value.X, min.X, max.X), MathHelper.Clamp(value.Y, min.Y, max.Y));
 		}
+		[Pure]
 		public static Vector2 Clamp(this Vector2 value, Rectangle area) {
 			return new Vector2(MathHelper.Clamp(value.X, area.X, area.Right), MathHelper.Clamp(value.Y, area.Y, area.Bottom));
 		}
+		[Pure]
 		public static Vector2 SnapToLine(this Vector2 value, Vector2 a, Vector2 b, bool clamp = true, float radius = 0) {
 			Vector2 diff = (b - a).Normalized(out float dist);
 			float progress = Vector2.Dot(diff, value - a);
@@ -2003,11 +2031,13 @@ namespace Origins {
 			if (radius > 0) pos += (value - pos).WithMaxLength(radius);
 			return pos;
 		}
+		[Pure]
 		public static Vector2 Apply(this Vector2 value, SpriteEffects spriteEffects, Vector2 bounds) {
 			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) value.X = bounds.X - value.X;
 			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) value.Y = bounds.Y - value.Y;
 			return value;
 		}
+		[Pure]
 		public static Vector2 TakeAverage(this List<Vector2> vectors) {
 			Vector2 sum = default;
 			int count = vectors.Count;
@@ -2020,22 +2050,23 @@ namespace Origins {
 			Utils.Swap(ref working, ref finalized);
 			working.Clear();
 		}
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 		public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
 			return new Vector2((float)(magnitude * Math.Cos(theta)), (float)(magnitude * Math.Sin(theta)));
 		}
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 		public static float NormDot(Vector2 a, Vector2 b) {
 			return (Vector2.Normalize(a) * Vector2.Normalize(b)).Sum();
 		}
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 		public static float NormDotWithPriorityMult(Vector2 a, Vector2 b, float priorityMult) {
 			return (Vector2.Dot(Vector2.Normalize(a), Vector2.Normalize(b)) - 1) * priorityMult + 1;
 		}
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 		public static float Sum(this Vector2 a) {
 			return a.X + a.Y;
 		}
+		[Pure]
 		public static Vector2 WithMaxLength(this Vector2 vector, float length) {
 			if (length <= 0) return Vector2.Zero;
 			float pLength = vector.LengthSquared();
@@ -2045,6 +2076,7 @@ namespace Origins {
 			return value = Vector2.Lerp(value, value2, amount);
 		}
 		#endregion
+		[Pure]
 		public static Color Desaturate(this Color value, float multiplier) {
 			float R = value.R / 255f;
 			float G = value.G / 255f;
@@ -2084,24 +2116,30 @@ namespace Origins {
 			}
 			return result;
 		}
+		[Pure]
 		public static Vector2 OldPos(this Projectile self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];
 		}
+		[Pure]
 		public static float OldRot(this Projectile self, int index) {
 			return index == -1 ? self.rotation : self.oldRot[index];
 		}
+		[Pure]
 		public static Vector2 OldPos(this NPC self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];
 		}
+		[Pure]
 		public static float OldRot(this NPC self, int index) {
 			return index == -1 ? self.rotation : self.oldRot[index];
 		}
+		[Pure]
 		public static float GetRotation(this Entity self) {
 			if (self is NPC npc) return npc.rotation;
 			if (self is Projectile projectile) return projectile.rotation;
 			if (self is Player player) return player.fullRotation;
 			return 0f;
 		}
+		[Pure]
 		public static float GetOldRotation(this Entity self) {
 			if (self is NPC npc) return npc.oldRot.Length >= 1 ? npc.oldRot[0] : npc.rotation;
 			if (self is Projectile projectile) return projectile.oldRot.Length >= 1 ? projectile.oldRot[0] : projectile.rotation;
@@ -2300,6 +2338,7 @@ namespace Origins {
 			recipe.acceptedGroups.Add(recipeGroupId);
 			return recipe;
 		}
+		[Pure]
 		public static bool IsTileReplacable(int x, int y) {
 			Tile tile = Main.tile[x, y];
 			return !tile.HasTile || (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y));
@@ -2352,9 +2391,10 @@ namespace Origins {
 				}
 			}
 		}
+		[Pure]
 		public static bool IsDevName(string name, int dev = 0) {
 			if (dev is 0 or 1) {//Tyfyter
-				return name is "Jennifer" or "Asher";
+				return name is "Moonlight" or "Moonlight Glint" or "Jennifer" or "Asher";
 			} else if (dev is 0 or 2) {//Chee
 
 			}//add more here
@@ -2375,13 +2415,16 @@ namespace Origins {
 			self.identity = id;
 			self.owner = owner;
 		}
+		[Pure]
 		public static Projectile GetProjectile(int owner, int identity) {
 			if (identity >= 0 && owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && identity < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
 				return OriginSystem.projectilesByOwnerAndID[owner, identity];
 			}
 			return null;
 		}
+		[Pure]
 		public static Projectile GetRelatedProjectile(this Projectile self, int index) => GetProjectile(self.owner, (int)self.ai[index]);
+		[Pure]
 		public static Projectile GetRelatedProjectile_Depreciated(this Projectile self, int index) {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
@@ -2406,10 +2449,13 @@ namespace Origins {
 		}
 		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
 		public static void DoFrames(this NPC self, int counterMax, float rate) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type], rate);
+		[Pure]
 		public static bool AnyNPCs<TModNPC>() where TModNPC : ModNPC => NPC.AnyNPCs(ModContent.NPCType<TModNPC>());
+		[Pure]
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(self.Male ? "male" : "female")}");
 		}
+		[Pure]
 		public static string GetCooldownText(int time) {
 			return ((time / 60 < 60)
 				? Language.GetTextValue("Mods.Origins.Items.GenericTooltip.SecondCooldown", Math.Round(time / 60.0))
@@ -2450,9 +2496,11 @@ namespace Origins {
 		}
 		private static FastStaticFieldInfo<Color[]> _colorLookup;
 		private static FastStaticFieldInfo<Color[]> MapColorLookup => _colorLookup ??= new(typeof(MapHelper), "colorLookup", BindingFlags.NonPublic);
+		[Pure]
 		public static Color GetTileMapColor(int type) {
 			return MapColorLookup.GetValue()[type];
 		}
+		[Pure]
 		public static Color GetWallMapColor(int type) {
 			if (Main.netMode == NetmodeID.Server) return Color.Transparent;
 			return MapColorLookup.GetValue()[MapHelper.wallLookup[type]];
@@ -2466,6 +2514,7 @@ namespace Origins {
 			CollisionExtensions.Unload();
 			OnIncreaseMaxBreath = null;
 		}
+		[Pure]
 		public static UnifiedRandom Clone(this UnifiedRandom r) {
 			UnifiedRandom o = new();
 			Inext.SetValue(o, (int)Inext.GetValue(r));
@@ -2473,13 +2522,7 @@ namespace Origins {
 			SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).ToArray());
 			return o;
 		}
-		public static string Stringify(this Recipe r) {
-			ItemID.Search.TryGetName(r.createItem.type, out string resultName);
-			return $"result: {resultName} " +
-				//$"alchemy: {r.alchemy} " +
-				$"required Items: {string.Join(", ", r.requiredItem.Select((i) => { ItemID.Search.TryGetName(i.type, out string name); return name; }))} " +
-				$"required Tiles: {string.Join(", ", r.requiredTile.Select((i) => { TileID.Search.TryGetName(i, out string name); return name; }))}";
-		}
+		[Pure]
 		public static T[] WithLength<T>(this T[] input, int length) {
 			T[] output = new T[length];
 			if (length > input.Length) {
@@ -2490,20 +2533,24 @@ namespace Origins {
 			}
 			return output;
 		}
+		[Pure]
 		public static T GetIfInRange<T>(this T[] array, int index, T fallback = default) {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
 		}
+		[Pure]
 		public static T GetIfInRange<T>(this T[,] array, int i, int j, T fallback = default) {
 			if (!array.IndexInRange(i, j)) return fallback;
 			return array[i, j];
 		}
+		[Pure]
 		public static bool IndexInRange<T>(this T[,] array, int i, int j) {
 			return i >= 0
 				&& j >= 0
 				&& i < array.GetLength(0)
 				&& j < array.GetLength(1);
 		}
+		[Pure]
 		public static bool IndexInRange<T>(this T[,,] array, int i, int j, int k) {
 			return i >= 0
 				&& j >= 0
@@ -2512,16 +2559,21 @@ namespace Origins {
 				&& j < array.GetLength(1)
 				&& k < array.GetLength(2);
 		}
+		[Pure]
 		public static Span<T> AsSpan<T>(this T[,] array) => MemoryMarshal.CreateSpan(ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(array)), array.Length);
+		[Pure]
 		public static Span<T> AsSpan<T>(this T[,,] array) => MemoryMarshal.CreateSpan(ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(array)), array.Length);
+		[Pure]
 		public static T GetIfInRange<T>(this List<T> array, int index, T fallback = default) {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
 		}
+		[Pure]
 		public static T GetIfInRange<T>(this IReadOnlyList<T> array, int index, T fallback = default) {
 			if (index < 0 || index >= array.Count) return fallback;
 			return array[index];
 		}
+		[Pure]
 		public static IEnumerable<int> GetTrueIndexes(this BitArray array) {
 			for (int i = 0; i < array.Length; i++) {
 				if (array[i]) yield return i;
@@ -2534,9 +2586,11 @@ namespace Origins {
 				array[i] = array.IndexInRange(index) ? array[index] : pushIn[i];
 			}
 		}
+		[Pure]
 		public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
 			return BoxOf(a, b, new Vector2(buffer));
 		}
+		[Pure]
 		public static Rectangle BoxOf(Vector2 a, Vector2 b, Vector2 buffer = default) {
 			Vector2 position = Vector2.Min(a, b) - buffer;
 			Vector2 dimensions = (Vector2.Max(a, b) + buffer) - position;
@@ -2616,11 +2670,13 @@ namespace Origins {
 			}
 		}
 		#endregion
+		[Pure]
 		public static int GetVersion<T>(this LinkedList<T> ll) {
 			if (LLNodeEnumerator<T>.LLVersion is null) LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic | BindingFlags.Instance);
 			return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
 		}
 
+		[Pure]
 		public static int GetNearestPlayerFrame(Player player) {
 			float rot = player.itemRotation * player.direction;
 			if (rot < -0.75) {
@@ -2638,6 +2694,7 @@ namespace Origins {
 			return 3;
 		}
 
+		[Pure]
 		public static int GetNearestPlayerFrame(float angle, int direction, float gravDir = 1) {
 			float rot = angle * direction;
 			if (rot < -0.75) {
@@ -2655,6 +2712,7 @@ namespace Origins {
 			return 3;
 		}
 
+		[Pure]
 		public static int GetNearestPlayerFrame(float angle, float gravDir = 1) {
 			double rot = Math.Sin(angle);
 			if (rot < -0.15) {
@@ -2671,6 +2729,7 @@ namespace Origins {
 			}
 			return 3;
 		}
+		[Pure]
 		public static bool Contains(this Rectangle area, Vector2 point) {
 			return area.Contains((int)point.X, (int)point.Y);
 		}
@@ -2753,6 +2812,7 @@ namespace Origins {
 			}
 		}
 		#endregion drawing
+		[Pure]
 		public static Rectangle MoveToWithin(this Rectangle value, Rectangle area) {
 			Rectangle output = value;
 			if (output.Width > area.Width) {
@@ -2787,12 +2847,15 @@ namespace Origins {
 		public static void SetLiquidType(this Tile tile, int liquidType) {
 			tile.LiquidType = liquidType;
 		}
+		[Pure]
 		public static bool HasSolidTile(this Tile tile) {
 			return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType];
 		}
+		[Pure]
 		public static bool HasFullSolidTile(this Tile tile) {
 			return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
 		}
+		[Pure]
 		public static int TileSolidness(this Tile tile) {
 			if (!tile.HasTile) return 0;
 			if (!Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || tile.IsActuated) return 1;
@@ -2801,11 +2864,14 @@ namespace Origins {
 		/// <summary>
 		/// checks if a tile is active and is the provided type
 		/// </summary>
+		[Pure]
 		public static bool TileIsType(this Tile self, int type) {
 			return self.HasTile && self.TileType == type;
 		}
 		/// <inheritdoc cref="TileIsType(Tile, int)"/>
+		[Pure]
 		public static bool TileIsType<TTile>(this Tile self) where TTile : ModTile => self.TileIsType(ModContent.TileType<TTile>());
+		[Pure]
 		public static bool TileIsInterface<TInterface>(this Tile self, out TInterface @interface) {
 			if (!typeof(TInterface).IsInterface) throw new ArgumentException($"TInterface must be an interface, {typeof(TInterface)} is not an interface", nameof(TInterface));
 			if (!self.HasTile) {
@@ -2830,6 +2896,7 @@ namespace Origins {
 			tile.RegisterItemDrop(ModContent.ItemType<TItem>());
 		}
 		#endregion
+		[Pure]
 		public static T SafeGet<T>(this TagCompound self, string key, T fallback = default) {
 			return self.TryGet(key, out T output) ? output : fallback;
 		}
@@ -2934,15 +3001,18 @@ namespace Origins {
 			int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
 			spriteBatch.Draw(self.GetGlowTexture(tile.TileColor), (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 		}
+		[Pure]
 		public static Point GetTilePosition(this Tile tile) {
 			uint id = TileMethods.TileId.GetValue(tile);
 			return new Point((int)(id / Main.tile.Height), (int)(id % Main.tile.Height));
 		}
+		[Pure]
 		public static ITree GetTreeType(Tile tile) {
 			if (!tile.HasTile || tile.TileType is TileID.VanityTreeSakura or TileID.VanityTreeYellowWillow || !TileID.Sets.IsATreeTrunk[tile.TileType]) return null;
 			Point pos = tile.GetTilePosition();
 			return GetTreeType(pos.X, pos.Y);
 		}
+		[Pure]
 		public static ITree GetTreeType(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			if (!tile.HasTile || tile.TileType is TileID.VanityTreeSakura or TileID.VanityTreeYellowWillow || !TileID.Sets.IsATreeTrunk[tile.TileType]) return null;
@@ -2950,6 +3020,7 @@ namespace Origins {
 			return PlantLoader.GetTree(Main.tile[x, y].TileType);
 		}
 		public static void DropTileItem(this ModTile tile, Item item) => tile.RegisterItemDrop(item.type, -1);
+		[Pure]
 		public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
 			return new Point(self.X + x, self.Y + y);
 		}
@@ -2964,9 +3035,11 @@ namespace Origins {
 				(method(value.a) ? 1 : 0));
 		}
 		static Dictionary<int, Dictionary<EquipType, int>> _idToSlot;
+		[Pure]
 		public static int GetEquipSlot(int itemType, EquipType equipType) {
 			return _idToSlot[itemType][equipType];
 		}
+		[Pure]
 		public static bool WaterCollision(Vector2 Position, int Width, int Height) {
 			int minX = Utils.Clamp((int)(Position.X / 16f) - 1, 0, Main.maxTilesX - 1);
 			int maxX = Utils.Clamp((int)((Position.X + Width) / 16f) + 2, 0, Main.maxTilesX - 1);
@@ -2992,6 +3065,7 @@ namespace Origins {
 			return false;
 		}
 		public delegate T Lerp<T>(T a, T b, float value);
+		[Pure]
 		public static T Bezier<T>(this Lerp<T> lerp, float progress, params T[] handles) {
 			do {
 				T[] nextHandles = new T[handles.Length - 1];
@@ -3002,6 +3076,7 @@ namespace Origins {
 			} while (handles.Length > 1);
 			return handles[0];
 		}
+		[Pure]
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
 			WeightedRandom<int> wr = new(rand);
 			for (int i = 0; i < prefixCategories.Length; i++) {
@@ -3015,6 +3090,7 @@ namespace Origins {
 			}
 			return wr;
 		}
+		[Pure]
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, double weight)[] prefixCategories) {
 			WeightedRandom<int> wr = new(rand);
 			for (int i = 0; i < prefixCategories.Length; i++) {
@@ -3028,6 +3104,7 @@ namespace Origins {
 			}
 			return wr;
 		}
+		[Pure]
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, bool[] set, double weight)[] prefixCategories) {
 			WeightedRandom<int> wr = new(rand);
 			for (int i = 0; i < prefixCategories.Length; i++) {
@@ -3046,6 +3123,7 @@ namespace Origins {
 		/// </summary>
 		/// <param name="prefixCategories">Weight functions default to "_ => 1" if null</param>
 		/// <returns></returns>
+		[Pure]
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, Func<int, double> weightFunction)[] prefixCategories) {
 			WeightedRandom<int> wr = new(rand);
 			for (int i = 0; i < prefixCategories.Length; i++) {
@@ -3062,6 +3140,7 @@ namespace Origins {
 			}
 			return wr;
 		}
+		[Pure]
 		public static WeightedRandom<int> AccessoryOrSpecialPrefix(this Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
 			(PrefixCategory category, bool[] set, double weight)[] categories = new (PrefixCategory category, bool[] set, double weight)[prefixCategories.Length + 1];
 			for (int i = 0; i < prefixCategories.Length; i++) {
@@ -3070,7 +3149,7 @@ namespace Origins {
 			categories[^1] = (PrefixCategory.Accessory, PrefixID.Sets.Factory.CreateBoolSet(true), 1);
 			return GetAllPrefixes(item, rand, categories);
 		}
-		[Obsolete("Just use PegasusLib.StrikethroughFont.Font")]
+		[Obsolete("Just use PegasusLib.StrikethroughFont.Font", true)]
 		public static DynamicSpriteFont StrikethroughFont => PegasusLib.StrikethroughFont.Font;
 		/// <summary>
 		/// inserts an item into a shimmer cycle, will not work to add an item after the last item of a cycle that is not complete yet
@@ -3105,11 +3184,15 @@ namespace Origins {
 		public static void RegisterForUnload(this IUnloadable unloadable) {
 			Origins.unloadables.Add(unloadable);
 		}
+		[Pure]
 		public static string GetDefaultTMLName(this Type type) => PegasusExt.GetDefaultTMLName(type);
+		[Pure]
 		public static string GetDefaultTMLName(this Type type, string suffix) => PegasusExt.GetDefaultTMLName(type) + suffix;
+		[Pure]
 		public static bool IsGeneric(this Type self, Type expectedType) {
 			return self.IsGenericType && self.GetGenericTypeDefinition() == expectedType;
 		}
+		[Pure]
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
 			T[] possibleFlags = Enum.GetValues<T>();
 			for (int i = 0; i < possibleFlags.Length; i++) {
@@ -3117,6 +3200,7 @@ namespace Origins {
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
 		}
+		[Pure]
 		public static IBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, bool better = false, bool alt = false) {
 			string key = $"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}";
 			Language.GetOrRegister(key, () => "<PH> bestiary text here");
@@ -3129,6 +3213,7 @@ namespace Origins {
 			}
 			return new FlavorTextBestiaryInfoElement(key);
 		}
+		[Pure]
 		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(int npcID) {
 			string flavorText = "";
 			if (npcID < NPCID.Count) {
@@ -3146,9 +3231,11 @@ namespace Origins {
 			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other], true);
 			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[npc.type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other];
 		}
+		[Pure]
 		public static string MakeContext(params string[] args) {
 			return new StringBuilder().AppendJoin(';', args.Where(a => !string.IsNullOrWhiteSpace(a))).ToString();
 		}
+		[Pure]
 		public static EntitySource_ItemUse WithContext(this EntitySource_ItemUse itemUseSource, params string[] args) {
 			string bocContext = MakeContext(args);
 			if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
@@ -3158,6 +3245,7 @@ namespace Origins {
 			}
 		}
 		static readonly GeneratorCache<Type, Func<IEntitySource, string, IEntitySource>> cloneWithContexts = new(GenerateCloneWithContext);
+		[Pure]
 		public static IEntitySource CloneWithContext(this IEntitySource source, string context) {
 			return cloneWithContexts[source.GetType()](source, context);
 		}
@@ -3192,6 +3280,7 @@ namespace Origins {
 
 			return getterMethod.CreateDelegate<Func<IEntitySource, string, IEntitySource>>();
 		}
+		[Pure]
 		public static bool Matches(this Recipe recipe, (int id, int? count)? result, int[] tiles, params (int id, int? count)[] ingredients) {
 			static bool ItemMatches(Item item, (int id, int? count) pattern) {
 				if (item.type == pattern.id) {
@@ -3232,6 +3321,7 @@ namespace Origins {
 				packet.Send();
 			}
 		}
+		[Pure]
 		public static bool IsInInteractionRange(this Player player, int chestWidth, int chestHeight, int chestXOffset = 0, int chestYOffset = 0) {
 			int playerCenterX = (int)((player.position.X + player.width * 0.5f) / 16);
 			int playerCenterY = (int)((player.position.Y + player.height * 0.5f) / 16);
@@ -3263,6 +3353,7 @@ namespace Origins {
 
 			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, true, false);
 		}
+		[Pure]
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
 			if (tiles.Contains(spawnInfo.SpawnTileType)) {
@@ -3344,6 +3435,10 @@ namespace Origins {
 			}
 			return false;
 		}
+		/// <summary>
+		/// not really pure, but it's important that this is always observed by a <see langword="using"/>, and this provides a warning if it's not observed at all
+		/// </summary>
+		[Pure]
 		public static ScopedOverride<T> ScopedOverride<T>(ref this T variable, T value) where T : struct => new(ref variable, value);
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
@@ -3481,6 +3576,7 @@ namespace Origins {
 			self.Add(key, value);
 			return value;
 		}
+		[Pure]
 		public static bool TryGetText(string key, [MaybeNullWhen(false)] out LocalizedText text) {
 			if (Language.Exists(key)) {
 				text = Language.GetText(key);
@@ -3489,6 +3585,7 @@ namespace Origins {
 			text = null;
 			return false;
 		}
+		[Pure]
 		public static LocalizedText CombineTooltips(params LocalizedText[] parts) {
 			switch (parts.Length) {
 				case 0:
@@ -3501,6 +3598,7 @@ namespace Origins {
 				return Language.GetOrRegister("Mods.Origins.Items.CombineTooltips").WithFormatArgs(parts[0], CombineTooltips(parts[1..]));
 			}
 		}
+		[Pure]
 		public static LocalizedText CombineWithAnd(params LocalizedText[] parts) {
 			if (parts.Length == 2) return Language.GetOrRegister("Mods.Origins.Conditions.And").WithFormatArgs(parts[0], parts[1]);
 			return CombineWithAndInternal(parts);
@@ -3525,6 +3623,7 @@ namespace Origins {
 			while (Language.Exists($"{key}.{i}")) i++;
 			return Language.GetText($"{key}.{Main.rand.Next(i)}");
 		}
+		[Pure]
 		public static LanguageTree GetLocalizationTree(this ILocalizedModType self)
 			=> TextUtils.LanguageTree.Find(self.Mod.GetLocalizationKey($"{self.LocalizationCategory}.{self.Name}"));
 		public static void GetMultiTileTopLeft(int i, int j, TileObjectData data, out int left, out int top) {
@@ -3560,6 +3659,7 @@ namespace Origins {
 			}
 			return foundTarget;
 		}
+		[Pure]
 		public static Vector2 Directions(this Player player, float xMultiplier = 1, float yMultiplier = 1) => new(player.direction * xMultiplier, player.gravDir * yMultiplier);
 		public static void DoCustomCombatText(Rectangle location, Color color, int amount, bool dramatic = false, bool dot = false, bool fromFriendly = true) {
 			CombatText.NewText(location, color, amount, dramatic, dot);
@@ -3678,6 +3778,7 @@ namespace Origins {
 			}
 			return null;
 		}
+		[Pure]
 		public static string ToRomanNumerals(int number) {
 			if (number < 0) return ToRomanNumerals(-number) + "0";
 			if (number < 1) return string.Empty;
@@ -3757,7 +3858,6 @@ namespace Origins {
 				..items.Subsets(index + 1)
 			];
 		}
-		public static T Get<T>(this T[] array, int index) => array[index];
 		public static IEnumerable<T> WalkWhile<T>(this T item, Predicate<T> predicate, Func<T, T> step) {
 			while (predicate(item)) {
 				yield return item;
@@ -3776,36 +3876,42 @@ namespace Origins {
 			shop.InsertBefore(ModContent.ItemType<TBefore>(), ModContent.ItemType<TNew>(), condition);
 	}
 	public static class ConditionExtensions {
+		[Pure]
 		public static Condition CommaAnd(this Condition a, Condition b) {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.Comma").WithFormatArgs(a.Description, b.Description),
 				() => a.Predicate() && b.Predicate()
 			);
 		}
+		[Pure]
 		public static Condition And(this Condition a, Condition b) {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.And").WithFormatArgs(a.Description, b.Description),
 				() => a.Predicate() && b.Predicate()
 			);
 		}
+		[Pure]
 		public static Condition CommaOr(this Condition a, Condition b) {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.Comma").WithFormatArgs(a.Description, b.Description),
 				() => a.Predicate() || b.Predicate()
 			);
 		}
+		[Pure]
 		public static Condition Or(this Condition a, Condition b) {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.Or").WithFormatArgs(a.Description, b.Description),
 				() => a.Predicate() || b.Predicate()
 			);
 		}
+		[Pure]
 		public static Condition Not(this Condition value) {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.Not").WithFormatArgs(value.Description),
 				() => !value.Predicate()
 			);
 		}
+		[Pure]
 		public static Condition PlayerCarriesItem<T>() where T : ModItem {
 			return Condition.PlayerCarriesItem(ModContent.ItemType<T>());
 		}
@@ -3835,6 +3941,7 @@ namespace Origins {
 			tileTriangles = null;
 			tileRectangles = null;
 		}
+		[Pure]
 		public static bool CanRainReach(Vector2 position) {
 			if (Main.remixWorld) {
 				if (!((position.Y / 16f) > Main.rockLayer + 1024) || !(position.Y / 16f < (Main.maxTilesY - 350))) {
@@ -4110,6 +4217,7 @@ namespace Origins {
 			double xIntercept = (pos.Y - yVlaue) / -slope + pos.X;
 			return new Vector2((float)xIntercept, yVlaue);
 		}
+		[Pure]
 		public static Vector2 GetCenterProjectedPoint(Rectangle rect, Vector2 a) {
 			Vector2 b = rect.Center();
 			float s = (a.Y - b.Y) / (a.X - b.X);
@@ -4378,13 +4486,17 @@ namespace Origins {
 			}
 			return default;
 		}
+		[Pure]
 		public static N Mul<N>(this bool flag, N value) where N : System.Numerics.INumber<N> {
 			return flag ? value : N.Zero;
 		}
+		[Pure]
 		public static N Mul<N>(this N value, bool flag) where N : System.Numerics.INumber<N> {
 			return flag ? value : N.Zero;
 		}
+		[Pure]
 		public static Rectangle Scaled(this Rectangle rectangle, float by) => new((int)(rectangle.X * by), (int)(rectangle.Y * by), (int)(rectangle.Width * by), (int)(rectangle.Height * by));
+		[Pure]
 		public static Vector2[] Scaled(this Vector2[] vertices, Vector2 scale) {
 			Vector2[] output = new Vector2[vertices.Length];
 			for (int i = 0; i < vertices.Length; i++) {
@@ -4392,6 +4504,7 @@ namespace Origins {
 			}
 			return output;
 		}
+		[Pure]
 		public static Vector2[] RotatedBy(this Vector2[] vertices, float rotation, Vector2 origin = default) {
 			Vector2[] output = new Vector2[vertices.Length];
 			for (int i = 0; i < vertices.Length; i++) {
@@ -4399,6 +4512,7 @@ namespace Origins {
 			}
 			return output;
 		}
+		[Pure]
 		public static bool[,] GeneratePathfindingGrid(Point topLeft, Point bottomRight, int halfExtraWidth, int halfExtraHeight) {
 			bool[,] solidity = new bool[bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y];
 			for (int i = 0; i < solidity.GetLength(0); i++) {
@@ -4504,12 +4618,14 @@ namespace Origins {
 			public bool opened;
 			public PathfindingNode parent;
 		}
+		[Pure]
 		public static float? CheckStripeVAALine(Vector2 stripePosition, float stripeWidth, Vector2 stripeDirection, Vector2 linePosition, float lineWidth) {
 			float progress = (linePosition.Y - stripePosition.Y) / stripeDirection.Y;
 			if (linePosition.X + lineWidth < stripePosition.X + stripeDirection.X * progress) return null;
 			if (linePosition.X > stripePosition.X + stripeWidth + stripeDirection.X * progress) return null;
 			return progress;
 		}
+		[Pure]
 		public static float? CheckMovingAALines(Vector2 positionA, float widthA, Vector2 velocityA, Vector2 positionB, float widthB, Vector2 velocityB) {
 			if (CheckStripeVAALine(positionA, widthA, velocityA + velocityB, positionB, widthB) is not float progress) return null;
 			if (progress < 0 || progress > 1) return null;
@@ -4712,6 +4828,7 @@ namespace Origins {
 				}
 			}
 		}
+		[Pure]
 		public static IEnumerable<string> GetGivenName(this ModNPC npc) {
 			string key = $"Mods.Origins.NPCs.{npc.Name}.Name";
 			if (Language.Exists(key)) {
@@ -5305,6 +5422,7 @@ namespace Origins {
 			return npc.GetNPCColorTintedByBuffs(baseColor);
 		}
 
+		[Pure]
 		public static bool CanBeAfflicted(this NPC npc, bool ignoreDontTakeDamage = false) {
 			if (npc.active && npc.lifeMax > 5 && (!npc.dontTakeDamage || ignoreDontTakeDamage) && !npc.friendly)
 				return !npc.immortal;
@@ -5468,7 +5586,9 @@ namespace Origins {
 				if (npc.extraValue > 0) NPC.RevengeManager.CacheEnemy(npc);
 			}
 		}
+		[Pure]
 		public static int FindBuffIndex<TBuff>(this NPC target) where TBuff : ModBuff => target.FindBuffIndex(ModContent.BuffType<TBuff>());
+		[Pure]
 		public static int FindBuffIndex<TBuff>(this Player target) where TBuff : ModBuff => target.FindBuffIndex(ModContent.BuffType<TBuff>());
 		public static void DelBuff<TBuff>(this NPC target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
 		public static void DelBuff<TBuff>(this Player target) where TBuff : ModBuff => target.DelBuff(target.FindBuffIndex<TBuff>());
@@ -5770,6 +5890,7 @@ namespace Origins {
 				TileObject.Place(objectData);
 			}
 		}
+		[Pure]
 		public static bool HasSolidFace(this Tile tile, TileSide side) {
 			if (tile.BlockType == BlockType.Solid) return true;
 			switch (side) {
@@ -5815,11 +5936,14 @@ namespace Origins {
 			float width = (tile.Width - 1) / 2f;
 			tile.Origin = new((int)(right ? Math.Ceiling(width) : Math.Floor(width)), tile.Height - 1);
 		}
+		[Pure]
 		public static TileItem GetTileItem(this ModTile tile) {
 			if (TileItem.Get(tile) is TileItem item && !item.IsDebug) return item;
 			throw new ArgumentException($"Cannot get TileItem of {tile} as it does not add one", nameof(tile));
 		}
+		[Pure]
 		public static bool BobberInLiquid(this FishingAttempt attempt, int liquid) => Main.tile[attempt.X, attempt.Y].LiquidType == liquid;
+		[Pure]
 		public static bool BobberInLiquid<TLiquid>(this FishingAttempt attempt) where TLiquid : ModLiquid => attempt.BobberInLiquid(LiquidLoader.LiquidType<TLiquid>());
 	}
 	public static class ProjectileExtensions {
@@ -5891,6 +6015,7 @@ namespace Origins {
 				}
 			}
 		}
+		[Pure]
 		public static bool IsLocallyOwned(this Projectile projectile) => projectile.owner == Main.myPlayer;
 
 		public static void FillWhipControlPoints(this Projectile proj, Vector2 playerArmPosition, List<Vector2> controlPoints, int useTimeMax, float useTime, float? useTimeForSize = null) {
@@ -5971,16 +6096,20 @@ namespace Origins {
 			ProjectileLoader.ModifyDamageHitbox(proj, ref hitbox);
 			return new(hitbox.Width / (float)proj.width, hitbox.Height / (float)proj.height);
 		}
+		[Pure]
 		public static StatModifier GetBlastRadius(this Projectile proj, BlastRadiusSources includeSources = BlastRadiusSources.All) {
 			return proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) ? global.GetBlastRadius(proj, includeSources) : default;
 		}
+		[Pure]
 		public static bool IsType<TProj>(this Projectile proj) where TProj : ModProjectile => proj.type == ModContent.ProjectileType<TProj>();
 	}
 	public static class ContentExtensions {
 		public static T[] RegisterSet<T>(this SetFactory.NamedSetKey set, T defaultState, params (int index, T value)[] inputs) => set.RegisterCustomSet<T>(defaultState,
 			[.. inputs.SelectMany(i => (IEnumerable<object>)[i.index, i.value])]
 		);
+		[Pure]
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
+		[Pure]
 		public static IEnumerable<LanguageTree> GetDescendants(this LanguageTree languageTree, bool includeSelf = false) {
 			if (includeSelf && languageTree.value.Key != languageTree.value.Value) yield return languageTree;
 			foreach (LanguageTree branch in languageTree.Values) {
@@ -5989,7 +6118,9 @@ namespace Origins {
 				}
 			}
 		}
+		[Pure]
 		public static LocalizedText SelectFrom(this LanguageTree languageTree, params object[] formatArgs) => Main.rand.Next(languageTree.GetChildren()).WithFormatArgs(formatArgs);
+		[Pure]
 		public static string SelectFromFormatArg(this LanguageTree languageTree, object format, UnifiedRandom rand = null) => (rand ?? Main.rand)
 			.Next(languageTree.Values
 				.Select(tree => tree.value)
@@ -6010,6 +6141,7 @@ namespace Origins {
 			[typeof(SequentialRulesNotScalingWithLuckRule)] = r => ((SequentialRulesNotScalingWithLuckRule)r).rules,
 			[typeof(SequentialRulesRule)] = r => ((SequentialRulesRule)r).rules,
 		};
+		[Pure]
 		public static T FindDropRule<T>(this IEnumerable<IItemDropRule> dropRules, Predicate<T> predicate) where T : class, IItemDropRule {
 			foreach (IItemDropRule dropRule in dropRules) {
 				if (dropRule is T rule && predicate(rule)) return rule;
@@ -6045,6 +6177,7 @@ namespace Origins {
 				OriginsModIntegrations.GoToKeybind(keybind);
 			}
 		}
+		[Pure]
 		public static string SubstituteKeybind(this string line, ModKeybind keybind) {
 			InputMode inputMode = InputMode.Keyboard;
 			switch (PlayerInput.CurrentInputMode) {
@@ -6059,6 +6192,7 @@ namespace Origins {
 			}
 			return line;
 		}
+		[Pure]
 		public static float DifficultyDamageMultiplier {
 			get {
 				if (Main.GameModeInfo.IsJourneyMode) {
@@ -6070,6 +6204,7 @@ namespace Origins {
 				return Main.GameModeInfo.EnemyDamageMultiplier;
 			}
 		}
+		[Pure]
 		public static Vector2 MapUV(this Rectangle rect, Point point) {
 			float U = (point.X - rect.Left) / (float)(rect.Right - rect.Left);
 			float V = (point.Y - rect.Bottom) / (float)(rect.Top - rect.Bottom);
@@ -6079,11 +6214,17 @@ namespace Origins {
 				MathHelper.Clamp(1f - V, 0, 1)
 			);
 		}
+		[Pure]
 		public static bool IsWithin(this Entity a, Entity b, float range) => a.Center.Clamp(b.Hitbox).IsWithin(b.Center.Clamp(a.Hitbox), range);
+		[Pure]
 		public static bool IsWithin(this Rectangle hitbox, Vector2 position, float range) => position.IsWithin(position.Clamp(hitbox), range);
+		[Pure]
 		public static bool IsWithinRectangular(this Entity a, Entity b, Vector2 range) => a.Center.Clamp(b.Hitbox).IsWithinRectangular(b.Center.Clamp(a.Hitbox), range);
+		[Pure]
 		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
+		[Pure]
 		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
+		[Pure]
 		public static void GetDisplayedDayTime(out string hours, out string minutes, out string seconds, out string half) {
 			// Get current weird time
 			double time = Main.time;
@@ -6131,6 +6272,7 @@ namespace Origins {
 				hours = intTime.ToString();
 			}
 		}
+		[Pure]
 		public static ActiveSound GetSound(this SlotId slot) {
 			return slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound sound) ? sound : null;
 		}
@@ -6143,6 +6285,7 @@ namespace Origins {
 				sound.Stop();
 			}
 		}
+		[Pure]
 		public static IEnumerable<Point> LiquidCollision(Vector2 Position, int Width, int Height) {
 			Vector2 checkCenter = new(Position.X + (Width / 2), Position.Y + (Height / 2));
 			int num = 10;
@@ -6323,6 +6466,7 @@ namespace Origins {
 				fail:;
 			}
 		}
+		[Pure]
 		static TEnum AND<TEnum>(this TEnum a, TEnum b) where TEnum : struct, Enum {
 			Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
 			if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<byte, TEnum>((byte)(Unsafe.BitCast<TEnum, byte>(a) & Unsafe.BitCast<TEnum, byte>(b)));
@@ -6331,6 +6475,7 @@ namespace Origins {
 			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<ulong, TEnum>((Unsafe.BitCast<TEnum, ulong>(a) & Unsafe.BitCast<TEnum, ulong>(b)));
 			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
 		}
+		[Pure]
 		static bool EQUALS<TEnum>(this TEnum a, TEnum b) where TEnum : struct, Enum {
 			Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
 			if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<TEnum, byte>(a) == Unsafe.BitCast<TEnum, byte>(b);
@@ -6341,13 +6486,18 @@ namespace Origins {
 		}
 	}
 	public static class NetmodeActive {
+		[Pure]
 		public static bool SinglePlayer => Main.netMode == NetmodeID.SinglePlayer;
+		[Pure]
 		public static bool MultiplayerClient => Main.netMode == NetmodeID.MultiplayerClient;
+		[Pure]
 		public static bool Server => Main.netMode == NetmodeID.Server;
 	}
 	// Convenience methods that really only exist to make things quicker and are likely to be used in places without a shared base class from Origins
 	public static class GlobalUtils {
+		[Pure]
 		public static Color FromHexRGB(uint hex) => FromHexRGBA((hex << 8) | 0x000000ffu);
+		[Pure]
 		public static Color FromHexRGBA(uint hex) => new() {
 			PackedValue = ((hex & 0xff000000u) >> 24) | ((hex & 0x00ff0000u) >> 8) | ((hex & 0x0000ff00u) << 8) | ((hex & 0x000000ffu) << 24),
 		};
@@ -6383,6 +6533,7 @@ namespace Origins {
 			if (min > max) Utils.Swap(ref min, ref max);
 		}
 		//https://en.wikipedia.org/wiki/Euclidean_algorithm
+		[Pure]
 		public static T GCF<T>(this T a, T b) where T : struct, INumber<T> {
 			if (T.IsZero(a) || T.IsNegative(a)) return T.One;
 			if (T.IsZero(b) || T.IsNegative(b)) return T.One;
@@ -6390,6 +6541,7 @@ namespace Origins {
 			while (!T.IsZero(a)) (b, a) = (a, b % a);
 			return b;
 		}
+		[Pure]
 		public static T OrXIf<T>(this T value, T condition, T result) {
 			if (Equals(value, condition)) return result;
 			return value;
