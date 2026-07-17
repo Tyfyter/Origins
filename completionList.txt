@@ -526,7 +526,7 @@ ACCESSORIES:
 (^) Coologne
 (^) CORE Generator
 (^) Counter-offensive Scarf
-(#2, ^2) CSTAA Jacket !!!
+(#2?, ^2) CSTAA Jacket !!!
 (^) Danger Barrel
 (†) Decorative A.S.H.E.S. !!!
 (^) Destructive Claws
