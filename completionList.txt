@@ -241,7 +241,7 @@ ENEMY NPCS:
 (^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
-(#, $2, ^2) Packhunter !!!
+(☻) Packhunter !!!
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
@@ -1103,7 +1103,7 @@ SUMMONER WEAPONS:
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(#3, ^2) Vampire Fireflower in a Pot !!!
+(☻) Vampire Fireflower in a Pot !!!
 
 NO POST-ML CONTENT YET.
 ---
@@ -1167,7 +1167,7 @@ EXPLOSIVE WEAPONS:
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb
 (^) Crystal Grenade
-(2#, ^2) Cupid's Arrow !!! 
+(†) Cupid's Arrow !!! 
 (^) Grenade Lawnchair
 (^) Happy Bomb
 (^) Rattlesnake
