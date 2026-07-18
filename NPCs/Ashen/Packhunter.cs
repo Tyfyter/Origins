@@ -102,7 +102,6 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void AI() {
-			NPC.confused = true;
 			viewPos = NeckPosition + viewDirection * 16;
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
