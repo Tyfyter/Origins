@@ -6502,6 +6502,15 @@ namespace Origins {
 			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<TEnum, ulong>(a) == Unsafe.BitCast<TEnum, ulong>(b);
 			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
 		}
+		public static void SetIDProp(this ModItem self) {
+			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
+		public static void SetIDProp(this ModProjectile self) {
+			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
+		public static void SetIDProp(this ModNPC self) {
+			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
 	}
 	public static class NetmodeActive {
 		[Pure]

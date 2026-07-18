@@ -8459,3 +8459,8 @@ The_Claw: {
 	DisplayName: The Claw
 	Tooltip: ""
 }
+
+Star_Harvest: {
+	DisplayName: Star Harvest
+	Tooltip: ""
+}

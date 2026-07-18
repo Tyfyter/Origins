@@ -1492,6 +1492,11 @@ Buffs: {
 		// DisplayName: <PH>Stress Ball Buff
 		// Description: Mods.Origins.Buffs.Stress_Ball_Buff.Description
 	}
+
+	Star_Harvest_Buff: {
+		// DisplayName: Star Harvest Buff
+		// Description: Mods.Origins.Buffs.Star_Harvest_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2313,6 +2318,9 @@ Projectiles: {
 	// Flashbang_Sun.DisplayName: The Sun
 	// Abrasion_Blaster_Explosion_Hostile.DisplayName: Abrasion Blaster
 	// Abrasion_Blaster_Hostile.DisplayName: Abrasion Blaster
+	// Small_Star_Cell.DisplayName: Small Star Cell
+	// Star_Cell.DisplayName: Star Cell
+	// Star_Cell_Tracker.DisplayName: Star Cell Tracker
 }
 
 Prefixes: {

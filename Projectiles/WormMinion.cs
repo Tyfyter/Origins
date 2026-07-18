@@ -89,6 +89,7 @@ namespace Origins.Projectiles {
 		public virtual float MaxPriorityRange => 1000;
 		public virtual float MaxNonPriorityRange => 700;
 		public virtual bool AutomaticRotationAndDirection => true;
+		public virtual bool SkipTargeting => false;
 		public Player Owner => Main.player[Projectile.owner];
 		public virtual void ResetTargetingData() {
 			targetingData.targetHitbox = Projectile.Hitbox;
@@ -147,7 +148,7 @@ namespace Origins.Projectiles {
 			}
 
 			ResetTargetingData();
-			Owner.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
+			if (!SkipTargeting) Owner.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
 
 			int oldDirection = Projectile.direction;
 			MoveTowardsTarget();

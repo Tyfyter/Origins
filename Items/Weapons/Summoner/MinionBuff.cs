@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public abstract IEnumerable<int> ProjectileTypes();
 		public virtual bool IsArtifact => false;
 		public virtual bool DrawHealthBars => IsArtifact;
+		public virtual bool ShowSlots => false;
 		public virtual bool ShowCount => true;
 		public override string Texture => ModContent.HasAsset(base.Texture) ? base.Texture : base.Texture.Replace("Items/Weapons/Summoner", "Buffs");
 		public override void SetStaticDefaults() {
@@ -51,6 +52,16 @@ namespace Origins.Items.Weapons.Summoner {
 				foreach (int proj in ProjectileTypes()) {
 					ArtifactMinionSystem.DrawBuffHealthbars(proj, ref drawParams, startY);
 				}
+			}
+			if (ShowSlots) {
+				float slots = 0;
+				HashSet<int> kinds = ProjectileTypes().ToHashSet();
+				foreach (Projectile other in Main.ActiveProjectiles) {
+					if (!other.IsLocallyOwned() || !kinds.Contains(other.type)) continue;
+					slots += other.minionSlots;
+				}
+				spriteBatch.DrawString(FontAssets.ItemStack.Value, $"{slots:0.#}", drawParams.TextPosition, drawParams.DrawColor, 0f, default, 0.8f, SpriteEffects.None, 0f);
+				drawParams.TextPosition.Y += FontAssets.ItemStack.Value.LineSpacing * 0.8f * 0.9f;
 			}
 			if (ShowCount) {
 				int count = 0;

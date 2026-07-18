@@ -586,6 +586,7 @@ namespace Origins {
 		[AutoReset] public float oldNaturalRegen;
 		[AutoReset] public StatModifier keepNaturalRegenMult = new(0, 1);
 		[DecrementReset] public int hookCooldown;
+		[AutoReset] public bool starCellArtifact;
 		#endregion
 
 		#region visuals
