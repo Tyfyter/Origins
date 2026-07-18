@@ -5612,6 +5612,24 @@ namespace Origins {
 				0f);
 			}
 		}
+		public static void StrikeOtherNPCs(this NPC self, float? damage = null, float knockback = 6, int? direction = null) {
+			damage ??= self.damage;
+			Rectangle baseHitbox = self.Hitbox;
+			foreach (NPC other in Main.ActiveNPCs) {
+				if (other == self) continue;
+				if (other.active && other.immune[255] == 0 && !(other.dontTakeDamage || other.dontTakeDamageFromHostiles || other.immortal)) {
+					int specialHitSetter = 1;
+					float damageMultiplier = 1f;
+					Rectangle hurtbox = other.Hitbox;
+					Rectangle hitbox = baseHitbox;
+					NPC.GetMeleeCollisionData(hurtbox, self.whoAmI, ref specialHitSetter, ref damageMultiplier, ref hitbox);
+					if (NPCLoader.CanHitNPC(self, other) && hitbox.Intersects(hurtbox)) {
+						self.StrikeOtherNPC(other, (int)(damage * damageMultiplier), knockback, direction ?? (other.Center.X > self.Center.X).ToDirectionInt());
+						break;
+					}
+				}
+			}
+		}
 	}
 	public static class TileExtenstions {
 		public static bool IsBrokenBottomAnchor(int i, int j) {

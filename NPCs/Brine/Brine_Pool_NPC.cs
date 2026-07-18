@@ -80,12 +80,12 @@ namespace Origins.NPCs.Brine {
 			HitOtherNPCs(NPC);
 		}
 		public static void HitOtherNPCs(NPC self) {
-			int specialHitSetter = 1;
-			float damageMultiplier = 1f;
 			Rectangle baseHitbox = self.Hitbox;
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (other == self) continue;
 				if (other.active && other.immune[255] == 0 && !(other.dontTakeDamage || other.dontTakeDamageFromHostiles || other.immortal)) {
+					int specialHitSetter = 1;
+					float damageMultiplier = 1f;
 					Rectangle hurtbox = other.Hitbox;
 					Rectangle hitbox = baseHitbox;
 					NPC.GetMeleeCollisionData(hurtbox, self.whoAmI, ref specialHitSetter, ref damageMultiplier, ref hitbox);

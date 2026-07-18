@@ -20,6 +20,7 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture glowTexture = typeof(Packhunter).GetDefaultTMLName("_Glow");
 		static AutoLoadingTexture headTexture = typeof(Packhunter).GetDefaultTMLName("_Head");
 		static AutoLoadingTexture headGlowTexture = typeof(Packhunter).GetDefaultTMLName("_Head_Glow");
+		public static float FlashRangeBoost => 0;
 		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 12), DrawOffsetY - 7);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -73,7 +74,7 @@ namespace Origins.NPCs.Ashen {
 				if (player.whoAmI == NPC.target) aggro += 300;
 				break;
 				case 4:
-				aggro = 0;
+				aggro = FlashRangeBoost;
 				break;
 			}
 			return aggro;
@@ -83,6 +84,7 @@ namespace Origins.NPCs.Ashen {
 			return NPC.Hitbox.Intersects(playerHitbox) || GetViewTriangle(GetPlayerAggro(player)).Intersects(playerHitbox);
 		}
 		bool ConfusedSearchFilter(NPC player) {
+			if (OriginsSets.NPCs.TargetDummies[player.type]) return false;
 			Rectangle playerHitbox = player.Hitbox;
 			return NPC.Hitbox.Intersects(playerHitbox) || GetViewTriangle(0).Intersects(playerHitbox);
 		}
@@ -100,6 +102,7 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void AI() {
+			NPC.confused = true;
 			viewPos = NeckPosition + viewDirection * 16;
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
@@ -187,15 +190,21 @@ namespace Origins.NPCs.Ashen {
 				acceleration = 0f;
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
 				if (++NPC.ai[0] > 15) {
+					Triangle flashTriangle = GetViewTriangle(FlashRangeBoost);
+					SoundEngine.PlaySound(SoundID.Camera, NPC.Center);
+					SoundEngine.PlaySound(SoundID.ScaryScream.WithPitch(2f), NPC.Center);
+					SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(2f), NPC.Center);
 					foreach (Player player in Main.ActivePlayers) {
-						if (GetViewTriangle(GetPlayerAggro(player)).Intersects(player.Hitbox)) {
-							SoundEngine.PlaySound(SoundID.Camera, NPC.Center);
-							SoundEngine.PlaySound(SoundID.ScaryScream.WithPitch(2f), NPC.Center);
-							SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(2f), NPC.Center);
+						if (flashTriangle.Intersects(player.Hitbox)) {
 							player.AddBuff(Flashbang_Debuff.ID, 65);
 							if (player.whoAmI == Main.myPlayer && OriginsModIntegrations.CheckAprilFools() && TextUtils.LanguageTree.Find("Mods.Origins.AprilFools.Buffs.Flashbang_Debuff.DogDescription") is LanguageTree desc) {
 								Flashbang_Debuff.descriptionOverride = desc.value;
 							}
+						}
+					}
+					if (NPC.confused) {
+						foreach (NPC npc in Main.ActiveNPCs) {
+							if (flashTriangle.Intersects(npc.Hitbox)) npc.AddBuff(Blind_Debuff.ID, 120);
 						}
 					}
 					NPC.aiAction = 1;
@@ -248,6 +257,7 @@ namespace Origins.NPCs.Ashen {
 			}
 			NPC.spriteDirection = NPC.direction;
 			viewDirection = NPC.rotation.ToRotationVector2();
+			if (NPC.confused) NPC.StrikeOtherNPCs();
 		}
 		public override void FindFrame(int frameHeight) {
 			DrawOffsetY = 0;
@@ -279,6 +289,12 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit) {
+			if (NPC.confused && hit.HitDirection == NPC.direction) {
+				hit.HitDirection *= -1;
+				NPC.velocity = hit.GetKnockbackFromHit();
+			}
 		}
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[3];
 		static readonly short[] dices = [0, 1, 2];
