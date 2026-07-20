@@ -8,9 +8,12 @@ using System.Reflection;
 using Terraria.GameContent;
 using ReLogic.Graphics;
 using System.Linq;
+using Terraria.ID;
 
 namespace Origins.Items.Weapons.Summoner {
+	[ReinitializeDuringResizeArrays]
 	public abstract class MinionBuff : ModBuff {
+		public static bool[] SkipInCount = ProjectileID.Sets.Factory.CreateBoolSet();
 		public abstract IEnumerable<int> ProjectileTypes();
 		public virtual bool IsArtifact => false;
 		public virtual bool DrawHealthBars => IsArtifact;
@@ -65,7 +68,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			if (ShowCount) {
 				int count = 0;
-				foreach (int proj in ProjectileTypes()) count += Main.LocalPlayer.ownedProjectileCounts[proj];
+				foreach (int proj in ProjectileTypes()) if (!SkipInCount[proj]) count += Main.LocalPlayer.ownedProjectileCounts[proj];
 				spriteBatch.DrawString(FontAssets.ItemStack.Value, count + "", drawParams.TextPosition, drawParams.DrawColor, 0f, default, 0.8f, SpriteEffects.None, 0f);
 			}
 		}

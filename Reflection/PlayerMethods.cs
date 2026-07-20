@@ -75,6 +75,13 @@ namespace Origins.Reflection {
 		[ReflectionParentType(typeof(PlayerLoader)), ReflectionMemberName("SetupPlayer")]
 		private static SetupPlayer_Del _SetupPlayer;
 		public static void SetupPlayer(Player player) => _SetupPlayer(player);
+		private delegate void FreeUpPetsAndMinions_Del(Item item);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("FreeUpPetsAndMinions")]
+		private static FreeUpPetsAndMinions_Del _FreeUpPetsAndMinions;
+		public static void FreeUpPetsAndMinions(Player player, Item item) {
+			DelegateMethods._target.SetValue(_FreeUpPetsAndMinions, player);
+			_FreeUpPetsAndMinions(item);
+		}
 		//private delegate void GrabItems_Del(int playerIndex);
 		//private static GrabItems_Del _GrabItems;
 		public static void ApplyNPCOnHitEffects(Player player, Item sItem, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone) {

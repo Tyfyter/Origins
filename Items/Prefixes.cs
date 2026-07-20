@@ -611,6 +611,7 @@ namespace Origins.Items {
 			Origins.SpecialPrefix[Type] = true;
 		}
 		public override void UpdateProjectile(Projectile projectile, int time) {
+			if (projectile.aiStyle == ProjAIStyleID.DesertTigerBall) return;
 			if (projectile.numUpdates == -1 && time > 0 && time % 30 == 0) {
 				projectile.DamageArtifactMinion(2, new PrefixDamageSource(this), true);
 			}

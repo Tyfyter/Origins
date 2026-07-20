@@ -384,7 +384,7 @@ namespace Origins.Projectiles {
 				}
 			}
 			foreach (Projectile enemyProj in Main.ActiveProjectiles) {
-				if ((enemyProj.hostile || (enemyProj.type == ProjectileID.RottenEgg && enemyProj.owner == projectile.owner)) && enemyProj.damage > 0 && enemyProj.Hitbox.Intersects(projectile.Hitbox)) {
+				if ((enemyProj.hostile || (enemyProj.type == ProjectileID.RottenEgg && enemyProj.owner == projectile.owner)) && enemyProj.damage > 0 && enemyProj.Colliding(enemyProj.Hitbox, projHitbox)) {
 					NPC.HitInfo hit = new() {
 						HitDirection = enemyProj.direction,
 						Knockback = 2,
