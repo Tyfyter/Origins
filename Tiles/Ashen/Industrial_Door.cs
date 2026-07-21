@@ -45,6 +45,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 
 			// Names
 			AddMapEntry(FromHexRGB(0x756982), CreateMapEntryName());
@@ -105,6 +106,7 @@ namespace Origins.Tiles.Ashen {
 			base.SetStaticDefaults();
 			Main.tileSolidTop[Type] = true;
 			TileID.Sets.Suffocate[Type] = false;
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			RegisterItemDrop(Tiles.TileItem.Get<Industrial_Door>().Type);
 		}
@@ -237,15 +239,22 @@ namespace Origins.Tiles.Ashen {
 							}
 						}
 					}
+					bool updateWater = TargetOpen && !WorldGen.noLiquidCheck && !NetmodeActive.MultiplayerClient;
 					for (int y = 0; y < data.Height; y++) {
 						ushort tileType = (y * 16 + 8 >= crush) ? open : closed;
 						for (int x = 0; x < data.Width; x++) {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileType = tileType;
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
-							if (TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
+							if (tileType == open && TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
 								Liquid.AddWater(left + x, top + y);
 							}
+						}
+						if (updateWater && (y * 16 + 8 >= crush) != (y * 16 + 8 >= CrushPixels(frame + 1))) {
+							Tile tile = Main.tile[left - 1, top + y];
+							if (tile.LiquidAmount > 0) Liquid.AddWater(left - 1, top + y);
+							tile = Main.tile[left + 2, top + y];
+							if (tile.LiquidAmount > 0) Liquid.AddWater(left + 2, top + y);
 						}
 					}
 				}

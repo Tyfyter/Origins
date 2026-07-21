@@ -45,6 +45,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 
 			// Names
 			AddMapEntry(FromHexRGB(0x756982), CreateMapEntryName());
@@ -105,6 +106,7 @@ namespace Origins.Tiles.Ashen {
 			base.SetStaticDefaults();
 			Main.tileSolidTop[Type] = true;
 			TileID.Sets.Suffocate[Type] = false;
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			RegisterItemDrop(Tiles.TileItem.Get<Ancient_Industrial_Door>().Type);
 		}
@@ -177,14 +179,21 @@ namespace Origins.Tiles.Ashen {
 					ushort tileType = (ushort)(frame == max_frame ? ModContent.TileType<Ancient_Industrial_Door_Open>() : ModContent.TileType<Ancient_Industrial_Door>());
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
-					for (int x = 0; x < data.Width; x++) {
-						for (int y = 0; y < data.Height; y++) {
+					bool updateWater = TargetOpen && !WorldGen.noLiquidCheck && !NetmodeActive.MultiplayerClient && frame == max_frame;
+					for (int y = 0; y < data.Height; y++) {
+						for (int x = 0; x < data.Width; x++) {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileType = tileType;
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
 							if (TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
 								Liquid.AddWater(left + x, top + y);
 							}
+						}
+						if (updateWater) {
+							Tile tile = Main.tile[left - 1, top + y];
+							if (tile.LiquidAmount > 0) Liquid.AddWater(left - 1, top + y);
+							tile = Main.tile[left + 2, top + y];
+							if (tile.LiquidAmount > 0) Liquid.AddWater(left + 2, top + y);
 						}
 					}
 					if (!TargetOpen && frame < 4) {
