@@ -1396,7 +1396,7 @@ TILES:
 (^) Fire Extinguisher Holder
 (^) Gas Generator
 (@3, #) Incinerator Pit !!!
-(#2, ^2) Industrial Door !!!
+(☻) Industrial Door !!!
 (^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)

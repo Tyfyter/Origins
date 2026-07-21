@@ -8464,3 +8464,8 @@ Star_Harvest: {
 	// DisplayName: Star Harvest
 	// Tooltip: ""
 }
+
+Ancient_Industrial_Door_Item: {
+	// DisplayName: Ancient Industrial Door
+	// Tooltip: ""
+}

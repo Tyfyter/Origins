@@ -16,10 +16,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using static Origins.Tiles.Ashen.Industrial_Door_TE_System;
+using static Origins.Tiles.Ashen.Ancient_Industrial_Door_TE_System;
 
 namespace Origins.Tiles.Ashen {
-	public class Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile {
+	public class Ancient_Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile {
 		public override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
@@ -81,7 +81,7 @@ namespace Origins.Tiles.Ashen {
 		public override bool RightClick(int i, int j) => Toggle(i, j);
 		public override void PlaceInWorld(int i, int j, Item item) {
 			FrameSurrounding(i, j, out int left, out int top);
-			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(left, top));
+			ModContent.GetInstance<Ancient_Industrial_Door_TE_System>().AddTileEntity(new(left, top));
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			this.ApplyTileGlow(i, j, ref drawData);
@@ -92,21 +92,21 @@ namespace Origins.Tiles.Ashen {
 		public static bool Toggle(int i, int j, bool actuallyDo = true) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			Door_Animation animation = Industrial_Door_TE_System.GetAnimation(new(left, top));
+			Door_Animation animation = Ancient_Industrial_Door_TE_System.GetAnimation(new(left, top));
 			if (animation.IsAnimating) return false;
-			if (actuallyDo) new Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
+			if (actuallyDo) new Ancient_Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
 			return true;
 		}
 	}
-	public class Industrial_Door_Open : Industrial_Door {
+	public class Ancient_Industrial_Door_Open : Ancient_Industrial_Door {
 		public override void Load() { }
-		public override string Texture => typeof(Industrial_Door).GetDefaultTMLName();
+		public override string Texture => typeof(Ancient_Industrial_Door).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.tileSolidTop[Type] = true;
 			TileID.Sets.Suffocate[Type] = false;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
-			RegisterItemDrop(Tiles.TileItem.Get<Industrial_Door>().Type);
+			RegisterItemDrop(Tiles.TileItem.Get<Ancient_Industrial_Door>().Type);
 		}
 		public override void PostSetDefaults() {
 			Main.tileBlockLight[Type] = false;
@@ -117,14 +117,14 @@ namespace Origins.Tiles.Ashen {
 			height = -1600;
 		}
 	}
-	public class Industrial_Door_TE_System : TESystem {
+	public class Ancient_Industrial_Door_TE_System : TESystem {
 		Dictionary<Point16, Door_Animation> openDoors;
 		public override void PreUpdateEntities() {
 			openDoors ??= [];
 			for (int i = 0; i < tileEntityLocations.Count; i++) {
 				Point16 pos = tileEntityLocations[i];
 				Tile tile = Main.tile[pos];
-				if (tile.HasTile && (tile.TileType == ModContent.TileType<Industrial_Door>() || tile.TileType == ModContent.TileType<Industrial_Door_Open>())) {
+				if (tile.HasTile && (tile.TileType == ModContent.TileType<Ancient_Industrial_Door>() || tile.TileType == ModContent.TileType<Ancient_Industrial_Door_Open>())) {
 					GetAnimation(pos).Update(pos);
 				} else {
 					tileEntityLocations.RemoveAt(i--);
@@ -136,8 +136,8 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void LoadWorldData(TagCompound tag) {
 			base.LoadWorldData(tag);
-			int closed = ModContent.TileType<Industrial_Door>();
-			int open = ModContent.TileType<Industrial_Door_Open>();
+			int closed = ModContent.TileType<Ancient_Industrial_Door>();
+			int open = ModContent.TileType<Ancient_Industrial_Door_Open>();
 			openDoors ??= [];
 			foreach (Point16 pos in tileEntityLocations) {
 				Tile tile = Main.tile[pos];
@@ -158,7 +158,7 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		public static Door_Animation GetAnimation(Point16 position) {
-			Dictionary<Point16, Door_Animation> openDoors = ModContent.GetInstance<Industrial_Door_TE_System>().openDoors;
+			Dictionary<Point16, Door_Animation> openDoors = ModContent.GetInstance<Ancient_Industrial_Door_TE_System>().openDoors;
 			openDoors.TryAdd(position, new());
 			return openDoors[position];
 		}
@@ -168,78 +168,17 @@ namespace Origins.Tiles.Ashen {
 			public int frameCounter = 0;
 			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
 			public const int max_frame = 5;
-			static int CrushPixels(int frame) {
-				switch (frame) {
-					case 0:
-					return 48;
-					case 1:
-					return 42;
-					case 2:
-					return 36;
-					case 3:
-					return 30;
-					case 4:
-					return 22;
-					case 5:
-					return 0;
-				}
-				return 0;
-			}
 			public void Update(Point16 position) {
 				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					frameCounter = 0;
 					frame += TargetOpen.ToDirectionInt();
-					ushort open = (ushort)ModContent.TileType<Industrial_Door_Open>();
-					ushort closed = (ushort)ModContent.TileType<Industrial_Door>();
+					ushort tileType = (ushort)(frame == max_frame ? ModContent.TileType<Ancient_Industrial_Door_Open>() : ModContent.TileType<Ancient_Industrial_Door>());
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
-					int crush = CrushPixels(frame);
-					if (!TargetOpen && crush > 0) {
-						Rectangle hitbox = new(left * 16, top * 16, 16 * 2, crush);
-						bool TryCrush(Entity entity) {
-							if (!entity.Hitbox.Intersects(hitbox)) return false;
-							float targetPush = top * 16 + crush - entity.position.Y;
-							Vector2 push = new(0, targetPush);
-							Vector4 slopeCollision = Collision.SlopeCollision(entity.position, push, entity.width, entity.height, fall: true);
-							Vector2 position = slopeCollision.XY();
-							push = slopeCollision.ZW();
-							push = Collision.TileCollision(position, push, entity.width, entity.height, fallThrough: true, fall2: true);
-							if (push.Y == targetPush) {
-								entity.position = position + push;
-								return false;
-							}
-							return true;
-						}
-						if (!NetmodeActive.Server) {
-							Player player = Main.LocalPlayer;
-							if (!player.shimmering) {
-								if (TryCrush(player)) {
-									player.Hurt(
-										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
-										player.statLife / (frame + 1),
-										0,
-										cooldownCounter: -2,
-										dodgeable: false,
-										knockback: 0,
-										scalingArmorPenetration: 1
-									);
-								}
-							}
-						}
-						if (!NetmodeActive.MultiplayerClient) {
-							foreach (NPC npc in Main.ActiveNPCs) {
-								if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
-								if (TryCrush(npc)) {
-									npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 0, noPlayerInteraction: true);
-								}
-							}
-						}
-					}
-					for (int y = 0; y < data.Height; y++) {
-						ushort tileType = (y * 16 + 8 >= crush) ? open : closed;
-						for (int x = 0; x < data.Width; x++) {
+					for (int x = 0; x < data.Width; x++) {
+						for (int y = 0; y < data.Height; y++) {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileType = tileType;
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
@@ -248,12 +187,39 @@ namespace Origins.Tiles.Ashen {
 							}
 						}
 					}
+					if (!TargetOpen && frame < 4) {
+						Rectangle hitbox = new(left * 16, top * 16, 16 * 2, 16 * 3);
+						if (!NetmodeActive.Server) {
+							Player player = Main.LocalPlayer;
+							if (!player.shimmering) {
+								if (player.Hitbox.Intersects(hitbox)) {
+									player.Hurt(
+										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
+										player.statLife / (frame + 1),
+										0,
+										cooldownCounter: -2,
+										dodgeable: false,
+										knockback: 18,
+										scalingArmorPenetration: 1
+									);
+								}
+							}
+						}
+						if (!NetmodeActive.MultiplayerClient) {
+							foreach (NPC npc in Main.ActiveNPCs) {
+								if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
+								if (npc.Hitbox.Intersects(hitbox)) {
+									npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
+								}
+							}
+						}
+					}
 				}
 			}
 		}
-		public record class Industrial_Door_Action(Point16 Position, bool Open) : SyncedAction {
+		public record class Ancient_Industrial_Door_Action(Point16 Position, bool Open) : SyncedAction {
 			protected override bool ShouldPerform => GetAnimation(Position).TargetOpen != Open;
-			public Industrial_Door_Action() : this(default, default) { }
+			public Ancient_Industrial_Door_Action() : this(default, default) { }
 			public override SyncedAction NetReceive(BinaryReader reader) => this with {
 				Position = new(reader.ReadInt16(), reader.ReadInt16()),
 				Open = reader.ReadBoolean()
@@ -267,6 +233,7 @@ namespace Origins.Tiles.Ashen {
 				GetAnimation(Position).TargetOpen = Open;
 				Vector2 soundPosition = Position.ToWorldCoordinates(16, 24);
 				SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-0.4f), soundPosition);
+				SoundEngine.PlaySound((Open ? Origins.Sounds.MetalCreakOpen : Origins.Sounds.MetalCreakClose).WithPitch(-0.4f), soundPosition);
 				SoundEngine.PlaySound(SoundID.NPCHit52, soundPosition);
 			}
 		}

@@ -2664,6 +2664,8 @@ Tiles: {
 	// Magic_Dropper_Brine.MapEntry: Dripping Brine
 	// Magic_Dropper_Amebic_Gel.MapEntry: Dripping Amebic Gel
 	// Oil_Derrick.MapEntry: Oil Derrick
+	// Ancient_Industrial_Door.MapEntry: Ancient Industrial Door
+	// Ancient_Industrial_Door_Open.MapEntry: Ancient Industrial Door
 }
 
 Liquids: {

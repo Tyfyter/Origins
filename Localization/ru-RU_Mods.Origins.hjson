@@ -2664,6 +2664,8 @@ Tiles: {
 	Magic_Dropper_Brine.MapEntry: Капающий рассол
 	Magic_Dropper_Amebic_Gel.MapEntry: Капающий амёбный гель
 	Oil_Derrick.MapEntry: Нефтяная вышка
+	// Ancient_Industrial_Door.MapEntry: Ancient Industrial Door
+	// Ancient_Industrial_Door_Open.MapEntry: Ancient Industrial Door
 }
 
 Liquids: {
