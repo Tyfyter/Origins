@@ -84,6 +84,7 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 		}
