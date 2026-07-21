@@ -123,6 +123,7 @@ namespace Origins.Items.Accessories {
 		#endregion
 		#region attacks
 		public abstract class PirateEyeMode : ModProjectile, IComparable<PirateEyeMode> {
+			public virtual bool Unplanned => false;
 			public override string Name => "Pirate_Eye_" + base.Name;
 			public sealed override void Load() {
 				Colors.Add(this);
@@ -633,6 +634,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class _Temp_Turquoise : PirateEyeMode, IBroken {
+			public override bool Unplanned => true;
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PoisonFang}";
 			public override Color Color => FromHexRGB(0x00ff9f);//#00FF9F
@@ -880,6 +882,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class _Temp_Blue : PirateEyeMode, IBroken {
+			public override bool Unplanned => true;
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.WaterStream}";
 			public override Color Color => FromHexRGB(0x2000ff);//#2000FF
@@ -1136,6 +1139,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class _Temp_Pink : PirateEyeMode, IBroken {
+			public override bool Unplanned => true;
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0xff9ae9);//#FF9AE9
@@ -1147,6 +1151,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class _Temp_Green : PirateEyeMode, IBroken {
+			public override bool Unplanned => true;
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0x009700);//#009700
@@ -1158,6 +1163,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class _Temp_Brown : PirateEyeMode, IBroken {
+			public override bool Unplanned => true;
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0xa74d00);//#A74D00
@@ -1228,6 +1234,9 @@ namespace Origins.Items.Accessories {
 							color = Color.Black;
 							button.Inflate(-3, -3);
 							Main.spriteBatch.Draw(texture, button, color);
+						}
+						if (Space_Pirates_Eye.Colors[i].Unplanned) {
+							Main.spriteBatch.Draw(TextureAssets.Cd.Value, button, Color.Red);
 						}
 					}
 					{
