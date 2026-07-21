@@ -4,6 +4,7 @@ using Origins.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Origins.Tiles {
@@ -52,6 +53,11 @@ namespace Origins.Tiles {
 		}
 		public static Texture2D GetTopGlowTexture(this IGlowingModTree self, int paintColor) {
 			return CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(self.TopGlowPaintKey, paintColor, self.TopGlowTexture);
+		}
+		public static void AddGlow(this IGlowingModTile self, ref TileDrawInfo drawData) {
+			drawData.glowColor = self.GlowColor;
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, drawData.tileWidth, drawData.tileHeight);
+			drawData.glowTexture = self.GlowTexture;
 		}
 		public static void DoFancyGlow(ref this Vector3 fancyLightingCurrentColor, Vector3 color, int paintColor) => DoFancyGlow(
 			ref fancyLightingCurrentColor.X, ref fancyLightingCurrentColor.Y, ref fancyLightingCurrentColor.Z,

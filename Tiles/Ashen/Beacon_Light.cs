@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs.Ashen;
@@ -17,13 +18,17 @@ using Terraria.ObjectData;
 using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.Tiles.Ashen {
-	public class Beacon_Light : OriginTile, IComplexMineDamageTile, IAshenWireTile, IReparableTile {
+	public class Beacon_Light : OriginTile, IComplexMineDamageTile, IAshenWireTile, IReparableTile, IGlowingModTile {
 		public static int ID { get; private set; }
-		TileItem item;
 		public override void Load() {
-			Mod.AddContent(item = new(this));
+			new TileItem(this).WithExtraStaticDefaults(this.DropTileItem).RegisterItem();
+			this.SetupGlowKeys();
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX < 18 * 2) color.DoFancyGlow(new(1.0f, 0.61f, 0.1f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileFrameImportant[Type] = true;
@@ -34,7 +39,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
 			// Names
-			AddMapEntry(FromHexRGB(0xFFB18C), item.DisplayName);
+			AddMapEntry(FromHexRGB(0xFFB18C), TileItem.Get(this).DisplayName);
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -43,7 +48,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower < 55 && Main.tile[i, j].TileFrameX >= 18 * 2 * 2) damage = 0;
@@ -57,6 +61,7 @@ namespace Origins.Tiles.Ashen {
 		public override void HitWire(int i, int j) {
 			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
 		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) => this.AddGlow(ref drawData);
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (!fail) {
 				Tile tile = Main.tile[i, j];
@@ -90,6 +95,9 @@ namespace Origins.Tiles.Ashen {
 				UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
 			}
 		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
 	}
 	public class Beacon_Light_TE_System : TESystem {
 		HashSet<Point16> processedLocations;

@@ -1447,7 +1447,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(#2/3?, ^2) Beacon Light !!!
+(☻) Beacon Light !!!
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
