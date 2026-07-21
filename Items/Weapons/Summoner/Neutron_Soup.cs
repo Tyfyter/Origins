@@ -56,15 +56,15 @@ namespace Origins.Items.Weapons.Summoner {
 			ref drawInfo,
 			lightColor
 		);
-		public override bool AltFunctionUse(Player player) => true;
+		public override bool AltFunctionUse(Player player) => false;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (player.altFunctionUse == 2) {
+			if (player.altFunctionUse != 2) {
 				type = ModContent.ProjectileType<Neutron_Soup_Beam>();
 				player.StartChanneling(type);
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (player.altFunctionUse == 2) {
+			if (player.altFunctionUse != 2) {
 				Vector2 shootDir = velocity.Normalized(out _);
 				Vector2 moveDir = new(player.controlRight.ToInt() - player.controlLeft.ToInt(), player.controlDown.ToInt() - player.controlUp.ToInt());
 				if (moveDir.LengthSquared() > 1) moveDir.Normalize();
@@ -77,6 +77,9 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 	public class Neutron_Soup_P : ModProjectile {
 		public override string Texture => base.Texture[..^2];
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.aiStyle = 0;
@@ -188,10 +191,10 @@ namespace Origins.Items.Weapons.Summoner {
 			if (Projectile.localAI[1].CycleUp(ChargeTime)) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= float.Lerp(0.1f, 1f, ChargeFactor);
+			modifiers.SourceDamage *= Utils.Remap(Projectile.ai[2], 0, ChargeTime, 0.1f, 1f);
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			modifiers.SourceDamage *= float.Lerp(0.1f, 1f, ChargeFactor);
+			modifiers.SourceDamage *= Utils.Remap(Projectile.ai[2], 0, ChargeTime, 0.1f, 1f);
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			overPlayers.Add(index);
