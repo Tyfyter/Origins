@@ -279,6 +279,9 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Vampire_Grenade>(), 5, 20, 30));
 				break;
 			}
+			if (NPCID.Sets.BelongsToInvasionFrostLegion[npc.type]) {
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Matryoshka_Doll>(), 150));
+			}
 			CommonDrop harpoonRule = null;
 			foreach (IItemDropRule rule in npcLoot.Get(includeGlobalDrops: false)) {
 				List<DropRateInfo> drops = [];
