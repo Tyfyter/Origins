@@ -18,6 +18,7 @@ namespace Origins.NPCs.MiscE {
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			NPCID.Sets.Zombies[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
 				if (Main.hardMode) {
 					int strength = npc.damage + 6 + npc.lifeMax / 4;

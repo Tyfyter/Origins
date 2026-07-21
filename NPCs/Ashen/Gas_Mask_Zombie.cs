@@ -36,6 +36,7 @@ namespace Origins.NPCs.Ashen {
 #else
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
 #endif
+			NPCID.Sets.Zombies[Type] = true;
 			/*NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
 				if (Main.hardMode) {
