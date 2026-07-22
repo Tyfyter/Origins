@@ -1301,6 +1301,7 @@ namespace Origins {
 			AvalonSets.NPCSets.Wicked[NPCType<Amoebeye>()] = true;
 			AvalonSets.NPCSets.Wicked[NPCType<Single_Cellular_Nautilus>()] = true;
 			AvalonSets.NPCSets.Wicked[NPCType<Riven_Mimic>()] = true;
+			AvalonSets.NPCSets.Wicked[NPCType<Malfunctioning_Missile>()] = true;
 			#endregion
 			#region Projectiles
 			AvalonSets.ProjectileSets.MinionProjectiles[Shimmer_Guardian_Shard.ID] = true;

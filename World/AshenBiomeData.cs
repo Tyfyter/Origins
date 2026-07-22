@@ -14,7 +14,6 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Liquids;
 using Origins.NPCs.Ashen;
-using Origins.NPCs.Defiled;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
@@ -124,7 +123,7 @@ namespace Origins.World.BiomeData {
 					return 0;
 				};
 				AddSpawn(NPCType<Trash_Compactor_Mimic>(), MimicRate(Mimic));
-				AddSpawn(NPCType<Enchanted_Trident>(), MimicRate(CursedWeapon));
+				AddSpawn(NPCType<Malfunctioning_Missile>(), MimicRate(CursedWeapon));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
