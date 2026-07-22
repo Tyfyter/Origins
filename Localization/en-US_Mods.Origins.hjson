@@ -1428,7 +1428,7 @@ Buffs: {
 	}
 
 	Matryoshka_Doll_Buff: {
-		DisplayName: Matryoshka Doll Buff
+		DisplayName: Matryoshka Doll
 		Description: Layers upon layers!
 	}
 

@@ -1093,7 +1093,7 @@ SUMMONER WEAPONS:
 (X) Culltivator
 (X) Cursor Brick
 (X) Fiber Optic Whips
-(#, ^2) Matryoshka Doll !!!
+(†) Matryoshka Doll !!!
 (X) Mojo Mask Staff
 (#, ^2) Neutron Soup !!!
 (X) Probe Controller

@@ -87,8 +87,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
-		public float SacrificeAvoidance => (Life / MaxLife) * (Projectile?.minionSlots ?? 1) + Size / 6f;
-		public override Rectangle RestRegion => base.RestRegion.Modified(-8, (int)(Flying + 1) * 16, 16, (int)(Flying + 1) * -16);
+		public float SacrificeAvoidance => Parent != -1 ? float.PositiveInfinity : (Life / MaxLife) * (Projectile?.minionSlots ?? 1) + Size / 6f;
+		public override Rectangle RestRegion => base.RestRegion.Modified(-8, 16 - (int)Projectile.localAI[1], 16, (int)(Flying + 1) * -16);
 		bool ISkipInMinionIndex.Skip => Parent != -1;
 		public ref float Size => ref Projectile.ai[0];
 		public ref float Flying => ref Projectile.ai[1];
@@ -129,7 +129,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.idStaticNPCHitCooldown = 6;
 			Projectile.manualDirectionChange = true;
 			Projectile.netImportant = true;
-			MaxLife = 100;
+			MaxLife = 200;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Child = -1;
@@ -193,15 +193,35 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.velocity = Projectile.velocity.Normalized(out speed);
 				if (speed > 8) speed *= 0.96f;
 				Projectile.velocity *= Math.Min(speed, 15);
+				Projectile.rotation = speed < 0.1f ? 0 : (Projectile.velocity.ToRotation() + MathHelper.PiOver2);
+				Vector2 dir = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
+				Dust dust = Dust.NewDustDirect(Projectile.position, 0, 0, DustID.Cloud);
+				dust.position = Projectile.Bottom + Vector2.UnitY * 2 + Projectile.velocity + dir.Perpendicular() * Main.rand.NextFloatDirection() * 0.45f * Projectile.width;
+				dust.velocity = dust.velocity * 0.5f - dir;
 				Rectangle hitbox = Projectile.Hitbox;
-				if (hitbox.Intersects(RestRegion) && !hitbox.OverlapsAnyTiles() && hitbox.Add(Vector2.UnitY * 24).OverlapsAnyTiles(false)) Flying = 0;
+				hitbox.Y += 1;
+				if (hitbox.Intersects(RestRegion)) {
+					if (hitbox.OverlapsAnyTiles()) {
+						if (Projectile.localAI[1] < 72) Projectile.localAI[1]++;
+					} else {
+						Projectile.localAI[1] = 0;
+						if (hitbox.Add(Vector2.UnitY * 24).OverlapsAnyTiles(false)) Flying = 0;
+					}
+				} else {
+					Projectile.localAI[1] = 0;
+				}
 			}
 		}
 		public override void MoveTowardsTarget() {
 			bool foundTarget = targetingData.TargetID != -1;
 			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
-			if (!Projectile.Center.IsWithin(Main.player[Projectile.owner].MountedCenter, foundTarget ? 1200 : 600)) {
+			if (Projectile.localAI[1] > 25 || !Projectile.Center.IsWithin(Owner.MountedCenter, foundTarget ? 1200 : 500)) {
+				if (!Projectile.Center.IsWithin(Owner.MountedCenter, 2000)) {
+					Projectile.localAI[1] = 0;
+					Projectile.Center = Owner.MountedCenter;
+					return;
+				}
 				Flying = 1;
 				return;
 			}
@@ -211,16 +231,25 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.velocity.X *= 0.9f;
 				return; 
 			}
+			float movement = Projectile.direction * SpeedModifier;
 			if (Projectile.velocity.Y == 0) {
-				Projectile.velocity.Y -= Math.Abs(targetPos.X - Projectile.Center.X) > 64 ? 4 : JumpHeight(Projectile.Bottom.Y - targetHitbox.Y);
-				if (targetPos.X >= Projectile.TopLeft.X && targetPos.X <= Projectile.TopRight.X) Projectile.velocity.X += 4 * Projectile.direction;
+				Projectile.localAI[1] += Projectile.localAI[2];
+				Projectile.localAI[1] *= Projectile.localAI[2];
+				float targetHeight = Projectile.localAI[1] * 16;
+				if (Math.Abs(targetPos.X - Projectile.Center.X) > 64) {
+					targetHeight += 8 + Size * 1.5f;
+				} else {
+					targetHeight = Projectile.Bottom.Y - targetHitbox.Y;
+				}
+				Projectile.velocity.Y -= JumpHeight(targetHeight);
+				if (targetPos.X >= Projectile.TopLeft.X && targetPos.X <= Projectile.TopRight.X) Projectile.velocity.X += 6 * movement;
 			} else {
-				Projectile.velocity.X += 0.1f * Projectile.direction;
+				Projectile.velocity.X += 0.15f * movement;
 			}
 		}
 		public static float JumpHeight(float targetHeight) {
 			if (targetHeight <= 0) return 0;
-			Max(ref targetHeight, 28);
+			Max(ref targetHeight, 8);
 			Min(ref targetHeight, 1080);
 			float currentSpeed = 0;
 			while (targetHeight > 0) {
@@ -234,7 +263,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => Parent == -1;
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Projectile.velocity *= 0.9f;
+			if (Flying == 0 && Projectile.velocity.X != oldVelocity.X) {
+				Projectile.localAI[2] = 1;
+			} else {
+				Projectile.localAI[2] = 0;
+			}
+			if (Projectile.velocity.Y != oldVelocity.Y) Projectile.velocity *= 0.9f;
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
