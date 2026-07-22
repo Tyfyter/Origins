@@ -129,7 +129,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.idStaticNPCHitCooldown = 6;
 			Projectile.manualDirectionChange = true;
 			Projectile.netImportant = true;
-			MaxLife = 200;
+			MaxLife = (int)(100 * ContentExtensions.DifficultyDamageMultiplier);
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Child = -1;
@@ -284,10 +284,157 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 		public void ModifyHurt(ref int damage, bool fromDoT) {
-			if (!fromDoT) damage = (int)(damage - Size);
+			if (!fromDoT) damage = (int)(damage - Size * ContentExtensions.DifficultyDamageMultiplier);
 		}
 		public void OnHurt(int damage, bool fromDoT) {
 			if (!fromDoT) SoundEngine.PlaySound(SoundID.NPCHit3.WithPitch(1f - Size / 3f).WithVolume(1f), Projectile.Center);
+			if (Life > 0) return;
+			switch (Size) {
+				case 0:
+				for (int i = 0; i < 3; i++) {
+					ref Vector2 pos = ref Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarfish, Projectile.velocity.X, Projectile.velocity.Y).position;
+					pos = pos.RotatedBy(Projectile.rotation, Projectile.Bottom);
+				}
+				break;
+				case 1:
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-2 * Projectile.direction, -8)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(2 * Projectile.direction, -2)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				break;
+				case 2:
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(1 * Projectile.direction, -3)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece1")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-2 * Projectile.direction, -10)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				break;
+				case 3:
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(5 * Projectile.direction, -9)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece1")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-6 * Projectile.direction, -8)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-3 * Projectile.direction, -15)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece5")
+				);
+				break;
+				case 4:
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(3 * Projectile.direction, -3)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece5")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(2 * Projectile.direction, -24)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-2 * Projectile.direction, -20)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece3")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-7 * Projectile.direction, -2)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece2")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-1 * Projectile.direction, -7)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece1")
+				);
+				break;
+				case 5:
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-6 * Projectile.direction, -27)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece5")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-1 * Projectile.direction, -30)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-1 * Projectile.direction, -24)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece3")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-8 * Projectile.direction, -2)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece2")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(0 * Projectile.direction, -7)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece1")
+				);
+				break;
+				case 6:
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-6 * Projectile.direction, -31)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece5")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-5 * Projectile.direction, -36)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece4")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(7 * Projectile.direction, -28)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece3")
+				);
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					(Projectile.Center + new Vector2(-10 * Projectile.direction, -2)).RotatedBy(Projectile.rotation, Projectile.Bottom),
+					Projectile.velocity,
+					Mod.GetGoreSlot("Gores/Matryoshka_Doll_Piece2")
+				);
+				break;
+			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
