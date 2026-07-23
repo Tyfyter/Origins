@@ -154,6 +154,7 @@ namespace Origins.Tiles.Ashen {
 			x += 3;
 			y += 6;
 		}
+		public Point MainTileOffset => new(3, 6);
 		public override SpecialChest.ChestData CreateChestData() => new Oil_Derrick_Container_Data();
 		public record class Oil_Derrick_Container_Data() : ChestData() {
 			static AutoLoadingTexture bgTexture = "Origins/UI/Oil_Derrick_BG";

@@ -54,6 +54,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
+			BlockTileInteractions.TilesBlockInteraction[Type] = true;
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower < 65) {
@@ -174,6 +175,7 @@ namespace Origins.Tiles.Ashen {
 			base.SetStaticDefaults();
 			Main.tileSolidTop[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+			BlockTileInteractions.TilesBlockInteraction[Type] = false;
 		}
 		public override void PostSetDefaults() {
 			Main.tileBlockLight[Type] = false;

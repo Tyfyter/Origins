@@ -206,6 +206,7 @@ namespace Origins.Tiles {
 					}
 				}
 			}
+			if (BlockTileInteractions.TilesBlockInteraction[type]) BlockTileInteractions.canSkipCheck = false;
 		}
 		public IEnumerable<int> ProvideItemObtainability() => [ModContent.ItemType<Mojo_Harvest>()];
 	}

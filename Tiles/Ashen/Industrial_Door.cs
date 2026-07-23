@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
@@ -62,6 +63,7 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 
 			TileID.Sets.Suffocate[Type] = true;
+			BlockTileInteractions.TilesBlockInteraction[Type] = true;
 		}
 		public override bool CanExplode(int i, int j) => false;
 		public override bool Slope(int i, int j) => false;
@@ -109,6 +111,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			RegisterItemDrop(Tiles.TileItem.Get<Industrial_Door>().Type);
+			BlockTileInteractions.TilesBlockInteraction[Type] = false;
 		}
 		public override void PostSetDefaults() {
 			Main.tileBlockLight[Type] = false;

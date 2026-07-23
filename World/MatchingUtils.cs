@@ -77,6 +77,18 @@ namespace Origins.World {
 		public delegate bool Breaker(AreaAnalysis analysis);
 		public delegate bool Counter(Point position);
 		public static Point[] Orthogonals => [new(0, 1), new(0, -1), new(1, 0), new(-1, 0)];
+		public static AreaAnalysis March(int i, int j, Point[] directions, Counter shouldCount, Breaker shouldBreak, HashSet<Point> walkedSet, List<Point> countedList) {
+			AreaAnalysis analysis = new() {
+				minX = i,
+				maxX = i,
+				minY = j,
+				maxY = j,
+				walked = walkedSet,
+				counted = countedList
+			};
+			analysis.DoMarch(new(i, j), directions, shouldCount, shouldBreak);
+			return analysis;
+		}
 		public static AreaAnalysis March(int i, int j, Point[] directions, Counter shouldCount, Breaker shouldBreak) {
 			AreaAnalysis analysis = new() {
 				minX = i,

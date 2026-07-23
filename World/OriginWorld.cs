@@ -274,6 +274,7 @@ namespace Origins {
 			SC_Scene_Effect.monolithTileActive = false;
 			Defiled_Wastelands.monolithActive = false;
 			EnvironmentSounds.SoundPositions.ResetSounds(true);
+			BlockTileInteractions.canSkipCheck = true;
 		}
 
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {

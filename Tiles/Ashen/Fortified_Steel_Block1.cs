@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
@@ -16,6 +17,7 @@ namespace Origins.Tiles.Ashen {
 	public class Fortified_Steel_Block1 : ComplexFrameTile, IAshenTile {
 		public virtual Color MapColor => FromHexRGB(0x5e3f2c);
 		public override void SetStaticDefaults() {
+			BlockTileInteractions.TilesBlockInteraction[Type] = true;
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
 			Main.tileSolid[Type] = true;
@@ -41,6 +43,7 @@ namespace Origins.Tiles.Ashen {
 		public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight) {
 			if (up == TileType<Cargo_Elevator_Door>() && Main.tile[i, j - 1].TileFrameX / 18 is > 2 and < 9) up = -1;
 			if (down == TileType<Cargo_Elevator_Door>() && Main.tile[i, j + 1].TileFrameX / 18 is > 2 and < 9) down = -1;
+			if (up == TileType<Industrial_Door>() && Main.tile[i, j - 1].TileFrameY % 54 != 0) up = -1;
 		}
 		public static void DrawTilePattern(int i, int j, Texture2D patternTexture) {
 			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
