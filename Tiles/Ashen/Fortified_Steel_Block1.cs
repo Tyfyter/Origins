@@ -27,6 +27,8 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[Type][TileType<Cargo_Elevator_Door_Open>()] = true;
 			Main.tileMerge[Type][TileType<Industrial_Door>()] = true;
 			Main.tileMerge[Type][TileType<Industrial_Door_Open>()] = true;
+			Main.tileMerge[Type][TileType<Ancient_Industrial_Door>()] = true;
+			Main.tileMerge[Type][TileType<Ancient_Industrial_Door_Open>()] = true;
 			TileID.Sets.Stone[Type] = false;
 			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
@@ -44,6 +46,10 @@ namespace Origins.Tiles.Ashen {
 			if (up == TileType<Cargo_Elevator_Door>() && Main.tile[i, j - 1].TileFrameX / 18 is > 2 and < 9) up = -1;
 			if (down == TileType<Cargo_Elevator_Door>() && Main.tile[i, j + 1].TileFrameX / 18 is > 2 and < 9) down = -1;
 			if (up == TileType<Industrial_Door>() && Main.tile[i, j - 1].TileFrameY % 54 != 0) up = -1;
+			if (left == TileType<Industrial_Door>()) left = -1;
+			if (right == TileType<Industrial_Door>()) right = -1;
+			if (left == TileType<Ancient_Industrial_Door>()) left = -1;
+			if (right == TileType<Ancient_Industrial_Door>()) right = -1;
 		}
 		public static void DrawTilePattern(int i, int j, Texture2D patternTexture) {
 			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
