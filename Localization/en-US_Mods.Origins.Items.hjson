@@ -13,6 +13,7 @@ GenericTooltip: {
 	DecreasedPotionSickness: Reduced potion cooldown
 	GreatlyDecreasedPotionSickness: Greatly reduced potion cooldown
 	AshenWireable: Powerable
+	Oilable: Oilable
 
 	HealDebuffs: {
 		Base: "Cleanses and grants immunity to "

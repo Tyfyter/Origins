@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Liquids;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items;
@@ -23,10 +26,18 @@ class Item_Lubrication : GlobalItem {
 		}
 		return base.CanRightClick(item);
 	}
+	static readonly Regex afterLineRegex = new("^(Tooltip\\d+|Placeable|Ammo|Consumable|Material|Wireable)$", RegexOptions.Compiled);
+	public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
+		for (int i = tooltips.Count - 1; i >= 0; i--) {
+			if (afterLineRegex.IsMatch(tooltips[i].Name)) {
+				tooltips.Insert(i + 1, new(Mod, "Oilable", Language.GetTextValue("Mods.Origins.Items.GenericTooltip.Oilable")));
+				break;
+			}
+		}
+	}
 	public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 		if (((IOilableItem)item.ModItem).OilApplied) DrawOilOverlay(item, spriteBatch, position);
 	}
-
 	public static void DrawOilOverlay(Item item, SpriteBatch spriteBatch, Vector2 position) {
 		Texture2D texture = Item_Lubrication.texture;
 		Rectangle frame = texture.Frame();
