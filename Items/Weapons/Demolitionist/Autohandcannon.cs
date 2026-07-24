@@ -8,11 +8,17 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Autohandcannon : ModItem {
+	public class Autohandcannon : ModItem, IOilableItem {
 		public static float ReuseThreshold => 0.8f;
 		public static bool ShouldJam(Player player) => Main.rand.NextBool(7, 37);
+		public static bool ShouldJamOilMult(Player player) => Main.rand.NextBool(70, 100);
 		public static int ID { get; private set; }
 		public static LocalizedText JammedText { get; private set; }
+		int oilCount = 0;
+		public bool OilApplied {
+			get => oilCount > 0;
+			set => oilCount = 100;
+		}
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ID = Type;
@@ -24,17 +30,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static void On_Player_ItemCheck_HackHoldStyles(On_Player.orig_ItemCheck_HackHoldStyles orig, Player self, Item sItem) {
 			orig(self, sItem);
-			if (self.whoAmI == Main.myPlayer && sItem.type == ID && self.ItemAnimationActive && self.itemAnimation < self.itemAnimationMax * ReuseThreshold && !self.OriginPlayer().autohandcannonJammed) {
+			if (self.whoAmI == Main.myPlayer && sItem.ModItem is Autohandcannon ahc && self.ItemAnimationActive && self.itemAnimation < self.itemAnimationMax * ReuseThreshold && !self.OriginPlayer().autohandcannonJammed) {
 				if (self.controlUseItem && self.releaseUseItem) {
 					self.itemAnimation = 0;
 					self.itemTime = 0;
-					if (ShouldJam(self)) {
+					if ((!ahc.OilApplied || ShouldJamOilMult(self)) && ShouldJam(self)) {
 						SoundEngine.PlaySound(SoundID.Item178.WithPitch(1.6f));
 						SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-1.2f));
 						self.OriginPlayer().autohandcannonJammed = true;
 						self.AddBuff(ModContent.BuffType<Autohandcannon_Jam_Debuff>(), 5 * 60);
 						CombatText.NewText(self.Hitbox, Color.DarkGray, JammedText.Value);
 					}
+					ahc.oilCount.Cooldown();
 				}
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using Origins.Liquids;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Liquids;
 using Origins.Tiles.Ashen;
 using Terraria;
 using Terraria.ID;
@@ -16,6 +17,9 @@ namespace Origins.Items.Tools.Liquids {
 			.AddIngredient(ItemID.EmptyBucket)
 			.AddTile<Oil_Derrick>()
 			.Register();
+		}
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			if (Main.mouseItem == Item && Main.HoverItem?.ModItem is IOilableItem) Item_Lubrication.DrawOilOverlay(Item, spriteBatch, position);
 		}
 	}
 	public class Oil_Bottomless_Bucket : Oil_Bucket {

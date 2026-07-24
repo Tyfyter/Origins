@@ -1,19 +1,21 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Weapons.Ammo;
+﻿using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using PegasusLib;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Harpoon_Gun : ModItem {
+	public class Harpoon_Gun : ModItem, IOilableItem {
 		protected override bool CloneNewInstances => true;
 		public AutoLoadingAsset<Texture2D> ChainTexture { get; private set; }
 		public int ChainFrames { get; protected set; } = 1;
+		int oilCount = 0;
+		public bool OilApplied {
+			get => oilCount > 0;
+			set => oilCount = 99;
+		}
 		public override void AutoStaticDefaults() {
 			base.AutoStaticDefaults();
 			ChainTexture = Texture + "_Chain";
@@ -63,6 +65,12 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void OnConsumeAmmo(Item ammo, Player player) {
 			consume = true;
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (OilApplied) {
+				velocity *= 1.25f;
+				oilCount--;
+			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (OriginConfig.Instance.NewHarpoonsFromTheFuture) player.StartChanneling(type);

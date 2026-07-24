@@ -32,9 +32,8 @@ namespace Origins.Items.Weapons.Ranged {
 			return Main.rand.NextBool(5);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (type == Item.shoot) {
-				type = Flammable_Harpoon_P.ID;
-			}
+			base.ModifyShootStats(player, ref position, ref velocity, ref type, ref damage, ref knockback);
+			if (type == Item.shoot) type = Flammable_Harpoon_P.ID;
 		}
 	}
 }

@@ -19,7 +19,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	[ReinitializeDuringResizeArrays]
-	public class AMRSL_Skewer : ModItem, ICustomDrawItem {
+	public class AMRSL_Skewer : ModItem, ICustomDrawItem, IOilableItem {
 		public static float[] AmmoCount { get; } = ItemID.Sets.Factory.CreateFloatSet(defaultState: 0,
 			ItemID.IronOre, 1f / 10,
 			ItemID.LeadOre, 1f / 10,
@@ -35,6 +35,13 @@ namespace Origins.Items.Weapons.Ranged {
 		public SkewerAmmoList ammoTypes = new();
 		int animationFrame = 0;
 		int animationCounter = 0;
+		int oilCount = 0;
+		public int oilConsumeCount = 0;
+		public bool OilApplied {
+			get => oilCount > 0;
+			set => oilCount = 150;
+		}
+		public static float OilAmmoMult => 1.15f;
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(int.MaxValue, 19));
@@ -87,14 +94,19 @@ namespace Origins.Items.Weapons.Ranged {
 				default:
 				if (++animationCounter >= 2) {
 					animationCounter = 0;
-					if (++animationFrame >= 19) animationFrame = 0;
-					if (animationFrame >= 8) {
-						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumClosedHiHat, player.itemLocation);
-						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumFloorTom, player.itemLocation);
-						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.Item149.WithPitch(1.5f).WithVolume(0.5f), player.itemLocation);
+					if (++animationFrame >= 19) {
+						animationFrame = 0;
+						oilCount = Math.Max(oilCount - oilConsumeCount, 0);
+						oilConsumeCount = 0;
+					} else if (animationFrame >= 8) {
+						if (!OilApplied) {
+							if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumClosedHiHat, player.itemLocation);
+							if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumFloorTom, player.itemLocation);
+							if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.Item149.WithPitch(1.5f).WithVolume(0.5f), player.itemLocation);
+							SoundEngine.PlaySound(SoundID.Item116.WithPitch(1.1f), player.itemLocation);
+						}
 						//SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(0.4f).WithVolume(0.4f), player.itemLocation);
 						SoundEngine.PlaySound(SoundID.Item74.WithVolume(2f), player.itemLocation);
-						SoundEngine.PlaySound(SoundID.Item116.WithPitch(1.1f), player.itemLocation);
 					}
 				}
 				break;
@@ -200,16 +212,10 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player drawPlayer = drawInfo.drawPlayer;
-			Vector2 itemPos = Main.DrawPlayerItemPos(drawPlayer.gravDir, Type);
-			itemPos.X -= 18;
-			itemPos.Y -= 16;
 			Rectangle frame = GetFrame();
-			drawOrigin = new Vector2(-itemPos.X, frame.Height / 2f);
-			if (drawPlayer.direction == -1) {
-				drawOrigin = new Vector2(itemTexture.Width + itemPos.X, frame.Height / 2f);
-			}
+			drawOrigin = new Vector2(20, 39).Apply(drawInfo.itemEffect, frame.Size());
 			float itemScale = drawPlayer.GetAdjustedItemScale(Item);
-			itemPos = drawInfo.ItemLocation + itemPos * Vector2.UnitY - Main.screenPosition;
+			Vector2 itemPos = drawInfo.drawPlayer.GetHandPosition() - Main.screenPosition;
 			drawInfo.DrawDataCache.Add(new DrawData(
 				itemTexture,
 				itemPos,
@@ -287,6 +293,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (player.HeldItem?.ModItem is AMRSL_Skewer skewer) {
 				bool consumeAny = true;
 				float ammoPerItem = option.AmmoPerItem;
+				if (skewer.OilApplied) ammoPerItem *= AMRSL_Skewer.OilAmmoMult;
 				if (option.item.ammo != AmmoID.None && !option.item.consumable) {
 					consumeAny = false;
 					ammoPerItem = 1;
@@ -304,6 +311,7 @@ namespace Origins.Items.Weapons.Ranged {
 				int newAmmo = Main.rand.RandomRound(consume * ammoPerItem);
 				skewer.ammoCount += newAmmo;
 				skewer.ammoTypes[option.item.type] += newAmmo;
+				skewer.oilConsumeCount = newAmmo;
 
 				player.altFunctionUse = 2;
 				player.ApplyItemAnimation(player.HeldItem);
@@ -337,6 +345,7 @@ namespace Origins.Items.Weapons.Ranged {
 				scale,
 				SpriteEffects.None,
 			0);
+			bool oiled = Main.LocalPlayer.HeldItem?.ModItem is AMRSL_Skewer { OilApplied: true };
 			string displayText = AmmoCountText;
 			ChatManager.DrawColorCodedString(
 				Main.spriteBatch,
@@ -349,7 +358,13 @@ namespace Origins.Items.Weapons.Ranged {
 				Vector2.One,
 				-1f
 			);
-			if (hovered) UICommon.TooltipMouseText($"{item.Name} ({item.stack})\nx{AmmoPerItem:0.##}");
+			if (hovered) {
+				if (oiled) {
+					UICommon.TooltipMouseText($"{item.Name} ({item.stack})\n[c/ffd566:x{AmmoPerItem * AMRSL_Skewer.OilAmmoMult:0.##}]");
+				} else {
+					UICommon.TooltipMouseText($"{item.Name} ({item.stack})\nx{AmmoPerItem:0.##}");
+				}
+			}
 		}
 		float GetScale(out Rectangle frame) {
 			Main.GetItemDrawFrame(item.type, out _, out frame);
@@ -362,7 +377,9 @@ namespace Origins.Items.Weapons.Ranged {
 		public string AmmoCountText {
 			get {
 				if (item.ammo != AmmoID.None && !item.consumable) return "\u221E";
-				return ((int)(AMRSL_Skewer.AmmoCount[item.type] * item.stack)).ToString();
+				float mult = 1;
+				if (Main.LocalPlayer.HeldItem?.ModItem is AMRSL_Skewer { OilApplied: true }) mult *= AMRSL_Skewer.OilAmmoMult;
+				return ((int)(AMRSL_Skewer.AmmoCount[item.type] * item.stack * mult)).ToString();
 			}
 		}
 		public bool IsHovered(Vector2 position) => Main.MouseScreen.IsWithinRectangular(position, TextureAssets.Item[item.type].Size() * 0.5f * GetScale(out _));
