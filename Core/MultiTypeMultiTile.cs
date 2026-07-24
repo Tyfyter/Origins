@@ -311,6 +311,18 @@ namespace Origins.Core {
 			Point mainTile = TileLoader.GetTile(tile.TileType) is IMultiTypeMultiTile multiTile ? multiTile.MainTileOffset : default;
 			return partFrameX == mainTile.X * 18 && partFrameY == mainTile.Y * 18;
 		}
+		public static void GetMainTile(int i, int j, out int x, out int y) {
+			x = i;
+			y = j;
+			Tile tile = Main.tile[i, j];
+			if (!tile.HasTile) return;
+			TileObjectData tileData = TileObjectData.GetTileData(tile);
+			if (tileData == null) return;
+			Point mainTile = TileLoader.GetTile(tile.TileType) is IMultiTypeMultiTile multiTile ? multiTile.MainTileOffset : default;
+			TileUtils.GetMultiTileTopLeft(i, j, tileData, out x, out y);
+			x += mainTile.X;
+			y += mainTile.Y;
+		}
 		static void IL_TileLoader_CheckModTile(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel label = default;

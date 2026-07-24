@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Liquids;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.Items;
 class Item_Lubrication : GlobalItem {
@@ -20,7 +22,7 @@ class Item_Lubrication : GlobalItem {
 					Main.LocalPlayer.GetItem(Main.myPlayer, new Item(ItemID.EmptyBucket, 1), new GetItemSettings(NoText: true, CanGoIntoVoidVault: true));
 				}
 			}
-			((IOilableItem)item.ModItem).OilApplied = true;
+			ApplyOil((IOilableItem)item.ModItem);
 			Main.mouseRightRelease = false;
 			return false;
 		}
@@ -36,7 +38,7 @@ class Item_Lubrication : GlobalItem {
 		}
 	}
 	public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-		if (((IOilableItem)item.ModItem).OilApplied) DrawOilOverlay(item, spriteBatch, position);
+		if (((IOilableItem)item.ModItem).OilApplied()) DrawOilOverlay(item, spriteBatch, position);
 	}
 	public static void DrawOilOverlay(Item item, SpriteBatch spriteBatch, Vector2 position) {
 		Texture2D texture = Item_Lubrication.texture;
@@ -45,7 +47,19 @@ class Item_Lubrication : GlobalItem {
 		if (item.ModItem is Oil_Bucket) offset -= Vector2.One * 2;
 		spriteBatch.Draw(texture, position + offset * Main.inventoryScale, frame, Color.White, 0f, frame.Size() / 2f, Main.inventoryScale * 0.85f, SpriteEffects.None, 0f);
 	}
+	public override void SaveData(Item item, TagCompound tag) {
+		tag[nameof(IOilableItem.OilCount)] = ((IOilableItem)item.ModItem).OilCount;
+	}
+	public override void LoadData(Item item, TagCompound tag) {
+		((IOilableItem)item.ModItem).OilCount = tag.SafeGet(nameof(IOilableItem.OilCount), 0);
+	}
+	static void ApplyOil(IOilableItem item) => item.OilCount = item.MaxOilCount;
 }
 public interface IOilableItem {
-	public bool OilApplied { get; set; }
+	public int MaxOilCount { get; }
+	public int OilCount { get; set; }
+}
+public static class OilExtensions {
+	public static bool OilApplied(this IOilableItem item) => item.OilCount > 0;
+	public static void ConsumeOil(this IOilableItem item, int count = 1) => item.OilCount = Math.Max(item.OilCount, 0);
 }

@@ -35,12 +35,10 @@ namespace Origins.Items.Weapons.Ranged {
 		public SkewerAmmoList ammoTypes = new();
 		int animationFrame = 0;
 		int animationCounter = 0;
-		int oilCount = 0;
 		public int oilConsumeCount = 0;
-		public bool OilApplied {
-			get => oilCount > 0;
-			set => oilCount = 150;
-		}
+		public int MaxOilCount => 150;
+		public int OilCount { get; set; }
+		public bool OilApplied => this.OilApplied();
 		public static float OilAmmoMult => 1.15f;
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
@@ -96,10 +94,10 @@ namespace Origins.Items.Weapons.Ranged {
 					animationCounter = 0;
 					if (++animationFrame >= 19) {
 						animationFrame = 0;
-						oilCount = Math.Max(oilCount - oilConsumeCount, 0);
+						this.ConsumeOil(oilConsumeCount);
 						oilConsumeCount = 0;
 					} else if (animationFrame >= 8) {
-						if (!OilApplied) {
+						if (!this.OilApplied()) {
 							if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumClosedHiHat, player.itemLocation);
 							if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumFloorTom, player.itemLocation);
 							if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.Item149.WithPitch(1.5f).WithVolume(0.5f), player.itemLocation);

@@ -4,7 +4,6 @@ using Origins.Dusts;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.UI;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,6 @@ using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.UI.Chat;
-using ThoriumMod.NPCs.BossViscount;
 
 namespace Origins.Items.Weapons.Ranged {
 	[ReinitializeDuringResizeArrays]
@@ -37,11 +35,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public int ammoTimer = 0;
 		public int mode = -1;
 		public PlantAmmoType SelectedMode => ModesByAmmo.GetIfInRange(mode);
-		int oilCount = 0;
-		public bool OilApplied {
-			get => oilCount > 0;
-			set => oilCount = 500;
-		}
+		public int MaxOilCount => 500;
+		public int OilCount { get; set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
@@ -70,10 +65,10 @@ namespace Origins.Items.Weapons.Ranged {
 			originPlayer.OnPostUpdateMiscEffects += OnPostUpdateMiscEffects;
 		}
 		void OnPostUpdateMiscEffects(Player player) {
-			if (++ammoTimer > Item.useAnimation * (OilApplied ? 24 : 30) * CombinedHooks.TotalUseSpeedMultiplier(player, Item)) {
+			if (++ammoTimer > Item.useAnimation * (this.OilApplied() ? 24 : 30) * CombinedHooks.TotalUseSpeedMultiplier(player, Item)) {
 				ammoTimer = 0;
 				int ammoGen = 3 + ammoCount / 40;
-				if (oilCount > 0) oilCount = Math.Max(oilCount - ammoGen, 0);
+				this.ConsumeOil(ammoGen);
 				ammoCount += ammoGen;
 				Min(ref ammoCount, 999);
 				if (mode == -1) mode = player.OriginPlayer().unlockedPlantModes.FirstOrDefault(-1);

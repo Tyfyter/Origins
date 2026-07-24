@@ -14,11 +14,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static bool ShouldJamOilMult(Player player) => Main.rand.NextBool(70, 100);
 		public static int ID { get; private set; }
 		public static LocalizedText JammedText { get; private set; }
-		int oilCount = 0;
-		public bool OilApplied {
-			get => oilCount > 0;
-			set => oilCount = 100;
-		}
+		public int MaxOilCount => 100;
+		public int OilCount { get; set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ID = Type;
@@ -34,14 +31,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (self.controlUseItem && self.releaseUseItem) {
 					self.itemAnimation = 0;
 					self.itemTime = 0;
-					if ((!ahc.OilApplied || ShouldJamOilMult(self)) && ShouldJam(self)) {
+					if ((!ahc.OilApplied() || ShouldJamOilMult(self)) && ShouldJam(self)) {
 						SoundEngine.PlaySound(SoundID.Item178.WithPitch(1.6f));
 						SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-1.2f));
 						self.OriginPlayer().autohandcannonJammed = true;
 						self.AddBuff(ModContent.BuffType<Autohandcannon_Jam_Debuff>(), 5 * 60);
 						CombatText.NewText(self.Hitbox, Color.DarkGray, JammedText.Value);
 					}
-					ahc.oilCount.Cooldown();
+					ahc.ConsumeOil();
 				}
 			}
 		}

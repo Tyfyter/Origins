@@ -15,11 +15,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Tank_Rifle : ModItem, ICustomDrawItem, IOilableItem {
-		int oilCount = 0;
-		public bool OilApplied {
-			get => oilCount > 0;
-			set => oilCount = 150;
-		}
+		public int MaxOilCount => 150;
+		public int OilCount { get; set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
@@ -51,7 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override float UseSpeedMultiplier(Player player) {
-			if (OilApplied) return 1.1f;
+			if (this.OilApplied()) return 1.1f;
 			return 1;
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
@@ -113,7 +110,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(SoundID.Item38.WithPitch(-1.5f), player.itemLocation);
 			SoundEngine.PlaySound(SoundID.Item88.WithPitch(-1f), player.itemLocation);
-			oilCount.Cooldown();
+			this.ConsumeOil();
 			return null;
 		}
 	}
