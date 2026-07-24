@@ -130,6 +130,8 @@ public class Tile_Lubrication : TESystem<Tile_Lubrication.Data> {
 	}
 	static Recipe.IngredientQuantityCallback OiledIngredientQuantity(int[] requiredTiles) => (Recipe recipe, int type, ref int amount, bool isDecrafting) => {
 		if (isDecrafting) return;
+		int reducedPortion = amount - ReduceConsumptionThreshold[type];
+		if (reducedPortion <= 0) return;
 		float quality = 0;
 		for (int i = 0; i < requiredTiles.Length; i++) {
 			float currentQuality = AdjToOiled[requiredTiles[i]].quality;
@@ -137,7 +139,9 @@ public class Tile_Lubrication : TESystem<Tile_Lubrication.Data> {
 			quality += currentQuality;
 		}
 		quality /= requiredTiles.Length;
-		if (amount > ReduceConsumptionThreshold[type] && Main.rand.NextFloat() < quality) amount--;
+		for (int i = 0; i < reducedPortion; i++) {
+			if (Main.rand.NextFloat() < quality) amount--;
+		}
 		if (lastCraftingOilConsumedTime.TrySet(PegasusLib.PegasusLib.GameTickCount)) {
 			for (int i = 0; i < requiredTiles.Length; i++) {
 				GetData(AdjToOiled[requiredTiles[i]].pos).OilCount--;
