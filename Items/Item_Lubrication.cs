@@ -15,13 +15,7 @@ class Item_Lubrication : GlobalItem {
 	public override bool AppliesToEntity(Item entity, bool lateInstantiation) => !lateInstantiation && entity.ModItem is IOilableItem;
 	public override bool CanRightClick(Item item) {
 		if (Main.mouseRightRelease && Main.mouseItem.ModItem is Oil_Bucket bucket) {
-			if (!bucket.Endless) {
-				if (Main.mouseItem.stack == 1) {
-					Main.mouseItem.ChangeItemType(ItemID.EmptyBucket);
-				} else {
-					Main.LocalPlayer.GetItem(Main.myPlayer, new Item(ItemID.EmptyBucket, 1), new GetItemSettings(NoText: true, CanGoIntoVoidVault: true));
-				}
-			}
+			bucket.ConsumeOil(Main.LocalPlayer);
 			ApplyOil((IOilableItem)item.ModItem);
 			Main.mouseRightRelease = false;
 			return false;

@@ -21,6 +21,15 @@ namespace Origins.Items.Tools.Liquids {
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (Main.mouseItem == Item && Main.HoverItem?.ModItem is IOilableItem) Item_Lubrication.DrawOilOverlay(Item, spriteBatch, position);
 		}
+		public void ConsumeOil(Player player) {
+			if (!Endless) {
+				if (Item.stack == 1) {
+					Item.ChangeItemType(ItemID.EmptyBucket);
+				} else {
+					player.GetItem(player.whoAmI, new Item(ItemID.EmptyBucket, 1), new GetItemSettings(NoText: true, CanGoIntoVoidVault: true));
+				}
+			}
+		}
 	}
 	public class Oil_Bottomless_Bucket : Oil_Bucket {
 		public override bool Endless => true;
