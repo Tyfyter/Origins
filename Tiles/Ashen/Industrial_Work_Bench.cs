@@ -47,6 +47,8 @@ namespace Origins.Tiles.Ashen {
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 			ID = Type;
+			Tile_Lubrication.MaxOil[Type] = 75;
+			Tile_Lubrication.OilCraftingQuality[Type] = 0.15f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
