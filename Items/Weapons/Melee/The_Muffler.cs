@@ -1,3 +1,4 @@
+using Avalon.Prefixes;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Projectiles;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	public class The_Muffler : ModItem {
+	public class The_Muffler : ModItem, IOilableItem {
+		public int MaxOilCount => 300;
+		public int OilCount { get; set; }
+		public static float OilDamageMod => 1.1f;
+		public static float OilEfficiencyMod => 1.15f;
 		public static bool RollMiasma(float chargeLevel) => float.Max(Main.rand.NextFloat(0f, 3f), Main.rand.NextFloat(0f, 3f)) < chargeLevel;
 		public static int MiasmaDuration(float chargeLevel) => 30;
 		public override void SetStaticDefaults() {
@@ -66,6 +71,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.height = 38;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 1;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 		}
 		public static float GetChargeLevel(float chargeAmount) => float.Min(chargeAmount * 0.01f, 3);
 		float ChargeLevel => GetChargeLevel(Main.player[Projectile.owner].OriginPlayer().mufflerAmount);
@@ -82,6 +88,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.frame.CycleUp(Main.projFrames[Type]);
 				if ((Projectile.frame % (Main.projFrames[Type] / 2)) == 4) {
 					if (The_Muffler.RollMiasma(ChargeLevel)) player.AddBuff(Miasma_Debuff.ID, The_Muffler.MiasmaDuration(ChargeLevel));
+					if (player.HeldItem?.ModItem is The_Muffler muffler) muffler.ConsumeOil();
 					Projectile.friendly = true;
 					Vector2 slamPos = Projectile.Center + Projectile.velocity * 2f;
 					SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolumeScale(0.15f).WithPitch(1), slamPos);
@@ -118,12 +125,16 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			float mufflerAmount = ChargeLevel;
 			modifiers.SourceDamage *= (1 + mufflerAmount - int.Min((int)mufflerAmount, 2) * 0.85f);
+			if (Main.player[Projectile.owner].HeldItem?.ModItem is The_Muffler muffler && muffler.OilApplied()) modifiers.SourceDamage *= The_Muffler.OilEfficiencyMod;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.life <= 0) {
 				Player player = Main.player[Projectile.owner];
 				float efficiency = 1;
-				if (player.HeldItem?.ModItem is The_Muffler muffler) efficiency = muffler.efficiency;
+				if (player.HeldItem?.ModItem is The_Muffler muffler) {
+					efficiency = muffler.efficiency;
+					if (muffler.OilApplied()) efficiency *= The_Muffler.OilEfficiencyMod;
+				}
 				player.OriginPlayer().mufflerAmount += target.lifeMax * efficiency;
 				if (Projectile.ai[2] == 0) {
 					Projectile.ai[2] = 1;
