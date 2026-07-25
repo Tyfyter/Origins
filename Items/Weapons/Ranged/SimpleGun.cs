@@ -11,6 +11,9 @@ namespace Origins.Items.Weapons.Ranged;
 public class Grease_Gun : SimpleGun {
 	public override int ScrapAmount => 25;
 	public override int BarrelYOffset => 4;
+	public override int MaxOilCount => 200;
+	public override float OilSpeedMult => 1.25f;
+	public override float OilSpreadMult => 0.9f;
 	public override void OnSetDefaults() {
 		Item.damage = 11;
 		Item.knockBack = 1;
@@ -24,6 +27,8 @@ public class Grease_Gun : SimpleGun {
 public class Tactical_SMG : SimpleGun {
 	public override int ScrapAmount => 20;
 	public override int BarrelYOffset => 5;
+	public override float OilSpeedMult => 1.15f;
+	public override float OilSpreadMult => 0.95f;
 	public override void OnSetDefaults() {
 		Item.damage = 4;
 		Item.knockBack = 1;
@@ -38,6 +43,9 @@ public class Tactical_SMG : SimpleGun {
 public class DMR : SimpleGun {
 	public override int ScrapAmount => 35;
 	public override int BarrelYOffset => 8;
+	public override int MaxOilCount => 24;
+	public override float OilSpeedMult => 1.5f;
+	public override float OilSpreadMult => 0f;
 	public override void OnSetDefaults() {
 		Item.damage = 38;
 		Item.knockBack = 4;
@@ -51,7 +59,7 @@ public class DMR : SimpleGun {
 	public override void HoldItem(Player player) => player.scope = true;
 }
 [ReinitializeDuringResizeArrays]
-public abstract class SimpleGun : ModItem {
+public abstract class SimpleGun : ModItem, IOilableItem {
 	public static float[] SpreadMultipliers { get; }
 	static SimpleGun() {
 		SpreadMultipliers = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpreadMultipliers)).RegisterFloatSet(1,
@@ -70,6 +78,10 @@ public abstract class SimpleGun : ModItem {
 	}
 	public abstract int ScrapAmount { get; }
 	public virtual int BarrelYOffset { get; }
+	public virtual int MaxOilCount => 100;
+	public virtual float OilSpeedMult => 1.1f;
+	public virtual float OilSpreadMult => 0.8f;
+	public int OilCount { get; set; }
 	public virtual void OnSetStaticDefaults() { }
 	public virtual void OnSetDefaults() { }
 	public virtual void OnApplyPrefix(int pre) { }
@@ -113,6 +125,12 @@ public abstract class SimpleGun : ModItem {
 	}
 	public sealed override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		position += velocity.Normalized(out _).Perpendicular(player.direction) * BarrelYOffset;
+		float spread = this.spread;
+		if (this.OilApplied()) {
+			spread *= OilSpreadMult * OilSpeedMult;
+			velocity *= OilSpeedMult;
+			this.ConsumeOil();
+		}
 		velocity += Main.rand.NextVector2Circular(spread, spread);
 		OnModifyShootStats(player, ref position, ref velocity, ref type, ref damage, ref knockback);
 	}

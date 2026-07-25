@@ -14,6 +14,7 @@ GenericTooltip: {
 	GreatlyDecreasedPotionSickness: Greatly reduced potion cooldown
 	AshenWireable: Powerable
 	Oilable: Oilable
+	Oiled: "[c/4F3F30:Oiled ({0}/{1})]"
 
 	HealDebuffs: {
 		Base: "Cleanses and grants immunity to "

@@ -132,6 +132,26 @@ namespace Origins.Items {
 			knockbackMult += 0.20f;// knockback
 		}
 	}
+	public class Oily_Prefix : ModPrefix {
+		public static int ID { get; private set; }
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult += 0.1f;
+		}
+		public override float RollChance(Item item) => item?.ModItem is IOilableItem ? 1f : 0f;
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) {
+			yield return new TooltipLine(
+				Mod,
+				"PrefixOil",
+				Language.GetTextValue("Mods.Origins.Tooltips.Modifiers.Oily")
+				) {
+				IsModifier = true
+			};
+		}
+	}
 	#region accessory prefixes
 	public class Assuring_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;

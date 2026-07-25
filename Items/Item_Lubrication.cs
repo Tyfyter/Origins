@@ -24,9 +24,14 @@ class Item_Lubrication : GlobalItem {
 	}
 	static readonly Regex afterLineRegex = new("^(Tooltip\\d+|Placeable|Ammo|Consumable|Material|Wireable)$", RegexOptions.Compiled);
 	public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
+		IOilableItem oilable = (IOilableItem)item.ModItem;
 		for (int i = tooltips.Count - 1; i >= 0; i--) {
 			if (afterLineRegex.IsMatch(tooltips[i].Name)) {
-				tooltips.Insert(i + 1, new(Mod, "Oilable", Language.GetTextValue("Mods.Origins.Items.GenericTooltip.Oilable")));
+				tooltips.Insert(i + 1, new(Mod, "Oilable",
+					oilable.OilCount > 0 ?
+					Language.GetTextValue("Mods.Origins.Items.GenericTooltip.Oiled", oilable.OilCount, oilable.MaxOilCount) :
+					Language.GetTextValue("Mods.Origins.Items.GenericTooltip.Oilable")
+				));
 				break;
 			}
 		}
@@ -54,6 +59,13 @@ public interface IOilableItem {
 	public int OilCount { get; set; }
 }
 public static class OilExtensions {
-	public static bool OilApplied(this IOilableItem item) => item.OilCount > 0;
-	public static void ConsumeOil(this IOilableItem item, int count = 1) => item.OilCount = Math.Max(item.OilCount, 0);
+	public static bool OilApplied(this IOilableItem item) {
+		if (((ModItem)item).Item.prefix == Oily_Prefix.ID) item.OilCount = item.MaxOilCount;
+		return item.OilCount > 0;
+	}
+
+	public static void ConsumeOil(this IOilableItem item, int count = 1) {
+		item.OilCount = Math.Max(item.OilCount - count, 0);
+		if (((ModItem)item).Item.prefix == Oily_Prefix.ID) item.OilCount = item.MaxOilCount;
+	}
 }

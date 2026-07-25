@@ -125,6 +125,7 @@ Tooltips: {
 		Spread: "{0}° spread"
 		SpreadPercent: "{0:+0;-0}% spread"
 		ArtifactMaxLife: "{0} maximum life"
+		Oily: Covered in oil
 	}
 }
 
@@ -2395,6 +2396,7 @@ Prefixes: {
 	}
 
 	Debug_Tank_Rifle_Prefix.DisplayName: Convenient
+	Oily_Prefix.DisplayName: Oily
 }
 
 BiomeName: {

@@ -1,10 +1,6 @@
 ﻿#define ANIMATED
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Projectiles;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
@@ -12,14 +8,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Mine_Flayer : ModItem {
+	public class Mine_Flayer : ModItem, IOilableItem {
+		public int MaxOilCount => 120;
+		public int OilCount { get; set; }
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.shootsEveryUse = false;
 			Item.damage = 48;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTime = 4;
+			Item.useTime = 5;
 			Item.useAnimation = 40;
 			Item.knockBack = 4f;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
@@ -74,11 +72,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 			return null;
 		}
+		public override float UseSpeedMultiplier(Player player) => this.OilApplied() ? 1.25f : 1;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			float spread = 3.5f;
+			if (this.OilApplied()) spread *= 0.857f;
 			velocity = (Vector2.UnitY * -player.gravDir)
-				.RotatedBy(player.direction * (1 - player.itemAnimation / (float)player.itemAnimationMax - 0.15f) * 3.5f)
+				.RotatedBy(player.direction * (1 - player.itemAnimation / (float)player.itemAnimationMax - 0.15f) * spread)
 				* velocity.Length();
 			type = Item.shoot;
+			this.ConsumeOil();
 		}
 	}
 	public class Mine_Flayer_P : ModProjectile, ICanisterProjectile {
