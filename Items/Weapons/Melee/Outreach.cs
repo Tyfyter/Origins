@@ -13,8 +13,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Outreach")]
-	public class Soldering_Iron : ModItem, ICustomWikiStat, IBroken {
-		static string IBroken.BrokenReason => "Make sure you can't decraft it pre-TM";
+	public class Soldering_Iron : ModItem, ICustomWikiStat, IOilableItem {
+		public int MaxOilCount => 15;
+		public int OilCount { get; set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ItemID.Sets.Spears[Type] = true;
@@ -44,9 +45,14 @@ namespace Origins.Items.Weapons.Melee {
 			.AddIngredient(ModContent.ItemType<NE8>(), 5)
 			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 		}
 		public override bool MeleePrefix() => true;
+		public override float UseSpeedMultiplier(Player player) {
+			if (this.OilApplied()) return 1.1f;
+			return 1;
+		}
 	}
 	[LegacyName("Outreach_P")]
 	public class Soldering_Iron_P : ModProjectile {
@@ -74,10 +80,11 @@ namespace Origins.Items.Weapons.Melee {
 
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			Soldering_Iron item = (Soldering_Iron)player.HeldItem.ModItem;
 			Projectile.direction = player.direction;
 			player.heldProj = Projectile.whoAmI;
 			player.itemTime = player.itemAnimation;
-			const int inactiveTime = 00;
+			const int inactiveTime = 0;
 			float frame = ((780 + inactiveTime) * (1 - player.itemAnimation / (float)player.itemAnimationMax));
 			if (player.channel && frame < 500 + inactiveTime && Projectile.owner == Main.myPlayer) {
 				Vector2 direction = (Main.MouseWorld - player.MountedCenter).SafeNormalize(default);
@@ -97,6 +104,7 @@ namespace Origins.Items.Weapons.Melee {
 			player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, ((Projectile.Center + Projectile.velocity * 8 * Projectile.scale) - shoulderPos).ToRotation() - MathHelper.PiOver2);
 			Projectile.position += Projectile.velocity * 112 * Projectile.scale;
 			if (player.ItemAnimationEndingOrEnded) {
+				if (Projectile.ai[0] != 1) item.ConsumeOil();
 				Projectile.Kill();
 			}
 			if (frame < inactiveTime) Projectile.frame = 0;
@@ -105,11 +113,12 @@ namespace Origins.Items.Weapons.Melee {
 				if (!player.channel) Projectile.ai[0] = 2;
 			} else if (frame < 375 + inactiveTime) {
 				Projectile.frame = 2;
+				if (!player.channel) Projectile.ai[0] = 3;
 			} else if (frame < 450 + inactiveTime) {
 				Projectile.frame = 3;
 				SoundEngine.PlaySound(SoundID.NPCDeath48.WithVolume(0.2f), player.MountedCenter);
-				if (!player.channel && Projectile.ai[0] == 0) {
-					Projectile.ai[0] = 1;
+				if (!player.channel && Projectile.ai[0] is 0 or 3) {
+					Projectile.ai[0] += 1;
 					player.itemAnimation = player.itemAnimationMax - (int)(((450 + inactiveTime) / (float)(780 + inactiveTime)) * player.itemAnimationMax);
 					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
 						IndexOfPlayerWhoInvokedThis = (byte)Projectile.owner,
@@ -120,8 +129,8 @@ namespace Origins.Items.Weapons.Melee {
 			} else if (frame < 500 + inactiveTime) {
 				SoundEngine.PlaySound(SoundID.NPCDeath43, player.MountedCenter);
 				Projectile.frame = 4;
-				if (!player.channel && Projectile.ai[0] == 0) {
-					Projectile.ai[0] = 1;
+				if (!player.channel && Projectile.ai[0] is 0 or 3) {
+					Projectile.ai[0] += 1;
 					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
 						IndexOfPlayerWhoInvokedThis = (byte)Projectile.owner,
 						PositionInWorld = Projectile.Center - Projectile.velocity * 20 * Projectile.scale,
@@ -162,7 +171,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			SoundEngine.PlaySound(SoundID.Item45);
-			if (Projectile.ai[0] == 1 && !CritType.ModEnabled) {
+			if (Projectile.ai[0] is 1 or 4 && !CritType.ModEnabled) {
 				modifiers.CritDamage *= 1 + Projectile.CritChance / 50f;
 				modifiers.SetCrit();
 			}
@@ -198,7 +207,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Soldering_Iron_Crit_Type : CritType<Soldering_Iron> {
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.PerfectTiming");
-		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[0] == 1;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[0] is 1 or 4;
 		public override float CritMultiplier(Player player, Item item) => 2f + (player.GetWeaponCrit(item) / 100f);
 	}
 }
