@@ -41,7 +41,9 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Ashen_Grass>(),
 				TileType<Ashen_Jungle_Grass>(),
-				TileType<Tainted_Stone>()
+				TileType<Ashen_Murky_Sludge_Grass>(),
+				TileType<Tainted_Stone>(),
+				TileType<Murky_Sludge>(),
 			];
 			TileObjectData.newTile.AnchorAlternateTiles = [
 				TileID.ClayPot,

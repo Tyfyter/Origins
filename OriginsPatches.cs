@@ -1719,6 +1719,14 @@ namespace Origins {
 				tile.TileFrameY = 0;
 				return true;
 			}
+			ushort surveysprout = (ushort)MC.TileType<Surveysprout>();
+			if (TileObjectData.GetTileData(surveysprout, 0).AnchorValidTiles.Contains(Main.tile[x, y + 1].TileType) && tile.LiquidAmount <= 0) {
+				tile.HasTile = true;
+				tile.TileType = surveysprout;
+				tile.TileFrameX = 0;
+				tile.TileFrameY = 0;
+				return true;
+			}
 			return false;
 		}
 
