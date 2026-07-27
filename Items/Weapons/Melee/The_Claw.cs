@@ -228,11 +228,13 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.extraUpdates = 0;
 		}
 		static bool controlUseItem;
+		float preAIRot;
 		public override bool PreAI() {
 			// this won't change anything outside of this projectile unless an exception is thrown, because this runs after the global version
 			Player player = Main.player[Projectile.owner];
 			controlUseItem = player.controlUseItem;
 			player.controlUseItem = player.controlUseTile;
+			preAIRot = Projectile.localAI[1];
 			return base.PreAI();
 		}
 		public override void AI() {
@@ -257,6 +259,9 @@ namespace Origins.Items.Weapons.Melee {
 					}
 				}
 				Projectile.ai[1]++;
+			}
+			if (Projectile.ai[0] == 0f && Projectile.localAI[2].CycleDown(MathHelper.TwoPi * 2, Projectile.localAI[1] - preAIRot)) {
+				SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, Projectile.Center);
 			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
