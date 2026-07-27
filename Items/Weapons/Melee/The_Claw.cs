@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Misc;
 using System;
@@ -209,6 +210,7 @@ namespace Origins.Items.Weapons.Melee {
 			return projHitbox.Add((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * (16 + ForwardOffset)).Intersects(targetHitbox);
 		}
 	}
+	[ReinitializeDuringResizeArrays]
 	public class The_Claw_Flail_P : The_Claw_Hook, IShadedProjectile {
 		const int ai_state_spinning = 0;
 		const int ai_state_launching_forward = 1;
@@ -220,6 +222,33 @@ namespace Origins.Items.Weapons.Melee {
 		public int Shader => Main.player[Projectile.owner].cGrapple;
 		protected override float ForwardOffset => 0;
 		public override string Texture => typeof(The_Claw_Hook).GetDefaultTMLName();
+#if TML_2026_05
+		static float[] FlailRangeBoost = ProjectileID.Sets.Factory.CreateFloatSet(0);
+		public override void Load() {
+			try {
+				IL_Projectile.Colliding += IL_Projectile_Colliding;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_Projectile_Colliding), e)) throw;
+			}
+		}
+		static void IL_Projectile_Colliding(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdcR4(55));
+			c.EmitLdarg0();
+			c.EmitDelegate(static (float range, Projectile projectile) => range + FlailRangeBoost[projectile.type]);
+		}
+		public override void SetStaticDefaults() {
+			FlailRangeBoost[Type] = 28;
+		}
+#else
+#error Try to use flail API
+		public override void FlailSpinCollisionRange(ref float range) {
+			range += 28;
+		}
+		public readonly struct FeatureFlag : IBroken {
+			static string IBroken.BrokenReason => "Try to use flail API";
+		}
+#endif
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.aiStyle = ProjAIStyleID.Flail;
