@@ -28,14 +28,14 @@ namespace Origins.UI.Snippets {
 				size = default;
 				if (image is null) return false;
 				image.Wait();
-				size = (options.Frame?.Size() ?? image.Size()) * Scale * scale;
+				size = (options.Frame?.Size() ?? image.Size()) * scale;
 				if (justCheckingString) return true;
 				if (options.Shader != JournalImageShader.None) {
 					shaderOroboros.Capture(spriteBatch);
 					spriteBatch.Restart(spriteBatch.GetState().FixedCulling());
 				}
-				//spriteBatch?.Draw(TextureAssets.MagicPixel.Value, position, image.Value.Bounds, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale * scale, SpriteEffects.None, 0);
-				spriteBatch?.Draw(image.Value, position + options.Offset * scale, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale * scale, SpriteEffects.None, 0);
+				//spriteBatch?.Draw(TextureAssets.MagicPixel.Value, position, image.Value.Bounds, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+				spriteBatch?.Draw(image.Value, position + options.Offset * scale, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
 				switch (options.Shader) {
 					case JournalImageShader.Sketch:
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
