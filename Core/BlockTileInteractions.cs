@@ -55,6 +55,8 @@ public class BlockTileInteractions : ILoadable {
 	static readonly HashSet<Point> reachablePoints = [];
 	//Remove allocations for list & list items
 	static readonly List<Point> discardCounted = [];
+	static int TileRangeX => Math.Min(Player.tileRangeX, 50);
+	static int TileRangeY => Math.Min(Player.tileRangeY, 50);
 	static bool IsReachable(int x, int y, SmartInteractScanSettings? settings = null) {
 		if (lastUpdatedOn.TrySet(OriginSystem.gameTickCount)) {
 			reachablePoints.Clear();
@@ -62,11 +64,23 @@ public class BlockTileInteractions : ILoadable {
 			Player player = Main.LocalPlayer;
 			if (settings is SmartInteractScanSettings _settings) {
 				range = (_settings.LX, _settings.HX, _settings.LY, _settings.HY);
+				if (_settings.HX - _settings.LX > 100) {
+					range.LX = (int)(player.position.X / 16f) - TileRangeX + 1;
+					range.HX = (int)((player.position.X + player.width) / 16f) + TileRangeX - 1;
+					range.LX = Utils.Clamp(range.LX, 10, Main.maxTilesX - 10);
+					range.HX = Utils.Clamp(range.HX, 10, Main.maxTilesX - 10);
+				}
+				if (_settings.HY - _settings.LY > 100) {
+					range.LY = (int)(player.position.Y / 16f) - TileRangeY + 1;
+					range.HY = (int)((player.position.Y + player.height) / 16f) + TileRangeY - 2;
+					range.LY = Utils.Clamp(range.LY, 10, Main.maxTilesY - 10);
+					range.HY = Utils.Clamp(range.HY, 10, Main.maxTilesY - 10);
+				}
 			} else {
-				range.LX = (int)(player.position.X / 16f) - Player.tileRangeX + 1;
-				range.HX = (int)((player.position.X + player.width) / 16f) + Player.tileRangeX - 1;
-				range.LY = (int)(player.position.Y / 16f) - Player.tileRangeY + 1;
-				range.HY = (int)((player.position.Y + player.height) / 16f) + Player.tileRangeY - 2;
+				range.LX = (int)(player.position.X / 16f) - TileRangeX + 1;
+				range.HX = (int)((player.position.X + player.width) / 16f) + TileRangeX - 1;
+				range.LY = (int)(player.position.Y / 16f) - TileRangeY + 1;
+				range.HY = (int)((player.position.Y + player.height) / 16f) + TileRangeY - 2;
 				range.LX = Utils.Clamp(range.LX, 10, Main.maxTilesX - 10);
 				range.HX = Utils.Clamp(range.HX, 10, Main.maxTilesX - 10);
 				range.LY = Utils.Clamp(range.LY, 10, Main.maxTilesY - 10);
