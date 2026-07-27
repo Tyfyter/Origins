@@ -33,7 +33,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Hellfire_Grenade_P : ModProjectile, IBroken {
-		public static string BrokenReason => "needs alt fire balancing";
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Hellfire_Grenade";
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
@@ -41,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Hand_Grenade_Launcher.AltUseTimeMultiplier[Type] = 0.1f;
 			Hand_Grenade_Launcher.AltAnimationMultiplier[Type] = 0.6f;
 			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
-				Projectile.NewProjectile(source, position, velocity * 0.5f, ModContent.ProjectileType<Hellfire_Grenade_Flamethrower>(), damage / 4, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity * 0.5f, ModContent.ProjectileType<Hellfire_Grenade_Flamethrower>(), damage / 4, knockback / 3, player.whoAmI);
 			};
 		}
 		public override void SetDefaults() {
@@ -118,6 +117,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.alpha = (int)(200 * (1 - (Projectile.localAI[0] / Lifetime)));
 				Projectile.rotation += 0.3f * Projectile.direction;
 				if (Projectile.ai[0] > Lifetime) {
+					SoundEngine.PlaySound(SoundID.Item34);
 					Projectile.Kill();
 				}
 			}

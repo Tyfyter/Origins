@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				position += velocity.SafeNormalize(Vector2.Zero);
 				for (int i = Main.rand.Next(2); ++i < 6;) {
 					type = player.beeType();
-					damage = player.beeDamage(damage);
+					damage = player.beeDamage(damage)/2;
 					knockback = player.beeKB(knockback);
 					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * Main.rand.NextFloat(0.4f, 0.8f), type, damage, knockback, player.whoAmI);
 				}

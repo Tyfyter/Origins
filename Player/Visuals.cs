@@ -263,7 +263,7 @@ namespace Origins {
 				}
 			}
 			if ((murkySludgeTouchTimer == 0 || touchingMurkySludges.Count == 0) && !touchingMurkySludges.SetEquals(touchedMurkySludges)) {
-				SoundEngine.PlaySound(Origins.Sounds.Glorp.WithPitch(1.2f).WithVolume(0.5f), Player.Bottom);
+				SoundEngine.PlaySound(Origins.Sounds.Glorp.WithPitchRange(1.15f, 1.65f).WithVolume(0.1f), Player.Bottom);
 				murkySludgeTouchTimer = 15 - Math.Clamp(Math.Abs(Player.velocity.X) - 2, 0, 5);
 			}
 			murkySludgeTouchTimer.Cooldown();

@@ -1,3 +1,4 @@
+using Avalon.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles.Brine;
 using Terraria;
@@ -42,8 +43,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
 				type = ModContent.ProjectileType<Impact_Grenade_Blast>();
 				position += velocity.SafeNormalize(Vector2.Zero) * 40;
-				damage *= 2;
-				knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+				damage *= 4;
+				knockback *= 3;
+				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 			};
 		}
 		public override void SetDefaults() {

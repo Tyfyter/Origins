@@ -4,6 +4,7 @@ using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Hand_Grenade_Launcher.AltFireAction[Type] = (player, source, position, velocity, type, damage, knockback) => {
 				type = ModContent.ProjectileType<Flashbang_Sun>();
 				player.StartChanneling(type);
-				Projectile.NewProjectileDirect(source, position, velocity * 0.6f, type, damage, knockback, player.whoAmI);
+				Projectile.NewProjectileDirect(source, position, velocity * 0.6f, type, damage * 50, knockback, player.whoAmI);
 			};
 		}
 		public override void SetDefaults() {
@@ -142,6 +143,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				player.itemRotation = MathHelper.WrapAngle((float)Math.Atan2(-Projectile.position.Y * player.direction, player.direction));
 
 				if (player.channel && !player.noItems && !player.CCed) {
+					//SoundEngine.PlaySound(SoundID.Item100);
 					Projectile.timeLeft++;
 					Projectile.scale.Warmup(3 + Projectile.ai[1], 0.01f);
 					if (Projectile.ai[0] >= 30) {
@@ -204,7 +206,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ExplosiveGlobalProjectile.DoExplosion(
 				Projectile,
 				(int)(256 * Projectile.scale),
-				sound: SoundID.Item62 with { Pitch = -2.5f }, // I like the pitch but needs to be louder
+				sound: SoundID.Item62 with { Pitch = -2.5f } with { Volume = 8f }, // I like the pitch but needs to be louder
 				fireDustAmount: (int)(53 * (2 * Projectile.scale)),
 				smokeDustAmount: (int)(58 * (2 * Projectile.scale)),
 				smokeGoreAmount: (int)(6 * Projectile.scale),

@@ -2,7 +2,6 @@
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.NPCs.MiscB.Shimmer_Construct;
-using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using Terraria;

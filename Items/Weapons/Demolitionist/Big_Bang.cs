@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f));
 			return base.UseItem(player);
 		}
-		public override Vector2? HoldoutOffset() => new(-14f, -6);
+		public override Vector2? HoldoutOffset() => new(-52f, -6);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 unit = velocity.Normalized(out _);
 			position += unit * 8 + unit.Perpendicular(player.direction) * 10;

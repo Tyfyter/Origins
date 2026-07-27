@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Misc;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -20,7 +21,7 @@ namespace Origins.Items.Weapons.Melee {
 			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 55;
+			Item.damage = 50;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -32,8 +33,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<The_Claw_Hook>();
 			Item.shootSpeed = 12f;
-			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 5);
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item1;
 		}
 		public override bool AltFunctionUse(Player player) => true;
@@ -242,6 +243,8 @@ namespace Origins.Items.Weapons.Melee {
 				Rectangle hitbox = Projectile.Hitbox.Add((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 16);
 				float maxSpeed = 0.2f;
 				if (Projectile.ai[1] == 0) {
+					SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundMiss, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item147, Projectile.Center);
 					Array.Clear(Projectile.localNPCImmunity);
 					hitbox.Inflate(4, 4);
 					maxSpeed = 4;

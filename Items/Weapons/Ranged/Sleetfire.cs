@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics;
+﻿using Origins.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

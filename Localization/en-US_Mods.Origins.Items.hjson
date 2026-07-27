@@ -7412,7 +7412,7 @@ The_Plant: {
 	DisplayName: The P.L.A.N.T.
 	Tooltip:
 		'''
-		Fabricates ammo that learns from bullet types in your inventory
+		Fabricates ammo and learns bullet types in your inventory
 		Fabricated ammo may behave differently from copied bullet type
 		'''
 
@@ -8459,7 +8459,12 @@ Rei_Set: {
 
 The_Claw: {
 	DisplayName: The Claw
-	Tooltip: ""
+	Tooltip:
+		'''
+		<left> to use as a flail
+		<right> to use as a grappling hook
+		Grapples to tiles and enemies
+		'''
 }
 
 Star_Harvest: {

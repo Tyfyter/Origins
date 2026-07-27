@@ -58,6 +58,7 @@ BOSSES AND MINI-BOSSES:
 (#, $2, ^2) D2L2 'Warsaw' !!!
 (#, $2, ^2) HA-24 'Hawken' !!!
 (X, ^2) Ichor Storm
+(X) Mistress
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation
@@ -273,6 +274,7 @@ ENEMY NPCS:
 (^) Brine Latcher
 (^) Brine Serpent
 (^) Carpalfish
+(X) Core Keeper
 (^) Defiled Asphyxiator
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -288,12 +290,14 @@ ENEMY NPCS:
 (^) Leaf Snapper
 (X) Madman
 (☻) Malfunctioning Missile !!!
+(X) Mist Avatar
 (X) Molten Aberration
 (^) Oil Ghoul
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm
 (^) Nasty Crawdad
+(X) Kitsune
 (^) Profaned Bident
 (X) Riven Gull
 (^) Riven Mimic
@@ -341,6 +345,7 @@ ENEMY NPCS:
 
 EVENTS:
 |---
+(X) Mist Haze
 (^) Smog Storm
 
 (X) Ashen Invasion
@@ -1167,7 +1172,7 @@ EXPLOSIVE WEAPONS:
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb
 (^) Crystal Grenade
-(†) Cupid's Arrow !!! 
+(^) Cupid's Arrow
 (^) Grenade Lawnchair
 (^) Happy Bomb
 (^) Rattlesnake
@@ -1607,6 +1612,7 @@ MATERIALS:
 (^) Bleeding Obsidian Shard
 (^) Brineglow
 (^) Eitrite Bar
+(X) Mystic Fragment !!!
 (^) Phoenum
 
 (^) Busted Servo
@@ -1673,7 +1679,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 |---
-(☻) Classified Blueprint !!!
+(^) Classified Blueprint
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection
