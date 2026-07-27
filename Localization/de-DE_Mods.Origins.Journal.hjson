@@ -1176,5 +1176,46 @@ Worn_Paper: {
 		Contributions:
 			- aiding the Terrarian
 		''' */
-	// Classified_Blueprint.Text: "[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]<PH> put blueprint sub-text here"
+	/* Classified_Blueprint.Text:
+		'''
+		[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]
+		[] TM-22S 'TRENCHMAKER' SPECIFICATIONS
+
+		### Production
+
+		Serial: TM-XX#
+		Name: 'Trenchmaker'
+		Designer: Senior Tinkerer H. M.
+		Introduction: April 4th 1-
+		Weight class: Heavy
+		Base model: TM-22S
+		Base price: 30 Platinum, 47 Gold, 2 Silver, 60 Copper
+		Design quirks:
+		 - Modular
+		 - Easy to maintain
+		 - Stable footing
+		 - Sensor vulnerability
+
+		### Chassis
+
+		Type: Standard
+		Mass: 40.28T (10.72T used, 29.56T open)
+		Slots: 28/45S
+		Speed: 20.9 kph
+		Turn: 160°/s (30+45°|128°)
+		Heat mgmt: (775 Th|-27 Th/s)
+
+		Hull grade: 356 TTA-A 400 (39.9/T ~ 8.92T/12S)
+		Engine: ICE100 (0.8T/4S)
+		Heatsinks: Type-S1H
+		Sensors: SD-422S (1T/1S)
+
+		### Details
+
+		 - Coated with a thermal-resistant titanium-tungsten alloy, the war engine is designed for use against thermal weaponry and safe operation at depots/outposts. The prototype also exhibits exceptional fall mitigation properties. These characteristics render the war engine suitable for potential orbital insertion as part of the ASTEREYE Program.
+		 - Enlarged camera-sensor modulus is a vulnerability to denser projectiles, however, allows for finer data and smoother locomotive control. A steel-reinforced, plastic anti-glare cover complements the exterior camera lens to prevent damage to the camera under daylight conditions, whilst also protecting against weighted projectiles from overhead. A radio component and E4 Slave Unit paired to the main processor allow the war engine to operate autonomously or by operator at will. The radio frequency to be shared verbally for security.
+		 - The key feature is the dual-power plant set-up, utilizing both internal combustion and the heavily-experimental phoenum power. The downsized PGE is an attempt at a working model for M.T. Bell's theories to a miniature version. The war engine will run primarily off of internal combustion until the need for the PGE arises. The PGE will activate under critical conditions, when the ICE is inoperable or during operation of the phoenum-propulsion jump jets.
+		 - Arm Comparator Unit links data with opposite arm for improved accuracy and logistics through wireless connection. Data broadcasting speeds are slow, but adjustments should still be timely. Range And Precision Processor measures muzzle velocity, impact time, spread, and other variables to improve weapon accuracy. The modular rocket pods utilize their own sensors for fire control data processing.
+		 - The ordinance launcher is completely hidden in the frontal armor plates. Quickly retracts the mechanism after a succesful launch. Heavily customizable to contain various mission-critical ordinance or support turrets when handling infantry.
+		''' */
 }
