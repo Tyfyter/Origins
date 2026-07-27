@@ -29,6 +29,7 @@ namespace Origins.Tiles.Ashen {
 				.AddRecipeGroup(RecipeGroupID.IronBar)
 				.AddIngredient<Scrap>(12)
 				.AddTile<Metal_Presser>()
+				.AddCondition(Condition.InGraveyard)
 				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();

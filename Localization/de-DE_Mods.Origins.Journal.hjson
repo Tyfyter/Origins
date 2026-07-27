@@ -753,11 +753,7 @@ Mechanicus_Sovereignty: {
 		/* Text:
 			'''
 			[header:Robot Guts (1/{$SeriesLength})]
-			[jimage/sc3d:Origins/Items/Materials/Biocomponent10]
-
-
-
-			*****
+			[jimage/sc2.5d:Origins/Items/Materials/Biocomponent10]
 			One of the surprisingly smaller castes of the Mechanicus Sovereignty, the Laborers, often worked alongside the worker machines in menial tasks, but not quite to the level of an Apprentice. Laborer quality of life was the worst due to how valuable one's intelligence was in their society, but compared to most other ancient civilizations there's was up there. There are no notable figures in the Laborer caste.
 			''' */
 	}
