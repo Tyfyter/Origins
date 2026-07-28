@@ -393,8 +393,9 @@ DeathMessage: {
 	}
 
 	Incinerator_Pit: {
-		// 2: "{0} raised the game's age rating."
+		// 0: "{0} died a horribly gruesome death."
 		// 1: "{0}… No, I can't even joke about this."
+		// 2: "{0} raised the game's age rating."
 	}
 
 	Tripod_0: "{0} забыл(а) закрепить треногу."

@@ -743,10 +743,13 @@ namespace Origins {
 						self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] /= 6;
 					},
 					() => {
-						if (self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] > 0) return self.dead;
+						self.jump.Cooldown();
+						self.jumpSpeedBoost -= 5;
+						self.maxFallSpeed *= 10;
+						if (self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] > 0) return self.dead.Mul(Incinerator_Pit.PlayerPowerTime);
 						self.Hurt(Incinerator_Pit.DeathReason(self), 100, 0, cooldownCounter: ImmunityCooldownID.TileContactDamage, dodgeable: false, knockback: 0);
 						self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] /= 6;
-						return self.dead;
+						return self.dead.Mul(Incinerator_Pit.PlayerPowerTime);
 					}
 				);
 			};

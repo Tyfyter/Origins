@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Misc;
+using Origins.Tiles.Ashen;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -284,7 +285,9 @@ namespace Origins.Items.Weapons.Melee {
 				foreach (Item item in Main.ActiveItems) {
 					if (hitbox.Intersects(item.Hitbox)) {
 						item.position += Projectile.velocity;
-						item.velocity += (hitbox.Center() - item.Center).WithMaxLength(maxSpeed);
+						float extraSpeed = 0;
+						if (item.GetGlobalItem<Incinerator_Pit.GrindItems>().noPickupTime.TrySet(0)) extraSpeed = 4;
+						item.velocity += (hitbox.Center() - item.Center).WithMaxLength(maxSpeed + extraSpeed);
 					}
 				}
 				Projectile.ai[1]++;

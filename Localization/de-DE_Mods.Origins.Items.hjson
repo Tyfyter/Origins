@@ -8482,8 +8482,3 @@ Incinerator_Pit_Item: {
 	// DisplayName: Incinerator Pit
 	// Tooltip: ""
 }
-
-Incinerator_Pit_Pit_Item: {
-	// DisplayName: Incinerator Pit Pit
-	// Tooltip: ""
-}

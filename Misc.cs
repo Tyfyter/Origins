@@ -1521,6 +1521,18 @@ namespace Origins {
 			if (hit.Crit) knockback *= 1.4f;
 			return new(knockback * (includeDirection ? hit.HitDirection : 1) * xMult, knockback * yMult);
 		}
+		[Pure]
+		public static Vector2 GetKnockback(float knockback, bool crit = false, bool nerf = true, int hitDirection = 1, float xMult = 1, float yMult = -0.75f) {
+			if (nerf) {
+				if (knockback > 8f) knockback = 8f + (knockback - 8f) * 0.9f;
+				if (knockback > 10f) knockback = 10f + (knockback - 10f) * 0.8f;
+				if (knockback > 12f) knockback = 12f + (knockback - 12f) * 0.7f;
+				if (knockback > 14f) knockback = 14f + (knockback - 14f) * 0.6f;
+				if (knockback > 16f) knockback = 16f;
+			}
+			if (crit) knockback *= 1.4f;
+			return new(knockback * hitDirection * xMult, knockback * yMult);
+		}
 		public static void ApplyBuffTimeModifier(this Player player, float mult, bool[] set, bool invert = false) {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (set[player.buffType[i]]) {
