@@ -8231,8 +8231,9 @@ Vampire_Fireflower_In_A_Pot: {
 		'''
 		Summons a vampire fireflower to fight for you
 		Inflicts [buffhint:OnFire3]
-		Heals you and slightly increases your speed during the day
-		Heals herself from her attacks and you while at full health herself
+		Heals herself and allies from her attacks
+		Slightly increases your speed during the day
+		Applies [buffhint:Origins/Crazy_Buff] during a Blood Moon or Solar Eclipse
 		'''
 }
 
@@ -8469,7 +8470,7 @@ The_Claw: {
 
 Star_Harvest: {
 	DisplayName: Star Harvest
-	Tooltip: ""
+	Tooltip: Summons self-replicating star cells to fight for you
 }
 
 Ancient_Industrial_Door_Item: {

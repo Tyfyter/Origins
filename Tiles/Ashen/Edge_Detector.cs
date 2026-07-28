@@ -13,7 +13,7 @@ namespace Origins.Tiles.Ashen {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
 			.WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
+				Recipe.Create(item.type, 4)
 				.AddIngredient(ItemID.Lens)
 				.AddIngredient(ItemID.Wire, 8)
 				.AddIngredient<Scrap>(12)

@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
+using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -64,7 +65,7 @@ namespace Origins.Buffs {
 }
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Vampire_Fireflower : Sunflower_Sunny {
-		public static int HealOver2Secs => 15;
+		public static int HealOver2Secs => 28;
 		public override bool DiesHorriblyInLava => false;
 		public override int ProjectileType => ModContent.ProjectileType<Vampire_Sunflower_P>();
 		public override int ProjectileTime => 9;
@@ -176,6 +177,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetStaticDefaults() {
 			Main.buffNoTimeDisplay[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Sunflower);
+			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer oP = player.OriginPlayer();

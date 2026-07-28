@@ -23,9 +23,6 @@ Conditions: {
 	NotHoliday: Not on {0}
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
-	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
-	DownedScrapper: After defeating the [glitch:MISSING_OBJECT_ERROR]
-	// DownedScrapper: After defeating the Scrapper
 	DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
 	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
 	DownedTrashCompactorMimic: After defeating an Trash Compactor Mimic, In hardmode
@@ -1440,7 +1437,8 @@ Buffs: {
 
 	Crazy_Buff: {
 		DisplayName: Crazy!
-		Description: Movement speed increased and monster spawns increased
+		Description: Movement speed and monster spawns increased
+		EffectDescription: Increases movement speed by 15% and enemy spawns by 17%
 	}
 
 	Wind_Pail_Debuff: {
@@ -1490,13 +1488,13 @@ Buffs: {
 	}
 
 	Stress_Ball_Buff: {
-		DisplayName: <PH>Stress Ball Buff
-		Description: Mods.Origins.Buffs.Stress_Ball_Buff.Description
+		DisplayName: De-stressed
+		Description: Increased damage
 	}
 
 	Star_Harvest_Buff: {
-		DisplayName: Star Harvest Buff
-		Description: Mods.Origins.Buffs.Star_Harvest_Buff.Description
+		DisplayName: Stellar Accumulation
+		Description: Shepherd of the stars
 	}
 }
 

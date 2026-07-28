@@ -200,8 +200,16 @@ public class Ashen_Supplies : LootPool {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Adjusto_Hook>(), 20));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<C6_Jackhammer>(), 10, 1, 5));
+		AddRule(ItemDropRule.Common(TileItem.ItemType<Delay_Component>(), 8, 2, 5));
+		AddRule(ItemDropRule.Common(TileItem.ItemType<Edge_Detector>(), 12, 3, 6));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b100).Type, 8, 2, 16));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b111).Type, 8, 1, 17));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b011).Type, 8, 1, 13));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b001).Type, 8, 1, 15));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b101).Type, 8, 1, 12));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Miter_Saw>(), 10, 1, 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Piledriver>(), 10, 1, 5));
+		AddRule(ItemDropRule.Common(TileItem.ItemType<Radio_Component>(), 8, 1, 7));
 		AddRule(ItemDropRule.Common(ItemID.Binoculars, 12));
 		AddRule(ItemDropRule.Common(ItemID.Bomb, 1, 65, 135));
 		AddRule(ItemDropRule.Common(ItemID.Dynamite, 1, 35, 80));

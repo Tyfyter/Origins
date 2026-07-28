@@ -1103,12 +1103,12 @@ SUMMONER WEAPONS:
 (#, ^2) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
-(#2, ^2R?) SMART Wrench !!! (R isn't in the symbol key)
-(☻) Star Harvest !!!
+(#2, ^2) SMART Wrench !!!
+(#2, ^2) Star Harvest !!!
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(☻) Vampire Fireflower in a Pot !!!
+(^) Vampire Fireflower in a Pot
 
 NO POST-ML CONTENT YET.
 ---
@@ -1400,8 +1400,8 @@ TILES:
 (^) Edge Detector
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(@3, #) Incinerator Pit !!!
-(☻) Industrial Door !!!
+(#, ^2) Incinerator Pit !!!
+(^) Industrial Door
 (^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)

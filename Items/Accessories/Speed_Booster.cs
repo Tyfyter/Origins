@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Layers;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -80,6 +81,7 @@ namespace Origins.Items.Accessories {
 			player.hasMagiluminescence = true;
 			Max(ref player.accRunSpeed, 6f);
 			if (originPlayer.shineSparkCharge > 0) {
+				//if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.Item106);
 				player.accRunSpeed += 3f;
 			}
 			player.rocketBoots = 2;

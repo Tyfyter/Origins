@@ -15,9 +15,9 @@ namespace Origins.Items.Accessories {
 	public class Stress_Ball : ModItem {
 		public static int TimePerFrame => 1;
 		public static Range CooldownRange => 450..900;
-		public static float BuffDuration => 60 * 7f;
+		public static float BuffDuration => 60 * 12;
 		public static float DecayDuration => 60 * 0.2f;
-		public static int SqueezeCount => 12;
+		public static int SqueezeCount => 10;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
@@ -27,6 +27,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.stressBall = true;
+			if (originPlayer.stressBallTimer == 12) SoundEngine.PlaySound(SoundID.Item67);
 			if (player.whoAmI != Main.myPlayer) return;
 			if (originPlayer.stressBallTimer >= 0) {
 				player.GetDamage(DamageClass.Generic) += 0.4f * originPlayer.stressBallStrength;
@@ -35,7 +36,7 @@ namespace Origins.Items.Accessories {
 				if (chance > 0 && Main.rand.NextBool(chance, CooldownRange.End.Value - CooldownRange.Start.Value)) originPlayer.stressBallTimer = -1;
 			} else {
 				if (!LoopSound.IsValid || !SoundEngine.TryGetActiveSound(LoopSound, out ActiveSound loop)) {
-					LoopSound = SoundEngine.PlaySound(Origins.Sounds.ShimmershotCharging, updateCallback: static sound => {
+					LoopSound = SoundEngine.PlaySound(Origins.Sounds.ShimmershotCharging.WithPitch(1.5f), updateCallback: static sound => {
 						OriginPlayer originPlayer = Main.LocalPlayer.OriginPlayer();
 						if (originPlayer.stressBallTimer < 0) {
 							sound.Pitch = originPlayer.stressBallStrength / SqueezeCount;
@@ -53,13 +54,13 @@ namespace Origins.Items.Accessories {
 						if (!OriginsModIntegrations.CheckAprilFools()) {
 							switch (Main.rand.Next(3)) {
 								case 0:
-								sound = SoundID.NPCHit15;
+								sound = SoundID.NPCHit15.WithPitch(1.5f);
 								break;
 								case 1:
-								sound = SoundID.NPCHit16;
+								sound = SoundID.NPCHit16.WithPitch(1.5f);
 								break;
 								case 2:
-								sound = SoundID.NPCHit17;
+								sound = SoundID.NPCHit17.WithPitch(1.5f);
 								break;
 							}
 						}

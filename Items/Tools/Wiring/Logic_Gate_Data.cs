@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.Items.Materials;
+using Origins.Tiles.Ashen;
 using Origins.UI;
 using PegasusLib.Content;
 using ReLogic.Content;
@@ -52,6 +54,13 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Actuator);
 			Item.consumable = true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(this, 5)
+				.AddRecipeGroup(ALRecipeGroups.CopperBars)
+				.AddIngredient<Silicon_Bar>()
+				.AddTile<Metal_Presser>()
+				.Register();
 		}
 		public override bool IsLoadingEnabled(Mod mod) {
 			if (TruthTable.IsEmpty) {

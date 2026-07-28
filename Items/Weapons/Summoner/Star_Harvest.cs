@@ -13,19 +13,19 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Star_Harvest : ModItem, ICustomWikiStat {
-		public static int BaseMaxHealth => 120;
-		public static int CellsPerSplit(int maxLife) => Main.rand.RandomRound(maxLife / 30f);
-		public static int MaxCellsPerSlot(int maxLife) => maxLife / 15;
-		public static int HurtImmuneTime => 8; //unaffected by speed modifiers, how many small cells will be immune to attacks for after being hit
+		public static int BaseMaxHealth => 100;
+		public static int CellsPerSplit(int maxLife) => Main.rand.RandomRound(maxLife / 33f);
+		public static int MaxCellsPerSlot(int maxLife) => maxLife / 16;
+		public static int HurtImmuneTime => 5; //unaffected by speed modifiers, how many small cells will be immune to attacks for after being hit
 		public static int BaseChildhoodDuration => 120; //affected by speed modifiers
 		public static int ChildImmuneTime => 15; //unaffected by speed modifiers, how many frames small cells will be immune to attacks and unable to attack for
-		public static int ChildViolenceTime => 15; //affected by speed modifiers, how many frames small cells will attack for before growing up
+		public static int ChildViolenceTime => 8; //affected by speed modifiers, how many frames small cells will attack for before growing up
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Type] = 0;
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 160;
+			Item.damage = 100;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 1;
 			Item.mana = 20;
@@ -33,10 +33,10 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.height = 32;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item44;
+			Item.useStyle = ItemUseStyleID.RaiseLamp;
+			Item.value = Item.sellPrice(gold: 10);
+			Item.rare = ItemRarityID.Red;
+			Item.UseSound = SoundID.Item117;
 			Item.buffType = Star_Harvest_Buff.ID;
 			Item.shoot = Star_Cell_Tracker.ID;
 			Item.noMelee = true;

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
-using Origins.NPCs.Ashen;
 using Origins.UI;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
@@ -10,7 +8,6 @@ using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -32,7 +29,13 @@ namespace Origins.Tiles.Ashen {
 		public override void Load() {
 			new TileItem(this, textureOverride: Texture)
 			.WithExtraStaticDefaults(this.DropTileItem)
-			.RegisterItem();
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type, 5)
+				.AddRecipeGroup(ALRecipeGroups.CopperBars)
+				.AddIngredient<Silicon_Bar>()
+				.AddTile<Metal_Presser>()
+				.Register();
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;

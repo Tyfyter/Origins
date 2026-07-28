@@ -136,6 +136,7 @@ namespace Origins {
 				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
 			}
 			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
+				SoundEngine.PlaySound(SoundID.Item105);
 				Player.armorEffectDrawShadow = true;
 			}
 		}
@@ -150,6 +151,7 @@ namespace Origins {
 				a = a * (1 - progress) * progressInvColor + progress * 0.9f;
 			}
 			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
+				SoundEngine.PlaySound(SoundID.Item105);
 				fullBright = true;
 				for (int i = 0; i < 3; i++) {
 					const float speed_mult = -1.5f;

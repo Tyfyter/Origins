@@ -23,9 +23,6 @@ Conditions: {
 	NotHoliday: Не на {0}
 	DownedFiberglassWeaver: После победы над Стекловолоконным ткачом
 	DownedLostDiver: После победы над Потерянным Дайвером
-	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
-	DownedScrapper: После победы над [glitch:ОШИБКА:_ОБЪЕКТ_ОТСУТСТВУЕТ]
-	// DownedScrapper: After defeating the Scrapper
 	DownedDefiledMimic: После победы над осквернённым мимиком в Хардмоде
 	DownedRivenMimic: После победы над {§Riven}анным мимиком в Хардмоде
 	DownedTrashCompactorMimic: После победы над мимиком-мусорщиком в Хардмоде
@@ -1441,6 +1438,7 @@ Buffs: {
 	Crazy_Buff: {
 		DisplayName: Безумен!
 		Description: Увеличены скорость движения и скорость появления монстров
+		// EffectDescription: Increases movement speed by 15% and enemy spawns by 17%
 	}
 
 	Wind_Pail_Debuff: {
@@ -1490,8 +1488,8 @@ Buffs: {
 	}
 
 	Stress_Ball_Buff: {
-		// DisplayName: <PH>Stress Ball Buff
-		// Description: Mods.Origins.Buffs.Stress_Ball_Buff.Description
+		// DisplayName: De-stressed
+		// Description: Increased damage
 	}
 
 	Star_Harvest_Buff: {
