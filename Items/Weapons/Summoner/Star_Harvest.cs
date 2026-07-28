@@ -65,7 +65,6 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Star_Harvest_Buff : MinionBuff {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.StardustCellMinion;
 		public override IEnumerable<int> ProjectileTypes() => [
 			Star_Cell.ID,
 			Small_Star_Cell.ID,
