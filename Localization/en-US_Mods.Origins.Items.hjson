@@ -7127,7 +7127,7 @@ Truss_Block_Item: {
 
 Industrial_Door_Item: {
 	DisplayName: Industrial Door
-	Tooltip: ""
+	Tooltip: "'Crushing hazard. Can cause serious injury or death. Stay clear of moving mechanism'"
 }
 
 Transistor_Item: {
@@ -8475,5 +8475,5 @@ Star_Harvest: {
 
 Ancient_Industrial_Door_Item: {
 	DisplayName: Ancient Industrial Door
-	Tooltip: ""
+	Tooltip: "'Crushing hazard. Can cause serious injury or death. Stay clear of moving mechanism'"
 }

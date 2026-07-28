@@ -86,6 +86,8 @@ namespace Origins.NPCs.Defiled {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			//npcLoot.Add(ItemDropRule.Common(ItemID.PaintingEaterOfLife, 200));
+			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));

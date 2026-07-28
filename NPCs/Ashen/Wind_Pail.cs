@@ -47,12 +47,11 @@ namespace Origins.NPCs.Ashen {
 			NPC.setFrameSize = true;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 26, amountDroppedMaximum: 52));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
+			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 		}
 		SlotId attackSound;
 		public override void AI() {

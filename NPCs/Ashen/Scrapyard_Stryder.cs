@@ -149,6 +149,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.spriteDirection = NPC.direction;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 5, amountDroppedMaximum: 11));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Phoenum>(), 1, 1, 3));

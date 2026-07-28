@@ -66,6 +66,7 @@ namespace Origins.NPCs.Riven {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 1, 2, 5));
 		}

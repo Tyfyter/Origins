@@ -1,5 +1,6 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -43,6 +44,13 @@ namespace Origins.NPCs.Ashen {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Ashen_Biome>().Type
 			];
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
+			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
+			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
+			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Phoenum>(), 3, 1, 3));
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData();
@@ -141,9 +149,6 @@ namespace Origins.NPCs.Ashen {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 

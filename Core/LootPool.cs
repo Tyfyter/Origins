@@ -372,6 +372,11 @@ public class Ashen_Closet : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Loose_Wheel>()));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b100).Type, 8, 2, 16));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b111).Type, 8, 1, 17));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b011).Type, 8, 1, 13));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b001).Type, 8, 1, 15));
+		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b101).Type, 8, 1, 12));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 7));
 		AddRule(ItemDropRule.Common(ItemID.Bomb, 1, 65, 135));
 		AddRule(ItemDropRule.Common(ItemID.Dynamite, 1, 35, 80));

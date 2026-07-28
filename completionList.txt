@@ -1379,6 +1379,7 @@ TILES:
 (^) Strange Plant (Stardust)
 (^) Traffic Cone
 
+(^) Ancient Industrial Door
 (^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire
@@ -1452,7 +1453,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(☻) Beacon Light !!!
+(^) Beacon Light
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
