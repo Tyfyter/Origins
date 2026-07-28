@@ -65,7 +65,7 @@ namespace Origins.Tiles.Ashen {
 
 			TileID.Sets.Suffocate[Type] = true;
 			BlockTileInteractions.TilesBlockInteraction[Type] = true;
-			ForceHoik.ForceHoikDirection[Type] = Industrial_Door.GetHoik;
+			ForceHoik.ForceHoikDirection[Type] = GetHoik;
 		}
 		public override bool CanExplode(int i, int j) => false;
 		public override bool Slope(int i, int j) => false;
