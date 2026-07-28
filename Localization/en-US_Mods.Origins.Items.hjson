@@ -8477,3 +8477,13 @@ Ancient_Industrial_Door_Item: {
 	DisplayName: Ancient Industrial Door
 	Tooltip: "'Crushing hazard. Can cause serious injury or death. Stay clear of moving mechanism'"
 }
+
+Incinerator_Pit_Item: {
+	DisplayName: Incinerator Pit
+	Tooltip: ""
+}
+
+Incinerator_Pit_Pit_Item: {
+	DisplayName: Incinerator Pit Pit
+	Tooltip: ""
+}

@@ -4038,6 +4038,19 @@ namespace Origins {
 			}
 			return false;
 		}
+		public static IEnumerable<Point> IterateTilesIn(this Rectangle rectangle) {
+			Point point = rectangle.TopLeft().ToTileCoordinates();
+			Point point2 = rectangle.BottomRight().ToTileCoordinates();
+			int num = Utils.Clamp(point.X, 0, Main.maxTilesX - 1);
+			int num2 = Utils.Clamp(point.Y, 0, Main.maxTilesY - 40);
+			int num3 = Utils.Clamp(point2.X, 0, Main.maxTilesX - 1);
+			int num4 = Utils.Clamp(point2.Y, 0, Main.maxTilesY - 40);
+			for (int i = num; i <= num3; i++) {
+				for (int j = num2; j <= num4; j++) {
+					yield return new Point(i, j);
+				}
+			}
+		}
 		/// <summary>
 		/// Throws <see cref="ArgumentException"/> if <paramref name="direction"/> is zero
 		/// </summary>
@@ -6509,6 +6522,9 @@ namespace Origins {
 			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
 		}
 		public static void SetIDProp(this ModNPC self) {
+			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
+		public static void SetIDProp(this ModBlockType self) {
 			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
 		}
 	}

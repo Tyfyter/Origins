@@ -73,6 +73,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Hanging_Scrap_Tile>());
 			Item.rare = ItemRarityID.Gray;
+			Item.value = 5;
 		}
 		public void PlaceTile(On_Player.orig_PlaceThing_Tiles orig, bool inRange) {
 			if (!inRange) return;

@@ -34,7 +34,7 @@ namespace Origins.Core {
 			ArgumentNullException.ThrowIfNull(shapeMap);
 			ArgumentNullException.ThrowIfNull(key);
 			HashSet<ShapeMapTile> chars = [..shapeMap];
-			key.Add(' ', null);
+			key[' '] = null;
 			LoaderUtils.ForEachAndAggregateExceptions(chars, @char => {
 				if (!key.ContainsKey(@char)) throw new ArgumentException($"{nameof(key)} must contain all characters present in {nameof(shapeMap)} except ' ', missing {@char.Value}");
 			});
@@ -151,7 +151,7 @@ namespace Origins.Core {
 			for (int i = 0; i < height; i++) {
 				if (map[i].Length != width) throw new ArgumentException("All lines must have equal length", nameof(map));
 			}
-			int styleWidth = -1;
+			int styleWidth = width;
 			for (int i = 0; i < width; i++) {
 				if (map[0][i] == '|') {
 					styleWidth = i;

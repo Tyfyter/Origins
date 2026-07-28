@@ -736,6 +736,19 @@ namespace Origins {
 				originPlayer.UpdateNPCPlatforms();
 				if (originPlayer.weakShimmer) orig(self);
 				originPlayer.UpdateMurkySludgeSounds();
+				Incinerator_Pit.HurtEntity(self, 
+					dir => {
+						if (self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] > 0) return;
+						self.Hurt(Incinerator_Pit.DeathReason(self), 100, dir, cooldownCounter: ImmunityCooldownID.TileContactDamage, dodgeable: false, knockback: 4.5f);
+						self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] /= 6;
+					},
+					() => {
+						if (self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] > 0) return self.dead;
+						self.Hurt(Incinerator_Pit.DeathReason(self), 100, 0, cooldownCounter: ImmunityCooldownID.TileContactDamage, dodgeable: false, knockback: 0);
+						self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] /= 6;
+						return self.dead;
+					}
+				);
 			};
 			try {
 				IL_Collision.TileCollision += IL_Collision_TileCollision_OffsetBookcases;

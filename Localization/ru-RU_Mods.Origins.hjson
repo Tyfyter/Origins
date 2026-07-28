@@ -392,6 +392,11 @@ DeathMessage: {
 		2: "{0} не добрался(-лась) до другой стороны."
 	}
 
+	Incinerator_Pit: {
+		// 2: "{0} raised the game's age rating."
+		// 1: "{0}… No, I can't even joke about this."
+	}
+
 	Tripod_0: "{0} забыл(а) закрепить треногу."
 	Tripod_1: "{0} получил(а) по полной от {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
 
@@ -2666,6 +2671,8 @@ Tiles: {
 	Oil_Derrick.MapEntry: Нефтяная вышка
 	// Ancient_Industrial_Door.MapEntry: Ancient Industrial Door
 	// Ancient_Industrial_Door_Open.MapEntry: Ancient Industrial Door
+	// Incinerator_Pit.MapEntry: Incinerator Pit
+	// Incinerator_Pit_Pit.MapEntry: Incinerator Pit Pit
 }
 
 Liquids: {
