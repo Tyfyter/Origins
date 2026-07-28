@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public static int BaseMaxHealth => 100;
 		public static int CellsPerSplit(int maxLife) => Main.rand.RandomRound(maxLife / 33f);
 		public static int MaxCellsPerSlot(int maxLife) => maxLife / 16;
-		public static int HurtImmuneTime => 5; //unaffected by speed modifiers, how many small cells will be immune to attacks for after being hit
+		public static int HurtImmuneTime => 5; //unaffected by speed modifiers, how many frames small cells will be immune to attacks for after being hit
 		public static int BaseChildhoodDuration => 120; //affected by speed modifiers
 		public static int ChildImmuneTime => 15; //unaffected by speed modifiers, how many frames small cells will be immune to attacks and unable to attack for
 		public static int ChildViolenceTime => 15; //affected by speed modifiers, how many frames small cells will attack for before growing up
