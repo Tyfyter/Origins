@@ -56,7 +56,7 @@ namespace Origins.Items.Tools.Wiring {
 			Item.consumable = true;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(this, 5)
+			Recipe.Create(Type, 5)
 				.AddRecipeGroup(ALRecipeGroups.CopperBars)
 				.AddIngredient<Silicon_Bar>()
 				.AddTile<Metal_Presser>()
