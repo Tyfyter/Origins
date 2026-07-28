@@ -102,6 +102,7 @@ namespace Origins.Tiles.Ashen {
 			if (actuallyDo) new Ancient_Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
 			return true;
 		}
+		public static int GetHoik(int realSlope, Tile tile) => (tile.TileFrameX % 36 == 0) ? SlopeID.TopLeft : SlopeID.TopLeft;
 	}
 	public class Ancient_Industrial_Door_Open : Ancient_Industrial_Door {
 		public override void Load() { }
