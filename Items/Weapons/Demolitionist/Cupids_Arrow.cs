@@ -73,6 +73,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
+			Projectile.hide = true;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.projectileBlastRadius *= 1.5f;
@@ -80,6 +81,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (++Projectile.localAI[0] < 7) return;
+			Projectile.hide = false;
 			Color dustColor = default;
 			int dustType = DustID.Torch;
 			if (Projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile global)) {

@@ -47,6 +47,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (player.altFunctionUse == 2) return AltUseTimeMultiplier[selectedProjType];
 			return base.UseTimeMultiplier(player);
 		}
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+			switch (selectedProjType) {
+				case ProjectileID.Beenade:
+				damage.Base -= Item.damage;
+				break;
+			}
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2 && AltFireAction[type] is ShootAction shootAction) {
 				shootAction(player, source, position, velocity, type, damage, knockback);
@@ -93,16 +100,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static void SetupVanillaAltFires() {
 			#region beenades
-			AltUseTimeMultiplier[ProjectileID.Beenade] = 0.1f;
-			AltAnimationMultiplier[ProjectileID.Beenade] = 0.5f;
+			AltUseTimeMultiplier[ProjectileID.Beenade] = 0.2f;
+			AltAnimationMultiplier[ProjectileID.Beenade] = 1f;
 			AltUseCount[ProjectileID.Beenade] = 4;
 			AltFireAction[ProjectileID.Beenade] = (player, source, position, velocity, type, damage, knockback) => {
 				position += velocity.SafeNormalize(Vector2.Zero);
 				for (int i = Main.rand.Next(2); ++i < 6;) {
-					type = player.beeType();
-					damage = player.beeDamage(damage)/2;
-					knockback = player.beeKB(knockback);
-					Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * Main.rand.NextFloat(0.4f, 0.8f), type, damage, knockback, player.whoAmI);
+					Projectile.NewProjectileDirect(
+						source,
+						position,
+						velocity.RotatedByRandom(0.1 * i) * Main.rand.NextFloat(0.4f, 0.8f),
+						player.beeType(),
+						player.beeDamage(damage),
+						player.beeKB(knockback)
+					);
 				}
 			};
 			#endregion beenades

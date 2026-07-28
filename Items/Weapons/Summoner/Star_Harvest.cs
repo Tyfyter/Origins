@@ -19,7 +19,10 @@ namespace Origins.Items.Weapons.Summoner {
 		public static int HurtImmuneTime => 5; //unaffected by speed modifiers, how many small cells will be immune to attacks for after being hit
 		public static int BaseChildhoodDuration => 120; //affected by speed modifiers
 		public static int ChildImmuneTime => 15; //unaffected by speed modifiers, how many frames small cells will be immune to attacks and unable to attack for
-		public static int ChildViolenceTime => 8; //affected by speed modifiers, how many frames small cells will attack for before growing up
+		public static int ChildViolenceTime => 15; //affected by speed modifiers, how many frames small cells will attack for before growing up
+		public static float BaseSpeed => 15;
+		public static float Inertia => 30;
+		
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Type] = 0;
 			Item.ResearchUnlockCount = 1;
@@ -154,13 +157,18 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.rotation += Projectile.direction * 0.3f;
 			Vector2 targetCenter = targetingData.HasTarget ? targetingData.Center : restRegion.Center();
 			Vector2 direction = (targetCenter - Projectile.Center).Normalized(out float distance);
-			float speed = 10f * SpeedModifier;
+			float speed = Star_Harvest.BaseSpeed * SpeedModifier;
 			speed += distance / 100f;
-			const int inertia = 40;
+			float inertia = Star_Harvest.Inertia + 1;
 			Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction * speed) / inertia;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			this.DamageArtifactMinion(target.life > 0 ? target.damage : (target.damage / 2), new NPCDamageSource(target));
+			int targetDamage = target.damage;
+			if (target.aiStyle == NPCAIStyleID.Celestial_Pillar) targetDamage = 80;
+			if (targetDamage > 0) this.DamageArtifactMinion(target.life > 0 ? targetDamage : (targetDamage / 2), new NPCDamageSource(target));
+			hit.Knockback = 1;
+			hit.HitDirection *= -1;
+			Projectile.velocity = hit.GetKnockbackFromHit();
 		}
 		public void OnHurt(int damage, bool fromDoT) {
 			if (Life > 0 && !fromDoT) {
