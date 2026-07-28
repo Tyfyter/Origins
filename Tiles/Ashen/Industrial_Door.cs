@@ -64,6 +64,7 @@ namespace Origins.Tiles.Ashen {
 
 			TileID.Sets.Suffocate[Type] = true;
 			BlockTileInteractions.TilesBlockInteraction[Type] = true;
+			ForceHoik.ForceHoikDirection[Type] = GetHoik;
 		}
 		public override bool CanExplode(int i, int j) => false;
 		public override bool Slope(int i, int j) => false;
@@ -100,6 +101,7 @@ namespace Origins.Tiles.Ashen {
 			if (actuallyDo) new Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
 			return true;
 		}
+		public static int GetHoik(int realSlope, Tile tile) => (tile.TileFrameX % 36 == 0) ? SlopeID.TopRight : SlopeID.TopLeft;
 	}
 	public class Industrial_Door_Open : Industrial_Door {
 		public override void Load() { }
@@ -110,8 +112,9 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Suffocate[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
-			RegisterItemDrop(Tiles.TileItem.Get<Industrial_Door>().Type);
+			RegisterItemDrop(TileItem.Get<Industrial_Door>().Type);
 			BlockTileInteractions.TilesBlockInteraction[Type] = false;
+			ForceHoik.ForceHoikDirection[Type] = null;
 		}
 		public override void PostSetDefaults() {
 			Main.tileBlockLight[Type] = false;
