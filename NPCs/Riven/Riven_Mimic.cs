@@ -18,7 +18,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 		public override void Load() => this.AddBanner(25);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;

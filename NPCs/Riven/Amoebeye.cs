@@ -163,7 +163,7 @@ namespace Origins.NPCs.Riven {
 			Gore.NewGoreDirect(NPC.GetSource_Death(), position, NPC.velocity, ModContent.GoreType<T>());
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, NPC.GetRivenGlowAlpha(drawColor));
 		}
 	}
 	public class Amoebeye_P : ModNPC, IRivenEnemy, IWikiNPC {
@@ -244,7 +244,7 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.spriteDirection = 1;
 		}
-		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color? GetAlpha(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (NPC.ai[0] == 0) {
 				NPC.ai[0] = target.whoAmI + 1;

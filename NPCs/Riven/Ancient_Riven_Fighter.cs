@@ -22,7 +22,7 @@ namespace Origins.NPCs.Riven {
 		public int FrameDuration => 1;
 		private static int FrameHeight = 40;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.09f;
 		static Asset<Texture2D> glowTexture;
 		public override Texture2D GlowTexture => glowTexture.Value;

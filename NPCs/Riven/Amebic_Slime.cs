@@ -55,6 +55,6 @@ namespace Origins.NPCs.Riven {
 				for (int i = 0; i < 5; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
 			}
 		}
-		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color? GetAlpha(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 	}
 }

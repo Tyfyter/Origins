@@ -547,7 +547,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			index = bossHeads[(int)float.Floor((1 - ArmorHealthPercent) * (bossHeads.Length - 1))];
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, NPC.GetRivenGlowAlpha(drawColor));
 			if (isHighestIndex) DrawAllArmor(NPC, spriteBatch, screenPos);
 		}
 		public void DrawSegmentArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -724,7 +724,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			);
 			data.Draw(spriteBatch);
 			data.texture = GlowTexture;
-			data.color = Riven_Hive.GetGlowAlpha(drawColor);
+			data.color = NPC.GetRivenGlowAlpha(drawColor);
 			data.Draw(spriteBatch);
 			if (isHighestIndex) DrawAllArmor(HeadSegment, spriteBatch, screenPos);
 			return false;
@@ -797,7 +797,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, NPC.GetRivenGlowAlpha(drawColor));
 			if (isHighestIndex) DrawAllArmor(HeadSegment, spriteBatch, screenPos);
 		}
 		public override void Init() {

@@ -237,7 +237,7 @@ namespace Origins.NPCs.Riven {
 			);
 			data.Draw(spriteBatch);
 			data.texture = glowTexture;
-			data.color = Riven_Hive.GetGlowAlpha(drawColor);
+			data.color = NPC.GetRivenGlowAlpha(drawColor);
 			data.Draw(spriteBatch);
 			if (NPC.aiAction != 3) {
 				data.texture = tailTexture;

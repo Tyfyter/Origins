@@ -238,7 +238,7 @@ namespace Origins.NPCs.Riven {
 				}
 			}
 		}
-		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color? GetAlpha(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 	}
 
 	public class Goo_Wall_Debuff : ModBuff {

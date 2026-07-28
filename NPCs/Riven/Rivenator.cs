@@ -159,6 +159,6 @@ namespace Origins.NPCs.Riven {
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 480, targetSeverity: 1f - 0.67f);
 		}
-		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color? GetAlpha(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 	}
 }

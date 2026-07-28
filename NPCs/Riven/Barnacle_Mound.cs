@@ -153,7 +153,7 @@ namespace Origins.NPCs.Riven {
 					GlowTexture,
 					position - screenPos,
 					NPC.frame,
-					Riven_Hive.GetGlowAlpha(drawColor),
+					NPC.GetRivenGlowAlpha(drawColor),
 					NPC.rotation,
 					halfSize,
 					NPC.scale,

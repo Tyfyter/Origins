@@ -14,6 +14,7 @@ using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.UI;
 using Origins.Walls;
+using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -5642,6 +5643,9 @@ namespace Origins {
 					}
 				}
 			}
+		}
+		public static Color GetRivenGlowAlpha(this NPC npc, Color lightColor) {
+			return npc.GetNPCColorTintedByBuffs(Riven_Hive.GetGlowAlpha(lightColor));
 		}
 	}
 	public static class TileExtenstions {
