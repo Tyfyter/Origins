@@ -39,7 +39,7 @@ namespace Origins.NPCs.Brine {
 			Main.npcFrameCount[Type] = 9;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Brine_Serpent", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(25f, 16f),
+				Position = new Vector2(30f, 16f),
 				PortraitPositionXOverride = 4,
 				PortraitPositionYOverride = 16f
 			};
