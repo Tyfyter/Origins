@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			switch (selectedProjType) {
 				case ProjectileID.Beenade:
-				damage.Base -= Item.damage;
+				damage.Base -= Item.damage / 2;
 				break;
 			}
 		}
@@ -106,7 +106,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			AltFireAction[ProjectileID.Beenade] = (player, source, position, velocity, type, damage, knockback) => {
 				position += velocity.SafeNormalize(Vector2.Zero);
 				for (int i = Main.rand.Next(2); ++i < 6;) {
-					Projectile.NewProjectileDirect(
+					Projectile projectile = Projectile.NewProjectileDirect(
 						source,
 						position,
 						velocity.RotatedByRandom(0.1 * i) * Main.rand.NextFloat(0.4f, 0.8f),
@@ -114,6 +114,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 						player.beeDamage(damage),
 						player.beeKB(knockback)
 					);
+					if (Main.rand.NextBool(2)) projectile.timeLeft = 15;
+					else if (Main.rand.NextBool(2)) projectile.timeLeft = 90;
+					projectile.penetrate -= 2;
+					projectile.appliesImmunityTimeOnSingleHits = true;
 				}
 			};
 			#endregion beenades

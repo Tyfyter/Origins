@@ -194,6 +194,12 @@ namespace Origins.Projectiles {
 				}
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
+					if (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee && parentProjectile.type == ProjectileID.Beenade) {
+						if (Main.rand.NextBool(2)) projectile.timeLeft = 15;
+						else if (Main.rand.NextBool(2)) projectile.timeLeft = 45;
+						projectile.penetrate -= 2;
+						projectile.appliesImmunityTimeOnSingleHits = true;
+					}
 					if (source is Mitosis_P.EntitySource_Mitosis) {
 						isFromMitosis = true;
 						projectile.alpha = 100;

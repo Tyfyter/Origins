@@ -1493,8 +1493,8 @@ Buffs: {
 	}
 
 	Star_Harvest_Buff: {
-		// DisplayName: Star Harvest Buff
-		// Description: Mods.Origins.Buffs.Star_Harvest_Buff.Description
+		// DisplayName: Stellar Accumulation
+		// Description: Shepherd of the stars
 	}
 }
 
