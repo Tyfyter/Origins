@@ -739,10 +739,11 @@ namespace Origins {
 				Incinerator_Pit.HurtEntity(self, 
 					dir => {
 						if (self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] > 0) return;
-						self.Hurt(Incinerator_Pit.DeathReason(self), 100, dir, cooldownCounter: ImmunityCooldownID.TileContactDamage, dodgeable: false, knockback: 4.5f);
+						self.Hurt(Incinerator_Pit.DeathReason(self), 50, dir, cooldownCounter: ImmunityCooldownID.TileContactDamage, dodgeable: false, knockback: 4.5f);
+						if (self.noKnockback) self.velocity.Y = -4.5f;
 						self.hurtCooldowns[ImmunityCooldownID.TileContactDamage] /= 6;
 					},
-					() => {
+					downInThere => {
 						self.jump.Cooldown();
 						self.jumpSpeedBoost -= 5;
 						self.maxFallSpeed *= 10;

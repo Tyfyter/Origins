@@ -4051,18 +4051,81 @@ namespace Origins {
 			}
 			return false;
 		}
-		public static IEnumerable<Point> IterateTilesIn(this Rectangle rectangle) {
+		public static IEnumerable<Point> IterateTilesIn(this Rectangle rectangle, TileOrder order = default) {
 			Point point = rectangle.TopLeft().ToTileCoordinates();
 			Point point2 = rectangle.BottomRight().ToTileCoordinates();
-			int num = Utils.Clamp(point.X, 0, Main.maxTilesX - 1);
-			int num2 = Utils.Clamp(point.Y, 0, Main.maxTilesY - 40);
-			int num3 = Utils.Clamp(point2.X, 0, Main.maxTilesX - 1);
-			int num4 = Utils.Clamp(point2.Y, 0, Main.maxTilesY - 40);
-			for (int i = num; i <= num3; i++) {
-				for (int j = num2; j <= num4; j++) {
-					yield return new Point(i, j);
+			int minX = Utils.Clamp(point.X, 0, Main.maxTilesX - 1);
+			int minY = Utils.Clamp(point.Y, 0, Main.maxTilesY - 40);
+			int maxX = Utils.Clamp(point2.X, 0, Main.maxTilesX - 1);
+			int maxY = Utils.Clamp(point2.Y, 0, Main.maxTilesY - 40);
+			switch (order) {
+				case TileOrder.RowMajor | TileOrder.AscX | TileOrder.AscY:
+				for (int j = minY; j <= maxY; j++) {
+					for (int i = minX; i <= maxX; i++) {
+						yield return new Point(i, j);
+					}
 				}
+				break;
+				case TileOrder.RowMajor | TileOrder.DescX | TileOrder.AscY:
+				for (int j = minY; j <= maxY; j++) {
+					for (int i = maxX; i >= minX; i--) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
+				case TileOrder.RowMajor | TileOrder.AscX | TileOrder.DescY:
+				for (int j = maxY; j >= minY; j--) {
+					for (int i = minX; i <= maxX; i++) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
+				case TileOrder.RowMajor | TileOrder.DescX | TileOrder.DescY:
+				for (int j = maxY; j >= minY; j--) {
+					for (int i = maxX; i >= minX; i--) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
+
+				case TileOrder.ColMajor | TileOrder.AscX | TileOrder.AscY:
+				for (int i = minX; i <= maxX; i++) {
+					for (int j = minY; j <= maxY; j++) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
+				case TileOrder.ColMajor | TileOrder.DescX | TileOrder.AscY:
+				for (int i = maxX; i >= minX; i--) {
+					for (int j = minY; j <= maxY; j++) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
+				case TileOrder.ColMajor | TileOrder.AscX | TileOrder.DescY:
+				for (int i = minX; i <= maxX; i++) {
+					for (int j = maxY; j >= minY; j--) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
+				case TileOrder.ColMajor | TileOrder.DescX | TileOrder.DescY:
+				for (int i = maxX; i >= minX; i--) {
+					for (int j = maxY; j >= minY; j--) {
+						yield return new Point(i, j);
+					}
+				}
+				break;
 			}
+		}
+		[Flags]
+		public enum TileOrder {
+			RowMajor = 0b000,
+			AscX = 0b000,
+			AscY = 0b000,
+			ColMajor = 0b001,
+			DescX = 0b010,
+			DescY = 0b100,
 		}
 		/// <summary>
 		/// Throws <see cref="ArgumentException"/> if <paramref name="direction"/> is zero

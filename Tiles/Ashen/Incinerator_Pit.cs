@@ -1,27 +1,34 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Core;
+using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
+using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Origins.Core.MultiTypeMultiTile;
 
 namespace Origins.Tiles.Ashen; 
 [ReinitializeDuringResizeArrays]
 public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTile, IMultiTypeMultiTile {
+	static Color poweredColor = new Color(255, 113, 0);
+	public static int MaxFuel => 60 * 60 * 1;
 	public static int PlayerPowerTime => 60 * 30;
-	public static int ItemPowerTime(Item item) => 30 + item.value + item.rare * 180 + ItemBonusPowerTime[item.type];
-	public static int NPCPowerTime(NPC npc) => 60 * 10 + (int)npc.value * 2 + npc.lifeMax / 60;
+	public static int ItemPowerTime(Item item) => (30 + (int)MathF.Pow(8, MathF.Log(item.value, 10)) + item.rare * 180 + ItemBonusPowerTime[item.type]) * item.stack;
+	public static int NPCPowerTime(NPC npc) => 60 * 10 + (int)MathF.Pow(8, MathF.Log(npc.value, 10)) * 2 + npc.lifeMax / 60;
 
 	public static int[] ItemBonusPowerTime = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Incinerator_Pit)}_{nameof(ItemBonusPowerTime)}").RegisterIntSet();
 	public static bool?[] ItemCanBeDestroyedOveride = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Incinerator_Pit)}_{nameof(ItemCanBeDestroyedOveride)}").RegisterCustomSet<bool?>(null);
@@ -110,7 +117,9 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		DrawGrinder(offset + new Vector2(46, 64), (float)Main.timeForVisualEffects * speed);
 		DrawGrinder(offset + new Vector2(134, 64), (float)Main.timeForVisualEffects * -speed + MathHelper.PiOver2);
 
-		for (int n = 0; n < vertices.Length; n++) vertices[n].Color = Lighting.GetColor(i + n % 14, j + n / 14);
+		bool isPowered = WiresUI.Settings.DrawWires && Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered;
+		float pulse = isPowered ? Ashen_Wire_Data.pulse.Value * 0.8f : 0;
+		for (int n = 0; n < vertices.Length; n++) vertices[n].Color = Color.Lerp(Lighting.GetColor(i + n % 14, j + n / 14), poweredColor, pulse);
 		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.Tile[ID].Value;
 		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, dices.Length / 3);
 		static void DrawGrinder(Vector2 position, float rotMult) {
@@ -123,17 +132,55 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			);
 		}
 	}
-	public static PlayerDeathReason DeathReason(Player player) => PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Incinerator_Pit").SelectFrom(player).ToNetworkText());
-	public static void HurtEntity(Entity entity, Action<int> bounce, Func<int> hurt) {
-		foreach (Point pos in entity.Hitbox.IterateTilesIn()) {
+	public static PlayerDeathReason DeathReason(Player player) => PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Incinerator_Pit").SelectFrom(player.name).ToNetworkText());
+	public static void HurtEntity(Entity entity, Action<int> bounce, Func<bool, int> hurt) {
+		foreach (Point pos in entity.Hitbox.IterateTilesIn(CollisionExtensions.TileOrder.DescY)) {
 			Tile tile = Main.tile[pos];
 			if (tile.TileType != Incinerator_Pit_Pit.ID) continue;
-			if (tile.TileFrameY <= 18) bounce((tile.TileFrameX < 18 * 4).ToDirectionInt());
-			else {
+			Rectangle dustRect = Rectangle.Intersect(entity.Hitbox, new(pos.X * 16, pos.Y * 16, 16, 16));
+			int sparks = ModContent.DustType<Spark_Dust>();
+			if (tile.TileFrameY <= 18) {
+				int dir = (tile.TileFrameX < 18 * 4).ToDirectionInt();
+				bounce(dir);
+				for (int i = 0; i < 4; i++) {
+					Dust dust = Dust.NewDustDirect(
+						dustRect.TopLeft(),
+						dustRect.Width,
+						dustRect.Height,
+						sparks
+					);
+					dust.velocity.X += dir * 4;
+					dust.velocity += Main.rand.NextVector2Circular(2, 2);
+					dust.noGravity = Main.rand.NextBool(2, 3);
+				}
+			} else {
 				if (entity.velocity.Y < 0 || tile.TileFrameY <= 18 * 3) entity.velocity.Y += 4;
-				int power = hurt();
+				if (tile.TileFrameY >= 18 * 3) {
+					entity.velocity.X *= 0.8f;
+					entity.velocity.X -= Math.Sign(Main.tile[(int)entity.Center.X / 16, pos.Y].TileFrameX - 5 * 18);
+					for (int i = 0; i < 4; i++) {
+						Dust dust = Dust.NewDustDirect(
+							dustRect.TopLeft(),
+							dustRect.Width,
+							dustRect.Height,
+							sparks
+						);
+						if (Main.rand.NextBool(10)) {
+							dust.velocity.Y -= 2 + Main.rand.NextFloat(1);
+							dust.velocity.X *= 0.25f;
+						} else {
+							dust.velocity.Y -= 4 + Main.rand.NextFloat(2);
+							dust.velocity.X *= 0.5f;
+							dust.velocity *= 1.5f;
+							dust.fadeIn = 1;
+							dust.noGravity = true;
+						}
+					}
+				}
+				int power = hurt(tile.TileFrameY >= 18 * 3);
 				if (power > 0) {
-
+					TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, TileObjectData.GetTileData(Main.tile[pos]), out int left, out int top);
+					Incinerator_Pit_TE.GetData(new(left, top)).Fuel += power;
 				}
 			}
 			break;
@@ -150,18 +197,69 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		(short)(x + 1 + y * 14), (short)(x + 1 + 14 + y * 14), (short)(x + 14 + y * 14),
 	])).ToArray();
 	private static readonly VertexRectangle grinderRect = new();
+	public override void PlaceInWorld(int i, int j, Item item) {
+		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
+		ModContent.GetInstance<Incinerator_Pit_TE>().AddTileEntity(new(left, top), new());
+	}
+	class Incinerator_Pit_TE : TESystem<Incinerator_Pit_TE.Data> {
+		public static Data GetData(Point16 position) {
+			ModContent.GetInstance<Incinerator_Pit_TE>().tileEntities.TryGetValue(position, out Data data);
+			return data;
+		}
+		protected override bool IsValidTile(Tile tile) => tile.HasTile && (tile.TileType == ID || tile.TileType == Incinerator_Pit_Pit.ID);
+		public class Data() : ITileEntityData {
+			int fuel;
+			public int Fuel {
+				get => fuel;
+				set => IsDirty |= fuel.TrySet(Math.Min(value, MaxFuel));
+			}
+			public void Update(Point16 position) {
+				bool shouldGenerate = fuel > 0;
+				if (Main.tile[position].Get<Ashen_Wire_Data>().IsTilePowered == shouldGenerate) goto consume;
+				TileObjectData tileData = TileObjectData.GetTileData(Main.tile[position]);
+				TileUtils.GetMultiTileTopLeft(position.X, position.Y, tileData, out int left, out int top);
+				for (int j = 0; j < tileData.Height; j++) {
+					for (int i = 0; i < tileData.Width; i++) {
+						if (!Shape.Matches(Main.tile[left + i, top + j], left, top, 0)) continue;
+						Ashen_Wire_Data.SetTilePowered(left + i, top + j, shouldGenerate);
+					}
+				}
+				consume:
+				if (fuel > 0) fuel--;
+			}
+
+			void ITileEntityData.SaveTE(TagCompound tag) {
+				tag[nameof(fuel)] = fuel;
+			}
+			static Data ITileEntityData.LoadTE(TagCompound tag) {
+				Data data = new();
+				tag.TryGet(nameof(fuel), out data.fuel);
+				return data;
+			}
+			void ITileEntityData.NetSend(BinaryWriter writer) {
+				writer.Write(fuel);
+			}
+			static Data ITileEntityData.NetReceive(BinaryReader reader, Data existing) {
+				existing ??= new Data();
+				existing.fuel = reader.ReadInt32();
+				return existing;
+			}
+			public bool IsDirty { get; set; }
+		}
+	}
 	class GrindNPCs : GlobalNPC {
 		int immuneTime;
 		public override bool InstancePerEntity => true;
 		public override void FindFrame(NPC npc, int frameHeight) {
 			immuneTime.Cooldown();
+			if (npc.noTileCollide || npc.dontTakeDamage) return;
 			HurtEntity(npc,
 				dir => {
 					if (immuneTime > 0) return;
-					npc.SimpleStrikeNPC(100, dir, knockBack: 4.5f);
+					npc.SimpleStrikeNPC(50, dir, knockBack: 4.5f);
 					immuneTime = 6;
 				},
-				() => {
+				downInThere => {
 					if (immuneTime > 0) return npc.active ? 0 : NPCPowerTime(npc);
 					npc.SimpleStrikeNPC(100, 0, knockBack: 0);
 					immuneTime = 6;
@@ -192,7 +290,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			c.GotoNext(MoveType.After, i => i.MatchLdcR4(0.95f));
 			c.EmitLdarg0();
 			c.EmitDelegate(static (float friction, Item item) => {
-				if (item.GetGlobalItem<GrindItems>().noPickupTime > 0) Max(ref friction, 0.99f);
+				if (!item.IsAir && item.GetGlobalItem<GrindItems>().noPickupTime > 0) Max(ref friction, 0.99f);
 				return friction;
 			});
 		}
@@ -206,21 +304,15 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 					noPickupTime = 35;
 					bounceCount++;
 				},
-				() => {
-					noPickupTime = 5;
-					foreach (Point pos in item.Hitbox.IterateTilesIn()) {
-						Tile tile = Main.tile[pos];
-						if (tile.TileType == Incinerator_Pit_Pit.ID && tile.TileFrameY >= 18 * 3) {
-							item.velocity.X *= 0.8f;
-							item.velocity.Y = 0;
-							item.velocity.X -= Math.Sign(Main.tile[(int)item.Center.X / 16, pos.Y].TileFrameX - 5 * 18);
-							grindTime = 3;
-							break;
-						}
+				downInThere => {
+					if (downInThere) {
+						item.velocity.Y = 0;
+						grindTime = 3;
 					}
+					noPickupTime = 5;
 					if (item.expert || item.master) return 0;
 					if (ItemCanBeDestroyedOveride[item.type] ?? (item.rare is ItemRarityID.Gray or ItemRarityID.White or ItemRarityID.Blue)) {
-						if (++grindDamage >= 150 + item.value * 0.075f + Math.Max(item.rare * 150, 0)) {
+						if (++grindDamage >= 150 + float.Pow(item.value, 0.35f) * 10f + Math.Max(item.rare * 150, 0)) {
 							item.active = false;
 							return ItemPowerTime(item);
 						}
