@@ -4,6 +4,7 @@ using Origins.Core;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -288,6 +289,12 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(NPC.aiAction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.aiAction = reader.ReadInt32();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit) {
 			if (NPC.confused && hit.HitDirection == NPC.direction) {
