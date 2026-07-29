@@ -458,6 +458,7 @@ namespace Origins {
 			);
 			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
+			public static bool?[] CanBeGrappledTo { get; } = TileID.Sets.Factory.CreateCustomSet<bool?>(null);
 			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
 			public static bool[] StructureSerializer_PlaceAsObject { get; } = TileID.Sets.Factory.CreateBoolSet();
 			public static (SoundStyle open, SoundStyle close)[] ChestSoundOverride { get; } = TileID.Sets.Factory.CreateCustomSet<(SoundStyle, SoundStyle)>(default);

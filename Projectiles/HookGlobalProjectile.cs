@@ -35,7 +35,9 @@ namespace Origins.Projectiles {
 		}
 		public override bool? GrappleCanLatchOnTo(Projectile projectile, Player player, int x, int y) {
 			Tile tile = Main.tile[x, y];
-			if (tile.HasTile && OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType) is OriginsSets.MultitileCollisionOffsetter collision) {
+			if (!tile.HasTile) return null;
+			if (OriginsSets.Tiles.CanBeGrappledTo[tile.TileType] is bool @override) return @override;
+			if (OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType) is OriginsSets.MultitileCollisionOffsetter collision) {
 				float posY = y * 16;
 				int height = 16;
 				collision(tile, ref posY, ref height);

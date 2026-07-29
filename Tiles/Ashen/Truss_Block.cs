@@ -50,6 +50,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.CanBeSloped[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			OriginsSets.Tiles.CanBeGrappledTo[Type] = true;
 			OriginsSets.Tiles.DisableHoiking[Type] = true;
 			AddMapEntry(FromHexRGB(0xBE9170));
 
