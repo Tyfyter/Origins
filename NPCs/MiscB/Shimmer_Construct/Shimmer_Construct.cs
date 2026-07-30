@@ -891,6 +891,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					case NPCID.ServantofCthulhu: goto case -1;
 					case NPCID.EyeofCthulhu: {
 						if (NPC.CountNPCS(NPCType<Shimmer_Construct>()) <= 0) goto case -1;
+						else npc.buffImmune[BuffID.Shimmer] = true;
 						break;
 					}
 					case -1: {
