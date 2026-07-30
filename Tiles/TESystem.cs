@@ -86,7 +86,7 @@ namespace Origins.Tiles {
 		}
 		[NoJIT]
 		void RegisterAction_Old() {
-			if (ModContent.GetInstance<PlaceComplexTEAction>() is null) Mod.AddContent(new PlaceComplexTEAction());
+			if (ModContent.GetInstance<PlaceComplexTEAction>() is null) Mod.AddContent((ILoadable)new PlaceComplexTEAction());
 		}
 		void RegisterAction_Future(Type isyncedAction) {
 			isyncedAction.GetNestedType("Loading").GetMethod("EnsureLoaded", [typeof(Mod), typeof(Type)]).Invoke(null, [Mod, typeof(PlaceComplexTEAction)]);
