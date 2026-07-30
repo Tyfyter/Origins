@@ -21,7 +21,7 @@ namespace Origins.Tiles.Ashen {
 		public Color GlowColor => Color.White;
 		public sealed override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (tile.TileFrameY >= 3 * 18) color.DoFancyGlow(new(1.05f, 0.75f, 0f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

@@ -23,7 +23,7 @@ namespace Origins.Tiles.Brine {
 		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (Glows(tile)) color.DoFancyGlow(new(0, 0, MathHelper.Max(1 - color.Z * 0.5f, 0)), tile.TileColor);
 		}
 		public static bool Glows(int frameNumX, int frameNumY) {

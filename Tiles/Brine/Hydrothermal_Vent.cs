@@ -90,8 +90,7 @@ namespace Origins.Tiles.Brine {
 	public class Hydrothermal_Vent_Goopy : Hydrothermal_Vent, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			(int i, int j) = tile.GetTilePosition();
+		public void FancyLightingGlowColor(Tile tile, int i, int j, ref Vector3 color) {
 			int style = TileObjectData.GetTileStyle(tile);
 			if (style < 0) return;
 			TileObjectData data = TileObjectData.GetTileData(tile.TileType, style);

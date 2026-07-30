@@ -161,7 +161,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -192,7 +192,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -221,7 +221,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -249,7 +249,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -279,7 +279,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -314,7 +314,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.CandleFancyGlow && glowTexture.Exists && IsOn(tile)) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -349,7 +349,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.CandelabraFancyGlow && glowTexture.Exists && IsOn(tile)) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -384,7 +384,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.LampFancyGlow && glowTexture.Exists && IsOn(tile)) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -444,7 +444,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.ChandelierFancyGlow && glowTexture.Exists && IsOn(tile)) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -513,7 +513,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.LanternFancyGlow && glowTexture.Exists && IsOn(tile)) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -543,7 +543,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -572,7 +572,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -601,7 +601,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -629,7 +629,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -656,7 +656,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
@@ -684,7 +684,7 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
 				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}

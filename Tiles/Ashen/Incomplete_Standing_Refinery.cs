@@ -95,8 +95,8 @@ namespace Origins.Tiles.Ashen {
 			new TileItem(this, true).RegisterItem();
 			this.SetupGlowKeys();
 		}
-		void IGlowingModTile.FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			Point16 pos = new(tile.GetTilePosition());
+		void IGlowingModTile.FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
+			Point16 pos = new(x, y);
 			int style = 0;
 			int style2 = 0;
 			TileObjectData.GetTileInfo(tile, ref style, ref style2);

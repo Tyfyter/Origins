@@ -33,7 +33,7 @@ namespace Origins.Tiles.Ashen {
 			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) { }
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) { }
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			// Properties

@@ -35,7 +35,7 @@ namespace Origins.Tiles.Ashen {
 			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			switch (tile.TileFrameY) {
 				case 0:
 				if (tile.TileFrameX == 18) break;

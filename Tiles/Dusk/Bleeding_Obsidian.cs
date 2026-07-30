@@ -17,7 +17,7 @@ namespace Origins.Tiles.Dusk {
 		public Color GlowColor => Color.White;
 		public sealed override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			color.DoFancyGlow(new(0.372f, 0.067f, 0.492f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

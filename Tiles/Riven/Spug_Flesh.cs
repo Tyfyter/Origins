@@ -21,7 +21,7 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (HasScar(tile)) {
 				color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * GlowValue, tile.TileColor);
 			}

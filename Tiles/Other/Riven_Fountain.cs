@@ -8,7 +8,7 @@ namespace Origins.Tiles.Other {
 		readonly AutoLoadingAsset<Texture2D> glowTexture;
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new(196, 196, 196, 100);
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (IsEnabled(tile)) {
 				color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue(), tile.TileColor);
 			}

@@ -195,7 +195,7 @@ public class Music_Box_RH : Music_Box, IGlowingModTile {
 			GlowTexture = Request<Texture2D>(Texture + "_Glow");
 		}
 	}
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
@@ -262,7 +262,7 @@ public class Music_Box_BP : Music_Box, IGlowingModTile {
 			GlowTexture = Request<Texture2D>(Texture + "_Glow");
 		}
 	}
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0f, 0.45f, 0.2f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
@@ -379,7 +379,7 @@ public class Music_Box_AS : Music_Box, IGlowingModTile {
 	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new(0.5f, 0.31f, 0f), tile.TileColor);
 	}
 }
@@ -404,7 +404,7 @@ public class Music_Box_SS : Music_Box, IGlowingModTile {
 	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f) * 0.5f, tile.TileColor);
 	}
 }
@@ -429,7 +429,7 @@ public class Music_Box_AF : Music_Box, IGlowingModTile {
 	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f), tile.TileColor);
 	}
 }
@@ -454,7 +454,7 @@ public class Music_Box_AM : Music_Box, IGlowingModTile {
 	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f) * 0.5f, tile.TileColor);
 	}
 }
@@ -500,7 +500,7 @@ public class Ancient_Music_Box_RH : Music_Box, IGlowingModTile {
 			return tile.TileFrameNumber > 0 || tile.Slope > 0;
 		}
 	}
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0.912f, 0.879f, 0.394f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void SetStaticDefaults() {
@@ -579,7 +579,7 @@ public class Ancient_Music_Box_BP : Music_Box, IGlowingModTile {
 			GlowTexture = Request<Texture2D>(Texture + "_Glow");
 		}
 	}
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0f, 0.912f, 0.394f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {

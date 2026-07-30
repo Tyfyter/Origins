@@ -31,7 +31,7 @@ namespace Origins.Tiles.Ashen {
 			this.SetupGlowKeys();
 		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (tile.TileFrameX >= 18) {
 				color.DoFancyGlow(SwitchColor.ToVector3(), tile.TileColor);
 				color.DoFancyGlow(tile.TileFrameY >= 18 ? Vector3.Up : Vector3.Right, tile.TileColor);

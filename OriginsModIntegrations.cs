@@ -126,15 +126,8 @@ namespace Origins {
 		public static void SearchKeybind(string text) {
 			instance.searchKeybinds?.Invoke(text);
 		}
-		delegate void _drawingAOMap(ref bool value);
-		_drawingAOMap drawingAOMap;
-		public static bool DrawingAOMap {
-			get {
-				bool value = false;
-				instance?.drawingAOMap?.Invoke(ref value);
-				return value;
-			}
-		}
+		static bool drawingAOMap;
+		public static bool DrawingAOMap => drawingAOMap;
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
@@ -613,7 +606,6 @@ namespace Origins {
 				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 				static void TileShine_Impl(ref Vector3 color, Tile tile) {
 					if (tile.HasTile) {
-						if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
 						switch (tile.TileType) {
 							case TileID.DyePlants:
 							if (tile.TileFrameX == 204 || tile.TileFrameX == 202) goto case TileID.Cactus;
@@ -630,8 +622,10 @@ namespace Origins {
 							case TileID.VanityTreeYellowWillow:
 							break;
 							default: {
+								if (!TileID.Sets.IsATreeTrunk[tile.TileType]) break;
 								if (OriginExtensions.GetTreeType(tile) is IGlowingModTile glowingTree) {
-									glowingTree.FancyLightingGlowColor(tile, ref color);
+									(int x, int y) = tile.GetTilePosition();
+									glowingTree.FancyLightingGlowColor(tile, x, y, ref color);
 								}
 								break;
 							}
@@ -649,6 +643,10 @@ namespace Origins {
 						TileShine_Impl(ref color, tile);
 					}));
 				}
+				foreach (ModTile tile in Origins.instance.GetContent<ModTile>()) {
+					if (tile is IGlowingModTile glowingTile) fancyLighting.Call("AddCustomTileLighting", tile.Type, (TileLightModifier)glowingTile.FancyLightingGlowColor);
+				}
+
 				/*
 				int wallShineCount = 0;
 				foreach (var item in smoothLightingType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
@@ -679,23 +677,13 @@ namespace Origins {
 				//*/
 				Type ambientOcclusionType = fancyLighting.GetType().Assembly.GetType("FancyLighting.AmbientOcclusion");
 				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				bool drawingAO = false;
 				MonoModHooks.Add(
 					ambientOcclusionType.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance),
 					(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((orig, self, wallTarget, doDraw, updateWallTarget) => {
-						drawingAO = true;
-						RenderTarget2D value;
-						try {
-							value = orig(self, wallTarget, doDraw, updateWallTarget);
-						} catch (Exception) {
-							drawingAO = false;
-							throw;
-						}
-						drawingAO = false;
-						return value;
+						using ScopedOverride<bool> _ = drawingAOMap.ScopedOverride(true);
+						return orig(self, wallTarget, doDraw, updateWallTarget);
 					})
 				);
-				drawingAOMap += (ref bool value) => value |= drawingAO;
 
 				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
 				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -712,6 +700,12 @@ namespace Origins {
 				}
 			}*/
 		}
+		delegate void TileLightModifier(
+			Tile tile,
+			int x,
+			int y,
+			ref Vector3 lightColor
+		);
 		delegate void orig_TileShine_1_0_2(ref Vector3 color, Tile tile);
 		delegate void hook_TileShine_1_0_2(orig_TileShine_1_0_2 orig, ref Vector3 color, Tile tile);
 		delegate void orig_TileShine_1_1_0(ref Vector3 color, Tile tile, float shimmerAlpha);

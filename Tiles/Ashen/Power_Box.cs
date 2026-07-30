@@ -40,7 +40,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public virtual void OnLoad() { }
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public virtual void FancyLightingGlowColor(Tile tile, ref Vector3 color) {/*
+		public virtual void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {/*
 			if (tile.TileFrameX >= 18) {
 				color.DoFancyGlow(SwitchColor.ToVector3(), tile.TileColor);
 				color.DoFancyGlow(tile.TileFrameY >= 18 ? Vector3.Up : Vector3.Right, tile.TileColor);
@@ -231,8 +231,8 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Width = 3;
 			TileObjectData.newTile.Origin = new(1, 1);
 		}
-		public override void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			base.FancyLightingGlowColor(tile, ref color);
+		public override void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
+			base.FancyLightingGlowColor(tile, x, y, ref color);
 		}
 	}
 }

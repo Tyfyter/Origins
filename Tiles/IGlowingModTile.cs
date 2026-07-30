@@ -12,7 +12,7 @@ namespace Origins.Tiles {
 		AutoCastingAsset<Texture2D> GlowTexture { get; }
 		CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		Color GlowColor { get; }
-		void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			color.DoFancyGlow(GlowColor.ToVector3(), tile.TileColor);
 		}
 	}

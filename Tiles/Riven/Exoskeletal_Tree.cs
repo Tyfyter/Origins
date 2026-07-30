@@ -28,7 +28,7 @@ namespace Origins.Tiles.Riven {
 			float glowValue = GlowValue;
 			return (0.394f * glowValue, 0.879f * glowValue, 0.912f * glowValue);
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (HasScar(tile)) color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * GlowValue, tile.TileColor);
 		}
 		static bool HasScar(Tile tile) {
@@ -94,7 +94,7 @@ namespace Origins.Tiles.Riven {
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (tile.TileFrameX / 18 != 2) color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * GlowValue, tile.TileColor);
 		}
 		public override Color MapColor => new(200, 175, 160);

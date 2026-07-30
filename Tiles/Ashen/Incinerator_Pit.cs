@@ -51,7 +51,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 	public override void Load() {
 		new TileItem(this, true).RegisterItem();
 	}
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (ShouldGlow(tile)) color.DoFancyGlow(new(0.912f, 0.579f, 0f), tile.TileColor);
 	}
 	protected virtual Color MapColor => new Color(81, 44, 23);

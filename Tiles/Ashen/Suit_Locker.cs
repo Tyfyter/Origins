@@ -24,7 +24,7 @@ namespace Origins.Tiles.Ashen {
 				.Register();
 			}).RegisterItem();
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (tile.TileFrameX < 3 * 18 * 2) color.DoFancyGlow(new Vector3(0.912f, 0.579f, 0f) * (tile.TileFrameY < 2 * 18 ? 1 : 0.125f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

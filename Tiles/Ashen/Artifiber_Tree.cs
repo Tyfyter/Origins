@@ -54,7 +54,7 @@ namespace Origins.Tiles.Ashen {
 			const float brightness = 0.4f;
 			return (r * brightness, g * brightness, b * brightness);
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			Vector3 glow = default;
 			GetGlow(tile, out glow.X, out glow.Y, out glow.Z);
 			color.DoFancyGlow(glow, tile.TileColor);
@@ -137,7 +137,7 @@ namespace Origins.Tiles.Ashen {
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public override Color MapColor => new(130, 103, 85);
 		public override int[] ValidAnchorTypes => Artifiber_Tree.AnchorTypes;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (tile.TileFrameX / 18 != 2) color.DoFancyGlow(Color.OrangeRed.ToVector3(), tile.TileColor);
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {

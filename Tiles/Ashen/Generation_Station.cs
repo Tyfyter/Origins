@@ -20,7 +20,7 @@ namespace Origins.Tiles.Ashen {
 			new TileItem(this, true).RegisterItem();
 			this.SetupGlowKeys();
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (ShouldGlow(tile)) color.DoFancyGlow(new(1.0f, 0.61f, 0.1f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

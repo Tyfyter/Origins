@@ -56,7 +56,7 @@ namespace Origins.Tiles.Ashen {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			const float brightness = 0.8f;
 			if (Main.tileFrame[Type] != 0 && tile.TileFrameX == 18 && tile.TileFrameY == 0) color.DoFancyGlow(new(brightness, brightness * 0.45f, brightness * 0.2f), tile.TileColor);
 		}

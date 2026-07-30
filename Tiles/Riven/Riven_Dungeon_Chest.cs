@@ -11,7 +11,7 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		protected override bool CanBeLocked => true;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			color.DoFancyGlow(new Vector3(0f, 0.25f, 0.5f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

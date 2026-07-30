@@ -98,7 +98,7 @@ namespace Origins.Tiles.Other {
 		readonly AutoLoadingAsset<Texture2D> glowTexture = typeof(Laser_Tag_Base_Console).GetDefaultTMLName() + "_Glow";
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new(196, 196, 196, 100);
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			color = Vector3.Max(color, Main.teamColor[tile.TileFrameX].ToVector3());
 		}
 		public override void Load() {

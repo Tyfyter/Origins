@@ -221,7 +221,7 @@ namespace Origins.Items.Other.Fish {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public bool Glows { get; private set; } = false;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (!Glows) return;
 			color.DoFancyGlow(item.TileGlowColor.ToVector3() * item.TileGlowFancyLightAmount, tile.TileColor);
 		}

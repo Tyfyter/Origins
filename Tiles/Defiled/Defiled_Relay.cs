@@ -28,7 +28,7 @@ namespace Origins.Tiles.Defiled {
 			9 => 0.38f,
 			_ => 0.24f
 		};
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			color.DoFancyGlow(Vector3.One * GlowValue, tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

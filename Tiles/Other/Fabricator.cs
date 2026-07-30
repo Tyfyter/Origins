@@ -10,7 +10,7 @@ namespace Origins.Tiles.Other {
 	public class Fabricator : ModTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			color.DoFancyGlow(new Vector3(1f, 0.5960784313725490196078431372549f, 0.5960784313725490196078431372549f) * 0.25f, tile.TileColor);
 		}
 		public override void SetStaticDefaults() {

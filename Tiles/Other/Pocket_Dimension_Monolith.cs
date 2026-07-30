@@ -8,7 +8,7 @@ namespace Origins.Tiles.Other {
 	public class Pocket_Dimension_Monolith : MonolithBase, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (IsEnabled(tile)) color.DoFancyGlow(new Vector3(0.394f), tile.TileColor);
 		}
 		public override int Frames => 4;

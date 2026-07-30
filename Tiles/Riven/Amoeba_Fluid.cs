@@ -17,7 +17,7 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			Vector3 glowColor;
 			if (OriginsModIntegrations.CheckAprilFools()) glowColor = new Vector3(0.912f) * GlowValue;
 			else glowColor = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;

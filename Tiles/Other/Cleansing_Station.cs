@@ -23,7 +23,7 @@ namespace Origins.Tiles.Other {
 	public class Cleansing_Station : ModTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => CanUse(Main.LocalPlayer) ? Color.White : Color.Transparent;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 			if (tile.TileFrameY == 0 && CanUse(Main.LocalPlayer)) color.DoFancyGlow(new(0, 0.784f, 0.839f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
