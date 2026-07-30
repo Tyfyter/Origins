@@ -35,7 +35,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileMergeDirt[Type] = true;
-			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
