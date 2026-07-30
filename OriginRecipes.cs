@@ -347,6 +347,9 @@ namespace Origins {
 				ModContent.ItemType<Prickly_Pear>(),
 				ModContent.ItemType<Sour_Apple>()
 			);
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Fragment],
+				ModContent.ItemType<Nova_Fragment>()
+			);
 
 			OriginsModIntegrations.AddRecipeGroups();
 		}
