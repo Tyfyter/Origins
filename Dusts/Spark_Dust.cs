@@ -1,14 +1,18 @@
+using Origins.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
 	public class Spark_Dust : ModDust {
 		public override string Texture => "Terraria/Images/Dust";
+		public override void SetStaticDefaults() {
+			EfficientDust.UpdateDustCallback[Type] = DoUpdate;
+		}
 		public override void OnSpawn(Dust dust) {
 			dust.frame.X = 60;
 			dust.scale *= 0.7f;
 		}
-		public override bool Update(Dust dust) {
+		public static void DoUpdate(Dust dust) {
 			if (!dust.noGravity) dust.velocity.Y += 0.05f;
 			Vector4 slopeCollision = Collision.SlopeCollision(dust.position, dust.velocity, 0, 0);
 			Vector2 position = slopeCollision.XY();
@@ -38,6 +42,9 @@ namespace Origins.Dusts {
 			}
 			if (dust.scale <= 0) dust.active = false;
 			if (dust.position.Y > Main.screenPosition.Y + Main.screenHeight) dust.active = false;
+		}
+		public override bool Update(Dust dust) {
+			DoUpdate(dust);
 			return false;
 		}
 		public override bool MidUpdate(Dust dust) {

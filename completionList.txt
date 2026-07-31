@@ -1401,7 +1401,7 @@ TILES:
 (^) Edge Detector
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(#, ^2) Incinerator Pit !!!
+(☻) Incinerator Pit !!!
 (^) Industrial Door
 (^) Large Storage Container
 (^) Laser Tag Console

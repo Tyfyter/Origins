@@ -77,7 +77,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		TileObjectData.newTile.SetHeight(8);
 		TileObjectData.newTile.SetOriginBottomCenter();
 		TileObjectData.newTile.Direction = TileObjectDirection.None;
-		TileObjectData.newTile.FlattenAnchors = true;
+		TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 		TileObjectData.newTile.HookPlaceOverride = Shape.Place;
 		TileObjectData.addTile(Type);
 		HitSound = SoundID.Tink;
@@ -143,7 +143,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 				int dir = (tile.TileFrameX < 18 * 4).ToDirectionInt();
 				bounce(dir);
 				for (int i = 0; i < 4; i++) {
-					Dust dust = Dust.NewDustDirect(
+					Dust dust = EfficientDust.NewDustDirect(
 						dustRect.TopLeft(),
 						dustRect.Width,
 						dustRect.Height,
@@ -156,10 +156,13 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			} else {
 				if (entity.velocity.Y < 0 || tile.TileFrameY <= 18 * 3) entity.velocity.Y += 4;
 				if (tile.TileFrameY >= 18 * 3) {
+					if (entity.velocity.Y >= 0 && Main.tile[entity.Center.ToTileCoordinates()].TileFrameY >= 18 * 4) {
+						entity.velocity.Y *= -0.11f;
+					}
 					entity.velocity.X *= 0.8f;
 					entity.velocity.X -= Math.Sign(Main.tile[(int)entity.Center.X / 16, pos.Y].TileFrameX - 5 * 18);
 					for (int i = 0; i < 4; i++) {
-						Dust dust = Dust.NewDustDirect(
+						Dust dust = EfficientDust.NewDustDirect(
 							dustRect.TopLeft(),
 							dustRect.Width,
 							dustRect.Height,
