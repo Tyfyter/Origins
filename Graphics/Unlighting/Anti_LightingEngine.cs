@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.NPCs.MiscB.Shimmer_Construct;
@@ -8,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Light;
 using Terraria.ModLoader;
 using OpCodes = System.Reflection.Emit.OpCodes;
@@ -34,16 +33,35 @@ namespace Origins.Graphics.Unlighting {
 			AlphaSourceBlend = Blend.Zero,
 			AlphaDestinationBlend = Blend.One
 		};
+		static readonly HalfVector4 halfV4FullBright = new(1, 1, 1, 1);
+		static uint[] rgba1010102FullBright = [];
+		static HalfVector4[] halfVector4FullBright = [];
 		internal static void ApplyFancyLightingHookFirst(Action orig) {
 			orig();
 			Origins.TryHookEvent("FancyLighting", "FancyLighting.SmoothLighting", "PostUpdateLightMap", PostUpdateLightMap);
 		}
 		static Texture2D unlightMapTexture;
+		static void ResizeAndFill<T>(ref T[] array, int size, T fillValue) {
+			int oldSize = array.Length;
+			Array.Resize(ref array, size);
+			if (size > oldSize) Array.Fill(array, fillValue, oldSize, size - oldSize);
+		}
 		static void PostUpdateLightMap(Texture2D lightMapTexture, Matrix samplingTransformation, Rectangle lightMapArea, bool cameraMode) {
 			if (Weak_Shimmer_Debuff.isDrawingShimmeryThing) {
-
+				switch (lightMapTexture.Format) {
+					case SurfaceFormat.Rgba1010102:
+					ResizeAndFill(ref rgba1010102FullBright, lightMapTexture.Width * lightMapTexture.Height, uint.MaxValue);
+					lightMapTexture.SetData(rgba1010102FullBright);
+					break;
+					case SurfaceFormat.HalfVector4:
+					ResizeAndFill(ref halfVector4FullBright, lightMapTexture.Width * lightMapTexture.Height, halfV4FullBright);
+					lightMapTexture.SetData(halfVector4FullBright);
+					break;
+				}
 				return;
 			}
+			if (!anyPerFrameUnglows) return;
+			LightMap unlightMap = LightingMethods._activeLightMap.GetValue(unlightingEngine);
 			if (lightMapTexture is RenderTarget2D renderTarget) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				RenderTargetUsage oldUsage = renderTarget.RenderTargetUsage;
@@ -56,7 +74,6 @@ namespace Origins.Graphics.Unlighting {
 					DepthStencilState.None,
 					RasterizerState.CullNone
 				);
-				LightMap unlightMap = LightingMethods._activeLightMap.GetValue(unlightingEngine);
 				if (unlightMapTexture is null || unlightMapTexture.Width != unlightMap.Height || unlightMapTexture.Height != unlightMap.Width) {
 					unlightMapTexture = new(Main.graphics.GraphicsDevice, unlightMap.Height, unlightMap.Width, false, SurfaceFormat.Vector4);
 				}
@@ -72,6 +89,32 @@ namespace Origins.Graphics.Unlighting {
 				Main.spriteBatch.End();
 				PegasusLib.Graphics.GraphicsMethods.SetRenderTargetUsage(renderTarget, oldUsage);
 				Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
+			} else {
+				Rectangle activeProcessedArea = LightingMethods._activeProcessedArea.GetValue(unlightingEngine);
+				Rectangle modifyingArea = activeProcessedArea;
+				modifyingArea.X -= lightMapArea.X;
+				modifyingArea.Y -= lightMapArea.Y;
+				modifyingArea.Width -= modifyingArea.Right - lightMapArea.Width;
+				modifyingArea.Height -= modifyingArea.Bottom - lightMapArea.Height;
+				(modifyingArea.Y, modifyingArea.X, modifyingArea.Height, modifyingArea.Width) = (modifyingArea.X, modifyingArea.Y, modifyingArea.Width, modifyingArea.Height);
+				uint[] colors = new uint[modifyingArea.Width * modifyingArea.Height];
+				lightMapTexture.GetData(0, modifyingArea, colors, 0, colors.Length);
+				for (int i = 0; i < colors.Length; i++) {
+					int y = i % modifyingArea.Width;
+					int x = i / modifyingArea.Width;
+					uint r = Subtract((colors[i] >> 00) & 0b1111111111, unlightMap[x, y].X);
+					uint g = Subtract((colors[i] >> 10) & 0b1111111111, unlightMap[x, y].Y);
+					uint b = Subtract((colors[i] >> 20) & 0b1111111111, unlightMap[x, y].Z);
+					uint a = (colors[i] >> 30) & 0b11;
+
+					colors[i] = (a << 30) | (r << 0) | (g << 10) | (b << 20);
+					static uint Subtract(uint a, float b) {
+						uint _b = (uint)(b * 0b1111111111);
+						if (a <= _b) return 0;
+						return a - _b;
+					}
+				}
+				lightMapTexture.SetData(0, modifyingArea, colors, 0, colors.Length);
 			}
 		}
 		readonly static The_Engine unlightingEngine = new();
@@ -174,7 +217,6 @@ namespace Origins.Graphics.Unlighting {
 			CopyPerFrameUnlights = getterMethod.CreateDelegate<Action<LightingEngine, LightingEngine>>();
 		}
 #pragma warning disable IDE0044 // Add readonly modifier
-		static bool anyUnglowingBlocks = false;
 		static bool anyPerFrameUnglows = false;
 #pragma warning restore IDE0044 // Add readonly modifier
 		Action<LightingEngine, LightingEngine> CopyPerFrameUnlights;
@@ -185,10 +227,6 @@ namespace Origins.Graphics.Unlighting {
 		}
 		private void On_LightingEngine_Present(On_LightingEngine.orig_Present orig, LightingEngine self) {
 			orig(self);
-			if (OriginsModIntegrations.FancyLightingEngine) {
-				orig(unlightingEngine);
-				return;
-			}
 			LightMap _activeLightMap = LightingMethods._activeLightMap.GetValue(self);
 			if (Weak_Shimmer_Debuff.isDrawingShimmeryThing) {
 				Array.Fill(LightingMethods._colors.GetValue(_activeLightMap), Vector3.One);
@@ -196,7 +234,7 @@ namespace Origins.Graphics.Unlighting {
 			}
 			if (self == lightingEngine.Value) {
 				orig(unlightingEngine);
-				if (anyUnglowingBlocks || anyPerFrameUnglows) {
+				if (anyPerFrameUnglows) {
 					int num = (Main.tileColor.R + Main.tileColor.G + Main.tileColor.B) / 3;
 					float minLight = (float)(num * 0.4) / 255f;
 					if (Lighting.Mode == LightMode.Retro) {
@@ -237,7 +275,6 @@ namespace Origins.Graphics.Unlighting {
 				c.Index = cursorIndex;*/
 				c.EmitLdloca(loc);
 				c.EmitDelegate((ref float value) => {
-					anyUnglowingBlocks |= true || value < 0 ;
 					value *= unlightingFactor;
 				});
 				c.Index += predicates.Length - 1;
@@ -247,7 +284,7 @@ namespace Origins.Graphics.Unlighting {
 		private Vector3 On_LightingEngine_GetColor(On_LightingEngine.orig_GetColor orig, LightingEngine self, int x, int y) {
 			if (Weak_Shimmer_Debuff.isDrawingShimmeryThing) return Vector3.One;
 			Vector3 value = orig(self, x, y);
-			if ((anyUnglowingBlocks || anyPerFrameUnglows) && self == lightingEngine.Value) {
+			if (anyPerFrameUnglows && self == lightingEngine.Value) {
 				Vector3 unlight = orig(unlightingEngine, x, y);
 				int num = (Main.tileColor.R + Main.tileColor.G + Main.tileColor.B) / 3;
 				float minLight = (float)(num * 0.4) / 255f;
@@ -281,7 +318,6 @@ namespace Origins.Graphics.Unlighting {
 		}
 		static float unlightingFactor = 1;
 		private void On_LightingEngine_ProcessScan(On_LightingEngine.orig_ProcessScan orig, LightingEngine self, Rectangle area) {
-			anyUnglowingBlocks = false;
 			orig(self, area);
 			if (self == lightingEngine.Value) {
 				try {
