@@ -59,6 +59,12 @@ using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
 using static System.Net.Mime.MediaTypeNames;
 using MC = Terraria.ModLoader.ModContent;
+using Origins.Liquids;
+using Origins.Dev;
+using System.Threading.Tasks;
+using Origins.Tiles.Ashen;
+using MonoMod.Utils;
+using Origins.Graphics.Unlighting;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -144,6 +150,8 @@ namespace Origins {
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
 			this.MusicAutoloadingEnabled = false;
+			HasDevBuild = File.Exists(Path.Combine(Program.SavePathShared, "Mods", GetType().Name + ".tmod"));
+			MonoModHooks.Add(typeof(MC).GetMethod("CacheVanillaState", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static), Anti_LightingEngine.ApplyFancyLightingHookFirst);
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));

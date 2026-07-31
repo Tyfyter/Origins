@@ -86,15 +86,8 @@ namespace Origins.Tiles.Other {
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = Main.rand.Next(1, 3);
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			Tile tile = Main.tile[i, j];
-
 			// If the torch is on
-			if (tile.TileFrameX < 66) {
-				Vector3 light = Shadow_Torch.Light;
-				r = light.X;
-				g = light.Y;
-				b = light.Z;
-			}
+			if (Main.tile[i, j].TileFrameX < 66) Lighting.AddLight(new(i * 16 + 8, j * 16 + 8), Shadow_Torch.Light);
 		}
 
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {

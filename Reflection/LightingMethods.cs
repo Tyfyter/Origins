@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Graphics.Light;
 using PegasusLib;
 using PegasusLib.Reflection;
+using System;
 
 namespace Origins.Reflection {
 	public class LightingMethods : ReflectionLoader {
@@ -16,5 +17,9 @@ namespace Origins.Reflection {
 		public static FastFieldInfo<LegacyLighting, float> _blueWave;
 		[ReflectionParentType(typeof(Lighting))]
 		public static FastStaticFieldInfo<Lighting, ILightingEngine> _activeEngine;
+		public static FastFieldInfo<LightingEngine, Rectangle> _activeProcessedArea;
+		public static FastFieldInfo<LightingEngine, LightMap> _activeLightMap;
+		public static FastFieldInfo<LightMap, Vector3[]> _colors;
+		public static FastFieldInfo<LightMap, LightMaskMode[]> _mask;
 	}
 }
