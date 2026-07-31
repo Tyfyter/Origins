@@ -618,13 +618,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (isDrawingShimmeryThing) return Vector3.One;
 				return orig(self, x, y);
 			};
-			On_LightingEngine.GetColor += (orig, self, x, y) => {
+			/*On_LightingEngine.GetColor += (orig, self, x, y) => {
 				if (isDrawingShimmeryThing) return Vector3.One;
 				return orig(self, x, y);
-			};
+			};*/
 		}
 
-		static bool isDrawingShimmeryThing = false;
+		internal static bool isDrawingShimmeryThing = false;
 		internal static bool isUpdatingShimmeryThing = false;
 
 		static void IL_Projectile_HandleMovement(ILContext il) {

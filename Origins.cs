@@ -63,6 +63,7 @@ using Origins.Dev;
 using System.Threading.Tasks;
 using Origins.Tiles.Ashen;
 using MonoMod.Utils;
+using Origins.Graphics.Unlighting;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -151,6 +152,7 @@ namespace Origins {
 			List<LocalizedText> loadingWarnings = [];
 			this.MusicAutoloadingEnabled = false;
 			HasDevBuild = File.Exists(Path.Combine(Program.SavePathShared, "Mods", GetType().Name + ".tmod"));
+			MonoModHooks.Add(typeof(MC).GetMethod("CacheVanillaState", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static), Anti_LightingEngine.ApplyFancyLightingHookFirst);
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));
