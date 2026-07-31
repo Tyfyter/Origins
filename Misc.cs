@@ -3205,11 +3205,13 @@ namespace Origins {
 		public static bool IsGeneric(this Type self, Type expectedType) {
 			return self.IsGenericType && self.GetGenericTypeDefinition() == expectedType;
 		}
+		static class FlagsCache<T> where T : struct, Enum {
+			public static T[] possibleFlags;
+		} 
 		[Pure]
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
-			T[] possibleFlags = Enum.GetValues<T>();
+			T[] possibleFlags = FlagsCache<T>.possibleFlags ??= Enum.GetValues<T>().Where(f => !f.Equals(default(T))).ToArray();
 			for (int i = 0; i < possibleFlags.Length; i++) {
-				if (possibleFlags[i].Equals(default(T))) continue;
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
 		}
