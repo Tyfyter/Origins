@@ -1,7 +1,9 @@
 ﻿using Origins.Items.Weapons.Ammo;
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,9 +27,15 @@ public class Scrap_Railing : Platform_Tile {
 		("""
 		_____
 		__+__
-		__O__
+		__T__
 		_____
 		""", (0, 0)),
+		("""
+		_____
+		__*__
+		_____
+		_____
+		""", (1, 0)),
 		#region no block connections
 		("""
 		__+__
@@ -115,54 +123,54 @@ public class Scrap_Railing : Platform_Tile {
 		""", (6, 2)),
 		#endregion
 		("""
+		__*__
 		__+__
-		__+__
-		__O__
+		__T__
 		_____
 		""", (1, 3)),
 		#region slopes
 		("""
-		__+__
-		_++__
-		__/__
 		_____
-		""", (8, 3)),
-		("""
-		_____
-		__+__
-		_++__
 		__/__
-		""", (8, 0)),
-		("""
-		_____
-		__++_
-		_++__
-		__/__
-		""", (8, 1)),
-		("""
-		_____
-		_+++_
-		_++__
-		__/__
-		""", (8, 2)),
-		("""
-		__+__
-		_++/_
 		_____
 		_____
 		""", (9, 0)),
 		("""
-		___+_
-		__++/
 		_____
-		__X__
+		__/l_
+		__+__
+		_____
+		""", (8, 0)),
+		("""
+		___/_
+		__/__
+		__+__
+		_____
+		""", (8, 1)),
+		("""
+		___/_
+		_+/__
+		__+__
+		_____
+		""", (8, 2)),
+		("""
+		__/__
+		__+__
+		_____
+		_____
+		""", (8, 3)),
+		("""
+		___/_
+		__/__
+		__/__
+		_____
 		""", (9, 1)),
 		("""
-		__++_
-		__++/
 		_____
-		__X__
-		""", (6, 1)),
+		__+/_
+		__+__
+		_____
+		""", (2, 2))
 		#endregion
 	];
 	public override void SetStaticDefaults() {
@@ -170,12 +178,35 @@ public class Scrap_Railing : Platform_Tile {
 		base.SetStaticDefaults();
 		TileID.Sets.Platforms[Type] = false;
 		TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
+		TileID.Sets.CanBeSloped[Type] = true;
 		TileID.Sets.HasSlopeFrames[Type] = true;
 		Main.tileSolidTop[Type] = false;
 		Main.tileSolid[Type] = false;
 		DustType = DustID.Lihzahrd;
 		RegisterItemDrop(Item.Type);
 		HitSound = SoundID.Tink;
+	}
+	public override bool Slope(int i, int j) {
+		Tile tile = Main.tile[i, j];
+		switch (tile.Slope) {
+			case SlopeType.Solid:
+			tile.Slope = SlopeType.SlopeDownLeft;
+			break;
+			case SlopeType.SlopeDownLeft:
+			tile.Slope = SlopeType.SlopeDownRight;
+			break;
+			default:
+			case SlopeType.SlopeDownRight:
+			tile.Slope = SlopeType.Solid;
+			break;
+		}
+		if (!WorldGen.gen) {
+			WorldGen.KillTile(i, j, fail: true, effectOnly: true);
+			SoundEngine.PlaySound(SoundID.Dig, new(i * 16 + 8, j * 16 + 8));
+			WorldGen.SquareTileFrame(i, j);
+		}
+		if (NetmodeActive.MultiplayerClient) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 7, i, j, 1f);
+		return false;
 	}
 	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 		offsetY = 2;
@@ -190,6 +221,13 @@ public class Scrap_Railing : Platform_Tile {
 			break;
 		}
 	}
+#if DEBUG
+	public override bool RightClick(int i, int j) {
+		Main.NewText(Pattern.GeneratePattern(i, j));
+		WorldGen.TileFrame(i, j, true);
+		return true;
+	}
+#endif
 	public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 		Init();
 		int bestPattern = -1;
@@ -204,49 +242,118 @@ public class Scrap_Railing : Platform_Tile {
 		tile.TileFrameY *= 18;
 		return false;
 	}
-	public static bool CanRailingAttachTo(int i, int j) {
+	static bool CanRailingAttachTo(int i, int j, Pattern.TileKind kind) {
 		Tile tile = Main.tile[i, j];
 		if (tile.TileType == Scrap_Railing.ID) return true;
-		if (!tile.HasTile) return false;
-		if (tile.HasFullSolidTile()) return true;
-		if (TileID.Sets.Platforms[tile.TileType]) return true;
+		if (!tile.HasUnactuatedTile) return false;
+		switch (kind) {
+			case Pattern.TileKind.CanConnectTop or Pattern.TileKind.NoConnectTop:
+			if (TileID.Sets.Platforms[tile.TileType] || Main.tileSolidTop[tile.TileType]) return true;
+			if (tile.TopSlope) return false;
+			break;
+			case Pattern.TileKind.CanConnectBottom or Pattern.TileKind.NoConnectBottom:
+			if (tile.BottomSlope) return false;
+			break;
+			case Pattern.TileKind.CanConnectLeft or Pattern.TileKind.NoConnectLeft:
+			if (tile.LeftSlope) return false;
+			break;
+			case Pattern.TileKind.CanConnectRight or Pattern.TileKind.NoConnectRight:
+			if (tile.RightSlope) return false;
+			break;
+		}
+		if (Main.tileSolid[tile.TileType]) return true;
 		if (Catwalk.OverrideTileNoAttach[tile.TileType].HasValue) return !Catwalk.OverrideTileNoAttach[tile.TileType].Value;
 		return Main.tileSolid[tile.TileType] && !Main.tileNoAttach[tile.TileType];
 	}
+	/// <summary>
+	/// Key:
+	/// Railings:<br/>
+	/// +: <see cref="SlopeType.Solid"/><br/>
+	/// \: <see cref="SlopeType.SlopeDownLeft"/><br/>
+	/// /: <see cref="SlopeType.SlopeDownRight"/><para/>
+	/// Other:<br/>
+	/// _: Ignore<br/>
+	/// T: top can be connected to<br/>
+	/// B: bottom can be connected to<br/>
+	/// L: left side can be connected to<br/>
+	/// R: right side can be connected to<br/>
+	/// t: top can not be connected to<br/>
+	/// b: bottom can not be connected to<br/>
+	/// l: left side can not be connected to<br/>
+	/// r: right side can not be connected to<br/>
+	/// </summary>
 	readonly struct Pattern {
 		readonly TileKind[] Layout { get; init; }
-		readonly static Regex sanityCheck = new("^([_OX+\\/]{5}\n){3}[_OX+\\/]{5}$", RegexOptions.Compiled);
+		readonly static Regex sanityCheck = new("^([_TtBbLlRr+*/\\\\]{5}\n){3}[_TtBbLlRr+*/\\\\]{5}$", RegexOptions.Compiled);
+		public static string GeneratePattern(int x, int y) {
+			StringBuilder pattern = new();
+			for (int j = -1; j <= 2; j++) {
+				pattern.Append('\n');
+				for (int i = -2; i <= 2; i++) {
+					Tile tile = Framing.GetTileSafely(x + i, y + j);
+					if (tile.HasTile && tile.TileType == ID) {
+						switch (tile.Slope) {
+							case SlopeType.Solid:
+							pattern.Append('+');
+							break;
+							case SlopeType.SlopeDownLeft:
+							pattern.Append('\\');
+							break;
+							case SlopeType.SlopeDownRight:
+							pattern.Append('/');
+							break;
+						}
+					} else {
+						pattern.Append('_');
+					}
+				}
+			}
+			return pattern.ToString();
+		}
 		public int MatchQuality(int x, int y) {
 			int quality = 0;
 			for (int j = -1; j <= 2; j++) {
 				for (int i = -2; i <= 2; i++) {
 					Tile tile = Framing.GetTileSafely(x + i, y + j);
-					switch (Layout[i + 2 + (j + 1) * 5]) {
+					TileKind kind = Layout[i + 2 + (j + 1) * 5];
+					switch (kind) {
 						case TileKind.Ignore:
 						continue;
 
-						case TileKind.Railing:
-						if (!tile.HasTile || (tile.TileType != ID)) return -1;
+						case TileKind.AnyRailing:
+						if (!tile.HasTile || tile.TileType != ID) return -1;
 						quality++;
 						break;
 
-						case TileKind.LeftSlope:
+						case TileKind.SolidRailing:
+						if (tile.BlockType != BlockType.Solid) return -1;
+						quality++;
+						goto case TileKind.AnyRailing;
+
+						case TileKind.LeftSlopeRailing:
 						if (tile.BlockType != BlockType.SlopeDownLeft) return -1;
-						goto case TileKind.CanConnect;
+						quality++;
+						goto case TileKind.AnyRailing;
 
-						case TileKind.RightSlope:
+						case TileKind.RightSlopeRailing:
 						if (tile.BlockType != BlockType.SlopeDownRight) return -1;
-						goto case TileKind.CanConnect;
+						quality++;
+						goto case TileKind.AnyRailing;
 
-						case TileKind.CanConnect:
-						if (!CanRailingAttachTo(x + i, y + j)) return -1;
+						case TileKind.CanConnectTop:
+						case TileKind.CanConnectBottom:
+						case TileKind.CanConnectLeft:
+						case TileKind.CanConnectRight:
+						if (!CanRailingAttachTo(x + i, y + j, kind)) return -1;
 						break;
 
-						case TileKind.NoConnect:
-						if (CanRailingAttachTo(x + i, y + j)) return -1;
+						case TileKind.NoConnectTop:
+						case TileKind.NoConnectBottom:
+						case TileKind.NoConnectLeft:
+						case TileKind.NoConnectRight:
+						if (CanRailingAttachTo(x + i, y + j, kind)) return -1;
 						break;
 					}
-					quality++;
 				}
 			}
 			return quality;
@@ -256,41 +363,94 @@ public class Scrap_Railing : Platform_Tile {
 			TileKind[] layout = new TileKind[5 * 4];
 			int i = 0;
 			foreach (char c in value) {
-				switch (c) {
-					case '_':
-					layout[i] = TileKind.Ignore;
-					break;
-					case '+':
-					layout[i] = TileKind.Railing;
-					break;
-					case 'O':
-					layout[i] = TileKind.CanConnect;
-					break;
-					case 'X':
-					layout[i] = TileKind.NoConnect;
-					break;
-					case '\\':
-					layout[i] = TileKind.LeftSlope;
-					break;
-					case '/':
-					layout[i] = TileKind.RightSlope;
-					break;
+				if (c == '\n') continue;
+				layout[i] = c switch {
+					'_' => TileKind.Ignore,
+					'*' => TileKind.AnyRailing,
+					'+' => TileKind.SolidRailing,
+					'\\' => TileKind.LeftSlopeRailing,
+					'/' => TileKind.RightSlopeRailing,
 
-					default:
-					continue;
-				}
+					'T' => TileKind.CanConnectTop,
+					't' => TileKind.NoConnectTop,
+
+					'B' => TileKind.CanConnectBottom,
+					'b' => TileKind.NoConnectBottom,
+
+					'L' => TileKind.CanConnectLeft,
+					'l' => TileKind.NoConnectLeft,
+
+					'R' => TileKind.CanConnectRight,
+					'r' => TileKind.NoConnectRight,
+					_ => throw new ArgumentException("Invalid layout", nameof(value))
+				};
 				i++;
 			}
 			layout[4] = TileKind.Ignore;
 			return new() { Layout = layout };
 		}
-		enum TileKind {
+		public override string ToString() {
+			StringBuilder pattern = new();
+			for (int i = 0; i < Layout.Length; i++) {
+				if (i > 0 && i % 5 == 0) pattern.Append('\n');
+				switch (Layout[i]) {
+					case TileKind.Ignore:
+					pattern.Append('_');
+					break;
+					case TileKind.AnyRailing:
+					pattern.Append('*');
+					break;
+					case TileKind.SolidRailing:
+					pattern.Append('+');
+					break;
+					case TileKind.LeftSlopeRailing:
+					pattern.Append('\\');
+					break;
+					case TileKind.RightSlopeRailing:
+					pattern.Append('/');
+					break;
+					case TileKind.CanConnectTop:
+					pattern.Append('T');
+					break;
+					case TileKind.NoConnectTop:
+					pattern.Append('t');
+					break;
+					case TileKind.CanConnectBottom:
+					pattern.Append('B');
+					break;
+					case TileKind.NoConnectBottom:
+					pattern.Append('b');
+					break;
+					case TileKind.CanConnectLeft:
+					pattern.Append('L');
+					break;
+					case TileKind.NoConnectLeft:
+					pattern.Append('l');
+					break;
+					case TileKind.CanConnectRight:
+					pattern.Append('R');
+					break;
+					case TileKind.NoConnectRight:
+					pattern.Append('r');
+					break;
+				}
+			}
+			return pattern.ToString();
+		}
+		public enum TileKind {
 			Ignore,
-			Railing,
-			CanConnect,
-			NoConnect,
-			LeftSlope,
-			RightSlope,
+			AnyRailing,
+			SolidRailing,
+			LeftSlopeRailing,
+			RightSlopeRailing,
+			CanConnectTop,
+			CanConnectBottom,
+			CanConnectLeft,
+			CanConnectRight,
+			NoConnectTop,
+			NoConnectBottom,
+			NoConnectLeft,
+			NoConnectRight,
 		}
 	}
 }
