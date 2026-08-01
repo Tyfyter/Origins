@@ -145,6 +145,7 @@ namespace Origins {
 		internal static List<LateLoadable> lateLoadables = [];
 		public override uint ExtraPlayerBuffSlots => 4;
 		internal static bool HasDevBuild { get; private set; }
+		public const string TempBuffSprite = "Origins/Textures/TempBuffSprite";
 		public Origins() {
 			instance = this;
 			_ = Shaders.Overbrighten;
@@ -1054,6 +1055,10 @@ namespace Origins {
 				}
 				stopwatch.Stop();
 				instance.Logger.Info($"Finished querying unused assets in {stopwatch.Elapsed}");
+
+				if (ModContent.Request<Texture2D>(TempBuffSprite, AssetRequestMode.DoNotLoad).IsLoaded) {
+					AddReason("Temp Buff Sprite in use");
+				}
 
 				Regex locIssue = new Regex("<(PH|SIC)>", RegexOptions.Compiled);
 				RestartStopwatch();

@@ -8482,3 +8482,8 @@ Incinerator_Pit_Item: {
 	// DisplayName: Incinerator Pit
 	// Tooltip: ""
 }
+
+Robot_Toy_Controller: {
+	// DisplayName: Robot Toy Controller
+	// Tooltip: ""
+}

@@ -1502,6 +1502,11 @@ Buffs: {
 		DisplayName: Stellar Accumulation
 		Description: Shepherd of the stars
 	}
+
+	Toy_Trenchmaker_Buff: {
+		DisplayName: Toy Trenchmaker Buff
+		Description: Mods.Origins.Buffs.Toy_Trenchmaker_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2326,6 +2331,7 @@ Projectiles: {
 	Small_Star_Cell.DisplayName: Small Star Cell
 	Star_Cell.DisplayName: Star Cell
 	Star_Cell_Tracker.DisplayName: Star Cell Tracker
+	Toy_Trenchmaker.DisplayName: Toy Trenchmaker
 }
 
 Prefixes: {
