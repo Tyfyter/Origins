@@ -223,7 +223,7 @@ namespace Origins.Items.Weapons.Melee {
 		public int Shader => Main.player[Projectile.owner].cGrapple;
 		protected override float ForwardOffset => 0;
 		public override string Texture => typeof(The_Claw_Hook).GetDefaultTMLName();
-#if TML_2026_05
+#if TML_2026_06
 		static float[] FlailRangeBoost = ProjectileID.Sets.Factory.CreateFloatSet(0);
 		public override void Load() {
 			try {
