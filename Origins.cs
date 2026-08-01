@@ -1033,7 +1033,7 @@ namespace Origins {
 					TimeSpan time = stopwatch.Elapsed;
 					if (time > TimeSpan.FromSeconds(timeCounter * 10)) {
 						timeCounter++;
-						data ??= [reason];
+						data ??= ["N/A"];
 						instance.Logger.Warn($"Potential hang during \"{name}\", reached {time}, data: {string.Join(", ", data)}");
 					}
 				}
