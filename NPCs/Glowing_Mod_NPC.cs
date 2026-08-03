@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
 	public abstract class Glowing_Mod_NPC : ModNPC, ILoadExtraTextures {
 		public virtual string GlowTexturePath => Texture + "_Glow";
-		public virtual Color GetGlowColor(Color drawColor) => NPC.GetNPCColorTintedByBuffs(Color.White);
+		public virtual Color GetGlowColor(Color drawColor) => NPC.GetTintColor(Color.White);
 		//public virtual bool DrawOverTiles => false;
 		private Asset<Texture2D> _GlowTexture {
 			get {

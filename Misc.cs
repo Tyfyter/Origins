@@ -5722,7 +5722,7 @@ namespace Origins {
 			}
 		}
 		public static Color GetRivenGlowAlpha(this NPC npc, Color lightColor) {
-			return npc.GetNPCColorTintedByBuffs(Riven_Hive.GetGlowAlpha(lightColor));
+			return npc.GetTintColor(Riven_Hive.GetGlowAlpha(lightColor));
 		}
 	}
 	public static class TileExtenstions {
