@@ -24,12 +24,12 @@ public class Scrap_Railing : Platform_Tile {
 	}
 	(Pattern pattern, (short x, short y) frame)[] Patterns { get; set; }
 	void Init() => Patterns = [
-		("""
+		/*("""
 		_____
 		__+__
 		__T__
 		_____
-		""", (0, 0)),
+		""", (0, 0)),*/
 		("""
 		_____
 		__*__
@@ -38,86 +38,86 @@ public class Scrap_Railing : Platform_Tile {
 		""", (1, 0)),
 		#region no block connections
 		("""
-		__+__
-		_+++_
-		__+__
+		__B__
+		_R+L_
+		__T__
 		_____
 		""", (0, 1)),
 		("""
-		__+__
-		_++__
-		__+__
+		__B__
+		_R+__
+		__T__
 		_____
 		""", (1, 1)),
 		("""
-		__+__
-		__++_
-		__+__
+		__B__
+		__+L_
+		__T__
 		_____
 		""", (2, 1)),
 		("""
-		__+__
-		_+++_
+		__B__
+		_R+L_
 		_____
 		_____
 		""", (3, 1)),
 		("""
+		__B__
 		__+__
-		__+__
-		__+__
+		__T__
 		_____
 		""", (4, 1)),
 		("""
-		__+__
-		_++__
+		__B__
+		_R+__
 		_____
 		_____
 		""", (5, 1)),
 		("""
-		__+__
-		__++_
+		__B__
+		__+L_
 		_____
 		_____
 		""", (6, 1)),
 		("""
 		_____
-		_+++_
-		__+__
+		_R+L_
+		__T__
 		_____
 		""", (0, 2)),
 		("""
 		_____
-		_++__
-		__+__
+		_R+__
+		__T__
 		_____
 		""", (1, 2)),
 		("""
 		_____
-		__++_
-		__+__
+		__+L_
+		__T__
 		_____
 		""", (2, 2)),
 		("""
 		_____
-		_+++_
+		_R+L_
 		_____
 		_____
 		""", (7, 2)),
 		("""
 		_____
 		__+__
-		__+__
+		__T__
 		_____
 		""", (4, 2)),
 		("""
 		_____
-		_++__
+		_R+__
 		_____
 		_____
 		""", (5, 2)),
 		("""
 		_____
-		__++_
+		__+L_
 		_____
 		_____
 		""", (6, 2)),
@@ -167,10 +167,28 @@ public class Scrap_Railing : Platform_Tile {
 		""", (9, 1)),
 		("""
 		_____
-		__+/_
-		__+__
+		__/*_
+		__*__
 		_____
-		""", (2, 2))
+		""", (12, 0)),
+		("""
+		_____
+		_*\__
+		__*__
+		_____
+		""", (13, 0)),
+		("""
+		__*__
+		__\*_
+		_____
+		_____
+		""", (12, 1)),
+		("""
+		__*__
+		_*/__
+		_____
+		_____
+		""", (13, 1))
 		#endregion
 	];
 	public override void SetStaticDefaults() {
@@ -244,8 +262,8 @@ public class Scrap_Railing : Platform_Tile {
 	}
 	static bool CanRailingAttachTo(int i, int j, Pattern.TileKind kind) {
 		Tile tile = Main.tile[i, j];
-		if (tile.TileType == Scrap_Railing.ID) return true;
 		if (!tile.HasUnactuatedTile) return false;
+		if (tile.TileType == Scrap_Railing.ID) return true;
 		switch (kind) {
 			case Pattern.TileKind.CanConnectTop or Pattern.TileKind.NoConnectTop:
 			if (TileID.Sets.Platforms[tile.TileType] || Main.tileSolidTop[tile.TileType]) return true;
