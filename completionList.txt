@@ -62,7 +62,7 @@ BOSSES AND MINI-BOSSES:
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation
-(#2, $, ^2) Fiberglass Weaver !!!
+(#2, $, ^2, ⛥(Should probably delay rework to release ashen update sooner)) Fiberglass Weaver !!!
 (^) Shimmer Construct
 (#2, ^2) Trenchmaker !!!
 (^) World Cracker
