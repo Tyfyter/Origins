@@ -1,3 +1,4 @@
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.NPCs;
@@ -112,6 +113,17 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.Kill();
 				return;
 			}
+			aims ??= new Aim[Main.maxNPCs];
+			decayingAims ??= new Aim[20];
+			Vector2 center = Projectile.Center;
+			if (!OriginClientConfig.Instance.DisableCoolVisualEffects) {
+				for (int i = 0; i < aims.Length; i++) {
+					if (aims[i].active) aims[i].DoUnlight(center);
+				}
+				for (int i = 0; i < decayingAims.Length; i++) {
+					if (decayingAims[i].active) decayingAims[i].DoUnlight(center);
+				}
+			}
 			float highestProgress = 0;
 			ActiveSound sound;
 			player.itemRotation = 0;//MathHelper.PiOver4 * -player.direction;
@@ -146,8 +158,6 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.owner == Main.myPlayer) player.ChangeDir((Main.MouseWorld.X > player.Center.X).ToDirectionInt());
 			Projectile.timeLeft = 2;
 			player.SetDummyItemTime(2);
-			aims ??= new Aim[Main.maxNPCs];
-			decayingAims ??= new Aim[20];
 			float maxLengthSQ = Projectile.velocity.LengthSquared();
 			if (!player.noItems && !player.CCed) {
 				if (--Projectile.ai[0] <= 0) {
@@ -162,7 +172,6 @@ namespace Origins.Items.Weapons.Magic {
 			} else {
 				Projectile.ai[2] = 1;
 			}
-			Vector2 center = Projectile.Center;
 			int activeAims = 0;
 			for (int i = 0; i < aims.Length; i++) {
 				if (aims[i].active) {
@@ -387,6 +396,16 @@ namespace Origins.Items.Weapons.Magic {
 					float length = Motion.Length();
 					motion *= Math.Max(1 - (1 - 0.99f * ((length - 2) / length)) * speed, 0);
 					active = length > 4;
+				}
+			}
+			public readonly void DoUnlight(Vector2 position) {
+				if (motion != default) {
+					float stepsCount = 1f / float.Ceiling(motion.Length() / 8);
+					Vector2 step = motion * stepsCount;
+					for (float i = 0; i <= 1f; i += stepsCount) {
+						Lighting.AddLight(position, Vector3.One * -0.9f * progress * (1.5f - stepsCount));
+						position += step;
+					}
 				}
 			}
 		}
