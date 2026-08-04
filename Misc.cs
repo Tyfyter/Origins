@@ -4,6 +4,7 @@ using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
 using Origins.Core;
 using Origins.CrossMod;
+using Origins.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
@@ -3459,16 +3460,16 @@ namespace Origins {
 			Vector2 pos = area.TopLeft() + offset;
 			float amt = 10; // as to try to not spawn to many dusts
 			for (float c = 0; c < area.Width; c += area.Width / amt) {
-				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
+				EfficientDust.NewDustDirect(pos + new Vector2(c, 0), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c < area.Height; c += area.Height / amt) {
-				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
+				EfficientDust.NewDustDirect(pos + new Vector2(0, c), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c < area.Width; c += area.Width / amt) {
-				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
+				EfficientDust.NewDustDirect(pos + new Vector2(c, area.Height), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c < area.Height; c += area.Height / amt) {
-				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
+				EfficientDust.NewDustDirect(pos + new Vector2(area.Width, c), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
 			}
 		}
 		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default, bool useScreenPos = true) {

@@ -290,10 +290,14 @@ namespace Origins.Graphics {
 		static readonly Dust fakeDust = new();
 		static bool reachedFakeDust = false;
 		public static Dust NewDustDirect(Vector2 Position, int Width, int Height, int Type, float SpeedX = 0f, float SpeedY = 0f, int Alpha = 0, Color newColor = default, float Scale = 1f) {
-			if (UpdateDustCallback[Type] is null) return Dust.NewDustDirect(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale);
+			bool perfect = Width == 0 && Height == 0;
+			if (UpdateDustCallback[Type] is null) {
+				return perfect ?
+					Dust.NewDustPerfect(Position, Type, new(SpeedX, SpeedY), Alpha, newColor, Scale) :
+					Dust.NewDustDirect(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale);
+			}
 			if (Main.gameMenu || Main.gamePaused || WorldGen.gen || NetmodeActive.Server || reachedFakeDust) return fakeDust;
 			Rectangle rectangle = new((int)Main.screenPosition.X - 500 - 4, (int)Main.screenPosition.Y - 50 - 4, Main.screenWidth + 1000, Main.screenHeight + 100);
-			bool perfect = Width == 0 && Height == 0;
 			if (!perfect) Position += new Vector2(4f);
 			if (!rectangle.Intersects(new((int)Position.X, (int)Position.Y, Width, Height))) return fakeDust;
 			if (Width < 5) Width = 5;
