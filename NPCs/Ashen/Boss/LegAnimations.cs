@@ -257,7 +257,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				SoundEngine.PlaySound(Origins.Sounds.PowerStomp, Projectile.Center);
 				Main.instance.CameraModifiers.Add(new CameraShakeModifier(Projectile.Center, 7.5f, 3f, 18, 750f, -1f, nameof(Trenchmaker)));
 			}
-				Projectile.ai[0] += 1f;
+			Projectile.ai[0] += 1f;
 			if (Projectile.ai[0] > 9f) {
 				Projectile.Kill();
 				return;
@@ -276,7 +276,24 @@ namespace Origins.NPCs.Ashen.Boss {
 				smashHitbox.Y += 16;
 				if (smashHitbox.OverlapsAnyTiles(out List<Point> tiles)) {
 					foreach (Point tile in tiles) {
-						if (TileLoader.GetTile(Main.tile[tile].TileType) is not IAshenTile) WorldGen.KillTile(tile.X, tile.Y);
+						int tileType = Main.tile[tile].TileType;
+						switch (tileType) {
+							case TileID.LihzahrdBrick:
+							case TileID.Chlorophyte:
+							case TileID.Adamantite or TileID.Titanium:
+							case TileID.Mythril or TileID.Orichalcum:
+							case TileID.Cobalt or TileID.Palladium:
+							continue;
+
+							default:
+							if (TileID.Sets.CrackedBricks[tileType]) break;
+							if (TileID.Sets.DungeonBiome[tileType] > 0) continue;
+							ModTile modTile = TileLoader.GetTile(tileType);
+							if (modTile is IAshenTile) continue;
+							if (modTile?.MinPick > 65) continue;
+							break;
+						}
+						WorldGen.KillTile(tile.X, tile.Y);
 					}
 				}
 			}
