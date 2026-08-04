@@ -609,7 +609,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} catch (Exception ex) {
 				if (Origins.LogLoadingILError(nameof(DrawPlayer_27_HeldItem), ex)) throw;
 			}
-			On_PlayerDrawLayers.DrawHeldProj += (orig, drawinfo, proj) => {
+			/*On_PlayerDrawLayers.DrawHeldProj += (orig, drawinfo, proj) => {
 				isDrawingShimmeryThing = drawinfo.drawPlayer?.OriginPlayer()?.weakShimmer ?? false;
 				orig(drawinfo, proj);
 				isDrawingShimmeryThing = false;
@@ -618,7 +618,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (isDrawingShimmeryThing) return Vector3.One;
 				return orig(self, x, y);
 			};
-			/*On_LightingEngine.GetColor += (orig, self, x, y) => {
+			On_LightingEngine.GetColor += (orig, self, x, y) => {
 				if (isDrawingShimmeryThing) return Vector3.One;
 				return orig(self, x, y);
 			};*/
