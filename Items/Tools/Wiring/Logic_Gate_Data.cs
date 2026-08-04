@@ -50,6 +50,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.Value });
 			OriginsSets.Items.AshenWireable[Type] = true;
+			ItemID.Sets.SortingPriorityWiring[Type] = 81;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Actuator);

@@ -71,6 +71,7 @@ public abstract class AshenWireTool : WireTool {
 			..GetIf(Upgrades.Logic, Language.GetOrRegister($"Mods.Origins.Items.{nameof(Screwdriver_Upgrade_Logic)}.UpgradeTooltip"))
 		]);
 	public override void SetStaticDefaults() {
+		base.SetStaticDefaults();
 		IsScrewdriver[Type] = Parts.Has(Upgrades.Screwdriver);
 		Item.staff[Type] = true;
 	}
@@ -97,6 +98,9 @@ public abstract class AshenWireTool : WireTool {
 public abstract class WireTool : ModItem, IWireTool {
 	public abstract IEnumerable<WireMode> Modes { get; }
 	public abstract int Rarity { get; }
+	public override void SetStaticDefaults() {
+		ItemID.Sets.SortingPriorityWiring[Type] = 82;
+	}
 	public override void SetDefaults() {
 		Item.CloneDefaults(ItemID.WireKite);
 		Item.shoot = ModContent.ProjectileType<ModWireChannel>();
