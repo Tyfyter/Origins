@@ -606,7 +606,10 @@ namespace Origins.Core {
 			}
 		}
 		class PreventDestruction : GlobalTile {
+			readonly RecursionCheckedSet<Point16> recursionBlocker = new();
 			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
+				using IDisposable recursionBlock = recursionBlocker.TryAdd(new(i, j));
+				if (recursionBlock is null) return false;
 				Tile tile = Main.tile[i, j];
 				int style = TileObjectData.GetTileStyle(tile);
 
