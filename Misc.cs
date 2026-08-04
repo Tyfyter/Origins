@@ -4719,7 +4719,7 @@ namespace Origins {
 		}
 		[Pure]
 		public static float? CheckMovingAALines(Vector2 positionA, float widthA, Vector2 velocityA, Vector2 positionB, float widthB, Vector2 velocityB) {
-			if (CheckStripeVAALine(positionA, widthA, velocityA + velocityB, positionB, widthB) is not float progress) return null;
+			if (CheckStripeVAALine(positionA, widthA, velocityA - velocityB, positionB, widthB) is not float progress) return null;
 			if (progress < 0 || progress > 1) return null;
 			return progress;
 		}
