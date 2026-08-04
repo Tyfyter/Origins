@@ -39,13 +39,13 @@ namespace Origins.NPCs.Ashen {
 			//NPC.scale = 0.9f;
 			NPC.value = 300;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Ashen_Biome>().Type,
+				ModContent.GetInstance<Underground_Ashen_Biome>().Type,
 			];
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName").Replace("_Head", ""));
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText(),
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
+				this.GetBestiaryFlavorText()
 			);
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
