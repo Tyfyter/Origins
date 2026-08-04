@@ -441,5 +441,15 @@ Reject_1.DisplayName: Reject
 Reject_3.DisplayName: Reject
 Scrapyard_Stryder.DisplayName: Scrapyard Stryder
 Packhunter.DisplayName: Packhunter
-Quakemaker.DisplayName: Quakemaker
+
+Quakemaker: {
+	DisplayName: QM-76
+	FullName: QM-76 'Quakemaker'
+}
+
 Malfunctioning_Missile.DisplayName: Malfunctioning Missile
+
+CM_17: {
+	DisplayName: CM-17
+	FullName: CM-17 'Watcher'
+}

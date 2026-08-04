@@ -4948,6 +4948,10 @@ namespace Origins {
 		public static void SyncCustomKnockback(this NPC npc, bool fromNet = false) {
 			DoCustomKnockback(npc, npc.velocity, fromNet);
 		}
+		public static void CustomBestiaryName(this BestiaryEntry bestiaryEntry, int type, string key) {
+			bestiaryEntry.Info[bestiaryEntry.Info.FindIndex(x => x is NamePlateInfoElement)] = new NamePlateInfoElement(key, type);
+			bestiaryEntry.Icon = new UnlockableNPCEntryIcon(type, overrideNameKey: key);
+		}
 		public class MultipleUnlockableNPCEntryIcon : IEntryIcon {
 			private readonly int _npcNetId;
 

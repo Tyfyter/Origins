@@ -111,6 +111,7 @@ namespace Origins.World.BiomeData {
 			public const float CursedWeapon = 0.01f;
 			public const float ScrapyardStryder = 0.01f;
 			public const float Quakemaker = 0.03f;
+			public const float Watcher = 0.03f;
 			public override string Name => $"{nameof(Ashen_Biome)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.BiomeHigh;
