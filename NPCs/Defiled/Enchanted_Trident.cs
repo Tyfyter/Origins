@@ -9,17 +9,18 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Enchanted_Trident : ModNPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 2, 76, 76);
-		public int AnimationFrames => 1;
-		public int FrameDuration => 1;
+		public int AnimationFrames => 3;
+		public int FrameDuration => 5;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
-		}
-		public override void FindFrame(int frameHeight) {
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				Scale = 0.85f,
-				PortraitScale = 1
+				PortraitScale = 1,
+				Position = new Vector2(0, 3),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = -15
 			};
 		}
 		public bool? Hardmode => true;
@@ -59,8 +60,13 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-
+		public override void FindFrame(int frameHeight) {
+			if (NPC.ai[0] == 2) {
+				NPC.frameCounter = 0.0;
+				NPC.frame.Y = 0;
+				return;
+			}
+			NPC.DoFrames(4);
 		}
 	}
 }
