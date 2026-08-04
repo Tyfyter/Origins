@@ -38,6 +38,7 @@ using PegasusLib.Reflection;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -1200,20 +1201,15 @@ namespace Origins {
 			if (TileLoader.GetTile(tileToCreate) is ICustomCanPlaceTile customCanPlaceTile) customCanPlaceTile.CanPlace(self, targetTile, sItem, ref tileToCreate, ref previewPlaceStyle, ref overrideCanPlace, ref forcedRandom);
 		}
 
-		static void FCEH(ILContext il) {
+		static void ShowPacketType(ILContext il) {
 			ILCursor c = new(il);
-			int msg = -1;
-			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine)))
-				&& c.TryGotoPrev(i => i.MatchStloc(msg))
-				&& c.TryGotoPrev(MoveType.After, i => i.MatchCallOrCallvirt<Exception>("get_" + nameof(Exception.Message)))
-				) {
-				c.EmitDelegate((string text) => {
-					if ((text?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (text?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false)) {
-						text += $" with packet type {lastPacketType}";
-					}
-					return text;
-				});
-			}
+			c.GotoNext(MoveType.AfterLabel, i => i.MatchNewobj<IOException>());
+			c.EmitDelegate((string text) => {
+				if ((text?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (text?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false)) {
+					text += $" with packet type {lastPacketType}";
+				}
+				return text;
+			});
 		}
 		private ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
 			if (Strange_Computer.drawingStrangeLine) return ReLogic.Utilities.SlotId.Invalid;
