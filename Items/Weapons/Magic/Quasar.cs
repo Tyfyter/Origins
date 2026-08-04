@@ -58,7 +58,7 @@ namespace Origins.Items.Weapons.Magic {
 		public int Shader => Quasar.ShaderID;
 		Quasar_P() : base() => _ = sound;
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3200 + 64;
 			Origins.HomingEffectivenessMultiplier[Type] = 10;
 			Smog_Storm.CutThroughSmogStorm[Type] = proj => ((Quasar_P)proj.ModProjectile).Draw(true);
 		}
