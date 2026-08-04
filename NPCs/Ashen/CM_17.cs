@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
-	public class CM_17 : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy {
+	public class CM_17 : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IBroken {
 		public Rectangle DrawRect => new(0, 0, 142, 90);
 		public int AnimationFrames => 6;
 		public int FrameDuration => 8;
@@ -26,6 +26,9 @@ namespace Origins.NPCs.Ashen {
 		public AutoLoadingTexture lowerArm = typeof(CM_17).GetDefaultTMLName() + "_Lower";
 		public AutoLoadingTexture upperArm = typeof(CM_17).GetDefaultTMLName() + "_Upper";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+		public static string BrokenReason => "need watchling impl, remove debug info";
+
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -80,11 +83,12 @@ namespace Origins.NPCs.Ashen {
 			}
 			bool HasMaxWatchings() {
 				int count = 0;
-				foreach(NPC npc in Main.ActiveNPCs) {
+				foreach (NPC npc in Main.ActiveNPCs) {
 					if ((npc.type == NPCType<Malfunctioning_Missile>() || npc.type == NPCType<Spider_Amoeba_Wall>()) && npc.ai[3] == NPC.whoAmI) {
 						count++;
-						if (count >= MaxWatchlings) break;
 					}
+					NPC.ai[1] = count; // for debugging
+					if (count >= MaxWatchlings) break;
 				}
 				return count >= MaxWatchlings;
 			}
@@ -211,7 +215,8 @@ namespace Origins.NPCs.Ashen {
 
 			SetDrawData(drillBit.Value, new Vector2(-98, -26), NPC.rotation, drillBit.Frame(1, 2, 0, (int)NPC.localAI[0]));
 
-			spriteBatch.DrawDebugTextAbove($"{NPC.direction} {NPC.spriteDirection}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
+			spriteBatch.DrawDebugTextAbove(
+				$"{NPC.direction} {NPC.spriteDirection}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
 				$"{NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}\n" +
 				$"{NPC.localAI[0]}, {NPC.localAI[1]}, {NPC.localAI[2]}, {NPC.localAI[3]}",
 				NPC.Top - screenPos, scale: 1);
