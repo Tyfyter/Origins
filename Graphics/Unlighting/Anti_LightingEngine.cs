@@ -16,7 +16,7 @@ using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace Origins.Graphics.Unlighting {
 	[ReinitializeDuringResizeArrays]
-	public class Anti_LightingEngine : ILoadable {
+	public class Anti_LightingEngine : ModSystem {
 		static readonly BlendState subtractiveBlending = new() {
 			ColorBlendFunction = BlendFunction.ReverseSubtract,
 			AlphaBlendFunction = BlendFunction.Add,
@@ -118,7 +118,7 @@ namespace Origins.Graphics.Unlighting {
 			}
 		}
 		readonly static The_Engine unlightingEngine = new();
-		public void Load(Mod mod) {
+		public override void PostAddRecipes() {
 			unlightingEngine.Rebuild();
 			On_LightingEngine.ProcessScan += On_LightingEngine_ProcessScan;
 			On_LightingEngine.ProcessBlur += On_LightingEngine_ProcessBlur;
@@ -138,6 +138,7 @@ namespace Origins.Graphics.Unlighting {
 			lightingEngine = new(() => _activeEngine.Value);
 			tileScanner = new(() => _tileScanner.GetValue(unlightingEngine));
 
+			#region CopyPerFrameUnlights
 			string methodName = "CopyPerFrameUnlights";
 			DynamicMethod getterMethod = new(methodName, typeof(void), [typeof(LightingEngine), typeof(LightingEngine)], true);
 			ILGenerator gen = getterMethod.GetILGenerator();
@@ -215,6 +216,7 @@ namespace Origins.Graphics.Unlighting {
 			gen.Emit(OpCodes.Ret);
 
 			CopyPerFrameUnlights = getterMethod.CreateDelegate<Action<LightingEngine, LightingEngine>>();
+			#endregion
 		}
 #pragma warning disable IDE0044 // Add readonly modifier
 		static bool anyPerFrameUnglows = false;
@@ -334,7 +336,6 @@ namespace Origins.Graphics.Unlighting {
 
 		FrameCachedValue<ILightingEngine> lightingEngine;
 		FrameCachedValue<TileLightScanner> tileScanner;
-		void ILoadable.Unload() { }
 		public class The_Engine : LightingEngine { }
 	}
 }
