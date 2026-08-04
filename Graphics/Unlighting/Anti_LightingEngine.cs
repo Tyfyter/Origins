@@ -47,7 +47,7 @@ namespace Origins.Graphics.Unlighting {
 			if (size > oldSize) Array.Fill(array, fillValue, oldSize, size - oldSize);
 		}
 		static void PostUpdateLightMap(Texture2D lightMapTexture, Matrix samplingTransformation, Rectangle lightMapArea, bool cameraMode) {
-			if (Weak_Shimmer_Debuff.isDrawingShimmeryThing) {
+			/*if (Weak_Shimmer_Debuff.isDrawingShimmeryThing) {
 				switch (lightMapTexture.Format) {
 					case SurfaceFormat.Rgba1010102:
 					ResizeAndFill(ref rgba1010102FullBright, lightMapTexture.Width * lightMapTexture.Height, uint.MaxValue);
@@ -59,7 +59,7 @@ namespace Origins.Graphics.Unlighting {
 					break;
 				}
 				return;
-			}
+			}*/
 			if (!anyPerFrameUnglows) return;
 			LightMap unlightMap = LightingMethods._activeLightMap.GetValue(unlightingEngine);
 			if (lightMapTexture is RenderTarget2D renderTarget) {
