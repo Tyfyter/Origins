@@ -7,6 +7,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -24,7 +25,7 @@ using static Origins.Core.MultiTypeMultiTile;
 
 namespace Origins.Tiles.Ashen; 
 [ReinitializeDuringResizeArrays]
-public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTile, IMultiTypeMultiTile {
+public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTile, IMultiTypeMultiTile, IAshenTile {
 	static Color poweredColor = new Color(255, 113, 0);
 	public static int MaxFuel => 60 * 60 * 1;
 	public static int PlayerPowerTime => 60 * 30;
@@ -51,6 +52,11 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 	);
 	public override void Load() {
 		new TileItem(this, true).RegisterItem();
+		On_TileDrawing.PostDrawTiles += On_TileDrawing_PostDrawTiles;
+	}
+	static void On_TileDrawing_PostDrawTiles(On_TileDrawing.orig_PostDrawTiles orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets) {
+		drawnPoints.Clear();
+		orig(self, solidLayer, forRenderTargets, intoRenderTargets);
 	}
 	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
 		if (ShouldGlow(tile)) color.DoFancyGlow(new(0.912f, 0.579f, 0f), tile.TileColor);
@@ -95,8 +101,12 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			b = 0f;
 		}
 	}
+	static readonly HashSet<Point> drawnPoints = [];
 	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-		if (TileObjectData.IsTopLeft(i, j)) Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
+		Tile tile = Main.tile[i, j];
+		i -= tile.TileFrameX / 18;
+		j -= tile.TileFrameY / 18;
+		if (drawnPoints.Add(new(i, j))) Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
 		return false;
 	}
 	public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
