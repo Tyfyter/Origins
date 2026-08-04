@@ -146,7 +146,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				});
 
 				if (foundTarget) {
-					SoundEngine.PlaySound(SoundID.NPCHit51.WithPitch(1.7f).WithVolume(0.05f), Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.RepairboyDeath.WithPitch(1.8f).WithVolume(0.2f), Projectile.Center);
 					float scaleFactor = 16f * fuelMult;
 					float lerpValue = 0.083333336f * Origins.HomingEffectivenessMultiplier[Projectile.type] * fuelMult;
 

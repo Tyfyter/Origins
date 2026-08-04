@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -143,6 +144,8 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 				int dir = (tile.TileFrameX < 18 * 4).ToDirectionInt();
 				bounce(dir);
 				for (int i = 0; i < 4; i++) {
+					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.25f)/*, center*/);
+					SoundEngine.PlaySound(SoundID.Item146.WithPitch(1.5f).WithVolume(0.25f)/*, center*/);
 					Dust dust = EfficientDust.NewDustDirect(
 						dustRect.TopLeft(),
 						dustRect.Width,
@@ -156,6 +159,9 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			} else {
 				if (entity.velocity.Y < 0 || tile.TileFrameY <= 18 * 3) entity.velocity.Y += 4;
 				if (tile.TileFrameY >= 18 * 3) {
+					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.25f)/*, center*/);
+					if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithVolume(0.25f)/*, center*/);
+					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item113.WithVolume(0.25f)/*, center*/);
 					if (entity.velocity.Y >= 0 && Main.tile[entity.Center.ToTileCoordinates()].TileFrameY >= 18 * 4) {
 						entity.velocity.Y *= -0.11f;
 					}

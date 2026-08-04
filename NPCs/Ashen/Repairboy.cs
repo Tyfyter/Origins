@@ -57,7 +57,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1f);
-			NPC.DeathSound = Origins.Sounds.RepairboyDeath;
+			NPC.DeathSound = Origins.Sounds.RepairboyDeath.WithVolume(0.25f);
 			NPC.value = Item.buyPrice();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,
@@ -170,7 +170,7 @@ namespace Origins.NPCs.Ashen {
 			return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(700)) SoundEngine.PlaySound(Origins.Sounds.RepairboyIdle.WithVolume(0.5f), NPC.Center);
+			if (Main.rand.NextBool(700)) SoundEngine.PlaySound(Origins.Sounds.RepairboyIdle.WithVolume(0.25f), NPC.Center);
 			const float strafe_accel = 0.05f;
 			if (!target.HasTarget || NPC.life < NPC.lifeMax || target.TargetType == TargetSearchTypes.Players) TargetClosest();
 			if (target.HasTarget) {
@@ -194,7 +194,7 @@ namespace Origins.NPCs.Ashen {
 					}
 					if (NPC.ai[1] == 0 && MathUtils.LinearSmoothing(ref NPC.localAI[0], 3, 1 / 5f)) {
 						if (NPC.ai[2].CycleUp(20)) {
-							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f).WithVolumeScale(0.5f), WeldingTorchPos);
+							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.35f).WithVolumeScale(0.5f), WeldingTorchPos);
 							if (NPC.life >= NPC.lifeMax) TargetClosest();
 						}
 						switch (NPC.ai[2] % 5) {

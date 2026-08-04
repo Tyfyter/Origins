@@ -1,12 +1,6 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
-using Origins.Buffs;
-using Origins.Items.Weapons.Summoner;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -236,7 +230,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			float movement = Projectile.direction * SpeedModifier;
 			if (Projectile.velocity.Y == 0) {
-				SoundEngine.PlaySound(SoundID.Item11.WithPitchRange(2f, 2.5f), Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item11.WithPitchRange(2f, 2.5f).WithVolume(0.38f), Projectile.Center);
 				Projectile.localAI[1] += Projectile.localAI[2];
 				Projectile.localAI[1] *= Projectile.localAI[2];
 				float targetHeight = Projectile.localAI[1] * 16;

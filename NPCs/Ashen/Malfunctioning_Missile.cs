@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -58,6 +59,7 @@ namespace Origins.NPCs.Ashen {
 
 			switch ((int)NPC.ai[0]) {
 				case 0: {
+					SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot.WithPitch(-1f), NPC.Center);
 					float speed = 11f;
 					Vector2 diff = (target.Center - NPC.Center).Normalized(out _);
 					NPC.velocity = diff * speed;
@@ -77,6 +79,8 @@ namespace Origins.NPCs.Ashen {
 					if (NPC.ai[1] >= 60f) {
 						NPC.velocity *= 0.97f;
 						if (NPC.ai[1] >= 100f) {
+							SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen.WithPitch(2f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item161.WithPitch(-0.5f).WithVolume(0.2f), NPC.Center);
 							NPC.netUpdate = true;
 							NPC.ai[0] = 2f;
 							NPC.ai[1] = 0f;
@@ -118,6 +122,7 @@ namespace Origins.NPCs.Ashen {
 					break;
 				}
 				case 4: {
+					SoundEngine.PlaySound(Origins.Sounds.RepairboyDeath.WithPitch(1.8f).WithVolume(0.2f), NPC.Center);
 					if (MathUtils.LinearSmoothing(ref NPC.ai[3], 0, 0.01f)) NPC.ai[3] = GetSquiggle() * 0.1f;
 					NPC.rotation += NPC.ai[3];
 					NPC.velocity = NPC.velocity.RotatedBy(NPC.ai[3]);

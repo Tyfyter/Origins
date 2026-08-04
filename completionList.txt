@@ -289,7 +289,7 @@ ENEMY NPCS:
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
-(☻) Malfunctioning Missile !!!
+(#2, ^2) Malfunctioning Missile !!!
 (X) Mist Avatar
 (X) Molten Aberration
 (^) Oil Ghoul
@@ -1401,7 +1401,7 @@ TILES:
 (^) Edge Detector
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(☻) Incinerator Pit !!!
+(#2, ^2) Incinerator Pit !!!
 (^) Industrial Door
 (^) Large Storage Container
 (^) Laser Tag Console
