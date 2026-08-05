@@ -79,9 +79,7 @@ namespace Origins.Items {
 				case ItemID.Dynamite:
 				case ItemID.BouncyDynamite:
 				case ItemID.StickyDynamite:
-				item.ammo = ItemID.Dynamite;
 				item.DamageType = DamageClasses.ThrownExplosive;
-				item.notAmmo = true;
 				statsModified = true;
 				break;
 
