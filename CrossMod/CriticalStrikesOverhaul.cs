@@ -116,7 +116,7 @@ namespace Origins.CrossMod {
 		}
 	}
 	public class Vorpal_Crit_Type : CritType {
-		public override bool InRandomPool => true;
+		public override bool InRandomPool => false;
 		public override LocalizedText Description => base.Description;
 		public override float CritMultiplier(Player Player, Item Item) => 10f;
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {

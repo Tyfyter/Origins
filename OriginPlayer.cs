@@ -1154,7 +1154,7 @@ namespace Origins {
 				if (playerDiff.Y == 0) playerDiff.Y = Player.gravity;
 				playerDiff.Y += Player.gravity;
 				Vector2 playerPos = Player.BottomLeft - playerDiff;
-				playerPos.Y = float.BitDecrement(playerPos.Y);
+				//playerPos.Y = float.BitDecrement(playerPos.Y);
 				if (standingOnPlatformNPC is not null && standingOnPlatformNPC.position.Y > standingOnPlatformNPC.oldPosition.Y) playerDiff.Y += standingOnPlatformNPC.position.Y - standingOnPlatformNPC.oldPosition.Y;
 				float minCollisionTime = float.PositiveInfinity;
 				foreach (NPC npc in Main.ActiveNPCs) {
@@ -1168,6 +1168,7 @@ namespace Origins {
 					Player.velocity -= standOnNPC.velocity - (standingOnPlatformNPC?.velocity ?? Vector2.Zero);
 				}
 				if (!float.IsPositiveInfinity(minCollisionTime) && standOnNPC.ModNPC is IPlatformNPC platform) {
+					minCollisionTime = float.BitDecrement(minCollisionTime);
 					Player.position = Player.oldPosition + playerDiff * minCollisionTime;
 					Vector2 npcDiff = platform.GetPlatformPos() - platform.OldPlatformPosition;
 					Vector2 playerMovementMult = new(1 - platform.PlatformStickyness(Player), 0);
