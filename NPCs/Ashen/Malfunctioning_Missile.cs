@@ -1,32 +1,32 @@
-﻿using CalamityMod.NPCs.TownNPCs;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.World.BiomeData;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Ashen {
-	public class Malfunctioning_Missile : ModNPC, IAshenEnemy, IWikiNPC, ICustomWikiStat {
+	public class Malfunctioning_Missile : Glowing_Mod_NPC, IAshenEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 2, 76, 76);
-		public int AnimationFrames => 1;
-		public int FrameDuration => 1;
+		public int AnimationFrames => 4;
+		public int FrameDuration => 5;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 3;
-		}
-		public override void FindFrame(int frameHeight) {
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			Main.npcFrameCount[NPC.type] = 4;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				Scale = 0.85f,
-				PortraitScale = 1
+				PortraitScale = 1,
+				Rotation = MathHelper.PiOver4 * 3,
+				Position = new Vector2(-3, 8),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = 0
 			};
 		}
 		public bool? Hardmode => true;
@@ -152,8 +152,31 @@ namespace Origins.NPCs.Ashen {
 				this.GetBestiaryFlavorText()
 			);
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-
+		public override void FindFrame(int frameHeight) {
+			if (NPC.ai[0] == 2) {
+				NPC.frameCounter = 0.0;
+				NPC.frame.Y = 38 * 3;
+				return;
+			}
+			NPC.DoFrames(4, ..3);
 		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+			SpriteEffects effects = NPC.rotation is >= MathHelper.PiOver2 and < MathHelper.PiOver2 * 3 ? SpriteEffects.FlipVertically : SpriteEffects.None;
+
+			spriteBatch.DrawGlowingNPCPart(
+				texture,
+				GlowTexture,
+				NPC.Center - screenPos,
+				NPC.frame,
+				NPC.GetTintColor(drawColor),
+				GetGlowColor(drawColor),
+				NPC.rotation,
+				NPC.frame.Size() * 0.5f,
+				NPC.scale,
+				effects);
+			return false;
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }
 	}
 }
