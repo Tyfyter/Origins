@@ -974,6 +974,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			};
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetTintColor(drawColor);
+			Color glowColor = NPC.GetTintColor(Color.White);
 			if (AIState == state_split_amalgamation_active) {
 				return;
 			}
@@ -986,7 +988,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			spriteBatch.DrawGlowingNPCPart(RightArmTexture, RightArmGlowTexture,
 				NPC.Center - new Vector2(-46 * NPC.spriteDirection, 12) * NPC.scale - screenPos,
 				armsFrame,
-				drawColor, Color.White,
+				drawColor,
+				glowColor,
 				rightArmRot * NPC.spriteDirection,
 				new Vector2(dir ? 7 : 23, 19),
 				NPC.scale,
@@ -996,7 +999,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			spriteBatch.DrawGlowingNPCPart(LeftArmTexture, LeftArmGlowTexture,
 				NPC.Center - new Vector2(36 * NPC.spriteDirection, 0) * NPC.scale - screenPos,
 				armsFrame,
-				drawColor, Color.White,
+				drawColor,
+				glowColor,
 				-leftArmRot * NPC.spriteDirection,
 				new Vector2(dir ? 23 : 7, 19),
 				NPC.scale,
@@ -1005,12 +1009,18 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			bool dir = NPC.spriteDirection == 1;
 			Rectangle armsFrame = new(0, armFrame * 96, 30, 94);
 			outlineData =
 			[
-					new(TextureAssets.Npc[Type].Value,NPC.Center + NPC.velocity - new Vector2(0,4),NPC.frame,Color.White,NPC.rotation,NPC.frame.Size() / 2f, NPC.scale, dir ? SpriteEffects.FlipHorizontally : SpriteEffects.None),
+					new(TextureAssets.Npc[Type].Value,
+					NPC.Center + NPC.velocity - new Vector2(0,4),
+					NPC.frame,
+					Color.White,
+					NPC.rotation,
+					NPC.frame.Size() / 2f,
+					NPC.scale,
+					dir ? SpriteEffects.FlipHorizontally : SpriteEffects.None),
 
 					new(LeftArmTexture,
 					NPC.Center - new Vector2(36 * NPC.spriteDirection, 0) * NPC.scale + NPC.velocity,

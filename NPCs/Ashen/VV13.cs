@@ -114,9 +114,8 @@ namespace Origins.NPCs.Ashen {
 			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Color glowColor = Color.White;
-			NPCLoader.DrawEffects(NPC, ref glowColor);
-			glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
+			Color glowColor = NPC.GetTintColor(Color.White);
+
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,

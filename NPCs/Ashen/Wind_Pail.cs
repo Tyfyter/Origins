@@ -221,7 +221,11 @@ namespace Origins.NPCs.Ashen {
 			if (NPC.frame.Width.TrySet(92)) NPC.frame.X = 94 * Main.rand.Next(3);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			drawColor = NPC.GetTintColor(drawColor);
+			Color glowColor = Color.White;
+			using (NPC.oiled.ScopedOverride(false)) {
+				glowColor = NPC.GetTintColor(glowColor);
+			}
 			SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			if (NPC.IsABestiaryIconDummy) {
 				NPC.Opacity = 1;
@@ -234,7 +238,7 @@ namespace Origins.NPCs.Ashen {
 				NPC.Bottom - screenPos,
 				NPC.frame,
 				drawColor * NPC.Opacity,
-				NPC.GetTintColor(Color.White) * NPC.Opacity * (NPC.ai[0] * 0.5f + 0.5f),
+				glowColor * NPC.Opacity * (NPC.ai[0] * 0.5f + 0.5f),
 				0,
 				NPC.frame.Size() * new Vector2(0.5f, 1),
 				NPC.scale,

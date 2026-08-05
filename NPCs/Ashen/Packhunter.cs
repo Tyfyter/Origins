@@ -305,11 +305,10 @@ namespace Origins.NPCs.Ashen {
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[3];
 		static readonly short[] dices = [0, 1, 2];
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			drawColor = NPC.GetTintColor(drawColor);
 			Color glowColor = Color.White;
 			using (NPC.oiled.ScopedOverride(false)) {
-				NPCLoader.DrawEffects(NPC, ref glowColor);
-				glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
+				glowColor = NPC.GetTintColor(glowColor);
 			}
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,

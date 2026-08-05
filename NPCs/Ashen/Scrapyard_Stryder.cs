@@ -159,9 +159,7 @@ namespace Origins.NPCs.Ashen {
 			base.HitEffect(hit);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Color glowColor = Color.White;
-			NPCLoader.DrawEffects(NPC, ref glowColor);
-			glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
+			Color glowColor = NPC.GetTintColor(Color.White);
 #if DRAWDEBUGINFO
 			switch (NPC.ai[2]) {
 				case -1:
@@ -177,7 +175,7 @@ namespace Origins.NPCs.Ashen {
 				glowTexture,
 				NPC.Bottom + Vector2.UnitY * 2 - screenPos,
 				NPC.frame,
-				NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor)),
+				NPC.GetAlpha(NPC.GetTintColor(drawColor)),
 				glowColor,
 				NPC.rotation,
 				NPC.frame.Size() * new Vector2(0.5f + (NPC.spriteDirection * 0.15f), 1),
@@ -217,7 +215,7 @@ namespace Origins.NPCs.Ashen {
 					texture,
 					GunPos - Main.screenPosition,
 					frame,
-					new Color(1f, 1f, 1f, 0.8f),
+					NPC.GetTintColor(new(1f, 1f, 1f, 0.8f)),
 					0,
 					frame.Size() * 0.5f,
 					1,
