@@ -66,7 +66,7 @@ namespace Origins.NPCs.Ashen {
 			for (int i = ProjectileID.ClusterSnowmanRocketI; i <= ProjectileID.DrySnowmanRocket; i++) TargetProjectilesLow[i] = true;
 			Projectile probe = new();
 			for (int i = 0; i < ProjectileLoader.ProjectileCount; i++) {
-				if (TargetProjectilesLow[i]) continue;
+				if (OohShiny[i] || TargetProjectilesLow[i]) continue;
 				probe.SetDefaults(i);
 				if (probe.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.GolfBall) TargetProjectilesLow[i] = true;
 			}
@@ -234,7 +234,7 @@ namespace Origins.NPCs.Ashen {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = SpriteEffects.FlipHorizontally;
 			float rotation = NPC.rotation;
-			if (MathHelper.WrapAngle(NPC.rotation) is < -MathHelper.PiOver2 or >= MathHelper.PiOver2) {
+			if (MathHelper.WrapAngle(NPC.rotation) is < -MathHelper.PiOver2 or > MathHelper.PiOver2) {
 				effects = SpriteEffects.None;
 				rotation += MathHelper.Pi;
 			}

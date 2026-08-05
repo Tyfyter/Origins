@@ -1,4 +1,4 @@
-﻿//#define DRAWPLATFORM //uncomment this to see where the platform is
+﻿//#define DRAWDEBUGINFO //uncomment this to see where the platform is
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Dev;
@@ -162,6 +162,7 @@ namespace Origins.NPCs.Ashen {
 			Color glowColor = Color.White;
 			NPCLoader.DrawEffects(NPC, ref glowColor);
 			glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
+#if DRAWDEBUGINFO
 			switch (NPC.ai[2]) {
 				case -1:
 				glowColor = Color.Lime;
@@ -170,6 +171,7 @@ namespace Origins.NPCs.Ashen {
 				glowColor = Color.Blue;
 				break;
 			}
+#endif
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
@@ -225,7 +227,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.DrawConfused();
 			return false;
 		}
-#if DRAWPLATFORM
+#if DRAWDEBUGINFO
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 platformStart = NPC.position + PlatformOffset - screenPos;
 			OriginExtensions.DrawDebugLineSprite(platformStart, platformStart + PlatformWidth * Vector2.UnitX, Color.Red);

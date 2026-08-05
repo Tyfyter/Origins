@@ -117,14 +117,6 @@ namespace Origins.NPCs.Ashen {
 			Color glowColor = Color.White;
 			NPCLoader.DrawEffects(NPC, ref glowColor);
 			glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
-			switch (NPC.ai[2]) {
-				case -1:
-				glowColor = Color.Lime;
-				break;
-				case 1:
-				glowColor = Color.Blue;
-				break;
-			}
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
