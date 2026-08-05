@@ -454,4 +454,7 @@ CM_17: {
 	// FullName: CM-17 'Watcher'
 }
 
-// VV13.DisplayName: V V13
+VV13: {
+	// DisplayName: VV-13
+	// FullName: VV-13 'Vice'
+}
