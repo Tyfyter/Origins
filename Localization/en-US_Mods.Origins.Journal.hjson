@@ -752,7 +752,7 @@ Mechanicus_Sovereignty: {
 		Name: "{$Items.Biocomponent10.DisplayName}"
 		Text:
 			'''
-			[header:Robot Guts (1/{$SeriesLength})]
+			[header:{$Name} (1/{$SeriesLength})]
 			[jimage/sc2.5d:Origins/Items/Materials/Biocomponent10]
 			One of the surprisingly smaller castes of the Mechanicus Sovereignty, the Laborers, often worked alongside the worker machines in menial tasks, but not quite to the level of an Apprentice. Laborer quality of life was the worst due to how valuable one's intelligence was in their society, but compared to most other ancient civilizations there's was up there. There are no notable figures in the Laborer caste.
 			'''
@@ -760,7 +760,7 @@ Mechanicus_Sovereignty: {
 
 	Nineball.Text:
 		'''
-		[header:Nineball (2/{$SeriesLength})]
+		[header:{$Items.Nineball.DisplayName} (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Melee/Nineball]
 		*****
 		The next one up were the aforementioned Apprentinces, those either too young for higher education or at an average level of intellect. This was the most populous caste of the Mechanicus Sovereignty and didn't have anyone of notable history. The Apprentice caste is treated as a beginner-level caste where the primary objective is to expand upon information. Apprentices don't get their specialties until they become Craftsmen.
@@ -770,7 +770,7 @@ Mechanicus_Sovereignty: {
 		Name: "{$Items.NE8.DisplayName}"
 		Text:
 			'''
-			[header:NE-8 (3/{$SeriesLength})]
+			[header:{$Name} (3/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Materials/NE8]
 
 
@@ -782,14 +782,14 @@ Mechanicus_Sovereignty: {
 
 	Internal_Combustionfish.Text:
 		'''
-		[header:Internal Combustionfish (4/{$SeriesLength})]
+		[header:{$Items.Internal_Combustionfish.DisplayName} (4/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Demolitionist/Internal_Combustionfish]
 		*****
 		Going into the Tinkerer caste, we start to see higher-level organization take place. Tinkerers are essentially just Craftsmen who are able to teach their jobs on a surface level. Tinkerers are of high emotional and intellectual intelligence as they must be tactful and able to express themselves. Some jobs performed by Tinkerers include maintenance technicians and systems work as they begin to understand pre-existing schematics.
 		'''
 	C6_Jackhammer.Text:
 		'''
-		[header:C6 Jackhammer (5/{$SeriesLength})]
+		[header:{$Items.C6_Jackhammer.DisplayName} (5/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Tools/C6_Jackhammer]
 		*****
 		Next is the Scope Tinkerer caste, able to begin learning beyond their area of expertise, but not quite capable of making product to drive forward society. They take on manager roles in the general workforce, able to educate the lower castes while pursuing their own studies with higher-ups on a more personal level. Being exalted to any castes above Scope is an arduous journey as knowledge becomes increasingly harder to acquire.
@@ -799,7 +799,7 @@ Mechanicus_Sovereignty: {
 		Name: "{$Items.Sixth_Spline.DisplayName}"
 		Text:
 			'''
-			[header:Fifth Spline (6/{$SeriesLength})]
+			[header:{$Name} (6/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Weapons/Ranged/Sixth_Spline]
 
 
@@ -807,6 +807,48 @@ Mechanicus_Sovereignty: {
 			Above Scope Tinkerers are Senior Tinkerers. They make up the second smallest caste by population and live more luxurious lives. Senior Tinkerers act as teachers for Scope Tinkerers while primarily pursuing ways to actively improve Mechanicus society through technology or policy. The one-on-one nature of working with Scope Tinkerers below them grants them a lot of time to balance their lives.
 			'''
 	}
+	Classified_Blueprint.Text:
+		'''
+		[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]
+		TM-22S 'TRENCHMAKER' SPECIFICATIONS (7/{$SeriesLength})
+
+		### Production
+
+		Serial: TM-XX#
+		Name: 'Trenchmaker'
+		Designer: Senior Tinkerer H. M.
+		Introduction: April 4th 1-
+		Weight class: Heavy
+		Base model: TM-22S
+		Base price: 30 Platinum, 47 Gold, 2 Silver, 60 Copper
+		Design quirks:
+		 - Modular
+		 - Easy to maintain
+		 - Stable footing
+		 - Sensor vulnerability
+
+		### Chassis
+
+		Type: Standard
+		Mass: 40.28T (10.72T used, 29.56T open)
+		Slots: 28/45S
+		Speed: 20.9 kph
+		Turn: 160°/s (30+45°|128°)
+		Heat mgmt: (775 Th|-27 Th/s)
+
+		Hull grade: 356 TTA-A 400 (39.9/T ~ 8.92T/12S)
+		Engine: ICE100 (0.8T/4S)
+		Heatsinks: Type-S1H
+		Sensors: SD-422S (1T/1S)
+
+		### Details
+
+		 - Coated with a thermal-resistant titanium-tungsten alloy, the war engine is designed for use against thermal weaponry and safe operation at depots/outposts. The prototype also exhibits exceptional fall mitigation properties. These characteristics render the war engine suitable for potential orbital insertion as part of the ASTEREYE Program.
+		 - Enlarged camera-sensor modulus is a vulnerability to denser projectiles, however, allows for finer data and smoother locomotive control. A steel-reinforced, plastic anti-glare cover complements the exterior camera lens to prevent damage to the camera under daylight conditions, whilst also protecting against weighted projectiles from overhead. A radio component and E4 Slave Unit paired to the main processor allow the war engine to operate autonomously or by operator at will. The radio frequency to be shared verbally for security.
+		 - The key feature is the dual-power plant set-up, utilizing both internal combustion and the heavily-experimental phoenum power. The downsized PGE is an attempt at a working model for M.T. Bell's theories to a miniature version. The war engine will run primarily off of internal combustion until the need for the PGE arises. The PGE will activate under critical conditions, when the ICE is inoperable or during operation of the phoenum-propulsion jump jets.
+		 - Arm Comparator Unit links data with opposite arm for improved accuracy and logistics through wireless connection. Data broadcasting speeds are slow, but adjustments should still be timely. Range And Precision Processor measures muzzle velocity, impact time, spread, and other variables to improve weapon accuracy. The modular rocket pods utilize their own sensors for fire control data processing.
+		 - The ordinance launcher is completely hidden in the frontal armor plates. Quickly retracts the mechanism after a succesful launch. Heavily customizable to contain various mission-critical ordinance or support turrets when handling infantry.
+		'''
 }
 
 Birth_Of_The_Gods: {
@@ -1171,47 +1213,5 @@ Worn_Paper: {
 
 		Contributions:
 			- aiding the Terrarian
-		'''
-	Classified_Blueprint.Text:
-		'''
-		[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]
-		[] TM-22S 'TRENCHMAKER' SPECIFICATIONS
-
-		### Production
-
-		Serial: TM-XX#
-		Name: 'Trenchmaker'
-		Designer: Senior Tinkerer H. M.
-		Introduction: April 4th 1-
-		Weight class: Heavy
-		Base model: TM-22S
-		Base price: 30 Platinum, 47 Gold, 2 Silver, 60 Copper
-		Design quirks:
-		 - Modular
-		 - Easy to maintain
-		 - Stable footing
-		 - Sensor vulnerability
-
-		### Chassis
-
-		Type: Standard
-		Mass: 40.28T (10.72T used, 29.56T open)
-		Slots: 28/45S
-		Speed: 20.9 kph
-		Turn: 160°/s (30+45°|128°)
-		Heat mgmt: (775 Th|-27 Th/s)
-
-		Hull grade: 356 TTA-A 400 (39.9/T ~ 8.92T/12S)
-		Engine: ICE100 (0.8T/4S)
-		Heatsinks: Type-S1H
-		Sensors: SD-422S (1T/1S)
-
-		### Details
-
-		 - Coated with a thermal-resistant titanium-tungsten alloy, the war engine is designed for use against thermal weaponry and safe operation at depots/outposts. The prototype also exhibits exceptional fall mitigation properties. These characteristics render the war engine suitable for potential orbital insertion as part of the ASTEREYE Program.
-		 - Enlarged camera-sensor modulus is a vulnerability to denser projectiles, however, allows for finer data and smoother locomotive control. A steel-reinforced, plastic anti-glare cover complements the exterior camera lens to prevent damage to the camera under daylight conditions, whilst also protecting against weighted projectiles from overhead. A radio component and E4 Slave Unit paired to the main processor allow the war engine to operate autonomously or by operator at will. The radio frequency to be shared verbally for security.
-		 - The key feature is the dual-power plant set-up, utilizing both internal combustion and the heavily-experimental phoenum power. The downsized PGE is an attempt at a working model for M.T. Bell's theories to a miniature version. The war engine will run primarily off of internal combustion until the need for the PGE arises. The PGE will activate under critical conditions, when the ICE is inoperable or during operation of the phoenum-propulsion jump jets.
-		 - Arm Comparator Unit links data with opposite arm for improved accuracy and logistics through wireless connection. Data broadcasting speeds are slow, but adjustments should still be timely. Range And Precision Processor measures muzzle velocity, impact time, spread, and other variables to improve weapon accuracy. The modular rocket pods utilize their own sensors for fire control data processing.
-		 - The ordinance launcher is completely hidden in the frontal armor plates. Quickly retracts the mechanism after a succesful launch. Heavily customizable to contain various mission-critical ordinance or support turrets when handling infantry.
 		'''
 }
