@@ -30,8 +30,8 @@ namespace Origins.NPCs.Ashen {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
-				Position = new(15, 45),
-				PortraitPositionXOverride = -5,
+				Position = new Vector2(35, 0),
+				PortraitPositionXOverride = 0,
 				PortraitPositionYOverride = 0
 			};
 			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
