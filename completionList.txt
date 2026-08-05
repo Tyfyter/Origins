@@ -158,7 +158,7 @@ WORLD GENERATION:
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(^) Riven Hive
+(#2) Riven Hive !!! (Amebic Gel needs to generate with biome)
 (#2, 々) Repentance
 
 (X) Defiled Egregore
@@ -289,7 +289,7 @@ ENEMY NPCS:
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
-(#2, ^2) Malfunctioning Missile !!!
+(^) Malfunctioning Missile
 (X) Mist Avatar
 (X) Molten Aberration
 (^) Oil Ghoul
@@ -870,7 +870,7 @@ MELEE WEAPONS:
 (^) Nematoclaw
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
-(#, ^2) The Claw !!!
+(#2, ^2) The Claw !!! (just needs flail mode and hook mode to switch keys)
 (^) The Foot
 (^) The Muffler
 (X) Unicorn Lance
