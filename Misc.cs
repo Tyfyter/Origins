@@ -4734,6 +4734,9 @@ namespace Origins {
 			if (self is null) return false;
 			return OriginsSets.Items.IsGun[self.type] || (self.useAmmo >= 0 && AmmoID.Sets.IsBullet[self.useAmmo]);
 		}
+		public static bool UseVanillaExplosiveAmmo(this Item item) {
+			return item.useAmmo is ItemID.RocketI or ItemID.Grenade or ItemID.Bomb or ItemID.Dynamite or ItemID.ExplosiveJackOLantern or ItemID.StyngerBolt;
+		}
 		public static void DefaultToLauncher(this Item self, int damage, int useTime, int width, int height, bool autoReuse = false) {
 			self.damage = damage;
 			self.useTime = useTime;
