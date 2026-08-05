@@ -62,6 +62,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		bool SearchFilter(Player player) => player?.OriginPlayer()?.standingOnPlatformNPC != NPC;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName"));
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
