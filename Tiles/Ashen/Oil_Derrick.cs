@@ -88,13 +88,13 @@ namespace Origins.Tiles.Ashen {
 			public override void UpdateSound(Vector2 position) {
 				int type = ModContent.TileType<Oil_Derrick>();
 				float mult = 1 / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
-				droning.PlaySoundIfInactive(Origins.Sounds.RadioBroadcaster.WithPitch(0.5f), position, playingSound => {
+				droning.PlaySoundIfInactive(Origins.Sounds.RadioBroadcaster.WithPitch(0.8f), position, playingSound => {
 					if (GetPosition() is not Vector2 pos) return false;
 					playingSound.Volume = 0.2f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
 					return true;
 				});
-				if (Main.tileFrame[type] == 1) SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1.4f).WithVolume(0.32f * mult), position);
-				if (Main.rand.NextBool(150)) SoundEngine.PlaySound(SoundID.Item148.WithPitch(-0.5f).WithVolume(0.48f * mult), position);
+				if (Main.tileFrame[type] == 1) SoundEngine.PlaySound(SoundID.Item108.WithPitch(-0.7f).WithVolume(0.25f * mult), position);
+				if (Main.rand.NextBool(150)) SoundEngine.PlaySound(SoundID.Item148.WithPitch(-0.5f).WithVolume(0.35f * mult), position);
 			}
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {

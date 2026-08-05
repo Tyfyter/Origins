@@ -8222,7 +8222,7 @@ Screwdriver_Upgrade_Logic: {
 
 Matryoshka_Doll: {
 	// DisplayName: Matryoshka Doll
-	// Tooltip: ""
+	// Tooltip: Summons a doll that increases in strength with layers
 }
 
 Vampire_Fireflower_In_A_Pot: {
@@ -8485,5 +8485,9 @@ Incinerator_Pit_Item: {
 
 Robot_Toy_Controller: {
 	// DisplayName: Robot Toy Controller
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Summons a miniature Trenchmaker toy
+		'EMERGENCY. ALIEN LIFEFORM. MUST DESTROY'
+		''' */
 }

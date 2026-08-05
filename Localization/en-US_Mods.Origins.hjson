@@ -1504,8 +1504,8 @@ Buffs: {
 	}
 
 	Toy_Trenchmaker_Buff: {
-		DisplayName: Toy Trenchmaker Buff
-		Description: Mods.Origins.Buffs.Toy_Trenchmaker_Buff.Description
+		DisplayName: Toy Trenchmaker
+		Description: The clanker goes clickity-clack!
 	}
 }
 

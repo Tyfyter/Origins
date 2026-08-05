@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
-using PegasusLib;
-using ReLogic.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,13 +10,11 @@ using System.IO;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem {
@@ -29,7 +24,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 16;
+			Item.damage = 32;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 1f;
 			Item.mana = 48;
@@ -353,6 +348,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.ignoreWater = true;
 			Projectile.netImportant = true;
 			Projectile.extraUpdates = 1;
+			//Projectile.ArmorPenetration += 10;
 			if (FrameCount > 1) Projectile.frame = Main.rand.Next(FrameCount);
 		}
 		protected TargetData targetData = new(TargetType.Slot, 0);

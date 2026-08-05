@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -64,6 +62,12 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.rotation += 0.4f;
 			Projectile.localAI[1] -= 0.25f;
 			if (Projectile.ai[0] != 0) {
+				if (Projectile.soundDelay <= 0) {
+					//SoundEngine.PlaySound(Origins.Sounds.LittleZap.WithPitch(-1.2f).WithVolume(0.2f), Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.WCScream.WithPitch(2.5f).WithVolume(0.15f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item29.WithPitch(-0.2f).WithVolume(0.05f), Projectile.Center);
+					Projectile.soundDelay = 5;
+				}
 				if (Projectile.IsLocallyOwned()) {
 					Projectile.netUpdate |= Projectile.velocity.TrySet(Vector2.Lerp(
 						Projectile.velocity.ToRotation().AngleTowards(Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation(), 0.1f).ToRotationVector2() * 16,
@@ -133,7 +137,6 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
-
 			return null;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
@@ -155,6 +158,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitch(2f).WithVolume(0.5f), Projectile.Center);
 			ParticleOrchestrator.RequestParticleSpawn(
 				false,
 				ParticleOrchestraType.TerraBlade,

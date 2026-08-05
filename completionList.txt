@@ -1827,7 +1827,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Blockus Tube (Juvenile Amalgamation)
 (^) Fleshy Globe (Self-Contained Universe)
 (^) Jawbreaker (Stellar Spark)
-(#, $2, ^2) Robot Toy Controller (Toy Trenchmaker) !!!
+(^) Robot Toy Controller (Toy Trenchmaker)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 

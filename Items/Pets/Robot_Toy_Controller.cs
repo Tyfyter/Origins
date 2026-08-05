@@ -150,7 +150,16 @@ namespace Origins.Items.Pets {
 			}
 
 			if (Flying) {
-				Projectile.frameCounter = 0;
+				if (Projectile.soundDelay <= 0) {
+					/*SoundEngine.PlaySound(SoundID.Item13.WithVolume(0.45f), Projectile.position, sound => {*/
+					SoundEngine.PlaySound(Origins.Sounds.HawkenThruster.WithVolume(0.4f), Projectile.position, sound => {
+						sound.Position = Projectile.Center;
+						return true;
+					});
+					Projectile.soundDelay = 100;
+				}
+
+					Projectile.frameCounter = 0;
 				Projectile.frame = 3;
 				speed *= 1.5f;
 				Min(ref speed, distanceToIdlePosition);
@@ -227,7 +236,22 @@ namespace Origins.Items.Pets {
 					Projectile.frame = 0;
 				}
 				if (Projectile.velocity.X != 0) {
-					if (Projectile.frameCounter.CycleUp(frameDist, (int)Math.Min(Math.Abs(Projectile.velocity.X), frameDist))) Projectile.frame.CycleUp(Main.projFrames[Type]);
+					if (Projectile.frameCounter.CycleUp(frameDist, (int)Math.Min(Math.Abs(Projectile.velocity.X), frameDist))) {
+						Projectile.frame.CycleUp(Main.projFrames[Type]);
+					}
+				}
+				if (Projectile.frame == 1 && Projectile.soundDelay <= 0) {
+					SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitch(3f).WithVolume(0.1f), Projectile.position, sound => {
+						sound.Position = Projectile.Center;
+						return true;
+					});
+					Projectile.soundDelay = 7;
+				} else if (Projectile.frame == 4 && Projectile.soundDelay <= 0) {
+					SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitch(3f).WithVolume(0.1f), Projectile.position, sound => {
+						sound.Position = Projectile.Center;
+						return true;
+					});
+					Projectile.soundDelay = 7;
 				}
 			} else {
 				Projectile.frame = 0;
@@ -260,7 +284,6 @@ namespace Origins.Items.Pets {
 }
 namespace Origins.Buffs {
 	public class Toy_Trenchmaker_Buff : ModBuff {
-		public override string Texture => Origins.TempBuffSprite;
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

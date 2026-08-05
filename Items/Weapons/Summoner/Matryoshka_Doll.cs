@@ -117,7 +117,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minionSlots = 0.5f;
 			Projectile.penetrate = -1;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 6;
@@ -163,15 +163,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.Bottom = bottom;
 			Projectile.hide = false;
 			Projectile.velocity *= Drag;
-			Projectile.soundDelay = 0;
 			if (Flying == 0) {
 				Projectile.tileCollide = true;
 				base.BasicAI();
 				Projectile.rotation = Math.Clamp(Projectile.direction * Projectile.velocity.Y * -0.1f, -0.5f, 0.5f);
 				Projectile.velocity.Y += Gravity;
 			} else {
-				Projectile.soundDelay = 60;
-				SoundEngine.PlaySound(SoundID.Item13, Projectile.Center);
+				if (Projectile.soundDelay <= 0) {
+					SoundEngine.PlaySound(SoundID.Item13.WithVolume(0.35f), Projectile.position, sound => {
+						sound.Position = Projectile.Center;
+						return true;
+					});
+					Projectile.soundDelay = 30;
+				}
 				Projectile.tileCollide = false;
 				targetingData.TargetID = -1;
 				DoActiveCheck();

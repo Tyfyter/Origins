@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Projectiles.Pets;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
@@ -51,6 +53,16 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
 		}
 		public override void AI() {
+			if (NPC.ai[0] <= 1) {
+				Dust dust = Dust.NewDustPerfect(
+					25 * NPC.rotation.ToRotationVector2() + NPC.Center,
+					DustID.Torch,
+					default,
+					120,
+					Color.Orange,
+					1.25f
+				);
+			}
 			NPCAimedTarget target = NPC.GetTargetData();
 			if (!NPC.HasValidTarget) {
 				NPC.TargetClosest();
@@ -80,7 +92,7 @@ namespace Origins.NPCs.Ashen {
 						NPC.velocity *= 0.97f;
 						if (NPC.ai[1] >= 100f) {
 							SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen.WithPitch(2f), NPC.Center);
-							SoundEngine.PlaySound(SoundID.Item161.WithPitch(-0.5f).WithVolume(0.2f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item66.WithPitch(-0.5f).WithVolume(0.2f), NPC.Center);
 							NPC.netUpdate = true;
 							NPC.ai[0] = 2f;
 							NPC.ai[1] = 0f;
