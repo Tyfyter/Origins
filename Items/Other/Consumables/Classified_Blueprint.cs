@@ -6,7 +6,7 @@ using JournalSortIndex = Origins.Journal.JournalEntry.JournalSortIndex;
 
 namespace Origins.Items.Other.Consumables;
 public class Classified_Blueprint : MaterialItem, IJournalEntryProvider {
-	public static JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 7);
+	public static JournalSortIndex SortIndex => new("The_Ashen", 4);
 	public override int ResearchUnlockCount => 1;
 	public override int Rare => ItemRarityID.Orange;
 	public override int Value => Item.sellPrice(gold: 3);
