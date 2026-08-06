@@ -539,7 +539,7 @@ Brine_Pool_And_Lost_Diver: {
 
 The_Ashen: {
 	// DisplayName: The Ashen
-	// SeriesLength: "3"
+	// SeriesLength: "4"
 	/* Stack_of_Shraps.Text:
 		'''
 		[header:Stack of Shraps (1/{$SeriesLength})]
@@ -559,7 +559,49 @@ The_Ashen: {
 		[header:Ace Shrapnel (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Ace_Shrapnel]
 		*****
-		My Subjects, no, they were mentally competent. It was merely their greed; that much had made sense to me. A strong economy relies on effective trade, but it couldn't have worked with my Creator MT. Neferly, their leader. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he underestimated me.
+		My Subjects, no, they were mentally competent. It was merely their greed; that much had made sense to me. A strong economy relies on effective trade, but it couldn't have worked with my Creator M.T. Neferly, their leader. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he underestimated me.
+		''' */
+	/* Classified_Blueprint.Text:
+		'''
+		[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]
+		TM-22S 'TRENCHMAKER' SPECIFICATIONS (4/{$SeriesLength})
+
+		### Production
+
+		Serial: TM-XX#
+		Name: 'Trenchmaker'
+		Designer: Senior Tinkerer H. M.
+		Introduction: April 4th 1-
+		Weight class: Heavy
+		Base model: TM-22S
+		Base price: 30 Platinum, 47 Gold, 2 Silver, 60 Copper
+		Design quirks:
+		 - Modular
+		 - Easy to maintain
+		 - Stable footing
+		 - Sensor vulnerability
+
+		### Chassis
+
+		Type: Standard
+		Mass: 40.28T (10.72T used, 29.56T open)
+		Slots: 24/45S
+		Speed: 20.9 kph
+		Turn: 160°/s (30+45°|128°)
+		Heat mgmt: (775 Th|-27 Th/s)
+
+		Hull grade: 356 TTA-A 400 (39.9/T ~ 8.92T/12S)
+		Engine: ICE100+PGE-47E (1.8T/8S)
+		Heatsinks: Type-S1H
+		Sensors: SD-422S (1T/1S)
+
+		### Details
+
+		 - Coated with a thermal-resistant titanium-tungsten alloy, the war engine is designed for use against thermal weaponry and safe operation at depots/outposts. The prototype also exhibits exceptional fall mitigation properties. These characteristics render the war engine suitable for potential orbital insertion as part of the ASTEREYE Program.
+		 - Enlarged camera-sensor modulus is a vulnerability to denser projectiles, however, allows for finer data and smoother locomotive control. A steel-reinforced, plastic anti-glare cover complements the exterior camera lens to prevent damage to the camera under daylight conditions, whilst also protecting against weighted projectiles from overhead. A radio component and E4 Slave Unit paired to the main processor allow the war engine to operate autonomously or by operator at will. The radio frequency to be shared verbally for security.
+		 - The key feature is the dual-power plant set-up, utilizing both internal combustion and the heavily-experimental phoenum power. The downsized PGE is an attempt at a working model for M.T. Bell's theories to a miniature version. The war engine will run primarily off of internal combustion until the need for the PGE arises. The PGE will activate under critical conditions, when the ICE is inoperable or during operation of the phoenum-propulsion jump jets.
+		 - Arm Comparator Unit links data with opposite arm for improved accuracy and logistics through wireless connection. Data broadcasting speeds are slow, but adjustments should still be timely. Range And Precision Processor measures muzzle velocity, impact time, spread, and other variables to improve weapon accuracy. The modular rocket pods utilize their own sensors for fire control data processing.
+		 - The ordinance launcher is completely hidden in the frontal armor plates. Quickly retracts the mechanism after a succesful launch. Heavily customizable to contain various mission-critical ordinance or support turrets when handling infantry.
 		''' */
 }
 
@@ -806,412 +848,405 @@ Mechanicus_Sovereignty: {
 			*****
 			Above Scope Tinkerers are Senior Tinkerers. They make up the second smallest caste by population and live more luxurious lives. Senior Tinkerers act as teachers for Scope Tinkerers while primarily pursuing ways to actively improve Mechanicus society through technology or policy. The one-on-one nature of working with Scope Tinkerers below them grants them a lot of time to balance their lives.
 			''' */
-		/* Classified_Blueprint.Text:
-			'''
-			[jimage/2xc1b0f07o-25,0:Origins/UI/Trenchmaker_Drawing]
-			[header:TM-22S 'TRENCHMAKER' SPECIFICATIONS (7/{$SeriesLength})]
-
-			### Production
-
-			Serial: TM-XX#
-			Name: 'Trenchmaker'
-			Designer: Senior Tinkerer H. M.
-			Introduction: April 4th 1-
-			Weight class: Heavy
-			Base model: TM-22S
-			Base price: 30 Platinum, 47 Gold, 2 Silver, 60 Copper
-			Design quirks:
-			 - Modular
-			 - Easy to maintain
-			 - Stable footing
-			 - Sensor vulnerability
-
-			### Chassis
-
-			Type: Standard
-			Mass: 40.28T (10.72T used, 29.56T open)
-			Slots: 28/45S
-			Speed: 20.9 kph
-			Turn: 160°/s (30+45°|128°)
-			Heat mgmt: (775 Th|-27 Th/s)
-
-			Hull grade: 356 TTA-A 400 (39.9/T ~ 8.92T/12S)
-			Engine: ICE100 (0.8T/4S)
-			Heatsinks: Type-S1H
-			Sensors: SD-422S (1T/1S)
-
-			### Details
-
-			 - Coated with a thermal-resistant titanium-tungsten alloy, the war engine is designed for use against thermal weaponry and safe operation at depots/outposts. The prototype also exhibits exceptional fall mitigation properties. These characteristics render the war engine suitable for potential orbital insertion as part of the ASTEREYE Program.
-			 - Enlarged camera-sensor modulus is a vulnerability to denser projectiles, however, allows for finer data and smoother locomotive control. A steel-reinforced, plastic anti-glare cover complements the exterior camera lens to prevent damage to the camera under daylight conditions, whilst also protecting against weighted projectiles from overhead. A radio component and E4 Slave Unit paired to the main processor allow the war engine to operate autonomously or by operator at will. The radio frequency to be shared verbally for security.
-			 - The key feature is the dual-power plant set-up, utilizing both internal combustion and the heavily-experimental phoenum power. The downsized PGE is an attempt at a working model for M.T. Bell's theories to a miniature version. The war engine will run primarily off of internal combustion until the need for the PGE arises. The PGE will activate under critical conditions, when the ICE is inoperable or during operation of the phoenum-propulsion jump jets.
-			 - Arm Comparator Unit links data with opposite arm for improved accuracy and logistics through wireless connection. Data broadcasting speeds are slow, but adjustments should still be timely. Range And Precision Processor measures muzzle velocity, impact time, spread, and other variables to improve weapon accuracy. The modular rocket pods utilize their own sensors for fire control data processing.
-			 - The ordinance launcher is completely hidden in the frontal armor plates. Quickly retracts the mechanism after a succesful launch. Heavily customizable to contain various mission-critical ordinance or support turrets when handling infantry.
-			''' */
 	}
-}
 
-Birth_Of_The_Gods: {
-	// DisplayName: Birth Of The Gods
-	// SeriesLength: "3"
+	Birth_Of_The_Gods: {
+		// DisplayName: Birth Of The Gods
+		// SeriesLength: "3"
 
-	Life_Fruit: {
-		// Name: "{$ItemName.LifeFruit}"
-		/* Text:
+		Life_Fruit: {
+			// Name: "{$ItemName.LifeFruit}"
+			/* Text:
+				'''
+				[header:Life Fruit (1/{$SeriesLength})]
+				[jimage/sc3d:Terraria/Images/Item_1291]
+
+				*****
+				Terraria's Dryads were its true keepers, bringing about life and acting on behalf of the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
+				''' */
+		}
+
+		Broken_Hero_Sword: {
+			// Name: "{$ItemName.BrokenHeroSword}"
+			/* Text:
+				'''
+				[header:Broken Hero Sword (2/{$SeriesLength})]
+				[jimage/sc3d:Terraria/Images/Item_1570]
+
+				*****
+				Some possessed this knowledge and hunted the Dryadkin for their Forbidden Fruit. The Dryad Clan had become jaded and lost trust in any outsiders who previously knew them. But, 16 of these fruits still remained whether protected by them or already outside of their control.
+				''' */
+		}
+
+		Luminite: {
+			// Name: "{$ItemName.LunarOre}"
+			/* Text:
+				'''
+				[header:Luminite (3/{$SeriesLength})]
+				[jimage/sc3d:Terraria/Images/Item_3460]
+
+				*****
+				And, there were those who ruined it for all, like that of Cthulhu's war against Terraria, which resulted in the death of all but one dryad who ran away. The search for godhood became a lost dream that day, but it gave way for the world to finally find balance. Terrarians exist to help with this and remove all gods for good.
+				''' */
+		}
+	}
+
+	Ocean_Tribe: {
+		// DisplayName: The Ocean Tribe
+		// SeriesLength: "5"
+
+		Neptunes_Shell: {
+			// Name: "{$ItemName.NeptunesShell}"
+			/* Text:
+				'''
+				[header:Neptune's Shell (1/{$SeriesLength})]
+				[jimage/sc3d:Terraria/Images/Item_497]
+
+				*****
+				Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire as he chose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been, but, it was still a slaughter.
+				''' */
+		}
+
+		/* Shark.Text:
 			'''
-			[header:Life Fruit (1/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_1291]
-
+			[header:Shark (2/{$SeriesLength})]
+			[jportrait/s1.2dw600:Shark]
 			*****
-			Terraria's Dryads were its true keepers, bringing about life and acting on behalf of the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
+			The merfolk's battle against Cthulhu was quick and violent. Neptune commanding the initial cavalry was a tactical failure that lead to his demise. Despite the unduly circumstances he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune was consumed by Cthulhu, which made Cthulhu even more powerful.
 			''' */
+
+		Shell_Pile: {
+			// Name: "{$ItemName.ShellPileBlock}"
+			/* Text:
+				'''
+				[header:Shell Pile (3/{$SeriesLength})]
+				[jimage/sc3d:Terraria/Images/Item_4090]
+
+				*****
+				Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh. Cthulhu would await his release from R'yleh in the darkness of the abyss.
+				''' */
+		}
+
+		Deep_Ocean_Pearl: {
+			// Name: Deep Ocean Pearl
+			/* Text:
+				'''
+				[header:Deep Ocean Pearl (4/{$SeriesLength})]
+				[jimage/sc3d:Origins/Items/Weapons/Summoner/Deep_Ocean_Pearl]
+
+				*****
+				The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from his havoc. There was a reform attempted by Neptune's closest but without their idol to give them guidance, the dream began to fade as people fled. I was just a merling at that time, which helped me fail to understand how awful life in Aqi was.
+				''' */
+		}
+
+		Diving_Helmet: {
+			// Name: "{$ItemName.DivingHelmet}"
+			/* Text:
+				'''
+				[header:Diving Helmet (5/{$SeriesLength})]
+				[jimage/sc3d:Terraria/Images/Item_268]
+
+				*****
+				I instead found joy infatuated by a naive diver who entertained himself by taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
+				''' */
+		}
 	}
 
-	Broken_Hero_Sword: {
-		// Name: "{$ItemName.BrokenHeroSword}"
+	Trenchmaker: {
+		// Name: Trenchmaker
 		/* Text:
 			'''
-			[header:Broken Hero Sword (2/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_1570]
-
+			[header:Trenchmaker]
+			[jimage/s1d:Origins/NPCs/Ashen/Boss/Trenchmaker]
 			*****
-			Some possessed this knowledge and hunted the Dryadkin for their Forbidden Fruit. The Dryad Clan had become jaded and lost trust in any outsiders who previously knew them. But, 16 of these fruits still remained whether protected by them or already outside of their control.
+			It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew came to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Do not get me wrong, the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since Lauren sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-22S was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-22S. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-S and TM-M lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the other network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack from quick reflexes, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I promised myself to never leave until the "Ashen" is powered off for good, so here I am.
 			''' */
 	}
 
-	Luminite: {
-		// Name: "{$ItemName.LunarOre}"
-		/* Text:
+	Worn_Paper: {
+		// DisplayName: Worn Paper
+		/* Loose_Wheel.Text:
 			'''
-			[header:Luminite (3/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_3460]
+			I got my certificate of admission into the Smokesite Scrapper Apprenticeship 3 months ago.
+			Just a few years in the mines, a few learning lessons here ‘n there and then I’m free.
+			Still laborious work, but it is fun.
+			I get to go to many abandoned facilities and take back home the important stuff, and sometimes meet with strange anomalies.
+			They say magic isn’t real, but we get to see it.
+			Don’t know a soul that would engineer these kinds of things; not even the M.T’s could figure it out.
+			As long as I stick with my new work group, I’ll be fine. They’re really old because our job has no prospects for advancement, but they can carry me forward until I get the hang of things.
+			Maybe one day I’ll also get to be unfazed by a random mannequin doing a handstand charge straight at me, but certainly not now.
+			''' */
+		/* Self_Preservation.Text:
+			'''
+			I was quite lucky. By the time the war engines turned on us I was out on a scrap run at AT-BSQ2, the facility was an old comms tower connecting the 2nd and 9th quadrants. We managed to get the comms array working again, which was powerful enough to relay messages that were being sent directly from the Mother Unit.
+			The facility having no power was the reason why the other smokesites in the surrounding area were inactive, but there were chills running down our spines after we powered it back on and intercepted the Mother Unit’s orders.
+			If it weren’t for my cowardice we'd be dead sooner.
+			We’ve been camped out here and brought in the buggy in-case we need a fast escape.
+			Seeing the birds in the sky and the daddy long legs out isn’t an assuring sight, though. And, I'm certain they're not just on-patrol for bandits.
+			''' */
+		/* Smog_Test.Text:
+			'''
+			Pat: Hey Bill, when's the last time you got a smog test?
 
+			Bill: Is this another one of your dumb jokes again?
+
+			Pat: Nah, I'm serious. I've seen you come here on your motorized bicycle. Everyone with a motor's gotta do it by the year.
+
+			Bill: Got mine last fall, why?
+
+			Pat: Well, you just let a big one out in this tiny shaft and it smells absolutely vile. What are you puttin' in there dude?
+
+			Bill: Oh, didn't know you were a smog tester. Got a good look at the undercarriage there? Nothing too rusty?
+
+			Pat: Well. You're surely smelly, but good at the comebacks.
+
+			Matt: Can you two shut the hell up?
+
+			Pat: What? Can't have a lil fun to pass the time?
+
+			Matt: I can't let my Apprenticeship to becoming a scrapper be ruined by you pigs. Try not to make a war engine think we're slacking off, would yah?
+
+			Bill: Fair's fair, but I'll screw up more if you make this about you and your stupid Apprenticeship BS.
+			''' */
+		/* The_Packing_Slip.Text:
+			'''
+			Manager: I checked it multiple times. The amount is not just wrong, the shipment itself is not what we ordered.
+
+			Worker: I have no idea about this, LGT. I explicitly remember putting it into the message to V-FSQ3 that we needed a shipment of fresh food stocks. The invoice number lines up too.
+
+			Manager: Instead, we got 18 tons of military technology. Could the message have gotten intercepted and changed in transit?
+
+			Worker: It’s entirely possible. Not the first comms station we’ve had become a smokesite. Guess that’s why we use the radio towers now, huh?
+
+			Manager: I will reach out to LGST about this, no worries. Just let LGST Avens know to update the supplies list.
+
+			Worker: Yes, LGT.
+			''' */
+		/* They_Found_Us.Text:
+			'''
+			We were compromised when a pack of packhunters came in and searched the place. We almost escaped but they were alerted by the buggy’s engine.
+			We drove about 8km before an HA-24 stopped us. I ran to this replenishment facility and found a power suit still in here. It’s a really good hiding place when you lock up in fear all the time. I can’t leave, but I can’t just starve myself. I’m just living off of whatever I can find.
+			''' */
+		/* Mean_Baby.Text:
+			'''
+			It's just a big baby. Who in their right mind made it this way? Here we are just trying to keep the stupid thing asleep, like it's supposed to be our job.
+			When the thing wakes up, we have to shock it with these tasers to calm it, and then sing it lullabies.
+			And for some reason, the lullabies actually work? Isn't this thing our POWERPLANT FOR THE ENTIRE POWER GRID? Whoever the hell thought making it a war machine, let alone with this much spite, deserves to be put in the pool of sanguinite we're having to sweat through everyday doing this crap.
+			''' */
+		/* Workplace_Safety_Concern.Text:
+			'''
+			Has anyone stopped to consider how much of a safety risk this place is? Just look at the table saw placed under the stairwell in sector 4B. Tell me the possibility of someone falling off the catwalk, onto that saw and then being minced to bits is slim-to-none.
+			Tell me that the doors with a crushing force of 5 elephants per square inch with no safety lever isn’t a concern mere feet away from the laborers’ bunks.
+			Who thought of any of this? I get why the layout of the facility is so off-kilter because it’s bits-and-pieces, but that doesn’t mean we can’t refurbish and replace our equipment. And, he wonders why I burn through so much morphine and fire bands.
+			''' */
+		/* Famine.Text:
+			'''
+			Sir, 
+
+			Regardless of our efforts, our crops always die out.
+			We’ve even cleaned out the entirety of hydroponics repeatedly, but none of the aquaculture survives.
+			The water supply is poisoned and it seems no amount of plumbing work will fix that.
+			We can’t rely on our own food production facilities anymore unless you plan on replacing the entire laborer caste with war engines.
+			I hope you have that deal with for them to provide us with food.
+			We’re going to need it.
+
+			Signed,
+
+			Sen.T. Romer
+			''' */
+	}
+
+	µTutorial: {
+		// DisplayName: Mechanics
+
+		Explosive_Weapons: {
+			// Name: Explosive Weapons
+			/* Text:
+				'''
+				Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by adversary defense. They also tend to be more expensive and rely heavily on your aim because of their often-slow velocities. Generally, the equipment is also the lowest in terms of defense, and there is still the added risk of blowing yourself up with your own explosives!
+
+				It's not all that bad to run with the rockets, however, it just requires a different level of play that running other classes might not have. Fortunately, some explosive weapons are safe to the user, but if they aren't there are plenty of items to provide you with "self-damage" protection. Not to mention, your explosives will only deal self-damage according to your own defense too!
+
+				Being a "demolitionist", as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
+
+				Oh, and one more thing: grenades are good for crowd-control, dynamite is good for single targets and bombs are an in-between. Yes, dynamite and bombs can be used offensively despite blowing up the world. That's just what a Pincushion from the Clothier is for. Also, look for any armor penetration bonuses to make them ignore defense and deal more damage!
+				''' */
+		}
+
+		TutorialJournalEntry: {
+			// Text: Mods.Origins.Journal.µTutorial.TutorialJournalEntry.Text
+			// Name: Tutorial Journal Entry
+		}
+	}
+
+	µUncategorized: {
+		// DisplayName: Uncategorized
+
+		Cubekon_Tinkerer: {
+			// Name: Cubekon Tinkerer
+			/* Text:
+				'''
+				Overview:
+					- is the mentor of the mechanic before she discovered the Cubekons where she was promptly captured by Quantux. Spent her seemingly 'forever' time inside the Cubekon Matrix, learning about everything they know and taking notes about the most important things. She became the Cubekon Tinkerer after she was released now full of ideas. responsible for ICARUS, and created it to be the final line of defense just before she was captured
+									
+				Origins:
+					- cubekon tinkerer's origins are unknown other than that she resided in the same kingdom as the Mechanic
+
+				Contributions:
+					- aiding the Terrarian, ICARUS, mech bosses (aid)
+				''' */
+		}
+
+		/* Eccentric_Stone.Text:
+			'''
+			[header:Eccentric Stone]
+			[jimage/sc2d:Origins/Items/Accessories/Eccentric_Stone]
 			*****
-			And, there were those who ruined it for all, like that of Cthulhu's war against Terraria, which resulted in the death of all but one dryad who ran away. The search for godhood became a lost dream that day, but it gave way for the world to finally find balance. Terrarians exist to help with this and remove all gods for good.
+			This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate, but yet weren't able to free me from. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so carelessly is unforgivable.
 			''' */
-	}
-}
 
-Ocean_Tribe: {
-	// DisplayName: The Ocean Tribe
-	// SeriesLength: "5"
+		Felnum: {
+			// Name: Felnum
+			/* Text:
+				'''
+				[header:Felnum]
+				[jimage/sc3d:Origins/Tiles/Other/Felnum_Ore_Item] [jimage/sc3dw800:Origins/Items/Materials/Felnum_Bar]
 
-	Neptunes_Shell: {
-		// Name: "{$ItemName.NeptunesShell}"
-		/* Text:
+				*****
+
+				Overview: 
+					- Felnum is mostly known for its "electrical greed" in that it builds up a crystalline material known as "felnum crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
+								
+				Characteristics: 
+					- Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, isn't too malleable, and possesses a worse thermal conductivity than its copper equivalent.
+								
+				Origins: 
+					- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:CopperOre] by blessing it at a Crystal Ball [i:CrystalBall].
+								
+				Chemistry:
+					- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits and Aetherite [i:Origins/Aetherite_Bar] dropped by a mysterious-yet-powerful guardian of the Aether. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+								
+				History: 
+					- Felnum is an artificial metal material conjured by the wizards of the Bastille (dungeon). Its sole purpose was to prevent lightning strikes from reduce the amount of lightning in the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.
+								
+				Symbolism:
+					- Felnum could be seen as a blessing or curse depending on who you ask. To the Order of Dryads that once lived in Terraria, it is seen as a grave mistake to restoring balance in the world. To the settlers of the surface, it can be seen as a blessing shielding them from the destructive thunderstorms.
+				''' */
+		}
+
+		/* Forbidden_Voice.Text:
 			'''
-			[header:Neptune's Shell (1/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_497]
-
+			[header:Forbidden Voice]
+			[jimage/sc3:Origins/Items/Accessories/Forbidden_Voice] [jimage/sc3w300:Origins/Items/Accessories/Forbidden_Voice_Uncursed]
 			*****
-			Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire as he chose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been, but, it was still a slaughter.
+			Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see it melting away. "Promises" of fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
 			''' */
-	}
-
-	/* Shark.Text:
-		'''
-		[header:Shark (2/{$SeriesLength})]
-		[jportrait/s1.2dw600:Shark]
-		*****
-		The merfolk's battle against Cthulhu was quick and violent. Neptune commanding the initial cavalry was a tactical failure that lead to his demise. Despite the unduly circumstances he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune was consumed by Cthulhu, which made Cthulhu even more powerful.
-		''' */
-
-	Shell_Pile: {
-		// Name: "{$ItemName.ShellPileBlock}"
-		/* Text:
+		/* Stone_Mask.Text:
 			'''
-			[header:Shell Pile (3/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_4090]
-
+			[header:Stone Mask]
+			[jimage/sc3d:Origins/Items/Accessories/Stone_Mask]
 			*****
-			Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh. Cthulhu would await his release from R'yleh in the darkness of the abyss.
+			Ah, I know of this mask, from history of torn-away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
 			''' */
-	}
 
-	Deep_Ocean_Pearl: {
-		// Name: Deep Ocean Pearl
-		/* Text:
+		Captured_Mojo: {
+			// Name: Mojo
+			/* Text:
+				'''
+				[header:Mojo]
+				[i:Origins/Captured_Mojo]
+
+				Overview: 
+					- only a rare type of plant is capable of capturing Mojo that randomly wanders the world. The Dryad doesn't speak much of this rare plant, likely for good reason. Touching Mojo feels extremely refreshing and saturating as it is said to make you younger. Could possibly explain why the Dryad is so old! 
+									
+				Characteristics: 
+					- Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
+									
+				Origins: 
+					- As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
+									
+				Chemistry:
+					- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation[ox:,] and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
+									
+				History: 
+					- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the {§Riven_Hive}, it was like any other single-cellular organism. When Cthulhu's invasion on Terraria's inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
+				''' */
+		}
+
+		/* Lost_Page.Text:
 			'''
-			[header:Deep Ocean Pearl (4/{$SeriesLength})]
-			[jimage/sc3d:Origins/Items/Weapons/Summoner/Deep_Ocean_Pearl]
+			I think they're still discovering- OKAY, so I totally just got sent to some kind of pocket dimension, so I'm going to try and write as much as I can on this piece of paper. I can see a lot of their data now that I'm in this weird realm, which I could only presume is some kind of prison. Their civilization is trying to become a singularity and combine all of their consciousnesses into one. It's really crazy, and I didn't think they were that far, but I am really discovering a lot of secrets right now. When I get out of here I'm going to really have to experiment…
 
-			*****
-			The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from his havoc. There was a reform attempted by Neptune's closest but without their idol to give them guidance, the dream began to fade as people fled. I was just a merling at that time, which helped me fail to understand how awful life in Aqi was.
+			Crap, I'm running out of space. Basically, if I don't forget what I learned from all this (still trying to process what I just saw) I have a lot of awesome projects in mind…
 			''' */
-	}
-
-	Diving_Helmet: {
-		// Name: "{$ItemName.DivingHelmet}"
-		/* Text:
+		/* Timbre_of_Hell.Text:
 			'''
-			[header:Diving Helmet (5/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_268]
+			To those who were banished to the depths, the cities of Hell were the closest thing to home. The cities of Hell always stood strong against the wild creatures that lived there until chaos ensued. There were loud crashing noises and unearthly screams coming from a faraway horizon as the wilderness grew rampant and even more violent. The cities were eventually overwhelmed by the creatures of Hell as they became more powerful and populous.
 
-			*****
-			I instead found joy infatuated by a naive diver who entertained himself by taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
+			What's left are only the constructs of the inhabitants that once lived there. Some are said to still roam along the ashen ground of the underworld to this day.
 			''' */
-	}
-}
-
-Trenchmaker: {
-	// Name: Trenchmaker
-	/* Text:
-		'''
-		[header:Trenchmaker]
-		[jimage/s1d:Origins/NPCs/Ashen/Boss/Trenchmaker]
-		*****
-		It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew came to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Do not get me wrong, the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since Lauren sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-22S was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-22S. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-S and TM-M lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the other network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack from quick reflexes, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I promised myself to never leave until the "Ashen" is powered off for good, so here I am.
-		''' */
-}
-
-Worn_Paper: {
-	// DisplayName: Worn Paper
-	/* Loose_Wheel.Text:
-		'''
-		'I got my certificate of admission into the Smokesite Scrapper Apprenticeship 3 months ago.
-		Just a few years in the mines, a few learning lessons here ‘n there and then I’m free.
-		Still laborious work, but it is fun.
-		I get to go to many abandoned facilities and take back home the important stuff, and sometimes meet with strange anomalies.
-		They say magic isn’t real, but we get to see it.
-		Don’t know a soul that would engineer these kinds of things;
-		not even the MT’s can figure it out.
-		As long as I stick with my new work group, I’ll be fine. They’re really old because our job has no prospects for advancement, they can carry me forward until I get the hang of things.
-		Maybe one day I’ll also get to be unfazed by a random mannequin doing a handstand charge straight at me, but certainly not now.'
-		''' */
-	/* Self_Preservation.Text:
-		'''
-		I was quite lucky.
-		By the time the war engines turned on us I was out on a scrap run at AT-BSQ2, the facility was an old comms tower connecting the 9th and 2nd quadrants.
-		We managed to get the comms array working again, which was powerful enough to relay messages that were being sent directly from the Mother Unit.
-		The facility having no power was the reason why the other smokesites in the surrounding area were inactive, but after we powered it back on and intercepted the Mother Unit’s orders, we had chills run down our spines.
-		If it weren’t for my cowardice, I’d be dead because Cath, Ron and Heggins agreed to heed my warnings.
-		We’ve been camped out here and brought in the buggy in-case we need a fast escape.
-		Seeing the birds in the sky and the daddy long legs out isn’t an assuring sight, though.
-		''' */
-	/* Smog_Test.Text:
-		'''
-		Pat: Hey Bill, when's the last time you got a smog test?
-
-		Bill: Is this another one of your dumb jokes again?
-
-		Pat: Nah, I'm serious. I've seen you come here on your motorized bicycle. Everyone with a motor's gotta do it by the year.
-
-		Bill: Got mine last fall, why?
-
-		Pat: Well, you just let a big one out in this damn shaft in my face, and it smells absolutely vile. What are you puttin' in there dude?
-
-		Bill: Oh, didn't know you were a smog tester. Got a good look at the undercarriage there? Nothing too rusty?
-
-		Pat: Well. You're surely smelly, but good at the comebacks. Good one.
-
-		Matt: Can you two shut the hell up?"
-
-		Pat: What? Can't have a lil fun to pass the time?
-
-		Matt: I can't let my Apprenticeship to becoming a scrapper be ruined by you pigs. Try not to make a war engine think we're slacking off, would yah?
-
-		Bill: Fair's fair, but I'll screw up more if you make this about you and your stupid Apprenticeship BS.
-		''' */
-	/* The_Packing_Slip.Text:
-		'''
-		Manager: I checked it multiple times. The amount is not just wrong, the shipment itself is not what we ordered.
-
-		Worker: I have no idea about this, LGT. I explicitly remember putting it into the message to V-FSQ3 that we needed a shipment of fresh food stocks. The invoice number lines up too.
-
-		Manager: Instead, we got 18 tons of military technology. Could the message have gotten intercepted and changed in transit?
-
-		Worker: It’s entirely possible. Not the first comms station we’ve had become a smokesite. Guess that’s why we use the radio towers now, huh?
-
-		Manager: I will reach out to LGST about this, no worries. Just let LGST Avens know to update the supplies list.
-
-		Worker: Yes, LGT.
-		''' */
-	/* They_Found_Us.Text:
-		'''
-		We were compromised when a pack of packhunters came in and searched the place.
-		We almost escaped but they were alerted by the buggy’s engine.
-		We drove about 8km before an HA-24 stopped us.
-		I ran to this replenishment facility and found a power suit still in here.
-		It’s a really good hiding place when you lock up in fear all the time.
-		I can’t leave, but I can’t just starve myself.
-		I’m just living off of whatever I can find
-		''' */
-	/* Mean_Baby.Text:
-		'''
-		It's just a big baby.
-		Who in their right mind made it this way?
-		Here we are just trying to keep the stupid thing asleep, and such is an impossible task.
-		The thing wakes up for a solid few minutes, we have to get near it and shock it with these tasers which supposedly calms it, and then sing it lullabies.
-		For some reason, the lullabies actually work.
-		Jace and I saw the end of not doing that... whoever the hell thought making the powerplant of the world a war machine, let alone with this much spite, deserves to be put in the pool of sanguinite we're having to sweat through everyday doing this crap.
-		''' */
-	/* Workplace_Safety_Concern.Text:
-		'''
-		Has anyone stopped to seriously consider how much of a safety risk this place is?
-		Just look at the table saw placed under the stairwell in sector 4B.
-		Tell me the possibility of someone falling off of the catwalk, onto that and then being minced to bits isn’t likely to happen.
-		Tell me that the doors with a crushing force of 5 elephants per square inch with no safety lever isn’t a concern mere feet away from the laborers’ bunks.
-		Who thought of any of this?
-		I get why the layout of the facility is so wacky because it’s bits-and-pieces, but that doesn’t mean we can’t reinstall and update our equipment.
-		And, he wonders why I burn through so much morphine and fire bands.
-		''' */
-	/* Famine.Text:
-		'''
-		Sir, no matter what we try to do our crops always die out.
-		We’ve even cleaned out the entirety of hydroponics over and over again, but none of the plants are surviving.
-		The water supply is poisoned and it seems no amount of plumbing work will fix that.
-		We can’t rely on our own food production facilities anymore unless you plan on replacing the entire laborer caste with war engines.
-		I hope you have that deal with for them to make food for us.
-		We’re going to need it.
-		''' */
-}
-
-µTutorial: {
-	// DisplayName: Mechanics
-
-	Explosive_Weapons: {
-		// Name: Explosive Weapons
-		/* Text:
+		/* Tinkerers_Handy_Guide.Text:
 			'''
-			Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by defense. They also tend to be more expensive and rely heavily on your aim because of their often-slow velocities. Fortunately, this reality of Terraria has some possible explosive equipment that could be manifested, but even the equipment is generally the lowest in terms of defense (as to permit flexibility and mobility). All of this and to mention that you could blow yourself up along with the world. Don't get caught in the blast radius of your own explosives!
+			So, they call themselves the Cuboids, but they're a part of the Cubekon race, just to clarify… after looking into their data, they seem to be from another world and are somehow trapped here for some reason. My question is, with this wealth of technological advance, why haven't they gotten out of here yet? Not even I know that. What I do know is what's inside of them.
 
-			It's not all that bad to run with the rockets, however, it just requires a different level of play that running other classes might not have. Fortunately, some explosive weapons are safe to the user, but if they aren't there are plenty of items to provide you with "self-damage" protection. Not to mention, your explosives will only deal self-damage according to your own defense too!
-
-			Being a "demolitionist", as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
-
-			Oh, and one more thing: grenades are good for crowd-control, dynamite is good for single targets and bombs are an in-between. Yes, dynamite and bombs can be used offensively despite blowing up the world. That's just what a Pincushion from the Clothier is for. Also, look for any armor penetration bonuses to make them ignore defense and deal more damage!
+			The Cuboids seem to be entirely mechanical in nature with a brain made out of these weird green cubes, which I'll just call 'qubes' for now. These 'qubes' act like a power source and data storage membrane in one. How I know that is because they make branch out in a very symmetric way all over the body of these Cuboids. There's also a lot of other machinery in here that I can only assume allows these things to move since I recently discovered that they have a consciousness, but that's a bit complicated…
 			''' */
-	}
+		/* Zoologist.Text:
+			'''
+			"Well, long ago my dad was this kinda wizard who knew Severus, and I remember he was really upset about how evil he became so he took it upon himself to end the chaos... but, he disappeared. I've been looking for him ever since I was a little girl. I wish I could help out with Severus, but I am just not cut out for that kinda thing. Especially since he could just curse me more."
 
-	TutorialJournalEntry: {
-		// Text: Mods.Origins.Journal.µTutorial.TutorialJournalEntry.Text
-		// Name: Tutorial Journal Entry
+			Overview:
+				- 
+								
+			Origins:
+				- golfer and Zoologist are related. Her parents are name of wizard related to severus and the mother is unknown. The wizard loved their mother so much, but something bad happened.
+
+			Contributions:
+				- aiding the Terrarian
+			''' */
 	}
 }
 
 µUncategorized: {
-	// DisplayName: Uncategorized
+	// Eccentric_Stone.Text: Mods.Origins.Journal.µUncategorized.Eccentric_Stone.Text
+	// DisplayName: µUncategorized
+	// Forbidden_Voice.Text: Mods.Origins.Journal.µUncategorized.Forbidden_Voice.Text
+	// Stone_Mask.Text: Mods.Origins.Journal.µUncategorized.Stone_Mask.Text
+	// Felnum.Text: Mods.Origins.Journal.µUncategorized.Felnum.Text
+}
 
-	Cubekon_Tinkerer: {
-		// Name: Cubekon Tinkerer
-		/* Text:
-			'''
-			Overview:
-				- is the mentor of the mechanic before she discovered the Cubekons where she was promptly captured by Quantux. Spent her seemingly 'forever' time inside the Cubekon Matrix, learning about everything they know and taking notes about the most important things. She became the Cubekon Tinkerer after she was released now full of ideas. responsible for ICARUS, and created it to be the final line of defense just before she was captured
-								
-			Origins:
-				- cubekon tinkerer's origins are unknown other than that she resided in the same kingdom as the Mechanic
+Worn_Paper: {
+	// Famine.Text: Mods.Origins.Journal.Worn_Paper.Famine.Text
+	// DisplayName: Worn_Paper
+	// Loose_Wheel.Text: Mods.Origins.Journal.Worn_Paper.Loose_Wheel.Text
+	// Mean_Baby.Text: Mods.Origins.Journal.Worn_Paper.Mean_Baby.Text
+	// Self_Preservation.Text: Mods.Origins.Journal.Worn_Paper.Self_Preservation.Text
+	// Smog_Test.Text: Mods.Origins.Journal.Worn_Paper.Smog_Test.Text
+	// The_Packing_Slip.Text: Mods.Origins.Journal.Worn_Paper.The_Packing_Slip.Text
+	// They_Found_Us.Text: Mods.Origins.Journal.Worn_Paper.They_Found_Us.Text
+	// Workplace_Safety_Concern.Text: Mods.Origins.Journal.Worn_Paper.Workplace_Safety_Concern.Text
+}
 
-			Contributions:
-				- aiding the Terrarian, ICARUS, mech bosses (aid)
-			''' */
+Birth_Of_The_Gods: {
+	// Broken_Hero_Sword.Text: Mods.Origins.Journal.Birth_Of_The_Gods.Broken_Hero_Sword.Text
+	// DisplayName: Birth_Of_The_Gods
+	// Life_Fruit.Text: Mods.Origins.Journal.Birth_Of_The_Gods.Life_Fruit.Text
+	// Luminite.Text: Mods.Origins.Journal.Birth_Of_The_Gods.Luminite.Text
+}
+
+Ocean_Tribe: {
+	// Diving_Helmet.Text: Mods.Origins.Journal.Ocean_Tribe.Diving_Helmet.Text
+	// DisplayName: Ocean_Tribe
+	// Neptunes_Shell.Text: Mods.Origins.Journal.Ocean_Tribe.Neptunes_Shell.Text
+	// Shark.Text: Mods.Origins.Journal.Ocean_Tribe.Shark.Text
+	// Shell_Pile.Text: Mods.Origins.Journal.Ocean_Tribe.Shell_Pile.Text
+}
+
+µTutorial: {
+	Explosive_Weapons: {
+		// Text: Mods.Origins.Journal.µTutorial.Explosive_Weapons.Text
+		// Name: Explosive Weapons Entry
 	}
 
-	/* Eccentric_Stone.Text:
-		'''
-		[header:Eccentric Stone]
-		[jimage/sc2d:Origins/Items/Accessories/Eccentric_Stone]
-		*****
-		This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate, but yet weren't able to free me from. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so carelessly is unforgivable.
-		''' */
-
-	Felnum: {
-		// Name: Felnum
-		/* Text:
-			'''
-			[header:Felnum]
-			[jimage/sc3d:Origins/Tiles/Other/Felnum_Ore_Item] [jimage/sc3dw800:Origins/Items/Materials/Felnum_Bar]
-
-			*****
-
-			Overview: 
-				- Felnum is mostly known for its "electrical greed" in that it builds up a crystalline material known as "felnum crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
-							
-			Characteristics: 
-				- Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, isn't too malleable, and possesses a worse thermal conductivity than its copper equivalent.
-							
-			Origins: 
-				- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:CopperOre] by blessing it at a Crystal Ball [i:CrystalBall].
-							
-			Chemistry:
-				- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits and Aetherite [i:Origins/Aetherite_Bar] dropped by a mysterious-yet-powerful guardian of the Aether. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
-							
-			History: 
-				- Felnum is an artificial metal material conjured by the wizards of the Bastille (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.
-							
-			Symbolism:
-				- Felnum is seen as blessing or a curse depending on who you ask due to its history. To the Order of Dryads that once lived in Terraria, it is seen as a grave mistake to restoring balance in the world. To the settlers of the surface, it can be seen as a blessing shielding them from the destructive thunderstorms.
-			''' */
-	}
-
-	/* Forbidden_Voice.Text:
-		'''
-		[header:Forbidden Voice]
-		[jimage/sc3:Origins/Items/Accessories/Forbidden_Voice] [jimage/sc3w300:Origins/Items/Accessories/Forbidden_Voice_Uncursed]
-		*****
-		Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see it melting away. "Promises" of fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
-		''' */
-	/* Stone_Mask.Text:
-		'''
-		[header:Stone Mask]
-		[jimage/sc3d:Origins/Items/Accessories/Stone_Mask]
-		*****
-		Ah, I know of this mask, from history of torn-away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
-		''' */
-
-	Captured_Mojo: {
-		// Name: Mojo
-		/* Text:
-			'''
-			[header:Mojo]
-			[i:Origins/Captured_Mojo]
-
-			Overview: 
-				- only a rare type of plant is capable of capturing Mojo that randomly wanders the world. The Dryad doesn't speak much of this rare plant, likely for good reason. Touching Mojo feels extremely refreshing and saturating as it is said to make you younger. Could possibly explain why the Dryad is so old! 
-								
-			Characteristics: 
-				- Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
-								
-			Origins: 
-				- As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
-								
-			Chemistry:
-				- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation[ox:,] and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
-								
-			History: 
-				- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the {§Riven_Hive}, it was like any other single-cellular organism. When Cthulhu's invasion on Terraria's inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
-			''' */
-	}
-
-	/* Lost_Page.Text:
-		'''
-		I think they're still discovering- OKAY, so I totally just got sent to some kind of pocket dimension, so I'm going to try and write as much as I can on this piece of paper. I can see a lot of their data now that I'm in this weird realm, which I could only presume is some kind of prison. Their civilization is trying to become a singularity and combine all of their consciousnesses into one. It's really crazy, and I didn't think they were that far, but I am really discovering a lot of secrets right now. When I get out of here I'm going to really have to experiment…
-
-		Crap, I'm running out of space. Basically, if I don't forget what I learned from all this (still trying to process what I just saw) I have a lot of awesome projects in mind…
-		''' */
-	/* Timbre_of_Hell.Text:
-		'''
-		To those who were banished to the depths, the cities of Hell were the closest thing to home. The cities of Hell always stood strong against the wild creatures that lived there until chaos ensued. There were loud crashing noises and unearthly screams coming from a faraway horizon as the wilderness grew rampant and even more violent. The cities were eventually overwhelmed by the creatures of Hell as they became more powerful and populous.
-
-		What's left are only the constructs of the inhabitants that once lived there. Some are said to still roam along the ashen ground of the underworld to this day.
-		''' */
-	/* Tinkerers_Handy_Guide.Text:
-		'''
-		So, they call themselves the Cuboids, but they're a part of the Cubekon race, just to clarify… after looking into their data, they seem to be from another world and are somehow trapped here for some reason. My question is, with this wealth of technological advance, why haven't they gotten out of here yet? Not even I know that. What I do know is what's inside of them.
-
-		The Cuboids seem to be entirely mechanical in nature with a brain made out of these weird green cubes, which I'll just call 'qubes' for now. These 'qubes' act like a power source and data storage membrane in one. How I know that is because they make branch out in a very symmetric way all over the body of these Cuboids. There's also a lot of other machinery in here that I can only assume allows these things to move since I recently discovered that they have a consciousness, but that's a bit complicated…
-		''' */
-	/* Zoologist.Text:
-		'''
-		"Well, long ago my dad was this kinda wizard who knew Severus, and I remember he was really upset about how evil he became so he took it upon himself to end the chaos... but, he disappeared. I've been looking for him ever since I was a little girl. I wish I could help out with Severus, but I am just not cut out for that kinda thing. Especially since he could just curse me more."
-
-		Overview:
-			- 
-							
-		Origins:
-			- golfer and Zoologist are related. Her parents are name of wizard related to severus and the mother is unknown. The wizard loved their mother so much, but something bad happened.
-
-		Contributions:
-			- aiding the Terrarian
-		''' */
+	// DisplayName: µTutorial
 }
