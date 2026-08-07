@@ -77,6 +77,7 @@ namespace Origins.Graphics {
 			SpawnDustCallback[DustID.Water_Space] = SpawnWater;
 			SpawnDustCallback[DustID.Water_Cavern] = SpawnWater;
 			SpawnDustCallback[DustID.Water_BloodMoon] = SpawnWater;
+			SpawnDustCallback[DustID.CursedTorch] = Torch(TorchID.Cursed);
 		}
 		public static void DefaultDrawVanillaDust(Dust dust) {
 			Color lightColor = Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16);
@@ -246,6 +247,55 @@ namespace Origins.Graphics {
 			}
 			if (!dust.noLightEmittence) Lighting.AddLight(dust.position, dust.color.ToVector3() * dust.scale);
 		}
+		static Action<Dust> Torch(int torchType) => dust => {
+			dust.position += dust.velocity;
+			if (!dust.noGravity) dust.velocity.Y += 0.05f;
+			if (!dust.noLight && !dust.noLightEmittence) {
+				float scale = dust.scale * 1.4f;
+				Min(ref scale, 1);
+				if (dust.customData is not float multiplier) multiplier = 1;
+				Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), torchType, scale * multiplier);
+			}
+			dust.rotation += dust.velocity.X * 0.5f;
+			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
+				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
+			} else {
+				dust.scale -= 0.01f;
+			}
+		};
+		static Action<Dust> Torch(Vector3 color) => dust => {
+			dust.position += dust.velocity;
+			if (!dust.noGravity) dust.velocity.Y += 0.05f;
+			if (!dust.noLight && !dust.noLightEmittence) {
+				float scale = dust.scale * 1.4f;
+				Min(ref scale, 1);
+				if (dust.customData is not float multiplier) multiplier = 1;
+				Lighting.AddLight(dust.position, color * scale * multiplier);
+			}
+			dust.rotation += dust.velocity.X * 0.5f;
+			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
+				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
+			} else {
+				dust.scale -= 0.01f;
+			}
+		};
+		static void Moss(Dust dust) {
+			dust.scale *= 0.96f;
+			dust.velocity.Y -= 0.01f;
+			dust.position += dust.velocity;
+			{
+				dust.rotation += dust.velocity.X * 0.5f;
+			}
+			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
+				if (dust.scale > dust.fadeIn) {
+					dust.fadeIn = 0f;
+				}
+			} else {
+				{
+					dust.scale -= 0.01f;
+				}
+			}
+		}
 		static void DrawDust() {
 			if (NetmodeActive.Server) return;
 			Rectangle rectangle = new((int)Main.screenPosition.X - 500 - 4, (int)Main.screenPosition.Y - 50 - 4, Main.screenWidth + 1000, Main.screenHeight + 100);
@@ -347,7 +397,7 @@ namespace Origins.Graphics {
 						}
 					}
 
-					SpawnDustCallback[Type]?.Invoke(dust); 
+					SpawnDustCallback[Type]?.Invoke(dust);
 					return dust;
 				}
 			}

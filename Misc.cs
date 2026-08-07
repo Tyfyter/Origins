@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
+using Mono.Cecil;
 using Origins.Core;
 using Origins.CrossMod;
 using Origins.Graphics;
@@ -2285,13 +2286,18 @@ namespace Origins {
 			}
 		}
 		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, float r, int k = 30) {
+			List<Vector2> samples = [];
+			rand.PoissonDiskSampling(samples, [], area, r, k);
+			return samples;
+		}
+		public static void PoissonDiskSampling(this UnifiedRandom rand, List<Vector2> samples, List<Vector2> activeList, Rectangle area, float r, int k = 30) {
 			float cellSize = r / MathF.Sqrt(2);
 			static int Ceil(float value) => (int)float.Ceiling(value);
 			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
 			Vector2 topLeft = area.TopLeft();
-			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
+			samples.Add(rand.NextVector2FromRectangle(area));
 			cells[(samples[0] - topLeft) / cellSize] = 0;
-			List<Vector2> activeList = [samples[0]];
+			activeList.Add(samples[0]);
 			while (activeList.Count > 0) {
 				int index = rand.Next(activeList.Count);
 				Vector2 currentSample = activeList[index];
@@ -2310,16 +2316,20 @@ namespace Origins {
 				samples.Add(newSample);
 				activeList.Add(newSample);
 			}
-			return samples;
 		}
 		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, Predicate<Vector2> customShape, float r, int k = 30) {
+			List<Vector2> samples = [];
+			rand.PoissonDiskSampling(samples, [], area, customShape, r, k);
+			return samples;
+		}
+		public static void PoissonDiskSampling(this UnifiedRandom rand, List<Vector2> samples, List<Vector2> activeList, Rectangle area, Predicate<Vector2> customShape, float r, int k = 30) {
 			float cellSize = r / MathF.Sqrt(2);
 			static int Ceil(float value) => (int)float.Ceiling(value);
 			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
 			Vector2 topLeft = area.TopLeft();
-			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
+			samples.Add(rand.NextVector2FromRectangle(area));
 			cells[(samples[0] - topLeft) / cellSize] = 0;
-			List<Vector2> activeList = [samples[0]];
+			activeList.Add(samples[0]);
 			while (activeList.Count > 0) {
 				int index = rand.Next(activeList.Count);
 				Vector2 currentSample = activeList[index];
@@ -2338,7 +2348,6 @@ namespace Origins {
 				samples.Add(newSample);
 				activeList.Add(newSample);
 			}
-			return samples;
 		}
 		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
 			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
