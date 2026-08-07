@@ -62,7 +62,7 @@ namespace Origins.World {
 				maxY = j,
 				walked = []
 			};
-			analysis.DoMarch(new(i, j), directions.Reverse().ToArray(), shouldCount, shouldBreak);
+			analysis.DoMarch(new(i, j), Enumerable.Reverse(directions).ToArray(), shouldCount, shouldBreak);
 			return analysis;
 		}
 		void DoMarch(Point start, Span<Point> directions, Counter shouldCount, Breaker shouldBreak) {

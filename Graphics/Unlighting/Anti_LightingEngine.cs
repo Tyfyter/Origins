@@ -4,6 +4,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Reflection;
+using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
@@ -157,11 +158,11 @@ namespace Origins.Graphics.Unlighting {
 
 			gen.Emit(OpCodes.Ldarg_1);
 			gen.Emit(OpCodes.Ldfld, _perFrameLights);
-			gen.Emit(OpCodes.Callvirt, List.GetMethod(nameof(List<>.Clear)));
+			gen.Emit(OpCodes.Callvirt, List.GetMethod(nameof(List<object>.Clear)));
 
 			gen.Emit(OpCodes.Ldarg_0);
 			gen.Emit(OpCodes.Ldfld, _perFrameLights);
-			gen.Emit(OpCodes.Call, List.GetProperty(nameof(List<>.Count)).GetGetMethod());
+			gen.Emit(OpCodes.Call, List.GetProperty(nameof(List<object>.Count)).GetGetMethod());
 			gen.Emit(OpCodes.Stloc, i); // int i = lights.Count;
 
 			Label end = gen.DefineLabel();
@@ -206,7 +207,7 @@ namespace Origins.Graphics.Unlighting {
 			gen.Emit(OpCodes.Ldarg_1);
 			gen.Emit(OpCodes.Ldfld, _perFrameLights);
 			gen.Emit(OpCodes.Ldloc, current);
-			gen.Emit(OpCodes.Callvirt, List.GetMethod(nameof(List<>.Add))); //arg1.Add(current);
+			gen.Emit(OpCodes.Callvirt, List.GetMethod(nameof(List<object>.Add))); //arg1.Add(current);
 			gen.Emit(OpCodes.Ldc_I4_1);
 			gen.Emit(OpCodes.Stsfld, anyPerFrameUnglows); // anyPerFrameUnglows = true;
 

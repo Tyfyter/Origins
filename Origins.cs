@@ -59,7 +59,6 @@ using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
 using static System.Net.Mime.MediaTypeNames;
 using MC = Terraria.ModLoader.ModContent;
-using Origins.Liquids;
 using Origins.Dev;
 using System.Threading.Tasks;
 using Origins.Tiles.Ashen;
@@ -150,7 +149,6 @@ namespace Origins {
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
 			this.MusicAutoloadingEnabled = false;
-			HasDevBuild = File.Exists(Path.Combine(Program.SavePathShared, "Mods", GetType().Name + ".tmod"));
 			MonoModHooks.Add(typeof(MC).GetMethod("CacheVanillaState", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static), Anti_LightingEngine.ApplyFancyLightingHookFirst);
 #if DEBUG
 			try {
@@ -1136,6 +1134,12 @@ namespace Origins {
 			expected:
 			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName));
 			return false;
+		}
+		public static void TryHookEvent(string modName, string className, string eventName, Delegate hook) {
+			if (!ModLoader.TryGetMod(modName, out Mod mod)) return;
+			Type type = mod.Code.GetType(className, true);
+			EventInfo @event = type.GetEvent(eventName) ?? throw new KeyNotFoundException($"Could not find event {eventName} in type {type}");
+			@event.AddEventHandler(null, hook.CastDelegate(@event.EventHandlerType));
 		}
 		// for DevHelper
 		static string DevHelpBrokenReason {
