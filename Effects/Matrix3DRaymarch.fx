@@ -144,7 +144,11 @@ float4 EscapeTheMatrix(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) :
     // clear the bg and only draw the shape at full brightness
     float4 finalShape = float4(col, 1) / lerp(1, 0, t / 60);
     float bloom = smoothstep(0.1, 1, 1/length(uv) * 0.15);
-    return lerp(bloom * uSecondaryColor.rgbr, finalShape, finalShape.r);
+	finalShape.r = clamp(finalShape.r, -2, 2);
+	finalShape.g = clamp(finalShape.g, -2, 2);
+	finalShape.b = clamp(finalShape.b, -2, 2);
+	finalShape.a = clamp(finalShape.a, -2, 2);
+	return lerp(bloom * uSecondaryColor.rgbr, finalShape, finalShape.r);
     
 }
 

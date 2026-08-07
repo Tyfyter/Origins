@@ -153,7 +153,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			for (int i = 0; i < GetNodeCount(); i++) {
 				Vector2 pos = nodes[i].position;
-				default(Matrix3DRaymarch).Draw(pos,(float)Projectile.timeLeft / 300);
+				default(Matrix3DRaymarch).Draw(pos, (float)Projectile.timeLeft / 300);
 
 			}
 			return false;
