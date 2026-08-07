@@ -418,7 +418,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)
 			.AddIngredient(ItemID.CursedFlame)
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
+			.AddRecipeGroup(ALRecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -461,11 +461,12 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Projectile.hide = true;
 		}
 		public override void AI() {
-			for (int i = 0; i < Projectile.width / 4; i++) {
-				Dust dust = Dust.NewDustDirect(
-					Projectile.Center + Main.rand.NextVector2Circular(67.5f, 67.5f) + Vector2.UnitY * 12,
-					0,
-					0,
+			for (int i = 0; i < Projectile.width / 16; i++) {
+				float d = Main.rand.NextFloat();
+				Dust dust = EfficientDust.NewDustDirect(
+					Projectile.Center + Main.rand.NextVector2CircularEdge(67.5f, 67.5f) * (d * d) + Vector2.UnitY * 12,
+					1,
+					1,
 					DustID.CursedTorch
 				);
 				//dust.noGravity = true;
