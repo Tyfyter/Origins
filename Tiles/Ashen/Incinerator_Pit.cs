@@ -106,7 +106,10 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		Tile tile = Main.tile[i, j];
 		i -= tile.TileFrameX / 18;
 		j -= tile.TileFrameY / 18;
-		if (drawnPoints.Add(new(i, j))) Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
+		if (drawnPoints.Add(new(i, j))) {
+			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
+			if (tile.LoopSoundDelay(60)) SoundEngine.PlaySound(SoundID.Clown, new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+		}
 		return false;
 	}
 	public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
