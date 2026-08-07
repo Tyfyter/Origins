@@ -40,10 +40,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Glass_Cannon_P : ModProjectile, ICanisterProjectile, IElementalProjectile {
 		public ushort Element => Elements.Fiberglass;
-		public static AutoLoadingAsset<Texture2D> outerTexture = typeof(Glass_Cannon_P).GetDefaultTMLName() + "_Outer";
-		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Glass_Cannon_P).GetDefaultTMLName() + "_Inner";
-		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
-		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public static AutoLoadingTexture outerTexture = typeof(Glass_Cannon_P).GetDefaultTMLName() + "_Outer";
+		public static AutoLoadingTexture innerTexture = typeof(Glass_Cannon_P).GetDefaultTMLName() + "_Inner";
+		public AutoLoadingTexture OuterTexture => outerTexture;
+		public AutoLoadingTexture InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
 			Origins.MagicTripwireDetonationStyle[Type] = 2;
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.aiStyle = 0;
-			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.timeLeft = 120;
 			Projectile.scale = 0.85f;
 			Projectile.penetrate = 1;
