@@ -1104,7 +1104,7 @@ SUMMONER WEAPONS:
 (X) Probe Controller
 (X) Ribatar
 (#2, ^2) SMART Wrench !!!
-(#2, ^2) Star Harvest !!!
+(☻) Star Harvest !!!
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
