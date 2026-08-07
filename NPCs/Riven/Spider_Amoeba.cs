@@ -109,11 +109,13 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override void AI() {
-			NPC.DoFrames(7);
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (!NPC.NPCCanStickToWalls()) {
 				NPC.Transform(ModContent.NPCType<Spider_Amoeba>());
 			}
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(7);
 		}
 	}
 }
