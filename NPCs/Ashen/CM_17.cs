@@ -295,7 +295,6 @@ namespace Origins.NPCs.Ashen {
 		public void Transform<TNPC>() where TNPC : Watchling {
 			int frame = NPC.frame.Y / NPC.frame.Height;
 			double frameCounter = NPC.frameCounter;
-			int sssss = ((Watchling)NPC.ModNPC).SpawnCounter;
 			NPC.Transform(NPCType<TNPC>());
 			NPC.frame.Y = frame * NPC.frame.Height;
 			NPC.frameCounter = frameCounter;
