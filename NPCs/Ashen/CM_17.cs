@@ -246,8 +246,8 @@ namespace Origins.NPCs.Ashen {
 		public Rectangle DrawRect => new(0, 0, 32, 26);
 		public int AnimationFrames => 6;
 		public static string BrokenReason => "Balance test, change sounds";
-		public int OwnerID { get; set; } = -1;
-		public int SpawnCounter { get; set; }
+		public int OwnerID = -1;
+		public int SpawnCounter;
 		public static int SpawnCounterMax => 60;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
@@ -282,13 +282,10 @@ namespace Origins.NPCs.Ashen {
 			if (source is EntitySource_Parent { Entity: NPC { ModNPC: CM_17, whoAmI: int owner } }) OwnerID = owner;
 		}
 		public override bool PreAI() {
-			Debugging.ChatOverhead($"owner: {OwnerID}, counter: {SpawnCounter}");
-			int spawnCounter = SpawnCounter;
 			if (!NPC.collideY && NPC.velocity.Y == 0) {
-				//NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
+				NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
 			}
-			if ((SpawnCounter > 0 || NPC.collideY) && spawnCounter.Warmup(SpawnCounterMax)) NPC.netUpdate = true;
-			if (spawnCounter != SpawnCounter) SpawnCounter = spawnCounter;
+			if ((SpawnCounter > 0 || NPC.collideY) && SpawnCounter.Warmup(SpawnCounterMax)) NPC.netUpdate = true;
 			if (SpawnCounter < SpawnCounterMax) {
 				if (NPC.collideY) NPC.velocity.X *= 0.8f;
 				return false;
@@ -298,18 +295,17 @@ namespace Origins.NPCs.Ashen {
 		public void Transform<TNPC>() where TNPC : Watchling {
 			int frame = NPC.frame.Y / NPC.frame.Height;
 			double frameCounter = NPC.frameCounter;
+			int sssss = ((Watchling)NPC.ModNPC).SpawnCounter;
 			NPC.Transform(NPCType<TNPC>());
 			NPC.frame.Y = frame * NPC.frame.Height;
 			NPC.frameCounter = frameCounter;
-			Watchling watch = (Watchling)NPC.ModNPC;
+			TNPC watch = (TNPC)NPC.ModNPC;
 			watch.OwnerID = OwnerID;
 			watch.SpawnCounter = SpawnCounter;
 		}
 		public override void AI() {
 			NPC.TargetClosest();
-			if (NPC.HasPlayerTarget) {
-				NPC.spriteDirection = NPC.direction;
-			}
+			if (NPC.HasPlayerTarget) NPC.spriteDirection = NPC.direction;
 			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
 
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -341,11 +337,12 @@ namespace Origins.NPCs.Ashen {
 			SetSharedDefaults();
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) { }
-		public override bool PreAI() => base.PreAI();
-		public override void AI() {
-			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+		public override bool PreAI() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return true;
 			if (!NPC.NPCCanStickToWalls()) Transform<Watchling>();
+			return true;
 		}
+		public override void AI() { }
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(4, 3..);
 		}
