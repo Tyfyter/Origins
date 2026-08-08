@@ -84,7 +84,10 @@ namespace Origins.NPCs {
 
 		private bool startDespawning;
 		public override void SetStaticDefaults() {
-			if (SegmentType != WormSegmentType.Head) NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			if (SegmentType != WormSegmentType.Head) {
+				NPCID.Sets.CantTakeLunchMoney[Type] = true;
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			}
 		}
 		public sealed override bool PreAI() {
 			if (NPC.localAI[1] == 0) {
