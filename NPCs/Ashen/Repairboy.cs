@@ -170,7 +170,7 @@ namespace Origins.NPCs.Ashen {
 			return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(700)) SoundEngine.PlaySound(Origins.Sounds.RepairboyIdle.WithVolume(0.25f), NPC.Center);
+			if (Main.rand.NextBool(1100)) SoundEngine.PlaySound(Origins.Sounds.RepairboyIdle.WithVolume(0.25f), NPC.Center);
 			const float strafe_accel = 0.05f;
 			if (!target.HasTarget || NPC.life < NPC.lifeMax || target.TargetType == TargetSearchTypes.Players) TargetClosest();
 			if (target.HasTarget) {

@@ -16,6 +16,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.OriginsSets;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Neutron_Soup : ModItem, ICustomDrawItem {
@@ -34,7 +35,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item8;
+			//Item.UseSound = SoundID.Item8;
 			Item.autoReuse = true;
 		}
 		public override void AddRecipes() => Recipe.Create(Type)
@@ -104,14 +105,14 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Neutron_Soup_Beam : ModProjectile, IShadedProjectile {
-		readonly static Sound sound = EnvironmentSounds.Register<Sound>();
+		//readonly static Sound sound = EnvironmentSounds.Register<Sound>();
 		public override string Texture => $"Terraria/Images/NPC_0";
 		public float ManaMultiplier => 1;
 		public float ChargeTime => Projectile.ai[0];
 		public float ChargeFactor => float.Min(Projectile.ai[2], ChargeTime);
 		public bool Charged => Projectile.ai[2] >= ChargeTime;
 		public int Shader => Quasar.ShaderID;
-		Neutron_Soup_Beam() : base() => _ = sound;
+		//Neutron_Soup_Beam() : base() => _ = sound;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
 			Origins.HomingEffectivenessMultiplier[Type] = 25;
@@ -146,8 +147,15 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			if (Projectile.velocity.X != 0) player.ChangeDir(Math.Sign(Projectile.velocity.X));
 
-			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 30).WithVolume(0.24f), player.position);
-			SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Projectile.ai[2] / 30).WithVolume(0.24f), player.position);
+			if (Projectile.soundDelay <= 0) {
+				SoundEngine.PlaySound(SoundID.Item24.WithPitch(Math.Clamp(Projectile.ai[2] / 30, 1, 3)).WithVolume(0.5f), Projectile.position, sound => {
+					sound.Position = Projectile.Center;
+					return true;
+				});
+				Projectile.soundDelay = 5;
+			}
+			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Math.Clamp(Projectile.ai[2] / 30, 1, 4)).WithVolume(0.24f), player.position);
+			SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Math.Clamp(Projectile.ai[2] / 30, 1, 3)).WithVolume(0.24f), player.position);
 			Projectile.position = Main.GetPlayerArmPosition(Projectile);
 			if (player.mount?.Active ?? false) Projectile.position.Y -= player.mount.PlayerOffset;
 			Projectile.position = player.RotatedRelativePoint(Projectile.position);
@@ -210,13 +218,13 @@ namespace Origins.Items.Weapons.Summoner {
 		void Draw(bool forSmog = false) {
 			float progress = Projectile.ai[2] / ChargeTime;
 			Min(ref progress, 1);
-			if (!forSmog) {
+			/*if (!forSmog) {
 				sound.TrySetNearest(Main.Camera.Center.SnapToLine(
 					Projectile.position,
 					Projectile.position + Projectile.velocity * Projectile.ai[1],
 					radius: 16
 				));
-			}
+			}*/
 			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearWrap);
@@ -241,7 +249,7 @@ namespace Origins.Items.Weapons.Summoner {
 			);
 			Main.EntitySpriteDraw(data);
 		}
-		static float soundVolume;
+		/*static float soundVolume;
 		class Sound : AEnvironmentSound {
 			SlotId droning;
 			SoundStyle sound = new("Terraria/Sounds/Item_104", SoundType.Sound) {
@@ -265,7 +273,7 @@ namespace Origins.Items.Weapons.Summoner {
 					return true;
 				});
 			}
-		}
+		}*/
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Neutron_Soup_Buff.ID, 240);
 			if (target.life > 0) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;

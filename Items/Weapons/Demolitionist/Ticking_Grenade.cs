@@ -2,6 +2,7 @@ using Origins.Items.Accessories;
 using Origins.UI;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -68,6 +69,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.ai[2] = (int)(60 * ModContent.GetInstance<Ticking_Grenade_UI>().TotalSeconds);
 		}
 		public override void AI() {
+			if (Projectile.soundDelay <= 0) {
+				SoundEngine.PlaySound(SoundID.MenuTick.WithPitch(1.2f).WithVolume(0.5f), Projectile.Center);
+				Projectile.soundDelay = 12;
+			}
 			if (Projectile.ai[2] > 0) Projectile.timeLeft = 60;
 			if (Projectile.timeLeft > 3 && --Projectile.ai[2] <= 0) Projectile.timeLeft = 3;
 		}

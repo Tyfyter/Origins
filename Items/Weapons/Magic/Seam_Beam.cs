@@ -31,11 +31,11 @@ namespace Origins.Items.Weapons.Magic {
 		}
 
 		public override void SetDefaults() {
-			Item.damage = 42;
+			Item.damage = 50;
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 19;
 			Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
-			Item.useTime = Item.useAnimation = 20;
+			Item.useTime = Item.useAnimation = 42;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = false;
 			Item.noMelee = true;

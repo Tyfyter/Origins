@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -85,6 +86,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.ai[2] = 1;
 				int type = ModContent.ProjectileType<Ripper_Lance_Spike>();
 				for (int i = 0; i < 3; i++) {
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1.5f, 1.65f).WithVolume(0.1f), Projectile.Center);
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromAI(),
 						Projectile.Center,

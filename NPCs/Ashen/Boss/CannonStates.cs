@@ -9,10 +9,10 @@ using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 namespace Origins.NPCs.Ashen.Boss {
 	public class Fire_Guns_State : AIState {
 		#region stats
-		public static float ShotRate => 10 - DifficultyMult;
+		public static float ShotRate => 7 - DifficultyMult;
 		public static int ShotDamage => (int)(18 * DifficultyMult);
 		public static float ShotVelocity => 12;
-		public static int Duration => 45;
+		public static int Duration => 60;
 		#endregion stats
 		public override bool Ranged => true;
 		public override GunKind? ForGunType => GunKind.Cannon;
@@ -24,7 +24,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 direction = npc.rotation.ToRotationVector2();
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
-				//SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitchRange(1.2f, 1.3f), npc.Center);
+				SoundEngine.PlaySound(SoundID.Item89.WithPitchRange(2f, 2.2f), npc.Center);
 				npc.ai[1]++;
 				Vector2 perp = direction.RotatedBy(MathHelper.PiOver2);
 				npc.SpawnProjectile(null,

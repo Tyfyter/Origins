@@ -79,7 +79,7 @@ namespace Origins.Items.Pets {
 		public override void AI() {
 			if (Projectile.localAI[2] != 1) {
 				Projectile.localAI[2] = 1;
-				SoundEngine.PlaySound(Origins.Sounds.WindUpToyStart, Projectile.Center, sound => {
+				SoundEngine.PlaySound(Origins.Sounds.WindUpToyStart.WithVolume(0.5f), Projectile.Center, sound => {
 					sound.Position = Projectile.Center;
 					return true;
 				});
@@ -87,7 +87,7 @@ namespace Origins.Items.Pets {
 			}
 
 			if (Projectile.soundDelay <= 0 && Main.rand.NextBool(650)) {
-				SoundEngine.PlaySound(Origins.Sounds.WindUpToy, Projectile.Center, sound => {
+				SoundEngine.PlaySound(Origins.Sounds.WindUpToy.WithVolume(0.5f), Projectile.Center, sound => {
 					sound.Position = Projectile.Center;
 					return true;
 				});

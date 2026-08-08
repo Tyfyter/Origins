@@ -198,8 +198,8 @@ namespace Origins.Items.Weapons.Magic {
 				position.X += Main.rand.NextFloat(16 * 5) * Main.rand.NextBool().ToDirectionInt();
 				Vector2 direction = Vector2.UnitY.RotatedByRandom(0.2f);
 				float speed = 32 * Projectile.ai[1];
-				SoundEngine.SoundPlayer.Play(SoundID.Item92.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.6f), position);
-				SoundEngine.SoundPlayer.Play(SoundID.Item103.WithPitch(-1.2f).WithPitchVarience(1f), position);
+				SoundEngine.SoundPlayer.Play(SoundID.Item92.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.4f), position);
+				SoundEngine.SoundPlayer.Play(SoundID.Item103.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.6f), position);
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
 					position - direction * spawn_dist,

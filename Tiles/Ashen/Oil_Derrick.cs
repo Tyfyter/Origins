@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -85,7 +86,6 @@ namespace Origins.Tiles.Ashen {
 		}
 		class Sound : AEnvironmentSound {
 			SlotId droning;
-			int soundDelay;
 			public override void UpdateSound(Vector2 position) {
 				int type = ModContent.TileType<Oil_Derrick>();
 				float mult = 1 / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
@@ -94,11 +94,15 @@ namespace Origins.Tiles.Ashen {
 					playingSound.Volume = 0.2f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
 					return true;
 				});
-				if (Main.tileFrame[type] == 1) SoundEngine.PlaySound(SoundID.Item108.WithPitch(-0.7f).WithVolume(0.25f * mult), position);
-				if (Main.rand.NextBool(150)) SoundEngine.PlaySound(SoundID.Item148.WithPitch(-0.5f).WithVolume(0.35f * mult), position);
-				soundDelay.Cooldown();
 			}
-			public override void UpdateSoundInactive() => soundDelay.Cooldown();
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Main.tile[i, j];
+			if (tile.LoopSoundDelay(60)) {
+				SoundEngine.PlaySound(SoundID.Item108.WithPitch(-0.7f).WithVolume(0.25f), new Vector2(i * 16 + 9 * 8, j * 16 + 8 * 8));
+				SoundEngine.PlaySound(SoundID.Item148.WithPitch(-0.5f).WithVolume(0.35f), new Vector2(i * 16 + 9 * 8, j * 16 + 8 * 8));
+			}
+			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];

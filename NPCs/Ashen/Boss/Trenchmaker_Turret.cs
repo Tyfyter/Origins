@@ -124,6 +124,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				case TurretKind.Cannon: {
 					NPC.ai[1].Cooldown();
 					if (TargetAngle(diff.ToRotation()) && NPC.ai[1] == 0) {
+						SoundEngine.PlaySound(SoundID.Item98.WithPitchRange(1.2f, 1.3f), NPC.Center);
 						NPC.SpawnProjectile(null,
 							GunPos,
 							NPC.rotation.ToRotationVector2() * 12,
@@ -139,6 +140,8 @@ namespace Origins.NPCs.Ashen.Boss {
 				case TurretKind.Launcher: {
 					NPC.ai[1].Cooldown();
 					if (TargetAngle(diff.ToRotation()) && NPC.ai[1] == 0) {
+						SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitchRange(-0.2f, -0.1f).WithVolume(0.6f), NPC.Center);
+						SoundEngine.PlaySound(SoundID.Item45.WithPitchRange(0.6f, 1.5f).WithVolume(0.6f), NPC.Center);
 						NPC.SpawnProjectile(null,
 							GunPos,
 							NPC.rotation.ToRotationVector2() * 12,
@@ -452,7 +455,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				if (Experiments.Pulse_Laser && IsActive && ++Projectile.localAI[2] % 20 > 5) return;
 				Vector2 gunPos = turret.GunPos;
 				float pitchFactor = IsActive ? 1 : (1 - owner.ai[1] / ChargeTime);
-				SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(pitchFactor).WithVolume(0.8f), gunPos);
+				SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(pitchFactor).WithVolume(0.4f), gunPos);
 				Projectile.velocity = owner.rotation.ToRotationVector2();
 				Projectile.position = gunPos + Projectile.velocity * 24;
 				Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);

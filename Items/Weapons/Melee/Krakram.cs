@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -64,7 +65,10 @@ namespace Origins.Items.Weapons.Melee {
 			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
 				if (globalProj.alreadyUnmissed[target.whoAmI]) return false;
 				float newDist = Projectile.DistanceSQ(target.Center);
-				if (target.whoAmI == Projectile.ai[2]) newDist *= 0.25f;
+				if (target.whoAmI == Projectile.ai[2]) {
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1.5f, 1.65f).WithVolume(0.2f), Projectile.Center);
+					newDist *= 0.25f;
+				}
 				if (newDist < dist) {
 					dist = newDist;
 					targetIndex = target.whoAmI;

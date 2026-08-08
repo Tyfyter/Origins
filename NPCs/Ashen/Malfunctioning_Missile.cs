@@ -134,6 +134,14 @@ namespace Origins.NPCs.Ashen {
 					break;
 				}
 				case 4: {
+					Dust dust = Dust.NewDustPerfect(
+							25 * NPC.rotation.ToRotationVector2() + NPC.Center,
+							DustID.Torch,
+							default,
+							120,
+							Color.Orange,
+							1.25f
+						);
 					SoundEngine.PlaySound(Origins.Sounds.RepairboyDeath.WithPitch(1.8f).WithVolume(0.2f), NPC.Center);
 					if (MathUtils.LinearSmoothing(ref NPC.ai[3], 0, 0.01f)) NPC.ai[3] = GetSquiggle() * 0.1f;
 					NPC.rotation += NPC.ai[3];
@@ -190,5 +198,18 @@ namespace Origins.NPCs.Ashen {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				for (int i = 0; i < 7; i++) {
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				}
+			} else if (Main.rand.NextBool(5)) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
+		}
 	}
 }

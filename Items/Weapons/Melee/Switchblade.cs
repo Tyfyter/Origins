@@ -40,6 +40,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.glowMask = -1;
 		}
 		public override bool AltFunctionUse(Player player) {
+			SoundEngine.PlaySound(SoundID.Research.WithPitch(1.8f).WithVolume(0.8f), player.Center);
 			int prefix = Item.prefix;
 			Item.ChangeItemType(ModContent.ItemType<Switchblade_Shortsword>());
 			Item.Prefix(prefix);
@@ -91,6 +92,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(silver: 27);
 		}
 		public override bool AltFunctionUse(Player player) {
+			SoundEngine.PlaySound(SoundID.Research.WithPitch(1.8f).WithVolume(0.8f), player.Center);
 			int prefix = Item.prefix;
 			Item.ChangeItemType(ModContent.ItemType<Switchblade_Broadsword>());
 			Item.Prefix(prefix);

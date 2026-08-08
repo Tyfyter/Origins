@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -117,6 +118,8 @@ namespace Origins.Tiles.Ashen {
 		}
 		public static bool Toggle(int i, int j, bool actuallyDo = true) {
 			Tile tile = Main.tile[i, j];
+			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(i * 16 + 11 * 8, j * 16 + 3 * 8));
+			
 			if (tile.TileFrameX >= 11 * 18) return false;
 			TileObjectData data = TileObjectData.GetTileData(tile);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
@@ -239,6 +242,7 @@ namespace Origins.Tiles.Ashen {
 			readonly HashSet<Point> leftClosing = [];
 			readonly HashSet<Point> rightClosing = [];
 			public void Update(Point16 position) {
+				Tile tile = Main.tile[position.X, position.Y];
 				if ((Main.tile[position].TileFrameX >= 11 * 18) != (TargetFrame == locked_frame)) {
 					if (TargetFrame == locked_frame) {
 						TargetFrame = closed_frame;
@@ -248,6 +252,9 @@ namespace Origins.Tiles.Ashen {
 				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
+					if (tile.LoopSoundDelay(1)) {
+						SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f)/*, new Vector2(position.X * 16 + 13 * 8, position.Y * 16 + 8 * 8)*/);
+					}
 					frameCounter = 0;
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
@@ -269,7 +276,7 @@ namespace Origins.Tiles.Ashen {
 					rightClosing.Clear();
 					for (int x = 0; x < data.Width; x++) {
 						for (int y = 0; y < data.Height; y++) {
-							Tile tile = Main.tile[left + x, top + y];
+							//Tile tile = Main.tile[left + x, top + y];
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
 							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open)) {
 								if (TargetFrame != open_frame) {

@@ -9,6 +9,7 @@ using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Items.Weapons.Magic;
 using Terraria.Graphics.Shaders;
+using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
@@ -74,6 +75,7 @@ namespace Origins.Items.Weapons.Melee {
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
 					movementFactor -= 0.8f;
 					if (Projectile.ai[2] == 0) {
+						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1.5f).WithVolume(0.5f), Projectile.Center);
 						Projectile.ai[2] = 1;
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),

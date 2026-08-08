@@ -314,7 +314,9 @@ public class Laser_Target_Locator_State : AIState {
 			if (++owner.ai[1] >= ChargeTime) {
 				owner.ai[0] = 2;
 				owner.ai[1] = 0;
-				SoundEngine.SoundPlayer.Play(SoundID.ResearchComplete.WithPitch(-2f).WithVolume(0.5f), TargetPos);
+				SoundEngine.SoundPlayer.Play(SoundID.ResearchComplete.WithPitch(1.5f).WithVolume(0.8f), TargetPos);
+				SoundEngine.SoundPlayer.Play(SoundID.Item29.WithPitch(1.5f).WithVolume(0.8f), TargetPos);
+				SoundEngine.SoundPlayer.Play(SoundID.Item35.WithPitch(-0.5f).WithVolume(0.8f), TargetPos);
 				Projectile.SpawnProjectile(
 					Projectile.GetSource_FromAI(),
 					TargetPos,
@@ -400,8 +402,8 @@ public class Laser_Target_Locator_State : AIState {
 				position.X += Main.rand.NextFloat(16 * 5) * Main.rand.NextBool().ToDirectionInt();
 				Vector2 direction = Vector2.UnitY.RotatedByRandom(0.2f);
 				float speed = MissileSpeed;
-				SoundEngine.SoundPlayer.Play(SoundID.Item92.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.6f), position);
-				SoundEngine.SoundPlayer.Play(SoundID.Item103.WithPitch(-1.2f).WithPitchVarience(1f), position);
+				SoundEngine.SoundPlayer.Play(SoundID.Item92.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.4f), position);
+				SoundEngine.SoundPlayer.Play(SoundID.Item103.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.6f), position);
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
 					position - direction * spawn_dist,

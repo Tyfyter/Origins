@@ -95,6 +95,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			orig(self, properties, ref position, ref velocity, ref collision);
 			if (collision.Entity is Projectile proj && proj.ModProjectile is Fuel_Rod_Ball_P && !velocity.WithinRange(collision.Entity.oldVelocity, 2)) {
 				SoundEngine.PlaySound(SoundID.Item10.WithPitchVarience(1f), position);
+				//SoundEngine.PlaySound(SoundID.Item15.WithPitch(Projectile.ai[2] / 30), position);
 			}
 		}
 
@@ -120,6 +121,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			switch ((int)Projectile.ai[0]) {
 				case 2: {
 					if (Projectile.IsLocallyOwned()) {
+						if (Projectile.soundDelay <= 0) {
+							SoundEngine.PlaySound(SoundID.Item10.WithPitchVarience(1f), player.Center);
+							SoundEngine.PlaySound(SoundID.Item15.WithPitch(MathHelper.Clamp(Projectile.ai[2] / 30, 0, 4)), player.Center);
+							SoundEngine.PlaySound(SoundID.DD2_LightningAuraZap.WithPitch(MathHelper.Clamp(Projectile.ai[2] / 30, 0, 1)), player.Center);
+							Projectile.soundDelay = 15;
+						}
 						int dir = player.direction;
 						player.ChangeDir(Math.Sign(Main.MouseWorld.X - player.MountedCenter.X));
 						if (dir != player.direction) NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);

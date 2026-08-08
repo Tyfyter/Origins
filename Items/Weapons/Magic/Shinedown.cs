@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.knockBack = FlatKnockbackAdjustment;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item132.WithPitch(1f);
+			Item.UseSound = SoundID.DD2_DarkMageCastHeal.WithPitch(-0.5f);
 			Item.autoReuse = false;
 			Item.channel = true;
 		}

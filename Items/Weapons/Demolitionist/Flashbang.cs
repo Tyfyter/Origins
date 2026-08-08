@@ -4,6 +4,7 @@ using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -55,6 +56,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.Item14.WithPitch(1.5f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item41.WithPitch(2f), Projectile.Center);
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 128;
@@ -75,6 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(Flashbang_Debuff.ID, 60);
+			//SoundEngine.PlaySound(SoundID.Item47.WithPitch(4f), target.Center);
 		}
 	}
 	public class Flash_P : ModProjectile {

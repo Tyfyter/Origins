@@ -37,18 +37,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return consumeFromProjectile || player.ItemUsesThisAnimation == 1;
 		}
 		public override bool? UseItem(Player player) {
-			SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), player.itemLocation);
 			return null;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Abrasion_Blaster_Charge_P.ID;
-			//SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
-			//Item.UseSound = Origins.Sounds.EnergyRipple;
 			int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
 			if (heldProjectile > -1) {
 				Projectile projectile = Main.projectile[heldProjectile];
 				if (projectile.active && projectile.type == Abrasion_Blaster_Charge_P.ID && projectile.ai[0] > 4) {
 					velocity = velocity.RotatedByRandom(0.1f);
+					//SoundEngine.PlaySound(SoundID.Item15.WithVolume(2f).WithPitch(0.01f), projectile.Center);
 				}
 			}
 		}
@@ -88,6 +86,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
+			if (Projectile.soundDelay <= 0) {
+				SoundEngine.PlaySound(SoundID.DD2_LightningBugZap.WithPitchRange(0.8f, 1f).WithVolume(0.25f), Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item157.WithPitchRange(-1.2f, -1f).WithVolume(0.25f), Projectile.Center);
+				Projectile.soundDelay = 10;
+			}
 			Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
 			dust.position = Projectile.Center;
 			dust.noGravity = true;

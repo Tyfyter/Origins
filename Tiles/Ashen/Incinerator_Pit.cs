@@ -108,7 +108,13 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		j -= tile.TileFrameY / 18;
 		if (drawnPoints.Add(new(i, j))) {
 			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
-			if (tile.LoopSoundDelay(60)) SoundEngine.PlaySound(SoundID.Clown, new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+			if (tile.LoopSoundDelay(1)) {
+				//SoundEngine.PlaySound(SoundID.Zombie70.WithPitch(2f).WithVolume(0.08f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+				SoundEngine.PlaySound(SoundID.Item140.WithPitch(-1.25f).WithVolume(0.15f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+				SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.25f).WithVolume(0.1f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+				SoundEngine.PlaySound(SoundID.Item144.WithPitch(2f).WithVolume(0.06f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+				//SoundEngine.PlaySound(SoundID.Item29.WithPitch(1f).WithVolume(0.2f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
+			}
 		}
 		return false;
 	}

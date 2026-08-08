@@ -32,7 +32,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 direction = npc.rotation.ToRotationVector2();
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
-				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitch(-0.5f), boss.GunPos);
+				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitchRange(-0.4f, -0.3f), boss.GunPos);
+				SoundEngine.PlaySound(SoundID.Item45.WithPitchRange(0.6f, 1.5f), boss.GunPos);
+				SoundEngine.PlaySound(SoundID.Item61.WithPitchRange(-0.8f, -0.6f), boss.GunPos);
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					boss.GunPos + direction * 6,
@@ -218,6 +220,8 @@ namespace Origins.NPCs.Ashen.Boss {
 					lastFirecracker
 				)?.whoAmI ?? lastFirecracker;
 			}
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(-0.8f), npc.Center);
+			SoundEngine.PlaySound(SoundID.Item65.WithPitch(-1.3f), npc.Center);
 		}
 		public class Trenchmaker_Firecracker : ModProjectile {
 			protected static AutoLoadingAsset<Texture2D> fuseTexture = typeof(Trenchmaker_Firecracker).GetDefaultTMLName("_Fuse");
