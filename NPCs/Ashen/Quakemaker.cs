@@ -1,10 +1,13 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Gores;
 using Origins.Items.Accessories;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
@@ -12,11 +15,13 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Ashen {
 	public class Quakemaker_Head : WormHead {
+		public static AutoLoadingTexture altHeadTexture = typeof(Quakemaker_Head).GetDefaultTMLName() + "_Alt";
 		public override int BodyType => ModContent.NPCType<Quakemaker_Body>();
 		public override int TailType => ModContent.NPCType<Quakemaker_Tail>();
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void Load() => this.AddBanner();
 		public override bool SharesDebuffs => true;
+		public bool UseAltHead = false;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 2;
@@ -144,8 +149,35 @@ namespace Origins.NPCs.Ashen {
 				current = next;
 			}
 		}
+		public override void OnSpawn(IEntitySource source) {
+			UseAltHead = Main.rand.NextBool();
+		}
+		public override void SendWormAI(BinaryWriter writer) {
+			writer.Write(UseAltHead);
+		}
+		public override void ReceiveWormAI(BinaryReader reader) {
+			UseAltHead = reader.ReadBoolean();
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(4);
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (UseAltHead) {
+				Main.EntitySpriteDraw(
+					altHeadTexture.Value,
+					NPC.Center - screenPos,
+					NPC.frame,
+					drawColor,
+					NPC.rotation,
+					NPC.frame.Size() * 0.5f,
+					NPC.scale,
+					SpriteEffects.None);
+			}
+			return !UseAltHead;
+		}
 	}
 	public class Quakemaker_Body : WormBody {
+		public static AutoLoadingTexture GlowTexture = typeof(Quakemaker_Body).GetDefaultTMLName() + "_Glow";
 		public override bool SharesImmunityFrames => true;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void SetStaticDefaults() {
@@ -203,8 +235,10 @@ namespace Origins.NPCs.Ashen {
 			NPC.lifeRegen = 0;
 			NPC.lifeRegenCount = 0;
 		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, NPC.GetTintColor(Color.White));
+		}
 	}
-
 	internal class Quakemaker_Tail : WormTail {
 		public override bool SharesImmunityFrames => true;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");

@@ -311,7 +311,7 @@ namespace Origins.NPCs.Ashen {
 			if (NPC.velocity.Y == 0f && NPC.NPCCanStickToWalls()) Transform<Watchling_Wall>();
 		}
 		public override void FindFrame(int frameHeight) {
-			if (SpawnCounter < SpawnCounterMax) NPC.frame.Y = (SpawnCounter * 3) / SpawnCounterMax * frameHeight;
+			if (SpawnCounter < SpawnCounterMax && !NPC.IsABestiaryIconDummy) NPC.frame.Y = (SpawnCounter * 3) / SpawnCounterMax * frameHeight;
 			else if (NPC.collideY || NPC.IsABestiaryIconDummy) NPC.DoFrames(4, 3..);
 			else NPC.DoFrames(1, 4..5);
 		}
