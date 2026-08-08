@@ -97,7 +97,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText()
+				this.GetBestiaryFlavorText(alt: true)
 			);
 		}
 		public override void AI() {
