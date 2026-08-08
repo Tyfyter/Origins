@@ -54,7 +54,7 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
-		public static int TimeToSpawnWatchlings = 2 * 60;
+		public static int TimeToSpawnWatchlings => 2 * 60;
 		public override void AI() {
 			const int MaxWatchlings = 10; // desired max subtracted by 2
 			float accel = 0.15f;
@@ -248,7 +248,7 @@ namespace Origins.NPCs.Ashen {
 		public static string BrokenReason => "Balance test, change sounds";
 		public int OwnerID { get; set; } = -1;
 		public int SpawnCounter { get; set; }
-		public static int SpawnCounterMax = 60;
+		public static int SpawnCounterMax => 60;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
