@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs.Riven;
+using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -266,8 +267,8 @@ namespace Origins.NPCs.Ashen {
 			NPC.defense = 10;
 			NPC.damage = 33;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+			NPC.DeathSound = SoundID.NPCDeath44;
 			this.CopyBanner<CM_17>();
 			SpawnModBiomes = [
 				GetInstance<Underground_Ashen_Biome>().Type
@@ -320,6 +321,22 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			SpawnCounter = reader.ReadInt32();
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				for (int i = 0; i < 7; i++) {
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				}
+			} else if (Main.rand.NextBool(5)) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
 		}
 	}
 	public class Watchling_Wall : Watchling, ICustomWikiStat {
