@@ -150,7 +150,7 @@ namespace Origins.NPCs.Ashen {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
 		}
 		public override void SetDefaults() {
@@ -210,7 +210,7 @@ namespace Origins.NPCs.Ashen {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
 		}
 		public override void SetDefaults() {

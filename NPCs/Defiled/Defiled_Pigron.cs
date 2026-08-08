@@ -23,11 +23,11 @@ namespace Origins.NPCs.Defiled {
 		public float Mana { get; set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.PigronCorruption];
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new Vector2(10f, 5f),
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -12f
-			});
+			};
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 		}
 		public bool? Hardmode => true;

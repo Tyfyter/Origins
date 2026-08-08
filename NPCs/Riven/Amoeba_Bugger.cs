@@ -14,7 +14,7 @@ namespace Origins.NPCs.Riven {
 		public Rectangle DrawRect => new(0, 0, 48, 32);
 		public int AnimationFrames => 1;
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
 		}

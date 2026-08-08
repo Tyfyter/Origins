@@ -123,7 +123,7 @@ namespace Origins.NPCs.Defiled {
 	internal class Defiled_Digger_Body : Defiled_Digger {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
@@ -140,7 +140,7 @@ namespace Origins.NPCs.Defiled {
 	internal class Defiled_Digger_Tail : Defiled_Digger {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);

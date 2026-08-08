@@ -161,7 +161,7 @@ namespace Origins.NPCs.MiscE {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -189,7 +189,7 @@ namespace Origins.NPCs.MiscE {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

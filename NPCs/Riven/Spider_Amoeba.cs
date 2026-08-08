@@ -91,7 +91,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {// could not add stats because 
 			NPC.CloneDefaults(NPCID.WallCreeperWall);

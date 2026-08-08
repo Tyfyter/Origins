@@ -276,7 +276,7 @@ namespace Origins.NPCs.Brine {
 	public class Brine_Serpent_Body : WormBody, IBrineSerpentPart, IPostHitPlayer {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 		}
 		public override bool SharesImmunityFrames => true;
@@ -317,7 +317,7 @@ namespace Origins.NPCs.Brine {
 		public override string Texture => typeof(Brine_Serpent_Head).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 		}
 		public override bool SharesImmunityFrames => true;
@@ -359,7 +359,7 @@ namespace Origins.NPCs.Brine {
 		public override float SegmentSeparation => 36;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {

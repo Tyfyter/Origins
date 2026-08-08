@@ -113,7 +113,7 @@ namespace Origins.NPCs.Riven {
 		string ICustomWikiStat.CustomStatPath => ModContent.GetInstance<NPCWikiProvider>().PageName(this) + "_Body";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
@@ -124,7 +124,7 @@ namespace Origins.NPCs.Riven {
 		string ICustomWikiStat.CustomStatPath => ModContent.GetInstance<NPCWikiProvider>().PageName(this) + "_Tail";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
