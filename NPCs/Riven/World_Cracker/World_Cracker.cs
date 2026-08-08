@@ -648,7 +648,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override float SegmentSeparation => 90;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			if (!Main.dedServ) {
 				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
 			}
@@ -753,7 +753,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

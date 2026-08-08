@@ -102,7 +102,7 @@ namespace Origins.NPCs.Riven {
 		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -128,7 +128,7 @@ namespace Origins.NPCs.Riven {
 		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

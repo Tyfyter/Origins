@@ -144,9 +144,9 @@ namespace Origins.NPCs.Dungeon {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			};
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;

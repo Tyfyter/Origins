@@ -24,11 +24,11 @@ namespace Origins.NPCs.Riven {
 		public override Color GetGlowColor(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.PigronCrimson];
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new Vector2(10f, 5f),
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -12f
-			});
+			};
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 		}
 		public override void SetDefaults() {

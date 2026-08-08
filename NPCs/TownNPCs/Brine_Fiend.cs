@@ -57,7 +57,7 @@ namespace Origins.NPCs.TownNPCs {
 				IsWet = true
 			};
 
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = drawModifiers;
 			NPC.Happiness
 				.SetBiomeAffection<JungleBiome>(AffectionLevel.Like)
 				.SetBiomeAffection<TempleBiome>(AffectionLevel.Love)

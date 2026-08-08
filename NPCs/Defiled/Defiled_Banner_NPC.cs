@@ -8,7 +8,7 @@ namespace Origins.NPCs.Defiled {
 		public override void Load() => this.AddBanner(100);
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.Generic.Defiled_Antibody");
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 	}
 }

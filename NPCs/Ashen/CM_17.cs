@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs.Riven;
+using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -27,7 +28,7 @@ namespace Origins.NPCs.Ashen {
 		public AutoLoadingTexture upperArm = typeof(CM_17).GetDefaultTMLName() + "_Upper";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-		public static string BrokenReason => "need watchling impl, remove debug info";
+		public static string BrokenReason => "remove debug info after balance testing";
 
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -54,10 +55,7 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
-		public override bool PreAI() {
-			return true;
-		}
-		public static int TimeToSpawnWatchlings = 2 * 60;
+		public static int TimeToSpawnWatchlings => 2 * 60;
 		public override void AI() {
 			const int MaxWatchlings = 10; // desired max subtracted by 2
 			float accel = 0.15f;
@@ -84,7 +82,7 @@ namespace Origins.NPCs.Ashen {
 			bool HasMaxWatchings() {
 				int count = 0;
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if ((npc.type == NPCType<Malfunctioning_Missile>() || npc.type == NPCType<Spider_Amoeba_Wall>()) && npc.ai[3] == NPC.whoAmI) {
+					if (npc?.ModNPC is Watchling { OwnerID: int OwnerID } && OwnerID == NPC.whoAmI) {
 						count++;
 					}
 					NPC.ai[1] = count; // for debugging
@@ -97,7 +95,10 @@ namespace Origins.NPCs.Ashen {
 				switch (NPC.aiAction) {
 					case 0:
 					targetMoveDirection = Math.Sign(target.Center.X - NPC.Center.X);
-					if ((NPC.ai[2].Cooldown() || NPC.ai[2] == 0) && !HasMaxWatchings()) NPC.aiAction = 1;
+					if ((NPC.ai[2].Cooldown() || NPC.ai[2] == 0) && !HasMaxWatchings()) {
+						NPC.aiAction = 1;
+						NPC.netUpdate = true;
+					}
 					break;
 
 					case 1:
@@ -105,14 +106,14 @@ namespace Origins.NPCs.Ashen {
 					Dust.QuickDust(pos, Color.White);
 					if (NPC.ai[0]++ == TimeToSpawnWatchlings * 0.5f) {
 						for (int i = 0; i < 3; i++) {
-							NPC watchling = NPC.SpawnNPC(null, (int)pos.X, (int)pos.Y, NPCType<Malfunctioning_Missile>());
+							NPC watchling = NPC.SpawnNPC(null, (int)pos.X, (int)pos.Y, NPCType<Watchling>());
 							watchling.velocity = new Vector2(-targetMoveDirection * 2, -2) + Main.rand.NextVector2Circular(3, 3);
-							watchling.ai[3] = NPC.whoAmI;
 						}
 					} else if (NPC.ai[0] >= TimeToSpawnWatchlings) {
 						NPC.ai[0] = 0;
 						NPC.ai[2] = 1 * 60;
 						NPC.aiAction = 0;
+						NPC.netUpdate = true;
 					}
 					if (target.Hitbox.Intersects(fleeRange)) {
 						targetMoveDirection = -Math.Sign(target.Center.X - NPC.Center.X);
@@ -121,9 +122,10 @@ namespace Origins.NPCs.Ashen {
 					} else accel = 0;
 					break;
 				}
-			} else {
-				AttemptRetarget();
-			}
+			} else AttemptRetarget();
+
+			HasMaxWatchings();
+
 			if (currentMoveDirection != targetMoveDirection) accel *= 0.25f;
 			if (NPC.direction == 0) NPC.direction = -1;
 			if (!NPC.collideY) accel *= 0.25f;
@@ -239,6 +241,126 @@ namespace Origins.NPCs.Ashen {
 			} else if (Main.rand.NextBool(5)) {
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
 			}
+		}
+	}
+	public class Watchling : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IBroken {
+		public Rectangle DrawRect => new(0, 0, 32, 26);
+		public int AnimationFrames => 6;
+		public static string BrokenReason => "Balance test, change sounds";
+		public int OwnerID = -1;
+		public int SpawnCounter;
+		public static int SpawnCounterMax => 60;
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[NPC.type] = 6;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.Zombie);
+			NPC.aiStyle = NPCAIStyleID.Fighter;
+			NPC.width = 28;
+			NPC.height = 28;
+			SetSharedDefaults();
+		}
+		public void SetSharedDefaults() {
+			NPC.lifeMax = 81;
+			NPC.defense = 10;
+			NPC.damage = 33;
+			NPC.friendly = false;
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+			NPC.DeathSound = SoundID.NPCDeath44;
+			this.CopyBanner<CM_17>();
+			SpawnModBiomes = [
+				GetInstance<Underground_Ashen_Biome>().Type
+			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent { Entity: NPC { ModNPC: CM_17, whoAmI: int owner } }) OwnerID = owner;
+		}
+		public override bool PreAI() {
+			if (!NPC.collideY && NPC.velocity.Y == 0) {
+				NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
+			}
+			if ((SpawnCounter > 0 || NPC.collideY) && SpawnCounter.Warmup(SpawnCounterMax)) NPC.netUpdate = true;
+			if (SpawnCounter < SpawnCounterMax) {
+				if (NPC.collideY) NPC.velocity.X *= 0.8f;
+				return false;
+			}
+			return base.PreAI();
+		}
+		public void Transform<TNPC>() where TNPC : Watchling {
+			int frame = NPC.frame.Y / NPC.frame.Height;
+			double frameCounter = NPC.frameCounter;
+			NPC.Transform(NPCType<TNPC>());
+			NPC.frame.Y = frame * NPC.frame.Height;
+			NPC.frameCounter = frameCounter;
+			TNPC watch = (TNPC)NPC.ModNPC;
+			watch.OwnerID = OwnerID;
+			watch.SpawnCounter = SpawnCounter;
+		}
+		public override void AI() {
+			NPC.TargetClosest();
+			if (NPC.HasPlayerTarget) NPC.spriteDirection = NPC.direction;
+			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
+
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			if (NPC.velocity.Y == 0f && NPC.NPCCanStickToWalls()) Transform<Watchling_Wall>();
+		}
+		public override void FindFrame(int frameHeight) {
+			if (SpawnCounter < SpawnCounterMax && !NPC.IsABestiaryIconDummy) NPC.frame.Y = (SpawnCounter * 3) / SpawnCounterMax * frameHeight;
+			else if (NPC.collideY || NPC.IsABestiaryIconDummy) NPC.DoFrames(4, 3..);
+			else NPC.DoFrames(1, 4..5);
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(SpawnCounter);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			SpawnCounter = reader.ReadInt32();
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				for (int i = 0; i < 7; i++) {
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				}
+			} else if (Main.rand.NextBool(5)) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
+		}
+	}
+	public class Watchling_Wall : Watchling, ICustomWikiStat {
+		bool ICustomWikiStat.CanExportStats => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+		}
+		public override void SetDefaults() {// could not add stats because 
+			NPC.CloneDefaults(NPCID.WallCreeperWall);
+			NPC.aiStyle = NPCAIStyleID.Spider;
+			NPC.width = 28;
+			NPC.height = 28;
+			SetSharedDefaults();
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) { }
+		public override bool PreAI() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return true;
+			if (!NPC.NPCCanStickToWalls()) Transform<Watchling>();
+			return true;
+		}
+		public override void AI() { }
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(4, 3..);
 		}
 	}
 }
