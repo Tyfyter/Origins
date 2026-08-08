@@ -27,14 +27,14 @@ public class Decorative_Ashes : ModItem {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
 		Item.master = true;
-		Item.damage = 60;
+		Item.damage = 81;
 		Item.DamageType = DamageClasses.Explosive;
 		Item.shoot = ModContent.ProjectileType<Decorative_Ashes_Missile>();
 		Item.knockBack = 1;
-		Item.useTime = 8;
+		Item.useTime = 5;
 		Item.useAnimation = Item.useTime;
-		Item.reuseDelay = 30;
-		Item.useLimitPerAnimation = 8;
+		Item.reuseDelay = 15;
+		Item.useLimitPerAnimation = 16;
 		Item.value = Item.sellPrice(gold: 5);
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) => player.OriginPlayer().decorativeAshes = Item;
@@ -82,8 +82,8 @@ public class Decorative_Ashes_Missile : ModProjectile {
 		Projectile.Opacity = 0;
 	}
 	public override void AI() {
-		const int range = 16 * 16;
-		const int boss_range = 16 * 27;
+		const int range = 16 * 28;
+		const int boss_range = 16 * 36;
 		const float boss_ratio = range / (float)boss_range;
 		float targetWeight = range;
 		Vector2 targetPos = default;

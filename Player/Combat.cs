@@ -1110,6 +1110,9 @@ namespace Origins {
 			}
 			if (decorativeAshes is not null && !isSelfDamage) {
 				for (int i = Decorative_Ashes.ThornsCount; i > 0; i--) {
+					SoundEngine.PlaySound(SoundID.Item92, Player.Center);
+					SoundEngine.PlaySound(SoundID.Item141.WithVolume(0.9f), Player.Center);
+					SoundEngine.PlaySound(SoundID.Item88.WithPitch(2.2f).WithVolume(0.6f), Player.Center);
 					Player.SpawnProjectile(
 						Player.GetSource_Accessory(decorativeAshes),
 						Decorative_Ashes.GetRocketShootPosition(Player),

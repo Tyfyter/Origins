@@ -7752,7 +7752,7 @@ The_Muffler: {
 	/* Tooltip:
 		'''
 		Revs up with a killstreak
-		Inflicts Miasma to the user with revs
+		Inflicts [buffhint/self:Origins/Miasma_Debuff] to the user with revs
 		''' */
 	// PrefixEfficiency: "{0:+0;-0}% efficiency"
 }

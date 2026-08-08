@@ -374,14 +374,15 @@ namespace Origins {
 			retoolArm?.UpdateArm(Player);
 			Space_Pirates_Eye.UpdateEye(Player, spacePirateEyeSelection);
 			if (glitterGlue is not null && glitterGlueTimer >= glitterGlue.useTime) {
-				const int range = 16 * 12;
+				const int range = 16 * 36;
 				const int rangeSQ = range * range;
-				const int bossRange = 16 * 20;
+				const int bossRange = 16 * 52;
 				const int bossRangeSQ = bossRange * bossRange;
 				bool doGlitter = false;
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (npc.CanBeChasedBy(Player) && Player.DistanceSQ(npc.Center) <= ((npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) ? bossRangeSQ : rangeSQ)) {
 						doGlitter = true;
+						SoundEngine.PlaySound(SoundID.Item163.WithPitch(1.4f).WithVolume(0.55f), Player.Center);
 						break;
 					}
 				}
@@ -404,9 +405,9 @@ namespace Origins {
 			if (decorativeAshes is not null) {
 				bool doGlitter = false;
 				if (decorativeAshesCount > 0) {
-					const int range = 16 * 12;
+					const int range = 16 * 36;
 					const int rangeSQ = range * range;
-					const int bossRange = 16 * 20;
+					const int bossRange = 16 * 52;
 					const int bossRangeSQ = bossRange * bossRange;
 					foreach (NPC npc in Main.ActiveNPCs) {
 						if (npc.CanBeChasedBy(Player) && Player.DistanceSQ(npc.Center) <= ((npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) ? bossRangeSQ : rangeSQ)) {
@@ -418,6 +419,8 @@ namespace Origins {
 				if (doGlitter) {
 					Min(ref decorativeAshesTimer, 0);
 					if (--decorativeAshesTimer <= -CombinedHooks.TotalUseTime(decorativeAshes.useTime, Player, decorativeAshes)) {
+						SoundEngine.PlaySound(SoundID.Item141.WithVolume(0.9f), Player.Center);
+						SoundEngine.PlaySound(SoundID.Item88.WithPitch(2.2f).WithVolume(0.6f), Player.Center);
 						Player.SpawnProjectile(
 							Player.GetSource_Accessory(decorativeAshes),
 							Decorative_Ashes.GetRocketShootPosition(Player),

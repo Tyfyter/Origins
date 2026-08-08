@@ -137,9 +137,10 @@ Springjumper: Обычно кролики не бывают настолько �
 // Reject_3: "{$Reject_1}"
 // Scrapyard_Stryder: The blueprints for the Stryder were hidden away until the Mother Unit could find a use for it. Originally designed as a personal transport vehicle, the Stryder has been adapted to fit an autonomous controlling unit instead; changing out the ICE for a PG, and gaining a phoenum cannon as a result.
 // Packhunter: Security bots designed exactly for getting around the rough, scrap-filled terrain of the Scrapyard. Features a hook bar on its back for easy transportation within the Factory as well.
-// Trenchmaker_Turret: *Pew Pew*
+// Trenchmaker_Turret: The turrets are no bigger than a soccer ball when neatly packed inside the Trenchmaker. They extend out quickly when deployed and lay seige to whatever the Trenchmaker is targetting.
+// Trenchmaker_Turret_Alt: *Pew Pew*
 // Quakemaker_Head: Found deep in the world, shaking up rocks to make mining easier. It searches for Sanguinite through magma to take back to the Factory for processing.
 // Malfunctioning_Missile: Being degraded and its processors worn over time, this malfunctioning civilization-ending missile flies around and seeks out anything it can find.
 // CM_17: Engineers of the Mechanicus Sovereignty drew inspiration from the Fiberglass Weaver when considering the ideal monitor of the Ashen Mines. To arachnophobes, they picked the perfect deterrant.
 // VV13: VV-13s are one of the first original designs by the Mother Unit after realizing a new need for a modular utility/combat platform in similar light to the Trenchmaker. The VV-13 is also a pilot project for hover technology, as the Mother Unit finds ways to condense it into smaller units.
-// Watchling: <PH> bestiary text here
+// Watchling: A CM-17's little assistant it deploys to aid it with monitoring the Ashen Mines.

@@ -15,14 +15,15 @@ public class Glitter_Glue : ModItem {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
 		Item.master = true;
-		Item.damage = 60;
+		Item.damage = 40;
 		Item.DamageType = DamageClass.Magic;
 		Item.shoot = ProjectileID.FairyQueenMagicItemShot;
 		Item.knockBack = 1;
-		Item.useTime = 60 * 4;// controls cooldown
+		Item.useTime = 60 * (int)2.6;// controls cooldown
 		Item.useAnimation = Item.useTime;
-		Item.useLimitPerAnimation = 3; // controls burst count
+		Item.useLimitPerAnimation = 12; // controls burst count
 		Item.value = Item.sellPrice(gold: 5);
+		Item.ArmorPenetration += 3;
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) => player.OriginPlayer().glitterGlue = Item;
 	public override bool MagicPrefix() => true;
