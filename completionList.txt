@@ -1386,7 +1386,7 @@ TILES:
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(^) Cargo Elevator Door
+(#3, $2, ^2) Cargo Elevator Door !!!
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station

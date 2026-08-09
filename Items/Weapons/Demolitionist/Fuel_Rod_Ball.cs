@@ -95,7 +95,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			orig(self, properties, ref position, ref velocity, ref collision);
 			if (collision.Entity is Projectile proj && proj.ModProjectile is Fuel_Rod_Ball_P && !velocity.WithinRange(collision.Entity.oldVelocity, 2)) {
 				SoundEngine.PlaySound(SoundID.Item10.WithPitchVarience(1f), position);
-				//SoundEngine.PlaySound(SoundID.Item15.WithPitch(Projectile.ai[2] / 30), position);
+				SoundEngine.PlaySound(SoundID.Item15.WithPitch(proj.ai[2] / 30), position);
+				SoundEngine.PlaySound(SoundID.DD2_LightningAuraZap.WithPitch(MathHelper.Clamp(proj.ai[2] / 30, 0, 1)), position);
 			}
 		}
 

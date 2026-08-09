@@ -7759,7 +7759,13 @@ The_Muffler: {
 
 Glitter_Glue: {
 	// DisplayName: Glitter Glue
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Releases colorful homing stars when enemies are nearby
+		25% increased damage during the day
+		Increased velocity and homing during the night
+		3 second cooldown
+		''' */
 }
 
 Robo_Tail: {
