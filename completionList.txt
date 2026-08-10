@@ -888,7 +888,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (X) Xeyah Laeta
 
-(@, #2) Arc-Flame Arm Blades !!!
+(@2, #2) Arc-Flame Arm Blades !!!
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
@@ -1399,6 +1399,7 @@ TILES:
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
+(@, #) Fast Conveyor Belt !!!
 (^) Fire Extinguisher Holder
 (^) Gas Generator
 (#2, ^2) Incinerator Pit !!!
