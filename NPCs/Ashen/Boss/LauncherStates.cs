@@ -34,7 +34,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (shotsToHaveFired > npc.ai[1]) {
 				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitchRange(-0.4f, -0.3f), boss.GunPos);
 				SoundEngine.PlaySound(SoundID.Item45.WithPitchRange(0.6f, 1.5f), boss.GunPos);
-				SoundEngine.PlaySound(SoundID.Item61.WithPitchRange(-0.8f, -0.6f), boss.GunPos);
+				//SoundEngine.PlaySound(SoundID.Item61.WithPitchRange(-0.8f, -0.6f), boss.GunPos);
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					boss.GunPos + direction * 6,

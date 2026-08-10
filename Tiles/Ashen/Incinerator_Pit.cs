@@ -178,9 +178,9 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			} else {
 				if (entity.velocity.Y < 0 || tile.TileFrameY <= 18 * 3) entity.velocity.Y += 4;
 				if (tile.TileFrameY >= 18 * 3) {
-					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f)/*, center*/);
-					if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithVolume(0.05f)/*, center*/);
-					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item113.WithVolume(0.05f)/*, center*/);
+					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f), new Vector2(pos.X * 16 + 13 * 8, pos.Y * 16 + 8 * 8));
+					if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithVolume(0.05f), new Vector2(pos.X * 16 + 13 * 8, pos.Y * 16 + 8 * 8));
+					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item113.WithVolume(0.05f), new Vector2(pos.X * 16 + 13 * 8, pos.Y * 16 + 8 * 8));
 					if (entity.velocity.Y >= 0 && Main.tile[entity.Center.ToTileCoordinates()].TileFrameY >= 18 * 4) {
 						entity.velocity.Y *= -0.11f;
 					}

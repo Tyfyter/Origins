@@ -2711,7 +2711,7 @@ Configs: {
 
 		SetBonusDoubleTap: {
 			Label: Set bonus double-tap
-			Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
+			Tooltip: Requires a specified key binding to be used twice in a short timeframe for set bonus abilities to trigger.
 		}
 
 		Headers: {
@@ -2722,17 +2722,17 @@ Configs: {
 
 		TabbyJournal: {
 			Label: Alternate {§Journal} layout
-			Tooltip: Currently the "normal" layout is still unimplemented
+			Tooltip: Currently the "normal" layout is still unimplemented.
 		}
 
 		AnimatedRavel: {
 			Label: Animated Ravel transformation
-			Tooltip: Makes Ravel transformations flashier
+			Tooltip: Makes Ravel transformations flashier.
 		}
 
 		ExtraGooeyRivenGores: {
 			Label: Extra-gooey Riven gores
-			Tooltip: More visually appealing way to kick Riven-butt
+			Tooltip: More visually appealing way to kick Riven butt.
 		}
 
 		DebugMenuButton: {
@@ -2743,11 +2743,11 @@ Configs: {
 
 		TwentyFourHourTime: {
 			Label: 24-hour time
-			Tooltip: Makes Origins' clocks display time in a 24-hour format
+			Tooltip: Makes Origins' clocks display time in a 24-hour format.
 		}
 
 		DefaultJournalMode: {
-			Label: Open {§Journal} to
+			Label: Open {§Journal} to...
 			Tooltip: ""
 		}
 
@@ -2808,7 +2808,7 @@ Configs: {
 
 		ShowRarityInHotbar: {
 			Label: Show Rarity In Hotbar
-			Tooltip: ""
+			Tooltip: Changes the color of the item name text above the hotbar to the item's rarity color.
 		}
 
 		ScrollWheelDirection: {
@@ -2818,11 +2818,11 @@ Configs: {
 
 		npcsNotToForceDialectOn: {
 			Label: NPCs Not To Force Dialect On
-			Tooltip: By default, Terraria Origins enables Dialect compatibility for all NPCs, if this somehow causes issues with an NPC, you can use this to prevent it.
+			Tooltip: By default, Terraria Origins enables Dialect compatibility for all NPCs. If this causes issues with an NPC, you can toggle this setting off to prevent it.
 		}
 
 		ImproveChlorophyteBulletsPerformance: {
-			Label: Improve Chlorophyte Bullets' Performance
+			Label: Improve Chlorophyte Bullet Performance
 			Tooltip: Replaces chlorophyte bullets' notoriously laggy visual effect with a more performant and arguably better-looking one.
 		}
 
@@ -2836,14 +2836,14 @@ Configs: {
 			Label: Disable Performance-Intensive Visual Effects
 			Tooltip:
 				'''
-				Certain visual effects associated with the Shimmer Construct, its loot[ox:,] and the Fiberglass Undergrowth biome may cause severe lag on low-end hardware
-				Enable this to disable and/or replace them
+				Certain visual effects associated with the Shimmer Construct, its loot[ox:,] and the Fiberglass Undergrowth biome may cause severe lag on low-end hardware.
+				Enable this to disable and/or replace them.
 				'''
 		}
 
 		DyeLightSources: {
 			Label: Dye Light Sources
-			Tooltip: ""
+			Tooltip: Whether or not dyes should change the color of light emitted by items they're applied to.
 		}
 
 		ProceduralLightSourceDyeRate: {
@@ -2857,28 +2857,28 @@ Configs: {
 		}
 
 		adjustoHookControlSetting: {
-			Label: adjusto Hook Control Setting
-			Tooltip: ""
+			Label: Adjust-o-Hook Control Setting
+			Tooltip: Controls whether the Adjust-o-Hook controls follow the default control scheme, are inverted or are relative to the world.
 		}
 
 		DyeLightTiles: {
 			Label: Dye Light Tiles
-			Tooltip: ""
+			Tooltip: Whether or not dyes should change the color of light emitted by tiles they're applied to.
 		}
 
 		FixNonSolidTileBlurring: {
 			Label: Fix Non-Solid Tile Blurring
-			Tooltip: ""
+			Tooltip: Prevents non-solid tiles, such as furniture, from blurring; establishing a much crisper and cleaner image of their sprites.
 		}
 
 		FlashbangColor: {
 			Label: Flashbang Color
-			Tooltip: ""
+			Tooltip: Changes the color of Flashbang flashes in-game.
 		}
 
 		PreferSelectedHook: {
 			Label: Prefer Selected Hook
-			Tooltip: ""
+			Tooltip: Prefer your selected hook instead of another hook an item you're using is attempting to use.
 		}
 	}
 
@@ -2896,7 +2896,7 @@ Configs: {
 			Label: Wooden item buffs
 			Tooltip:
 				'''
-				Whether or not vanilla/modded wooden items receive buffs from Origins
+				Whether or not vanilla/modded wooden items receive buffs from Origins.
 				Currently affects:
 				Ebonwood armor
 				Shadewood armor
@@ -2906,12 +2906,12 @@ Configs: {
 
 		RainSetBuff: {
 			Label: Rain armor buffs
-			Tooltip: Gives Rain armor pieces bonuses and a set bonus when equipped together
+			Tooltip: Provides Rain armor pieces bonuses and a set bonus when equipped together.
 		}
 
 		GrassMerge: {
 			Label: Universal Grass Merge
-			Tooltip: Forces grass to merge with other types of grass
+			Tooltip: Forces grass to merge with other types of grass.
 		}
 
 		DebugMode: {
@@ -2921,40 +2921,40 @@ Configs: {
 
 		RoyalGel: {
 			Label: Royal Gel Slime
-			Tooltip: Allows Royal Gel to summon a slime minion
+			Tooltip: Allows Royal Gel to summon a slime minion.
 		}
 
 		VolatileGelatin: {
 			Label: Volatile Gelatin boosts
-			Tooltip: Volatile Gelatin's attacks count as explosive damage and coat enemies in highly explosive gel
+			Tooltip: Volatile Gelatin's attacks count as explosive damage and coat enemies in highly-explosive gel.
 		}
 
 		Assimilation: {
 			Label: Assimilation mechanics
-			Tooltip: Toggles between whether or not Assimilation will be active
+			Tooltip: Toggles between whether or not Assimilation will be active.
 		}
 
 		StatShareRatio: {
 			Label: Stat share multipliers
-			Tooltip: These values will determine how much bonuses for the class contribute to generic damage when using stat-sharing effects
+			Tooltip: These values will determine how much bonuses for a class contribute to generic damage when using stat-sharing effects.
 		}
 
 		AddDebuff: Makes {0} inflict the {1} debuff
-		ThunderSpear.Tooltip: Makes {0} inflict the {1} debuff
+		ThunderSpear.Tooltip: Makes {0} inflict the {1} debuff.
 
 		FrostHydra: {
 			Label: "{$ItemName.StaffoftheFrostHydra}"
-			Tooltip: Frost Hydra now shoots bursts of frost at nearby targets, and its long-range shots now explode, gaining extra benefit from summon tag damage
+			Tooltip: Frost Hydra now shoots bursts of frost at nearby targets, and its long range shots now explode, gaining extra benefit from summon tag damage.
 		}
 
 		VanillaWhipScale: {
 			Label: Vanilla Whip Scale Support
-			Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
+			Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers.
 		}
 
 		TicketInBank: {
 			Label: "[itemname:Origins/Lottery_Ticket] usable in Banks"
-			Tooltip: Should the [itemname:Origins/Lottery_Ticket] work while in player banks
+			Tooltip: Whether or not [itemname:Origins/Lottery_Ticket]s work while in player banks.
 		}
 
 		NewHarpoonsFromTheFuture: {
@@ -2963,13 +2963,21 @@ Configs: {
 		}
 
 		ForbiddenArmor: {
-			Label: Forbidden Armor
+			Label: Forbidden armor buffs
 			Tooltip: ""
 		}
 
 		QuirkyEvilSpread: {
 			Label: Quirky Evil Spread
-			Tooltip: Allows evil biomes to spread in unique ways
+			Tooltip:
+				'''
+				Allows evil biomes to spread in unique ways. Does not support other modded evil biomes (yet).
+				Corruption: Spreads through Corruptors.
+				Crimson: Spreads through ground where any nearby enemy, NPC or player was slain.
+				Defiled: Quickly reclaims purified tiles until the last Defiled Heart is smashed.
+				Riven: Riven enemies passively increase the chances of nearby pure tiles being converted.
+				Ashen: Ignores any obstacles such as sunflowers and trees, and can spread further but much slower.
+				'''
 		}
 	}
 

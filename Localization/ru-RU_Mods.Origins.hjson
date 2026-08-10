@@ -2873,12 +2873,12 @@ Configs: {
 
 		FlashbangColor: {
 			// Label: Flashbang Color
-			// Tooltip: ""
+			// Tooltip: Changes the color of Flashbang flashes in-game.
 		}
 
 		PreferSelectedHook: {
 			// Label: Prefer Selected Hook
-			// Tooltip: ""
+			// Tooltip: Prefer your selected hook instead of another hook an item you're using is attempting to use.
 		}
 	}
 
@@ -2969,7 +2969,15 @@ Configs: {
 
 		QuirkyEvilSpread: {
 			// Label: Quirky Evil Spread
-			// Tooltip: Allows evil biomes to spread in unique ways
+			/* Tooltip:
+				'''
+				Allows evil biomes to spread in unique ways. Does not support other modded evil biomes (yet).
+				Corruption: Spreads through Corruptors.
+				Crimson: Spreads through ground where any nearby enemy, NPC or player was slain.
+				Defiled: Quickly reclaims purified tiles until the last Defiled Heart is smashed.
+				Riven: Riven enemies passively increase the chances of nearby pure tiles being converted.
+				Ashen: Ignores any obstacles such as sunflowers and trees, and can spread further but much slower.
+				''' */
 		}
 	}
 

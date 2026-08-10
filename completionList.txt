@@ -62,7 +62,7 @@ BOSSES AND MINI-BOSSES:
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation
-(#2, $, ^2, ⛥(Should probably delay rework to release ashen update sooner)) Fiberglass Weaver !!!
+(ᗢ) Fiberglass Weaver
 (^) Shimmer Construct
 (#2, ^2) Trenchmaker !!!
 (^) World Cracker
@@ -90,7 +90,7 @@ TOWN NPCs:
 (ᗢ) Defiled Effigy
 
 (X) Arabel
-(ᗢ, #2, ^2) Mother Unit !!! (leave it with just "ᗢ" once done)
+(#2, ^2) Mother Unit !!! (needs animation and glow)
 (%2, X) The Author
 
 (%2, X) Cubekon Tinkerer
@@ -177,11 +177,11 @@ OTHER:
 |---
 (X) Cubekon Tinkerer's Modifiers
 (^) Defiled "Chrysalis" Spawning
-(X) Equipment Lubing mechanics !!!
+(^) Equipment Lubing mechanics
 (^) Explosive Modifiers
 (^) Journal
 (^) Quest System General
-(X) Quirky World Evil Spread mechanics !!!
+(#2) Quirky World Evil Spread mechanics !!!
 (X) NPC Portraits
 (#, $2, ^2) Sprockey Power Wiring Assisstant !!!
 (^) Summoner Plus Modifiers
@@ -242,7 +242,7 @@ ENEMY NPCS:
 (^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
-(#2, $2, ^2) Packhunter !!!
+(#2, ^2) Packhunter !!!
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
@@ -317,7 +317,7 @@ ENEMY NPCS:
 (^) Torn Ghoul
 (^) Trash Compactor Mimic
 (^) Trijaw Shark
-(#, $2, ^2) VV-13 !!!
+(#, ^2) VV-13 !!!
 
 (X) Clockwork
 (@2/3, #) Electromancer

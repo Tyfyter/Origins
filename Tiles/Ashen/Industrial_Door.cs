@@ -281,8 +281,11 @@ namespace Origins.Tiles.Ashen {
 			protected override void Perform() {
 				GetAnimation(Position).TargetOpen = Open;
 				Vector2 soundPosition = Position.ToWorldCoordinates(16, 24);
-				SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-0.4f), soundPosition);
-				SoundEngine.PlaySound(SoundID.NPCHit52, soundPosition);
+				if (Open) {
+					SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitchRange(0.1f, 0.2f).WithVolume(0.8f), soundPosition);
+				} else {
+					SoundEngine.PlaySound(Origins.Sounds.MetalDoorClose.WithPitchRange(0.1f, 0.2f).WithVolume(0.8f), soundPosition);
+				}
 			}
 		}
 	}

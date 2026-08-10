@@ -7213,7 +7213,7 @@ Fuel_Rod_Ball: {
 		<left> to throw
 		Hold <right> to excite the fuel for a more powerful detonation
 		Press <right> while active for it to return
-		Excited fuel rod balls will explode instead
+		Excited fuel rod balls will explode and deal more damage
 		'''
 }
 

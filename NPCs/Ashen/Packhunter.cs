@@ -2,6 +2,10 @@
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Dev;
+using Origins.Items.Armor.Ashen;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
+using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -11,6 +15,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,14 +36,14 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.lifeMax = 40;
-			NPC.defense = 6;
+			NPC.lifeMax = 60;
+			NPC.defense = 7;
 			NPC.damage = 25;
 			NPC.width = 44;
 			NPC.height = 30;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
-			NPC.DeathSound = SoundID.NPCDeath44;
+			NPC.DeathSound = Origins.Sounds.PackhunterDeath.WithPitchRange(0.9f, 1.1f).WithVolume(0.9f);
 			NPC.knockBackResist = 0.3f;
 			NPC.value = 75;
 			NPC.target = Main.maxPlayers;
@@ -52,6 +57,12 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(new CommonDrop(ModContent.ItemType<Biocomponent10>(), 1, 1, 3));
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 2, amountDroppedMaximum: 4));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
@@ -67,12 +78,23 @@ namespace Origins.NPCs.Ashen {
 			float aggro = player.aggro;
 			switch (NPC.aiAction) {
 				case 1:
-				if (player.whoAmI == NPC.target) aggro += 600;
-				else aggro -= 300;
+				if (player.whoAmI == NPC.target) {
+					if (NPC.soundDelay <= 0) {
+						SoundEngine.PlaySound(Origins.Sounds.PackhunterAlarm.WithPitch(1.2f).WithVolume(0.25f), NPC.Center);
+						NPC.soundDelay = 20;
+					}
+					aggro += 600;
+				} else aggro -= 300;
 				break;
 				case 2:
 				case 3:
-				if (player.whoAmI == NPC.target) aggro += 300;
+				if (player.whoAmI == NPC.target) {
+					aggro += 300;
+					if (NPC.soundDelay <= 0) {
+						SoundEngine.PlaySound(Origins.Sounds.PackhunterAlarm.WithPitch(0.8f).WithVolume(0.25f), NPC.Center);
+						NPC.soundDelay = 50;
+					}
+				}
 				break;
 				case 4:
 				aggro = FlashRangeBoost;
@@ -103,6 +125,7 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(650) && NPC.aiAction != 1) SoundEngine.PlaySound(Origins.Sounds.PackhunterChatter.WithPitchRange(0.9f, 1.1f).WithVolume(0.9f), NPC.Center);
 			viewPos = NeckPosition + viewDirection * 16;
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
@@ -153,7 +176,7 @@ namespace Origins.NPCs.Ashen {
 				if (seesTarget) {
 					NPC.ai[0]++;
 					NPC.ai[1] = 0;
-					SoundEngine.SoundPlayer.Play(Origins.Sounds.defiledKill.WithPitch(NPC.ai[0]/8).WithVolume(0.5f), NPC.Center);
+					SoundEngine.SoundPlayer.Play(Origins.Sounds.PackhunterChatter.WithPitch(MathHelper.Clamp(NPC.ai[0]/30, 0, 2)), NPC.Center);
 				} else {
 					NPC.ai[1]++;
 				}
@@ -193,10 +216,10 @@ namespace Origins.NPCs.Ashen {
 					Triangle flashTriangle = GetViewTriangle(FlashRangeBoost);
 					SoundEngine.PlaySound(SoundID.Camera, NPC.Center);
 					SoundEngine.PlaySound(SoundID.ScaryScream.WithPitch(2f), NPC.Center);
-					SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(2f), NPC.Center);
+					SoundEngine.PlaySound(Origins.Sounds.PackhunterDeath.WithPitch(1.5f), NPC.Center);
 					foreach (Player player in Main.ActivePlayers) {
 						if (flashTriangle.Intersects(player.Hitbox)) {
-							player.AddBuff(Flashbang_Debuff.ID, 65);
+							player.AddBuff(Flashbang_Debuff.ID, 85);
 							if (player.whoAmI == Main.myPlayer && OriginsModIntegrations.CheckAprilFools() && TextUtils.LanguageTree.Find("Mods.Origins.AprilFools.Buffs.Flashbang_Debuff.DogDescription") is LanguageTree desc) {
 								Flashbang_Debuff.descriptionOverride = desc.value;
 							}
@@ -289,6 +312,17 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				for (int i = 0; i < 5; i++) {
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				}
+			} else if (Main.rand.NextBool(5)) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.aiAction);

@@ -57,7 +57,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1f);
-			NPC.DeathSound = Origins.Sounds.RepairboyDeath.WithVolume(0.25f);
+			NPC.DeathSound = Origins.Sounds.RepairboyDeath.WithVolume(0.4f);
 			NPC.value = Item.buyPrice();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,

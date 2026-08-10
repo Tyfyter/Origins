@@ -52,17 +52,25 @@ namespace Origins {
 			public static SoundStyle EnergyRipple = SoundID.Item8;
 			public static SoundStyle PhaserCrash = SoundID.Item12;
 			public static SoundStyle DeepBoom = SoundID.Item14;
+			public static SoundStyle SonarPing = SoundID.Zombie82.WithPitch(-1).WithVolume(0.2f);
 			public static SoundStyle HolyHandGrenade = new("Origins/Sounds/Custom/HolyHandGrenade");
 			public static SoundStyle SmallSawStart = new("Origins/Sounds/Custom/SmallSawStart");
 			public static SoundStyle SmallSaw = new("Origins/Sounds/Custom/SmallSaw") {
 				IsLooped = true
 			};
 			public static SoundStyle SmallSawEnd = new("Origins/Sounds/Custom/SmallSawEnd");
+			public static SoundStyle SawStart = new("Origins/Sounds/Custom/SawStart");
+			public static SoundStyle Saw = new("Origins/Sounds/Custom/Saw") {
+				IsLooped = true
+			};
+			public static SoundStyle SawEnd = new("Origins/Sounds/Custom/SawEnd");
 			public static SoundStyle WeldingTorch = new("Origins/Sounds/Custom/WeldingTorch");
 			public static SoundStyle WeldingTorchCancel = new("Origins/Sounds/Custom/WeldingTorchCancel");
 			public static SoundStyle MetalBoxOpen = new("Origins/Sounds/Custom/MetalBoxOpen");
 			public static SoundStyle MetalCreakOpen = new("Origins/Sounds/Custom/MetalCreakOpen");
 			public static SoundStyle MetalCreakClose = new("Origins/Sounds/Custom/MetalCreakClose");
+			public static SoundStyle MetalDoorOpen = new("Origins/Sounds/Custom/MetalDoorOpen");
+			public static SoundStyle MetalDoorClose = new("Origins/Sounds/Custom/MetalDoorClose");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
@@ -97,6 +105,11 @@ namespace Origins {
 			public static SoundStyle RejectIdle = new("Origins/Sounds/Custom/Withered_Idle", 3);
 			public static SoundStyle WindUpToy = new("Origins/Sounds/Custom/WindUpToy");
 			public static SoundStyle WindUpToyStart = new("Origins/Sounds/Custom/WindUpToyStart");
+			public static SoundStyle PackhunterAlarm = new("Origins/Sounds/Custom/Packhunter_Alarm");
+			public static SoundStyle PackhunterChatter = new("Origins/Sounds/Custom/Packhunter_Chatter", 2);
+			public static SoundStyle PackhunterDeath = new("Origins/Sounds/Custom/Packhunter_Death");
+			public static SoundStyle Haha24 = new("Origins/Sounds/Custom/Haha24");
+			public static SoundStyle VV13Idle = new("Origins/Sounds/Custom/VV13_Idle", 3);
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",
@@ -150,6 +163,14 @@ namespace Origins {
 				public static SoundStyle Death = SoundID.DD2_KoboldDeath;
 				public static SoundStyle Score = SoundID.DrumTamaSnare;
 			}
+			public static class SprockeyScrewdriver {
+				public static SoundStyle Inquire = new("Origins/Sounds/Custom/Screwdriver/Sprockey_Inquire");
+				public static SoundStyle Point = new("Origins/Sounds/Custom/Screwdriver/Sprockey_Point");
+				public static SoundStyle Right = new("Origins/Sounds/Custom/Screwdriver/Sprockey_Right");
+				public static SoundStyle Wrong = new("Origins/Sounds/Custom/Screwdriver/Sprockey_Wrong");
+				public static SoundStyle ImpatientPoint = new("Origins/Sounds/Custom/Screwdriver/Sprockey_ImpatientPoint", 2);
+				public static SoundStyle ImpatientWrong = new("Origins/Sounds/Custom/Screwdriver/Sprockey_ImpatientWrong");
+			}
 		}
 		public static void AudioLoad() {
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
@@ -162,6 +183,7 @@ namespace Origins {
 			Sounds.PowerUp = new SoundStyle("Origins/Sounds/Custom/PowerUp", SoundType.Sound);
 			Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
 			Sounds.PhaserCrash = new SoundStyle("Origins/Sounds/Custom/PhaserCrash", SoundType.Sound);
+			Sounds.SonarPing = new SoundStyle("Origins/Sounds/Custom/SonarPing", SoundType.Sound);
 			Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound) {
 				MaxInstances = 0
 			};

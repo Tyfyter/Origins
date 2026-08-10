@@ -9,6 +9,7 @@ using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -68,6 +69,9 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(650)) {
+				SoundEngine.PlaySound(Origins.Sounds.VV13Idle, NPC.Center);
+			}
 			NPC.TargetClosestUpgraded();
 			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
 				NPCAimedTarget target = NPC.GetTargetData();
