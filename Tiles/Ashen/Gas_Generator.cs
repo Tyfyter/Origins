@@ -64,8 +64,7 @@ public class Gas_Generator : ModTile {
 		num = fail ? 1 : 3;
 	}
 	public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
-		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
-		frameYOffset = Gas_Generator_TE.GetData(new(left, top)).Frame * AnimationFrameHeight;
+		frameYOffset = GetData(i, j).Frame * AnimationFrameHeight;
 	}
 	public override void PlaceInWorld(int i, int j, Item item) {
 		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
@@ -101,7 +100,8 @@ public class Gas_Generator : ModTile {
 		if (ModContent.GetInstance<Gas_Generator_TE>().tileEntities[new(i, j)].Fuel > 0) {
 			FastRandom rand = new FastRandom(Origins.gameFrameCount).WithModifier(i, j);
 			rand.Next(1);
-			pos += rand.NextVector2Circular(1, 2); 
+			pos += rand.NextVector2Circular(1, 2);
+			if (!Main.gamePaused && Main.instance.IsActive) Dust.NewDust(new(i * 16 + 8, j * 16 + 8), 0, 0, DustID.Smoke, 0, -2, 125, new Color(0, 0, 0));
 		}
 		pos = pos.Floor();
 		short tileFrameX = tile.TileFrameX;
@@ -176,19 +176,24 @@ public class Gas_Generator : ModTile {
 	}
 	public override void NearbyEffects(int i, int j, bool closer) {
 		if (closer) return;
-		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
-		if (Gas_Generator_TE.GetData(new(i, j)).Fuel <= 0) return;
+		if (GetData(i, j).Fuel <= 0) return;
 		activeSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
+	}
+	public override void EmitParticles(int i, int j, Tile tile, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
+		if (GetData(i, j).Fuel > 0) ;
 	}
 	class Sound : AEnvironmentSound {
 		public int NoisyGenerator = 0;
 		public override void UpdateSound(Vector2 position) {
-			Dust.NewDust(position, 0, 0, DustID.Smoke, 0, -2, 125, new Color(0, 0, 0));
 			if (NoisyGenerator.CycleUp(8)) {
 				SoundEngine.PlaySound(SoundID.Item22.WithVolume(0.7f), position);
 				SoundEngine.PlaySound(SoundID.Item69.WithVolume(0.2f).WithPitch(1.5f), position);
 			}
 		}
+	}
+	static Gas_Generator_TE.Data GetData(int i, int j) {
+		Tile tile = Main.tile[i, j];
+		return Gas_Generator_TE.GetData(new(i - tile.TileFrameX / 18, j - tile.TileFrameY / 18));
 	}
 	class Gas_Generator_TE : TESystem<Gas_Generator_TE.Data> {
 		public static Data GetData(Point16 position) {
