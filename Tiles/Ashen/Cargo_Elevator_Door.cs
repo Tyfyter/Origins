@@ -252,9 +252,7 @@ namespace Origins.Tiles.Ashen {
 				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
-					if (Main.tile[position].LoopSoundDelay(3)) {
-						SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 13 * 8, position.Y * 16 + 8 * 8));
-					}
+					SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 13 * 8, position.Y * 16 + 8 * 8));
 					frameCounter = 0;
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
