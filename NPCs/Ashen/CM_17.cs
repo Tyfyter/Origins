@@ -336,7 +336,7 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 4));
 		}
 	}
 	public class Watchling_Wall : Watchling, ICustomWikiStat {

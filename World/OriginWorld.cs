@@ -59,7 +59,7 @@ namespace Origins {
 		private static double? _worldSurfaceLow;
 		public static double WorldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
 		public Rectangle brinePoolRange;
-		public static bool DefiledResurgenceActive => Main.hardMode && !NPC.downedPlantBoss;//true;
+		public static bool DefiledResurgenceActive => Main.hardMode && !NPC.downedPlantBoss && OriginConfig.Instance.QuirkyEvilSpread;//true;
 		public const byte evil_corruption = 0b0001;//1
 		public const byte evil_crimson = 0b0010;//2
 												//difference of 4 (2^2)
