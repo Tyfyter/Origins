@@ -9,7 +9,6 @@ using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,6 +21,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Origins.Core.MultiTypeMultiTile;
+using static Origins.Graphics.Primitives.VertexMultiTile;
 
 namespace Origins.Tiles.Ashen; 
 [ReinitializeDuringResizeArrays]
@@ -35,6 +35,8 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 	public static int[] ItemBonusPowerTime = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Incinerator_Pit)}_{nameof(ItemBonusPowerTime)}").RegisterIntSet();
 	public static bool?[] ItemCanBeDestroyedOveride = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Incinerator_Pit)}_{nameof(ItemCanBeDestroyedOveride)}").RegisterCustomSet<bool?>(null);
 	AutoLoadingTexture grinderTexture = typeof(Incinerator_Pit).GetDefaultTMLName("_Grinder");
+	AutoLoadingTexture glowTexture = typeof(Incinerator_Pit).GetDefaultTMLName("_Glow");
+	AutoLoadingTexture pitGlowTexture = typeof(Incinerator_Pit_Pit).GetDefaultTMLName("_Glow");
 	public static int ID { get; private set; }
 	public static ShapeMap Shape => field = field || new ShapeMap(
 		new() {
@@ -96,8 +98,8 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 	}
 	public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 		if (ShouldGlow(Main.tile[i, j])) {
-			r = 0.0912f;
-			g = 0.0579f;
+			r = 0.912f;
+			g = 0.579f;
 			b = 0f;
 		}
 	}
@@ -106,50 +108,57 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		Tile tile = Main.tile[i, j];
 		i -= tile.TileFrameX / 18;
 		j -= tile.TileFrameY / 18;
-		if (drawnPoints.Add(new(i, j))) {
-			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
-			if (tile.LoopSoundDelay(1)) {
-				//SoundEngine.PlaySound(SoundID.Zombie70.WithPitch(2f).WithVolume(0.08f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
-				SoundEngine.PlaySound(SoundID.Item140.WithPitch(-1.25f).WithVolume(0.15f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
-				SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.25f).WithVolume(0.1f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
-				SoundEngine.PlaySound(SoundID.Item144.WithPitch(2f).WithVolume(0.06f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
-				//SoundEngine.PlaySound(SoundID.Item29.WithPitch(1f).WithVolume(0.2f), new Vector2(i * 16 + 13 * 8, j * 16 + 8 * 8));
-			}
-		}
+		if (drawnPoints.Add(new(i, j))) Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
 		return false;
 	}
-	public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
-		const float speed = 0.3f;
-		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-		Vector2 offset = new Vector2(i, j) * 16 - Main.screenPosition;
-		for (int n = 0; n < vertices.Length; n++) {
-			Vector2 pos = new(n % 14, n / 14);
-			vertices[n].TextureCoordinate = pos / new Vector2(13, 8);
-			vertices[n].Position = new(pos * 16 + offset, 0);
-			vertices[n].Color = Color.White;
+	class Sound : AEnvironmentSound {
+		public override void UpdateSound(Vector2 position) {
+			//SoundEngine.PlaySound(SoundID.Zombie70.WithPitch(2f).WithVolume(0.08f), position);
+			SoundEngine.PlaySound(SoundID.Item140.WithPitch(-1.25f).WithVolume(0.15f), position);
+			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.25f).WithVolume(0.1f), position);
+			SoundEngine.PlaySound(SoundID.Item144.WithPitch(2f).WithVolume(0.06f), position);
+			//SoundEngine.PlaySound(SoundID.Item29.WithPitch(1f).WithVolume(0.2f), position);
 		}
+	}
+	public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
+		verts.Draw(
+			i,
+			j,
+			spriteBatch,
+			new WirePulseLayer(),
+			Lit(TextureAssets.Tile[Incinerator_Pit_Pit.ID].Value),
+			Glow(pitGlowTexture),
+			new GrinderLayer(grinderTexture),
+			Lit(TextureAssets.Tile[ID].Value),
+			Glow(glowTexture)
+		);
+	}
+	readonly struct GrinderLayer(Texture2D grinderTexture) : ILayer {
+		private static readonly VertexRectangle grinderRect = new();
+		bool ILayer.UsesVertices => false;
+		readonly void ILayer.Draw(VertexPositionColorTexture[] vertices, short[] dices, int i, int j, SpriteBatch spriteBatch) {
+			const float speed = 0.3f;
 
-		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.Tile[Incinerator_Pit_Pit.ID].Value;
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, dices.Length / 3);
-
-		Main.graphics.GraphicsDevice.Textures[0] = grinderTexture;
-		DrawGrinder(offset + new Vector2(46, 64), (float)Main.timeForVisualEffects * speed);
-		DrawGrinder(offset + new Vector2(134, 64), (float)Main.timeForVisualEffects * -speed + MathHelper.PiOver2);
-
-		bool isPowered = WiresUI.Settings.DrawWires && Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered;
-		float pulse = isPowered ? Ashen_Wire_Data.pulse.Value * 0.8f : 0;
-		for (int n = 0; n < vertices.Length; n++) vertices[n].Color = Color.Lerp(Lighting.GetColor(i + n % 14, j + n / 14), poweredColor, pulse);
-		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.Tile[ID].Value;
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, dices.Length / 3);
-		static void DrawGrinder(Vector2 position, float rotMult) {
-			grinderRect.Draw(
-				position,
-				Color.White,
-				new(88, 84),
-				rotMult,
-				position
-			);
+			Vector2 offset = new Vector2(i, j) * 16 - Main.screenPosition;
+			Main.graphics.GraphicsDevice.Textures[0] = grinderTexture;
+			DrawGrinder(offset + new Vector2(46, 64), (float)Main.timeForVisualEffects * speed);
+			DrawGrinder(offset + new Vector2(134, 64), (float)Main.timeForVisualEffects * -speed + MathHelper.PiOver2);
+			static void DrawGrinder(Vector2 position, float rotMult) {
+				grinderRect.Draw(
+					position,
+					Color.White,
+					new(88, 84),
+					rotMult,
+					position
+				);
+			}
+		}
+	}
+	readonly struct WirePulseLayer : ILayer {
+		readonly void ILayer.Draw(VertexPositionColorTexture[] vertices, short[] dices, int i, int j, SpriteBatch spriteBatch) {
+			bool isPowered = WiresUI.Settings.DrawWires && Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered;
+			float pulse = isPowered ? Ashen_Wire_Data.pulse.Value * 0.8f : 0;
+			for (int n = 0; n < vertices.Length; n++) vertices[n].Color = Color.Lerp(vertices[n].Color, poweredColor, pulse);
 		}
 	}
 	public static PlayerDeathReason DeathReason(Player player) => PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Incinerator_Pit").SelectFrom(player.name).ToNetworkText());
@@ -214,17 +223,12 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			break;
 		}
 	}
-	public static bool ShouldGlow(Tile tile) => Shape[tile.TileFrameX / 18, tile.TileFrameY / 18, 0] == 'O';
+	public static bool ShouldGlow(Tile tile) => Shape[tile.TileFrameX / 18, tile.TileFrameY / 18, 0] == 'O' && Shape[tile.TileFrameX / 18, tile.TileFrameY / 18 + 1, 0] == 'X';
 	bool IMultiTypeMultiTile.IsValidTile(Tile tile, int left, int top, int style) => Shape.Matches(tile, left, top, style);
 	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
-	private readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[14 * 9];
-	static readonly short[] dices = Enumerable.Range(0, 13).SelectMany(x => Enumerable.Range(0, 8).SelectMany<int, short>(y => [
-		(short)(x + y * 14), (short)(x + 1 + y * 14), (short)(x + 14 + y * 14),
-		(short)(x + 1 + y * 14), (short)(x + 1 + 14 + y * 14), (short)(x + 14 + y * 14),
-	])).ToArray();
-	private static readonly VertexRectangle grinderRect = new();
+	readonly VertexMultiTile verts = new(14, 9);
 	public override void PlaceInWorld(int i, int j, Item item) {
 		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
 		ModContent.GetInstance<Incinerator_Pit_TE>().AddTileEntity(new(left, top), new());
