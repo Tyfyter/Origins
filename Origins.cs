@@ -819,7 +819,7 @@ namespace Origins {
 			}
 			foreach (ModNPC npc in MC.GetContent<ModNPC>()) {
 				if (npc is IJournalEntrySource source) JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[npc.Type], source.EntryName);
-				if (npc is IMinions minions) NPCID.Sets.BossBestiaryPriority.InsertRange(NPCID.Sets.BossBestiaryPriority.IndexOf(npc.Type) + 1, minions.BossMinions);
+				if (npc is IMinions { BossMinions: List<int> minions }) NPCID.Sets.BossBestiaryPriority.InsertRange(NPCID.Sets.BossBestiaryPriority.IndexOf(npc.Type) + 1, minions);
 			}
 			MC.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 			ForcedDialectCompatibility.PostSetupContent();

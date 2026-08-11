@@ -82,7 +82,7 @@ namespace Origins.Tiles.Ashen {
 			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
 			SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
 			SoundEngine.PlaySound(SoundID.Zombie49.WithPitch(1.2f), new(i * 16 + 8, j * 16 + 8));
-			return base.RightClick(i, j);
+			return true;
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }

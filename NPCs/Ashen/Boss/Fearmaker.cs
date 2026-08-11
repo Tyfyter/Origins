@@ -19,7 +19,9 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Ashen.Boss {
-	public class Fearmaker : Trenchmaker {
+	public class Fearmaker : Trenchmaker, IBossChecklistEntry, IMinions {
+		bool IBossChecklistEntry.HasEntry => false;
+		List<int> IMinions.BossMinions => null;
 		public override string Texture => typeof(Trenchmaker).GetDefaultTMLName();
 		public override string BossHeadTexture => null;
 		public override void Load() {
