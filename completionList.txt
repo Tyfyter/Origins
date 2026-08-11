@@ -888,7 +888,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (X) Xeyah Laeta
 
-(@2, #2) Arc-Flame Arm Blades !!!
+(#2, ^2) Arc-Flame Arm Blades !!!
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
@@ -1399,11 +1399,13 @@ TILES:
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
-(@, #) Fast Conveyor Belt !!!
+(#2, ^2) Fast Conveyor Belt !!!
 (^) Fire Extinguisher Holder
 (^) Gas Generator
 (#2, ^2) Incinerator Pit !!!
 (^) Industrial Door
+(X) Large Auto Assembler !!!
+(X) Large Conveyor Scooper !!!
 (^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)
@@ -1431,6 +1433,8 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (^) Rusty Locker
+(X) Small Auto Assembler !!!
+(X) Small Conveyor Scooper !!!
 (^) Small Storage Container
 (^) Solar Battery
 (#, ^5) Surveysprout Planter Box (tML #4061)
