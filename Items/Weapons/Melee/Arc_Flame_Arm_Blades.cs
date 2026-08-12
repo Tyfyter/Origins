@@ -278,7 +278,6 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Blade_Dance_Buff : ModBuff {
-		public override string Texture => typeof(Arc_Flame_Arm_Blades).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
