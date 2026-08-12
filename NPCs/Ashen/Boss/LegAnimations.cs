@@ -388,7 +388,8 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Jump_Air_Animation : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (Math.Abs(PistonLength(npc, leg) - 24) < 2 && (leg.WasStanding || otherLeg.WasStanding)) {
-				SoundEngine.PlaySound(Origins.Sounds.PowerStomp/*, npc.Center*/);
+				npc.GetLegPositions(leg, out _, out _, out Vector2 footPos);
+				SoundEngine.PlaySound(Origins.Sounds.PowerStomp, footPos);
 				SmallStepEffect(npc, leg);
 				return ModContent.GetInstance<Standing_Animation>();
 			}
