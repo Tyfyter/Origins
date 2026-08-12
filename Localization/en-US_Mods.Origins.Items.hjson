@@ -8480,6 +8480,7 @@ Arc_Flame_Arm_Blades: {
 	Tooltip:
 		'''
 		Has a chance to inflict various [buffhint/dnflame and plasma debuffs:Origins/Arc_Burn_Debuff]{0}
+		Chance above 100% inflicts additional debuffs
 		<right> to increase [buffhint/selfdnMelee Damage:Origins/Blade_Dance_Buff]{1}
 		'''
 	NoCSOTooltip:

@@ -5,6 +5,7 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
+using Origins.Layers;
 using Origins.NPCs;
 using PegasusLib.UI;
 using System;
@@ -25,8 +26,8 @@ namespace Origins.Items.Weapons.Melee {
 			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<Arc_Flame_Arm_Blades>()));
 		}
 	}
+	[AutoloadEquip(EquipType.HandsOn)]
 	public class Arc_Flame_Arm_Blades : ModItem, ICustomWikiStat {
-		public override string Texture => typeof(Broken_Fiberglass_Sword).GetDefaultTMLName();
 		public static int[] Debuffs = [];
 		public static int SoundTime = 0;
 		public string[] Categories => [
@@ -37,10 +38,12 @@ namespace Origins.Items.Weapons.Melee {
 		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(string.Join("", Debuffs.Skip(1).Select(GenerateEmptyTag)), CritType.ModEnabled ? string.Empty : this.GetLocalization("NoCSOTooltip"));
 		public override void SetStaticDefaults() {
 			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Weak_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame];
+			Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.HandsOn);
 			//PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Arkhalis);/*
+			Item.CloneDefaultsKeepSlots(ItemID.Arkhalis);/*
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
@@ -56,6 +59,12 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Arc_Flame_Arm_Blades_Slash>();
 			//Item.rare = ItemRarityID.Cyan;
 			//Item.UseSound = SoundID.Item1;
+		}
+		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
+			player.handon = Item.handOnSlot;
+		}
+		public override void UseStyle(Player player, Rectangle heldItemFrame) {
+			player.handon = Item.handOnSlot;
 		}
 		public override bool AltFunctionUse(Player player) => !player.HasBuff(Blade_Dance_Cooldown_Debuff.ID);
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
@@ -80,7 +89,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			if (!CritType.ModEnabled) {
 				int index = tooltips.FindLastIndex(tip => tip.Name.StartsWith("Tooltip")) + 1;
-				tooltips.Insert(index, new(Mod, "CritCondition", Language.GetTextValue("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type")));
+				tooltips.Insert(index, new(Mod, "CritCondition", Language.GetTextValue("Mods.Origins.CritType.Arc_Flame_Arm_Blades_Crit_Type")) { OverrideColor = new(255, 255, 181) });
 			}
 		}
 		public static void BladeDance(Player player) {
@@ -91,12 +100,11 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Arc_Flame_Arm_Blades_Slash : ModProjectile {
-		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Arkhalis}";
 		static ref int[] Debuffs => ref Arc_Flame_Arm_Blades.Debuffs;
 		static RangeRandom rand;
 		public override void SetStaticDefaults() {
 			rand = new(Main.rand, 0, Debuffs.Length);
-			Main.projFrames[Type] = 28;
+			Main.projFrames[Type] = 14;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Arkhalis);
@@ -160,7 +168,8 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public void NonCritEffect(NPC target) {
-			if (Main.rand.Next(100) < Projectile.CritChance) {
+			float chance = Projectile.CritChance;
+			while (Main.rand.Next(100) < chance) {
 				rand.Reset();
 				for (int i = 0; i < Debuffs.Length; i++) {
 					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Weak_Debuff.ID || target.HasBuff(Debuffs[i]))
@@ -170,6 +179,7 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				int selectedDebuff = Debuffs[rand.Get()];
 				target.AddBuff(selectedDebuff, 3 * 60);
+				chance -= 100;
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -183,7 +193,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.ai[0] = 0;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if (Main.rand.Next(100) < Projectile.CritChance) {
+			float chance = Projectile.CritChance;
+			while (Main.rand.Next(100) < chance) {
 				rand.Reset();
 				for (int i = 0; i < Debuffs.Length; i++) {
 					if (Debuffs[i] == Arc_Burn_Debuff.ID || Debuffs[i] == Weak_Debuff.ID || target.HasBuff(Debuffs[i]))
@@ -194,6 +205,7 @@ namespace Origins.Items.Weapons.Melee {
 				int selectedDebuff = Debuffs[rand.Get()];
 				if (selectedDebuff == Weak_Debuff.ID) selectedDebuff = BuffID.Weak;
 				target.AddBuff(selectedDebuff, 3 * 60);
+				chance -= 100;
 			}
 		}
 	}
@@ -210,7 +222,7 @@ namespace Origins.Items.Weapons.Melee {
 }
 namespace Origins.Buffs {
 	public class Arc_Burn_Debuff : ModBuff {
-		public override string Texture => typeof(Broken_Fiberglass_Sword).GetDefaultTMLName();
+		public override string Texture => typeof(Arc_Flame_Arm_Blades).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
@@ -221,7 +233,7 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) => player.OriginPlayer().arcBurn = true;
 	}
 	public class Blade_Dance_Buff : ModBuff {
-		public override string Texture => typeof(Fiberglass_Sword).GetDefaultTMLName();
+		public override string Texture => typeof(Arc_Flame_Arm_Blades).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
@@ -232,7 +244,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Blade_Dance_Cooldown_Debuff : ModBuff {
-		public override string Texture => typeof(Fiberglass_Sword).GetDefaultTMLName();
+		public override string Texture => typeof(Arc_Flame_Arm_Blades).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public static ref int SoundTime => ref Arc_Flame_Arm_Blades.SoundTime;
 		public override void SetStaticDefaults() {
