@@ -25,7 +25,7 @@ using static Origins.Graphics.Primitives.VertexMultiTile;
 
 namespace Origins.Tiles.Ashen; 
 [ReinitializeDuringResizeArrays]
-public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTile, IMultiTypeMultiTile, IAshenTile {
+public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMultiTile, IAshenTile {
 	readonly Sound activeSound = EnvironmentSounds.Register<Sound>();
 	static Color poweredColor = new Color(255, 113, 0);
 	public static int MaxFuel => 60 * 60 * 1;
@@ -61,16 +61,12 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		drawnPoints.Clear();
 		orig(self, solidLayer, forRenderTargets, intoRenderTargets);
 	}
-	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
-		if (ShouldGlow(tile)) color.DoFancyGlow(new(0.912f, 0.579f, 0f), tile.TileColor);
-	}
 	protected virtual Color MapColor => new Color(81, 44, 23);
 	public override void SetStaticDefaults() {
 		this.SetIDProp();
 		// Properties
 		TileID.Sets.CanBeSloped[Type] = false;
 		Main.tileSolid[Type] = true;
-		Main.tileLighted[Type] = true;
 		Main.tileFrameImportant[Type] = true;
 		Main.tileNoAttach[Type] = true;
 		Main.tileLavaDeath[Type] = false;
@@ -96,13 +92,6 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 
 	public void MinePower(int i, int j, int minePower, ref int damage) {
 		if (minePower < 55) damage = 0;
-	}
-	public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-		if (ShouldGlow(Main.tile[i, j])) {
-			r = 0.912f;
-			g = 0.579f;
-			b = 0f;
-		}
 	}
 	static readonly HashSet<Point> drawnPoints = [];
 	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
@@ -228,11 +217,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 			break;
 		}
 	}
-	public static bool ShouldGlow(Tile tile) => Shape[tile.TileFrameX / 18, tile.TileFrameY / 18, 0] == 'O' && Shape[tile.TileFrameX / 18, tile.TileFrameY / 18 + 1, 0] == 'X';
 	bool IMultiTypeMultiTile.IsValidTile(Tile tile, int left, int top, int style) => Shape.Matches(tile, left, top, style);
-	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-	public Color GlowColor => Color.White;
 	readonly VertexMultiTile verts = new(14, 9);
 	public override void PlaceInWorld(int i, int j, Item item) {
 		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
@@ -384,12 +369,27 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		}
 	}
 }
-public class Incinerator_Pit_Pit : Incinerator_Pit {
+public class Incinerator_Pit_Pit : Incinerator_Pit, IGlowingModTile {
 	public new static int ID { get; private set; }
 	protected override Color MapColor => new Color(255, 81, 0);
 	public override void Load() { }
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
+		if (ShouldGlow(tile)) color.DoFancyGlow(new(0.912f, 0.579f, 0f), tile.TileColor);
+	}
 	public override void SetStaticDefaults() {
 		base.SetStaticDefaults();
 		Main.tileSolid[Type] = false;
+		Main.tileLighted[Type] = true;
 	}
+	public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+		if (ShouldGlow(Main.tile[i, j])) {
+			r = 0.912f;
+			g = 0.579f;
+			b = 0f;
+		}
+	}
+	public static bool ShouldGlow(Tile tile) => Shape[tile.TileFrameX / 18, tile.TileFrameY / 18 + 1, 0] == 'X';
+	CustomTilePaintLoader.CustomTileVariationKey IGlowingModTile.GlowPaintKey { get; set; }
+	AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture { get; }
+	Color IGlowingModTile.GlowColor => new(0.912f, 0.579f, 0f);
 }
