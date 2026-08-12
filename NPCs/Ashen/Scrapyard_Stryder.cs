@@ -33,7 +33,7 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[Type] = 6;
+			Main.npcFrameCount[Type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(15, 45), PortraitPositionXOverride = -5, PortraitPositionYOverride = 0 };
 			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
 		}
@@ -140,10 +140,10 @@ namespace Origins.NPCs.Ashen {
 				NPC.frameCounter = 0;
 				return;
 			}
-			if (NPC.IsABestiaryIconDummy) NPC.DoFrames(16, 6);
-			else if (NPC.ai[2] != 1 || Math.Abs(NPC.position.X - NPC.oldPosition.X) > 0.5f) NPC.DoFrames(16, (NPC.position.X - NPC.oldPosition.X) * NPC.direction);
+			if (NPC.IsABestiaryIconDummy) NPC.DoFrames(16, ..7, 6);
+			else if (NPC.ai[2] != 1 || Math.Abs(NPC.position.X - NPC.oldPosition.X) > 1f) NPC.DoFrames(16, ..7, (NPC.position.X - NPC.oldPosition.X) * NPC.direction);
 			else {
-				NPC.frame.Y = NPC.frame.Height * 5;
+				NPC.frame.Y = NPC.frame.Height * 6;
 				NPC.frameCounter = 0;
 			}
 			NPC.spriteDirection = NPC.direction;
