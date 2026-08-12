@@ -54,7 +54,7 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
-(#, $2, ^2) CM-17 'Watcher' !!!
+(†) CM-17 'Watcher' !!! (remove debugging code after balance test)
 (#, $2, ^2) D2L2 'Warsaw' !!!
 (#, $2, ^2) HA-24 'Hawken' !!!
 (X, ^2) Ichor Storm

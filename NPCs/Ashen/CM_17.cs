@@ -4,9 +4,6 @@ using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
-using Origins.NPCs.Ashen.Boss;
-using Origins.NPCs.Riven;
-using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -19,7 +16,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Projectiles.Minions;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
@@ -75,8 +71,8 @@ namespace Origins.NPCs.Ashen {
 			Rectangle detectRange = NPC.Hitbox;
 			Rectangle fleeRange = NPC.Hitbox;
 			detectRange.Inflate(20 * 16, 15 * 16);
-			fleeRange.Inflate(8 * 16, 5 * 16);
-			detectRange.DrawDebugOutline();
+			fleeRange.Inflate(8 * 16, 5 * 16); // for debugging
+			detectRange.DrawDebugOutline(); // for debugging
 			fleeRange.DrawDebugOutline();
 			void AttemptRetarget() {
 				if (NPC.ai[3] == 0) accel = 0;
@@ -107,7 +103,7 @@ namespace Origins.NPCs.Ashen {
 
 					case 1:
 					Vector2 pos = NPC.Center + new Vector2(55, -4).Apply(SpriteEffects, default);
-					Dust.QuickDust(pos, Color.White);
+					Dust.QuickDust(pos, Color.White); // for debugging
 					if (NPC.ai[0]++ == TimeToSpawnWatchlings * 0.5f) {
 						for (int i = 0; i < 3; i++) {
 							NPC watchling = NPC.SpawnNPC(null, (int)pos.X, (int)pos.Y, NPCType<Watchling>());
@@ -127,8 +123,7 @@ namespace Origins.NPCs.Ashen {
 					break;
 				}
 			} else AttemptRetarget();
-
-			HasMaxWatchings();
+			HasMaxWatchings(); // for debugging
 
 			if (currentMoveDirection != targetMoveDirection) accel *= 0.25f;
 			if (NPC.direction == 0) NPC.direction = -1;
@@ -189,9 +184,6 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(new CommonDrop(ItemType<Exo_Legs>(), 300, 1, 1, 11));
 			npcLoot.Add(ItemDropRule.ByCondition(new Journal_Entry_Condition(Journal_Registry.GetJournalEntryByTextKey(GetInstance<Worn_Paper_Smog_Test>().PaperName)), ItemType<Worn_Paper_Smog_Test>(), 40));
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			return base.PreDraw(spriteBatch, screenPos, drawColor);
-		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2[] offsets = new Vector2[Main.npcFrameCount[Type]];
 			offsets[1] = new(0, 2);
@@ -221,6 +213,7 @@ namespace Origins.NPCs.Ashen {
 
 			SetDrawData(drillBit.Value, new Vector2(-98, -26), NPC.rotation, drillBit.Frame(1, 2, 0, (int)NPC.localAI[0]));
 
+			// for debugging
 			spriteBatch.DrawDebugTextAbove(
 				$"{NPC.direction} {NPC.spriteDirection}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
 				$"{NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}\n" +
@@ -253,8 +246,8 @@ namespace Origins.NPCs.Ashen {
 		public static string BrokenReason => "Balance test";
 		public List<int> ConnectedWatchlings = [];
 		public int OwnerID = -1;
-		public int SpawnCounter;
-		public static int SpawnCounterMax => 60;
+		public int SpawnAnimCounter;
+		public static int SpawnAnimCounterMax => 60;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
@@ -291,8 +284,8 @@ namespace Origins.NPCs.Ashen {
 			if (!NPC.collideY && NPC.velocity.Y == 0) {
 				NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
 			}
-			if ((SpawnCounter > 0 || NPC.collideY) && SpawnCounter.Warmup(SpawnCounterMax)) NPC.netUpdate = true;
-			if (SpawnCounter < SpawnCounterMax) {
+			if ((SpawnAnimCounter > 0 || NPC.collideY) && SpawnAnimCounter.Warmup(SpawnAnimCounterMax)) NPC.netUpdate = true;
+			if (SpawnAnimCounter < SpawnAnimCounterMax) {
 				if (NPC.collideY) NPC.velocity.X *= 0.8f;
 				return false;
 			}
@@ -306,7 +299,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.frameCounter = frameCounter;
 			TNPC watch = (TNPC)NPC.ModNPC;
 			watch.OwnerID = OwnerID;
-			watch.SpawnCounter = SpawnCounter;
+			watch.SpawnAnimCounter = SpawnAnimCounter;
 		}
 		public override void AI() {
 			NPC.TargetClosest();
@@ -324,8 +317,8 @@ namespace Origins.NPCs.Ashen {
 				NPC target = Main.npc[i];
 				if (!target.active) continue;
 				if (NPC.Center.WithinRange(target.Center, LaserRange) &&
-					target?.ModNPC is Watchling { SpawnCounter: int counter }
-					&& counter >= SpawnCounterMax) {
+					target?.ModNPC is Watchling { SpawnAnimCounter: int counter }
+					&& counter >= SpawnAnimCounterMax) {
 					ConnectedWatchlings.Add(target.whoAmI);
 				}
 			}
@@ -340,15 +333,15 @@ namespace Origins.NPCs.Ashen {
 			return true;
 		}
 		public override void FindFrame(int frameHeight) {
-			if (SpawnCounter < SpawnCounterMax && !NPC.IsABestiaryIconDummy) NPC.frame.Y = (SpawnCounter * 3) / SpawnCounterMax * frameHeight;
+			if (SpawnAnimCounter < SpawnAnimCounterMax && !NPC.IsABestiaryIconDummy) NPC.frame.Y = (SpawnAnimCounter * 3) / SpawnAnimCounterMax * frameHeight;
 			else if (NPC.collideY || NPC.IsABestiaryIconDummy) NPC.DoFrames(4, 3..);
 			else NPC.DoFrames(1, 4..5);
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(SpawnCounter);
+			writer.Write(SpawnAnimCounter);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
-			SpawnCounter = reader.ReadInt32();
+			SpawnAnimCounter = reader.ReadInt32();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			for (int i = 0; i < ConnectedWatchlings.Count; i++) {
