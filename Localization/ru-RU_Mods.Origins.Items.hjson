@@ -8531,11 +8531,13 @@ Robot_Toy_Controller: {
 }
 
 Fast_Conveyor_Belt_Item: {
-	// DisplayName: Fast Conveyor Belt (Clockwise)
+	// GenericName: Fast Conveyor Belt
+	// ConditionDescription: When the player has a {$GenericName} in their inventory
+	// DisplayName: "{$GenericName} (Clockwise)"
 	// Tooltip: ""
 }
 
 Fast_Conveyor_Belt_CC_Item: {
-	// DisplayName: Fast Conveyor Belt (Counter Clockwise)
+	// DisplayName: "{$Fast_Conveyor_Belt_Item.GenericName} (Counter Clockwise)"
 	// Tooltip: ""
 }

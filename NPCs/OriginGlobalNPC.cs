@@ -93,6 +93,8 @@ namespace Origins.NPCs {
 					shop.InsertAfter<Gray_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Teal_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
 					shop.InsertAfter<Orange_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
+					shop.InsertAfter(ItemID.ConveyorBeltLeft, TileItem.ItemType<Fast_Conveyor_Belt>(), Fast_Conveyor_Belt.HasFastConveyorBelt);
+					shop.InsertAfter(ItemID.ConveyorBeltRight, TileItem.ItemType<Fast_Conveyor_Belt_CC>(), Fast_Conveyor_Belt.HasFastConveyorBelt);
 					break;
 				}
 				case NPCID.Dryad: {
