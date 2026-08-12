@@ -190,6 +190,8 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Cargo_Elevator_Door_TE_System : TESystem {
 		Dictionary<Point16, Door_Animation> openDoors;
+		static bool[] IsCED;
+		public override void SetStaticDefaults() => IsCED = TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Cargo_Elevator_Door>(), ModContent.TileType<Cargo_Elevator_Door_Open>());
 		public override void PreUpdateEntities() {
 			openDoors ??= [];
 			for (int i = 0; i < tileEntityLocations.Count; i++) {
@@ -242,7 +244,6 @@ namespace Origins.Tiles.Ashen {
 			readonly HashSet<Point> leftClosing = [];
 			readonly HashSet<Point> rightClosing = [];
 			public void Update(Point16 position) {
-				//Tile tile = Main.tile[position.X, position.Y];
 				if ((Main.tile[position].TileFrameX >= 11 * 18) != (TargetFrame == locked_frame)) {
 					if (TargetFrame == locked_frame) {
 						TargetFrame = closed_frame;
@@ -275,6 +276,7 @@ namespace Origins.Tiles.Ashen {
 					for (int x = 0; x < data.Width; x++) {
 						for (int y = 0; y < data.Height; y++) {
 							Tile tile = Main.tile[left + x, top + y];
+							if (!IsCED[tile.TileType]) continue;
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
 							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open)) {
 								if (TargetFrame != open_frame) {

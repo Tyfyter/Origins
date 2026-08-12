@@ -128,12 +128,14 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Ancient_Industrial_Door_TE_System : TESystem {
 		Dictionary<Point16, Door_Animation> openDoors;
+		static bool[] IsAID;
+		public override void SetStaticDefaults() => IsAID = TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Ancient_Industrial_Door>(), ModContent.TileType<Ancient_Industrial_Door_Open>());
 		public override void PreUpdateEntities() {
 			openDoors ??= [];
 			for (int i = 0; i < tileEntityLocations.Count; i++) {
 				Point16 pos = tileEntityLocations[i];
 				Tile tile = Main.tile[pos];
-				if (tile.HasTile && (tile.TileType == ModContent.TileType<Ancient_Industrial_Door>() || tile.TileType == ModContent.TileType<Ancient_Industrial_Door_Open>())) {
+				if (tile.HasTile && IsAID[tile.TileType]) {
 					GetAnimation(pos).Update(pos);
 				} else {
 					tileEntityLocations.RemoveAt(i--);
@@ -190,6 +192,7 @@ namespace Origins.Tiles.Ashen {
 					for (int y = 0; y < data.Height; y++) {
 						for (int x = 0; x < data.Width; x++) {
 							Tile tile = Main.tile[left + x, top + y];
+							if (!IsAID[tile.TileType]) continue;
 							tile.TileType = tileType;
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
 							if (TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
