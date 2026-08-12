@@ -2,7 +2,7 @@ using Humanizer;
 using Origins.Buffs;
 using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Graphics;
+using Origins.Dusts;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Melee {
 			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<Arc_Flame_Arm_Blades>()));
 		}
 	}
-	[AutoloadEquip(EquipType.Body)]
+	[AutoloadEquip(EquipType.HandsOn, EquipType.HandsOff)]
 	public class Arc_Flame_Arm_Blades : ModItem, ICustomWikiStat {
 		public static int[] Debuffs = [];
 		public static int SoundTime = 0;
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Weak_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame];
 			Origins.AddGlowMask(this);
-			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Body);
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.HandsOn, EquipType.HandsOff);
 			//PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 		}
 		public override void SetDefaults() {
@@ -153,9 +153,14 @@ namespace Origins.Items.Weapons.Melee {
 			}
 
 			Vector2 dustPos = Projectile.Center + Projectile.velocity * 3f;
-			Lighting.AddLight(dustPos, 0.8f, 0.8f, 0.8f);
+			Color color = Main.rand.Next(3) switch {
+				1 => new(187, 10, 251),
+				2 => new(82, 103, 255),
+				_ => new(212, 0, 95)
+			};
+			Lighting.AddLight(dustPos, color.ToVector3());
 			if (Main.rand.NextBool(3)) {
-				Dust dust = EfficientDust.NewDustDirect(dustPos - Projectile.Size / 2f, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 100, Scale: 2f);
+				Dust dust = Dust.NewDustDirect(dustPos - Projectile.Size / 2f, Projectile.width, Projectile.height, ModContent.DustType<Tintable_Torch_Dust>(), Projectile.velocity.X, Projectile.velocity.Y, 100, color, 2f);
 				dust.noGravity = true;
 				dust.position -= Projectile.velocity;
 			}
@@ -230,8 +235,45 @@ namespace Origins.Buffs {
 			Buff_Hint_Handler.ModifyTip(Type, 15);
 			ID = Type;
 		}
-		public override void Update(NPC npc, ref int buffIndex) => npc.GetGlobalNPC<OriginGlobalNPC>().arcBurn = true;
-		public override void Update(Player player, ref int buffIndex) => player.OriginPlayer().arcBurn = true;
+		public override void Update(NPC npc, ref int buffIndex) {
+			npc.GetGlobalNPC<OriginGlobalNPC>().arcBurn = true;
+			Color color = Main.rand.Next(3) switch {
+				1 => new(187, 10, 251),
+				2 => new(82, 103, 255),
+				_ => new(212, 0, 95)
+			};
+			if (Main.rand.NextBool(3, 4)) {
+				Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<Tintable_Torch_Dust>(), npc.velocity.X, npc.velocity.Y, 100, color, 2f);
+				dust.noGravity = true;
+				dust.velocity *= 1.8f;
+				dust.velocity.Y -= 0.5f;
+				if (Main.rand.NextBool(4)) {
+					dust.noGravity = false;
+					dust.scale *= 0.5f;
+				}
+			}
+			Lighting.AddLight(npc.Center, color.ToVector3());
+		}
+
+		public override void Update(Player player, ref int buffIndex) {
+			player.OriginPlayer().arcBurn = true;
+			Color color = Main.rand.Next(3) switch {
+				1 => new(187, 10, 251),
+				2 => new(82, 103, 255),
+				_ => new(212, 0, 95)
+			};
+			if (Main.rand.NextBool(3, 4)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, ModContent.DustType<Tintable_Torch_Dust>(), player.velocity.X, player.velocity.Y, 100, color, 2f);
+				dust.noGravity = true;
+				dust.velocity *= 1.8f;
+				dust.velocity.Y -= 0.5f;
+				if (Main.rand.NextBool(4)) {
+					dust.noGravity = false;
+					dust.scale *= 0.5f;
+				}
+			}
+			Lighting.AddLight(player.Center, color.ToVector3());
+		}
 	}
 	public class Blade_Dance_Buff : ModBuff {
 		public override string Texture => typeof(Arc_Flame_Arm_Blades).GetDefaultTMLName();
