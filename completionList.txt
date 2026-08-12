@@ -158,7 +158,7 @@ WORLD GENERATION:
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(#2) Riven Hive !!! (Amebic Gel needs to generate with biome)
+(☻) Riven Hive !!! (Amebic Gel needs to generate with biome)
 (#2, 々) Repentance
 
 (X) Defiled Egregore
@@ -1618,7 +1618,7 @@ MATERIALS:
 (^) Bleeding Obsidian Shard
 (^) Brineglow
 (^) Eitrite Bar
-(X) Mystic Fragment !!!
+(X) Mystic Fragment !!! ?
 (^) Phoenum
 
 (^) Busted Servo
