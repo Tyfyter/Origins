@@ -19,7 +19,7 @@ public class Glitter_Glue : ModItem {
 		Item.DamageType = DamageClass.Magic;
 		Item.shoot = ProjectileID.FairyQueenMagicItemShot;
 		Item.knockBack = 1;
-		Item.useTime = 60 * (int)2.6;// controls cooldown
+		Item.useTime = (int)(60 * 2.6);// controls cooldown
 		Item.useAnimation = Item.useTime;
 		Item.useLimitPerAnimation = 12; // controls burst count
 		Item.value = Item.sellPrice(gold: 5);
