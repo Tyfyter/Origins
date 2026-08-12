@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
+using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Riven;
 using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -16,6 +19,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Projectiles.Minions;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
@@ -246,7 +250,8 @@ namespace Origins.NPCs.Ashen {
 	public class Watchling : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IBroken {
 		public Rectangle DrawRect => new(0, 0, 32, 26);
 		public int AnimationFrames => 6;
-		public static string BrokenReason => "Balance test, change sounds";
+		public static string BrokenReason => "Balance test";
+		public List<int> ConnectedWatchlings = [];
 		public int OwnerID = -1;
 		public int SpawnCounter;
 		public static int SpawnCounterMax => 60;
@@ -310,6 +315,29 @@ namespace Origins.NPCs.Ashen {
 
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (NPC.velocity.Y == 0f && NPC.NPCCanStickToWalls()) Transform<Watchling_Wall>();
+			SharedAI();
+		}
+		public static float LaserRange => 8 * 16;
+		public void SharedAI() {
+			ConnectedWatchlings.Clear();
+			for (int i = NPC.whoAmI + 1; i < Main.npc.Length; i++) {
+				NPC target = Main.npc[i];
+				if (!target.active) continue;
+				if (NPC.Center.WithinRange(target.Center, LaserRange) &&
+					target?.ModNPC is Watchling { SpawnCounter: int counter }
+					&& counter >= SpawnCounterMax) {
+					ConnectedWatchlings.Add(target.whoAmI);
+				}
+			}
+		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			for (int i = 0; i < ConnectedWatchlings.Count; i++) {
+				if (Collision.CheckAABBvLineCollision(victimHitbox.TopLeft(), victimHitbox.Size(), NPC.Center, Main.npc[ConnectedWatchlings[i]].Center)) {
+					npcHitbox = victimHitbox;
+					break;
+				}
+			}
+			return true;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (SpawnCounter < SpawnCounterMax && !NPC.IsABestiaryIconDummy) NPC.frame.Y = (SpawnCounter * 3) / SpawnCounterMax * frameHeight;
@@ -321,6 +349,42 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			SpawnCounter = reader.ReadInt32();
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			for (int i = 0; i < ConnectedWatchlings.Count; i++) {
+				NPC connected = Main.npc[ConnectedWatchlings[i]];
+				using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				Vector2 diff = connected.Center - NPC.Center;
+				Vector2 position = NPC.Center;
+				position -= screenPos;
+				float rotation = diff.ToRotation();
+				float dist = diff.Length();
+				const float scale = 1f / 256f;
+				DrawData data = new(
+					TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,
+					position,
+					null,
+					new Color(255, 40, 0, 0),
+					rotation,
+					Vector2.UnitY * 128,
+					new Vector2(dist * scale, 24 * scale),
+					0
+				);
+				data.Draw(Main.spriteBatch);
+				Rectangle frame = new(256 - (int)(Main.timeForVisualEffects * 5 % 256), 0, (int)dist, 256);
+				data.scale.X = 1;
+				data.scale.Y *= 2;
+				data.texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape].Value;
+				data.position = position;
+				data.sourceRect = frame;
+				data.Draw(Main.spriteBatch);
+				data.position = connected.Center - screenPos;
+				data.rotation += MathHelper.Pi;
+				data.sourceRect = frame;
+				data.Draw(Main.spriteBatch);
+			}
+			return true;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
@@ -358,7 +422,10 @@ namespace Origins.NPCs.Ashen {
 			if (!NPC.NPCCanStickToWalls()) Transform<Watchling>();
 			return true;
 		}
-		public override void AI() { }
+		public override void AI() {
+			NPC.rotation += MathHelper.Pi;
+			SharedAI();
+		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(4, 3..);
 		}
