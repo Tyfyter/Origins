@@ -389,7 +389,7 @@ namespace Origins {
 					Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
 				}));
 			}
-			tasks.Add(new PassLegacy("Polluting Water", (_, _) => {
+			tasks.Add(new PassLegacy("Contaminating Water", (_, _) => {
 				FastParallel.For(0, Main.maxTilesX, (fromInclusive, toExclusive, _) => {
 					for (int i = fromInclusive; i < toExclusive; i++) {
 						for (int j = 0; j < Main.maxTilesY; j++) {

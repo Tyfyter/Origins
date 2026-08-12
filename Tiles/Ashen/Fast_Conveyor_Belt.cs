@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Ashen; 
 public class Fast_Conveyor_Belt : ModTile {
 	public static Action<Item> CreateRecipes<TOther>(int slowVersion) where TOther : ModTile => item => {
-		const int count_per_bucket = 10;
+		const int count_per_bucket = 25;
 		Recipe.Create(item.type)
 		.AddIngredient(TileItem.ItemType<TOther>())
 		.Register();
@@ -54,6 +54,7 @@ public class Fast_Conveyor_Belt : ModTile {
 		HitSound = SoundID.Tink;
 		DustType = Ashen_Biome.DefaultTileDust;
 		AnimationFrameHeight = 90;
+		//Rarity = ItemRarityID.Blue;
 	}
 	public override void HitWire(int i, int j) {
 		if (Main.tile[i, j].HasActuator) return;

@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Melee {
 			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<Arc_Flame_Arm_Blades>()));
 		}
 	}
-	[AutoloadEquip(EquipType.HandsOn)]
+	[AutoloadEquip(EquipType.Body)]
 	public class Arc_Flame_Arm_Blades : ModItem, ICustomWikiStat {
 		public static int[] Debuffs = [];
 		public static int SoundTime = 0;
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			Debuffs = [ModContent.BuffType<Arc_Burn_Debuff>(), ModContent.BuffType<Weak_Debuff>(), BuffID.OnFire3, BuffID.ShadowFlame];
 			Origins.AddGlowMask(this);
-			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.HandsOn);
+			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Body);
 			//PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = Debuffs;
 		}
 		public override void SetDefaults() {
