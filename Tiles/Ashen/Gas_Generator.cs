@@ -179,9 +179,6 @@ public class Gas_Generator : ModTile {
 		if (GetData(i, j).Fuel <= 0) return;
 		activeSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
 	}
-	public override void EmitParticles(int i, int j, Tile tile, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
-		if (GetData(i, j).Fuel > 0) ;
-	}
 	class Sound : AEnvironmentSound {
 		public int NoisyGenerator = 0;
 		public override void UpdateSound(Vector2 position) {

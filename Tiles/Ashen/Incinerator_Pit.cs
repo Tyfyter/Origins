@@ -26,6 +26,7 @@ using static Origins.Graphics.Primitives.VertexMultiTile;
 namespace Origins.Tiles.Ashen; 
 [ReinitializeDuringResizeArrays]
 public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTile, IMultiTypeMultiTile, IAshenTile {
+	readonly Sound activeSound = EnvironmentSounds.Register<Sound>();
 	static Color poweredColor = new Color(255, 113, 0);
 	public static int MaxFuel => 60 * 60 * 1;
 	public static int PlayerPowerTime => 60 * 30;
@@ -110,6 +111,10 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IGlowingModTi
 		j -= tile.TileFrameY / 18;
 		if (drawnPoints.Add(new(i, j))) Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomSolid);
 		return false;
+	}
+	public override void NearbyEffects(int i, int j, bool closer) {
+		if (closer) return;
+		activeSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
 	}
 	class Sound : AEnvironmentSound {
 		public override void UpdateSound(Vector2 position) {
