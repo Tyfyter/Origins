@@ -1399,7 +1399,7 @@ TILES:
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
-(#2, ^2) Fast Conveyor Belt !!!
+(☻) Fast Conveyor Belt !!!
 (^) Fire Extinguisher Holder
 (^) Gas Generator
 (#2, ^2) Incinerator Pit !!!

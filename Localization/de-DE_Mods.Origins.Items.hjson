@@ -8529,3 +8529,13 @@ Robot_Toy_Controller: {
 		'EMERGENCY. ALIEN LIFEFORM. MUST DESTROY'
 		''' */
 }
+
+Fast_Conveyor_Belt_Item: {
+	// DisplayName: Fast Conveyor Belt (Clockwise)
+	// Tooltip: ""
+}
+
+Fast_Conveyor_Belt_CC_Item: {
+	// DisplayName: Fast Conveyor Belt (Counter Clockwise)
+	// Tooltip: ""
+}
