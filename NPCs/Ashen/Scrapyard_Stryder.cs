@@ -140,8 +140,8 @@ namespace Origins.NPCs.Ashen {
 				NPC.frameCounter = 0;
 				return;
 			}
-			if (NPC.IsABestiaryIconDummy) NPC.DoFrames(16, ..7, 6);
-			else if (NPC.ai[2] != 1 || Math.Abs(NPC.position.X - NPC.oldPosition.X) > 1f) NPC.DoFrames(16, ..7, (NPC.position.X - NPC.oldPosition.X) * NPC.direction);
+			if (NPC.IsABestiaryIconDummy) NPC.DoFrames(16, ..6, 6);
+			else if (NPC.ai[2] != 1 || Math.Abs(NPC.position.X - NPC.oldPosition.X) > 1f) NPC.DoFrames(16, ..6, (NPC.position.X - NPC.oldPosition.X) * NPC.direction);
 			else {
 				NPC.frame.Y = NPC.frame.Height * 6;
 				NPC.frameCounter = 0;
