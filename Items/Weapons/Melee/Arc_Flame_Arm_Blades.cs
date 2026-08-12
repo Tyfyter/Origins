@@ -62,9 +62,11 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			player.handon = Item.handOnSlot;
+			player.handoff = Item.handOffSlot;
 		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			player.handon = Item.handOnSlot;
+			player.handoff = Item.handOffSlot;
 		}
 		public override bool AltFunctionUse(Player player) => !player.HasBuff(Blade_Dance_Cooldown_Debuff.ID);
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
