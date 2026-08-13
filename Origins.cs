@@ -2,22 +2,24 @@ global using Microsoft.Xna.Framework;
 global using PegasusLib;
 global using static Origins.GlobalUtils;
 global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
+global using AltLib = AltLibrary.AltLibrary;
+global using AutoLoadingTexture = PegasusLib.AutoLoadingAsset<Microsoft.Xna.Framework.Graphics.Texture2D>;
 global using Color = Microsoft.Xna.Framework.Color;
+global using Matrix = Microsoft.Xna.Framework.Matrix;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 global using Vector2 = Microsoft.Xna.Framework.Vector2;
 global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
-global using Matrix = Microsoft.Xna.Framework.Matrix;
-global using AltLib = AltLibrary.AltLibrary;
-global using AutoLoadingTexture = PegasusLib.AutoLoadingAsset<Microsoft.Xna.Framework.Graphics.Texture2D>;
 using AltLibrary;
 using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using MonoMod.Utils;
 using Origins.Backgrounds;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Graphics;
+using Origins.Graphics.Unlighting;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Bleeding;
@@ -28,13 +30,13 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
 using Origins.Layers;
+using Origins.Liquids;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.TownNPCs;
-using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Banners;
-using Origins.Tiles.Defiled;
 using Origins.UI;
 using Origins.UI.Snippets;
 using Origins.World.BiomeData;
@@ -47,6 +49,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
@@ -56,14 +59,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using static Origins.OriginsSets.Items;
 using MC = Terraria.ModLoader.ModContent;
-using Origins.Liquids;
-using Origins.Dev;
-using System.Threading.Tasks;
-using Origins.Tiles.Ashen;
-using MonoMod.Utils;
-using Origins.Graphics.Unlighting;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -1011,8 +1007,19 @@ namespace Origins {
 		}
 		public static void TryHookEvent(string modName, string className, string eventName, Delegate hook) {
 			if (!ModLoader.TryGetMod(modName, out Mod mod)) return;
+#if DEBUG
 			Type type = mod.Code.GetType(className, true);
 			EventInfo @event = type.GetEvent(eventName) ?? throw new KeyNotFoundException($"Could not find event {eventName} in type {type}");
+#else
+			if (mod.Code.GetType(className, false) is not Type type) {
+				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.MissingType").WithFormatArgs(className, modName, eventName));
+				return;
+			}
+			if (type.GetEvent(eventName) is not EventInfo @event) {
+				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.MissingEvent").WithFormatArgs(eventName, className));
+				return;
+			}
+#endif
 			@event.AddEventHandler(null, hook.CastDelegate(@event.EventHandlerType));
 		}
 		// for DevHelper

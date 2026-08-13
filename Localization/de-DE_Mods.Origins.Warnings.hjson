@@ -5,6 +5,8 @@
 // ILEditException: Error while applying IL edit {0}, some functionality may not work as intended, see client.log for more details
 // DetourBindFail: Error while applying detour {0}, some functionality may not work as intended, see client.log for more details
 // AvalonPotatoMine: Due to tModLoader not supporting custom pressure plates, Potato Mines are disabled with Exxo Avalon Origins enabled, as they cannot coexist with the pressure plate it adds, I have submitted a solution to this issue to tModLoader.
+// MissingType: Could not find type {0} in mod {1} while looking for event {2}
+// MissingEvent: Could not find event {0} in type {1}
 
 DropRuleType: {
 	// Main: Main
