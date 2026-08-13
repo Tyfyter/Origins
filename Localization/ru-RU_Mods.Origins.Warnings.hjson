@@ -7,6 +7,7 @@ ILEditException: Произошла ошибка во время примене�
 AvalonPotatoMine: В связи с тем, что tModLoader не поддерживает пользовательские нажимные плиты, картофельные мины не работают с включённым Exxo Avalon Origins, поскольку они не совместимы с добавляемой модификацией пользовательской нажимной плитой. Мы предложили решение этой проблемы в сам tML.
 // MissingType: Could not find type {0} in mod {1} while looking for event {2}
 // MissingEvent: Could not find event {0} in type {1}
+// SpecialChest.PreventDestruction_PreventStackOverflow: Could not appply detour, malformed multitiles may cause a crash
 
 DropRuleType: {
 	Main: Основное

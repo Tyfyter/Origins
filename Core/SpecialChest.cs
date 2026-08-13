@@ -605,8 +605,20 @@ namespace Origins.Core {
 				if (SpecialChestUI.InputtingText) PlayerInput.WritingText = true;
 			}
 		}
-		class PreventDestruction : GlobalTile {
+		sealed class PreventDestruction : GlobalTile {
 			readonly RecursionCheckedSet<Point16> recursionBlocker = new();
+			public override void Load() {
+				try {
+					MonoModHooks.Add(typeof(TileLoader).GetMethod(nameof(TileLoader.CheckModTile)), On_TileLoader_CheckModTile);
+				} catch (Exception e) {
+					if (Origins.LogLoadingError("SpecialChest.PreventDestruction_PreventStackOverflow", nameof(On_TileLoader_CheckModTile), e)) throw;
+				}
+			}
+			static bool skipFrame = false;
+			static void On_TileLoader_CheckModTile(Action<int, int, int> orig, int i, int j, int type) {
+				using ScopedOverride<bool> _ = skipFrame.ScopedOverride(true);
+				orig(i, j, type);
+			}
 			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
 				using IDisposable recursionBlock = recursionBlocker.TryAdd(new(i, j));
 				if (recursionBlock is null) return false;
@@ -636,7 +648,17 @@ namespace Origins.Core {
 				}
 				return true;
 			}
+			public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
+				if (skipFrame && Main.tileFrameImportant[type]) return false;
+				return base.TileFrame(i, j, type, ref resetFrame, ref noBreak);
+			}
 			public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
+				bool blockDamaged = default;
+				if (!CanKillTile(i, j, type, ref blockDamaged)) {
+					fail = true;
+					effectOnly = true;
+					return;
+				}
 				new Destroy_Special_Chest_Action(new(i, j)).Perform();
 			}
 		}
