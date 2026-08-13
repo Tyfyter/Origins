@@ -157,14 +157,16 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 	}
 	public static PlayerDeathReason DeathReason(Player player) => PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Incinerator_Pit").SelectFrom(player.name).ToNetworkText());
 	public static void HurtEntity(Entity entity, Action<int> bounce, Func<bool, int> hurt) {
-		foreach (Point pos in entity.Hitbox.IterateTilesIn(CollisionExtensions.TileOrder.DescY)) {
+		Rectangle hitbox = entity.Hitbox;
+		foreach (Point pos in hitbox.IterateTilesIn(CollisionExtensions.TileOrder.DescY)) {
 			Tile tile = Main.tile[pos];
 			if (tile.TileType != Incinerator_Pit_Pit.ID) continue;
-			Rectangle dustRect = Rectangle.Intersect(entity.Hitbox, new(pos.X * 16, pos.Y * 16, 16, 16));
+			Point16 topLeft = new(pos.X - tile.TileFrameX / 18, pos.Y - tile.TileFrameY / 18);
 			int sparks = ModContent.DustType<Spark_Dust>();
 			if (tile.TileFrameY <= 18) {
 				int dir = (tile.TileFrameX < 18 * 4).ToDirectionInt();
 				bounce(dir);
+				Rectangle dustRect = Rectangle.Intersect(hitbox, new(pos.X * 16, pos.Y * 16, 16, 16));
 				for (int i = 0; i < 4; i++) {
 					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f)/*, center*/);
 					SoundEngine.PlaySound(SoundID.Item146.WithPitch(1.5f).WithVolume(0.05f)/*, center*/);
@@ -181,38 +183,46 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 			} else {
 				if (entity.velocity.Y < 0 || tile.TileFrameY <= 18 * 3) entity.velocity.Y += 4;
 				if (tile.TileFrameY >= 18 * 3) {
-					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f), new Vector2(pos.X * 16 + 13 * 8, pos.Y * 16 + 8 * 8));
-					if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithVolume(0.05f), new Vector2(pos.X * 16 + 13 * 8, pos.Y * 16 + 8 * 8));
-					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item113.WithVolume(0.05f), new Vector2(pos.X * 16 + 13 * 8, pos.Y * 16 + 8 * 8));
+					Vector2 effectPos = pos.ToWorldCoordinates();
+					for (int i = (Main.tile[pos].TileFrameX / 18 - 5) * 4; i != 0; i -= Math.Sign(i)) {
+						Vector2 mov = new(Math.Sign(i) * 4, 0);
+						if (!hitbox.Contains(effectPos + mov)) break;
+						effectPos += mov;
+					}
 					if (entity.velocity.Y >= 0 && Main.tile[entity.Center.ToTileCoordinates()].TileFrameY >= 18 * 4) {
 						entity.velocity.Y *= -0.11f;
 					}
 					entity.velocity.X *= 0.8f;
 					entity.velocity.X -= Math.Sign(Main.tile[(int)entity.Center.X / 16, pos.Y].TileFrameX - 5 * 18);
-					for (int i = 0; i < 4; i++) {
-						Dust dust = EfficientDust.NewDustDirect(
-							dustRect.TopLeft(),
-							dustRect.Width,
-							dustRect.Height,
-							sparks
-						);
-						if (Main.rand.NextBool(10)) {
-							dust.velocity.Y -= 2 + Main.rand.NextFloat(1);
-							dust.velocity.X *= 0.25f;
-						} else {
-							dust.velocity.Y -= 4 + Main.rand.NextFloat(2);
-							dust.velocity.X *= 0.5f;
-							dust.velocity *= 1.5f;
-							dust.fadeIn = 1;
-							dust.noGravity = true;
+					if (Main.tile[topLeft].LoopSoundDelay(1)) {
+						SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f), effectPos);
+						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithVolume(0.05f), effectPos);
+						if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item113.WithVolume(0.05f), effectPos);
+					}
+					if (Main.tile[effectPos.ToTileCoordinates()].LoopSoundDelay(1)) {
+						Rectangle dustRect = new Rectangle(0, 0, 16, 16).Recentered(effectPos);
+						for (int i = 0; i < 4; i++) {
+							Dust dust = EfficientDust.NewDustDirect(
+								dustRect.TopLeft(),
+								dustRect.Width,
+								dustRect.Height,
+								sparks
+							);
+							if (Main.rand.NextBool(10)) {
+								dust.velocity.Y -= 2 + Main.rand.NextFloat(1);
+								dust.velocity.X *= 0.25f;
+							} else {
+								dust.velocity.Y -= 4 + Main.rand.NextFloat(2);
+								dust.velocity.X *= 0.5f;
+								dust.velocity *= 1.5f;
+								dust.fadeIn = 1;
+								dust.noGravity = true;
+							}
 						}
 					}
 				}
 				int power = hurt(tile.TileFrameY >= 18 * 3);
-				if (power > 0) {
-					TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, TileObjectData.GetTileData(Main.tile[pos]), out int left, out int top);
-					Incinerator_Pit_TE.GetData(new(left, top)).Fuel += power;
-				}
+				if (power > 0) Incinerator_Pit_TE.GetData(topLeft).Fuel += power;
 			}
 			break;
 		}
