@@ -27,7 +27,7 @@ namespace Origins.Backgrounds {
 				if (Origins.LogLoadingILError(GetType().Name, e)) throw;
 			}
 			if (ModLoader.TryGetMod("FancyLighting", out Mod fancy) && fancy.Version >= new Version(1, 1)) {
-				Origins.TryHookEvent("FancyLighting", "FancyLighting.FancySkyRendering", "PreDrawSky", PreDrawSky);
+				fancy.Call("AddHook", "PreDrawSky", (Delegate)PreDrawSky);
 			}
 		}
 		static bool skipActuallyDrawing = false;

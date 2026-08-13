@@ -602,7 +602,8 @@ namespace Origins {
 		[JITWhenModsEnabled("FancyLighting")]
 		void LoadFancyLighting() {
 			try {
-				Type smoothLightingType = fancyLighting.GetType().Assembly.GetType("FancyLighting.SmoothLighting");
+				Assembly flAssembly = fancyLighting.GetType().Assembly;
+				Type smoothLightingType = flAssembly.GetType("FancyLighting.SmoothLighting") ?? flAssembly.GetType("FancyLighting.Core.SmoothLighting");
 				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 				static void TileShine_Impl(ref Vector3 color, Tile tile) {
 					if (tile.HasTile) {
@@ -675,19 +676,21 @@ namespace Origins {
 					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
 				}
 				//*/
-				Type ambientOcclusionType = fancyLighting.GetType().Assembly.GetType("FancyLighting.AmbientOcclusion");
-				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				MonoModHooks.Add(
-					ambientOcclusionType.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance),
-					(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((orig, self, wallTarget, doDraw, updateWallTarget) => {
-						using ScopedOverride<bool> _ = drawingAOMap.ScopedOverride(true);
-						return orig(self, wallTarget, doDraw, updateWallTarget);
-					})
-				);
-
 				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
 				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
 					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
+
+				Type ambientOcclusionType = flAssembly.GetType("FancyLighting.AmbientOcclusion") ?? flAssembly.GetType("FancyLighting.Core.AmbientOcclusion");
+				if (ambientOcclusionType.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {
+					MonoModHooks.Add(
+						ApplyAmbientOcclusion,
+						(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((orig, self, wallTarget, doDraw, updateWallTarget) => {
+							using ScopedOverride<bool> _ = drawingAOMap.ScopedOverride(true);
+							return orig(self, wallTarget, doDraw, updateWallTarget);
+						})
+					);
+				}
+
 			} catch (Exception e) {
 				FancyLighting = null;
 				FancyLightingEngineEnabled = null;

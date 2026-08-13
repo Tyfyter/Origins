@@ -249,7 +249,7 @@ namespace Origins.Events {
 			public override void Load() {
 				Main.QueueMainThreadAction(ReinitializeTexture);
 				On_LightingEngine.Present += On_LightingEngine_Present;
-				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) Origins.TryHookEvent("FancyLighting", "FancyLighting.SmoothLighting", "PostUpdateLightMap", PostUpdateLightMap);
+				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) mod.Call("AddHook", "PostUpdateLightMap", (Delegate)PostUpdateLightMap);
 			}
 			static int skipVanilla = 0;
 			static void PostUpdateLightMap(Texture2D lightMapTexture, Matrix samplingTransformation, Rectangle lightMapArea, bool cameraMode) {
