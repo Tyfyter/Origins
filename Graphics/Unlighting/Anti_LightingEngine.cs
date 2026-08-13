@@ -39,7 +39,7 @@ namespace Origins.Graphics.Unlighting {
 		static HalfVector4[] halfVector4FullBright = [];
 		internal static void ApplyFancyLightingHookFirst(Action orig) {
 			orig();
-			Origins.TryHookEvent("FancyLighting", "FancyLighting.SmoothLighting", "PostUpdateLightMap", PostUpdateLightMap);
+			if (ModLoader.TryGetMod("FancyLighting", out Mod fancy)) fancy.Call("AddHook", "PostUpdateLightMap", (Delegate)PostUpdateLightMap);
 		}
 		static Texture2D unlightMapTexture;
 		static void ResizeAndFill<T>(ref T[] array, int size, T fillValue) {
