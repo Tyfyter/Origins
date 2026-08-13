@@ -1618,7 +1618,7 @@ MATERIALS:
 (^) Bleeding Obsidian Shard
 (^) Brineglow
 (^) Eitrite Bar
-(X) Mystic Fragment !!! ?
+(X) Mystic Fragment
 (^) Phoenum
 
 (^) Busted Servo
