@@ -29,6 +29,10 @@ public class Fast_Conveyor_Belt : ModTile {
 		.AddOnCraftCallback(CraftingCallbacks.NoConsumeCrafting<Oil_Bottomless_Bucket>)
 		.Register();
 	};
+	public static void SharedDefaults(Item item) {
+		item.value = Item.sellPrice(silver: 10);
+		item.rare = ItemRarityID.Blue;
+	}
 	public static Condition HasFastConveyorBelt { get; private set; } = new Condition(
 		Language.GetOrRegister("Mods.Origins.Items.Fast_Conveyor_Belt_Item.ConditionDescription"),
 		() => Main.LocalPlayer.HasItemInAnyInventory((Item item) => item.type == TileItem.ItemType<Fast_Conveyor_Belt>() || item.type == TileItem.ItemType<Fast_Conveyor_Belt_CC>())
@@ -36,7 +40,7 @@ public class Fast_Conveyor_Belt : ModTile {
 	public sealed override void Load() {
 		new TileItem(this)
 		.WithExtraStaticDefaults(this.DropTileItem)
-		.WithExtraDefaults(item => item.value = Item.sellPrice(silver: 10))
+		.WithExtraDefaults(SharedDefaults)
 		.WithOnAddRecipes(CreateRecipes<Fast_Conveyor_Belt_CC>(ItemID.ConveyorBeltLeft))
 		.RegisterItem();
 	}
@@ -70,7 +74,7 @@ public class Fast_Conveyor_Belt_CC : ModTile {
 	public sealed override void Load() {
 		new TileItem(this)
 		.WithExtraStaticDefaults(this.DropTileItem)
-		.WithExtraDefaults(item => item.value = Item.sellPrice(silver: 10))
+		.WithExtraDefaults(Fast_Conveyor_Belt.SharedDefaults)
 		.WithOnAddRecipes(Fast_Conveyor_Belt.CreateRecipes<Fast_Conveyor_Belt>(ItemID.ConveyorBeltRight))
 		.RegisterItem();
 	}
