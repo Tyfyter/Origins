@@ -1217,6 +1217,13 @@ namespace Origins {
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 		[DefaultValue(false)]
 		public bool DisableDefiledWastelandsShader { get; set; }
+		public ItemSpecificConfigs ItemSpecificConfigOptions { get; set; } = new();
+		public record ItemSpecificConfigs(
+			bool TheClaw_SwapInputs = false
+		) {
+			public ItemSpecificConfigs() : this(false) { }
+			public override string ToString() => "";
+		}
 	}
 	public class ServerSideAccessibility : ModConfig {
 		public static ServerSideAccessibility Instance;

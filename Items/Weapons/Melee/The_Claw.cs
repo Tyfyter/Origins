@@ -40,9 +40,9 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override bool AltFunctionUse(Player player) => true;
-		public override bool CanUseItem(Player player) => player.altFunctionUse != 2 || player.OriginPlayer().hookCooldown <= 0;
+		public override bool CanUseItem(Player player) => !UseFlail(player) || player.OriginPlayer().hookCooldown <= 0;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (player.altFunctionUse == 2) {
+			if (UseFlail(player)) {
 				type = ModContent.ProjectileType<The_Claw_Flail_P>();
 				player.StartChanneling(type);
 			}
@@ -52,6 +52,7 @@ namespace Origins.Items.Weapons.Melee {
 			LimitClaws();
 			return true;
 		}
+		public static bool UseFlail(Player player) => (player.altFunctionUse == 2) == OriginAccessibilityConfig.Instance.ItemSpecificConfigOptions.TheClaw_SwapInputs;
 	}
 	public class The_Claw_Hook : ModProjectile {
 		protected static AutoLoadingTexture chainTexture = typeof(The_Claw).GetDefaultTMLName("_Cable");
@@ -263,7 +264,7 @@ namespace Origins.Items.Weapons.Melee {
 			// this won't change anything outside of this projectile unless an exception is thrown, because this runs after the global version
 			Player player = Main.player[Projectile.owner];
 			controlUseItem = player.controlUseItem;
-			player.controlUseItem = player.controlUseTile;
+			if (OriginAccessibilityConfig.Instance.ItemSpecificConfigOptions.TheClaw_SwapInputs) player.controlUseItem = player.controlUseTile;
 			preAIRot = Projectile.localAI[1];
 			return base.PreAI();
 		}

@@ -3214,6 +3214,11 @@ Configs: {
 			// Label: Disable Defiled Wastelands Shader
 			// Tooltip: ""
 		}
+
+		ItemSpecificConfigOptions: {
+			// Label: Item Specific Options
+			// Tooltip: ""
+		}
 	}
 
 	ServerSideAccessibility: {
@@ -3337,6 +3342,20 @@ Configs: {
 		World: {
 			// Label: World
 			// Tooltip: ""
+		}
+	}
+
+	ItemSpecificConfigs: {
+		// Tooltip: ""
+
+		SwapInputs: {
+			// Label: Swap Inputs
+			// Tooltip: Swap inputs for this item's primary and secondary uses
+		}
+
+		TheClaw_SwapInputs: {
+			// Label: "{$Items.The_Claw.DisplayName}: {$SwapInputs.Label}"
+			// Tooltip: "{$SwapInputs.Tooltip}"
 		}
 	}
 }
