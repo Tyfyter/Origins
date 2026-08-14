@@ -23,6 +23,7 @@ namespace Origins.Tiles.Ashen {
 						case TileID.Dirt:
 						case TileID.Mud:
 						case TileID.Ash:
+						case TileID.Stone:
 						break;
 
 						default:
