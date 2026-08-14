@@ -417,6 +417,7 @@ public class Scrap_Railing : Platform_Tile {
 						case TileKind.CanConnectLeft:
 						case TileKind.CanConnectRight:
 						if (!CanRailingAttachTo(x + i, y + j, kind)) return -1;
+						if (tile.TileType != ID) quality++;
 						break;
 
 						case TileKind.NoConnectTop:
