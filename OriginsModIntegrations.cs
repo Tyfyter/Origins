@@ -777,17 +777,39 @@ namespace Origins {
 					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
 				}
 				//*/
-				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
+				/*Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
 				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
+					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));*/
 
 				Type ambientOcclusionType = flAssembly.GetType("FancyLighting.AmbientOcclusion") ?? flAssembly.GetType("FancyLighting.Core.AmbientOcclusion");
-				if (ambientOcclusionType.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {
+				if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {
 					MonoModHooks.Add(
 						ApplyAmbientOcclusion,
 						(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((orig, self, wallTarget, doDraw, updateWallTarget) => {
-							using ScopedOverride<bool> _ = drawingAOMap.ScopedOverride(true);
-							return orig(self, wallTarget, doDraw, updateWallTarget);
+							try {
+								drawingAOMap = true;
+								return orig(self, wallTarget, doDraw, updateWallTarget);
+							} finally {
+								drawingAOMap = false;
+							}
+						})
+					);
+				} else if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo DrawAmbientOcclusion) {
+					MonoModHooks.Add(
+						DrawAmbientOcclusion,
+						((Func<object, RenderTarget2D, RenderTarget2D, RenderTarget2D, bool, bool, RenderTarget2D>  orig,
+						object self,
+						RenderTarget2D wallTarget,
+						RenderTarget2D tileTarget,
+						RenderTarget2D tile2Target,
+						bool tileEntityShadows,
+						bool cameraMode) => {
+							try {
+								drawingAOMap = true;
+								return orig(self, wallTarget, tileTarget, tile2Target, tileEntityShadows, cameraMode);
+							} finally {
+								drawingAOMap = false;
+							}
 						})
 					);
 				}
