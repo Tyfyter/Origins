@@ -13,6 +13,7 @@ namespace Origins.Tiles.Ashen {
 			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
+			TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Dirt;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
 			TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
@@ -56,6 +57,7 @@ namespace Origins.Tiles.Ashen {
 			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
+			TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Mud;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -91,6 +93,7 @@ namespace Origins.Tiles.Ashen {
 			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
+			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<Murky_Sludge>();
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
