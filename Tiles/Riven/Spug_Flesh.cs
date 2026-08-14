@@ -92,7 +92,7 @@ namespace Origins.Tiles.Riven {
 			r = g = b = 0;
 			if (OriginClientConfig.Instance.DisableCoolVisualEffects) return;
 			Tile tile = Main.tile[i, j];
-			if (OriginsModIntegrations.FancyLightingEngine && HasScar(tile)) {
+			if (OriginsModIntegrations.FancyLightingEngineActive && HasScar(tile)) {
 				r = 0.02f * GlowValue;
 				g = 0.15f * GlowValue;
 				b = 0.2f * GlowValue;

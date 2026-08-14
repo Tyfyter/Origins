@@ -100,7 +100,7 @@ namespace Origins {
 		Mod fancyLighting;
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Func<bool> FancyLightingEngineEnabled;
-		public static bool FancyLightingEngine => instance.FancyLightingEngineEnabled();
+		public static bool FancyLightingEngineActive => instance?.FancyLightingEngineEnabled?.Invoke() ?? false;
 		Mod fargosMutant;
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
 		Mod avalon;
@@ -676,9 +676,9 @@ namespace Origins {
 					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
 				}
 				//*/
-				/*Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
+				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
 				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));*/
+					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
 
 				Type ambientOcclusionType = flAssembly.GetType("FancyLighting.AmbientOcclusion") ?? flAssembly.GetType("FancyLighting.Core.AmbientOcclusion");
 				if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {

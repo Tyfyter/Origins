@@ -243,7 +243,7 @@ namespace Origins.Tiles.Ashen {
 			return walked;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (OriginsModIntegrations.FancyLightingEngine) this.DrawTileGlow(i, j, spriteBatch);
+			if (OriginsModIntegrations.FancyLightingEngineActive) this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Main.tile[i, j].TileFrameY < 18 * 3) {

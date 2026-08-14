@@ -166,7 +166,7 @@ namespace Origins.Events {
 		delegate void orig_ModifyLightingBrightness(ref float negLight, ref float negLight2);
 		void ModifyLightingBrightness(orig_ModifyLightingBrightness orig, ref float negLight, ref float negLight2) {
 			orig(ref negLight, ref negLight2);
-			if (OriginsModIntegrations.FancyLightingEngine) negLight -= negLight * sky.Opacity * 0.5f;
+			if (OriginsModIntegrations.FancyLightingEngineActive) negLight -= negLight * sky.Opacity * 0.5f;
 		}
 		public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>();
 		public override void SpecialVisuals(Player player, bool isActive) {
