@@ -1386,7 +1386,7 @@ TILES:
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(#3, $2, ^2) Cargo Elevator Door !!!
+(☻) Cargo Elevator Door !!!
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station
@@ -1395,14 +1395,14 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#2?, ^2) Delay Component !!! (missing ticking(?) for visual indicator)
+(☻) Delay Component !!! (missing ticking(?) for visual indicator)
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
-(#2, ^2) Fast Conveyor Belt !!! (needs blue rarity code)
+(☻) Fast Conveyor Belt !!! (needs blue rarity code)
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(#2, ^2) Incinerator Pit !!!
+(☻) Incinerator Pit !!!
 (^) Industrial Door
 (X) Large Auto Assembler !!!
 (X) Large Conveyor Scooper !!!
