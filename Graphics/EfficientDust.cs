@@ -1,10 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using MonoMod.Utils;
 using Origins.Dusts;
 using ReLogic.Content;
 using ReLogic.Threading;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,6 +24,7 @@ namespace Origins.Graphics {
 		public static DrawDustFunc[] DustDrawFuncs = DustID.Sets.Factory.CreateCustomSet<DrawDustFunc>(null);
 		public static Action<Dust>[] SpawnDustCallback = DustID.Sets.Factory.CreateCustomSet<Action<Dust>>(null);
 		static Dust[] dust = new Dust[Main.maxDust].Select(_ => new Dust()).ToArray();
+		public static Action<int, int, float, float, float> TestEmitLight;
 		public void Load(Mod mod) {
 			if (NetmodeActive.Server) {
 				dust = null;
@@ -32,7 +39,7 @@ namespace Origins.Graphics {
 				if (modDust is null) {
 					DustDrawFuncs[i] = DefaultDrawVanillaDust;
 				} else {
-					UpdateDustCallback[i] ??= dust => modDust.Update(dust);
+					if (modDust.Mod is Origins) UpdateDustCallback[i] ??= Clean(modDust.Update);
 					DustDrawFuncs[i] ??= (dust) => {
 						if (!modDust.PreDraw(dust)) return;
 						Color lightColor = Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16);
@@ -336,9 +343,12 @@ namespace Origins.Graphics {
 					}
 				}
 			});
+			Purge();
 		}
 		static readonly Dust fakeDust = new();
 		static bool reachedFakeDust = false;
+		public static Dust NewDustPerfect(Vector2 Position, int Type, Vector2? Velocity = null, int Alpha = 0, Color newColor = default, float Scale = 1f) =>
+			NewDustDirect(Position, 0, 0, Type, Velocity?.X ?? (Main.rand.Next(-20, 21) * 0.1f), Velocity?.Y ?? (Main.rand.Next(-20, 21) * 0.1f), Alpha, newColor, Scale);
 		public static Dust NewDustDirect(Vector2 Position, int Width, int Height, int Type, float SpeedX = 0f, float SpeedY = 0f, int Alpha = 0, Color newColor = default, float Scale = 1f) {
 			bool perfect = Width == 0 && Height == 0;
 			if (UpdateDustCallback[Type] is null) {
@@ -405,6 +415,54 @@ namespace Origins.Graphics {
 			return fakeDust;
 		}
 		public void Unload() { }
+		public static class Lighting {
+			public static Color GetColor(int x, int y) => Terraria.Lighting.GetColor(x, y);
+			public static void AddLight(Vector2 position, Vector3 rgb) {
+				AddLight((int)(position.X / 16f), (int)(position.Y / 16f), rgb.X, rgb.Y, rgb.Z);
+			}
+			public static void AddLight(Vector2 position, float r, float g, float b) {
+				AddLight((int)(position.X / 16f), (int)(position.Y / 16f), r, g, b);
+			}
+			public static void AddLight(int i, int j, int torchID, float lightAmount) {
+				TorchID.TorchColor(torchID, out float R, out float G, out float B);
+				AddLight(i, j, R * lightAmount, G * lightAmount, B * lightAmount);
+			}
+			public static void AddLight(Vector2 position, int torchID) {
+				TorchID.TorchColor(torchID, out float R, out float G, out float B);
+				AddLight((int)position.X / 16, (int)position.Y / 16, R, G, B);
+			}
+			public static void AddLight(int i, int j, float r, float g, float b) => lights.Add((i, j, r, g, b));
+		}
+
+		static readonly ConcurrentBag<(int i, int j, float r, float g, float b)> lights = [];
+		static void Purge() {
+			foreach ((int i, int j, float r, float g, float b) in lights) Terraria.Lighting.AddLight(i, j, r, g, b);
+			lights.Clear();
+		}
+		static Action<Dust> Clean(Func<Dust, bool> update) {
+			if (replacementMethods is null) {
+				replacementMethods = [];
+				foreach (MethodInfo method in typeof(Lighting).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)) {
+					replacementMethods.Add((method.GetParameters().Select(p => p.ParameterType).ToArray(), method));
+				}
+			}
+			DynamicMethodDefinition cleaned = new(update.Method);
+			ILCursor c = new(new ILContext(cleaned.Definition));
+			while (c.TryGotoNext(MoveType.AfterLabel, i => i.MatchCall<Terraria.Lighting>(nameof(Terraria.Lighting.AddLight)))) {
+				c.Next.MatchCall(out MethodReference method);
+				MethodInfo info = replacementMethods.FirstOrDefault(s => {
+					if (s.parameterTypes.Length != method.Parameters.Count) return false;
+					for (int i = 0; i < method.Parameters.Count; i++) if (!method.Parameters[i].ParameterType.Is(s.parameterTypes[i])) return false;
+					return true;
+				}).method;
+				if (info is null) continue;
+				c.Remove();
+				c.Emit(OpCodes.Call, info);
+			}
+			update = cleaned.Generate().CreateDelegate<Func<Dust, bool>>(update.Target);
+			return dust => update(dust);
+		}
+		static List<(Type[] parameterTypes, MethodInfo method)> replacementMethods;
 	}
 	public delegate void DrawDustFunc(Dust dust);
 }
