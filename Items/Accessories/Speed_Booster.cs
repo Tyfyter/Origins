@@ -96,7 +96,7 @@ namespace Origins.Items.Accessories {
 			originPlayer.automatedReturnsHandler = true;
 			originPlayer.conveyorBeltModifiers += (ref Vector2 movement, Player player) => {
 				if (Math.Sign(movement.X) == -Math.Sign(player.velocity.X)) {
-					movement *= player.OriginPlayer().shineSparkCharge <= 0 ? 1.5f : 0.75f;
+					movement *= player.OriginPlayer().shineSparkCharge <= 0 ? 1.55f : 0.75f;
 				}
 			};
 
