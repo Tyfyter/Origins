@@ -33,7 +33,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.09f;
+		public AssimilationAmount? Assimilation => 0.05f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 8;

@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -26,7 +25,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.04f;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;

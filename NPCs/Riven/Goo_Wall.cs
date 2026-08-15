@@ -4,7 +4,6 @@ using Origins.Core;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;

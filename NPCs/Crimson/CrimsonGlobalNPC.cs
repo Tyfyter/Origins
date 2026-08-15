@@ -37,19 +37,15 @@ namespace Origins.NPCs.Crimson {
 			static void AddAssimilation(int npc, AssimilationAmount amount) => AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(npc, amount);
 			AddAssimilation(NPCID.BloodCrawler, 0.05f);
 			AddAssimilation(NPCID.BloodCrawlerWall, 0.05f);
-			AddAssimilation(NPCID.BloodFeeder, 0.06f);
-			AddAssimilation(NPCID.BloodJelly, 0.08f);
-			AddAssimilation(NPCID.BloodMummy, 0.08f);
-			AddAssimilation(NPCID.SandsharkCrimson, 0.09f);
-			AddAssimilation(NPCID.BrainofCthulhu, 0.16f);
+			AddAssimilation(NPCID.BloodFeeder, 0.04f);
+			AddAssimilation(NPCID.BloodJelly, 0.07f);
+			AddAssimilation(NPCID.BrainofCthulhu, 0.05f);
 			AddAssimilation(NPCID.Creeper, 0.002f);
-			AddAssimilation(NPCID.Crimera, 0.05f);
-			AddAssimilation(NPCID.Crimslime, 0.06f);
-			AddAssimilation(NPCID.CrimsonGoldfish, 0.05f);
+			AddAssimilation(NPCID.Crimera, 0.03f);
 			AddAssimilation(NPCID.DesertGhoulCrimson, 0.06f);
-			AddAssimilation(NPCID.FaceMonster, 0.08f);
-			AddAssimilation(NPCID.FloatyGross, 0.08f);
-			AddAssimilation(NPCID.Herpling, 0.06f);
+			AddAssimilation(NPCID.FaceMonster, 0.05f);
+			AddAssimilation(NPCID.FloatyGross, 0.07f);
+			AddAssimilation(NPCID.Herpling, 0.05f);
 			AddAssimilation(NPCID.IchorSticker, 0.06f);
 		}
 		public override void Unload() {

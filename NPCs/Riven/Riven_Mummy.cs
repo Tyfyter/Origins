@@ -14,7 +14,7 @@ namespace Origins.NPCs.Riven {
 		public int FrameDuration => 2;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color GetGlowColor(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
-		public AssimilationAmount? Assimilation => 0.07f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary

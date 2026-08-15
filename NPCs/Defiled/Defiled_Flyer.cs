@@ -7,7 +7,6 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -132,7 +132,7 @@ namespace Origins.NPCs.Riven {
 	}
 
 	public abstract class Rivenator : ModNPC, IRivenEnemy {
-		public AssimilationAmount? Assimilation => 0.06f;
+		public AssimilationAmount? Assimilation => 0.05f;
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;

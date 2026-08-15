@@ -16,7 +16,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.5f;
+		public AssimilationAmount? Assimilation => 0.05f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				Velocity = 1

@@ -1,21 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Buffs;
+using Origins.Dev;
+using Origins.Gores.NPCs;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Origins.World.BiomeData;
-using System.IO;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Graphics.Effects;
-using PegasusLib;
-using Terraria.Audio;
-using Origins.Projectiles;
-using Origins.Gores.NPCs;
-using Origins.Buffs;
-using Origins.Dev;
-using Newtonsoft.Json.Linq;
 
 namespace Origins.NPCs.Riven {
 	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -24,7 +19,7 @@ namespace Origins.NPCs.Riven {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color GetGlowColor(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
-		public AssimilationAmount? Assimilation => 0.08f;
+		public AssimilationAmount? Assimilation => 0.06f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 8;

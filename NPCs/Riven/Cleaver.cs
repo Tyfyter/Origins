@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Cleaver_Head : WormHead, IRivenEnemy, ICustomWikiStat {
-		public AssimilationAmount? Assimilation => 0.04f;
+		public AssimilationAmount? Assimilation => 0.01f;
 		public override int BodyType => ModContent.NPCType<Cleaver_Body>();
 		public override int TailType => ModContent.NPCType<Cleaver_Tail>();
 		public override void Load() => this.AddBanner();

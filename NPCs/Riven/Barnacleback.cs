@@ -1,10 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;

@@ -1,5 +1,4 @@
 ﻿using Origins.Dev;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -10,7 +9,7 @@ using Terraria.ID;
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public override Color GetGlowColor(Color drawColor) => NPC.GetRivenGlowAlpha(drawColor);
-		public AssimilationAmount? Assimilation => 0.03f;
+		public AssimilationAmount? Assimilation => 0.007f;
 		public Rectangle DrawRect => new(0, 0, 48, 32);
 		public int AnimationFrames => 1;
 		public override void SetStaticDefaults() {

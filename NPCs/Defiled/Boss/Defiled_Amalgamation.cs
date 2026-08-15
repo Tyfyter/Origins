@@ -80,7 +80,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		};
 
 		public string CustomSpritePath => "DefiledAmalg";
-		public AssimilationAmount? Assimilation => 0.05f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public static bool spawnDA = false;
 		float rightArmRot = 0.25f;
 		float leftArmRot = 0.25f;

@@ -37,7 +37,7 @@ using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor, IMinions, IBossChecklistEntry {
-		public AssimilationAmount? Assimilation => 0.08f;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
@@ -637,7 +637,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public class World_Cracker_Body : WormBody, ILoadExtraTextures, IRivenEnemy, IDrawWCArmor {
-		public AssimilationAmount? Assimilation => 0.06f;
+		public AssimilationAmount? Assimilation => 0.02f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
@@ -744,7 +744,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public class World_Cracker_Tail : WormTail, IRivenEnemy {
-		public AssimilationAmount? Assimilation => 0.10f;
+		public AssimilationAmount? Assimilation => 0.05f;
 		public override bool SharesImmunityFrames => true;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public override float SegmentSeparation => 96;

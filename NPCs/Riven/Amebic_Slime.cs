@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Amebic_Slime : ModNPC, IRivenEnemy, IWikiNPC {
-		public AssimilationAmount? Assimilation => 0.04f;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public Rectangle DrawRect => new(0, 0, 32, 28);
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;

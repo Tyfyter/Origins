@@ -1,11 +1,5 @@
 ﻿using Origins.Buffs;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.Riven.World_Cracker;
-using Origins.World.BiomeData;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {

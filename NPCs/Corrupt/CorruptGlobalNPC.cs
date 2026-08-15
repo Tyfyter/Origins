@@ -41,27 +41,20 @@ namespace Origins.NPCs.Corrupt {
 		];
 		public override void Load() {
 			static void AddAssimilation(int npc, AssimilationAmount amount) => AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(npc, amount);
-			AddAssimilation(NPCID.Clinger, 0.11f);
-			AddAssimilation(NPCID.CorruptGoldfish, 0.05f);
+			AddAssimilation(NPCID.Clinger, 0.09f);
 			AddAssimilation(NPCID.Corruptor, 0.09f);
-			AddAssimilation(NPCID.CorruptSlime, 0.04f);
-			AddAssimilation(NPCID.DesertGhoulCorruption, 0.06f);
-			AddAssimilation(NPCID.DarkMummy, 0.08f);
-			AddAssimilation(NPCID.SandsharkCorrupt, 0.09f);
 			AddAssimilation(NPCID.DevourerHead, 0.05f);
 			AddAssimilation(NPCID.DevourerBody, 0.04f);
 			AddAssimilation(NPCID.DevourerTail, 0.05f);
-			AddAssimilation(NPCID.SeekerHead, 0.10f);
-			AddAssimilation(NPCID.SeekerBody, 0.08f);
-			AddAssimilation(NPCID.SeekerTail, 0.10f);
-			AddAssimilation(NPCID.EaterofSouls, 0.07f);
-			AddAssimilation(NPCID.EaterofWorldsHead, 0.07f);
-			AddAssimilation(NPCID.EaterofWorldsBody, 0.05f);
-			AddAssimilation(NPCID.EaterofWorldsTail, 0.07f);
-			AddAssimilation(NPCID.Slimeling, 0.03f);
-			AddAssimilation(NPCID.Slimer, 0.06f);
-			AddAssimilation(NPCID.VileSpit, 0.14f);
-			AddAssimilation(NPCID.VileSpitEaterOfWorlds, 0.05f);
+			AddAssimilation(NPCID.SeekerHead, 0.07f);
+			AddAssimilation(NPCID.SeekerBody, 0.06f);
+			AddAssimilation(NPCID.SeekerTail, 0.07f);
+			AddAssimilation(NPCID.EaterofSouls, 0.04f);
+			AddAssimilation(NPCID.EaterofWorldsHead, 0.02f);
+			AddAssimilation(NPCID.EaterofWorldsBody, 0.01f);
+			AddAssimilation(NPCID.EaterofWorldsTail, 0.02f);
+			AddAssimilation(NPCID.VileSpit, 0.12f);
+			AddAssimilation(NPCID.VileSpitEaterOfWorlds, 0.01f);
 		}
 		public override void Unload() {
 			NPCTypes = null;

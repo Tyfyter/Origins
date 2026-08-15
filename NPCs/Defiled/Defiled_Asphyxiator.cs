@@ -17,7 +17,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 36;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.04f;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
