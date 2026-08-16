@@ -2,6 +2,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Gores;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Ashen;
+using Origins.Items.Armor.Defiled;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
+using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +15,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -46,6 +53,13 @@ namespace Origins.NPCs.Ashen {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Ashen_Biome>().Type,
 			];
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(new CommonDrop(ModContent.ItemType<Biocomponent10>(), 1, 1, 3));
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 3, amountDroppedMaximum: 7));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName").Replace("_Head", ""));

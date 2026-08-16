@@ -19,12 +19,13 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
-			Item.damage = 30;
+			Item.damage = 81;
 			Item.knockBack = 4f;
 			Item.defense = 1;
 			Item.shoot = ModContent.ProjectileType<Flak_Jacket_Explosion>();
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 1);
+			Item.ArmorPenetration += 3;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.endurance += (1 - player.endurance) * 0.05f;

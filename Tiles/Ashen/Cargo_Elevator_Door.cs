@@ -119,7 +119,7 @@ namespace Origins.Tiles.Ashen {
 		public static bool Toggle(int i, int j, bool actuallyDo = true) {
 			Tile tile = Main.tile[i, j];
 			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(i * 16 + 11 * 8, j * 16 + 3 * 8));
-			
+
 			if (tile.TileFrameX >= 11 * 18) return false;
 			TileObjectData data = TileObjectData.GetTileData(tile);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
@@ -135,7 +135,11 @@ namespace Origins.Tiles.Ashen {
 					return false;
 				}
 			}
-			if (actuallyDo) new Cargo_Elevator_Door_Action(new(left, top), animation.TargetFrame != Door_Animation.open_frame).Perform();
+			if (actuallyDo) {
+				if (animation.TargetFrame == Door_Animation.closed_frame) SoundEngine.PlaySound(Origins.Sounds.MetalDoorClose.WithPitch(-0.8f).WithVolume(0.7f), new Vector2(i * 16 + 11 * 8, j * 16 + 3 * 8));
+				if (animation.TargetFrame == Door_Animation.open_frame) SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(-1f).WithVolume(0.8f), new Vector2(i * 16 + 11 * 8, j * 16 + 3 * 8));
+				new Cargo_Elevator_Door_Action(new(left, top), animation.TargetFrame != Door_Animation.open_frame).Perform();
+			}
 			return true;
 		}
 
@@ -253,7 +257,8 @@ namespace Origins.Tiles.Ashen {
 				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
-					SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 13 * 8, position.Y * 16 + 8 * 8));
+					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 11 * 8, position.Y * 16 + 3 * 8));
+					//SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 13 * 8, position.Y * 16 + 8 * 8));
 					frameCounter = 0;
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);

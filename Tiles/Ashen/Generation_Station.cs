@@ -79,8 +79,8 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 			new Power_Multitile_Action(i, j, diff < 0).Perform();
-			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
-			SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
+			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-0.5f).WithVolume(0.3f), new(i * 16 + 8, j * 16 + 8));
+			SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-0.5f).WithVolume(0.3f), new(i * 16 + 8, j * 16 + 8));
 			SoundEngine.PlaySound(SoundID.Zombie49.WithPitch(1.2f), new(i * 16 + 8, j * 16 + 8));
 			return true;
 		}

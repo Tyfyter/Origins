@@ -7393,7 +7393,7 @@ Flak_Jacket: {
 	// DisplayName: Flak Jacket
 	/* Tooltip:
 		'''
-		Reduces incoming damage by 5%
+		Reduces damage taken by 5%
 		Explodes into flak upon taking damage
 		''' */
 }
@@ -8423,7 +8423,14 @@ Fortified_Steel_Wall2_Placed_Unsafe_Item: {
 
 CSTAA_Jacket: {
 	// DisplayName: Ceramic-Shrapnel Tempered-Alloy Armor
-	// Tooltip: "'also known as CSTAA Jacket'"
+	/* Tooltip:
+		'''
+		Grants a quick dash
+		Increases dash speed by 20%
+		Reduces damage taken by 5%
+		Taking damage while dashing makes you explode into flak
+		'Also known as CSTAA Jacket'
+		''' */
 }
 
 Shuckatana: {

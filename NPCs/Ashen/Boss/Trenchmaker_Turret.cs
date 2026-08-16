@@ -77,6 +77,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.damage = 27;;
 			NPC.npcSlots = 0;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
+			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type

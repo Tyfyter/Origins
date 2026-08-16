@@ -9,8 +9,8 @@ This mod is a collaboration amongst Origins Dev Team since April of 2017.
 
 Programmer: Tyfyter2002, Reivax
 Artist: leeleue
-Music: leeleue
-Sound designer: leeleue
+Music: leeleue, Taki
+Sound designer: leeleue, Taki
 Wiki developer: leeleue, Jadams, Reivax, Kono Dio Da
 Playtester: Kono Dio Da
 

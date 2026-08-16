@@ -15,7 +15,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x2c212a));
 			DustType = DustID.Mud;
-			HitSound = SoundID.NPCHit18;
+			HitSound = SoundID.NPCHit18.WithVolume(0.8f);
 			LateSetupActions.Add(() => {
 				TileMergeOverlay mergeOverlay = new(merge + "Murk_Overlay", Type);
 				for (int i = 0; i < TileLoader.TileCount; i++) {

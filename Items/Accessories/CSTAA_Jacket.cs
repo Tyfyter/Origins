@@ -19,14 +19,22 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
-			Item.damage = 30;
+			Item.damage = 81;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.useTime = 6;
 			Item.knockBack = 4f;
 			Item.defense = 1;
 			Item.shoot = ModContent.ProjectileType<CSTAA_Jacket_Explosion>();
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Fallacious_Vase>())
+			.AddIngredient(ModContent.ItemType<Flak_Jacket>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.endurance += (1 - player.endurance) * 0.05f;
