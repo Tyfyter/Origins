@@ -21,3 +21,5 @@ If you have any questions, comments or a bug you have found from anything Origin
 
 [quote=tModLoader Origins]
 Developed By Origins Dev Team[/quote]
+
+One sound provided by SoundEffectsFactory.

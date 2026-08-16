@@ -381,6 +381,7 @@ STATUS EFFECTS:
 (^) Wrapped Up
 
 (^) Cavitation
+(^) Crazy!
 (^) Impeding Shrapnel
 (^) Mana Buffer
 (^) Miasma

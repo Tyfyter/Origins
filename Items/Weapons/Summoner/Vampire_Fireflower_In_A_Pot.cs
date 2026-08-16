@@ -173,7 +173,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Crazy_Buff : ModBuff {
-		public override string Texture => $"Terraria/Images/Buff_{BuffID.Sunflower}";
+		public override string Texture => "Origins/Buffs/Crazy_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoTimeDisplay[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Sunflower);
