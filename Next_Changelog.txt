@@ -1,0 +1,4 @@
+Additions:
+
+Fixes:
+* Shattered Ghouls no longer inflict 10 times as much assimilation as intended
