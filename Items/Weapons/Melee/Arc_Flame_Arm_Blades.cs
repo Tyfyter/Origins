@@ -230,7 +230,6 @@ namespace Origins.Items.Weapons.Melee {
 }
 namespace Origins.Buffs {
 	public class Arc_Burn_Debuff : ModBuff {
-		public override string Texture => typeof(Arc_Flame_Arm_Blades).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
