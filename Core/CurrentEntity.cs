@@ -11,7 +11,7 @@ public ref struct CurrentEntity {
 	}
 	public readonly void Dispose() => Entity = prev;
 	class Loader : ILoadable {
-		void ILoadable.Load(Mod mod) => IgnoreThisLineOfTheStackTraceThisCodeChangesNothing.LoadCurrentEntity();
+		void ILoadable.Load(Mod mod) => IgnoreThisLineOfTheStackTraceThisCodeChangesNothingItJustReadsData.LoadCurrentEntity();
 		void ILoadable.Unload() { }
 	}
 }

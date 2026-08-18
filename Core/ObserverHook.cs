@@ -28,7 +28,7 @@ internal static class ObserverHook {
 		}
 		argIndex++;
 		for (int i = 0; i < extraArgIndex.Length; i++) extraArgIndex[i]++;
-		DynamicMethod dmd = new($"Observer Hook: {method.Name}", method.ReturnType, [typeof(TOrig), ..methodParams]);
+		DynamicMethod dmd = new($"Observer Hook: {method.Name}", method.ReturnType, [typeof(TOrig), ..methodParams], createObserver.Method.ReflectedType);
 		ILGenerator gen = dmd.GetILGenerator();
 		gen.DeclareLocal(createObserver.Method.ReturnType);
 
