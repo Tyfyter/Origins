@@ -8548,3 +8548,8 @@ Fast_Conveyor_Belt_CC_Item: {
 	DisplayName: "{$Fast_Conveyor_Belt_Item.GenericName} (Counter Clockwise)"
 	Tooltip: ""
 }
+
+Star_Soldier_Summon_Item: {
+	DisplayName: Star Soldier Summon Item
+	Tooltip: ""
+}

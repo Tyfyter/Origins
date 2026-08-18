@@ -1507,6 +1507,16 @@ Buffs: {
 		// DisplayName: Toy Trenchmaker
 		// Description: The clanker goes clickity-clack!
 	}
+
+	Star_Soldier_Proper_Buff: {
+		// DisplayName: Star Soldier Proper Buff
+		// Description: Mods.Origins.Buffs.Star_Soldier_Proper_Buff.Description
+	}
+
+	Star_Soldier_Wagon_Buff: {
+		// DisplayName: Star Soldier Wagon Buff
+		// Description: Mods.Origins.Buffs.Star_Soldier_Wagon_Buff.Description
+	}
 }
 
 DamageClassName: {
