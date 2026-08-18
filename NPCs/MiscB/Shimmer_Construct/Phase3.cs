@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Core;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
@@ -19,7 +20,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -575,11 +575,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} catch (Exception ex) {
 				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
 			}
-			On_Projectile.Update += [DebuggerStepThrough](orig, self, i) => {
-				using (isUpdatingShimmeryThing.ScopedOverride(self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer)) {
-					orig(self, i);
-				}
-			};
+			IgnoreThisLineOfTheStackTraceThisCodeChangesNothingItJustReadsData.LoadCurrentEntityShimmer();
 			On_Collision.CanHitLine += (orig, Position1, Width1, Height1, Position2, Width2, Height2) => isUpdatingShimmeryThing || orig(Position1, Width1, Height1, Position2, Width2, Height2);
 			On_Collision.CanHitWithCheck += (orig, Position1, Width1, Height1, Position2, Width2, Height2, check) => isUpdatingShimmeryThing || orig(Position1, Width1, Height1, Position2, Width2, Height2, check);
 			On_Collision.CanHit_Entity_Entity += (orig, a, b) => isUpdatingShimmeryThing || orig(a, b);
