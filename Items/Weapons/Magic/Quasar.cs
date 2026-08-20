@@ -1,3 +1,4 @@
+using AltLibrary.Core;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Events;
@@ -19,6 +20,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Quasar : ModItem {
+		public static int BlockPenetrationDist => 64;
 		public override string Texture => $"Terraria/Images/NPC_1";
 		public static int ShaderID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -120,7 +122,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
 
-			Projectile.ai[1] = CollisionExt.Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64) + 8;
+			Projectile.ai[1] = CollisionExt.Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64) + Quasar.BlockPenetrationDist;
 			Vector2 newTarget = Projectile.position + Projectile.velocity * Projectile.ai[1];
 			TargetPos = newTarget;
 			Projectile.ai[2]++;
@@ -128,7 +130,7 @@ namespace Origins.Items.Weapons.Magic {
 				Vector2 perp = Projectile.velocity.Perpendicular();
 				int type = ModContent.ProjectileType<Quasar_Offshoot_P>();
 				for (int i = Main.rand.Next((int)Math.Ceiling(0.0075f * Projectile.ai[1])); i > 0; i--) {
-					float dist = Main.rand.NextFloat(Projectile.ai[1]);
+					float dist = Main.rand.NextFloat(Projectile.ai[1] - Quasar.BlockPenetrationDist);
 					int dir = Main.rand.NextBool().ToDirectionInt();
 					Projectile.SpawnProjectile(null,
 						Projectile.position + Projectile.velocity * dist,
@@ -173,13 +175,14 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 position = Projectile.position;
 			position -= Main.screenPosition;
 			float rotation = diff.ToRotation();
-			float dist = diff.Length();
+			float dist = diff.Length() - Quasar.BlockPenetrationDist;
 			float scale = (1f + forSmog.ToInt()) / 256f;
 			Color color = new(80, 0, 255, 0);
 			color *= progress;
 			Rectangle frame = new(256 - (int)((Projectile.ai[2] * 24) % 256), 0, (int)dist, 256);
+			Texture2D texture = TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value;
 			DrawData data = new(
-				TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value,
+				texture,
 				position,
 				frame,
 				color * progress,
@@ -188,19 +191,54 @@ namespace Origins.Items.Weapons.Magic {
 				new Vector2(1, 128 * scale),
 				0
 			);
+
 			Main.EntitySpriteDraw(data);
+			diff /= dist + Quasar.BlockPenetrationDist;
+			DrawEnding(diff, position, data.color, frame);
+
 			data.color = color * progress * progress * progress;
 			Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 32;
 			data.position = position + offset;
-			frame.Width = (int)CollisionExt.Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) + 8;
+			frame.Width = (int)CollisionExt.Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16);
 			data.sourceRect = frame;
 			Main.EntitySpriteDraw(data);
+			DrawEnding(diff, data.position, data.color, frame);
+
 			data.position = position - offset;
-			frame.Width = (int)CollisionExt.Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) + 8;
+			frame.Width = (int)CollisionExt.Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16);
 			data.sourceRect = frame;
 			Main.EntitySpriteDraw(data);
+			DrawEnding(diff, data.position, data.color, frame);
 			Main.spriteBatch.Restart(state);
 		}
+
+		private static void DrawEnding(Vector2 diff, Vector2 position, Color color, Rectangle frame) {
+			Vector2 uvConvert = Vector2.One / TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value.Size();
+			position += diff * frame.Width;
+			frame.X += frame.Width;
+			frame.Width = Quasar.BlockPenetrationDist;
+			Vector2 perp = diff.Perpendicular() * 64;
+			diff *= Quasar.BlockPenetrationDist;
+			vertices[0].Position = new Vector3(position + perp, 0);
+			vertices[1].Position = new Vector3(position + perp + diff, 0);
+			vertices[2].Position = new Vector3(position - perp, 0);
+			vertices[3].Position = new Vector3(position - perp + diff, 0);
+
+			vertices[0].TextureCoordinate = frame.TopLeft() * uvConvert;
+			vertices[1].TextureCoordinate = frame.TopRight() * uvConvert;
+			vertices[2].TextureCoordinate = frame.BottomLeft() * uvConvert;
+			vertices[3].TextureCoordinate = frame.BottomRight() * uvConvert;
+
+			vertices[0].Color = color;
+			vertices[1].Color = Color.Transparent;
+			vertices[2].Color = color;
+			vertices[3].Color = Color.Transparent;
+
+			Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
+		}
+
+		static VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
+		static readonly short[] dices = [0, 1, 2, 3, 1, 2];
 		static float soundVolume;
 		class Sound : AEnvironmentSound {
 			SlotId droning;

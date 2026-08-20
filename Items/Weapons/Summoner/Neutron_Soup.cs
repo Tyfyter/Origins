@@ -10,6 +10,7 @@ using ReLogic.Content;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -186,7 +187,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
 
-			float dist = CollisionExt.Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64) + 24;
+			float dist = CollisionExt.Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
 			Vector2 newTarget = Projectile.position + Projectile.velocity * dist;
 			TargetPos = newTarget;
 			Projectile.ai[2]++;
@@ -196,7 +197,7 @@ namespace Origins.Items.Weapons.Summoner {
 			player.velocity -= Projectile.velocity * 0.3f * (25 / Projectile.ai[0])
 				* Utils.GetLerpValue(-16, 0, Vector2.Dot(player.velocity, shootDir), true)
 				* Utils.Remap(Vector2.Dot(moveDir, shootDir), 0, 1, 1, 0.25f);
-			if (Projectile.localAI[1].CycleUp(ChargeTime)) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+			if (Projectile.ai[1].CycleUp(ChargeTime)) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= Utils.Remap(Projectile.ai[2], 0, ChargeTime, 0.1f, 1f);
@@ -225,7 +226,7 @@ namespace Origins.Items.Weapons.Summoner {
 					radius: 16
 				));
 			}*/
-			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return;
+			if (!Collision.CheckAABBvLineCollision(Main.screenPosition - Vector2.One * 16, Main.ScreenSize.ToVector2() + Vector2.One * 32, Projectile.position, TargetPos)) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearWrap);
 			Vector2 diff = TargetPos - Projectile.position;
@@ -236,19 +237,48 @@ namespace Origins.Items.Weapons.Summoner {
 			float scale = (1f + forSmog.ToInt()) / 256f;
 			Color color = new(100, 180, 255, 0);
 			color *= progress;
+			color *= progress;
 			Rectangle frame = new(256 - (int)((Projectile.ai[2] * 32) % 256), 0, (int)dist, 256);
+			Texture2D texture = TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value;
 			DrawData data = new(
-				TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value,
+				texture,
 				position,
 				frame,
-				color * progress,
+				color,
 				rotation,
 				Vector2.UnitY * 128,
 				new Vector2(1, 64 * scale),
 				0
 			);
 			Main.EntitySpriteDraw(data);
+			const int fade_out_dist = 16;
+
+			Vector2 uvConvert = Vector2.One / texture.Size();
+			diff /= dist;
+			position += diff * (int)dist;
+			frame.X += frame.Width;
+			frame.Width = fade_out_dist;
+			Vector2 perp = diff.Perpendicular() * 32;
+			diff *= fade_out_dist;
+			vertices[0].Position = new Vector3(position + perp, 0);
+			vertices[1].Position = new Vector3(position + perp + diff, 0);
+			vertices[2].Position = new Vector3(position - perp, 0);
+			vertices[3].Position = new Vector3(position - perp + diff, 0);
+
+			vertices[0].TextureCoordinate = frame.TopLeft() * uvConvert;
+			vertices[1].TextureCoordinate = frame.TopRight() * uvConvert;
+			vertices[2].TextureCoordinate = frame.BottomLeft() * uvConvert;
+			vertices[3].TextureCoordinate = frame.BottomRight() * uvConvert;
+
+			vertices[0].Color = color;
+			vertices[1].Color = Color.Transparent;
+			vertices[2].Color = color;
+			vertices[3].Color = Color.Transparent;
+
+			Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
+		static VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
+		static readonly short[] dices = [0, 1, 2, 3, 1, 2];
 		/*static float soundVolume;
 		class Sound : AEnvironmentSound {
 			SlotId droning;
