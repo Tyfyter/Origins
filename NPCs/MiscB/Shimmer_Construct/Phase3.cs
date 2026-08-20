@@ -758,8 +758,20 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public class Players_Above_Liquids_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater), ILoadable {
-		readonly List<Player> playersAboveLiquids = [];
+		static readonly List<Player> playersAboveLiquids = [];
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (playersAboveLiquids.Count <= 0) return;
+			SpriteBatchState state = spriteBatch.GetState();
+			try {
+				spriteBatch.End();
+				Main.PotionOfReturnRenderer.DrawPlayers(Main.Camera, playersAboveLiquids.Where(p => p.PotionOfReturnOriginalUsePosition.HasValue));
+				Main.PlayerRenderer.DrawPlayers(Main.Camera, playersAboveLiquids);
+			} finally {
+				spriteBatch.Begin(state);
+			}
+		}
+
+		internal static void RefreshPlayers() {
 			playersAboveLiquids.Clear();
 			List<Player> playersBehindNPCs = MainReflection.PlayersThatDrawBehindNPCs;
 			List<Player> playersAfterProjectiles = MainReflection.PlayersThatDrawAfterProjectiles;
@@ -771,16 +783,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			playersBehindNPCs.RemoveAll(playersAboveLiquids.Contains);
 			playersAfterProjectiles.RemoveAll(playersAboveLiquids.Contains);
-			if (playersAboveLiquids.Count <= 0) return;
-			SpriteBatchState state = spriteBatch.GetState();
-			try {
-				spriteBatch.End();
-				Main.PotionOfReturnRenderer.DrawPlayers(Main.Camera, playersAboveLiquids.Where(p => p.PotionOfReturnOriginalUsePosition.HasValue));
-				Main.PlayerRenderer.DrawPlayers(Main.Camera, playersAboveLiquids);
-			} finally {
-				spriteBatch.Begin(state);
-			}
 		}
+
 		public override void Update(GameTime gameTime) { }
 		public override void Activate(Vector2 position, params object[] args) {
 			Opacity = 1;

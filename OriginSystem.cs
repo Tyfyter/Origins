@@ -409,6 +409,7 @@ namespace Origins {
 		}
 		public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform) {
 			SC_Phase_Three_Underlay.minLightAreas.Clear();
+			Players_Above_Liquids_Overlay.RefreshPlayers();
 			foreach (Projectile proj in Main.ActiveProjectiles) {
 				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
 			}
