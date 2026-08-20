@@ -60,6 +60,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
 		}
+		public override void DrawEffects(ref Color drawColor) => drawColor = Color.White;
 		public override void FindFrame(int frameHeight) {
 			if (NPC.ai[0] == 2) {
 				NPC.frameCounter = 0.0;
