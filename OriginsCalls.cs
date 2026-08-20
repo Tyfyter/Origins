@@ -1,13 +1,9 @@
-using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Utils;
 using Origins.Items.Tools.Liquids;
-using Origins.Items.Tools.Wiring;
 using Origins.Tiles.Other;
 using System;
-using System.Collections.Generic;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins {
