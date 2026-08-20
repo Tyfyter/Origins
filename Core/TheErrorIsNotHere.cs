@@ -12,7 +12,7 @@ internal class IgnoreThisLineOfTheStackTraceThisCodeChangesNothingItJustReadsDat
 		};
 		On_Player.Update += [DebuggerStepThrough] (orig, self, i) => {
 			using CurrentEntity cur = new(self);
-			orig(self, i);
+			using (Weak_Shimmer_Debuff.isUpdatingShimmeryThing.ScopedOverride(self.OriginPlayer().weakShimmer)) orig(self, i);
 		};
 		On_NPC.UpdateNPC += [DebuggerStepThrough] (orig, self, i) => {
 			using CurrentEntity cur = new(self);

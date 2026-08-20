@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils.LiquidContent;
 using MonoMod.Cil;
 using Origins.Core;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
+using Origins.Reflection;
+using Origins.Tiles.Ashen;
 using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
@@ -14,10 +17,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -570,6 +575,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					orig(self);
 				}
 			};
+			Origins.DoILEdit(LiquidCollision.GetAppropriateWets, SkipWetCheck);
+			static void SkipWetCheck(ILContext il) {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.After, 
+					i => i.MatchStindRef()
+				);
+				ILLabel label = c.DefineLabel();
+				//c.EmitLdsfld(typeof(Weak_Shimmer_Debuff).GetField(nameof(isUpdatingShimmeryThing), BindingFlags.NonPublic | BindingFlags.Static));
+				c.EmitDelegate(Getter);
+				c.EmitBrtrue(label);
+				c.GotoNext(MoveType.AfterLabel,
+					i => i.MatchLdarg3(),
+					i => i.MatchLdindRef(),
+					i => i.MatchLdcI4(1),
+					i => i.MatchCallOrCallvirt(typeof(Enumerable), nameof(Enumerable.Contains))
+				);
+				c.MarkLabel(label);
+				static bool Getter() => isUpdatingShimmeryThing;
+			}
 			try {
 				IL_Projectile.HandleMovement += IL_Projectile_HandleMovement;
 			} catch (Exception ex) {
@@ -732,6 +756,48 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				npc.DelBuff(buffIndex--);
 			}
 		}
+	}
+	public class Players_Above_Liquids_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater), ILoadable {
+		readonly List<Player> playersAboveLiquids = [];
+		public override void Draw(SpriteBatch spriteBatch) {
+			playersAboveLiquids.Clear();
+			List<Player> playersBehindNPCs = MainReflection.PlayersThatDrawBehindNPCs;
+			List<Player> playersAfterProjectiles = MainReflection.PlayersThatDrawAfterProjectiles;
+			for (int i = 0; i < playersBehindNPCs.Count; i++) {
+				if (playersBehindNPCs[i].OriginPlayer().weakShimmer) playersAboveLiquids.Add(playersBehindNPCs[i]);
+			}
+			for (int i = 0; i < playersAfterProjectiles.Count; i++) {
+				if (playersAfterProjectiles[i].OriginPlayer().weakShimmer) playersAboveLiquids.Add(playersAfterProjectiles[i]);
+			}
+			playersBehindNPCs.RemoveAll(playersAboveLiquids.Contains);
+			playersAfterProjectiles.RemoveAll(playersAboveLiquids.Contains);
+			if (playersAboveLiquids.Count <= 0) return;
+			SpriteBatchState state = spriteBatch.GetState();
+			try {
+				spriteBatch.End();
+				Main.PotionOfReturnRenderer.DrawPlayers(Main.Camera, playersAboveLiquids.Where(p => p.PotionOfReturnOriginalUsePosition.HasValue));
+				Main.PlayerRenderer.DrawPlayers(Main.Camera, playersAboveLiquids);
+			} finally {
+				spriteBatch.Begin(state);
+			}
+		}
+		public override void Update(GameTime gameTime) { }
+		public override void Activate(Vector2 position, params object[] args) {
+			Opacity = 1;
+			Mode = OverlayMode.Active;
+		}
+		public override void Deactivate(params object[] args) { }
+		public override bool IsVisible() => true;
+		public static void ForceActive() {
+			if (Overlays.Scene[typeof(Players_Above_Liquids_Overlay).FullName].Mode != OverlayMode.Active) {
+				Overlays.Scene.Activate(typeof(Players_Above_Liquids_Overlay).FullName, default);
+			}
+		}
+		public void Load(Mod mod) {
+			Overlays.Scene[GetType().FullName] = this;
+		}
+
+		public void Unload() { }
 	}
 	public class Cheap_SC_Phase_Three_Underlay() : Overlay(EffectPriority.High, RenderLayers.Walls) {
 		bool active = false;

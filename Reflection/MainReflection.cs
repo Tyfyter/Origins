@@ -28,6 +28,8 @@ namespace Origins.Reflection {
 		public static FastStaticFieldInfo<Main, Player> _currentPlayerOverride;
 		public static List<Player> PlayersThatDrawBehindNPCs { get => _playersThatDrawBehindNPCs.GetValue(Main.instance); set => _playersThatDrawBehindNPCs.SetValue(Main.instance, value); }
 		public static FastFieldInfo<Main, List<Player>> _playersThatDrawBehindNPCs;
+		public static List<Player> PlayersThatDrawAfterProjectiles { get => _playersThatDrawAfterProjectiles.GetValue(Main.instance); set => _playersThatDrawAfterProjectiles.SetValue(Main.instance, value); }
+		public static FastFieldInfo<Main, List<Player>> _playersThatDrawAfterProjectiles;
 		public static FastStaticFieldInfo<Main, int> currentMapHeight;
 		public static Action<Projectile> DrawProj_Flamethrower { get; private set; }
 		public static Action<NPC, int, Color, float> DrawNPC_SlimeItem { get; private set; }
@@ -44,6 +46,7 @@ namespace Origins.Reflection {
 			screenOff = new("screenOff", BindingFlags.NonPublic);
 			_currentPlayerOverride = new("_currentPlayerOverride", BindingFlags.NonPublic);
 			_playersThatDrawBehindNPCs = "_playersThatDrawBehindNPCs";
+			_playersThatDrawAfterProjectiles = "_playersThatDrawAfterProjectiles";
 			DrawProj_Flamethrower = typeof(Main).GetMethod(nameof(DrawProj_Flamethrower), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<Projectile>>();
 			DrawDust = typeof(Main).GetMethod(nameof(DrawDust), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<Action>(Main.instance);
 			DrawNPC_SlimeItem = typeof(Main).GetMethod(nameof(DrawNPC_SlimeItem), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<NPC, int, Color, float>>();

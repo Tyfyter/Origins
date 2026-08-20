@@ -421,6 +421,7 @@ namespace Origins {
 		public override void PostDrawTiles() {
 			SpecialTilePreviewOverlay.ForceActive();
 			Players_Behind_Tiles_Overlay.ForceActive();
+			Players_Above_Liquids_Overlay.ForceActive();
 			Hanging_Scrap_Overlay.ForceActive();
 			Gas_Mask_Overlay.ForceActive();
 			Flashbang_Overlay.ForceActive();
