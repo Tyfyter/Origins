@@ -616,7 +616,11 @@ namespace Origins.Core {
 			}
 			static bool skipFrame = false;
 			static void On_TileLoader_CheckModTile(Action<int, int, int> orig, int i, int j, int type) {
-				using ScopedOverride<bool> _ = skipFrame.ScopedOverride(true);
+				Tile tile = Main.tile[i, j];
+				int x = i, y = j;
+				if (TileObjectData.GetTileData(tile) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(i, j, objectData, out x, out y);
+				if (TileLoader.GetTile(tile.TileType) is ICustomTELocation customTELocation) customTELocation.ModifyTELocation(ref x, ref y, i, j);
+				using ScopedOverride<bool> _ = skipFrame.ScopedOverride(TryGetChest(x, y) is not null);
 				orig(i, j, type);
 			}
 			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
