@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -24,11 +25,51 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 		Item.value = Item.sellPrice(gold: 1);
 	}
 }
-public class Star_Soldier_Proper : ModMount {
+public class Star_Soldier : ModMount {
+	static int BodyTextureFrames => 5;
+	AutoLoadingTexture bodyTexture = typeof(Star_Soldier).GetDefaultTMLName();
+	static int FrontLegTextureFrames => 18;
+	AutoLoadingTexture frontLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Front_Leg");
+	static int BackLegTextureFrames => 18;
+	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
 	public class MountHandler {
+		public int bodyFrame;
+		public float bodyFrameCounter;
+		public int walkFrame;
+		public float walkFrameCounter;
+		int fallCounter;
 		public void Update(Player player) {
 			//player.mount._flyTime = 0;
 			player.mount._data.jumpSpeed = -player.velocity.Y + 0.04f; // The rate at which the player and mount ascend towards (negative y velocity) the jump height when the jump button is pressed.
+			if (player.controlJump) {
+				if (bodyFrameCounter.CycleUp(4)) {
+					bodyFrame.CycleUp(BodyTextureFrames - 1, 0);
+					bodyFrame++;
+				}
+			} else bodyFrame = 0;
+			bool collidingY = player.OriginPlayer().collidingY;
+			if (!collidingY) {
+				if (++fallCounter < 5) collidingY = true;
+			} else fallCounter = 0;
+			if (collidingY) {
+				float speed = Math.Abs(player.velocity.X);
+				if (speed < 0.5f) {
+					walkFrame = 0;
+					walkFrameCounter = 0;
+				} else {
+					while (walkFrameCounter.CycleUp(32, speed)) {
+						walkFrame.CycleUp(13);
+						speed = 0;
+					}
+				}
+			} else {
+				walkFrame = 13;
+				walkFrameCounter = 0;
+			}
+			if (player.controlUseItem) {
+
+				player.controlUseItem = false;
+			}
 		}
 	}
 	public override void SetStaticDefaults() {
@@ -78,18 +119,59 @@ public class Star_Soldier_Proper : ModMount {
 		player.mount._mountSpecificData = new MountHandler();
 	}
 	public override void UpdateEffects(Player player) => GetHandler(player).Update(player);
+	public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) => false;
 	static MountHandler GetHandler(Player player) {
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
-	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-		if (drawType == 0) playerDrawData.Add(new(TextureAssets.MagicPixel.Value, drawPlayer.Hitbox.Add(-Main.screenPosition), Color.Red));
-		return base.Draw(playerDrawData, drawType, drawPlayer, ref texture, ref glowTexture, ref drawPosition, ref frame, ref drawColor, ref glowColor, ref rotation, ref spriteEffects, ref drawOrigin, ref drawScale, shadow);
+	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle _, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
+		if (drawType == 3) {
+			MountHandler handler = GetHandler(drawPlayer);
+			Rectangle frame = backLegTexture.Frame(verticalFrames: BackLegTextureFrames, frameY: handler.walkFrame);
+			Vector2 bodyCenter = drawPosition - Vector2.UnitY * ((drawPlayer.height - Player.defaultHeight) * 0.5f - 8);
+			Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32);
+
+			playerDrawData.Add(new(
+				backLegTexture,
+				hips,
+				frame,
+				drawColor,
+				rotation,
+				spriteEffects.ApplyToOrigin(new(15, 23), frame),
+				drawScale,
+				spriteEffects
+			));
+
+			frame = bodyTexture.Frame(verticalFrames: BodyTextureFrames, frameY: handler.bodyFrame);
+			playerDrawData.Add(new(
+				bodyTexture,
+				bodyCenter,
+				frame,
+				drawColor,
+				rotation,
+				spriteEffects.ApplyToOrigin(new(59, 37), frame),
+				drawScale,
+				spriteEffects
+			));
+
+			frame = frontLegTexture.Frame(verticalFrames: FrontLegTextureFrames, frameY: handler.walkFrame);
+			playerDrawData.Add(new(
+				frontLegTexture,
+				hips,
+				frame,
+				drawColor,
+				rotation,
+				spriteEffects.ApplyToOrigin(new(15, 23), frame),
+				drawScale,
+				spriteEffects
+			));
+		}
+		return false;
 	}
 }
 public class Star_Soldier_Proper_Buff : ModBuff {
 	public override string Texture => "Origins/Buffs/Chambersite_Minecart_Buff";
-	protected virtual int MountID => ModContent.MountType<Star_Soldier_Proper>();
+	protected virtual int MountID => ModContent.MountType<Star_Soldier>();
 	public override void SetStaticDefaults() {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 			mountID = MountID
@@ -106,7 +188,7 @@ public class Star_Soldier_Wagon : ModMount {
 	public class MountHandler {
 		int time;
 		public void Update(Player player) {
-			if (++time > 60) player.mount.SetMount(ModContent.MountType<Star_Soldier_Proper>(), player, player.direction == -1);
+			if (++time > 60) player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
 		}
 	}
 	public override void SetStaticDefaults() {
