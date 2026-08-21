@@ -112,8 +112,17 @@ public class Star_Soldier_Wagon : ModMount {
 	public override void SetStaticDefaults() {
 		MountData.buff = ModContent.BuffType<Star_Soldier_Wagon_Buff>();
 
+		MountData.jumpHeight = 0;
+		MountData.jumpSpeed = 0f;
+		MountData.acceleration = 0.02f; // The rate at which the mount speeds up.
+		MountData.blockExtraJumps = true; // Determines whether or not you can use a double jump (like cloud in a bottle) while in the mount.
+		MountData.constantJump = false; // Allows you to hold the jump button down.
+		MountData.runSpeed = 1f; // The speed of the mount
+		MountData.dashSpeed = 1f; // The speed the mount moves when in the state of dashing.
+		MountData.flightTimeMax = 0; // The amount of time in frames a mount can be in the state of flying.
+
 		MountData.totalFrames = 1;
-		MountData.playerYOffsets = Enumerable.Repeat(0, MountData.totalFrames).ToArray(); // Fills an array with values for less repeating code
+		MountData.playerYOffsets = Enumerable.Repeat(8, MountData.totalFrames).ToArray(); // Fills an array with values for less repeating code
 
 		MountData.standingFrameCount = 1;
 		MountData.standingFrameDelay = 1;
@@ -149,7 +158,14 @@ public class Star_Soldier_Wagon : ModMount {
 		return data;
 	}
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-		return base.Draw(playerDrawData, drawType, drawPlayer, ref texture, ref glowTexture, ref drawPosition, ref frame, ref drawColor, ref glowColor, ref rotation, ref spriteEffects, ref drawOrigin, ref drawScale, shadow);
+		if (drawType == 2) {
+			drawOrigin = texture.Size() * 0.5f;
+			drawOrigin.X -= drawPlayer.direction * 4;
+			frame = texture.Bounds;
+			drawPosition.Y += 9;
+			return true;
+		}
+		return false;
 	}
 }
 public class Star_Soldier_Wagon_Buff : ModBuff {
