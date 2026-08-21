@@ -28,7 +28,11 @@ namespace Origins.Layers {
 			int wishingGlassAnimation = originPlayer.wishingGlassAnimation;
 			if (wishingGlassAnimation == CooldownEndAnimationDuration + 1) return;
 			Vector2 position = drawInfo.Position + drawInfo.drawPlayer.Size * 0.5f + originPlayer.wishingGlassOffset;
-			Vector2 posScale = new(drawInfo.drawPlayer.direction * 1.5f, 1.25f);
+			position.Y += (drawInfo.drawPlayer.height - Player.defaultHeight) * 0.5f;
+			Vector2 posScale = new(1.5f, 1.25f);
+			if (drawInfo.drawPlayer.width != Player.defaultWidth) posScale.X = 0.5f + (posScale.X - 0.5f) * (Player.defaultWidth / (float)drawInfo.drawPlayer.width);
+			if (drawInfo.drawPlayer.height != Player.defaultHeight) posScale.Y = 0.5f + (posScale.Y - 0.5f) * (Player.defaultHeight / (float)drawInfo.drawPlayer.height);
+			posScale.X *= drawInfo.drawPlayer.direction;
 			if (wishingGlassAnimation > CooldownEndAnimationDuration) {
 				position += drawInfo.drawPlayer.Size * GetPosition(wishingGlassAnimation).XY() * posScale;
 				ArmorShaderData shader = originPlayer.wishingGlassDye < 0 ? null : GameShaders.Armor.GetSecondaryShader(originPlayer.wishingGlassDye, drawInfo.drawPlayer);
