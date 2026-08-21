@@ -1235,5 +1235,5 @@ namespace Origins {
 		[DefaultValue(1f), Range(0, 1)]
 		public float RivenAsimilationMultiplier = 1f;
 	}
-	public interface IExpectToBeUnobtainable { }
+	public interface IExpectToBeUnobtainable;
 }

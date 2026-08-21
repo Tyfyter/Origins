@@ -8553,3 +8553,8 @@ Star_Soldier_Summon_Item: {
 	// DisplayName: Star Soldier Summon Item
 	// Tooltip: ""
 }
+
+Star_Soldier_Gun: {
+	// DisplayName: Star Soldier Gun
+	// Tooltip: ""
+}
