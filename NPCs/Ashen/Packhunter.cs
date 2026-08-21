@@ -27,7 +27,12 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture headTexture = typeof(Packhunter).GetDefaultTMLName("_Head");
 		static AutoLoadingTexture headGlowTexture = typeof(Packhunter).GetDefaultTMLName("_Head_Glow");
 		public static float FlashRangeBoost => 0;
-		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 12), DrawOffsetY - 7);
+		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 12), DrawOffsetY + (NPC.frame.Y / NPC.frame.Height) switch {
+			2 => 2,
+			3 => 2,
+			6 => 2,
+			_ => 0
+		} - 7);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -356,20 +361,18 @@ namespace Origins.NPCs.Ashen {
 				NPC.scale,
 				NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
 			);
-			if (NPC.frame.Y == NPC.frame.Height * 8) {
-				spriteBatch.DrawGlowingNPCPart(
-					headTexture,
-					headGlowTexture,
-					NeckPosition - screenPos,
-					null,
-					drawColor,
-					glowColor,
-					NPC.rotation + MathHelper.Pi,
-					headTexture.Value.Size() * new Vector2(1, 0.5f),
-					NPC.scale,
-					NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None
-				);
-			}
+			spriteBatch.DrawGlowingNPCPart(
+				headTexture,
+				headGlowTexture,
+				NeckPosition - screenPos,
+				null,
+				drawColor,
+				glowColor,
+				NPC.rotation + MathHelper.Pi,
+				headTexture.Value.Size() * new Vector2(1, 0.5f),
+				NPC.scale,
+				NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None
+			);
 			NPC.DrawConfused();
 			return false;
 		}
@@ -381,13 +384,6 @@ namespace Origins.NPCs.Ashen {
 			.Apply();
 			Triangle viewTriangle = GetViewTriangle(GetPlayerAggro(Main.LocalPlayer));
 			//screenPos.Y -= NPC.gfxOffY;
-			switch (NPC.frame.Y / NPC.frame.Height) {
-				case 2:
-				case 3:
-				case 6:
-				screenPos.Y -= 2;
-				break;
-			}
 			Color color = new Color(96, 72, 48, 0);
 			switch (NPC.aiAction) {
 				case 4:
