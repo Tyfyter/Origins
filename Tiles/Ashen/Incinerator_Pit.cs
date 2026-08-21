@@ -107,11 +107,14 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 	}
 	class Sound : AEnvironmentSound {
 		public override void UpdateSound(Vector2 position) {
-			//SoundEngine.PlaySound(SoundID.Zombie70.WithPitch(2f).WithVolume(0.08f), position);
-			SoundEngine.PlaySound(SoundID.Item140.WithPitch(-1.25f).WithVolume(0.15f), position);
-			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.25f).WithVolume(0.1f), position);
-			SoundEngine.PlaySound(SoundID.Item144.WithPitch(2f).WithVolume(0.06f), position);
-			//SoundEngine.PlaySound(SoundID.Item29.WithPitch(1f).WithVolume(0.2f), position);
+			float distFactor = ((position - Main.Camera.Center) / new Vector2(84.5f * 16, 62 * 16)).Abs(out _).Max();
+			distFactor = Utils.Remap(distFactor, 1, 0.75f, 0, 1);
+
+			//SoundEngine.PlaySound(SoundID.Zombie70.WithPitch(2f).WithVolume(0.08f * distFactor), position);
+			SoundEngine.PlaySound(SoundID.Item140.WithPitch(-1.25f).WithVolume(0.15f * distFactor), position);
+			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.25f).WithVolume(0.1f * distFactor), position);
+			SoundEngine.PlaySound(SoundID.Item144.WithPitch(2f).WithVolume(0.06f * distFactor), position);
+			//SoundEngine.PlaySound(SoundID.Item29.WithPitch(1f).WithVolume(0.2f * distFactor), position);
 		}
 	}
 	public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
