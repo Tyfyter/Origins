@@ -1509,13 +1509,13 @@ Buffs: {
 	}
 
 	Star_Soldier_Proper_Buff: {
-		DisplayName: Star Soldier Proper Buff
-		Description: Mods.Origins.Buffs.Star_Soldier_Proper_Buff.Description
+		DisplayName: Star Soldier
+		Description: Status: ACTIVE
 	}
 
 	Star_Soldier_Wagon_Buff: {
-		DisplayName: Star Soldier Wagon Buff
-		Description: Mods.Origins.Buffs.Star_Soldier_Wagon_Buff.Description
+		DisplayName: Star Soldier
+		Description: Status: DEPLOYED
 	}
 }
 

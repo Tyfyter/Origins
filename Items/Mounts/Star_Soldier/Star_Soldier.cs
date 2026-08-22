@@ -70,6 +70,8 @@ public class Star_Soldier : ModMount {
 					jumpCounter++;
 					walkFrame = 17 - (jumpCounter / 4);
 					if (walkFrame <= 13) {
+						SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithPitch(-0.7f).WithVolume(0.5f), player.Center);
+						SoundEngine.PlaySound(SoundID.Item88.WithPitch(-0.4f), player.Center);
 						walkFrame = 13;
 						jumpCounter = 0;
 						if (player.controlJump) player.mount._data.jumpSpeed = 10;
@@ -83,12 +85,12 @@ public class Star_Soldier : ModMount {
 						walkFrameCounter = 0;
 					} else {
 						if (player.velocity.X * player.direction < 0) {
-							while (walkFrameCounter.CycleDown(32, speed)) {
+							while (walkFrameCounter.CycleDown(20, speed)) {
 								walkFrame.CycleDownWithZero(13);
 								speed = 0;
 							}
 						} else {
-							while (walkFrameCounter.CycleUp(32, speed)) {
+							while (walkFrameCounter.CycleUp(20, speed)) {
 								walkFrame.CycleUp(13);
 								speed = 0;
 							}
@@ -103,10 +105,16 @@ public class Star_Soldier : ModMount {
 
 			if (player.controlJump && jumpCounter == 0) {
 				if (bodyFrameCounter.CycleUp(4)) {
+					if (bodyFrame >= 2) {
+						//SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.5f), player.Center);
+						SoundEngine.PlaySound(SoundID.Item100.WithPitch(-0.4f), player.Center);
+					}
 					bodyFrame.CycleUp(BodyTextureFrames - 1, 0);
 					bodyFrame++;
 				}
 			} else bodyFrame = 0;
+
+			if (walkFrame == 6) SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitch(3f).WithVolume(0.1f));
 			chosenItem.ItemCheck(player, ref player.controlUseItem);
 			altItem.ItemCheck(player, ref player.controlUseTile);
 		}
@@ -395,9 +403,12 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 }
 public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override void SetDefaults() {
-		Item.CloneDefaults(ItemID.SniperRifle);
-		Item.useAnimation /= 3;
-		Item.useTime /= 3;
+		Item.CloneDefaults(ItemID.SDMG);
+		Item.damage = 94;
+		Item.useAnimation = 18;
+		Item.useTime = 9;
+		Item.shootSpeed = 19;
+		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
 	}
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(1, 4, 0, 0);
@@ -414,7 +425,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	}
 }
 public class Star_Soldier_Proper_Buff : ModBuff {
-	public override string Texture => "Origins/Buffs/Chambersite_Minecart_Buff";
+	public override string Texture => "Origins/Buffs/Star_Soldier_Buff";
 	protected virtual int MountID => ModContent.MountType<Star_Soldier>();
 	public override void SetStaticDefaults() {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
@@ -495,7 +506,7 @@ public class Star_Soldier_Wagon : ModMount {
 	}
 }
 public class Star_Soldier_Wagon_Buff : ModBuff {
-	public override string Texture => "Origins/Buffs/Chambersite_Minecart_Buff";
+	public override string Texture => "Origins/Buffs/Star_Soldier_Buff";
 	protected virtual int MountID => ModContent.MountType<Star_Soldier_Wagon>();
 	public override void SetStaticDefaults() {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
