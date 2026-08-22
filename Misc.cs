@@ -2047,6 +2047,10 @@ namespace Origins {
 			return pos;
 		}
 		[Pure]
+		public static Vector2 Transform(this Vector2 value, Matrix matrix) => Vector2.Transform(value, matrix);
+		[Pure]
+		public static Vector2 Apply(this Vector2 value, SpriteEffects spriteEffects) => value.Apply(spriteEffects, default);
+		[Pure]
 		public static Vector2 Apply(this Vector2 value, SpriteEffects spriteEffects, Vector2 bounds) {
 			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) value.X = bounds.X - value.X;
 			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) value.Y = bounds.Y - value.Y;

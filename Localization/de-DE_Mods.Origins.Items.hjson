@@ -8558,3 +8558,8 @@ Star_Soldier_Gun: {
 	// DisplayName: Star Soldier Gun
 	// Tooltip: ""
 }
+
+Star_Soldier_Pod: {
+	// DisplayName: Star Soldier Pod
+	// Tooltip: ""
+}

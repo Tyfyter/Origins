@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Graphics.Renderers;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
@@ -37,28 +38,23 @@ public class Star_Soldier : ModMount {
 	static int LegTextureFrames => 18;
 	AutoLoadingTexture frontLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Front_Leg");
 	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
+	static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
+	static AutoLoadingTexture forearmTexture = typeof(Star_Soldier).GetDefaultTMLName("_Forearm");
 	public class MountHandler {
 		public int bodyFrame;
 		public float bodyFrameCounter;
 		public int walkFrame;
 		public float walkFrameCounter;
-		public Item chosenItem = new(ModContent.ItemType<Star_Soldier_Gun>());
-		public int itemAnimation;
-		public int itemAnimationMax;
-		public int itemTime;
-		public int itemTimeMax;
-		public float itemRotation;
+		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Pod>()) };
 		int fallCounter;
 		int jumpCounter;
-		Player player;
 		public void Update(Player player) {
-			this.player = player;
-
 			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, Main.MouseWorld - player.Bottom).Perform();
-			Vector2 playerCenter = GetAimOrigin();
-			GeometryUtils.AngularSmoothing(ref itemRotation, ((player.OriginPlayer().relativeTarget + player.Bottom) - playerCenter).ToRotation(), 0.2f);
-			if (!float.IsFinite(itemRotation)) itemRotation = 0;
-			player.direction = (GeometryUtils.AngleDif(itemRotation, 0, out _) < MathHelper.PiOver2).ToDirectionInt();
+
+			player.direction = (player.OriginPlayer().relativeTarget.X >= 0).ToDirectionInt();
+			chosenItem.UpdateRotations(player);
+			altItem.UpdateRotations(player);
 
 			//player.mount._flyTime = 0;
 			bool collidingY = player.OriginPlayer().collidingY;
@@ -111,69 +107,157 @@ public class Star_Soldier : ModMount {
 					bodyFrame++;
 				}
 			} else bodyFrame = 0;
-			if (player.controlUseItem) {
-				if (itemAnimation == 0) WithItemTimeOverride(StartUseAnimation);
-				player.controlUseItem = false;
-			}
-			itemAnimation.Cooldown();
-			itemTime.Cooldown();
-			if (itemTime <= 0 && itemAnimation > 0) {
-				WithItemTimeOverride(StartUseItem);
-			}
+			chosenItem.ItemCheck(player, ref player.controlUseItem);
+			altItem.ItemCheck(player, ref player.controlUseTile);
 		}
-		void StartUseAnimation() {
-			player.ApplyItemAnimation(chosenItem);
-		}
-		void StartUseItem() => ShootItem(chosenItem);
-		void ShootItem(Item sItem) {
-			if (!player.IsLocallyOwned()) {
-				player.ApplyItemTime(chosenItem, callUseItem: false);
-				return;
-			}
-			int projToShoot;
-			float speed;
-			int Damage;
-			float Knockback;
-			int usedAmmoItemId = 0;
-			if (sItem.useAmmo > 0) {
-				if (!player.PickAmmo(sItem, out projToShoot, out speed, out Damage, out Knockback, out usedAmmoItemId, ItemID.Sets.gunProj[sItem.type])) return;
-			} else {
-				projToShoot = sItem.shoot;
-				speed = sItem.shootSpeed;
-				Damage = player.GetWeaponDamage(sItem);
-				Knockback = sItem.knockBack;
-			}
-			new Star_Soldier_Weapon_Sound(player).Perform();
-			Knockback = player.GetWeaponKnockback(sItem, Knockback);
-			EntitySource_ItemUse_WithAmmo projectileSource = new(player, sItem, usedAmmoItemId, nameof(Star_Soldier));
-			player.ApplyItemTime(chosenItem, callUseItem: false);
-
-			Vector2 playerCenter = GetAimOrigin();
-
-			Vector2 vector = itemRotation.ToRotationVector2();
-			Vector2 velocity = vector * sItem.shootSpeed;
-			CombinedHooks.ModifyShootStats(player, sItem, ref playerCenter, ref velocity, ref projToShoot, ref Damage, ref Knockback);
-			if (CombinedHooks.Shoot(player, sItem, projectileSource, playerCenter, velocity, projToShoot, Damage, Knockback)) {
-				Projectile.NewProjectile(projectileSource, playerCenter, velocity, projToShoot, Damage, Knockback);
-			}
-		}
-		Vector2 GetAimOrigin() => player.RotatedRelativePoint(player.MountedCenter);
-		void WithItemTimeOverride(Action action) {
-			using ScopedOverride<int> o0 = player.itemAnimation.ScopedOverride(itemAnimation);
-			using ScopedOverride<int> o1 = player.itemAnimationMax.ScopedOverride(itemAnimationMax);
-			using ScopedOverride<int> o2 = player.itemTime.ScopedOverride(itemTime);
-			using ScopedOverride<int> o3 = player.itemTimeMax.ScopedOverride(itemTimeMax);
-			action();
-			itemAnimation = player.itemAnimation;
-			itemAnimationMax = player.itemAnimationMax;
-			itemTime = player.itemTime;
-			itemTimeMax = player.itemTimeMax;
-		}
-		public record class Star_Soldier_Weapon_Sound(Player Player) : AutoSyncedAction {
-			public Star_Soldier_Weapon_Sound() : this(default(Player)) { }
+		public record class Star_Soldier_Weapon_Sound(Player Player, int ItemType) : AutoSyncedAction {
+			public Star_Soldier_Weapon_Sound() : this(default, default) { }
 			protected override bool ShouldPerform => Player.active && !Player.dead;
-			protected override void Perform() {
-				if (!Main.dedServ) SoundEngine.PlaySound(GetHandler(Player).chosenItem.UseSound, Player.MountedCenter);
+			protected override void Perform() => SoundEngine.PlaySound(ContentSamples.ItemsByType[ItemType].UseSound, Player.MountedCenter);
+		}
+		public struct Arm {
+			public Item item;
+			public int itemAnimation;
+			public int itemAnimationMax;
+			public int itemTime;
+			public int itemTimeMax;
+			static Player player;
+			public float shoulderRotation;
+			public float forearmRotation;
+			public float gunRotation;
+			readonly Star_Soldier_Weapon Weapon => (Star_Soldier_Weapon)item.ModItem;
+			public readonly void GetPositions(Vector2 basePosition, float baseRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
+				shoulderPos = basePosition - (new Vector2(4, 20) * directions).RotatedBy(baseRotation);
+				if (directions.Sum() == 0) baseRotation += MathHelper.Pi;
+				forearmPos = shoulderPos + (new Vector2(-22, 24) * directions).RotatedBy(baseRotation + shoulderRotation);
+				gunPos = forearmPos + (new Vector2(20, 16) * directions).RotatedBy(baseRotation + forearmRotation);
+			}
+			public void UpdateRotations(Player player) {
+				Vector2 relativeTarget = player.OriginPlayer().relativeTarget;
+				GetPositions(GetBodyCenter(player, player.Center), player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
+				float targetRotation = (relativeTarget + player.Bottom - gunPos).ToRotation();
+
+				GeometryUtils.AngularSmoothing(ref gunRotation, targetRotation, 0.2f);
+				if (!float.IsFinite(gunRotation)) gunRotation = 0;
+
+				GeometryUtils.AngularSmoothing(ref forearmRotation, targetRotation, 0.2f);
+				if (!float.IsFinite(forearmRotation)) forearmRotation = 0;
+
+				/*float baseRot = player.direction * MathHelper.PiOver2;
+				Debugging.ChatOverhead(GeometryUtils.AngleDif(baseRot, targetRotation, out _));
+				targetRotation = baseRot + Math.Clamp(GeometryUtils.AngleDif(baseRot, targetRotation, out int dir), MathHelper.PiOver4 * 0.25f, MathHelper.PiOver4 * 3) * dir;
+				OriginExtensions.DrawDebugLine(player.MountedCenter, player.MountedCenter + baseRot.ToRotationVector2() * 64, dustType: 29);
+				OriginExtensions.DrawDebugLine(player.MountedCenter, player.MountedCenter + ((baseRot + MathHelper.PiOver4 * 0.25f) * dir).ToRotationVector2() * 64);
+				OriginExtensions.DrawDebugLine(player.MountedCenter, player.MountedCenter + ((baseRot + MathHelper.PiOver4 * 3) * dir).ToRotationVector2() * 64, dustType: 27);*/
+				GeometryUtils.AngularSmoothing(ref shoulderRotation, targetRotation, 0.1f);
+				if (!float.IsFinite(shoulderRotation)) shoulderRotation = 0;
+			}
+			public void ItemCheck(Player player, ref bool control) {
+				Arm.player = player;
+				Weapon.UpdateEquipped(player);
+				if (control) {
+					if (itemAnimation == 0) WithItemTimeOverride(StartUseAnimation);
+					control = false;
+				}
+				itemAnimation.Cooldown();
+				itemTime.Cooldown();
+				if (itemTime <= 0 && itemAnimation > 0) {
+					WithItemTimeOverride(StartUseItem);
+				}
+			}
+			readonly void StartUseAnimation() {
+				if (!Weapon.CanUseItem(player)) return;
+				player.ApplyItemAnimation(item);
+			}
+			readonly void StartUseItem() => ShootItem(item);
+			void WithItemTimeOverride(Action action) {
+				using ScopedOverride<int> o0 = player.itemAnimation.ScopedOverride(itemAnimation);
+				using ScopedOverride<int> o1 = player.itemAnimationMax.ScopedOverride(itemAnimationMax);
+				using ScopedOverride<int> o2 = player.itemTime.ScopedOverride(itemTime);
+				using ScopedOverride<int> o3 = player.itemTimeMax.ScopedOverride(itemTimeMax);
+				action();
+				itemAnimation = player.itemAnimation;
+				itemAnimationMax = player.itemAnimationMax;
+				itemTime = player.itemTime;
+				itemTimeMax = player.itemTimeMax;
+			}
+			readonly void ShootItem(Item item) {
+				if (!player.IsLocallyOwned()) {
+					player.ApplyItemTime(item, callUseItem: false);
+					return;
+				}
+				int projToShoot;
+				float speed;
+				int Damage;
+				float Knockback;
+				int usedAmmoItemId = 0;
+				if (item.useAmmo > 0) {
+					if (!player.PickAmmo(item, out projToShoot, out speed, out Damage, out Knockback, out usedAmmoItemId, ItemID.Sets.gunProj[item.type])) return;
+				} else {
+					projToShoot = item.shoot;
+					speed = item.shootSpeed;
+					Damage = player.GetWeaponDamage(item);
+					Knockback = item.knockBack;
+				}
+				new Star_Soldier_Weapon_Sound(player, item.type).Perform();
+				Knockback = player.GetWeaponKnockback(item, Knockback);
+				EntitySource_ItemUse_WithAmmo projectileSource = new(player, item, usedAmmoItemId, nameof(Star_Soldier));
+				player.ApplyItemTime(item, callUseItem: false);
+
+				MountHandler handler = GetHandler(player);
+				GetPositions(GetBodyCenter(player, player.Center), player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
+
+				Vector2 vector = gunRotation.ToRotationVector2();
+				Vector2 velocity = vector * item.shootSpeed;
+				CombinedHooks.ModifyShootStats(player, item, ref gunPos, ref velocity, ref projToShoot, ref Damage, ref Knockback);
+				if (CombinedHooks.Shoot(player, item, projectileSource, gunPos, velocity, projToShoot, Damage, Knockback)) {
+					Projectile.NewProjectile(projectileSource, gunPos, velocity, projToShoot, Damage, Knockback);
+				}
+			}
+			public readonly void DrawArm(List<DrawData> playerDrawData, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler, Vector2 bodyCenter) {
+				if (item is null) return;
+				GetPositions(bodyCenter, rotation, Vector2.One.Apply(spriteEffects), out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos);
+				if (spriteEffects is SpriteEffects.FlipHorizontally or SpriteEffects.FlipVertically) rotation += MathHelper.Pi;
+				playerDrawData.Add(new(
+					shoulderTexture,
+					shoulderPos,
+					null,
+					drawColor,
+					rotation + shoulderRotation,
+					spriteEffects.ApplyToOrigin(new(29, 5), shoulderTexture.Value.Bounds),
+					drawScale,
+					spriteEffects
+				));
+
+				playerDrawData.Add(new(
+					forearmTexture,
+					forearmPos,
+					null,
+					drawColor,
+					rotation + forearmRotation,
+					spriteEffects.ApplyToOrigin(new(9, 3), forearmTexture.Value.Bounds),
+					drawScale,
+					spriteEffects
+				));
+
+				Rectangle frame = TextureAssets.Item[item.type].Value.Bounds;
+				DrawData data = new(
+					TextureAssets.Item[item.type].Value,
+					gunPos,
+					frame,
+					drawColor,
+					rotation + gunRotation,
+					spriteEffects.ApplyToOrigin(new(25, 9), frame),
+					drawScale,
+					spriteEffects
+				);
+				if (item.ModItem is Star_Soldier_Weapon weapon) weapon.ModifyDrawData(handler, ref data);
+				playerDrawData.Add(data);
+				if (item.glowMask >= 0) {
+					data.texture = TextureAssets.GlowMask[item.glowMask].Value;
+					data.color = Color.White;
+					playerDrawData.Add(data);
+				}
 			}
 		}
 	}
@@ -219,6 +303,7 @@ public class Star_Soldier : ModMount {
 		MountData.swimFrameCount = MountData.inAirFrameCount;
 		MountData.swimFrameDelay = MountData.inAirFrameDelay;
 		MountData.swimFrameStart = MountData.inAirFrameStart;
+		OriginsSets.Mounts.DisableDirectionChange[Type] = true;
 	}
 	public override void SetMount(Player player, ref bool skipDust) {
 		player.mount._mountSpecificData = new MountHandler();
@@ -233,13 +318,16 @@ public class Star_Soldier : ModMount {
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
+	static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * ((player.height - Player.defaultHeight) * 0.5f - 8);
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle _, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
 		if (drawType == 3) {
 			MountHandler handler = GetHandler(drawPlayer);
 			Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
-			Vector2 bodyCenter = drawPosition - Vector2.UnitY * ((drawPlayer.height - Player.defaultHeight) * 0.5f - 8);
-			Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32);
+			Vector2 bodyCenter = GetBodyCenter(drawPlayer, drawPosition);
+			Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
+			Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32).Transform(rotationMatrix);
 
+			handler.altItem.DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
 			playerDrawData.Add(new(
 				backLegTexture,
 				hips,
@@ -274,26 +362,7 @@ public class Star_Soldier : ModMount {
 				drawScale,
 				spriteEffects
 			));
-			if (handler.chosenItem is Item item) {
-				frame = TextureAssets.Item[item.type].Value.Bounds;
-				DrawData data = new(
-					TextureAssets.Item[item.type].Value,
-					bodyCenter,
-					frame,
-					drawColor,
-					handler.itemRotation + rotation + (spriteEffects == SpriteEffects.FlipHorizontally ? MathHelper.Pi : 0),
-					spriteEffects.ApplyToOrigin(new(3, 5), frame),
-					drawScale,
-					spriteEffects
-				);
-				if (item.ModItem is Star_Soldier_Weapon weapon) weapon.ModifyDrawData(handler, ref data);
-				playerDrawData.Add(data);
-				if (item.glowMask >= 0) {
-					data.texture = TextureAssets.GlowMask[item.glowMask].Value;
-					data.color = Color.White;
-					playerDrawData.Add(data);
-				}
-			}
+			handler.chosenItem.DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
 		}
 		return false;
 	}
@@ -302,7 +371,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	Asset<Texture2D> icon;
 	public override ModItem NewInstance(Item entity) {
 		Star_Soldier_Weapon item = (Star_Soldier_Weapon)base.NewInstance(entity);
-
+		item.icon = icon;
 		return item;
 	}
 	public override void AutoStaticDefaults() {
@@ -310,6 +379,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 		icon = ModContent.Request<Texture2D>(Texture + "_Icon");
 	}
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
+	public void UpdateEquipped(Player player) { }
 }
 public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override void SetDefaults() {
@@ -319,6 +389,16 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	}
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(1, 4, 0, 0);
+	}
+}
+public class Star_Soldier_Pod : Star_Soldier_Weapon {
+	public override void SetDefaults() {
+		Item.CloneDefaults(ItemID.RocketLauncher);
+		Item.useAnimation /= 3;
+		Item.useTime /= 3;
+	}
+	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
+		drawData.sourceRect = drawData.texture.Frame(1, 2, 0, 0);
 	}
 }
 public class Star_Soldier_Proper_Buff : ModBuff {
@@ -348,11 +428,11 @@ public class Star_Soldier_Wagon : ModMount {
 
 		MountData.jumpHeight = 0;
 		MountData.jumpSpeed = 0f;
-		MountData.acceleration = 0.02f; // The rate at which the mount speeds up.
+		MountData.acceleration = 0.001f; // The rate at which the mount speeds up.
 		MountData.blockExtraJumps = true; // Determines whether or not you can use a double jump (like cloud in a bottle) while in the mount.
 		MountData.constantJump = false; // Allows you to hold the jump button down.
-		MountData.runSpeed = 1f; // The speed of the mount
-		MountData.dashSpeed = 1f; // The speed the mount moves when in the state of dashing.
+		MountData.runSpeed = 32f; // The speed of the mount
+		MountData.dashSpeed = 32f; // The speed the mount moves when in the state of dashing.
 		MountData.flightTimeMax = 0; // The amount of time in frames a mount can be in the state of flying.
 
 		MountData.totalFrames = 1;

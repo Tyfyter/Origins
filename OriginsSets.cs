@@ -604,7 +604,8 @@ namespace Origins {
 					Vector2 dirOffset = player.direction > 0 ? new Vector2(-1.5f, -1) : new Vector2(0.5f, -1);
 					return player.MountedCenter + player.Directions(2 + offsets.X, 12 - player.height * 0.5f + offsets.Y) + dirOffset;
 				})
-			); 
+			);
+			public static bool[] DisableDirectionChange = MountID.Sets.Factory.CreateBoolSet();
 			public static class Create {
 				public static Func<Player, Vector2> SimpleEyePosition(int xOffset, int yOffset) => player => player.MountedCenter + player.Directions(2 + xOffset, 12 - player.height * 0.5f + yOffset);
 			}
