@@ -5,6 +5,7 @@ using AltLibrary.Core.Generation;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Mounts.Star_Soldier;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
@@ -689,7 +690,7 @@ namespace Origins.World.BiomeData {
 			BiomeOreBrick = TileType<Sanguinite_Brick>();
 			AltarTile = TileType<Ashen_Altar>();
 
-			BiomeChestItem = ItemType<Ashen_Torch>();
+			BiomeChestItem = ItemType<Star_Soldier_Summon_Item>();
 			BiomeChestTile = TileType<Ashen_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			BiomeKeyItem = ItemType<Ashen_Key>();

@@ -83,6 +83,7 @@ using AvalonSets = Avalon.Data.Sets;
 using AvalonHerbology = Avalon.Data.HerbologyData;
 using Origins.NPCs.Felnum;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Items.Mounts.Star_Soldier;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -438,7 +439,7 @@ namespace Origins {
 				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Phoenum_Torch>(), BuffType<Impeding_Shrapnel_Debuff>());
 				Avalon.Call("AddTorchLauncherDebuffType", ItemType<Shadow_Torch>(), BuffType<Blind_Debuff>());
 
-				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Ashen_Key>(), ItemType<Ashen_Torch>() });
+				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Ashen_Key>(), ItemType<Star_Soldier_Summon_Item>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Brine_Key>(), ItemType<The_Foot>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Defiled_Key>(), ItemType<Missing_File>() });
 				Avalon.Call("AddBiomeChest", new List<int> { ItemType<Riven_Key>(), ItemType<Plasma_Cutter>() });
@@ -966,7 +967,7 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 
-			Recipe.Create(ItemType<Ashen_Torch>()) // temp result until the actual ashen dungeon weapon is made
+			Recipe.Create(ItemType<Star_Soldier_Summon_Item>())
 				.AddIngredient(ItemType<Ashen_Key>())
 				.AddCondition(Condition.DownedPlantera)
 				.AddTile(TileID.MythrilAnvil)
