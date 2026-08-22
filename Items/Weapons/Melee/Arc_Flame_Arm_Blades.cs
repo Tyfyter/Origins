@@ -162,7 +162,15 @@ namespace Origins.Items.Weapons.Melee {
 			};
 			Lighting.AddLight(dustPos, color.ToVector3());
 			if (Main.rand.NextBool(3)) {
-				Dust dust = Dust.NewDustDirect(dustPos - Projectile.Size / 2f, Projectile.width, Projectile.height, ModContent.DustType<Tintable_Torch_Dust>(), Projectile.velocity.X, Projectile.velocity.Y, 100, color, 2f);
+				Dust dust = Dust.NewDustDirect(
+					dustPos - Projectile.Size / 2f,
+					Projectile.width, Projectile.height,
+					ModContent.DustType<Tintable_Torch_Dust>(),
+					Projectile.velocity.X,
+					Projectile.velocity.Y,
+					100,
+					color,
+					2f);
 				dust.noGravity = true;
 				dust.position -= Projectile.velocity;
 			}

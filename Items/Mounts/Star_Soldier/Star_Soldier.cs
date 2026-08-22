@@ -227,7 +227,9 @@ public class Star_Soldier : ModMount {
 					spriteEffects.ApplyToOrigin(new(29, 5), shoulderTexture.Value.Bounds),
 					drawScale,
 					spriteEffects
-				));
+				) {
+					shader = player.cMount
+				});
 
 				playerDrawData.Add(new(
 					forearmTexture,
@@ -238,7 +240,9 @@ public class Star_Soldier : ModMount {
 					spriteEffects.ApplyToOrigin(new(9, 3), forearmTexture.Value.Bounds),
 					drawScale,
 					spriteEffects
-				));
+				) {
+					shader = player.cMount
+				});
 
 				Rectangle frame = TextureAssets.Item[item.type].Value.Bounds;
 				DrawData data = new(
@@ -250,7 +254,9 @@ public class Star_Soldier : ModMount {
 					spriteEffects.ApplyToOrigin(new(25, 9), frame),
 					drawScale,
 					spriteEffects
-				);
+				) {
+					shader = player.cMount
+				};
 				if (item.ModItem is Star_Soldier_Weapon weapon) weapon.ModifyDrawData(handler, ref data);
 				playerDrawData.Add(data);
 				if (item.glowMask >= 0) {
@@ -337,7 +343,9 @@ public class Star_Soldier : ModMount {
 				spriteEffects.ApplyToOrigin(new(15, 23), frame),
 				drawScale,
 				spriteEffects
-			));
+			) {
+				shader = drawPlayer.cMount
+			});
 
 			frame = bodyTexture.Frame(verticalFrames: BodyTextureFrames, frameY: handler.bodyFrame);
 			playerDrawData.Add(new(
@@ -349,7 +357,9 @@ public class Star_Soldier : ModMount {
 				spriteEffects.ApplyToOrigin(new(59, 37), frame),
 				drawScale,
 				spriteEffects
-			));
+			) {
+				shader = drawPlayer.cMount
+			});
 
 			frame = frontLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
 			playerDrawData.Add(new(
@@ -361,7 +371,9 @@ public class Star_Soldier : ModMount {
 				spriteEffects.ApplyToOrigin(new(15, 23), frame),
 				drawScale,
 				spriteEffects
-			));
+			) {
+				shader = drawPlayer.cMount
+			});
 			handler.chosenItem.DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
 		}
 		return false;
