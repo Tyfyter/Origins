@@ -8213,7 +8213,7 @@ Awesome_Prosthetic_Tail: {
 
 Grease_Gun: {
 	// DisplayName: Grease Gun
-	// Tooltip: ""
+	// Tooltip: "25% chance to save ammo"
 }
 
 DMR: {
@@ -8223,7 +8223,7 @@ DMR: {
 
 Tactical_SMG: {
 	// DisplayName: Tactical SMG
-	// Tooltip: ""
+	// Tooltip: "25% chance to save ammo"
 }
 
 Oil_Derrick_Item: {

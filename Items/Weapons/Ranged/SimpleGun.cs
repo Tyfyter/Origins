@@ -15,7 +15,7 @@ public class Grease_Gun : SimpleGun {
 	public override float OilSpeedMult => 1.25f;
 	public override float OilSpreadMult => 0.9f;
 	public override void OnSetDefaults() {
-		Item.damage = 11;
+		Item.damage = 10;
 		Item.knockBack = 1;
 		Item.useTime = Item.useAnimation = 9;
 		spread = 1;
@@ -23,7 +23,10 @@ public class Grease_Gun : SimpleGun {
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2.2f);
 	}
 	public override Vector2? HoldoutOffset() => new Vector2(-8, -2);
-}
+	public override bool CanConsumeAmmo(Item ammo, Player player) {
+		return Main.rand.NextBool(3, 4);
+	}
+	}
 public class Tactical_SMG : SimpleGun {
 	public override int ScrapAmount => 20;
 	public override int BarrelYOffset => 5;
@@ -32,13 +35,16 @@ public class Tactical_SMG : SimpleGun {
 	public override void OnSetDefaults() {
 		Item.damage = 4;
 		Item.knockBack = 1;
-		Item.shootSpeed = 5;
+		Item.shootSpeed = 6;
 		Item.useTime = Item.useAnimation = 5;
 		spread = 2;
 		Item.autoReuse = true;
 		Item.UseSound = SoundID.Item11.WithPitch(1.4f);
 	}
 	public override Vector2? HoldoutOffset() => new Vector2(-8, -2);
+	public override bool CanConsumeAmmo(Item ammo, Player player) {
+		return Main.rand.NextBool(3, 4);
+	}
 }
 public class DMR : SimpleGun {
 	public override int ScrapAmount => 35;

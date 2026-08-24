@@ -140,14 +140,14 @@ namespace Origins {
 			.Register();
 			#endregion
 			#region Ashen
-			Recipe.Create(ItemID.Uzi)
+			Recipe.Create(ItemID.Gatligator)
 			.AddIngredient(ItemID.SoulofNight, 10)
 			.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 5)
 			.AddIngredient<Tactical_SMG>(1)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 
-			Recipe.Create(ItemID.Gatligator)
+			Recipe.Create(ItemID.Uzi)
 			.AddIngredient(ItemID.SoulofNight, 10)
 			.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 5)
 			.AddIngredient<Grease_Gun>(1)
@@ -157,6 +157,7 @@ namespace Origins {
 			Recipe.Create(ItemID.SniperRifle)
 			.AddIngredient(ItemID.SoulofMight, 10)
 			.AddIngredient(ItemID.ChlorophyteBar, 5)
+			.AddIngredient(ItemID.Ectoplasm, 5)
 			.AddIngredient<DMR>(1)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
