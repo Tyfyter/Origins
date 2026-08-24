@@ -5,6 +5,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
@@ -136,6 +137,28 @@ namespace Origins {
 			.AddIngredient(ItemID.TissueSample, 6)
 			.AddTile(TileID.Anvils)
 			.AddDecraftCondition(Condition.DownedEowOrBoc)
+			.Register();
+			#endregion
+			#region Ashen
+			Recipe.Create(ItemID.Uzi)
+			.AddIngredient(ItemID.SoulofNight, 10)
+			.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 5)
+			.AddIngredient<Tactical_SMG>(1)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+
+			Recipe.Create(ItemID.Gatligator)
+			.AddIngredient(ItemID.SoulofNight, 10)
+			.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 5)
+			.AddIngredient<Grease_Gun>(1)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+
+			Recipe.Create(ItemID.SniperRifle)
+			.AddIngredient(ItemID.SoulofMight, 10)
+			.AddIngredient(ItemID.ChlorophyteBar, 5)
+			.AddIngredient<DMR>(1)
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 			#endregion
 			#endregion
