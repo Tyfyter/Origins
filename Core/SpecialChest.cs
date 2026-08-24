@@ -631,21 +631,23 @@ namespace Origins.Core {
 
 				TileObjectData data = style >= 0 ? TileObjectData.GetTileData(tile.TileType, style) : null;
 				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, data, out i, out j);
+				int top = j;
 				if (TileLoader.GetTile(tile.TileType) is ICustomTELocation customTELocation) customTELocation.ModifyTELocation(ref i, ref j, i, j);
 				if (!(TryGetChest(i, j)?.CanDestroy() ?? true)) return false;
 				if (!Main.tileNoAttach[type]) {
+					Point16 thisTopLeft = TileObjectData.TopLeft(i, j);
 					for (int k = 0; k < (data?.Width ?? 1); k++) {
-						tile = Main.tile[i + k, j - 1];
+						tile = Main.tile[i + k, top - 1];
 						if (!tile.HasTile) continue;
 						if (Main.tileContainer[tile.TileType]) return false;
 						style = TileObjectData.GetTileStyle(tile);
 						if (style < 0) continue;
-						if (TileObjectData.TopLeft(i + k, j - 1) == TileObjectData.TopLeft(i, j)) continue;
+						if (TileObjectData.TopLeft(i + k, top - 1) == thisTopLeft) continue;
 						TileObjectData aboveData = TileObjectData.GetTileData(tile.TileType, style);
 						if (aboveData is not null && aboveData.AnchorBottom != AnchorData.Empty) {
-							TileUtils.GetMultiTileTopLeft(i + k, j - 1, aboveData, out int x, out _);
+							TileUtils.GetMultiTileTopLeft(i + k, top - 1, aboveData, out int x, out _);
 							if (i + k >= x + aboveData.AnchorBottom.checkStart && i + k <= x + aboveData.AnchorBottom.checkStart + aboveData.AnchorBottom.tileCount) {
-								if (!WorldGen.CanKillTile(i + k, j - 1)) return false;
+								if (!WorldGen.CanKillTile(i + k, top - 1)) return false;
 							}
 						}
 					}
@@ -657,6 +659,7 @@ namespace Origins.Core {
 				return base.TileFrame(i, j, type, ref resetFrame, ref noBreak);
 			}
 			public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
+				if (effectOnly || fail) return;
 				bool blockDamaged = default;
 				if (!CanKillTile(i, j, type, ref blockDamaged)) {
 					fail = true;
