@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
@@ -45,7 +46,7 @@ public class Star_Soldier : ModMount {
 		public float bodyFrameCounter;
 		public int walkFrame;
 		public float walkFrameCounter;
-		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
 		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
 		int fallCounter;
 		int jumpCounter;
@@ -171,7 +172,7 @@ public class Star_Soldier : ModMount {
 			}
 			public void ItemCheck(Player player, ref bool control) {
 				Arm.player = player;
-				Weapon.UpdateEquipped(player, this);
+				Weapon.UpdateEquipped(player, ref this, control);
 				if (control) {
 					if (itemAnimation == 0) WithItemTimeOverride(StartUseAnimation);
 					control = false;
@@ -188,15 +189,11 @@ public class Star_Soldier : ModMount {
 			}
 			readonly void StartUseItem() => ShootItem(item);
 			void WithItemTimeOverride(Action action) {
-				using ScopedOverride<int> o0 = player.itemAnimation.ScopedOverride(itemAnimation);
-				using ScopedOverride<int> o1 = player.itemAnimationMax.ScopedOverride(itemAnimationMax);
-				using ScopedOverride<int> o2 = player.itemTime.ScopedOverride(itemTime);
-				using ScopedOverride<int> o3 = player.itemTimeMax.ScopedOverride(itemTimeMax);
+				using ScopedRedirect<int> o0 = new(ref player.itemAnimation, ref itemAnimation);
+				using ScopedRedirect<int> o1 = new(ref player.itemAnimationMax, ref itemAnimationMax);
+				using ScopedRedirect<int> o2 = new(ref player.itemTime, ref itemTime);
+				using ScopedRedirect<int> o3 = new(ref player.itemTimeMax, ref itemTimeMax);
 				action();
-				itemAnimation = player.itemAnimation;
-				itemAnimationMax = player.itemAnimationMax;
-				itemTime = player.itemTime;
-				itemTimeMax = player.itemTimeMax;
 			}
 			readonly void ShootItem(Item item) {
 				if (!player.IsLocallyOwned()) {
@@ -433,7 +430,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 		icon = ModContent.Request<Texture2D>(Texture + "_Icon");
 	}
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
-	public virtual void UpdateEquipped(Player player, Star_Soldier.MountHandler.Arm arm) { }
+	public virtual void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) { }
 	public override bool NeedsAmmo(Player player) => false;
 	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale);
 }
@@ -452,7 +449,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
 	}
 	public override bool CanUseItem(Player player) => ammo > 0;
-	public override void UpdateEquipped(Player player, Star_Soldier.MountHandler.Arm arm) {
+	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		if (arm.itemAnimation != 0) {
 			reloadTime = 0;
 			if (arm.itemTime == arm.itemTimeMax && usedFakeAmmo) ammo--;
@@ -515,6 +512,68 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 				SpriteEffects.None,
 			0);
 		}
+		position.Y += 8;
+	}
+}
+public class Star_Soldier_Laser : Star_Soldier_Weapon {
+	static float AmmoMax => 69;
+	static float ChargeSpeed => 0.5f;
+	static float RechargeSpeed => 0.435f;
+	float ammo = 0;
+	bool recharging = false;
+	public override void SetStaticDefaults() {
+		Origins.AddGlowMask(this);
+	}
+	public override void SetDefaults() {
+		Item.CloneDefaults(ItemID.SDMG);
+		Item.damage = 94;
+		Item.useAnimation = 8;
+		Item.useTime = 8;
+		Item.shootSpeed = 19;
+		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
+		Item.mana = 100;
+	}
+	public override bool CanUseItem(Player player) => !recharging;
+	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
+		if (arm.itemAnimation != 0 && control) {
+			const float precision = 100;
+			int manaRedirect = (int)(ammo * precision);
+			using (new ScopedRedirect<int>(ref player.statMana, ref manaRedirect)) {
+				if (!player.CheckMana(Item, pay: true)) recharging = true;
+			}
+			ammo = manaRedirect / precision;
+			if (!recharging) {
+				arm.itemTime = arm.itemTimeMax;
+				arm.itemAnimation = arm.itemAnimationMax;
+			}
+			Debugging.ChatOverhead(arm.itemTime);
+		} else {
+			if (ammo.Warmup(AmmoMax, recharging ? RechargeSpeed : ChargeSpeed)) recharging = false;
+		}
+	}
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+		int width = 64;
+		int halfWidth = width / 2;
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			position,
+			new Rectangle(0, 0, width, 4),
+			Color.Black,
+			0,
+			new Vector2(halfWidth, 2),
+			1,
+			SpriteEffects.None,
+		0);
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			position,
+			new Rectangle(0, 0, (int)((ammo * width) / AmmoMax), 4),
+			recharging ? Color.Purple : Color.DodgerBlue,
+			0,
+			new Vector2(halfWidth, 2),
+			1,
+			SpriteEffects.None,
+		0);
 		position.Y += 8;
 	}
 }
