@@ -35,7 +35,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Origins.OriginsSets.Items;
 using static Origins.Tiles.Ashen.Administrator_Panel;
 using static Tyfyter.Utils.UITools;
 
@@ -46,6 +45,8 @@ namespace Origins {
 		public StateSwitchingInterface SetBonusHUD { get; } = new("Origins: Set Bonus HUD");
 		public StateSwitchingInterface AccessoryHUD { get; } = new("Origins: Accessory HUD", true);
 		public StateSwitchingInterface ItemUseHUD { get; } = new("Origins: Held Item HUD");
+		struct MoveMountHUD : IMoveToPegFlag;
+		public StateSwitchingInterface MountHUD { get; } = new("Origins: Mount HUD");
 		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
 		public SpacePirateEyeInterface SpacePirateEyeUI { get; } = new();
 		public UserInterfaceWithDefaultState journalUI;
@@ -177,6 +178,7 @@ namespace Origins {
 			ItemUseHUD.Update(gameTime);
 			AccessoryHUD.Update(gameTime);
 			SetBonusHUD.Update(gameTime);
+			MountHUD.Update(gameTime);
 			EventHUD.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
@@ -193,6 +195,7 @@ namespace Origins {
 				ItemUseHUD.Insert(layers);
 				AccessoryHUD.Insert(layers);
 				SetBonusHUD.Insert(layers);
+				MountHUD.Insert(layers);
 				EventHUD.Insert(layers);
 				SpacePirateEyeUI.Insert(layers);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
