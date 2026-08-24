@@ -13,11 +13,14 @@ namespace Origins.Items.Accessories {
 			CreateRecipe()
 			.AddIngredient<Feathery_Crest>()
 			.AddIngredient<Superjump_Cape>()
+			.AddIngredient(ItemID.Bone, 4)
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
 		public override void UpdateEquip(Player player) {
-			player.jumpSpeedBoost += 12;
+			player.OriginPlayer().superJump = true;
+			player.jumpSpeedBoost += 2;
+			Player.jumpHeight += 10;
 			player.noFallDmg = true;
 			if (player.controlJump) {
 				player.gravity = 0.15f;

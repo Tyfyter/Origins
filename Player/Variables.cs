@@ -425,6 +425,7 @@ namespace Origins {
 		public SoundStyle? loopedWingSound;
 		public Action<ActiveSound> loopedWingSoundUpdate;
 		SlotId loopedWingSoundSlot;
+		[AutoReset] public bool superJump;
 		#endregion
 
 		#region explosive stats

@@ -17,7 +17,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			base.UpdateAccessory(player, hideVisual);
-			player.jumpSpeedBoost += 12;
+			player.OriginPlayer().superJump = true;
+			player.jumpSpeedBoost += 2;
+			Player.jumpHeight += 10;
 			player.noFallDmg = true;
 			if (player.controlJump) {
 				player.gravity = 0.15f;
