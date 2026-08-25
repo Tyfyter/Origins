@@ -49,7 +49,7 @@ public class Star_Soldier : ModMount {
 		public int walkFrame;
 		public float walkFrameCounter;
 		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
-		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
+		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
 		static int currentArm;
 		ref Arm GetArm(int index) {
 			currentArm = index;
@@ -459,7 +459,22 @@ public class Star_Soldier : ModMount {
 		default
 	);
 	// TODO: make it use the colors from Arc_Flame_Arm_Blades.cs lines 159-161
-	public static readonly WeaponColors Plasma = RGB;
+	public static readonly WeaponColors Plasma = new(
+		Matrix.Multiply(new(
+			1, 0, 0, 0,
+			0.5f, 0, 0, 1,
+			0.333f, 0, 0, 1,
+			0, 0, 0, 0
+		), 1),
+		WeaponColors.Create(212, 0, 95),
+		new(
+			0, 0.733f, 0, 0,
+			0, 0.039f, 0, 0,
+			0, 0.984f, 0, 0,
+			0, 0, 0, 0
+		),
+		default
+	);
 	public static IReadOnlyDictionary<string, WeaponColors> NameColors { get; } = new Dictionary<string, WeaponColors>(StringComparer.OrdinalIgnoreCase) {
 		["Faust"] = Chrysalis,
 		["Kathleen"] = Chrysalis,
@@ -573,6 +588,17 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 			1,
 			SpriteEffects.None,
 		0);
+		int ammoFactor = (ammo * width) / AmmoMax;
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			position + halfWidth * Vector2.UnitX,
+			new Rectangle(0, 0, ammoFactor, 4),
+			Color.OrangeRed,
+			0,
+			new Vector2(ammoFactor, 2),
+			1,
+			SpriteEffects.None,
+		0);
 		if (reloadTime > 1 && reloadTime < ReloadLength) {
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
@@ -585,20 +611,16 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 				SpriteEffects.None,
 			0);
 		}
-		float mult = width / (float)AmmoMax;
-		for (int i = 0; i < ammo; i++) {
-			Vector2 pos = position + new Vector2(halfWidth - i * mult, 0);
-			spriteBatch.Draw(
-				TextureAssets.MagicPixel.Value,
-				pos,
-				new Rectangle(0, 0, 2, 4),
-				Color.OrangeRed,
-				0,
-				new Vector2(1, 2),
-				1,
-				SpriteEffects.None,
-			0);
-		}
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			position + halfWidth * Vector2.UnitX,
+			new Rectangle(0, 0, ammoFactor, 4),
+			Color.OrangeRed,
+			0,
+			new Vector2(ammoFactor, 2),
+			new Vector2(1, 0.5f),
+			SpriteEffects.None,
+		0);
 		position.Y += 8;
 	}
 }
@@ -761,6 +783,9 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			if (arm.itemAnimation <= 0) {
 				Projectile.Kill();
 				return;
+			}
+			if (colors.Scale == 0) {
+				colors = Star_Soldier.Plasma;
 			}
 			if (colors.Scale == 0 && !Star_Soldier.NameColors.TryGetValue(owner.name, out colors)) {
 				colors = Star_Soldier.DefaultColors;
