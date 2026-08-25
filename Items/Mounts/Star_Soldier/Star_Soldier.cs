@@ -441,12 +441,22 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	int reloadTime = 0;
 	bool usedFakeAmmo;
 	public override void SetDefaults() {
-		Item.CloneDefaults(ItemID.SDMG);
 		Item.damage = 94;
+		Item.DamageType = DamageClass.Ranged;
 		Item.useAnimation = 24;
 		Item.useTime = 8;
 		Item.shootSpeed = 19;
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
+
+		Item.useStyle = ItemUseStyleID.Shoot;
+		Item.autoReuse = true;
+		Item.crit += 10;
+		Item.width = 60;
+		Item.height = 26;
+		Item.shoot = ProjectileID.Bullet;
+		Item.useAmmo = AmmoID.Bullet;
+		Item.noMelee = true;
+		Item.knockBack = 2.5f;
 	}
 	public override bool CanUseItem(Player player) => ammo > 0;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
@@ -525,13 +535,22 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.CloneDefaults(ItemID.SDMG);
 		Item.damage = 94;
+		Item.DamageType = DamageClass.Magic;
 		Item.useAnimation = 8;
 		Item.useTime = 8;
 		Item.shootSpeed = 19;
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
 		Item.mana = 100;
+
+		Item.useStyle = ItemUseStyleID.Shoot;
+		Item.autoReuse = true;
+		Item.crit += 10;
+		Item.width = 60;
+		Item.height = 26;
+		Item.shoot = ProjectileID.Bullet;
+		Item.noMelee = true;
+		Item.knockBack = 2.5f;
 	}
 	public override bool CanUseItem(Player player) => !recharging;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
