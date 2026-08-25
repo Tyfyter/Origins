@@ -48,8 +48,8 @@ public class Star_Soldier : ModMount {
 		public float bodyFrameCounter;
 		public int walkFrame;
 		public float walkFrameCounter;
-		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
-		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Pod>()) };
+		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
+		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
 		static int currentArm;
 		ref Arm GetArm(int index) {
 			currentArm = index;
@@ -458,11 +458,15 @@ public class Star_Soldier : ModMount {
 		),
 		default
 	);
+	// TODO: make it use the colors from Arc_Flame_Arm_Blades.cs lines 159-161
+	public static readonly WeaponColors Plasma = RGB;
 	public static IReadOnlyDictionary<string, WeaponColors> NameColors { get; } = new Dictionary<string, WeaponColors>(StringComparer.OrdinalIgnoreCase) {
 		["Faust"] = Chrysalis,
 		["Kathleen"] = Chrysalis,
 		["Jennifer"] = Chrysalis,
-		["Jennifer_alt"] = Chrysalis
+		["Jennifer_alt"] = Chrysalis,
+		["Rei"] = Plasma,
+		["Reivax"] = Plasma,
 	};
 	public record struct WeaponColors(Matrix InitialMult, Matrix FinalColor, Matrix OverbrightColor, Vector3 ExtraBeamData) {
 		public float Scale { get; set; } = 1;
@@ -644,7 +648,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				arm.itemAnimation = 0;
 			}
 		} else {
-			SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(0.1f + ammo / 20).WithVolume(0.2f - ammo/400), player.Center);
+			SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(0.1f + ammo / 20).WithVolume(0.2f - ammo / 400), player.Center);
 			arm.itemTime = 0;
 			arm.itemAnimation = 0;
 			if (ammo.Warmup(AmmoMax, recharging ? RechargeSpeed : ChargeSpeed)) {
@@ -761,12 +765,11 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			if (colors.Scale == 0 && !Star_Soldier.NameColors.TryGetValue(owner.name, out colors)) {
 				colors = Star_Soldier.DefaultColors;
 			}
-			colors.ExtraBeamData = new(1f / 3, 0.075f, 0.25f);
 			Projectile.velocity = arm.gunRotation.ToRotationVector2();
 			arm.GetPositions(owner.MountedCenter, owner.fullRotation, owner.Directions, out _, out _, out Projectile.position);
 			Projectile.position += Projectile.velocity * 24;
 			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
-			
+
 			//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
 			//SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
 			Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
@@ -867,7 +870,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	public override void SetDefaults() {
 		Item.CloneDefaults(ItemID.RocketLauncher);
 		Item.damage = 54;
-		Item.useAnimation = 48; 
+		Item.useAnimation = 48;
 		Item.useTime = 12;
 		Item.shootSpeed = 15;
 		Item.reuseDelay = 60;
