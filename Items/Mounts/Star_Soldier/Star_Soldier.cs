@@ -889,11 +889,11 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			Vector2 diff = TargetPos - Projectile.position;
 			Vector2 position = Projectile.position;
 			position -= Main.screenPosition;
-			Main.spriteBatch.Draw(
+			/*Main.spriteBatch.Draw(
 				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,
 				position,
 				default
-			);
+			);*/
 			float rotation = diff.ToRotation();
 			float dist = diff.Length();
 			const float scale = 1f / 256f;
