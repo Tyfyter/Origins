@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Vector2 offset = Vector2.Normalize(velocity);
 			offset = offset * 24 + offset.RotatedBy(-MathHelper.PiOver2 * player.direction) * 8;
 			position += offset;
-			velocity = velocity.RotatedByRandom(0.65);
+			velocity = velocity.RotatedByRandom(0.65f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.itemAnimationMax - player.itemAnimation > 9) return false;

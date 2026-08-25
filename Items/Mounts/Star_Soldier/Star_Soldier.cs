@@ -48,8 +48,8 @@ public class Star_Soldier : ModMount {
 		public float bodyFrameCounter;
 		public int walkFrame;
 		public float walkFrameCounter;
-		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
-		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
+		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Pod>()) };
 		static int currentArm;
 		ref Arm GetArm(int index) {
 			currentArm = index;
@@ -504,12 +504,12 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	int reloadTime = 0;
 	bool usedFakeAmmo;
 	public override void SetDefaults() {
-		Item.damage = 94;
+		Item.damage = 54;
 		Item.DamageType = DamageClass.Ranged;
-		Item.useAnimation = 2;
-		Item.useTime = 2;
+		Item.useAnimation = 3;
+		Item.useTime = 3;
 		Item.shootSpeed = 19;
-		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
+		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1.7f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
 		Item.crit += 10;
@@ -519,6 +519,12 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		Item.useAmmo = AmmoID.Bullet;
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
+	}
+	public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		Vector2 offset = Vector2.Normalize(velocity);
+		offset = offset * 24 + offset.RotatedBy(-MathHelper.PiOver2 * player.direction) * 8;
+		position += offset;
+		velocity = velocity.RotatedByRandom(0.08f);
 	}
 	public override bool CanUseItem(Player player) => ammo > 0;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
@@ -860,12 +866,19 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	}
 	public override void SetDefaults() {
 		Item.CloneDefaults(ItemID.RocketLauncher);
-		Item.useAnimation /= 3;
-		Item.useTime /= 3;
+		Item.damage = 54;
+		Item.useAnimation = 48; 
+		Item.useTime = 12;
+		Item.shootSpeed = 15;
+		Item.reuseDelay = 60;
+		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
 	}
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(1, 2, 0, 0);
 	}
+	/*public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1f), player.Center);
+	}*/
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) { }
 }
 public class Star_Soldier_Proper_Buff : ModBuff {
