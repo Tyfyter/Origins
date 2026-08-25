@@ -3893,6 +3893,8 @@ namespace Origins {
 				item = step(item);
 			}
 		}
+		public static bool IsMount<TMount>(this Mount mount) where TMount : ModMount => mount.IsMount(ModContent.MountType<TMount>());
+		public static bool IsMount(this Mount mount, int type) => mount.Active && mount.Type == type;
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

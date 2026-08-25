@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 
 namespace Origins.Core;
+#pragma warning disable IDE0052 // IDE0052: Private member 'redirect' can be removed as the value assigned to it is never read
 public readonly ref struct ScopedRedirect<T> : IDisposable {
 	private readonly ref T variable;
 	private readonly ref T redirect;
@@ -20,3 +21,4 @@ public readonly ref struct ScopedRedirect<T> : IDisposable {
 		}
 	}
 }
+#pragma warning restore IDE0052

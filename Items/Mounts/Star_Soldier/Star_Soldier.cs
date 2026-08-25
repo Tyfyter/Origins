@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Core;
+using Origins.Core.Shaders;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
+using Origins.NPCs.Ashen.Boss;
 using Origins.UI;
 using PegasusLib.Networking;
 using ReLogic.Content;
@@ -14,6 +17,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -48,14 +52,20 @@ public class Star_Soldier : ModMount {
 		public float walkFrameCounter;
 		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
 		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		static int currentArm;
+		ref Arm GetArm(int index) {
+			currentArm = index;
+			if (index == 1) return ref altItem;
+			return ref chosenItem;
+		}
 		int fallCounter;
 		int jumpCounter;
 		public void Update(Player player) {
 			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, Main.MouseWorld - player.Bottom).Perform();
 
 			player.direction = (player.OriginPlayer().relativeTarget.X >= 0).ToDirectionInt();
-			chosenItem.UpdateRotations(player);
-			altItem.UpdateRotations(player);
+			GetArm(0).UpdateRotations(player);
+			GetArm(1).UpdateRotations(player);
 
 			//player.mount._flyTime = 0;
 			bool collidingY = player.OriginPlayer().collidingY;
@@ -125,8 +135,8 @@ public class Star_Soldier : ModMount {
 				}
 			} else bodyFrame = 0;
 
-			chosenItem.ItemCheck(player, ref player.controlUseItem);
-			altItem.ItemCheck(player, ref player.controlUseTile);
+			GetArm(0).ItemCheck(player, ref player.controlUseItem);
+			GetArm(1).ItemCheck(player, ref player.controlUseTile);
 
 			static void StepSound(Player player) {
 				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitch(3f).WithVolume(0.1f), player.Bottom);
@@ -215,7 +225,7 @@ public class Star_Soldier : ModMount {
 				}
 				new Star_Soldier_Weapon_Sound(player, item.type).Perform();
 				Knockback = player.GetWeaponKnockback(item, Knockback);
-				EntitySource_ItemUse_WithAmmo projectileSource = new(player, item, usedAmmoItemId, nameof(Star_Soldier));
+				EntitySource_ItemUse_WithAmmo projectileSource = new(player, item, usedAmmoItemId, nameof(Star_Soldier) + currentArm);
 				player.ApplyItemTime(item, callUseItem: false);
 
 				MountHandler handler = GetHandler(player);
@@ -339,7 +349,7 @@ public class Star_Soldier : ModMount {
 	}
 
 	public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) => false;
-	static MountHandler GetHandler(Player player) {
+	public static MountHandler GetHandler(Player player) {
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
@@ -399,7 +409,7 @@ public class Star_Soldier : ModMount {
 	}
 	public class Star_Soldier_UI : SwitchableUIState {
 		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
-		public override bool IsActive() => Main.LocalPlayer.mount.Active && Main.LocalPlayer.mount.Type == ModContent.MountType<Star_Soldier>();
+		public override bool IsActive() => Main.LocalPlayer.mount.IsMount<Star_Soldier>();
 		public Star_Soldier_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
@@ -537,18 +547,17 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 	public override void SetDefaults() {
 		Item.damage = 94;
 		Item.DamageType = DamageClass.Magic;
-		Item.useAnimation = 8;
-		Item.useTime = 8;
+		Item.useAnimation = 30;
+		Item.useTime = 30;
 		Item.shootSpeed = 19;
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
 		Item.mana = 100;
 
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
-		Item.crit += 10;
 		Item.width = 60;
 		Item.height = 26;
-		Item.shoot = ProjectileID.Bullet;
+		Item.shoot = ModContent.ProjectileType<Star_Soldier_Laser_Beam>();
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
 	}
@@ -558,17 +567,25 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			const float precision = 100;
 			int manaRedirect = (int)(ammo * precision);
 			using (new ScopedRedirect<int>(ref player.statMana, ref manaRedirect)) {
-				if (!player.CheckMana(Item, pay: true)) recharging = true;
+				using ScopedOverride<int> _ = player.statManaMax2.ScopedOverride((int)(AmmoMax * precision));
+				if (!player.CheckMana(Item, pay: true, blockQuickMana: true)) recharging = true;
 			}
 			ammo = manaRedirect / precision;
 			if (!recharging) {
 				arm.itemTime = arm.itemTimeMax;
 				arm.itemAnimation = arm.itemAnimationMax;
+			} else {
+				arm.itemTime = 0;
+				arm.itemAnimation = 0;
 			}
-			Debugging.ChatOverhead(arm.itemTime);
 		} else {
+			arm.itemTime = 0;
+			arm.itemAnimation = 0;
 			if (ammo.Warmup(AmmoMax, recharging ? RechargeSpeed : ChargeSpeed)) recharging = false;
 		}
+	}
+	public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		return base.Shoot(player, source, position, velocity, type, damage, knockback);
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		int width = 64;
@@ -594,6 +611,188 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			SpriteEffects.None,
 		0);
 		position.Y += 8;
+	}
+	public class Star_Soldier_Laser_Beam : ModProjectile {
+		static readonly AdvancedMiscShaderData hitAOEShader = new(ModContent.Request<Effect>("Origins/Effects/Radial"), "TrenchmakerLaserHit", [
+			new("uOffset", new Vector2(0.5f)),
+			new("uScale", float.Sqrt(0.5f))
+		]);
+		static Parameter uImageOffset1;
+		static Parameter uColorMatrix0;
+		static Parameter uColorMatrix1;
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3200 + 64;
+			hitAOEShader.UseSamplerState(SamplerState.PointWrap)
+			.UseImage1(TextureAssets.MagicPixel);
+			GameShaders.Misc["Origins:StarSoldierLaserHit"] = hitAOEShader;
+			hitAOEShader.LoadThen(() => {
+				hitAOEShader.CreateParameter(ref uImageOffset1, nameof(uImageOffset1), Vector2.Zero);
+				hitAOEShader.CreateParameter(ref uColorMatrix0, nameof(uColorMatrix0), Matrix.Identity);
+				hitAOEShader.CreateParameter(ref uColorMatrix1, nameof(uColorMatrix1), Matrix.Identity);
+			});
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.penetrate = -1;
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 5;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public Vector2 TargetPos {
+			get => new(Projectile.ai[0], Projectile.ai[1]);
+			set => (Projectile.ai[0], Projectile.ai[1]) = value;
+		}
+		bool IsActive {
+			get => Projectile.localAI[0] != 0;
+			set => Projectile.localAI[0] = value.ToInt();
+		}
+		public override void OnSpawn(IEntitySource source) {
+			string[] contextArgs = source?.Context?.Split(';') ?? [];
+			for (int i = 0; i < contextArgs.Length; i++) {
+				if (contextArgs[i].StartsWith(nameof(Star_Soldier))) {
+					_ = float.TryParse(contextArgs[i][nameof(Star_Soldier).Length..], out Projectile.ai[2]);
+					break;
+				}
+			}
+		}
+		public override void AI() {
+			if (!Projectile.TryGetOwner(out Player owner) || !owner.mount.IsMount<Star_Soldier>()) {
+				Projectile.Kill();
+				return;
+			}
+			Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(owner);
+			Star_Soldier.MountHandler.Arm arm = Projectile.ai[2] == 1 ? handler.altItem : handler.chosenItem;
+			if (arm.itemAnimation <= 0) {
+				Projectile.Kill();
+				return;
+			}
+			IsActive = arm.itemAnimation > 0;
+			Projectile.velocity = arm.gunRotation.ToRotationVector2();
+			arm.GetPositions(owner.MountedCenter, owner.fullRotation, owner.Directions, out _, out _, out Projectile.position);
+			Projectile.position += Projectile.velocity * 24;
+			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
+			if (IsActive) {
+				//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
+				//SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
+				Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
+			}
+			Projectile.localAI[2] += 1f / 60;
+			TargetPos = targetPos;
+			//SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(++owner.ai[3] / 10).WithVolume(0.5f), Projectile.Center);
+			//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(owner.ai[3] / 20).WithVolume(0.5f), Projectile.Center);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (!IsActive) return false;
+			if (targetHitbox.IsWithin(TargetPos, 16 * 5)) return true;
+			return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 12));
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			if (!target.immune) modifiers = modifiers with { CooldownCounter = -2 };
+			modifiers.Knockback *= 1.5f;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			if (info.CooldownCounter == -2) {
+				target.immune = true;
+				target.immuneTime = target.longInvince ? 16 : 8;
+			}
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
+			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
+				uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
+				uColorMatrix0 with {
+					Value = new Matrix(
+						1, 0, 0, 0,
+						0, 0.392f, 0, 0,
+						0, 0, 0, 0,
+						0, 0, 0, 0)
+				},
+				uColorMatrix1 with {
+					Value = new Matrix(
+						0, 0, 1, 0,
+						0, 0.392f, 0, 0,
+						0, 0, 0, 0,
+						0, 0, 0, 0)
+				}
+			);
+			Main.spriteBatch.Draw(
+				TextureAssets.Projectile[Type].Value,
+				TargetPos - Main.screenPosition,
+				null,
+				new Color(255, 255, 255, 0),
+				Projectile.localAI[2],
+				Vector2.One * 128,
+				Vector2.One * 5,
+				0,
+			0);
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			Vector2 diff = TargetPos - Projectile.position;
+			Vector2 position = Projectile.position;
+			position -= Main.screenPosition;
+			float rotation = diff.ToRotation();
+			float dist = diff.Length();
+			const float scale = 1f / 256f;
+			DrawData data = new(
+				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,//TextureAssets.MagicPixel.Value,
+				position,
+				null,
+				new Color(255, 100, 0, 0),
+				rotation,
+				Vector2.UnitY * 128,
+				new Vector2(dist * scale, 24 * scale),
+				0
+			);
+			data.Draw(Main.spriteBatch);
+			Rectangle frame = new(256 - (int)((Projectile.localAI[2] * 600) % 256), 0, (int)dist, 256);
+			data.scale.X = 1;
+			data.scale.Y *= 2;
+			data.texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape].Value;
+			float progress = 1 - Projectile.localAI[1] / 1;
+			progress *= progress;
+			if (IsActive) progress = 1;
+			Min(ref progress, 1);
+			data.color *= progress;
+			Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 24;
+			data.position = position + offset;
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+			data.sourceRect = frame;
+			data.Draw(Main.spriteBatch);
+			data.position = position - offset;
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+			data.sourceRect = frame;
+			data.Draw(Main.spriteBatch);
+			return false;
+		}
+		float Raymarch(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+			float dist = CollisionExt.Raymarch(position, direction, maxLength);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (dist < 16) return dist;
+				if (npc.friendly) continue;
+				if (position.Clamp(npc.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+				float collisionPoint = 1;
+				if (Collision.CheckAABBvLineCollision(npc.position, npc.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+					Min(ref dist, collisionPoint);
+				}
+			}
+			if (Main.player[Projectile.owner] is { hostile: true, team: int team }) {
+				if (team == 0) team = -1;
+				foreach (Player player in Main.ActivePlayers) {
+					if (!player.hostile || player.team == team) continue;
+					if (dist < 16) return dist;
+					if (position.Clamp(player.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+					float collisionPoint = 1;
+					if (Collision.CheckAABBvLineCollision(player.position, player.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+						Min(ref dist, collisionPoint);
+					}
+				}
+			}
+			return dist;
+		}
 	}
 }
 public class Star_Soldier_Pod : Star_Soldier_Weapon {
