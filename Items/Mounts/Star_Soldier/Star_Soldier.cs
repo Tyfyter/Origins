@@ -10,11 +10,13 @@ using PegasusLib.Networking;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -212,7 +214,7 @@ public class Star_Soldier : ModMount {
 				action();
 			}
 			readonly void ShootItem(Item item) {
-				if (!player.IsLocallyOwned()) {
+				if (!player.IsLocallyOwned() || GetHandler(player) is not MountHandler handler) {
 					player.ApplyItemTime(item, callUseItem: false);
 					return;
 				}
@@ -234,7 +236,6 @@ public class Star_Soldier : ModMount {
 				EntitySource_ItemUse_WithAmmo projectileSource = new(player, item, usedAmmoItemId, nameof(Star_Soldier) + currentArm);
 				player.ApplyItemTime(item, callUseItem: false);
 
-				MountHandler handler = GetHandler(player);
 				GetPositions(GetBodyCenter(player, player.Center), player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
 
 				Vector2 vector = gunRotation.ToRotationVector2();
@@ -297,6 +298,7 @@ public class Star_Soldier : ModMount {
 				}
 			}
 		}
+
 	}
 	public override void SetStaticDefaults() {
 		MountData.buff = ModContent.BuffType<Star_Soldier_Proper_Buff>();
@@ -350,19 +352,19 @@ public class Star_Soldier : ModMount {
 	}
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
-		GetHandler(player).Update(player);
+		GetHandler(player)?.Update(player);
 		player.OriginPlayer().mountOnly = true;
 	}
 
 	public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) => false;
 	public static MountHandler GetHandler(Player player) {
+		if (!player.mount.IsMount<Star_Soldier>()) return null;
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
 	static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * ((player.height - Player.defaultHeight) * 0.5f - 8);
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle _, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-		if (drawType == 3) {
-			MountHandler handler = GetHandler(drawPlayer);
+		if (drawType == 3 && GetHandler(drawPlayer) is MountHandler handler) {
 			Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
 			Vector2 bodyCenter = GetBodyCenter(drawPlayer, drawPosition);
 			Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
@@ -421,6 +423,7 @@ public class Star_Soldier : ModMount {
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Player player = Main.LocalPlayer;
+			if (GetHandler(player) is not MountHandler handler) return;
 			Vector2 pos = player.MountedCenter - Main.screenPosition;
 			pos.Y += player.height * 0.5f + 8;
 
@@ -428,7 +431,6 @@ public class Star_Soldier : ModMount {
 			pos.X = ((int)pos.X) / scale.X;
 			pos.Y = ((int)pos.Y) / scale.Y;
 
-			MountHandler handler = GetHandler(player);
 			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale.XY());
 			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale.XY());
 		}
@@ -549,15 +551,15 @@ public class Star_Soldier : ModMount {
 	}
 }
 public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
-	Asset<Texture2D> icon;
+	public Asset<Texture2D> Icon { get; private set; }
 	public override ModItem NewInstance(Item entity) {
 		Star_Soldier_Weapon item = (Star_Soldier_Weapon)base.NewInstance(entity);
-		item.icon = icon;
+		item.Icon = Icon;
 		return item;
 	}
 	public override void AutoStaticDefaults() {
 		base.AutoStaticDefaults();
-		icon = ModContent.Request<Texture2D>(Texture + "_Icon");
+		Icon = ModContent.Request<Texture2D>(Texture + "_Icon");
 	}
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
 	public virtual void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) { }
@@ -567,7 +569,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	static int AmmoMax => 32;
 	static int ReloadLength => 51;
-	int ammo = 0;
+	int ammo = AmmoMax;
 	int reloadTime = 0;
 	bool usedFakeAmmo;
 	public override void SetDefaults() {
@@ -676,7 +678,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 	static float AmmoMax => 100;
 	static float ChargeSpeed => 0.75f;
 	static float RechargeSpeed => 0.6f;
-	float ammo = 0;
+	float ammo = AmmoMax;
 	bool recharging = false;
 	public override void SetStaticDefaults() {
 		Origins.AddGlowMask(this);
@@ -826,11 +828,10 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			}
 		}
 		public override void AI() {
-			if (!Projectile.TryGetOwner(out Player owner) || !owner.mount.IsMount<Star_Soldier>()) {
+			if (!Projectile.TryGetOwner(out Player owner) || Star_Soldier.GetHandler(owner) is not Star_Soldier.MountHandler handler) {
 				Projectile.Kill();
 				return;
 			}
-			Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(owner);
 			Star_Soldier.MountHandler.Arm arm = Projectile.ai[2] == 1 ? handler.altItem : handler.chosenItem;
 			if (arm.itemAnimation <= 0) {
 				Projectile.Kill();
@@ -957,6 +958,11 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 	}
 }
 public class Star_Soldier_Pod : Star_Soldier_Weapon {
+	static int AmmoMax => 4;
+	static int ReloadLength => 3 * 60 / AmmoMax;
+	int ammo = AmmoMax;
+	int reloadTime = 0;
+	bool reloading = false;
 	public override void SetStaticDefaults() {
 		AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 	}
@@ -969,13 +975,45 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		Item.reuseDelay = 60;
 		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
 	}
+	public override bool CanUseItem(Player player) => !reloading && ammo > 0;
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(1, 2, 0, 0);
+	}
+	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
+		if (arm.itemAnimation != 0) {
+			reloadTime = 0;
+			if (arm.itemTime == arm.itemTimeMax) ammo--;
+		} else if (reloading) {
+			if (reloadTime.CycleUp(ReloadLength)) {
+				SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.Center);
+				if (ammo.Warmup(AmmoMax)) reloading = false;
+			}
+		} else if (ammo < AmmoMax) {
+			reloading = true;
+		}
 	}
 	/*public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1f), player.Center);
 	}*/
-	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) { }
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+		int width = 64;
+		int segment = (int)((width * 0.75f) / AmmoMax);
+		for (int i = 0; i < AmmoMax; i++) {
+			Color color = reloading ? Color.White : Color.OrangeRed;
+			if (i >= ammo) color = Color.Black;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				position,
+				new Rectangle(0, 0, segment, 4),
+				color,
+				0,
+				new Vector2(segment * ((i - 0.5f * (AmmoMax - 1)) * 1.1f + i / (float)(AmmoMax - 1)), 2),
+				1,
+				SpriteEffects.None,
+			0);
+		}
+		position.Y += 8;
+	}
 }
 public class Star_Soldier_Proper_Buff : ModBuff {
 	public override string Texture => "Origins/Buffs/Star_Soldier_Buff";
@@ -992,11 +1030,90 @@ public class Star_Soldier_Proper_Buff : ModBuff {
 		originPlayer.targetHeight = player.mount._data.heightBoost + Player.defaultHeight;
 	}
 }
-public class Star_Soldier_Wagon : ModMount {
+public class Star_Soldier_Wagon : ModMount, IModifyControls {
 	public class MountHandler {
 		int time;
+		int hoverIndex = 0;
+		Star_Soldier_Weapon leftClickSelection;
+		Star_Soldier_Weapon rightClickSelection;
 		public void Update(Player player) {
-			if (++time > 60) player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
+			if (leftClickSelection is null || rightClickSelection is null) return;
+			if (++time > 60) {
+				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
+				Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(player);
+				handler.chosenItem.item.SetDefaults(leftClickSelection.Type);
+				handler.altItem.item.SetDefaults(rightClickSelection.Type);
+			}
+		}
+		public bool ModifyControls(Player player) {
+			ReadOnlyCollection<Star_Soldier_Weapon> options = (ReadOnlyCollection<Star_Soldier_Weapon>)ModContent.GetContent<Star_Soldier_Weapon>();
+			if (PlayerInput.ScrollWheelDelta.Abs(out int dir) >= 120) {
+				if (dir < 0) hoverIndex.CycleUp(options.Count);
+				else hoverIndex.CycleDownWithZero(options.Count);
+			}
+			PlayerInput.ScrollWheelDelta = 0;
+			/*for (int i = 1; i <= 10; i++) {
+				if (player.KeyStatus["Hotbar" + i] && i < options.Count) {
+					hoverIndex = i;
+				}
+				triggersSet.KeyStatus["Hotbar" + i] = false;
+			}*/
+			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
+				if (leftClickSelection is null) leftClickSelection = options[hoverIndex];
+				else leftClickSelection = null;
+			}
+			if (PlayerInput.Triggers.JustPressed.MouseRight) {
+				if (rightClickSelection is null) rightClickSelection = options[hoverIndex];
+				else rightClickSelection = null;
+			}
+			player.controlUseItem = false;
+			player.controlUseTile = false;
+			return false;
+		}
+		public void DrawUI(SpriteBatch spriteBatch) {
+			ReadOnlyCollection<Star_Soldier_Weapon> options = (ReadOnlyCollection<Star_Soldier_Weapon>)ModContent.GetContent<Star_Soldier_Weapon>();
+			Player player = Main.LocalPlayer;
+			Vector2 pos = player.MountedCenter - Main.screenPosition;
+
+			Main.UIScaleMatrix.Decompose(out Vector3 scale, out _, out _);
+			pos.X = ((int)pos.X) / scale.X;
+			pos.Y = ((int)pos.Y) / scale.Y;
+			Vector2 iconsPos = pos - Vector2.UnitX * (player.width * 0.5f + 40);
+			DrawData data = new(
+				options[0].Icon.Value,
+				iconsPos,
+				Color.White
+			) {
+				origin = options[0].Icon.Value.Size() * 0.5f,
+				scale = new(0.85f)
+			};
+			if (leftClickSelection is null) {
+				for (int i = -1; i <= 1; i++) {
+					data.texture = options[(hoverIndex + i + options.Count) % options.Count].Icon.Value;
+					data.position = iconsPos + i * 50 * Vector2.UnitY;
+					data.color = Color.White * (i == 0 ? 1 : 0.5f);
+					data.Draw(spriteBatch);
+				}
+			} else {
+				data.texture = leftClickSelection.Icon.Value;
+				data.position = iconsPos;
+				data.color = Color.White;
+				data.Draw(spriteBatch);
+			}
+			iconsPos = pos + Vector2.UnitX * (player.width * 0.5f + 40);
+			if (rightClickSelection is null) {
+				for (int i = -1; i <= 1; i++) {
+					data.texture = options[(hoverIndex + i + options.Count) % options.Count].Icon.Value;
+					data.position = iconsPos + i * 50 * Vector2.UnitY;
+					data.color = Color.White * (i == 0 ? 1 : 0.5f);
+					data.Draw(spriteBatch);
+				}
+			} else {
+				data.texture = rightClickSelection.Icon.Value;
+				data.position = iconsPos;
+				data.color = Color.White;
+				data.Draw(spriteBatch);
+			}
 		}
 	}
 	public override void SetStaticDefaults() {
@@ -1042,11 +1159,13 @@ public class Star_Soldier_Wagon : ModMount {
 	public override void SetMount(Player player, ref bool skipDust) {
 		player.mount._mountSpecificData = new MountHandler();
 	}
-	public override void UpdateEffects(Player player) => GetHandler(player).Update(player);
+	public override void UpdateEffects(Player player) => GetHandler(player)?.Update(player);
 	static MountHandler GetHandler(Player player) {
+		if (!Main.LocalPlayer.mount.IsMount<Star_Soldier_Wagon>()) return null;
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
+	public bool ModifyControls(Player player) => GetHandler(player)?.ModifyControls(player) ?? true;
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
 		if (drawType == 2) {
 			drawOrigin = texture.Size() * 0.5f;
@@ -1056,6 +1175,14 @@ public class Star_Soldier_Wagon : ModMount {
 			return true;
 		}
 		return false;
+	}
+	public class Star_Soldier_UI : SwitchableUIState {
+		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
+		public override bool IsActive() => Main.LocalPlayer.mount.IsMount<Star_Soldier_Wagon>();
+		public Star_Soldier_UI() : base() {
+			OverrideSamplerState = SamplerState.PointClamp;
+		}
+		protected override void DrawSelf(SpriteBatch spriteBatch) => GetHandler(Main.LocalPlayer)?.DrawUI(spriteBatch);
 	}
 }
 public class Star_Soldier_Wagon_Buff : ModBuff {

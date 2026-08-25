@@ -783,13 +783,17 @@ namespace Origins {
 		}
 		public override void SetControls() {
 			Debugging.LogFirstRun(SetControls);
+			bool canModifyControls = true;
 			if (!Main.mapFullscreen && Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
 				PlayerInput.ScrollWheelDelta = 0;
+				canModifyControls = false;
 			}
 			if (lunaticsRuneCharge > 0) {
 				Player.controlUseItem = false;
 				Player.controlUseTile = false;
+				canModifyControls = false;
 			}
+			if (canModifyControls && Player.mount.Active && Player.mount._data.ModMount is IModifyControls modifyControls) canModifyControls = modifyControls.ModifyControls(Player);
 		}
 		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
 			if (Player.InModBiome<Brine_Pool>()) {
