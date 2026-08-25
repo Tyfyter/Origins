@@ -845,11 +845,13 @@ MELEE WEAPONS:
 (^) Endowood Sword
 (^) Felnum Boar Spear
 (^) Fiberglass Sword
+(X) Flaillail
 (^) Hemorang
 (^) Krakram
 (^) Marrowick Sword
 (^) Nineball
 (^) Orbital Saw
+(X) Psymanti Cooking Knife
 (^) Ripper Lance
 (^) Riverang
 (^) Shuckatana
@@ -1446,6 +1448,8 @@ TILES:
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (^) Transistor
 (^) Unsuspicious Bush
+(X) Warhead
+(X) Warhead Control Terminal
 (#, ^5) Wilting Rose Planter Box (tML #4061)
 (^) Wind Turbine
 (X) Wrycoral Planter Box
@@ -1456,6 +1460,7 @@ TILES:
 (X) Interstellar Sampler
 (^) Medicine Fabricator
 (^) Metal Presser
+(X) Psymanti Mixing Station
 (X) The Demaker
 
 (^) Acetabularia
@@ -1487,11 +1492,14 @@ TILES:
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
+(X) Marrowick Weapon Rack
 (^) Modular Light Fixture
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
 (^) Power Box
+(X) Psymanti Banner
+(X) Psymanti Pottery
 (^) Radio Broadcaster
 (^) Riven Altar
 (^) Riven Foliage
@@ -1502,6 +1510,7 @@ TILES:
 (^) Steel Support Beam
 (^) Suit Locker
 (^) Surveysprout
+(X) Sylil Statue
 (^) Table Saw
 (^) Tangela Bramble
 (^) Tool Rack
@@ -1591,6 +1600,7 @@ MATERIALS:
 (^) Acetabularia
 (^) Adhesive Wrap
 (^) Aetherite Bar
+(X) Aqueoua Remains
 (^) Ashen Seeds
 (^) Bark
 (^) Bat Hide
@@ -1674,6 +1684,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
+(X) Crabby
 (^) Hyrax
 (^) Peppered Moth
 
@@ -1715,6 +1726,7 @@ CONSUMABLES:
 (#, ^2) Potion of Projection
 (^) Protean Potion
 (^) Purification Potion
+(X) Slippery Potion
 (^) Super Mojo Flask
 (^) Voidsight Potion
 
@@ -1750,7 +1762,9 @@ CONSUMABLES:
 (^5) Sanguis Pack
 (^5) Unmarked Antidote
 
+(X) Aqueoua Ribeye
 (^) Bad Juju Stone
+(X) Barnacle Stir Fry
 (^) BBQ Skewer
 (^) Bileberry
 (^) Blastberry
@@ -1758,9 +1772,11 @@ CONSUMABLES:
 (^) Bread
 (†) Brine Cheese !!! (balance drop chances)
 (々) Budget Fairy Dust
+(X) Buds 'n Bugs
 (^) Caeser Salad
 (^) Cognac
 (^) Contaminated Infusion
+(X) Crabby Legs
 (^) Crockin' Sprocks
 (^) Edible Hair Gel
 (^) Honey Wheat Bread
@@ -1775,6 +1791,8 @@ CONSUMABLES:
 (^) Petrified Prickly Pear
 (^) Potato
 (^) Prickly Pear
+(X) Protoform Tongue
+(X) Psymanti Deathwish
 (^) Shattered Stout
 (^) Soul Spaghetti
 (^) Sour Apple

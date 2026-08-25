@@ -206,6 +206,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						isInPhase3 = true;
 						NPC.netUpdate = true;
 						if (!NetmodeActive.MultiplayerClient) {
+							SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen, NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2.2f).WithVolume(0.6f), NPC.Center);
 							int num = Item.NewItem(NPC.GetSource_FromThis("ArabelCage"), (int)(Main.leftWorld + 640f + 16f + 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
 							Main.item[num].newAndShiny = true;
 							if (Main.netMode == NetmodeID.MultiplayerClient)

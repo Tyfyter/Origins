@@ -83,6 +83,7 @@ public class Star_Soldier : ModMount {
 					if (walkFrame <= 13) {
 						SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithPitch(-0.7f).WithVolume(0.5f), player.Center);
 						SoundEngine.PlaySound(SoundID.Item88.WithPitch(-0.4f), player.Center);
+						SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitchRange(0.5f, 0.7f).WithVolume(0.9f), player.Bottom);
 						walkFrame = 13;
 						jumpCounter = 0;
 						if (player.controlJump) player.mount._data.jumpSpeed = 10;
@@ -103,6 +104,9 @@ public class Star_Soldier : ModMount {
 									case 6:
 									StepSound(player);
 									break;
+									case 12:
+									StepSound(player);
+									break;
 								}
 							}
 						} else {
@@ -111,6 +115,9 @@ public class Star_Soldier : ModMount {
 								speed = 0;
 								switch (walkFrame) {
 									case 6:
+									StepSound(player);
+									break;
+									case 12:
 									StepSound(player);
 									break;
 								}
@@ -139,7 +146,8 @@ public class Star_Soldier : ModMount {
 			GetArm(1).ItemCheck(player, ref player.controlUseTile);
 
 			static void StepSound(Player player) {
-				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitch(3f).WithVolume(0.1f), player.Bottom);
+				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitchRange(0.5f, 0.7f).WithVolume(0.3f), player.Bottom);
+				SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), player.Bottom);
 			}
 		}
 		public record class Star_Soldier_Weapon_Sound(Player Player, int ItemType) : AutoSyncedAction {
@@ -445,7 +453,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale);
 }
 public class Star_Soldier_Gun : Star_Soldier_Weapon {
-	static int AmmoMax => 15;
+	static int AmmoMax => 32;
 	static int ReloadLength => 51;
 	int ammo = 0;
 	int reloadTime = 0;
@@ -453,11 +461,10 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override void SetDefaults() {
 		Item.damage = 94;
 		Item.DamageType = DamageClass.Ranged;
-		Item.useAnimation = 24;
-		Item.useTime = 8;
+		Item.useAnimation = 2;
+		Item.useTime = 2;
 		Item.shootSpeed = 19;
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
-
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
 		Item.crit += 10;
@@ -471,9 +478,11 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override bool CanUseItem(Player player) => ammo > 0;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		if (arm.itemAnimation != 0) {
+			//SoundEngine.PlaySound(SoundID.Item61.WithPitch(2f), player.Center);
 			reloadTime = 0;
 			if (arm.itemTime == arm.itemTimeMax && usedFakeAmmo) ammo--;
 		} else if (ammo < AmmoMax && reloadTime.Warmup(ReloadLength)) {
+			SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.Center);
 			ammo = AmmoMax;
 		}
 	}
@@ -489,7 +498,10 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		return false;
 	}
 	static bool needsAmmoChecking = false;
-	public override void OnConsumeAmmo(Item ammo, Player player) => this.ammo--;
+	public override void OnConsumeAmmo(Item ammo, Player player) {
+		SoundEngine.PlaySound(SoundID.Item149.WithPitch(-1f), player.Center);
+		this.ammo--;
+	}
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(1, 4, 0, 0);
 	}
@@ -536,23 +548,22 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	}
 }
 public class Star_Soldier_Laser : Star_Soldier_Weapon {
-	static float AmmoMax => 69;
-	static float ChargeSpeed => 0.5f;
-	static float RechargeSpeed => 0.435f;
+	static float AmmoMax => 100;
+	static float ChargeSpeed => 0.75f;
+	static float RechargeSpeed => 0.6f;
 	float ammo = 0;
 	bool recharging = false;
 	public override void SetStaticDefaults() {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.damage = 94;
+		Item.damage = 69;
 		Item.DamageType = DamageClass.Magic;
 		Item.useAnimation = 30;
 		Item.useTime = 30;
 		Item.shootSpeed = 19;
-		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
+		//Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
 		Item.mana = 100;
-
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
 		Item.width = 60;
@@ -572,16 +583,24 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			}
 			ammo = manaRedirect / precision;
 			if (!recharging) {
+				SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.3f), player.Center);
+				SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.3f), player.Center);
 				arm.itemTime = arm.itemTimeMax;
 				arm.itemAnimation = arm.itemAnimationMax;
 			} else {
+				SoundEngine.SoundPlayer.Play(SoundID.NPCHit43.WithPitch(0.6f).WithVolume(0.3f), player.Center);
 				arm.itemTime = 0;
 				arm.itemAnimation = 0;
 			}
 		} else {
+			SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(0.1f + ammo / 20).WithVolume(0.2f - ammo/400), player.Center);
 			arm.itemTime = 0;
 			arm.itemAnimation = 0;
-			if (ammo.Warmup(AmmoMax, recharging ? RechargeSpeed : ChargeSpeed)) recharging = false;
+			if (ammo.Warmup(AmmoMax, recharging ? RechargeSpeed : ChargeSpeed)) {
+				recharging = false;
+				SoundEngine.SoundPlayer.Play(SoundID.Item75.WithPitch(0.6f).WithVolume(0.3f), player.Center);
+				SoundEngine.SoundPlayer.Play(SoundID.Item84.WithPitch(0.8f).WithVolume(0.9f), player.Center);
+			}
 		}
 	}
 	public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
