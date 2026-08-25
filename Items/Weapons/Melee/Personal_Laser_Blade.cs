@@ -276,7 +276,7 @@ namespace Origins.Items.Weapons.Melee {
 				return BladeColor.DEFAULT;
 				case "ceroba":
 				return BladeColor.STUN;
-				case "reivax" or "dio":
+				case "rei" or "reivax" or "dio":
 				return BladeColor.CORAL;
 				case "jennifer" or "jennifer_alt" or "faust" or "kathleen":
 				return BladeColor.CHRYSALIS;
