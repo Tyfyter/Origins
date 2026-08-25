@@ -458,23 +458,13 @@ public class Star_Soldier : ModMount {
 		),
 		default
 	);
-	// TODO: make it use the colors from Arc_Flame_Arm_Blades.cs lines 159-161
-	public static readonly WeaponColors Plasma = new(
-		Matrix.Multiply(new(
-			1, 0, 0, 0,
-			0.5f, 0, 0, 1,
-			0.333f, 0, 0, 1,
-			0, 0, 0, 0
-		), 1),
-		WeaponColors.Create(212, 0, 95),
-		new(
-			0, 0.733f, 0, 0,
-			0, 0.039f, 0, 0,
-			0, 0.984f, 0, 0,
-			0, 0, 0, 0
-		),
-		default
-	);
+	public static readonly WeaponColors Plasma = WeaponColors.CreateGradient(
+		new Color(187, 10, 251),
+		new(new Color(82, 103, 255), -0.35f, 5),
+		new(new Color(212, 0, 95), -0.5f, 2)
+	) with {
+		Scale = 1.15f
+	};
 	public static IReadOnlyDictionary<string, WeaponColors> NameColors { get; } = new Dictionary<string, WeaponColors>(StringComparer.OrdinalIgnoreCase) {
 		["Faust"] = Chrysalis,
 		["Kathleen"] = Chrysalis,
@@ -485,6 +475,7 @@ public class Star_Soldier : ModMount {
 	};
 	public record struct WeaponColors(Matrix InitialMult, Matrix FinalColor, Matrix OverbrightColor, Vector3 ExtraBeamData) {
 		public float Scale { get; set; } = 1;
+		public Vector4 OverbrightMax { get; set; } = new(float.PositiveInfinity);
 		public WeaponColors(float InitialMult, Matrix FinalColor) : this(Matrix.Multiply(Matrix.Identity with { M44 = 0 }, InitialMult), FinalColor, Matrix.Identity with { M44 = 0 }, new(1f / 3, 0.075f, 1.2f)) { }
 		public static Matrix Create(int r, int g, int b, int a = 0) => new(
 			r / 255f, 0, 0, 0,
@@ -498,6 +489,63 @@ public class Star_Soldier : ModMount {
 			b, 0, 0, 0,
 			a, 0, 0, 0
 		);
+		public static WeaponColors CreateGradient(Color a, GradientData b) => new(
+			new(
+				1, 0, 0, 0,
+				b.Factor, 0, 0, 1 + b.Start,
+				0, 0, 0, 0,
+				0, 0, 0, 0
+			),
+			WeaponColors.Create(a.R, a.G, a.B),
+			new(
+				0, b.Color.X - a.R / 255f, 0, 0,
+				0, b.Color.Y - a.G / 255f, 0, 0,
+				0, b.Color.Z - a.B / 255f, 0, 0,
+				0, b.Color.W, 0, 0
+			),
+			default
+		) {
+			OverbrightMax = Vector4.One
+		};
+		public static WeaponColors CreateGradient(Color a, GradientData b, GradientData c) => new(
+			new(
+				1, 0, 0, 0,
+				b.Factor, 0, 0, 1 + b.Start,
+				c.Factor, 0, 0, 1 + c.Start,
+				0, 0, 0, 0
+			),
+			WeaponColors.Create(a.R, a.G, a.B),
+			new(
+				0, b.Color.X - a.R / 255f, c.Color.X - b.Color.X, 0,
+				0, b.Color.Y - a.G / 255f, c.Color.Y - b.Color.Y, 0,
+				0, b.Color.Z - a.B / 255f, c.Color.Z - b.Color.Z, 0,
+				0, b.Color.W, c.Color.W - b.Color.W, 0
+			),
+			default
+		) {
+			OverbrightMax = Vector4.One
+		};
+		public static WeaponColors CreateGradient(Color a, GradientData b, GradientData c, GradientData d) => new(
+			new(
+				1, 0, 0, 0,
+				b.Factor, 0, 0, 1 + b.Start,
+				c.Factor, 0, 0, 1 + c.Start,
+				0, 0, 0, 0
+			),
+			WeaponColors.Create(a.R, a.G, a.B),
+			new(
+				0, b.Color.X - a.R / 255f, c.Color.X - b.Color.X, d.Color.X - c.Color.X,
+				0, b.Color.Y - a.G / 255f, c.Color.Y - b.Color.Y, d.Color.Y - c.Color.Y,
+				0, b.Color.Z - a.B / 255f, c.Color.Z - b.Color.Z, d.Color.Z - c.Color.Z,
+				0, b.Color.W, c.Color.W - b.Color.W, d.Color.W - c.Color.W
+			),
+			default
+		) {
+			OverbrightMax = Vector4.One
+		};
+		public record struct GradientData(Vector4 Color, float Start, float Factor) {
+			public GradientData(Color Color, float Start, float Factor) : this(Color.ToVector4() * new Vector4(1, 1, 1, 0), Start, Factor) { }
+		}
 	}
 }
 public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
@@ -721,6 +769,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			public static Parameter uColorMatrix1;
 			public static Parameter uFinalColorMatrix;
 			public static Parameter uOverbrightMatrix;
+			public static Parameter uOverbrightMax;
 			public static Parameter uShaderSpecificData;
 		}
 		static class AOEParams {
@@ -728,6 +777,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			public static Parameter uColorMatrix1;
 			public static Parameter uFinalColorMatrix;
 			public static Parameter uOverbrightMatrix;
+			public static Parameter uOverbrightMax;
 		}
 		Star_Soldier.WeaponColors colors;
 		public override void SetStaticDefaults() {
@@ -740,6 +790,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				beamShader.CreateParameter(ref BeamParams.uColorMatrix1, nameof(BeamParams.uColorMatrix1), Matrix.Identity with { M44 = 0 });
 				beamShader.CreateParameter(ref BeamParams.uFinalColorMatrix, nameof(BeamParams.uFinalColorMatrix), Matrix.Identity);
 				beamShader.CreateParameter(ref BeamParams.uOverbrightMatrix, nameof(BeamParams.uOverbrightMatrix), Matrix.Identity);
+				beamShader.CreateParameter(ref BeamParams.uOverbrightMax, nameof(BeamParams.uOverbrightMax), new Vector4(float.PositiveInfinity));
 				beamShader.CreateParameter(ref BeamParams.uShaderSpecificData, nameof(BeamParams.uShaderSpecificData), Vector4.Zero);
 			});
 			hitAOEShader.LoadThen(() => {
@@ -747,6 +798,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				hitAOEShader.CreateParameter(ref AOEParams.uColorMatrix1, nameof(AOEParams.uColorMatrix1), Matrix.Identity with { M44 = 0 });
 				hitAOEShader.CreateParameter(ref AOEParams.uFinalColorMatrix, nameof(AOEParams.uFinalColorMatrix), Matrix.Identity);
 				hitAOEShader.CreateParameter(ref AOEParams.uOverbrightMatrix, nameof(AOEParams.uOverbrightMatrix), Matrix.Identity);
+				hitAOEShader.CreateParameter(ref AOEParams.uOverbrightMax, nameof(AOEParams.uOverbrightMax), new Vector4(float.PositiveInfinity));
 			});
 		}
 		public override void SetDefaults() {
@@ -783,9 +835,6 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			if (arm.itemAnimation <= 0) {
 				Projectile.Kill();
 				return;
-			}
-			if (colors.Scale == 0) {
-				colors = Star_Soldier.Plasma;
 			}
 			if (colors.Scale == 0 && !Star_Soldier.NameColors.TryGetValue(owner.name, out colors)) {
 				colors = Star_Soldier.DefaultColors;
@@ -824,7 +873,8 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				AOEParams.uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
 				AOEParams.uColorMatrix1 with { Value = colors.InitialMult },
 				AOEParams.uFinalColorMatrix with { Value = colors.FinalColor },
-				AOEParams.uOverbrightMatrix with { Value = colors.OverbrightColor }
+				AOEParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
+				AOEParams.uOverbrightMax with { Value = colors.OverbrightMax }
 			);
 			Main.spriteBatch.Draw(
 				TextureAssets.Projectile[Type].Value,
@@ -839,6 +889,11 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			Vector2 diff = TargetPos - Projectile.position;
 			Vector2 position = Projectile.position;
 			position -= Main.screenPosition;
+			Main.spriteBatch.Draw(
+				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,
+				position,
+				default
+			);
 			float rotation = diff.ToRotation();
 			float dist = diff.Length();
 			const float scale = 1f / 256f;
@@ -856,9 +911,22 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				BeamParams.uColorMatrix1 with { Value = colors.InitialMult },
 				BeamParams.uFinalColorMatrix with { Value = colors.FinalColor },
 				BeamParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
+				BeamParams.uOverbrightMax with { Value = colors.OverbrightMax },
 				BeamParams.uShaderSpecificData with { Value = new Vector4(colors.ExtraBeamData, 0) }
 			);
 			data.Draw(Main.spriteBatch);
+			beamShader.Apply(null,
+				BeamParams.uColorMatrix1 with { Value = colors.InitialMult },
+				BeamParams.uFinalColorMatrix with { Value = colors.FinalColor },
+				BeamParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
+				BeamParams.uOverbrightMax with { Value = colors.OverbrightMax },
+				BeamParams.uShaderSpecificData with { Value = Vector4.Zero }
+			);
+			/*Main.spriteBatch.Draw(
+				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,
+				position,
+				default
+			);*/
 			return false;
 		}
 		float Raymarch(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {

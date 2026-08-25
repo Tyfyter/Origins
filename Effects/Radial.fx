@@ -20,6 +20,7 @@ matrix<float, 4, 4> uColorMatrix0;
 matrix<float, 4, 4> uColorMatrix1;
 matrix<float, 4, 4> uFinalColorMatrix;
 matrix<float, 4, 4> uOverbrightMatrix;
+float4 uOverbrightMax;
 
 const float PI = 3.1415926535897932384626433832795;
 const float TAU = 6.283185307179586476925286766559;
@@ -34,7 +35,7 @@ float4 StarSoldierLaserHit(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	float2 rt = float2(atan2(diff.y, diff.x) / TAU + 0.5, length(diff) / uScale);
 	float4 value = (mul(uColorMatrix0, tex2D(uImage0, rt)) * mul(uColorMatrix1, tex2D(uImage1, rt + uImageOffset1)));
 	float4 overbrightness = max(value - float4(1, 1, 1, 1), float4(0, 0, 0, 0));
-	return mul(uFinalColorMatrix, value - overbrightness) + mul(uOverbrightMatrix, overbrightness);
+	return mul(uFinalColorMatrix, value - overbrightness) + mul(uOverbrightMatrix, min(overbrightness, uOverbrightMax));
 }
 
 technique Technique1 {
