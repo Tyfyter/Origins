@@ -370,7 +370,7 @@ public class Star_Soldier : ModMount {
 			Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
 			Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32).Transform(rotationMatrix);
 
-			handler.altItem.DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
+			(drawPlayer.direction == -1 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
 			playerDrawData.Add(new(
 				backLegTexture,
 				hips,
@@ -411,7 +411,7 @@ public class Star_Soldier : ModMount {
 			) {
 				shader = drawPlayer.cMount
 			});
-			handler.chosenItem.DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
+			(drawPlayer.direction == -1 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
 		}
 		return false;
 	}
