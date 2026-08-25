@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
-using Origins.NPCs.Ashen.Boss;
 using Origins.UI;
 using PegasusLib.Networking;
 using ReLogic.Content;
@@ -51,7 +49,7 @@ public class Star_Soldier : ModMount {
 		public int walkFrame;
 		public float walkFrameCounter;
 		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
-		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
 		static int currentArm;
 		ref Arm GetArm(int index) {
 			currentArm = index;
@@ -435,6 +433,53 @@ public class Star_Soldier : ModMount {
 			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale.XY());
 		}
 	}
+	public static readonly WeaponColors DefaultColors = new(1, WeaponColors.Create(255, 100, 0));
+	public static readonly WeaponColors Chrysalis = new(
+		Matrix.Multiply(Matrix.Identity, 5) with { M41 = 1, M44 = 0 },
+		WeaponColors.Create(0.0215f, 0.1645f, 0.1785f, 10),
+		WeaponColors.Create(0.063f, 0.863f, 0.051f),
+		new(1f / 3, 0.075f, 0.25f)
+	) {
+		Scale = 0.85f
+	};
+	public static readonly WeaponColors RGB = new(
+		Matrix.Multiply(new(
+			1, 0, 0, 0,
+			0.5f, 0, 0, 0,
+			0.25f, 0, 0, 0,
+			0, 0, 0, 0
+		), 15),
+		WeaponColors.Create(1f, 0, 0),
+		new(
+			0, -2f, 0, 0,
+			0, 2, -8f, 0,
+			0, 0, 4, 0,
+			0, 0, 0, 0
+		),
+		default
+	);
+	public static IReadOnlyDictionary<string, WeaponColors> NameColors { get; } = new Dictionary<string, WeaponColors>(StringComparer.OrdinalIgnoreCase) {
+		["Faust"] = Chrysalis,
+		["Kathleen"] = Chrysalis,
+		["Jennifer"] = Chrysalis,
+		["Jennifer_alt"] = Chrysalis
+	};
+	public record struct WeaponColors(Matrix InitialMult, Matrix FinalColor, Matrix OverbrightColor, Vector3 ExtraBeamData) {
+		public float Scale { get; set; } = 1;
+		public WeaponColors(float InitialMult, Matrix FinalColor) : this(Matrix.Multiply(Matrix.Identity with { M44 = 0 }, InitialMult), FinalColor, Matrix.Identity with { M44 = 0 }, new(1f / 3, 0.075f, 1.2f)) { }
+		public static Matrix Create(int r, int g, int b, int a = 0) => new(
+			r / 255f, 0, 0, 0,
+			g / 255f, 0, 0, 0,
+			b / 255f, 0, 0, 0,
+			a / 255f, 0, 0, 0
+		);
+		public static Matrix Create(float r, float g, float b, float a = 0) => new(
+			r, 0, 0, 0,
+			g, 0, 0, 0,
+			b, 0, 0, 0,
+			a, 0, 0, 0
+		);
+	}
 }
 public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	Asset<Texture2D> icon;
@@ -632,22 +677,44 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		position.Y += 8;
 	}
 	public class Star_Soldier_Laser_Beam : ModProjectile {
-		static readonly AdvancedMiscShaderData hitAOEShader = new(ModContent.Request<Effect>("Origins/Effects/Radial"), "TrenchmakerLaserHit", [
-			new("uOffset", new Vector2(0.5f)),
-			new("uScale", float.Sqrt(0.5f))
+		static readonly AdvancedMiscShaderData beamShader = new(ModContent.Request<Effect>("Origins/Effects/Beam"), "StarSoldierLaser", [
+			new("uColorMatrix0", Matrix.Identity with { M44 = 0 })
 		]);
-		static Parameter uImageOffset1;
-		static Parameter uColorMatrix0;
-		static Parameter uColorMatrix1;
+		static readonly AdvancedMiscShaderData hitAOEShader = new(ModContent.Request<Effect>("Origins/Effects/Radial"), "StarSoldierLaserHit", [
+			new("uOffset", new Vector2(0.5f)),
+			new("uScale", float.Sqrt(0.5f)),
+			new("uColorMatrix0", Matrix.Identity with { M44 = 0 })
+		]);
+		static class BeamParams {
+			public static Parameter uColorMatrix1;
+			public static Parameter uFinalColorMatrix;
+			public static Parameter uOverbrightMatrix;
+			public static Parameter uShaderSpecificData;
+		}
+		static class AOEParams {
+			public static Parameter uImageOffset1;
+			public static Parameter uColorMatrix1;
+			public static Parameter uFinalColorMatrix;
+			public static Parameter uOverbrightMatrix;
+		}
+		Star_Soldier.WeaponColors colors;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3200 + 64;
 			hitAOEShader.UseSamplerState(SamplerState.PointWrap)
 			.UseImage1(TextureAssets.MagicPixel);
+			GameShaders.Misc["Origins:StarSoldierLaser"] = beamShader;
 			GameShaders.Misc["Origins:StarSoldierLaserHit"] = hitAOEShader;
+			beamShader.LoadThen(() => {
+				beamShader.CreateParameter(ref BeamParams.uColorMatrix1, nameof(BeamParams.uColorMatrix1), Matrix.Identity with { M44 = 0 });
+				beamShader.CreateParameter(ref BeamParams.uFinalColorMatrix, nameof(BeamParams.uFinalColorMatrix), Matrix.Identity);
+				beamShader.CreateParameter(ref BeamParams.uOverbrightMatrix, nameof(BeamParams.uOverbrightMatrix), Matrix.Identity);
+				beamShader.CreateParameter(ref BeamParams.uShaderSpecificData, nameof(BeamParams.uShaderSpecificData), Vector4.Zero);
+			});
 			hitAOEShader.LoadThen(() => {
-				hitAOEShader.CreateParameter(ref uImageOffset1, nameof(uImageOffset1), Vector2.Zero);
-				hitAOEShader.CreateParameter(ref uColorMatrix0, nameof(uColorMatrix0), Matrix.Identity);
-				hitAOEShader.CreateParameter(ref uColorMatrix1, nameof(uColorMatrix1), Matrix.Identity);
+				hitAOEShader.CreateParameter(ref AOEParams.uImageOffset1, nameof(AOEParams.uImageOffset1), Vector2.Zero);
+				hitAOEShader.CreateParameter(ref AOEParams.uColorMatrix1, nameof(AOEParams.uColorMatrix1), Matrix.Identity with { M44 = 0 });
+				hitAOEShader.CreateParameter(ref AOEParams.uFinalColorMatrix, nameof(AOEParams.uFinalColorMatrix), Matrix.Identity);
+				hitAOEShader.CreateParameter(ref AOEParams.uOverbrightMatrix, nameof(AOEParams.uOverbrightMatrix), Matrix.Identity);
 			});
 		}
 		public override void SetDefaults() {
@@ -664,10 +731,6 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		public Vector2 TargetPos {
 			get => new(Projectile.ai[0], Projectile.ai[1]);
 			set => (Projectile.ai[0], Projectile.ai[1]) = value;
-		}
-		bool IsActive {
-			get => Projectile.localAI[0] != 0;
-			set => Projectile.localAI[0] = value.ToInt();
 		}
 		public override void OnSpawn(IEntitySource source) {
 			string[] contextArgs = source?.Context?.Split(';') ?? [];
@@ -689,23 +752,24 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				Projectile.Kill();
 				return;
 			}
-			IsActive = arm.itemAnimation > 0;
+			if (colors.Scale == 0 && !Star_Soldier.NameColors.TryGetValue(owner.name, out colors)) {
+				colors = Star_Soldier.DefaultColors;
+			}
+			colors.ExtraBeamData = new(1f / 3, 0.075f, 0.25f);
 			Projectile.velocity = arm.gunRotation.ToRotationVector2();
 			arm.GetPositions(owner.MountedCenter, owner.fullRotation, owner.Directions, out _, out _, out Projectile.position);
 			Projectile.position += Projectile.velocity * 24;
 			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
-			if (IsActive) {
-				//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
-				//SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
-				Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
-			}
+			
+			//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
+			//SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
+			Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
 			Projectile.localAI[2] += 1f / 60;
 			TargetPos = targetPos;
 			//SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(++owner.ai[3] / 10).WithVolume(0.5f), Projectile.Center);
 			//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(owner.ai[3] / 20).WithVolume(0.5f), Projectile.Center);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (!IsActive) return false;
 			if (targetHitbox.IsWithin(TargetPos, 16 * 5)) return true;
 			return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 12));
 		}
@@ -723,33 +787,21 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
 			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
-				uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
-				uColorMatrix0 with {
-					Value = new Matrix(
-						1, 0, 0, 0,
-						0, 0.392f, 0, 0,
-						0, 0, 0, 0,
-						0, 0, 0, 0)
-				},
-				uColorMatrix1 with {
-					Value = new Matrix(
-						0, 0, 1, 0,
-						0, 0.392f, 0, 0,
-						0, 0, 0, 0,
-						0, 0, 0, 0)
-				}
+				AOEParams.uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
+				AOEParams.uColorMatrix1 with { Value = colors.InitialMult },
+				AOEParams.uFinalColorMatrix with { Value = colors.FinalColor },
+				AOEParams.uOverbrightMatrix with { Value = colors.OverbrightColor }
 			);
 			Main.spriteBatch.Draw(
 				TextureAssets.Projectile[Type].Value,
 				TargetPos - Main.screenPosition,
 				null,
-				new Color(255, 255, 255, 0),
+				default,
 				Projectile.localAI[2],
 				Vector2.One * 128,
 				Vector2.One * 5,
 				0,
 			0);
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			Vector2 diff = TargetPos - Projectile.position;
 			Vector2 position = Projectile.position;
 			position -= Main.screenPosition;
@@ -757,33 +809,21 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			float dist = diff.Length();
 			const float scale = 1f / 256f;
 			DrawData data = new(
-				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,//TextureAssets.MagicPixel.Value,
+				TextureAssets.Extra[ExtrasID.MagicMissileTrailShape].Value,//TextureAssets.MagicPixel.Value,
 				position,
-				null,
-				new Color(255, 100, 0, 0),
+				new(256 - (int)((Projectile.localAI[2] * 600) % 256), 0, (int)dist, 256),
+				default,
 				rotation,
 				Vector2.UnitY * 128,
-				new Vector2(dist * scale, 24 * scale),
+				new Vector2(1, 48 * scale * colors.Scale),
 				0
 			);
-			data.Draw(Main.spriteBatch);
-			Rectangle frame = new(256 - (int)((Projectile.localAI[2] * 600) % 256), 0, (int)dist, 256);
-			data.scale.X = 1;
-			data.scale.Y *= 2;
-			data.texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape].Value;
-			float progress = 1 - Projectile.localAI[1] / 1;
-			progress *= progress;
-			if (IsActive) progress = 1;
-			Min(ref progress, 1);
-			data.color *= progress;
-			Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 24;
-			data.position = position + offset;
-			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
-			data.sourceRect = frame;
-			data.Draw(Main.spriteBatch);
-			data.position = position - offset;
-			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
-			data.sourceRect = frame;
+			beamShader.Apply(null,
+				BeamParams.uColorMatrix1 with { Value = colors.InitialMult },
+				BeamParams.uFinalColorMatrix with { Value = colors.FinalColor },
+				BeamParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
+				BeamParams.uShaderSpecificData with { Value = new Vector4(colors.ExtraBeamData, 0) }
+			);
 			data.Draw(Main.spriteBatch);
 			return false;
 		}

@@ -16,6 +16,10 @@ float2 uOffset;
 float uScale;
 float4 uShaderSpecificData;
 float2 uLoopData;
+matrix<float, 4, 4> uColorMatrix0;
+matrix<float, 4, 4> uColorMatrix1;
+matrix<float, 4, 4> uFinalColorMatrix;
+matrix<float, 4, 4> uOverbrightMatrix;
 
 float4 Beam(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	if (uLoopData.y == 0) {
@@ -32,8 +36,20 @@ float4 Beam(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	return color * tex2D(uImage0, uv);
 }
 
+float4 StarSoldierLaser(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	float4 value = tex2D(uImage0, uv)
+	+ tex2D(uImage0, uv + uShaderSpecificData.xy) * uShaderSpecificData.z
+	+ tex2D(uImage0, uv - uShaderSpecificData.xy) * uShaderSpecificData.z;
+	value = mul(uColorMatrix1, value);
+	float4 overbrightness = max(value - float4(1, 1, 1, 1), float4(0, 0, 0, 0));
+	return mul(uFinalColorMatrix, value - overbrightness) + mul(uOverbrightMatrix, overbrightness);
+}
+
 technique Technique1 {
 	pass Beam {
 		PixelShader = compile ps_2_0 Beam();
+	}
+	pass StarSoldierLaser {
+		PixelShader = compile ps_2_0 StarSoldierLaser();
 	}
 }
