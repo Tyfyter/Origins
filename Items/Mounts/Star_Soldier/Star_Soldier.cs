@@ -21,6 +21,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static PegasusLib.Sets.ShaderSets.Armor;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -460,7 +461,7 @@ public class Star_Soldier : ModMount {
 		WeaponColors.Create(0.063f, 0.863f, 0.051f),
 		new(1f / 3, 0.075f, 0.25f)
 	) {
-		Scale = 0.85f
+		Scale = 0.9f
 	};
 	public static readonly WeaponColors RGB = new(
 		Matrix.Multiply(new(
@@ -477,13 +478,15 @@ public class Star_Soldier : ModMount {
 			0, 0, 0, 0
 		),
 		default
-	);
+	) {
+		Scale = 1.3f
+	};
 	public static readonly WeaponColors Plasma = WeaponColors.CreateGradient(
 		new Color(187, 10, 251),
 		new(new Color(82, 103, 255), -0.35f, 5),
 		new(new Color(212, 0, 95), -0.5f, 2)
 	) with {
-		Scale = 1.15f
+		Scale = 1.7f
 	};
 	public static IReadOnlyDictionary<string, WeaponColors> NameColors { get; } = new Dictionary<string, WeaponColors>(StringComparer.OrdinalIgnoreCase) {
 		["Faust"] = Chrysalis,
@@ -1171,6 +1174,13 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				hitAOEShader.CreateParameter(ref AOEParams.uOverbrightMatrix, nameof(AOEParams.uOverbrightMatrix), Matrix.Identity);
 				hitAOEShader.CreateParameter(ref AOEParams.uOverbrightMax, nameof(AOEParams.uOverbrightMax), new Vector4(float.PositiveInfinity));
 			});
+
+			RainbowDyes = [
+				GameShaders.Armor.GetShaderIdFromItemId(ItemID.RainbowDye),
+				GameShaders.Armor.GetShaderIdFromItemId(ItemID.IntenseRainbowDye),
+				GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye),
+				GameShaders.Armor.GetShaderIdFromItemId(ItemID.MidnightRainbowDye)
+			];
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
@@ -1196,6 +1206,13 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				}
 			}
 		}
+		public static HashSet<int> RainbowDyes;
+		/*public static ArmorShaderSet<bool> HasDye { get; } = new() { // use me when "ForceInitialize" from PegasusLib is usable by other mods
+			[(Main.pixelShader, "ArmorColoredRainbow")] = true,
+			[(Main.pixelShader, "ArmorBrightnessRainbow")] = true,
+			[(Main.pixelShader, "ArmorLivingRainbow")] = true,
+			[(Main.pixelShader, "ArmorMidnightRainbow")] = true
+		};*/
 		public override void AI() {
 			if (!Projectile.TryGetOwner(out Player owner) || Star_Soldier.GetHandler(owner) is not Star_Soldier.MountHandler handler) {
 				Projectile.Kill();
@@ -1206,8 +1223,9 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				Projectile.Kill();
 				return;
 			}
-			if (colors.Scale == 0 && !Star_Soldier.NameColors.TryGetValue(owner.name, out colors)) {
-				colors = Star_Soldier.DefaultColors;
+			if (colors.Scale == 0) {
+				if (!Star_Soldier.NameColors.TryGetValue(owner.name, out colors)) colors = Star_Soldier.DefaultColors;
+				if (RainbowDyes.Contains(owner.cMount)) colors = Star_Soldier.RGB;
 			}
 			Projectile.velocity = arm.gunRotation.ToRotationVector2();
 			arm.GetPositions(owner.MountedCenter, owner.fullRotation, owner.Directions, out _, out _, out Projectile.position);
@@ -1238,13 +1256,14 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
+			Star_Soldier.WeaponColors activeColors = colors == Star_Soldier.DefaultColors && OriginsModIntegrations.CheckAprilFools() ? Star_Soldier.RGB : colors;
 			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
 				AOEParams.uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
-				AOEParams.uColorMatrix1 with { Value = colors.InitialMult },
-				AOEParams.uFinalColorMatrix with { Value = colors.FinalColor },
-				AOEParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
-				AOEParams.uOverbrightMax with { Value = colors.OverbrightMax }
+				AOEParams.uColorMatrix1 with { Value = activeColors.InitialMult },
+				AOEParams.uFinalColorMatrix with { Value = activeColors.FinalColor },
+				AOEParams.uOverbrightMatrix with { Value = activeColors.OverbrightColor },
+				AOEParams.uOverbrightMax with { Value = activeColors.OverbrightMax }
 			);
 			Main.spriteBatch.Draw(
 				TextureAssets.Projectile[Type].Value,
@@ -1274,22 +1293,22 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				default,
 				rotation,
 				Vector2.UnitY * 128,
-				new Vector2(1, 48 * scale * colors.Scale),
+				new Vector2(1, 48 * scale * activeColors.Scale),
 				0
 			);
 			beamShader.Apply(null,
-				BeamParams.uColorMatrix1 with { Value = colors.InitialMult },
-				BeamParams.uFinalColorMatrix with { Value = colors.FinalColor },
-				BeamParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
-				BeamParams.uOverbrightMax with { Value = colors.OverbrightMax },
-				BeamParams.uShaderSpecificData with { Value = new Vector4(colors.ExtraBeamData, 0) }
+				BeamParams.uColorMatrix1 with { Value = activeColors.InitialMult },
+				BeamParams.uFinalColorMatrix with { Value = activeColors.FinalColor },
+				BeamParams.uOverbrightMatrix with { Value = activeColors.OverbrightColor },
+				BeamParams.uOverbrightMax with { Value = activeColors.OverbrightMax },
+				BeamParams.uShaderSpecificData with { Value = new Vector4(activeColors.ExtraBeamData, 0) }
 			);
 			data.Draw(Main.spriteBatch);
 			beamShader.Apply(null,
-				BeamParams.uColorMatrix1 with { Value = colors.InitialMult },
-				BeamParams.uFinalColorMatrix with { Value = colors.FinalColor },
-				BeamParams.uOverbrightMatrix with { Value = colors.OverbrightColor },
-				BeamParams.uOverbrightMax with { Value = colors.OverbrightMax },
+				BeamParams.uColorMatrix1 with { Value = activeColors.InitialMult },
+				BeamParams.uFinalColorMatrix with { Value = activeColors.FinalColor },
+				BeamParams.uOverbrightMatrix with { Value = activeColors.OverbrightColor },
+				BeamParams.uOverbrightMax with { Value = activeColors.OverbrightMax },
 				BeamParams.uShaderSpecificData with { Value = Vector4.Zero }
 			);
 			/*Main.spriteBatch.Draw(
