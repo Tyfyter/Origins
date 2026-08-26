@@ -150,11 +150,6 @@ public class Star_Soldier : ModMount {
 				SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), player.Bottom);
 			}
 		}
-		public record class Star_Soldier_Weapon_Sound(Player Player, int ItemType) : AutoSyncedAction {
-			public Star_Soldier_Weapon_Sound() : this(default, default) { }
-			protected override bool ShouldPerform => Player.active && !Player.dead;
-			protected override void Perform() => SoundEngine.PlaySound(ContentSamples.ItemsByType[ItemType].UseSound, Player.MountedCenter);
-		}
 		public struct Arm {
 			public Item item;
 			public int itemAnimation;
@@ -195,11 +190,11 @@ public class Star_Soldier : ModMount {
 					if (itemAnimation == 0) WithItemTimeOverride(StartUseAnimation);
 					control = false;
 				}
-				itemAnimation.Cooldown();
 				itemTime.Cooldown();
 				if (itemTime <= 0 && itemAnimation > 0) {
 					WithItemTimeOverride(StartUseItem);
 				}
+				itemAnimation.Cooldown();
 			}
 			readonly void StartUseAnimation() {
 				if (!Weapon.CanUseItem(player)) return;
@@ -298,8 +293,13 @@ public class Star_Soldier : ModMount {
 				}
 			}
 		}
-
+		public record class Star_Soldier_Weapon_Sound(Player Player, int ItemType) : AutoSyncedAction {
+			public Star_Soldier_Weapon_Sound() : this(default, default) { }
+			protected override bool ShouldPerform => Player.active && !Player.dead;
+			protected override void Perform() => SoundEngine.PlaySound(ContentSamples.ItemsByType[ItemType].UseSound, Player.MountedCenter);
+		}
 	}
+	#region mount handling
 	public override void SetStaticDefaults() {
 		MountData.buff = ModContent.BuffType<Star_Soldier_Proper_Buff>();
 		{// both are 0 so it can have a custom animated jump
@@ -415,6 +415,7 @@ public class Star_Soldier : ModMount {
 		}
 		return false;
 	}
+	#endregion
 	public class Star_Soldier_UI : SwitchableUIState {
 		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
 		public override bool IsActive() => Main.LocalPlayer.mount.IsMount<Star_Soldier>();
@@ -435,6 +436,16 @@ public class Star_Soldier : ModMount {
 			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale.XY());
 		}
 	}
+	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {
+		public Star_Soldier_Set_Weapons() : this(default, default, default) { }
+		protected override bool ShouldPerform => Player.active && !Player.dead;
+		protected override void Perform() {
+			if (GetHandler(Player) is not MountHandler handler) return;
+			handler.chosenItem.item.SetDefaults(MainHand);
+			handler.altItem.item.SetDefaults(OffHand);
+		}
+	}
+	#region colors
 	public static readonly WeaponColors DefaultColors = new(1, WeaponColors.Create(255, 100, 0));
 	public static readonly WeaponColors Chrysalis = new(
 		Matrix.Multiply(Matrix.Identity, 5) with { M41 = 1, M44 = 0 },
@@ -549,9 +560,11 @@ public class Star_Soldier : ModMount {
 			public GradientData(Color Color, float Start, float Factor) : this(Color.ToVector4() * new Vector4(1, 1, 1, 0), Start, Factor) { }
 		}
 	}
+	#endregion
 }
 public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	public Asset<Texture2D> Icon { get; private set; }
+	public static IReadOnlyList<Star_Soldier_Weapon> Weapons => field ??= ModContent.GetContent<Star_Soldier_Weapon>().OrderBy(w => w.Item.DamageType.Type).ToList();
 	public override ModItem NewInstance(Item entity) {
 		Star_Soldier_Weapon item = (Star_Soldier_Weapon)base.NewInstance(entity);
 		item.Icon = Icon;
@@ -613,7 +626,12 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override bool NeedsAmmo(Player player) {
 		if (needsAmmoChecking) return true;
 		using (needsAmmoChecking.ScopedOverride(true)) {
-			usedFakeAmmo = ItemLoader.NeedsAmmo(Item, player);
+			usedFakeAmmo = CombinedHooks.CanConsumeAmmo(player, Item, new(ItemID.MusketBall, ammo))
+				&& (!player.ammoPotion || Main.rand.NextBool(4, 5))
+				&& (!player.huntressAmmoCost90 || Main.rand.NextBool(9, 10))
+				&& (!player.chloroAmmoCost80 || Main.rand.NextBool(4, 5))
+				&& (!player.ammoCost80 || Main.rand.NextBool(4, 5))
+				&& (!player.ammoCost75 || Main.rand.NextBool(3, 4));
 		}
 		return false;
 	}
@@ -957,6 +975,63 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		}
 	}
 }
+public class Star_Soldier_Droner : Star_Soldier_Weapon {
+	static int AmmoMax => 1;
+	static int ReloadLength => 15 * 60;
+	int ammo = AmmoMax;
+	int reloadTime = 0;
+	public override void SetStaticDefaults() {
+		Origins.AddGlowMask(this);
+	}
+	public override void SetDefaults() {
+		Item.damage = 54;
+		Item.DamageType = DamageClass.Summon;
+		Item.useAnimation = 12;
+		Item.useTime = 12;
+		Item.shootSpeed = 15;
+		Item.knockBack = 4f;
+		Item.useAmmo = AmmoID.Rocket;
+		Item.shoot = ProjectileID.RocketI;
+		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
+		Item.useStyle = ItemUseStyleID.Shoot;
+		Item.autoReuse = true;
+	}
+	public override bool CanUseItem(Player player) => ammo > 0;
+	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
+	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
+		if (arm.itemAnimation != 0) {
+			reloadTime = 0;
+			if (arm.itemTime == arm.itemTimeMax) ammo--;
+		} else if (ammo < AmmoMax) {
+			if (reloadTime.CycleUp(ReloadLength)) {
+				SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.Center);
+				ammo.Warmup(AmmoMax);
+			}
+		}
+	}
+	/*public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1f), player.Center);
+	}*/
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+		int width = 64;
+		int segment = width / AmmoMax;
+		for (int i = 0; i < AmmoMax; i++) {
+			Color color = Color.OrangeRed;
+			if (i >= ammo) color = Color.Black;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				position,
+				new Rectangle(0, 0, segment, 4),
+				color,
+				0,
+				new Vector2(segment * 0.5f, 2),
+				1,
+				SpriteEffects.None,
+			0);
+		}
+		position.Y += 8;
+	}
+}
 public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	static int AmmoMax => 4;
 	static int ReloadLength => 3 * 60 / AmmoMax;
@@ -967,13 +1042,17 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 	}
 	public override void SetDefaults() {
-		Item.CloneDefaults(ItemID.RocketLauncher);
 		Item.damage = 54;
+		Item.DamageType = DamageClasses.Explosive;
 		Item.useAnimation = 48;
 		Item.useTime = 12;
 		Item.shootSpeed = 15;
-		Item.reuseDelay = 60;
+		Item.knockBack = 4f;
+		Item.useAmmo = AmmoID.Rocket;
+		Item.shoot = ProjectileID.RocketI;
 		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
+		Item.useStyle = ItemUseStyleID.Shoot;
+		Item.autoReuse = true;
 	}
 	public override bool CanUseItem(Player player) => !reloading && ammo > 0;
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
@@ -1040,13 +1119,11 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 			if (leftClickSelection is null || rightClickSelection is null) return;
 			if (++time > 60) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
-				Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(player);
-				handler.chosenItem.item.SetDefaults(leftClickSelection.Type);
-				handler.altItem.item.SetDefaults(rightClickSelection.Type);
+				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
 			}
 		}
 		public bool ModifyControls(Player player) {
-			ReadOnlyCollection<Star_Soldier_Weapon> options = (ReadOnlyCollection<Star_Soldier_Weapon>)ModContent.GetContent<Star_Soldier_Weapon>();
+			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			if (PlayerInput.ScrollWheelDelta.Abs(out int dir) >= 120) {
 				if (dir < 0) hoverIndex.CycleUp(options.Count);
 				else hoverIndex.CycleDownWithZero(options.Count);
@@ -1071,7 +1148,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 			return false;
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
-			ReadOnlyCollection<Star_Soldier_Weapon> options = (ReadOnlyCollection<Star_Soldier_Weapon>)ModContent.GetContent<Star_Soldier_Weapon>();
+			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			Player player = Main.LocalPlayer;
 			Vector2 pos = player.MountedCenter - Main.screenPosition;
 
