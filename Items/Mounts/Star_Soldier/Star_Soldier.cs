@@ -613,7 +613,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.damage = 69;
+		Item.damage = 390;
 		Item.DamageType = DamageClass.Melee;
 		Item.useAnimation = 35;
 		Item.useTime = 35;
@@ -626,6 +626,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		Item.shoot = ModContent.ProjectileType<Star_Soldier_Blade_P>();
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
+		Item.UseSound = SoundID.Item105.WithPitch(-0.8f);
 	}
 	public override bool CanUseItem(Player player) => cooldown == 0;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
@@ -1406,7 +1407,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 }
 public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	static int AmmoMax => 4;
-	static int ReloadLength => 60 / AmmoMax;
+	static int ReloadLength => 100 / AmmoMax;
 	int ammo = AmmoMax;
 	int reloadTime = 0;
 	bool reloading = false;
@@ -1414,7 +1415,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 	}
 	public override void SetDefaults() {
-		Item.damage = 54;
+		Item.damage = 108;
 		Item.DamageType = DamageClasses.Explosive;
 		Item.useAnimation = 48;
 		Item.useTime = 12;
@@ -1436,8 +1437,12 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 			if (arm.itemTime == arm.itemTimeMax) ammo--;
 		} else if (reloading) {
 			if (reloadTime.CycleUp(ReloadLength)) {
-				SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.MountedCenter);
-				if (ammo.Warmup(AmmoMax)) reloading = false;
+				SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f).WithVolume(0.35f), player.MountedCenter);
+				if (ammo.Warmup(AmmoMax)) {
+					SoundEngine.PlaySound(SoundID.Item108.WithPitch(-0.5f).WithVolume(0.5f), player.MountedCenter);
+					SoundEngine.PlaySound(SoundID.Item103.WithPitch(1.5f).WithVolume(0.5f), player.MountedCenter);
+					reloading = false;
+				}
 			}
 		} else if (ammo < AmmoMax) {
 			reloading = true;
@@ -1445,6 +1450,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	}
 	public override void PlaySound(Player player) {
 		SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1f), player.MountedCenter);
+		SoundEngine.PlaySound(SoundID.Item113.WithPitch(1.2f), player.MountedCenter);
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		int width = 64;
