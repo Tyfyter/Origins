@@ -21,7 +21,6 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Mounts.Star_Soldier.Star_Soldier_Laser;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -170,6 +169,7 @@ public class Star_Soldier : ModMount {
 				gunPos = forearmPos + (new Vector2(20, 16) * directions).RotatedBy(baseRotation + forearmRotation);
 			}
 			public void UpdateRotations(Player player) {
+				if (!Weapon.UpdateRotations(player, ref this)) return;
 				Vector2 relativeTarget = player.OriginPlayer().relativeTarget;
 				GetPositions(GetBodyCenter(player, player.Center), player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
 				float targetRotation = (relativeTarget + player.Bottom - gunPos).ToRotation();
@@ -293,6 +293,7 @@ public class Star_Soldier : ModMount {
 					data.color = Color.White;
 					playerDrawData.Add(data);
 				}
+
 			}
 		}
 		public record class Star_Soldier_Weapon_Sound(Player Player, int ItemType) : AutoSyncedAction {
@@ -495,7 +496,10 @@ public class Star_Soldier : ModMount {
 	public record struct WeaponColors(Matrix InitialMult, Matrix FinalColor, Matrix OverbrightColor, Vector3 ExtraBeamData) {
 		public float Scale { get; set; } = 1;
 		public Vector4 OverbrightMax { get; set; } = new(float.PositiveInfinity);
+		public float DustMinBrightness { get; set; } = 0;
+		public float DustMaxBrightness { get; set; } = 1;
 		public WeaponColors(float InitialMult, Matrix FinalColor) : this(Matrix.Multiply(Matrix.Identity with { M44 = 0 }, InitialMult), FinalColor, Matrix.Identity with { M44 = 0 }, new(1f / 3, 0.075f, 1.2f)) { }
+		public readonly Vector4 GetDustColor() => GetColor(Main.rand.NextFloat(DustMinBrightness, DustMaxBrightness));
 		public readonly Vector4 GetColor(float brightness) {
 			Vector4 color = new(brightness, brightness, brightness, 1);
 			color = Vector4.Transform(color, Matrix.Transpose(InitialMult));
@@ -588,6 +592,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	}
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
 	public virtual void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) { }
+	public virtual bool UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) => true;
 	public override bool NeedsAmmo(Player player) => false;
 	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale);
 	public virtual void PlaySound(Player player) { }
@@ -602,15 +607,15 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 	public override void SetDefaults() {
 		Item.damage = 69;
 		Item.DamageType = DamageClass.Melee;
-		Item.useAnimation = 30;
-		Item.useTime = 30;
-		Item.shootSpeed = 19;
+		Item.useAnimation = 35;
+		Item.useTime = 35;
+		Item.shootSpeed = 1;
 		//Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
 		Item.width = 60;
 		Item.height = 26;
-		Item.shoot = ModContent.ProjectileType<Star_Soldier_Laser_Beam>();
+		Item.shoot = ModContent.ProjectileType<Star_Soldier_Blade_P>();
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
 	}
@@ -620,6 +625,9 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		if (arm.itemAnimation != 0) cooldown = CooldownTime;
 		if (cooldown == 0) cooldownAlpha.Cooldown(rate: 1f / 15);
 		else cooldownAlpha = 1;
+	}
+	public override bool UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) {
+		return true;
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		if (this.cooldownAlpha == 0 || cooldown >= CooldownTime) return;
@@ -650,30 +658,44 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		position.Y += 8 * float.Pow(Utils.GetLerpValue(0, 0.4f, this.cooldownAlpha, true), 2);
 	}
 	public class Star_Soldier_Blade_P : ModProjectile, IElementalProjectile {
+		static readonly AdvancedMiscShaderData bladeShader = new(ModContent.Request<Effect>("Origins/Effects/Strip"), "StarSoldierLaserBlade", [
+			new("uColorMatrix0", Matrix.Identity with { M44 = 0 })
+		]);
+		public static Parameter uColorMatrix1;
+		public static Parameter uFinalColorMatrix;
+		public static Parameter uOverbrightMatrix;
+		public static Parameter uOverbrightMax;
 		public const int trail_length = 20;
 		public ushort Element => Elements.Fire;
 		public override string Texture => "Origins/Items/Weapons/Melee/Personal_Laser_Blade";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = -1;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = trail_length * 2;
 			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			ID = Type;
+			bladeShader.LoadThen(() => {
+				bladeShader.CreateParameter(ref uColorMatrix1, nameof(uColorMatrix1), Matrix.Identity with { M44 = 0 });
+				bladeShader.CreateParameter(ref uFinalColorMatrix, nameof(uFinalColorMatrix), Matrix.Identity);
+				bladeShader.CreateParameter(ref uOverbrightMatrix, nameof(uOverbrightMatrix), Matrix.Identity);
+				bladeShader.CreateParameter(ref uOverbrightMax, nameof(uOverbrightMax), new Vector4(float.PositiveInfinity));
+			});
 		}
-		protected const int HitboxSteps = 5;
-		protected const float Startup = 0.25f;
-		protected const float End = 0.25f;
-		protected const float SwingStartVelocity = 1f;
-		protected const float SwingEndVelocity = 1f;
-		protected const float TimeoutVelocity = 1f;
-		protected const float MinAngle = -2.5f;
-		protected const float MaxAngle = 2.5f;
+		protected static int HitboxSteps => 7;
+		protected static float Startup => 0.25f;
+		protected static float End => 0.25f;
+		protected static float SwingStartVelocity => 1f;
+		protected static float SwingEndVelocity => 1f;
+		protected static float TimeoutVelocity => 1f;
+		protected static float MinAngle => -2.5f;
+		protected static float MaxAngle => 2.5f;
 		protected Rectangle lastHitHitbox;
+		Star_Soldier.WeaponColors colors;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
-			Projectile.width = 16;
-			Projectile.height = 16;
+			Projectile.width = 24;
+			Projectile.height = 24;
 			Projectile.aiStyle = 0;
 			Projectile.extraUpdates = 3;
 			Projectile.usesLocalNPCImmunity = true;
@@ -687,6 +709,13 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 				itemUse.Player.ApplyMeleeScale(ref Projectile.scale);
 				Projectile.ai[1] = itemUse.Player.direction;
 			}
+			string[] contextArgs = source?.Context?.Split(';') ?? [];
+			for (int i = 0; i < contextArgs.Length; i++) {
+				if (contextArgs[i].StartsWith(nameof(Star_Soldier))) {
+					_ = float.TryParse(contextArgs[i][nameof(Star_Soldier).Length..], out Projectile.ai[0]);
+					break;
+				}
+			}
 		}
 		protected float SwingFactor {
 			get => Projectile.ai[2];
@@ -694,40 +723,23 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
-			Player player = Main.player[Projectile.owner];
-			if (!player.active || player.dead) {
+			if (!Projectile.TryGetOwner(out Player player) || Star_Soldier.GetHandler(player) is not Star_Soldier.MountHandler handler) {
 				Projectile.Kill();
 				return;
 			}
-			if (player.channel) {
-				Projectile.timeLeft = player.itemTimeMax * Projectile.MaxUpdates;
-				if (Projectile.owner == Main.myPlayer) {
-					Vector2 newVel = (Main.MouseWorld - Projectile.Center).SafeNormalize(default);
-					if (Projectile.velocity != newVel) {
-						Projectile.velocity = newVel;
-						Projectile.netUpdate = true;
-					}
-				}
-				player.SetDummyItemTime(player.itemTimeMax - 1);
-				Projectile.ai[0] += 1f / Projectile.timeLeft;
-				if (Projectile.ai[0] >= 1) {
-					Projectile.ai[0] = 1;
-					player.channel = false;
-					Projectile.timeLeft += Projectile.timeLeft / 2;
-				}
-				Projectile.width = (int)(16 * (1 + Projectile.ai[0] * Projectile.ai[0]));
-				Projectile.height = Projectile.width;
+			ref Star_Soldier.MountHandler.Arm arm = ref (Projectile.ai[0] == 1 ? ref handler.altItem : ref handler.chosenItem);
+			if (arm.itemAnimation <= 0) {
+				Projectile.Kill();
+				return;
 			}
-			if (player.itemTime <= 2) {
-				Projectile.localAI[2] = 1;
+			Projectile.hide = (Projectile.ai[0] == 1) == (player.direction == 1);
+			if (Projectile.hide) player.heldProj = Projectile.whoAmI;
+			if (colors.Scale == 0 && !Star_Soldier.NameColors.TryGetValue(player.name, out colors)) {
+				colors = Star_Soldier.DefaultColors;
 			}
 			float updateOffset = (Projectile.MaxUpdates - (Projectile.numUpdates + 1)) / (float)(Projectile.MaxUpdates + 1);
-			SwingFactor = ((player.itemTime - updateOffset) / (float)player.itemTimeMax) * (1 + Startup + End) - End;
+			SwingFactor = ((arm.itemTime - updateOffset) / (float)arm.itemTimeMax) * (1 + Startup + End) - End;
 			if (SwingFactor > 0) SwingFactor = MathHelper.Lerp(MathF.Pow(SwingFactor, 2f), MathF.Pow(SwingFactor, 0.5f), SwingFactor * SwingFactor);
-			if (Projectile.localAI[2] == 1) {
-				player.SetDummyItemTime(2);
-				SwingFactor = 0;
-			}
 			Projectile.rotation = MathHelper.Lerp(
 				MaxAngle,
 				MinAngle,
@@ -735,50 +747,33 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 			) * Projectile.ai[1] * player.gravDir;
 
 			float realRotation = Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() * player.gravDir;
-			player.heldProj = Projectile.whoAmI;
-			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetCompositeArmPosition(false);
-			player.itemLocation = Projectile.Center + GeometryUtils.Vec2FromPolar(26, realRotation + 0.3f * player.direction);
-			player.itemRotation = player.compositeFrontArm.rotation;
+			arm.shoulderRotation = realRotation + (SwingFactor - 1) * 1.65f * Projectile.ai[1];
+			arm.forearmRotation = realRotation - (SwingFactor - 1) * 0.1f * Projectile.ai[1];
+			arm.gunRotation = realRotation - (SwingFactor - 1) * 0.25f * Projectile.ai[1];
+			arm.GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Projectile.position);
+			Projectile.position -= Projectile.Size * 0.5f;
+			Projectile.position += arm.gunRotation.ToRotationVector2() * 52;
+			Projectile.localAI[2] = arm.gunRotation;
+
 			player.direction = Math.Sign(Projectile.velocity.X);
-			if (Projectile.localAI[1] > 0) {
-				Projectile.localAI[1]--;
-			}
+			Projectile.localAI[1].Cooldown();
 			EmitEnchantmentVisuals();
+			for (int i = Projectile.oldPos.Length - 1; i > 0; i--) {
+				Projectile.oldPos[i] = Projectile.oldPos[i - 1];
+				Projectile.oldRot[i] = Projectile.oldRot[i - 1];
+				Projectile.oldSpriteDirection[i] = Projectile.oldSpriteDirection[i - 1];
+			}
+			Projectile.oldPos[0] = Projectile.position;
+			Projectile.oldRot[0] = Projectile.localAI[2];
+			Projectile.oldSpriteDirection[0] = Projectile.spriteDirection;
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			if (Projectile.hide) overPlayers.Add(index);
 		}
 		public virtual void EmitEnchantmentVisuals() {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.95f;
-			float velocityMult = 0;
-			float rotMult = 0.15f;
-			if (Projectile.localAI[2] == 0) {
-				if (Main.player[Projectile.owner].channel) {
-					velocityMult = 2;
-				} else {
-					velocityMult = 8;
-					rotMult = 0.05f;
-				}
-			}
-			Color dustColor = Color.Magenta;
-			switch (GetBladeColor()) {
-				case BladeColor.DEFAULT:
-				dustColor = new(0, 225, 255, 64);
-				break;
-				case BladeColor.STUN:
-				dustColor = new(255, 255, 0, 64);
-				break;
-				case BladeColor.PULSE:
-				dustColor = new(80, 255, 219, 64);
-				break;
-				case BladeColor.CORAL:
-				dustColor = new(255, 32, 20, 64);
-				break;
-				case BladeColor.CHRYSALIS:
-				dustColor = new(12, 168, 10, 32);
-				break;
-				case BladeColor.FAILURE:
-				dustColor = new(156, 191, 255, 64);
-				break;
-			}
+			Vector2 vel = Projectile.localAI[2].ToRotationVector2() * Projectile.velocity.Length() * Projectile.width * 0.95f;
+			float velocityMult = 8;
+			float rotMult = 0.05f;
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
 				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < 1 + Projectile.ai[0]) {
@@ -786,7 +781,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 						Projectile.position + vel * j,
 						Projectile.width, Projectile.height,
 						DustID.PortalBoltTrail,
-						newColor: dustColor
+						newColor: new(colors.GetDustColor())
 					);
 					dust.velocity = dust.velocity * 0.25f + Projectile.velocity.RotatedBy(Projectile.rotation * rotMult) * velocityMult;
 					dust.position += dust.velocity * 2;
@@ -796,11 +791,11 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Vector2 end = Projectile.Center + (Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * HitboxSteps);
+			Vector2 end = Projectile.Center + (Projectile.localAI[2].ToRotationVector2() * Projectile.velocity.Length() * Projectile.width * HitboxSteps);
 			Utils.PlotTileLine(Projectile.Center, end, Projectile.width, DelegateMethods.CutTiles);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width;
+			Vector2 vel = Projectile.localAI[2].ToRotationVector2() * Projectile.velocity.Length() * Projectile.width;
 			Vector2 additionalOffset = vel.SafeNormalize(default) * 12;
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Rectangle hitbox = projHitbox;
@@ -815,55 +810,9 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			LaserBladeDrawer trailDrawer = default;
-			switch (GetBladeColor()) {
-				case BladeColor.DEFAULT:
-				trailDrawer.TrailColor = new(0, 35, 35, 0);
-				trailDrawer.BladeColor = new(0, 255, 255, 128);
-				trailDrawer.BladeSecondaryColor = new(0, 180, 255, 64);
-				break;
-				case BladeColor.STUN:
-				trailDrawer.TrailColor = new(35, 35, 0, 0);
-				trailDrawer.BladeColor = new(255, 255, 0, 128);
-				trailDrawer.BladeSecondaryColor = new(255, 255, 130, 64);
-				break;
-				case BladeColor.PULSE:
-				trailDrawer.TrailColor = new(15, 35, 30, 0);
-				trailDrawer.BladeColor = new(80, 255, 219, 128);
-				trailDrawer.BladeSecondaryColor = new(130, 255, 255, 64);
-				break;
-				case BladeColor.CORAL:
-				trailDrawer.TrailColor = new(35, 17, 11, 0);
-				trailDrawer.BladeColor = new(240, 128, 128, 128);
-				trailDrawer.BladeSecondaryColor = new(255, 127, 80, 64);
-				break;
-				case BladeColor.CHRYSALIS:
-				trailDrawer.TrailColor = new(11, 84, 91, 255);
-				trailDrawer.BladeColor = new(88, 196, 84, 64);
-				trailDrawer.BladeSecondaryColor = new(11, 84, 91, 64);
-				break;
-				case BladeColor.FAILURE:
-				trailDrawer.TrailColor = new(156, 191, 255, 255);
-				trailDrawer.BladeColor = new(255, 255, 255, 64);
-				trailDrawer.BladeSecondaryColor = new(156, 191, 255, 64);
-				break;
-			}
 			trailDrawer.Length = Projectile.velocity.Length() * Projectile.width * 0.9f * HitboxSteps;
-			trailDrawer.Draw(Projectile);
+			trailDrawer.Draw(Projectile, in colors);
 			return false;
-		}
-		public BladeColor GetBladeColor() {
-			switch ((Main.player.GetIfInRange(Projectile.owner)?.name ?? "").ToLower()) {
-				default:
-				return BladeColor.DEFAULT;
-				case "ceroba":
-				return BladeColor.STUN;
-				case "rei" or "reivax" or "dio":
-				return BladeColor.CORAL;
-				case "jennifer" or "jennifer_alt" or "faust" or "kathleen":
-				return BladeColor.CHRYSALIS;
-				case "chee" or "xiqi" or "chrersis":
-				return BladeColor.FAILURE;
-			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
@@ -871,27 +820,26 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
 		}
-		public enum BladeColor {
-			DEFAULT,
-			STUN,
-			PULSE,
-			CORAL,
-			CHRYSALIS,
-			FAILURE
-		}
 		public struct LaserBladeDrawer {
 
 			private static VertexStrip _vertexStrip = new();
 
-			public Color TrailColor;
-			public Color BladeColor;
-			public Color BladeSecondaryColor;
+			static Color TrailColor = new(35, 35, 35, 0);
+			static Color BladeColor = new(255, 255, 255, 128);
+			static Color BladeSecondaryColor = new(255, 255, 255, 64);
 
 			public float Length;
 
 			int[] spriteDirections;
-			public void Draw(Projectile proj) {
-				if (!Main.player[proj.owner].channel) {
+			public void Draw(Projectile proj, in Star_Soldier.WeaponColors colors) {
+				if (renderTarget is null) {
+					Main.QueueMainThreadAction(SetupRenderTargets);
+					Main.OnResolutionChanged += Resize;
+					return;
+				}
+				Origins.shaderOroboros.Capture();
+				Main.graphics.GraphicsDevice.Clear(Color.Black);
+				{
 					MiscShaderData miscShaderData = GameShaders.Misc["EmpressBlade"];
 					int num = 1;//1
 					int num2 = 0;//0
@@ -901,7 +849,6 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 					miscShaderData.Apply();
 					float[] oldRot = new float[proj.oldRot.Length];
 					Vector2[] oldPos = new Vector2[proj.oldPos.Length];
-					float baseRot = proj.velocity.ToRotation() + MathHelper.PiOver2;
 					Vector2 move = new(Length - 30, 0);
 					for (int i = 0; i < oldPos.Length; i++) {
 						if (proj.oldPos[i] == default) {
@@ -910,17 +857,16 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 							if (i == 0) return;
 							break;
 						}
-						oldRot[i] = proj.oldRot[i] + baseRot;
+						oldRot[i] = proj.oldRot[i] + MathHelper.PiOver2;
 						oldPos[i] = proj.oldPos[i] + move.RotatedBy(oldRot[i] - MathHelper.PiOver2);
 					}
 					spriteDirections = proj.oldSpriteDirection;
 					_vertexStrip.PrepareStrip(oldPos, oldRot, AfterimageColors, AfterimageWidth, -Main.screenPosition + proj.Size / 2f, oldPos.Length, includeBacksides: true);
 					_vertexStrip.DrawTrail();
-					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				}
 				{
 					MiscShaderData miscShaderData = GameShaders.Misc["Origins:LaserBlade"];
-					Vector2 velocity = proj.velocity.RotatedBy(proj.rotation) * Length * 1.333f;
+					Vector2 velocity = proj.localAI[2].ToRotationVector2() * Length * 1.333f;
 					Vector2[] positions = new Vector2[15];
 					for (int i = 0; i < positions.Length; i++) {
 						positions[i] = proj.Center + velocity * ((i + 1) / (float)(positions.Length + 1));
@@ -934,14 +880,24 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 					miscShaderData.Apply();
 					_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, BladeSecondaryColors, BladeWidth, -Main.screenPosition, true);
 					_vertexStrip.DrawTrail();
-					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 					miscShaderData.UseSaturation(0.5f);
 					miscShaderData.Apply();
 					_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, BladeColors, BladeWidth, -Main.screenPosition, true);
 					_vertexStrip.DrawTrail();
-					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				}
+				Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+				Origins.shaderOroboros.Reset(default);
+				using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate);
+				//Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, renderTarget.Width, renderTarget.Height), Color.Black);
+				bladeShader.Apply(null,
+					uColorMatrix1 with { Value = colors.InitialMult },
+					uFinalColorMatrix with { Value = colors.FinalColor },
+					uOverbrightMatrix with { Value = colors.OverbrightColor },
+					uOverbrightMax with { Value = colors.OverbrightMax }
+				);
+				Main.spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			}
 
 			private readonly Color AfterimageColors(float progressOnStrip) {
@@ -963,6 +919,16 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 			}
 			private readonly float BladeWidth(float progressOnStrip) {
 				return 24 - 8 * progressOnStrip;
+			}
+			static RenderTarget2D renderTarget;
+			static void Resize(Vector2 _) {
+				if (Main.dedServ) return;
+				renderTarget.Dispose();
+				SetupRenderTargets();
+			}
+			static void SetupRenderTargets() {
+				if (renderTarget is not null && !renderTarget.IsDisposed) return;
+				renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 			}
 		}
 	}
@@ -1250,7 +1216,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 
 			//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
 			//SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
-			Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.TintableDustLighted, newColor: new(colors.GetColor(Main.rand.NextFloat())));
+			Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.TintableDustLighted, newColor: new(colors.GetDustColor()));
 			Projectile.localAI[2] += 1f / 60;
 			TargetPos = targetPos;
 			//SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(++owner.ai[3] / 10).WithVolume(0.5f), Projectile.Center);

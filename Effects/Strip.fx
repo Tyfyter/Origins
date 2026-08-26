@@ -20,6 +20,11 @@ float4 uSourceRect1;
 float4 uAlphaMatrix0;
 float4 uAlphaMatrix1;
 float2x3 uUVMatrix0;
+matrix<float, 4, 4> uColorMatrix0;
+matrix<float, 4, 4> uColorMatrix1;
+matrix<float, 4, 4> uFinalColorMatrix;
+matrix<float, 4, 4> uOverbrightMatrix;
+float4 uOverbrightMax;
 
 float4 SapphireAura(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	float upi = uv.x * 3.14159265359 * 2;
@@ -46,9 +51,19 @@ float4 AnimatedTrail(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	return color * ApplyAlphaMatrix(tex2D(uImage0, (uv * uSourceRect0.zw) + uSourceRect0.xy), uAlphaMatrix0) * ApplyAlphaMatrix(tex2D(uImage1, (uv * uSourceRect1.zw) + uSourceRect1.xy), uAlphaMatrix1).a;
 }
 
-float4 LaserBlade(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+float4 LaserBladeBase(float2 uv, float saturation) {
 	float factor = 1.0 - ((abs(uv.y - 0.5f) + uv.x * 0.45) * (pow(uv.x, 0.5)) * 2);
-	return color * ApplyAlphaMatrix(tex2D(uImage0, uv + float2(uTime.x * uSaturation, 0)), uAlphaMatrix0) * factor * uOpacity;
+	return ApplyAlphaMatrix(tex2D(uImage0, uv + float2(uTime.x * uSaturation, 0)), uAlphaMatrix0) * factor * uOpacity;
+}
+float4 LaserBlade(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	return color * LaserBladeBase(uv, uSaturation);
+}
+
+float4 StarSoldierLaserBlade(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	float4 value = tex2D(uImage0, uv);
+	value = mul(uColorMatrix1, value);
+	float4 overbrightness = max(value - float4(1, 1, 1, 1), float4(0, 0, 0, 0));
+	return mul(uFinalColorMatrix, value - overbrightness) + mul(uOverbrightMatrix, min(overbrightness, uOverbrightMax));
 }
 
 float2 ApplySourceRect(float2 uv, float4 sourceRect) {
@@ -102,6 +117,9 @@ technique Technique1 {
 	}
 	pass LaserBlade {
 		PixelShader = compile ps_2_0 LaserBlade();
+	}
+	pass StarSoldierLaserBlade {
+		PixelShader = compile ps_2_0 StarSoldierLaserBlade();
 	}
 	pass OverbrightenLaserBlade {
 		PixelShader = compile ps_3_0 OverbrightenLaserBlade();
