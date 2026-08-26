@@ -8573,3 +8573,8 @@ Star_Soldier_Droner: {
 	DisplayName: Star Soldier Droner
 	Tooltip: ""
 }
+
+Star_Soldier_Blade: {
+	DisplayName: Star Soldier Blade
+	Tooltip: ""
+}

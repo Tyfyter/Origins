@@ -2343,6 +2343,7 @@ Projectiles: {
 	// Star_Cell_Tracker.DisplayName: Star Cell Tracker
 	// Toy_Trenchmaker.DisplayName: Toy Trenchmaker
 	// Star_Soldier_Laser_Beam.DisplayName: Star Soldier Laser Beam
+	// Star_Soldier_Blade_P.DisplayName: Star Soldier Blade P
 }
 
 Prefixes: {
