@@ -1416,7 +1416,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 }
 public class Star_Soldier_Pod : Star_Soldier_Weapon {
 	static int AmmoMax => 4;
-	static int ReloadLength => 3 * 60 / AmmoMax;
+	static int ReloadLength => 60 / AmmoMax;
 	int ammo = AmmoMax;
 	int reloadTime = 0;
 	bool reloading = false;
