@@ -42,6 +42,7 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 public class Star_Soldier : ModMount {
 	static int BodyTextureFrames => 5;
 	AutoLoadingTexture bodyTexture = typeof(Star_Soldier).GetDefaultTMLName();
+	AutoLoadingTexture bodyGlowTexture = typeof(Star_Soldier).GetDefaultTMLName("_Glow");
 	static int LegTextureFrames => 18;
 	AutoLoadingTexture frontLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Front_Leg");
 	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
@@ -393,7 +394,7 @@ public class Star_Soldier : ModMount {
 			});
 
 			frame = bodyTexture.Frame(verticalFrames: BodyTextureFrames, frameY: handler.bodyFrame);
-			playerDrawData.Add(new(
+			DrawData bodyData = new(
 				bodyTexture,
 				bodyCenter,
 				frame,
@@ -404,7 +405,11 @@ public class Star_Soldier : ModMount {
 				spriteEffects
 			) {
 				shader = drawPlayer.cMount
-			});
+			};
+			playerDrawData.Add(bodyData);
+			bodyData.texture = bodyGlowTexture;
+			bodyData.color = Color.White;
+			playerDrawData.Add(bodyData);
 
 			frame = frontLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
 			playerDrawData.Add(new(
