@@ -171,6 +171,7 @@ namespace Origins.Buffs {
 		public override string Texture => "Origins/Buffs/Torn_Debuff";
 		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.{LocalizationCategory}.Torn_Debuff.DisplayName");
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.{LocalizationCategory}.Torn_Debuff.Description");
+		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
