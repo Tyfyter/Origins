@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using PegasusLib;
 using PegasusLib.Graphics;
 using System.Collections.Generic;
@@ -136,7 +137,15 @@ namespace Origins.UI {
 			if (isActive) base.Update(gameTime);
 		}
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (isActive) base.Draw(spriteBatch);
+			if (!isActive) return;
+			if (!UseImmediateMode && OverrideSamplerState is null) {
+				base.Draw(spriteBatch);
+				return;
+			}
+			using (spriteBatch.OverrideState(UseImmediateMode ? SpriteSortMode.Immediate : SpriteSortMode.Deferred, samplerState: OverrideSamplerState)) {
+				DrawSelf(spriteBatch);
+			}
+			DrawChildren(spriteBatch);
 		}
 	}
 	public class StateSwitchingInterface : UserInterface {
