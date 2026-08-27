@@ -152,14 +152,18 @@ public class Star_Soldier : ModMount {
 				}
 			} else bodyFrame = 0;
 
-			GetArm(0).ItemCheck(player, ref player.controlUseItem);
-			GetArm(1).ItemCheck(player, ref player.controlUseTile);
-
 			static void StepSound(Player player) {
 				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitchRange(0.5f, 0.7f).WithVolume(0.3f), player.Bottom);
 				SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), player.Bottom);
 			}
 		}
+
+		public void ItemCheck(Player player) {
+			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened);
+			GetArm(0).ItemCheck(player, ref player.controlUseItem);
+			GetArm(1).ItemCheck(player, ref player.controlUseTile);
+		}
+
 		public struct Arm {
 			public Item item;
 			public int itemAnimation;
@@ -199,7 +203,6 @@ public class Star_Soldier : ModMount {
 				Weapon.UpdateEquipped(player, ref this, control);
 				if (control) {
 					if (itemAnimation == 0) WithItemTimeOverride(StartUseAnimation);
-					control = false;
 				}
 				itemTime.Cooldown();
 				if (itemTime <= 0 && itemAnimation > 0) {
@@ -379,7 +382,7 @@ public class Star_Soldier : ModMount {
 		GetHandler(player)?.Update(player);
 		player.OriginPlayer().mountOnly = true;
 	}
-
+	public static void ItemCheck(Player player) => GetHandler(player).ItemCheck(player);
 	public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) => false;
 	public static MountHandler GetHandler(Player player) {
 		if (!player.mount.IsMount<Star_Soldier>()) return null;

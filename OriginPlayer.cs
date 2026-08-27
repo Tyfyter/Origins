@@ -6,6 +6,7 @@ using Origins.Core;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
+using Origins.Items.Mounts.Star_Soldier;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Medicine;
@@ -987,6 +988,10 @@ namespace Origins {
 			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
 				itemUseOldDirection = Player.direction;
 				LunaticsRuneAttack.ItemCheck(Player);
+				return false;
+			}
+			if (Player.mount.IsMount<Star_Soldier>()) {
+				Star_Soldier.ItemCheck(Player);
 				return false;
 			}
 			if (disableUseItem) {
