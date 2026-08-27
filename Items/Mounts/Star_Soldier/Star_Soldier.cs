@@ -8,9 +8,11 @@ using Origins.Misc;
 using Origins.UI;
 using PegasusLib.Networking;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -21,6 +23,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
 using static PegasusLib.Sets.ShaderSets.Armor;
 
 namespace Origins.Items.Mounts.Star_Soldier;
@@ -379,6 +382,7 @@ public class Star_Soldier : ModMount {
 	}
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
+		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
 		GetHandler(player)?.Update(player);
 		player.OriginPlayer().mountOnly = true;
 	}
@@ -448,23 +452,79 @@ public class Star_Soldier : ModMount {
 	}
 	#endregion
 	public class Star_Soldier_UI : SwitchableUIState {
+		public override InterfaceScaleType ScaleType => InterfaceScaleType.None;
 		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
-		public override bool IsActive() => Main.LocalPlayer.mount.IsMount<Star_Soldier>();
+		public override bool IsActive() => !Main.LocalPlayer.dead && Main.LocalPlayer.mount.IsMount<Star_Soldier>();
 		public Star_Soldier_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
+		readonly (Vector2 pos, bool horizontal)[] lines = [
+			(Vector2.Zero, true),
+			(Vector2.Zero, false),
+			(Vector2.UnitX, true),
+			(Vector2.UnitX, false),
+			(Vector2.UnitY, true),
+			(Vector2.UnitY, false),
+			(Vector2.One, true),
+			(Vector2.One, false)
+		];
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Player player = Main.LocalPlayer;
 			if (GetHandler(player) is not MountHandler handler) return;
-			Vector2 pos = player.MountedCenter - Main.screenPosition;
+			Main.UIScaleMatrix.Decompose(out Vector3 _uiScale, out _, out _);
+			Vector2 uiScale = _uiScale.XY();
+			Vector2 scale = Main.GameViewMatrix.Zoom * uiScale;
+
+			Vector2 pos = player.Center - Main.screenPosition;
 			pos.Y += player.height * 0.5f + 8;
 
-			Main.UIScaleMatrix.Decompose(out Vector3 scale, out _, out _);
-			pos.X = ((int)pos.X) / scale.X;
-			pos.Y = ((int)pos.Y) / scale.Y;
+			pos = pos.Transform(Main.UIScaleMatrix);
+			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
+			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 
-			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale.XY());
-			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale.XY());
+			StringBuilder builder = new();
+			foreach (NPC npc in Main.ActiveNPCs) {
+				Rectangle hitbox = npc.Hitbox;
+				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
+
+				Color color = npc.friendly ? Color.Lime : Color.OrangeRed;
+				hitbox.X -= (int)Main.screenPosition.X;
+				hitbox.Y -= (int)Main.screenPosition.Y;
+				Vector2 horizontal = new(hitbox.Width / 3, 2);
+				Vector2 vertical = new(2, hitbox.Height / 3);
+				Rectangle rect = new(0, 0, 1, 1);
+				Vector2 offset = Vector2.One * 2;
+				Vector2 size = hitbox.Size() + offset * 2;
+				for (int i = 0; i < lines.Length; i++) {
+					spriteBatch.Draw(
+						TextureAssets.MagicPixel.Value,
+						hitbox.TopLeft() + lines[i].pos * size - offset,
+						rect,
+						color,
+						0,
+						lines[i].pos,
+						uiScale * (lines[i].horizontal ? horizontal : vertical),
+						SpriteEffects.None,
+					0);
+				}
+				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
+				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
+				builder.Clear();
+				builder.AppendLine(npc.GivenOrTypeName);
+				if (!npc.dontTakeDamage) {
+					builder.Append(npc.life);
+					builder.Append('/');
+					builder.AppendLine(npc.lifeMax.ToString());
+				}
+				if (builder.Length <= 0) continue;
+				string text = builder.ToString().Trim();
+				spriteBatch.DrawString(
+					FontAssets.ItemStack.Value,
+					text,
+					hitbox.TopLeft() - FontAssets.ItemStack.Value.MeasureString(text) * Vector2.UnitY,
+					color
+				);
+			}
 		}
 	}
 	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {
@@ -529,9 +589,9 @@ public class Star_Soldier : ModMount {
 		public readonly Vector4 GetDustColor() => GetColor(Main.rand.NextFloat(DustMinBrightness, DustMaxBrightness));
 		public readonly Vector4 GetColor(float brightness) {
 			Vector4 color = new(brightness, brightness, brightness, 1);
-			color = Vector4.Transform(color, Matrix.Transpose(InitialMult));
+			color = InitialMult.TransposedTransform(color);
 			Vector4 overbrightness = Vector4.Max(color - Vector4.One, Vector4.Zero);
-			return Vector4.Transform(color - overbrightness, Matrix.Transpose(FinalColor)) + Vector4.Transform(Vector4.Min(overbrightness, OverbrightMax), Matrix.Transpose(OverbrightColor));
+			return FinalColor.TransposedTransform(color - overbrightness) + OverbrightColor.TransposedTransform(Vector4.Min(overbrightness, OverbrightMax));
 		}
 		public static Matrix Create(int r, int g, int b, int a = 0) => new(
 			r / 255f, 0, 0, 0,
@@ -625,7 +685,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	public virtual void PlaySound(Player player) { }
 }
 public class Star_Soldier_Blade : Star_Soldier_Weapon {
-	static int CooldownTime => 60 * 2;
+	static int CooldownTime => 60;
 	float cooldown;
 	float cooldownAlpha;
 	public override void SetStaticDefaults() {
@@ -649,13 +709,10 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 	}
 	public override bool CanUseItem(Player player) => cooldown == 0;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
-		cooldown.Cooldown();
+		cooldown.Cooldown(rate: player.GetWeaponAttackSpeed(Item));
 		if (arm.itemAnimation != 0) cooldown = CooldownTime;
 		if (cooldown == 0) cooldownAlpha.Cooldown(rate: 1f / 15);
 		else cooldownAlpha = 1;
-	}
-	public override bool UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) {
-		return true;
 	}
 	public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 		SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
@@ -861,7 +918,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		}
 		public struct LaserBladeDrawer {
 
-			private static VertexStrip _vertexStrip = new();
+			private static readonly VertexStrip _vertexStrip = new();
 
 			static Color TrailColor = new(35, 35, 35, 0);
 			static Color BladeColor = new(255, 255, 255, 128);
@@ -925,7 +982,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 					_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, BladeColors, BladeWidth, -Main.screenPosition, true);
 					_vertexStrip.DrawTrail();
 				}
-				Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+				Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Matrix.Invert(Main.GameViewMatrix.TransformationMatrix));
 				Origins.shaderOroboros.Reset(default);
 				using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate);
 				//Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, renderTarget.Width, renderTarget.Height), Color.Black);
@@ -1632,6 +1689,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 		player.mount._mountSpecificData = new MountHandler();
 	}
 	public override void UpdateEffects(Player player) => GetHandler(player)?.Update(player);
+
 	static MountHandler GetHandler(Player player) {
 		if (!Main.LocalPlayer.mount.IsMount<Star_Soldier_Wagon>()) return null;
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
@@ -1650,7 +1708,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 	}
 	public class Star_Soldier_UI : SwitchableUIState {
 		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
-		public override bool IsActive() => Main.LocalPlayer.mount.IsMount<Star_Soldier_Wagon>();
+		public override bool IsActive() => !Main.LocalPlayer.dead && Main.LocalPlayer.mount.IsMount<Star_Soldier_Wagon>();
 		public Star_Soldier_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}

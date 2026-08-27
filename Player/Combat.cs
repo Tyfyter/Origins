@@ -804,6 +804,7 @@ namespace Origins {
 			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.9f) {
 				modifiers.FinalDamage *= 0.5f;
 			}
+			modifiers.Knockback = modifiers.Knockback.CombineWith(knockbackTaken);
 		}
 		struct ImproveManaShielding : IBroken {
 			static string IBroken.BrokenReason => "Replace mana shielding impl w/ Origins.Core.Mana_Shielding";

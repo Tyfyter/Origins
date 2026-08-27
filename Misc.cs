@@ -3759,6 +3759,26 @@ namespace Origins {
 			Z = vector.Z;
 			W = vector.W;
 		}
+		public static Vector4 TransposedTransform(this in Matrix matrix, Vector4 vector) {
+			return new(
+				(vector.X * matrix.M11) +
+				(vector.Y * matrix.M12) +
+				(vector.Z * matrix.M13) +
+				(vector.W * matrix.M14),
+				(vector.X * matrix.M21) +
+				(vector.Y * matrix.M22) +
+				(vector.Z * matrix.M23) +
+				(vector.W * matrix.M24),
+				(vector.X * matrix.M31) +
+				(vector.Y * matrix.M32) +
+				(vector.Z * matrix.M33) +
+				(vector.W * matrix.M34),
+				(vector.X * matrix.M41) +
+				(vector.Y * matrix.M42) +
+				(vector.Z * matrix.M43) +
+				(vector.W * matrix.M44)
+			);
+		}
 		public static SpriteEffects Transpose(this SpriteEffects spriteEffects) {
 			switch (spriteEffects) {
 				case SpriteEffects.FlipHorizontally:
