@@ -645,7 +645,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		Item.shoot = ModContent.ProjectileType<Star_Soldier_Blade_P>();
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
-		Item.UseSound = SoundID.Item105.WithPitch(-0.8f);
+		Item.UseSound = SoundID.Item105.WithPitch(-0.6f);
 	}
 	public override bool CanUseItem(Player player) => cooldown == 0;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
@@ -657,6 +657,14 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 	public override bool UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) {
 		return true;
 	}
+	public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+		SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
+		SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
+	}
+	public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo) {
+		SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
+		SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
+	}    
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		if (this.cooldownAlpha == 0 || cooldown >= CooldownTime) return;
 		float cooldownAlpha = this.cooldownAlpha * this.cooldownAlpha;
@@ -685,7 +693,9 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		0);
 		position.Y += 8 * float.Pow(Utils.GetLerpValue(0, 0.4f, this.cooldownAlpha, true), 2);
 	}
-	public class Star_Soldier_Blade_P : ModProjectile, IElementalProjectile {
+}
+
+public class Star_Soldier_Blade_P : ModProjectile, IElementalProjectile {
 		static readonly AdvancedMiscShaderData bladeShader = new(ModContent.Request<Effect>("Origins/Effects/Strip"), "StarSoldierLaserBlade", [
 			new("uColorMatrix0", Matrix.Identity with { M44 = 0 })
 		]);
@@ -971,7 +981,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	int reloadTime = 0;
 	bool usedFakeAmmo;
 	public override void SetDefaults() {
-		Item.damage = 54;
+		Item.damage = 50;
 		Item.DamageType = DamageClass.Ranged;
 		Item.useAnimation = 3;
 		Item.useTime = 3;
@@ -979,7 +989,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1.7f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
-		Item.crit += 10;
+		Item.crit += 4;
 		Item.width = 60;
 		Item.height = 26;
 		Item.shoot = ProjectileID.Bullet;
