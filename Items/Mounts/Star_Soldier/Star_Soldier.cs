@@ -664,7 +664,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 	public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo) {
 		SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
 		SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
-	}    
+	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		if (this.cooldownAlpha == 0 || cooldown >= CooldownTime) return;
 		float cooldownAlpha = this.cooldownAlpha * this.cooldownAlpha;
@@ -693,9 +693,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		0);
 		position.Y += 8 * float.Pow(Utils.GetLerpValue(0, 0.4f, this.cooldownAlpha, true), 2);
 	}
-}
-
-public class Star_Soldier_Blade_P : ModProjectile, IElementalProjectile {
+	public class Star_Soldier_Blade_P : ModProjectile, IElementalProjectile {
 		static readonly AdvancedMiscShaderData bladeShader = new(ModContent.Request<Effect>("Origins/Effects/Strip"), "StarSoldierLaserBlade", [
 			new("uColorMatrix0", Matrix.Identity with { M44 = 0 })
 		]);
