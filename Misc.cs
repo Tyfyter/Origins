@@ -1840,6 +1840,12 @@ namespace Origins {
 		public static bool Contains(this Rectangle area, int x, int y, int xPadding, int yPadding) {
 			return (area.X <= x + xPadding) && (x < area.Right + xPadding) && (area.Y <= y + yPadding) && (y < area.Bottom + yPadding);
 		}
+		public static bool Intersects(Vector2 posA, Vector2 sizeA, Vector2 posB, Vector2 sizeB) {
+			return (posB.X < posA.X + sizeA.X &&
+					posA.X < posB.X + sizeB.X &&
+					posB.Y < posA.Y + sizeA.Y &&
+					posA.Y < posB.Y + sizeB.Y);
+		}
 		[Pure]
 		public static Vector4 UVFrame(this Asset<Texture2D> frame, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			return frame.Value.UVFrame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);

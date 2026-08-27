@@ -458,15 +458,16 @@ public class Star_Soldier : ModMount {
 		public Star_Soldier_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
-		readonly (Vector2 pos, bool horizontal)[] lines = [
-			(Vector2.Zero, true),
-			(Vector2.Zero, false),
-			(Vector2.UnitX, true),
-			(Vector2.UnitX, false),
-			(Vector2.UnitY, true),
-			(Vector2.UnitY, false),
-			(Vector2.One, true),
-			(Vector2.One, false)
+		readonly (Vector2 pos, Vector4 dimensions)[] lines = [
+			(Vector2.Zero, new(1, 0, 0, 2)),
+			(Vector2.Zero, new(0, 1, 2, 0)),
+			(Vector2.UnitX, new(1, 0, 0, 2)),
+			(Vector2.UnitX, new(0, 1, 2, 0)),
+			(Vector2.UnitY, new(1, 0, 0, 2)),
+			(Vector2.UnitY, new(0, 1, 2, 0)),
+			(Vector2.One, new(1, 0, 0, 2)),
+			(Vector2.One, new(0, 1, 2, 0)),
+			(Vector2.One * 0.5f, new(0, 0, 4, 4)),
 		];
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Player player = Main.LocalPlayer;
@@ -478,52 +479,70 @@ public class Star_Soldier : ModMount {
 			Vector2 pos = player.Center - Main.screenPosition;
 			pos.Y += player.height * 0.5f + 8;
 
-			pos = pos.Transform(Main.UIScaleMatrix);
+			//pos = pos.Transform(Main.UIScaleMatrix);
 			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 
 			StringBuilder builder = new();
+			float nearestDist = float.PositiveInfinity;
+			Vector4 nearest = default;
+			NPC nearestNPC = default;
 			foreach (NPC npc in Main.ActiveNPCs) {
 				Rectangle hitbox = npc.Hitbox;
 				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
 
-				Color color = npc.friendly ? Color.Lime : Color.OrangeRed;
+				Color color = (npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]) ? Color.Lime : Color.OrangeRed;
 				hitbox.X -= (int)Main.screenPosition.X;
 				hitbox.Y -= (int)Main.screenPosition.Y;
-				Vector2 horizontal = new(hitbox.Width / 3, 2);
-				Vector2 vertical = new(2, hitbox.Height / 3);
+
+				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
+				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
+
+				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
+				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
+				if (Minimize(ref nearestDist, dist)) {
+					nearest = new(hitboxPos, hitboxSize.X, hitboxSize.Y);
+					nearestNPC = npc;
+				}
+
 				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = Vector2.One * 2;
-				Vector2 size = hitbox.Size() + offset * 2;
+				Vector2 offset = uiScale * 2;
+				Vector2 size = hitboxSize + offset * 2;
+
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						hitbox.TopLeft() + lines[i].pos * size - offset,
+						hitboxPos + lines[i].pos * size - offset,
 						rect,
 						color,
 						0,
 						lines[i].pos,
-						uiScale * (lines[i].horizontal ? horizontal : vertical),
+						hitboxSize * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
 						SpriteEffects.None,
 					0);
 				}
 				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
 				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
+			}
+			if (nearestNPC is not null) {
 				builder.Clear();
-				builder.AppendLine(npc.GivenOrTypeName);
-				if (!npc.dontTakeDamage) {
-					builder.Append(npc.life);
+				builder.AppendLine(nearestNPC.GivenOrTypeName);
+				if (!nearestNPC.dontTakeDamage) {
+					builder.Append(nearestNPC.life);
 					builder.Append('/');
-					builder.AppendLine(npc.lifeMax.ToString());
+					builder.AppendLine(nearestNPC.lifeMax.ToString());
 				}
-				if (builder.Length <= 0) continue;
 				string text = builder.ToString().Trim();
 				spriteBatch.DrawString(
 					FontAssets.ItemStack.Value,
 					text,
-					hitbox.TopLeft() - FontAssets.ItemStack.Value.MeasureString(text) * Vector2.UnitY,
-					color
-				);
+					nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
+					(nearestNPC.friendly || NPCID.Sets.CountsAsCritter[nearestNPC.type]) ? Color.Lime : Color.OrangeRed,
+					0,
+					default,
+					uiScale,
+					SpriteEffects.None,
+				0);
 			}
 		}
 	}
