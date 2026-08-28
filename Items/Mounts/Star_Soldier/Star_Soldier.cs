@@ -92,8 +92,15 @@ public class Star_Soldier : ModMount {
 			//player.mount._flyTime = 0;
 			bool collidingY = player.OriginPlayer().collidingY;
 
-			if (!collidingY) player.mount._data.jumpSpeed = Math.Max(-player.velocity.Y, 0) + 0.04f;
-			else player.mount._data.jumpSpeed = -1;
+
+			if (!collidingY) {
+				player.mount._data.jumpSpeed = Math.Max(-player.velocity.Y, 0) + 1f;
+				if (player.controlJump && player.jump == 0 && player.mount._flyTime > 0 && player.velocity.Y > -8) {
+					player.velocity.Y -= 0.05f;
+				}
+			} else {
+				player.mount._data.jumpSpeed = -1;
+			}
 
 			if (!collidingY) {
 				if (++fallCounter < 5) collidingY = true;
