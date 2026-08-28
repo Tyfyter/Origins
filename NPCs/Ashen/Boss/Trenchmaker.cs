@@ -542,7 +542,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			spriteBatch.Draw(
 				armTexture,
 				GunPos - screenPos,
-				armTexture.Frame(verticalFrames: 4, frameY: (int)GunType),
+				armTexture.Frame(verticalFrames: 4, frameY: ArmFrame),
 				drawColor,
 				NPC.rotation + (effects.HasFlag(SpriteEffects.FlipHorizontally) ? 0 : MathHelper.Pi),
 				new Vector2(47, 15).Apply(effects, armTexture.Value.Size()),
