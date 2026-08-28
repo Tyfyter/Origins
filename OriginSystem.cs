@@ -2,9 +2,6 @@
 using Origins.Core;
 using Origins.Core.Structures;
 using Origins.Items.Accessories;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.Ashen;
@@ -16,8 +13,6 @@ using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Ashen.Hanging_Scrap;
-using Origins.Tiles.Brine;
-using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.UI;
@@ -181,7 +176,9 @@ namespace Origins {
 			MountHUD.Update(gameTime);
 			EventHUD.Update(gameTime);
 		}
+		public static IReadOnlySet<string> hideInterfaceLayers = null;
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
+			//hideInterfaceLayers = null;
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 			if (inventoryIndex != -1) {//error prevention & null check
 				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
@@ -217,6 +214,18 @@ namespace Origins {
 					return true;
 				},
 				InterfaceScaleType.Game) { Active = Main.LocalPlayer.GetModPlayer<OriginPlayer>().strangeComputer }
+			);
+			layers.Insert(0, new LegacyGameInterfaceLayer(
+				"Origins: Hide Interface Layers",
+				delegate {
+					if (hideInterfaceLayers is null) return true;
+					for (int i = 0; i < layers.Count; i++) {
+						if (hideInterfaceLayers.Contains(layers[i].Name)) layers[i].Active = false;
+					}
+					hideInterfaceLayers = null;
+					return true;
+				},
+				InterfaceScaleType.None)
 			);
 			inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Hotbar"));
 			if (inventoryIndex != -1 && layers[inventoryIndex].Active && Main.LocalPlayer.HasBuff<Lunatics_Rune_Attacks_Buff>()) {

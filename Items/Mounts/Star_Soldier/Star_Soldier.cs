@@ -65,6 +65,11 @@ public class Star_Soldier : ModMount {
 		public float walkFrameCounter;
 		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
 		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		readonly WeakReference<NPC> lockOnTarget = new(null);
+		public NPC LockOnTarget {
+			get => lockOnTarget.TryGetTarget(out NPC target) ? target : null;
+			set => lockOnTarget.SetTarget(value);
+		}
 		static int currentArm;
 		ref Arm GetArm(int index) {
 			currentArm = index;
@@ -74,7 +79,11 @@ public class Star_Soldier : ModMount {
 		int fallCounter;
 		int jumpCounter;
 		public void Update(Player player) {
-			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, Main.MouseWorld - player.Bottom).Perform();
+			if (LockOnTarget is NPC target) {
+				if (!target.active) LockOnTarget = null;
+				else if (player.MountedCenter.Clamp(target.Hitbox).WithinRange(player.MountedCenter, 16 * 100) == false) LockOnTarget = null;
+			}
+			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, (LockOnTarget?.Center ?? Main.MouseWorld) - player.Bottom).Perform();
 
 			player.direction = (player.OriginPlayer().relativeTarget.X >= 0).ToDirectionInt();
 			GetArm(0).UpdateRotations(player);
@@ -455,7 +464,18 @@ public class Star_Soldier : ModMount {
 	public class Star_Soldier_UI : SwitchableUIState {
 		public override InterfaceScaleType ScaleType => InterfaceScaleType.None;
 		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
-		public override bool IsActive() => !Main.LocalPlayer.dead && Main.LocalPlayer.mount.IsMount<Star_Soldier>();
+		static readonly HashSet<string> hideLayers = [
+			"Vanilla: Resource Bars",
+			"Vanilla: Info Accessories Bar",
+			"Vanilla: Hotbar",
+			"ThoriumMod: Combat Icon"
+		];
+		public override bool IsActive() {
+			if (Main.LocalPlayer.dead || !Main.LocalPlayer.mount.IsMount<Star_Soldier>()) return false;
+			//OriginSystem.hideInterfaceLayers = hideLayers;
+			return true;
+		}
+
 		public Star_Soldier_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
@@ -484,7 +504,32 @@ public class Star_Soldier : ModMount {
 			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 
-			StringBuilder builder = new();
+			/*{ //hp bar
+				const int max_width = 400;
+				Rectangle baseFrame = new(0, 0, max_width, 1);
+				Rectangle frame = baseFrame with { Width = (player.statLife * max_width) / player.statLifeMax2 };
+				DrawData data = new(
+					TextureAssets.MagicPixel.Value,
+					new Vector2((Main.screenWidth - max_width) * 0.5f + 7 * uiScale.X, 8),
+					baseFrame,
+					Color.Black,
+					0,
+					default,
+					uiScale,
+					SpriteEffects.None
+				);
+				(data with { position = data.position + Vector2.UnitX * (2 + max_width), color = Color.OrangeRed, sourceRect = new(0, 0, 2, 1) }).Draw(spriteBatch);
+				data.Draw(spriteBatch);
+				(data with { color = Color.OrangeRed, sourceRect = frame }).Draw(spriteBatch);
+				for (int i = 1; i < 20; i++) {
+					data.position.X -= 1 * uiScale.X;
+					data.position.Y += baseFrame.Height * uiScale.Y;
+					(data with { position = data.position + Vector2.UnitX * (2 + max_width), color = Color.OrangeRed, sourceRect = new(0, 0, 2, 1) }).Draw(spriteBatch);
+					data.Draw(spriteBatch);
+					(data with { color = Color.OrangeRed, sourceRect = frame }).Draw(spriteBatch);
+				}
+			}*/
+
 			float nearestDist = float.PositiveInfinity;
 			Vector4 nearest = default;
 			NPC nearestNPC = default;
@@ -493,6 +538,7 @@ public class Star_Soldier : ModMount {
 				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
 
 				Color color = (npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]) ? Color.Lime : Color.OrangeRed;
+				if (npc == handler.LockOnTarget) color = Color.Red;
 				hitbox.X -= (int)Main.screenPosition.X;
 				hitbox.Y -= (int)Main.screenPosition.Y;
 
@@ -505,7 +551,6 @@ public class Star_Soldier : ModMount {
 				Rectangle rect = new(0, 0, 1, 1);
 				Vector2 offset = uiScale * 8;
 				Vector2 size = hitboxSize + offset * 2;
-
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
@@ -521,12 +566,16 @@ public class Star_Soldier : ModMount {
 				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
 				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
 				if (Minimize(ref nearestDist, dist)) {
-					nearest = new(hitboxPos, hitboxSize.X, hitboxSize.Y);
+					nearest = new(hitboxPos - offset, size.X, size.Y);
 					nearestNPC = npc;
 				}
 			}
 			if (nearestNPC is not null) {
-				builder.Clear();
+				if (Keybindings.StarSoldierLockOn.JustPressed) {
+					if (nearestNPC == handler.LockOnTarget || nearestDist > 16 * 16 * 15 * 15) handler.LockOnTarget = null;
+					else handler.LockOnTarget = nearestNPC;
+				}
+				StringBuilder builder = new();
 				builder.AppendLine(nearestNPC.GivenOrTypeName);
 				if (!nearestNPC.dontTakeDamage) {
 					builder.Append(nearestNPC.life);
@@ -537,14 +586,15 @@ public class Star_Soldier : ModMount {
 				spriteBatch.DrawString(
 					FontAssets.ItemStack.Value,
 					text,
-					nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
+					nearest.XY() + new Vector2(nearest.Z, 0),
+					//nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
 					(nearestNPC.friendly || NPCID.Sets.CountsAsCritter[nearestNPC.type]) ? Color.Lime : Color.OrangeRed,
 					0,
 					default,
 					uiScale,
 					SpriteEffects.None,
 				0);
-			}
+			} else if (Keybindings.StarSoldierLockOn.JustPressed) handler.LockOnTarget = nearestNPC;
 		}
 	}
 	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {

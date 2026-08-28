@@ -30,6 +30,8 @@ namespace Origins {
 #endif
 		[Keybind(Keys.B)]
 		public static ModKeybind MultiBucket { get; private set; }
+		[Keybind(Keys.Q)]
+		public static ModKeybind StarSoldierLockOn { get; private set; }
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);
 			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Static)) {
