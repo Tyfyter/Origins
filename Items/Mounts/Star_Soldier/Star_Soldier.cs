@@ -391,6 +391,8 @@ public class Star_Soldier : ModMount {
 	}
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
+		player.statLifeMax2 += 250;
+		player.lifeRegenCount = 0;
 		player.statDefense += 65 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
 		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
 		GetHandler(player)?.Update(player);
@@ -572,6 +574,8 @@ public class Star_Soldier : ModMount {
 			}
 			if (nearestNPC is not null) {
 				if (Keybindings.StarSoldierLockOn.JustPressed) {
+					SoundEngine.PlaySound(SoundID.Chat.WithPitch(1.8f).WithVolume(0.6f), player.Center);
+					SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.6f).WithVolume(0.6f), player.Center);
 					if (nearestNPC == handler.LockOnTarget || nearestDist > 16 * 16 * 15 * 15) handler.LockOnTarget = null;
 					else handler.LockOnTarget = nearestNPC;
 				}
@@ -771,7 +775,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.damage = 390;
+		Item.damage = 500;
 		Item.DamageType = DamageClass.Melee;
 		Item.useAnimation = 35;
 		Item.useTime = 35;
@@ -1227,7 +1231,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.damage = 69;
+		Item.damage = 72;
 		Item.DamageType = DamageClass.Magic;
 		Item.useAnimation = 30;
 		Item.useTime = 30;
@@ -1560,11 +1564,11 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 	}
 	public override void SetDefaults() {
-		Item.damage = 108;
+		Item.damage = 222;
 		Item.DamageType = DamageClasses.Explosive;
 		Item.useAnimation = 48;
 		Item.useTime = 12;
-		Item.shootSpeed = 15;
+		Item.shootSpeed = 24;
 		Item.knockBack = 4f;
 		Item.useAmmo = AmmoID.Rocket;
 		Item.shoot = ProjectileID.RocketI;

@@ -1440,6 +1440,7 @@ TILES:
 (X) Ravel Locker
 (^) Riven Campfire
 (^) Riven Dungeon Chest
+(X) Riven Pylon
 (^) Rusty Locker
 (X) Small Auto Assembler !!!
 (X) Small Conveyor Scooper !!!
@@ -1545,6 +1546,7 @@ TILES:
 (X) Music Box (Fiberglass Weaver)
 (X) Music Box (Lost Diver)
 (X) Music Box (Mildew Carrion)
+(X) Music Box (Psymanti Camp)
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
