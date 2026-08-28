@@ -583,11 +583,7 @@ public class Star_Soldier : ModMount {
 				}
 				StringBuilder builder = new();
 				builder.AppendLine(nearestNPC.GivenOrTypeName);
-				if (!nearestNPC.dontTakeDamage) {
-					builder.Append(nearestNPC.life);
-					builder.Append('/');
-					builder.AppendLine(nearestNPC.lifeMax.ToString());
-				}
+				if (!nearestNPC.dontTakeDamage) builder.Append($"{nearestNPC.GetLifePercent():P0}");
 				string text = builder.ToString().Trim();
 				spriteBatch.DrawString(
 					FontAssets.ItemStack.Value,
