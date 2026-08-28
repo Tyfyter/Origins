@@ -564,7 +564,8 @@ public class Star_Soldier : ModMount {
 		WeaponColors.Create(0.063f, 0.863f, 0.051f),
 		new(1f / 3, 0.075f, 0.25f)
 	) {
-		Scale = 0.9f
+		BeamScale = 0.9f,
+		AOEScale = 0.75f
 	};
 	public static readonly WeaponColors RGB = new(
 		Matrix.Multiply(new(
@@ -582,15 +583,22 @@ public class Star_Soldier : ModMount {
 		),
 		default
 	) {
-		Scale = 1.3f
+		BeamScale = 1.3f
 	};
 	public static readonly WeaponColors Plasma = WeaponColors.CreateGradient(
 		new Color(187, 10, 251),
 		new(new Color(82, 103, 255), -0.35f, 5),
 		new(new Color(212, 0, 95), -0.5f, 2)
 	) with {
-		Scale = 1.7f
+		BeamScale = 1.7f
 	};
+	public static void InitializeColor(Player player, ref WeaponColors? colors) {
+		if (colors?.BeamScale == 0) {
+			if (RainbowDyes.Contains(player.cMount)) colors = RGB;
+			else if (!NameColors.TryGetValue(player.name, out WeaponColors color)) colors = null;
+			else colors = color;
+		}
+	}
 	public static IReadOnlyDictionary<string, WeaponColors> NameColors { get; } = new Dictionary<string, WeaponColors>(StringComparer.OrdinalIgnoreCase) {
 		["Faust"] = Chrysalis,
 		["Kathleen"] = Chrysalis,
@@ -601,7 +609,8 @@ public class Star_Soldier : ModMount {
 		["temp star"] = Plasma
 	};
 	public record struct WeaponColors(Matrix InitialMult, Matrix FinalColor, Matrix OverbrightColor, Vector3 ExtraBeamData) {
-		public float Scale { get; set; } = 1;
+		public float BeamScale { get; set; } = 1;
+		public float AOEScale { get; set; } = 1;
 		public Vector4 OverbrightMax { get; set; } = new(float.PositiveInfinity);
 		public float DustMinBrightness { get; set; } = 0;
 		public float DustMaxBrightness { get; set; } = 1;
@@ -848,11 +857,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 			}
 			Projectile.hide = (Projectile.ai[0] == 1) == (player.direction == 1);
 			if (Projectile.hide) player.heldProj = Projectile.whoAmI;
-			if (colors?.Scale == 0) {
-				if (!Star_Soldier.NameColors.TryGetValue(player.name, out Star_Soldier.WeaponColors color)) colors = null;
-				else colors = color;
-				if (Star_Soldier.RainbowDyes.Contains(player.cMount)) colors = Star_Soldier.RGB;
-			}
+			Star_Soldier.InitializeColor(player, ref colors);
 			float updateOffset = (Projectile.MaxUpdates - (Projectile.numUpdates + 1)) / (float)(Projectile.MaxUpdates + 1);
 			SwingFactor = ((arm.itemTime - updateOffset) / (float)arm.itemTimeMax) * (1 + Startup + End) - End;
 			if (SwingFactor > 0) SwingFactor = MathHelper.Lerp(MathF.Pow(SwingFactor, 2f), MathF.Pow(SwingFactor, 0.5f), SwingFactor * SwingFactor);
@@ -1323,11 +1328,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				Projectile.Kill();
 				return;
 			}
-			if (colors?.Scale == 0) {
-				if (!Star_Soldier.NameColors.TryGetValue(owner.name, out Star_Soldier.WeaponColors color)) colors = null;
-				else colors = color;
-				if (Star_Soldier.RainbowDyes.Contains(owner.cMount)) colors = Star_Soldier.RGB;
-			}
+			Star_Soldier.InitializeColor(owner, ref colors);
 			Projectile.velocity = arm.gunRotation.ToRotationVector2();
 			arm.GetPositions(owner.MountedCenter, owner.fullRotation, owner.Directions, out _, out _, out Projectile.position);
 			Projectile.position += Projectile.velocity * 24;
@@ -1372,7 +1373,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				default,
 				Projectile.localAI[2],
 				Vector2.One * 128,
-				Vector2.One * 5,
+				Vector2.One * 5 * Colors.AOEScale,
 				0,
 			0);
 			Vector2 diff = TargetPos - Projectile.position;
@@ -1393,7 +1394,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				default,
 				rotation,
 				Vector2.UnitY * 128,
-				new Vector2(1, 48 * scale * Colors.Scale),
+				new Vector2(1, 48 * scale * Colors.BeamScale),
 				0
 			);
 			beamShader.Apply(null,
