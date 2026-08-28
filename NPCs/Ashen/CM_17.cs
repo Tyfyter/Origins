@@ -218,7 +218,7 @@ namespace Origins.NPCs.Ashen {
 				$"{NPC.direction} {NPC.spriteDirection}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
 				$"{NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}\n" +
 				$"{NPC.localAI[0]}, {NPC.localAI[1]}, {NPC.localAI[2]}, {NPC.localAI[3]}",
-				NPC.Top - screenPos, scale: 1);
+				NPC.Top - screenPos);
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.aiAction);
