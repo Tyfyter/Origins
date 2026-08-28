@@ -500,13 +500,9 @@ public class Star_Soldier : ModMount {
 
 				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
 				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
-				if (Minimize(ref nearestDist, dist)) {
-					nearest = new(hitboxPos, hitboxSize.X, hitboxSize.Y);
-					nearestNPC = npc;
-				}
 
 				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * 2;
+				Vector2 offset = uiScale * 8;
 				Vector2 size = hitboxSize + offset * 2;
 
 				for (int i = 0; i < lines.Length; i++) {
@@ -517,12 +513,16 @@ public class Star_Soldier : ModMount {
 						color,
 						0,
 						lines[i].pos,
-						hitboxSize * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
+						size * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
 						SpriteEffects.None,
 					0);
 				}
 				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
 				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
+				if (Minimize(ref nearestDist, dist)) {
+					nearest = new(hitboxPos, hitboxSize.X, hitboxSize.Y);
+					nearestNPC = npc;
+				}
 			}
 			if (nearestNPC is not null) {
 				builder.Clear();
