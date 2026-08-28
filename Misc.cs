@@ -1792,6 +1792,8 @@ namespace Origins {
 			}
 			return (int)value;
 		}
+		public static bool NextBool(this UnifiedRandom random, float chance) => random.NextFloat() < chance;
+		public static bool NextBool(this UnifiedRandom random, MultipliableFloat chance) => random.NextBool(chance.Value);
 		[Pure]
 		public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) return 0;

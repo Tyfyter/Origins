@@ -692,6 +692,7 @@ namespace Origins {
 		[AutoReset] public float maxSpawnsMultiplier = 1f;
 		public int iFramesFromHurt = 0;
 		[AutoReset] public StatModifier knockbackTaken = StatModifier.Default;
+		[AutoReset] public MultipliableFloat ammoConsumptionChance = MultipliableFloat.One;
 		internal void SetUsingScope() => willBeUsingScope = true;
 		internal void UpdateUsingScope() {
 			isUsingScope = willBeUsingScope;

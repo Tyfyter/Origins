@@ -172,6 +172,8 @@ public class Star_Soldier : ModMount {
 
 		public void ItemCheck(Player player) {
 			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened);
+			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
+			GetArm(1).Weapon.PreItemCheck(player, this, ref GetArm(1));
 			GetArm(0).ItemCheck(player, ref player.controlUseItem);
 			GetArm(1).ItemCheck(player, ref player.controlUseTile);
 		}
@@ -186,7 +188,7 @@ public class Star_Soldier : ModMount {
 			public float shoulderRotation;
 			public float forearmRotation;
 			public float gunRotation;
-			readonly Star_Soldier_Weapon Weapon => (Star_Soldier_Weapon)item.ModItem;
+			public readonly Star_Soldier_Weapon Weapon => (Star_Soldier_Weapon)item.ModItem;
 			public readonly void GetPositions(Vector2 basePosition, float baseRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
 				shoulderPos = basePosition - (new Vector2(4, 20) * directions).RotatedBy(baseRotation);
 				if (directions.Sum() == 0) baseRotation += MathHelper.Pi;
@@ -761,6 +763,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 		Icon = ModContent.Request<Texture2D>(Texture + "_Icon");
 	}
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
+	public virtual void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) { }
 	public virtual void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) { }
 	public virtual bool UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) => true;
 	public override bool NeedsAmmo(Player player) => false;
@@ -791,6 +794,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		Item.UseSound = SoundID.Item105.WithPitch(-0.6f);
 	}
 	public override bool CanUseItem(Player player) => cooldown == 0;
+	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.statDefense.AdditiveBonus += 0.1f;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		cooldown.Cooldown(rate: player.GetWeaponAttackSpeed(Item));
 		if (arm.itemAnimation != 0) cooldown = CooldownTime;
@@ -1138,6 +1142,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		velocity = velocity.RotatedByRandom(0.08f);
 	}
 	public override bool CanUseItem(Player player) => ammo > 0;
+	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.OriginPlayer().ammoConsumptionChance *= 0.9f;
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		if (arm.itemAnimation != 0) {
 			//SoundEngine.PlaySound(SoundID.Item61.WithPitch(2f), player.Center);
@@ -1247,6 +1252,8 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		Item.knockBack = 2.5f;
 	}
 	public override bool CanUseItem(Player player) => !recharging;
+	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.GetAttackSpeed(DamageClass.Magic) *= 1.1f;
+	public override void ModifyManaCost(Player player, ref float reduce, ref float mult) => mult *= player.GetWeaponAttackSpeed(Item);
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		if (arm.itemAnimation != 0 && control) {
 			const float precision = 100;
@@ -1400,9 +1407,16 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			if (targetHitbox.IsWithin(TargetPos, 16 * 5)) return true;
 			return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 12));
 		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			if (!Projectile.TryGetOwner(out Player owner) || Star_Soldier.GetHandler(owner) is not Star_Soldier.MountHandler handler) return;
+			Star_Soldier.MountHandler.Arm arm = Projectile.ai[2] == 1 ? handler.altItem : handler.chosenItem;
+			modifiers.FinalDamage *= owner.GetWeaponAttackSpeed(arm.item);
+		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			if (!Projectile.TryGetOwner(out Player owner) || Star_Soldier.GetHandler(owner) is not Star_Soldier.MountHandler handler) return;
+			Star_Soldier.MountHandler.Arm arm = Projectile.ai[2] == 1 ? handler.altItem : handler.chosenItem;
+			modifiers.FinalDamage *= owner.GetWeaponAttackSpeed(arm.item);
 			if (!target.immune) modifiers = modifiers with { CooldownCounter = -2 };
-			modifiers.Knockback *= 1.5f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (info.CooldownCounter == -2) {
@@ -1577,6 +1591,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		Item.autoReuse = true;
 	}
 	public override bool CanUseItem(Player player) => !reloading && ammo > 0;
+	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.OriginPlayer().projectileSpeedBoost *= 1.1f;
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(verticalFrames: 2, frameY: reloading.ToInt());
 	}
