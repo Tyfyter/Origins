@@ -5,6 +5,7 @@ using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Necromancer;
+using Origins.Items.Mounts.Star_Soldier;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
@@ -838,6 +839,7 @@ namespace Origins {
 		public override void OnHurt(Player.HurtInfo info) {
 			if (crystalHeart) crystalHeartCounter += info.Damage;
 			oldNaturalRegen = Player.lifeRegenTime;
+			if (Star_Soldier.HandleHurt(Player, in info)) Player.statLife += info.Damage;
 		}
 		public override void PostHurt(Player.HurtInfo info) {
 			Player.lifeRegenTime += keepNaturalRegenMult.ApplyTo(oldNaturalRegen);

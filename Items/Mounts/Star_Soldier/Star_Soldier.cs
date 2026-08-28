@@ -24,7 +24,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static PegasusLib.Sets.ShaderSets.Armor;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -59,6 +58,9 @@ public class Star_Soldier : ModMount {
 		[(Main.pixelShader, "ArmorMidnightRainbow")] = true
 	};*/
 	public class MountHandler {
+		public static int MaxLife => 750;
+		public int life = MaxLife;
+		public int dotCount = 0;
 		public int bodyFrame;
 		public float bodyFrameCounter;
 		public int walkFrame;
@@ -79,18 +81,41 @@ public class Star_Soldier : ModMount {
 		int fallCounter;
 		int jumpCounter;
 		public void Update(Player player) {
+			OriginPlayer originPlayer = player.OriginPlayer();
 			if (LockOnTarget is NPC target) {
 				if (!target.active) LockOnTarget = null;
 				else if (player.MountedCenter.Clamp(target.Hitbox).WithinRange(player.MountedCenter, 16 * 100) == false) LockOnTarget = null;
 			}
 			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, (LockOnTarget?.Center ?? Main.MouseWorld) - player.Bottom).Perform();
 
-			player.direction = (player.OriginPlayer().relativeTarget.X >= 0).ToDirectionInt();
+			player.direction = (originPlayer.relativeTarget.X >= 0).ToDirectionInt();
 			GetArm(0).UpdateRotations(player);
 			GetArm(1).UpdateRotations(player);
 
+			if (player.bleed) originPlayer.oiled = true;
+
+			player.buffImmune[BuffID.Poisoned] = true;
+			if (!originPlayer.oiled) {
+				player.buffImmune[BuffID.OnFire] = true;
+				player.buffImmune[BuffID.OnFire3] = true;
+			}
+
+			player.lifeRegenTime = 0;
+			if (player.lifeRegenCount < 0) {
+				dotCount -= player.lifeRegenCount;
+				player.lifeRegenCount = 0;
+			}
+			while (dotCount.CycleUp(120, 0)) life--;
+
+			if (life <= 0) {
+				player.mount.Dismount(player);
+				player.statLife -= player.statLifeMax2 / 4 - 1;
+				player.lifeRegenCount = -120;
+				return;
+			}
+
 			//player.mount._flyTime = 0;
-			bool collidingY = player.OriginPlayer().collidingY;
+			bool collidingY = originPlayer.collidingY;
 
 
 			if (!collidingY) {
@@ -176,7 +201,12 @@ public class Star_Soldier : ModMount {
 				SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), player.Bottom);
 			}
 		}
-
+		public void HandleHurt(Player player, in Player.HurtInfo info) {
+			life -= info.Damage;
+			if (life > 0) return;
+			player.mount.Dismount(player);
+			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
+		}
 		public void ItemCheck(Player player) {
 			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened);
 			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
@@ -400,8 +430,6 @@ public class Star_Soldier : ModMount {
 	}
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
-		player.statLifeMax2 += 250;
-		player.lifeRegenCount = 0;
 		player.statDefense += 65 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
 		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
 		GetHandler(player)?.Update(player);
@@ -409,6 +437,11 @@ public class Star_Soldier : ModMount {
 	}
 	public static void ItemCheck(Player player) => GetHandler(player).ItemCheck(player);
 	public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) => false;
+	public static bool HandleHurt(Player player, in Player.HurtInfo info) {
+		if (GetHandler(player) is not MountHandler handler) return false;
+		handler.HandleHurt(player, in info);
+		return true;
+	}
 	public static MountHandler GetHandler(Player player) {
 		if (!player.mount.IsMount<Star_Soldier>()) return null;
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
@@ -472,21 +505,51 @@ public class Star_Soldier : ModMount {
 		return false;
 	}
 	#endregion
+	[ReinitializeDuringResizeArrays]
+	public static class Sets {
+		public static Action<SpriteBatch>[] CustomBuffIndicator = BuffID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(CustomBuffIndicator)}")
+		.Description("Replaces the normal buff icon drawing when the player is using the Star Soldier mount")
+		.RegisterCustomSet<Action<SpriteBatch>>(null);
+	}
 	public class Star_Soldier_UI : SwitchableUIState {
+		static readonly AdvancedMiscShaderData healthBarShader = new(ModContent.Request<Effect>("Origins/Effects/HUD"), "HealthBar");
 		public override InterfaceScaleType ScaleType => InterfaceScaleType.None;
-		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
+		public override void AddToList() {
+			OriginSystem.Instance.MountHUD.AddState(this);
+			healthBarShader.LoadThen(() => {
+				uColor.Bind(healthBarShader);
+				uSecondaryColor.Bind(healthBarShader);
+				uSaturation.Bind(healthBarShader);
+			});
+		}
 		static readonly HashSet<string> hideLayers = [
 			"Vanilla: Resource Bars",
 			"Vanilla: Info Accessories Bar",
 			"Vanilla: Hotbar",
 			"ThoriumMod: Combat Icon"
 		];
+		public static Parameter uColor = Parameter.uColor with { Value = Color.OrangeRed.ToVector3() };
+		public static Parameter uSecondaryColor = Parameter.uSecondaryColor with { Value = Vector3.Zero };
+		public static Parameter uSaturation = Parameter.uSaturation;
 		public override bool IsActive() {
 			if (Main.LocalPlayer.dead || !Main.LocalPlayer.mount.IsMount<Star_Soldier>()) return false;
-			//OriginSystem.hideInterfaceLayers = hideLayers;
+			OriginSystem.hideInterfaceLayers = hideLayers;
 			return true;
 		}
-
+		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[6] {
+			new(default, Color.White, new(0, 0)),
+			new(default, Color.White, new(0.05f, 0)),
+			new(default, Color.White, new(0.05f, 1)),
+			new(default, Color.White, new(0.95f, 0)),
+			new(default, Color.White, new(0.95f, 1)),
+			new(default, Color.White, new(1f, 0))
+		};
+		static readonly short[] dices = [
+			0, 1, 2,
+			1, 3, 2,
+			2, 3, 4,
+			4, 3, 5,
+		];
 		public Star_Soldier_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
@@ -515,31 +578,56 @@ public class Star_Soldier : ModMount {
 			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
 
-			/*{ //hp bar
-				const int max_width = 400;
-				Rectangle baseFrame = new(0, 0, max_width, 1);
-				Rectangle frame = baseFrame with { Width = (player.statLife * max_width) / player.statLifeMax2 };
-				DrawData data = new(
-					TextureAssets.MagicPixel.Value,
-					new Vector2((Main.screenWidth - max_width) * 0.5f + 7 * uiScale.X, 8),
-					baseFrame,
-					Color.Black,
-					0,
-					default,
-					uiScale,
-					SpriteEffects.None
-				);
-				(data with { position = data.position + Vector2.UnitX * (2 + max_width), color = Color.OrangeRed, sourceRect = new(0, 0, 2, 1) }).Draw(spriteBatch);
-				data.Draw(spriteBatch);
-				(data with { color = Color.OrangeRed, sourceRect = frame }).Draw(spriteBatch);
-				for (int i = 1; i < 20; i++) {
-					data.position.X -= 1 * uiScale.X;
-					data.position.Y += baseFrame.Height * uiScale.Y;
-					(data with { position = data.position + Vector2.UnitX * (2 + max_width), color = Color.OrangeRed, sourceRect = new(0, 0, 2, 1) }).Draw(spriteBatch);
-					data.Draw(spriteBatch);
-					(data with { color = Color.OrangeRed, sourceRect = frame }).Draw(spriteBatch);
+			Vector2 hpSize = new Vector2(400, 16) * uiScale;
+			{ //hp bar
+				Vector2 position = new((Main.screenWidth - hpSize.X) * 0.5f, 8);
+				for (int i = 0; i < vertices.Length; i++) {
+					vertices[i].Position = new(position + hpSize * vertices[i].TextureCoordinate, 0);
 				}
-			}*/
+
+				healthBarShader.Apply(null,
+					uColor,
+					uSecondaryColor,
+					uSaturation with { Value = handler.life / (float)MountHandler.MaxLife }
+				);
+				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			}
+			{ //buff icons
+				Point position = new((int)((Main.screenWidth - hpSize.X) * 0.5f + hpSize.X * 0.075f), 28);
+				Point currentPosition = position;
+				int hovered = -1;
+				for (int i = 0; i < Player.MaxBuffs; i++) {
+					if (player.buffType[i] > 0) {
+						if (Sets.CustomBuffIndicator[player.buffType[i]] is Action<SpriteBatch> customIcon) {
+							customIcon(spriteBatch);
+							continue;
+						}
+						hovered = Main.DrawBuffIcon(hovered, i, currentPosition.X, currentPosition.Y);
+						currentPosition.X += 38;
+						if (currentPosition.X >= position.X + 9 * 38) {
+							currentPosition.X = position.X;
+							currentPosition.Y += 50;
+						}
+					} else {
+						Main.buffAlpha[i] = 0.4f;
+					}
+				}
+				if (hovered >= 0) {
+					int buffType = player.buffType[hovered];
+					string buffName = Lang.GetBuffName(buffType);
+					string buffTooltip = Main.GetBuffTooltip(player, buffType);
+
+					if (player.buffType[hovered] == BuffID.MonsterBanner) Main.bannerMouseOver = true;
+					int rare = Main.meleeBuff[buffType] ? -10 : 0;
+
+					BuffLoader.ModifyBuffText(buffType, ref buffName, ref buffTooltip, ref rare);
+					Main.instance.MouseTextHackZoom(buffName, rare, 0, buffTooltip);
+				}
+			}
 
 			float nearestDist = float.PositiveInfinity;
 			Vector4 nearest = default;
@@ -1646,6 +1734,7 @@ public class Star_Soldier_Proper_Buff : ModBuff {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 			mountID = MountID
 		};
+		Star_Soldier.Sets.CustomBuffIndicator[Type] = _ => { };
 	}
 	public override void Update(Player player, ref int buffIndex) {
 		OriginPlayer originPlayer = player.OriginPlayer();

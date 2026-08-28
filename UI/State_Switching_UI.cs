@@ -142,7 +142,7 @@ namespace Origins.UI {
 				base.Draw(spriteBatch);
 				return;
 			}
-			using (spriteBatch.OverrideState(UseImmediateMode ? SpriteSortMode.Immediate : SpriteSortMode.Deferred, samplerState: OverrideSamplerState)) {
+			using (spriteBatch.OverrideState(UseImmediateMode ? SpriteSortMode.Immediate : SpriteSortMode.Deferred, samplerState: OverrideSamplerState, rasterizerState: RasterizerState.CullNone)) {
 				DrawSelf(spriteBatch);
 			}
 			DrawChildren(spriteBatch);
