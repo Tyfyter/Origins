@@ -396,15 +396,14 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			spriteBatch.Restart(state);
 		}
-		private Rectangle armFrame = new(0, 62, 130, 310);
 		public int ArmFrame {
 			get {
-				return (armFrame.X / armFrame.Width) % 4;
+				return field % 4;
 			}
-			set => armFrame.X = armFrame.Width * value;
+			set;
 		}
 		public string BossName => nameof(Trenchmaker);
-		public bool HasEntry => Type == ModContent.NPCType<Trenchmaker>();
+		public bool HasEntry => true;
 		public float EntryPosition => 3f;
 		public bool DownedCondition => NPC.downedBoss2;
 		public Dictionary<string, object> EntryInfo => new() {
@@ -421,16 +420,16 @@ namespace Origins.NPCs.Ashen.Boss {
 				SpriteBatchState state = spriteBatch.GetState();
 				spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
 				try {
-					Vector2 center = area.Center();
+					Vector2 center = area.Center() - new Vector2(0, 60);
 					if (NPC.frameCounter++ >= 30) {
 						ArmFrame++;
 						NPC.frameCounter = 0;
 					}
 					if (OriginsModIntegrations.CheckAprilFools()) {
-						DrawFront(spriteBatch, center - new Vector2(0, 60), color, 3, false);
-						spriteBatch.DrawDebugTextAbove(Language.GetTextValue("Mods.Origins.AprilFools.NPCs.Trenchmaker.BossChecklistDialog"), center + new Vector2(0, 60), color: new Color(0.8f, 0.1f, 0, Main.mouseTextColor / 255f).MultiplyRGBA(Main.MouseTextColorReal), scale: 3);
+						DrawFront(spriteBatch, Main.rand.NextVector2Circular(1, 1) + center, color, 3);
+						spriteBatch.DrawDebugTextAbove(Language.GetTextValue("Mods.Origins.AprilFools.NPCs.Trenchmaker.BossChecklistDialog"), center + new Vector2(0, 120), color: new Color(0.8f, 0.1f, 0, Main.mouseTextColor / 255f).MultiplyRGBA(Main.MouseTextColorReal), scale: 3);
 					} else {
-						DrawFront(spriteBatch, center - new Vector2(0, 60), color, 1f, true);
+						DrawFront(spriteBatch, center, color, 1f, true);
 					}
 				} finally {
 					spriteBatch.Restart(state);
@@ -449,77 +448,42 @@ namespace Origins.NPCs.Ashen.Boss {
 				ArmFrame = (int)GunType;
 			}
 		}
-		void DrawFront(SpriteBatch spriteBatch, Vector2 position, Color drawColor, float scaleMulti = 1, bool bossEntry = false) {
-			Vector2 offset = /*+ (Vector2.UnitX * 120)*/ position;
-			Vector2 hipPos = offset + (new Vector2(0, frontTexture.Value.Height * 0.68f) * scaleMulti);
-			DrawData data = new(
-				hipFrontTexture,
-				hipPos,
-				null,
-				drawColor,
-				0,
-				hipFrontTexture.Value.Size() * 0.5f,
-				1 * scaleMulti,
-				SpriteEffects.None,
-				0);
-			data.Draw(spriteBatch);
-
-			data.texture = lThighFrontTexture;
-			data.origin = lThighFrontTexture.Value.Size() * 0.5f;
-			data.position = hipPos - (new Vector2(hipFrontTexture.Value.Width * 0.63f, -4f) * scaleMulti);
-			data.Draw(spriteBatch);
-			data.texture = rThighFrontTexture;
-			data.origin = rThighFrontTexture.Value.Size() * 0.5f;
-			data.position = hipPos + (new Vector2(hipFrontTexture.Value.Width * 0.63f, 4f) * scaleMulti);
-			data.Draw(spriteBatch);
-			if (bossEntry) {
-				data.texture = lCalfFrontTexture;
-				data.origin = lCalfFrontTexture.Value.Size() * 0.5f;
-				data.position = hipPos - (new Vector2(hipFrontTexture.Value.Width * 0.59f, -3f - lThighFrontTexture.Value.Height) * scaleMulti);
-				data.Draw(spriteBatch);
-				data.texture = footFrontTexture;
-				data.origin = footFrontTexture.Value.Size() * 0.5f;
-				data.position += new Vector2(0, lCalfFrontTexture.Value.Height * 0.77f) * scaleMulti;
-				data.effect = SpriteEffects.FlipHorizontally;
-				data.Draw(spriteBatch);
-
-				data.texture = rCalfFrontTexture;
-				data.origin = rCalfFrontTexture.Value.Size() * 0.5f;
-				data.position = hipPos + (new Vector2(hipFrontTexture.Value.Width * 0.59f, 3f + rThighFrontTexture.Value.Height) * scaleMulti);
-				data.effect = SpriteEffects.None;
-				data.Draw(spriteBatch);
-				data.texture = footFrontTexture;
-				data.origin = footFrontTexture.Value.Size() * 0.5f;
-				data.position += new Vector2(0, rCalfFrontTexture.Value.Height * 0.77f) * scaleMulti;
-				data.Draw(spriteBatch);
+		void DrawFront(SpriteBatch spriteBatch, Vector2 position, Color drawColor, float scaleMulti = 1, bool drawCompleteLegs = false) {
+			//position = (Vector2.UnitX * (120 * scaleMulti)) + position;
+			Vector2 hipPos = position + (new Vector2(0, frontTexture.Value.Height * 0.68f) * scaleMulti);
+			Vector2 thighOffset = new(hipFrontTexture.Value.Width * 0.63f, -4f);
+			Vector2 armOffset = new(frontTexture.Value.Width * 0.456f, 0);
+			Rectangle armFrame = lArmFrontTexture.Frame(5, 5, ArmFrame, 3);
+			void CreatePart(Texture2D texture, Vector2? pos = null, Vector2? offset = null, Rectangle? frame = null, SpriteEffects effects = SpriteEffects.None) {
+				new DrawData(
+					texture,
+					(pos ?? position) + ((offset ?? Vector2.Zero) * scaleMulti),
+					frame,
+					drawColor,
+					0,
+					(frame is not null ? frame.Value.Size() : texture.Size()) * 0.5f,
+					1 * scaleMulti,
+					effects
+				).Draw(spriteBatch);
 			}
-			data.texture = lExhaustFrontTexture;
-			data.origin = lExhaustFrontTexture.Value.Size() * 0.5f;
-			data.sourceRect = null;
-			data.position = offset + Main.rand.NextVector2Circular(1, 1) - (new Vector2(frontTexture.Value.Width * 0.14f, 8) * scaleMulti);
-			data.Draw(spriteBatch);
 
-			data.texture = rExhaustFrontTexture;
-			data.origin = rExhaustFrontTexture.Value.Size() * 0.5f;
-			data.position = offset + Main.rand.NextVector2Circular(1, 1) + (new Vector2(frontTexture.Value.Width * 0.16f, -8) * scaleMulti);
-			data.Draw(spriteBatch);
+			CreatePart(hipFrontTexture, hipPos);
+			CreatePart(lThighFrontTexture, hipPos, -thighOffset);
+			CreatePart(rThighFrontTexture, hipPos, thighOffset * new Vector2(1, -1));
+			if (drawCompleteLegs) {
+				Vector2 calfOffset = new(hipFrontTexture.Value.Width * 0.59f, -3f - lThighFrontTexture.Value.Height);
+				Vector2 footOffset = calfOffset - new Vector2(0, lCalfFrontTexture.Value.Height * 0.77f);
 
-			data.texture = frontTexture;
-			data.origin = frontTexture.Value.Size() * 0.5f;
-			data.position = offset;
-			data.Draw(spriteBatch);
-			data.color = drawColor;
-			Rectangle FrameArm = lArmFrontTexture.Frame(5, 5, ArmFrame % 5, 3);
-
-			data.texture = lArmFrontTexture;
-			data.origin = FrameArm.Size() * 0.5f;
-			data.sourceRect = FrameArm;
-			data.position = offset - (new Vector2(frontTexture.Value.Width * 0.456f, 0) * scaleMulti);
-			data.Draw(spriteBatch);
-
-			data.texture = rArmFrontTexture;
-			data.position = offset + (new Vector2(frontTexture.Value.Width * 0.456f, 0) * scaleMulti);
-			data.Draw(spriteBatch);
+				CreatePart(lCalfFrontTexture, hipPos, -calfOffset);
+				CreatePart(footFrontTexture, hipPos, -footOffset, effects: SpriteEffects.FlipHorizontally);
+				CreatePart(rCalfFrontTexture, hipPos, calfOffset * new Vector2(1, -1));
+				CreatePart(footFrontTexture, hipPos, footOffset * new Vector2(1, -1));
+			}
+			CreatePart(lExhaustFrontTexture, position, Main.rand.NextVector2Circular(1, 1) - new Vector2(frontTexture.Value.Width * 0.14f, 8));
+			CreatePart(rExhaustFrontTexture, position, Main.rand.NextVector2Circular(1, 1) + new Vector2(frontTexture.Value.Width * 0.16f, -8));
+			CreatePart(frontTexture);
+			CreatePart(lArmFrontTexture, position, -armOffset, armFrame);
+			CreatePart(rArmFrontTexture, position, armOffset, armFrame);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
