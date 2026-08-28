@@ -382,6 +382,7 @@ public class Star_Soldier : ModMount {
 	}
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
+		player.statDefense += 65 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
 		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
 		GetHandler(player)?.Update(player);
 		player.OriginPlayer().mountOnly = true;
