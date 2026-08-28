@@ -414,7 +414,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				RelicTileBase.ItemType<Trenchmaker_Relic>(),
 				TrophyTileBase.ItemType<Trenchmaker_Trophy>(),
 				ModContent.ItemType<Trenchmaker_Mask>(),
-				//ModContent.ItemType<Robot_Toy_Controller>(),
+				ModContent.ItemType<Robot_Toy_Controller>(),
 			},
 			["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
 				SpriteBatchState state = spriteBatch.GetState();
@@ -570,7 +570,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Bomb_Rack>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Trenchmaker_Relic>()));
-			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Smiths_Hammer>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Robot_Toy_Controller>(), 4));
 		}
 		public Rectangle GetFootHitbox(Leg leg) {
 			GetLegPositions(leg, out _, out _, out Vector2 footPos);
