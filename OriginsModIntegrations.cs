@@ -244,6 +244,9 @@ namespace Origins {
 				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block1>());
 				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block2>());
 				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block3>());
+				FargosMutant.Call("AddIndestructibleWallType", WallType<Fortified_Steel_Wall1>());
+				FargosMutant.Call("AddIndestructibleWallType", WallType<Fortified_Steel_Wall2>());
+				FargosMutant.Call("AddIndestructibleWallType", WallType<Fortified_Steel_Wall3>());
 
 				FargosMutant.Call("AddEvilAltar", Ashen_Altar.ID);
 				FargosMutant.Call("AddEvilAltar", Defiled_Altar.ID);
