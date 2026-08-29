@@ -9,9 +9,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod.Fargos.Items {
+	#region Base Classes
 	public abstract class TOSummons<TSummon> : ModItem where TSummon : ModNPC {
+		public abstract int SortingPriority { get; }
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 		public override void SetStaticDefaults() {
+			ItemID.Sets.SortingPriorityBossSpawns[Type] = SortingPriority;
 			Item.ResearchUnlockCount = 3;
 		}
 		public override void SetDefaults() {
@@ -25,12 +28,6 @@ namespace Origins.CrossMod.Fargos.Items {
 			new TOSummons_Action(player.whoAmI, ModContent.NPCType<TSummon>(), pos).Perform();
 			return true;
 		}
-	}
-	public class Defiled_Chest : TOSummons<Defiled_Mimic> { }
-	public class Riven_Chest : TOSummons<Riven_Mimic> { }
-	public class Suspicious_Trash_Compactor : TOSummons<Trash_Compactor_Mimic>, IBroken {
-		static string IBroken.BrokenReason => "Needs texture";
-		public override string Texture => typeof(Defiled_Chest).GetDefaultTMLName();
 	}
 
 	public record class TOSummons_Action(int PlayerID, int Type, Vector2 Pos) : SyncedAction {
@@ -47,8 +44,22 @@ namespace Origins.CrossMod.Fargos.Items {
 			writer.WritePackedVector2(Pos);
 		}
 		protected override void Perform() {
-			Player player = Main.player[PlayerID];
 			NPC.NewNPCDirect(NPC.GetBossSpawnSource(PlayerID), Pos, Type);
 		}
 	}
+	#endregion
+
+	#region Rare Creatures
+	public class Defiled_Chest : TOSummons<Defiled_Mimic> {
+		public override int SortingPriority => 6;
+	}
+	public class Riven_Chest : TOSummons<Riven_Mimic> {
+		public override int SortingPriority => 6;
+	}
+	public class Suspicious_Trash_Compactor : TOSummons<Trash_Compactor_Mimic> {
+		public override int SortingPriority => 6;
+	}
+	#endregion
+	#region Bosses
+	#endregion
 }
