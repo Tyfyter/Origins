@@ -1782,7 +1782,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 		OriginSystem.hideInterfaceLayers = Main.playerInventory ? hideLayersInventory : hideLayers;
 		return true;
 	}
-	// We could go full Nier and let the player interact with the UI components as items
+	// We could go full NieR and let the player interact with the UI components as items
 	readonly IUISegment[] uiSegments = [
 		new WeaponHUD(),
 		new HPHUD(),
@@ -1902,7 +1902,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			if (player.breath != player.breathMax) { //O2 bar
 				Vector2 position = new(8, Main.screenHeight - 8);
 				Vector2 width = new(8, 0);
-				Vector2 height = new(0, -96);
+				Vector2 height = new(0, -128);
 				vertices[0].Position = new(position, 0);
 				vertices[1].Position = new(position + height, 0);
 				vertices[2].Position = new(position + width, 0);
