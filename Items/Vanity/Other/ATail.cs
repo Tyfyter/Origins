@@ -28,6 +28,7 @@ public abstract class ATail : ModItem {
 		if (!hideVisual) UpdateVanity(player);
 	}
 	public override void UpdateVanity(Player player) {
+		if (player.mount.Active && OriginsSets.Mounts.HideTails[player.mount.Type]) return;
 		OriginPlayer originPlayer = player.OriginPlayer();
 		originPlayer.vanityTail = this;
 		UpdateTail(player, originPlayer.vanityTailSegments);

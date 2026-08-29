@@ -23,7 +23,9 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
+		static HashSet<PlayerDrawLayer> vanillaLayers;
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
+			vanillaLayers ??= new(new FastStaticFieldInfo<IReadOnlyList<PlayerDrawLayer>>(typeof(PlayerDrawLayers), "VanillaLayers").Value);
 			Item item = drawInfo.heldItem;
 			if (item.ModItem is ICustomDrawItem custom && custom.HideNormalDraw) PlayerDrawLayers.HeldItem.Hide();
 			PlayerDrawLayers.CaptureTheGem.Hide();
@@ -31,7 +33,7 @@ namespace Origins {
 			if (mountOnly && !drawInfo.headOnlyRender) {
 				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
 					PlayerDrawLayer layer = PlayerDrawLayerLoader.DrawOrder[i];
-					if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack) {
+					if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack && vanillaLayers.Contains(layer)) {
 						layer.Hide();
 					}
 				}

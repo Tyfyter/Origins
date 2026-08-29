@@ -420,6 +420,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		MountData.swimFrameStart = MountData.inAirFrameStart;
 		OriginsSets.Mounts.DisableDirectionChange[Type] = true;
 		OriginsSets.Mounts.EyePosition[Type] = player => player.MountedCenter + player.Directions(new Vector2(24, -16));
+		OriginsSets.Mounts.HideTails[Type] = true;
 
 		RainbowDyes = [
 			GameShaders.Armor.GetShaderIdFromItemId(ItemID.RainbowDye),
@@ -1811,6 +1812,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 
 			Vector2 pos = player.Center - Main.screenPosition;
 			pos.Y += player.height * 0.5f + 8;
+			pos = pos.Floor();
 
 			//pos = pos.Transform(Main.UIScaleMatrix);
 			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);

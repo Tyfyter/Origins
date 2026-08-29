@@ -606,6 +606,7 @@ namespace Origins {
 				})
 			);
 			public static bool[] DisableDirectionChange = MountID.Sets.Factory.CreateBoolSet();
+			public static bool[] HideTails = MountID.Sets.Factory.CreateNamedSet(nameof(HideTails)).RegisterBoolSet();
 			public static class Create {
 				public static Func<Player, Vector2> SimpleEyePosition(int xOffset, int yOffset) => player => player.MountedCenter + player.Directions(2 + xOffset, 12 - player.height * 0.5f + yOffset);
 			}
