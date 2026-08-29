@@ -1953,12 +1953,16 @@ AMMO:
 CROSS-MOD CONTENT:
 |---
 (^) AlchemistNPC Lite sell TO stuff
+(^) Avalon biome lock box support
+(X) Cinematic Boss Intros support
 (^) Fargo's Altar Exterminator effect evils
+(#2) Fargo's alternate boss summons
 (ᗢ) Fargo's caught npcs
+(X) Fargo's energized boss summons
 (^) Fargo's Fountain biome change
 (X) Fargo's Purity Totem effects evils
 (ᗢ) Fargo's sell boss/rare npc summons
-(ᗢ) Fargo's sell evil woods
+(^) Fargo's sell evil woods
 (^) Fargo's stat sheet has explosive stats
 (^) Fargo's stat sheet has perm upgrades
 (ᗢ) Luiafk Skeleton Merchant update
@@ -2004,7 +2008,7 @@ CROSS-MOD CONTENT:
 (^) Riven "Fake" Altar
 (^) Sanguinite Storage Unit
 (^) Sanguinite Storage Upgrade
-(#2, ^2) Suspicious Trash Compactor !!!
+(^) Suspicious Trash Compactor
 (^) Watered-down Keytar
 (#, ^2) Wave Energy Converter !!!
 
