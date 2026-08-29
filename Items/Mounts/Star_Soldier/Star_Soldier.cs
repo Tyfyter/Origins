@@ -1,8 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Avalon;
+using Avalon.ModSupport.MLL;
+using CalamityMod.Items.Potions.Alcohol;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
 using Origins.UI;
@@ -22,6 +26,8 @@ using Terraria.GameInput;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -422,9 +428,7 @@ public class Star_Soldier : ModMount {
 			GameShaders.Armor.GetShaderIdFromItemId(ItemID.MidnightRainbowDye)
 		];
 	}
-	public override void SetMount(Player player, ref bool skipDust) {
-		player.mount._mountSpecificData = new MountHandler();
-	}
+	public override void SetMount(Player player, ref bool skipDust) => player.mount._mountSpecificData = new MountHandler();
 	struct HideItemHUD : IBroken {
 		static string IBroken.BrokenReason => "Hide item HUD";
 	}
@@ -432,8 +436,12 @@ public class Star_Soldier : ModMount {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
 		player.statDefense += 65 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
 		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
+		player.AddMaxBreath(200);
 		GetHandler(player)?.Update(player);
 		player.OriginPlayer().mountOnly = true;
+		Max(ref player.accWatch, 5);
+		Max(ref player.accCompass, 2);
+		Max(ref player.accDepthMeter, 2);
 	}
 	public static void ItemCheck(Player player) => GetHandler(player).ItemCheck(player);
 	public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) => false;
@@ -505,195 +513,6 @@ public class Star_Soldier : ModMount {
 		return false;
 	}
 	#endregion
-	[ReinitializeDuringResizeArrays]
-	public static class Sets {
-		public static Action<SpriteBatch>[] CustomBuffIndicator = BuffID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(CustomBuffIndicator)}")
-		.Description("Replaces the normal buff icon drawing when the player is using the Star Soldier mount")
-		.RegisterCustomSet<Action<SpriteBatch>>(null);
-	}
-	public class Star_Soldier_UI : SwitchableUIState {
-		static readonly AdvancedMiscShaderData healthBarShader = new(ModContent.Request<Effect>("Origins/Effects/HUD"), "HealthBar");
-		public override InterfaceScaleType ScaleType => InterfaceScaleType.None;
-		public override void AddToList() {
-			OriginSystem.Instance.MountHUD.AddState(this);
-			healthBarShader.LoadThen(() => {
-				uColor.Bind(healthBarShader);
-				uSecondaryColor.Bind(healthBarShader);
-				uSaturation.Bind(healthBarShader);
-			});
-		}
-		static readonly HashSet<string> hideLayers = [
-			"Vanilla: Resource Bars",
-			"Vanilla: Info Accessories Bar",
-			"Vanilla: Hotbar",
-			"ThoriumMod: Combat Icon"
-		];
-		public static Parameter uColor = Parameter.uColor with { Value = Color.OrangeRed.ToVector3() };
-		public static Parameter uSecondaryColor = Parameter.uSecondaryColor with { Value = Vector3.Zero };
-		public static Parameter uSaturation = Parameter.uSaturation;
-		public override bool IsActive() {
-			if (Main.LocalPlayer.dead || !Main.LocalPlayer.mount.IsMount<Star_Soldier>()) return false;
-			OriginSystem.hideInterfaceLayers = hideLayers;
-			return true;
-		}
-		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[6] {
-			new(default, Color.White, new(0, 0)),
-			new(default, Color.White, new(0.05f, 0)),
-			new(default, Color.White, new(0.05f, 1)),
-			new(default, Color.White, new(0.95f, 0)),
-			new(default, Color.White, new(0.95f, 1)),
-			new(default, Color.White, new(1f, 0))
-		};
-		static readonly short[] dices = [
-			0, 1, 2,
-			1, 3, 2,
-			2, 3, 4,
-			4, 3, 5,
-		];
-		public Star_Soldier_UI() : base() {
-			OverrideSamplerState = SamplerState.PointClamp;
-		}
-		readonly (Vector2 pos, Vector4 dimensions)[] lines = [
-			(Vector2.Zero, new(1, 0, 0, 2)),
-			(Vector2.Zero, new(0, 1, 2, 0)),
-			(Vector2.UnitX, new(1, 0, 0, 2)),
-			(Vector2.UnitX, new(0, 1, 2, 0)),
-			(Vector2.UnitY, new(1, 0, 0, 2)),
-			(Vector2.UnitY, new(0, 1, 2, 0)),
-			(Vector2.One, new(1, 0, 0, 2)),
-			(Vector2.One, new(0, 1, 2, 0)),
-			(Vector2.One * 0.5f, new(0, 0, 4, 4)),
-		];
-		protected override void DrawSelf(SpriteBatch spriteBatch) {
-			Player player = Main.LocalPlayer;
-			if (GetHandler(player) is not MountHandler handler) return;
-			Main.UIScaleMatrix.Decompose(out Vector3 _uiScale, out _, out _);
-			Vector2 uiScale = _uiScale.XY();
-			Vector2 scale = Main.GameViewMatrix.Zoom * uiScale;
-
-			Vector2 pos = player.Center - Main.screenPosition;
-			pos.Y += player.height * 0.5f + 8;
-
-			//pos = pos.Transform(Main.UIScaleMatrix);
-			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
-			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
-
-			Vector2 hpSize = new Vector2(400, 16) * uiScale;
-			{ //hp bar
-				Vector2 position = new((Main.screenWidth - hpSize.X) * 0.5f, 8);
-				for (int i = 0; i < vertices.Length; i++) {
-					vertices[i].Position = new(position + hpSize * vertices[i].TextureCoordinate, 0);
-				}
-
-				healthBarShader.Apply(null,
-					uColor,
-					uSecondaryColor,
-					uSaturation with { Value = handler.life / (float)MountHandler.MaxLife }
-				);
-				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
-				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			}
-			{ //buff icons
-				Point position = new((int)((Main.screenWidth - hpSize.X) * 0.5f + hpSize.X * 0.075f), 28);
-				Point currentPosition = position;
-				int hovered = -1;
-				for (int i = 0; i < Player.MaxBuffs; i++) {
-					if (player.buffType[i] > 0) {
-						if (Sets.CustomBuffIndicator[player.buffType[i]] is Action<SpriteBatch> customIcon) {
-							customIcon(spriteBatch);
-							continue;
-						}
-						hovered = Main.DrawBuffIcon(hovered, i, currentPosition.X, currentPosition.Y);
-						currentPosition.X += 38;
-						if (currentPosition.X >= position.X + 9 * 38) {
-							currentPosition.X = position.X;
-							currentPosition.Y += 50;
-						}
-					} else {
-						Main.buffAlpha[i] = 0.4f;
-					}
-				}
-				if (hovered >= 0) {
-					int buffType = player.buffType[hovered];
-					string buffName = Lang.GetBuffName(buffType);
-					string buffTooltip = Main.GetBuffTooltip(player, buffType);
-
-					if (player.buffType[hovered] == BuffID.MonsterBanner) Main.bannerMouseOver = true;
-					int rare = Main.meleeBuff[buffType] ? -10 : 0;
-
-					BuffLoader.ModifyBuffText(buffType, ref buffName, ref buffTooltip, ref rare);
-					Main.instance.MouseTextHackZoom(buffName, rare, 0, buffTooltip);
-				}
-			}
-
-			float nearestDist = float.PositiveInfinity;
-			Vector4 nearest = default;
-			NPC nearestNPC = default;
-			foreach (NPC npc in Main.ActiveNPCs) {
-				Rectangle hitbox = npc.Hitbox;
-				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
-
-				Color color = (npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]) ? Color.Lime : Color.OrangeRed;
-				if (npc == handler.LockOnTarget) color = Color.Red;
-				hitbox.X -= (int)Main.screenPosition.X;
-				hitbox.Y -= (int)Main.screenPosition.Y;
-
-				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
-				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
-
-				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
-				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
-
-				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * 8;
-				Vector2 size = hitboxSize + offset * 2;
-				for (int i = 0; i < lines.Length; i++) {
-					spriteBatch.Draw(
-						TextureAssets.MagicPixel.Value,
-						hitboxPos + lines[i].pos * size - offset,
-						rect,
-						color,
-						0,
-						lines[i].pos,
-						size * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
-						SpriteEffects.None,
-					0);
-				}
-				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
-				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
-				if (Minimize(ref nearestDist, dist)) {
-					nearest = new(hitboxPos - offset, size.X, size.Y);
-					nearestNPC = npc;
-				}
-			}
-			if (nearestNPC is not null) {
-				if (Keybindings.StarSoldierLockOn.JustPressed) {
-					SoundEngine.PlaySound(SoundID.Chat.WithPitch(1.8f).WithVolume(0.6f), player.Center);
-					SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.6f).WithVolume(0.6f), player.Center);
-					if (nearestNPC == handler.LockOnTarget || nearestDist > 16 * 16 * 15 * 15) handler.LockOnTarget = null;
-					else handler.LockOnTarget = nearestNPC;
-				}
-				StringBuilder builder = new();
-				builder.AppendLine(nearestNPC.GivenOrTypeName);
-				if (!nearestNPC.dontTakeDamage) builder.Append($"{nearestNPC.GetLifePercent():P0}");
-				string text = builder.ToString().Trim();
-				spriteBatch.DrawString(
-					FontAssets.ItemStack.Value,
-					text,
-					nearest.XY() + new Vector2(nearest.Z, 0),
-					//nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
-					(nearestNPC.friendly || NPCID.Sets.CountsAsCritter[nearestNPC.type]) ? Color.Lime : Color.OrangeRed,
-					0,
-					default,
-					uiScale,
-					SpriteEffects.None,
-				0);
-			} else if (Keybindings.StarSoldierLockOn.JustPressed) handler.LockOnTarget = nearestNPC;
-		}
-	}
 	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {
 		public Star_Soldier_Set_Weapons() : this(default, default, default) { }
 		protected override bool ShouldPerform => Player.active && !Player.dead;
@@ -1734,7 +1553,7 @@ public class Star_Soldier_Proper_Buff : ModBuff {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 			mountID = MountID
 		};
-		Star_Soldier.Sets.CustomBuffIndicator[Type] = _ => { };
+		Star_Soldier_UI.Sets.CustomBuffIndicator[Type] = _ => { };
 	}
 	public override void Update(Player player, ref int buffIndex) {
 		OriginPlayer originPlayer = player.OriginPlayer();
@@ -1743,10 +1562,12 @@ public class Star_Soldier_Proper_Buff : ModBuff {
 		originPlayer.targetHeight = player.mount._data.heightBoost + Player.defaultHeight;
 	}
 }
-public class Star_Soldier_Wagon : ModMount, IModifyControls {
+public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 	public class MountHandler {
 		int time;
 		int hoverIndex = 0;
+		bool hotbarPlus;
+		bool hotbarMinus;
 		Star_Soldier_Weapon leftClickSelection;
 		Star_Soldier_Weapon rightClickSelection;
 		public void Update(Player player) {
@@ -1756,19 +1577,24 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
 			}
 		}
-		public bool ModifyControls(Player player) {
+		public bool ModifyTriggers(Player player, TriggersSet triggersSet) {
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			if (PlayerInput.ScrollWheelDelta.Abs(out int dir) >= 120) {
 				if (dir < 0) hoverIndex.CycleUp(options.Count);
 				else hoverIndex.CycleDownWithZero(options.Count);
 			}
 			PlayerInput.ScrollWheelDelta = 0;
-			/*for (int i = 1; i <= 10; i++) {
-				if (player.KeyStatus["Hotbar" + i] && i < options.Count) {
-					hoverIndex = i;
+			for (int i = 1; i <= 10; i++) {
+				if (triggersSet.KeyStatus["Hotbar" + i] && i <= options.Count) {
+					hoverIndex = i - 1;
 				}
 				triggersSet.KeyStatus["Hotbar" + i] = false;
-			}*/
+			}
+			if (PlayerInput.Triggers.Current.HotbarScrollCD == 0 && (triggersSet.HotbarPlus ^ triggersSet.HotbarMinus)) {
+				if (triggersSet.HotbarPlus) hoverIndex.CycleUp(options.Count);
+				if (triggersSet.HotbarMinus) hoverIndex.CycleDownWithZero(options.Count);
+				PlayerInput.Triggers.Current.HotbarScrollCD = 8;
+			} else if (!triggersSet.HotbarPlus && !triggersSet.HotbarMinus) PlayerInput.Triggers.Current.HotbarScrollCD = 0;
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
 				if (leftClickSelection is null) leftClickSelection = options[hoverIndex];
 				else leftClickSelection = null;
@@ -1777,6 +1603,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 				if (rightClickSelection is null) rightClickSelection = options[hoverIndex];
 				else rightClickSelection = null;
 			}
+			triggersSet.HotbarPlus = false;
+			triggersSet.HotbarMinus = false;
 			player.controlUseItem = false;
 			player.controlUseTile = false;
 			return false;
@@ -1877,7 +1705,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyControls {
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
-	public bool ModifyControls(Player player) => GetHandler(player)?.ModifyControls(player) ?? true;
+	public bool ModifyTriggers(Player player, TriggersSet triggersSet) => GetHandler(player)?.ModifyTriggers(player, triggersSet) ?? true;
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
 		if (drawType == 2) {
 			drawOrigin = texture.Size() * 0.5f;
@@ -1904,5 +1732,459 @@ public class Star_Soldier_Wagon_Buff : ModBuff {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 			mountID = MountID
 		};
+	}
+}
+public class Star_Soldier_UI : SwitchableUIState {
+	[ReinitializeDuringResizeArrays]
+	public static class Sets {
+		public static Action<SpriteBatch>[] CustomBuffIndicator = BuffID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(CustomBuffIndicator)}")
+		.Description("Replaces the normal buff icon drawing when the player is using the Star Soldier mount")
+		.RegisterCustomSet<Action<SpriteBatch>>(null);
+		public static Action<SpriteBatch>[] InfoDisplayOverride = new Action<SpriteBatch>[InfoDisplayLoader.InfoDisplayCount];
+		static Sets() {
+			InfoDisplayOverride[InfoDisplay.DepthMeter.Type] = InfoAccessoryHUD.DrawDepthMeter;
+		}
+	}
+	static readonly AdvancedMiscShaderData healthBarShader = new(ModContent.Request<Effect>("Origins/Effects/HUD"), "HealthBar");
+	public override InterfaceScaleType ScaleType => InterfaceScaleType.None;
+	public override void AddToList() {
+		OriginSystem.Instance.MountHUD.AddState(this);
+		healthBarShader.LoadThen(() => {
+			uColor.Bind(healthBarShader);
+			uSecondaryColor.Bind(healthBarShader);
+			uSaturation.Bind(healthBarShader);
+		});
+	}
+	static readonly HashSet<string> hideLayers = [
+		"Vanilla: Resource Bars",
+		"Vanilla: Info Accessories Bar",
+		"Vanilla: Hotbar",
+		"ThoriumMod: Combat Icon"
+	];
+	static readonly HashSet<string> hideLayersInventory = [
+		"Vanilla: Resource Bars",
+		"Vanilla: Hotbar",
+		"ThoriumMod: Combat Icon"
+	];
+	public static Parameter uColor = Parameter.uColor with { Value = Color.OrangeRed.ToVector3() };
+	public static Parameter uSecondaryColor = Parameter.uSecondaryColor with { Value = Vector3.Zero };
+	public static Parameter uSaturation = Parameter.uSaturation;
+	public override bool IsActive() {
+		if (Main.LocalPlayer.dead || !Main.LocalPlayer.mount.IsMount<Star_Soldier>()) return false;
+		OriginSystem.hideInterfaceLayers = Main.playerInventory ? hideLayersInventory : hideLayers;
+		return true;
+	}
+	// We could go full Nier and let the player interact with the UI components as items
+	readonly IUISegment[] uiSegments = [
+		new WeaponHUD(),
+		new HPHUD(),
+		new O2HUD(),
+		new TargetingHUD(),
+		new InfoAccessoryHUD(),
+	];
+	public Star_Soldier_UI() : base() {
+		OverrideSamplerState = SamplerState.PointClamp;
+	}
+	protected override void DrawSelf(SpriteBatch spriteBatch) {
+		Player player = Main.LocalPlayer;
+		if (Star_Soldier.GetHandler(player) is not Star_Soldier.MountHandler handler) return;
+		Main.UIScaleMatrix.Decompose(out Vector3 _uiScale, out _, out _);
+		Vector2 uiScale = _uiScale.XY();
+
+		for (int i = 0; i < uiSegments.Length; i++) uiSegments[i].Draw(spriteBatch, handler, uiScale);
+	}
+	interface IUISegment {
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale);
+	}
+	public class WeaponHUD : IUISegment {
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			Player player = Main.LocalPlayer;
+			Vector2 scale = Main.GameViewMatrix.Zoom * uiScale;
+
+			Vector2 pos = player.Center - Main.screenPosition;
+			pos.Y += player.height * 0.5f + 8;
+
+			//pos = pos.Transform(Main.UIScaleMatrix);
+			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
+			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
+		}
+	}
+	public class HPHUD : IUISegment {
+		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[6] {
+			new(default, Color.White, new(0, 0)),
+			new(default, Color.White, new(0.05f, 0)),
+			new(default, Color.White, new(0.05f, 1)),
+			new(default, Color.White, new(0.95f, 0)),
+			new(default, Color.White, new(0.95f, 1)),
+			new(default, Color.White, new(1f, 0))
+		};
+		static readonly short[] dices = [
+			0, 1, 2,
+			1, 3, 2,
+			2, 3, 4,
+			4, 3, 5,
+		];
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			Player player = Main.LocalPlayer;
+			Vector2 hpSize = new Vector2(400, 16) * uiScale;
+			{ //HP bar
+				Vector2 position = new((Main.screenWidth - hpSize.X) * 0.5f, 8);
+				for (int i = 0; i < vertices.Length; i++) {
+					vertices[i].Position = new(position + hpSize * vertices[i].TextureCoordinate, 0);
+				}
+
+				healthBarShader.Apply(null,
+					uColor,
+					uSecondaryColor,
+					uSaturation with { Value = handler.life / (float)Star_Soldier.MountHandler.MaxLife }
+				);
+				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			}
+			{ //buff icons
+				Point position = new((int)((Main.screenWidth - hpSize.X) * 0.5f + hpSize.X * 0.075f), 28);
+				Point currentPosition = position;
+				int hovered = -1;
+				for (int i = 0; i < Player.MaxBuffs; i++) {
+					if (player.buffType[i] > 0) {
+						if (Sets.CustomBuffIndicator[player.buffType[i]] is Action<SpriteBatch> customIcon) {
+							customIcon(spriteBatch);
+							continue;
+						}
+						hovered = Main.DrawBuffIcon(hovered, i, currentPosition.X, currentPosition.Y);
+						currentPosition.X += 38;
+						if (currentPosition.X >= position.X + 9 * 38) {
+							currentPosition.X = position.X;
+							currentPosition.Y += 50;
+						}
+					} else {
+						Main.buffAlpha[i] = 0.4f;
+					}
+				}
+				if (hovered >= 0) {
+					int buffType = player.buffType[hovered];
+					string buffName = Lang.GetBuffName(buffType);
+					string buffTooltip = Main.GetBuffTooltip(player, buffType);
+
+					if (player.buffType[hovered] == BuffID.MonsterBanner) Main.bannerMouseOver = true;
+					int rare = Main.meleeBuff[buffType] ? -10 : 0;
+
+					BuffLoader.ModifyBuffText(buffType, ref buffName, ref buffTooltip, ref rare);
+					Main.instance.MouseTextHackZoom(buffName, rare, 0, buffTooltip);
+				}
+			}
+		}
+	}
+	public class O2HUD : IUISegment {
+		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4] {
+			new(default, Color.White, new(0, 0)),
+			new(default, Color.White, new(1, 0)),
+			new(default, Color.White, new(0, 1)),
+			new(default, Color.White, new(1, 1))
+		};
+		static readonly short[] dices = [
+			0, 1, 2,
+			1, 3, 2
+		];
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			Player player = Main.LocalPlayer;
+			if (player.breath != player.breathMax) { //O2 bar
+				Vector2 position = new(8, Main.screenHeight - 8);
+				Vector2 width = new(8, 0);
+				Vector2 height = new(0, -64);
+				vertices[0].Position = new(position, 0);
+				vertices[1].Position = new(position + height, 0);
+				vertices[2].Position = new(position + width, 0);
+				vertices[3].Position = new(position + width + height, 0);
+
+				healthBarShader.Apply(null,
+					uColor,
+					uSecondaryColor,
+					uSaturation with { Value = player.breath / (float)player.breathMax }
+				);
+				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				spriteBatch.DrawString(
+					FontAssets.ItemStack.Value,
+					"O2",
+					position + width + height + Vector2.UnitX * 4,
+					//nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
+					Color.OrangeRed,
+					0,
+					default,
+					uiScale * 0.85f,
+					SpriteEffects.None,
+				0);
+			}
+		}
+	}
+	public class TargetingHUD : IUISegment {
+		readonly (Vector2 pos, Vector4 dimensions)[] lines = [
+			(Vector2.Zero, new(1, 0, 0, 2)),
+			(Vector2.Zero, new(0, 1, 2, 0)),
+			(Vector2.UnitX, new(1, 0, 0, 2)),
+			(Vector2.UnitX, new(0, 1, 2, 0)),
+			(Vector2.UnitY, new(1, 0, 0, 2)),
+			(Vector2.UnitY, new(0, 1, 2, 0)),
+			(Vector2.One, new(1, 0, 0, 2)),
+			(Vector2.One, new(0, 1, 2, 0)),
+			(Vector2.One * 0.5f, new(0, 0, 4, 4)),
+		];
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			Player player = Main.LocalPlayer;
+			float nearestDist = float.PositiveInfinity;
+			Vector4 nearest = default;
+			NPC nearestNPC = default;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				Rectangle hitbox = npc.Hitbox;
+				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
+
+				Color color = (npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]) ? Color.Lime : Color.OrangeRed;
+				if (npc == handler.LockOnTarget) color = Color.Red;
+				hitbox.X -= (int)Main.screenPosition.X;
+				hitbox.Y -= (int)Main.screenPosition.Y;
+
+				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
+				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
+
+				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
+				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
+
+				Rectangle rect = new(0, 0, 1, 1);
+				Vector2 offset = uiScale * 8;
+				Vector2 size = hitboxSize + offset * 2;
+				for (int i = 0; i < lines.Length; i++) {
+					spriteBatch.Draw(
+						TextureAssets.MagicPixel.Value,
+						hitboxPos + lines[i].pos * size - offset,
+						rect,
+						color,
+						0,
+						lines[i].pos,
+						size * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
+						SpriteEffects.None,
+					0);
+				}
+				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
+				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
+				if (Minimize(ref nearestDist, dist)) {
+					nearest = new(hitboxPos - offset, size.X, size.Y);
+					nearestNPC = npc;
+				}
+			}
+			if (nearestNPC is not null) {
+				if (Keybindings.StarSoldierLockOn.JustPressed) {
+					SoundEngine.PlaySound(SoundID.Chat.WithPitch(1.8f).WithVolume(0.6f), player.Center);
+					SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.6f).WithVolume(0.6f), player.Center);
+					if (nearestNPC == handler.LockOnTarget || nearestDist > 16 * 16 * 15 * 15) handler.LockOnTarget = null;
+					else handler.LockOnTarget = nearestNPC;
+				}
+				StringBuilder builder = new();
+				builder.AppendLine(nearestNPC.GivenOrTypeName);
+				if (!nearestNPC.dontTakeDamage) builder.Append($"{nearestNPC.GetLifePercent():P0}");
+				string text = builder.ToString().Trim();
+				spriteBatch.DrawString(
+					FontAssets.ItemStack.Value,
+					text,
+					nearest.XY() + new Vector2(nearest.Z, 0),
+					//nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
+					(nearestNPC.friendly || NPCID.Sets.CountsAsCritter[nearestNPC.type]) ? Color.Lime : Color.OrangeRed,
+					0,
+					default,
+					uiScale,
+					SpriteEffects.None,
+				0);
+			} else if (Keybindings.StarSoldierLockOn.JustPressed) handler.LockOnTarget = nearestNPC;
+		}
+	}
+	public class InfoAccessoryHUD : IUISegment {
+		static readonly FastStaticFieldInfo<List<InfoDisplay>> InfoDisplays = new(typeof(InfoDisplayLoader), nameof(InfoDisplays));
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			if (Main.playerInventory) return;
+			Player player = Main.LocalPlayer;
+
+			int y = 8;
+			if (Main.mapStyle == 1 && Main.mapEnabled) y += 335;
+			int lineSpacing = 22;
+			if (Main.screenHeight < 650) lineSpacing = 20;
+
+			for (int i = 0; i < InfoDisplayLoader.InfoDisplayCount; i++) {
+				InfoDisplay display = InfoDisplays.Value[i];
+				if (!InfoDisplayLoader.Active(display) || player.hideInfo[i]) {
+					continue;
+				}
+				if (Sets.InfoDisplayOverride[i] is Action<SpriteBatch> customDisplay) {
+					customDisplay(spriteBatch);
+					continue;
+				}
+				Color infoTextColor = Main.MouseTextColorReal.MultiplyRGBA(Color.OrangeRed);
+				Color infoTextShadowColor = Color.Transparent;
+				string text = display.DisplayValue(ref infoTextColor, ref infoTextShadowColor);
+				string name = "";
+				switch (display) {
+					case WatchesInfoDisplay: {
+						double time = Main.time;
+						if (!Main.dayTime) {
+							// if it's night add this number
+							time += 54000.0;
+						}
+
+						// Divide by seconds in a day * 24
+						time = (time / 86400.0) * 24.0;
+						// Dunno why we're taking 19.5. Something about hour formatting
+						time = time - 7.5 - 12.0;
+						// Format in readable time
+						if (time < 0.0) {
+							time += 24.0;
+						}
+
+						int intTime = (int)time;
+						// Get the decimal points of time.
+						double deltaTime = time - intTime;
+						int seconds = ((int)(deltaTime * 60.0 * 60.0) % 60);
+						// multiply them by 60. Minutes, probably
+						deltaTime = (int)(deltaTime * 60.0);
+						text = $"{intTime:0#}:{(int)deltaTime:0#}:{seconds:0#}";
+						break;
+					}
+					case MetalDetectorInfoDisplay: {
+						if (Main.SceneMetrics.bestOre <= 0) {
+							continue;
+						} else {
+							int baseOption = 0;
+							int tileType = Main.SceneMetrics.bestOre;
+							if (Main.SceneMetrics.ClosestOrePosition.HasValue) {
+								Point pos = Main.SceneMetrics.ClosestOrePosition.Value;
+								Tile tile = Framing.GetTileSafely(pos);
+								if (tile.HasTile) {
+									MapHelper.GetTileBaseOption(pos.X, pos.Y, tile.TileType, tile, ref baseOption);
+									tileType = tile.TileType;
+									if (TileID.Sets.BasicChest[tileType] || TileID.Sets.BasicChestFake[tileType]) {
+										baseOption = 0;
+									}
+								}
+							}
+							text = Language.GetTextValue("GameUI.OreDetected", Lang.GetMapObjectName(MapHelper.TileToLookup(tileType, baseOption)));
+						}
+						break;
+					}
+					case LifeformAnalyzerInfoDisplay: {
+						const float maxDist = 1300;
+						int bestRarity = 0;
+						int index = -1;
+						if (player.accCritterGuideCounter <= 0) {
+							player.accCritterGuideCounter = 15;
+							foreach (NPC npc in Main.ActiveNPCs) {
+								if (npc.rarity > bestRarity && npc.Center.WithinRange(player.Center, maxDist)) {
+									index = npc.whoAmI;
+									bestRarity = npc.rarity;
+								}
+							}
+							player.accCritterGuideNumber = (byte)index;
+						} else {
+							player.accCritterGuideCounter--;
+							index = player.accCritterGuideNumber;
+						}
+						NPC rarestNPC = Main.npc.GetIfInRange(index);
+						if ((rarestNPC?.active ?? false) && rarestNPC.rarity > 0) text = Main.npc[index].GivenOrTypeName;
+						break;
+					}
+					case RadarInfoDisplay: {
+						const float maxDist = 2000;
+						if (player.accThirdEyeCounter <= 0) {
+							player.accThirdEyeNumber = 0;
+							player.accThirdEyeCounter = 15;
+							foreach (NPC npc in Main.ActiveNPCs) {
+								if (!npc.friendly && npc.damage > 0 && npc.lifeMax > 5 && !npc.dontCountMe && npc.Center.WithinRange(player.Center, maxDist)) {
+									player.accThirdEyeNumber++;
+								}
+							}
+						} else {
+							player.accThirdEyeCounter--;
+						}
+						if (player.accThirdEyeNumber != 0) {
+							text = player.accThirdEyeNumber != 1 ? Language.GetTextValue("GameUI.EnemiesNearby", player.accThirdEyeNumber) : Language.GetTextValue("GameUI.OneEnemyNearby");
+						}
+						break;
+					}
+					case TallyCounterInfoDisplay: {
+						int lastCreatureHit = player.lastCreatureHit;
+						if (lastCreatureHit > 0) {
+							text = Lang.GetNPCNameValue(Item.BannerToNPC(lastCreatureHit)) + ": " + NPC.killCount[lastCreatureHit];
+						}
+						break;
+					}
+					case DPSMeterInfoDisplay: {
+						player.checkDPSTime();
+						if (player.getDPS() != 0) {
+							text = Language.GetTextValue("GameUI.DPS", player.getDPS());
+						}
+						break;
+					}
+					case CompassInfoDisplay: {
+						int xPos = (int)((player.position.X + (float)(player.width / 2)) * 2f / 16f - (float)Main.maxTilesX);
+						text = (xPos > 0) ? Language.GetTextValue("GameUI.CompassEast", xPos) : ((xPos >= 0) ? Language.GetTextValue("GameUI.CompassCenter") : Language.GetTextValue("GameUI.CompassWest", -xPos));
+						break;
+					}
+				}
+#pragma warning disable CS0618 // Type or member is obsolete
+				InfoDisplayLoader.ModifyDisplayValue(display, ref text);
+				InfoDisplayLoader.ModifyDisplayName(display, ref name);
+				InfoDisplayLoader.ModifyDisplayColor(display, ref infoTextColor, ref infoTextShadowColor);
+#pragma warning restore CS0618 // Type or member is obsolete
+				InfoDisplayLoader.ModifyDisplayParameters(display, ref text, ref name, ref infoTextColor, ref infoTextShadowColor);
+				if (string.IsNullOrEmpty(text)) continue;
+
+				Vector2 size = FontAssets.MouseText.Value.MeasureString(text);
+
+				spriteBatch.DrawString(
+					FontAssets.MouseText.Value,
+					text,
+					new Vector2(Main.screenWidth - size.X - 8, y),
+					infoTextColor,
+					0f,
+					default,
+					Vector2.One,
+					SpriteEffects.None,
+				0f);
+				y += lineSpacing;
+			}
+		}
+		public static void DrawDepthMeter(SpriteBatch spriteBatch) {
+			Player player = Main.LocalPlayer;
+			int depth = -(int)(((player.position.Y + player.height) * 2f / 16f) - Main.worldSurface * 2.0);
+
+			Vector2 size = FontAssets.MouseText.Value.MeasureString(depth.ToString());
+
+			spriteBatch.DrawString(
+				FontAssets.MouseText.Value,
+				depth.ToString(),
+				new Vector2(Main.screenWidth - size.X - 8 - 48, Main.screenHeight * 0.5f),
+				Color.OrangeRed,
+				0f,
+				default,
+				Vector2.One,
+				SpriteEffects.None,
+			0f);
+
+			Vector2 position = new(Main.screenWidth - 4, Main.screenHeight * 0.5f + 12);
+			DrawData smallTick = new(TextureAssets.MagicPixel.Value, position, new Rectangle(0, 0, 24, 2), Color.OrangeRed) {
+				origin = new(24, 1)
+			};
+			DrawData largeTick = smallTick with { scale = new Vector2(2, 1) };
+			for (int i = depth - 200; i < depth + 200; i++) {
+				if (i % 20 != 0) continue;
+				DrawData data = i % 100 == 0 ? largeTick : smallTick;
+				data.color *= 1 - float.Pow((i - depth) / 200f, 4);
+				data.position.Y -= i - depth;
+				data.Draw(spriteBatch);
+			}
+		}
 	}
 }

@@ -769,13 +769,16 @@ namespace Origins {
 					}
 				}
 			}
-			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
+			bool canModifyControls = true;
+			if (canModifyControls && Player.mount.Active && Player.mount._data.ModMount is IModifyTriggers modifyControls) canModifyControls = modifyControls.ModifyTriggers(Player, triggersSet);
+			if (canModifyControls && Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
 				for (int i = 1; i <= 10; i++) {
 					if (triggersSet.KeyStatus["Hotbar" + i] && !Player.ItemAnimationActive && LunaticsRuneAttack.ValidateSelection(ref i)) {
 						lunaticsRuneSelectedAttack = i;
 					}
 					triggersSet.KeyStatus["Hotbar" + i] = false;
 				}
+				canModifyControls = false;
 			}
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;
@@ -784,17 +787,13 @@ namespace Origins {
 		}
 		public override void SetControls() {
 			Debugging.LogFirstRun(SetControls);
-			bool canModifyControls = true;
 			if (!Main.mapFullscreen && Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
 				PlayerInput.ScrollWheelDelta = 0;
-				canModifyControls = false;
 			}
 			if (lunaticsRuneCharge > 0) {
 				Player.controlUseItem = false;
 				Player.controlUseTile = false;
-				canModifyControls = false;
 			}
-			if (canModifyControls && Player.mount.Active && Player.mount._data.ModMount is IModifyControls modifyControls) canModifyControls = modifyControls.ModifyControls(Player);
 		}
 		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
 			if (Player.InModBiome<Brine_Pool>()) {

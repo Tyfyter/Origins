@@ -822,9 +822,9 @@ namespace Origins {
 		void StartUse(Player player);
 		void EndUse(Player player);
 	}
-	public interface IModifyControls {
+	public interface IModifyTriggers {
 		/// <returns>False to prevent further modification</returns>
-		bool ModifyControls(Player player);
+		bool ModifyTriggers(Player player, TriggersSet triggersSet);
 	}
 	internal class SpecialTilePreviewOverlay() : Overlay(EffectPriority.High, RenderLayers.TilesAndNPCs), ILoadable {
 		public override void Draw(SpriteBatch spriteBatch) => (Main.LocalPlayer?.HeldItem?.ModItem as ISpecialTilePreviewItem)?.DrawPreview();
