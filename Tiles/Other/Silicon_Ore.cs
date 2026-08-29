@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -58,10 +59,10 @@ namespace Origins.Tiles.Other {
 			.AddTile(TileID.GlassKiln)
 			.Register();
 
-			/*Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Ashen_Sand_Item>(), 3)
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Sootsand_Item>(), 3)
 			.AddTile(TileID.GlassKiln)
-			.Register();*/
+			.Register();
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
