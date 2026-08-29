@@ -47,7 +47,7 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 		Item.value = Item.sellPrice(gold: 1);
 	}
 }
-public class Star_Soldier : ModMount {
+public class Star_Soldier : ModMount, IModifyTriggers {
 	static int BodyTextureFrames => 5;
 	AutoLoadingTexture bodyTexture = typeof(Star_Soldier).GetDefaultTMLName();
 	AutoLoadingTexture bodyGlowTexture = typeof(Star_Soldier).GetDefaultTMLName("_Glow");
@@ -427,6 +427,10 @@ public class Star_Soldier : ModMount {
 			GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye),
 			GameShaders.Armor.GetShaderIdFromItemId(ItemID.MidnightRainbowDye)
 		];
+		On_Player.ScrollHotbar += On_Player_ScrollHotbar;
+	}
+	static void On_Player_ScrollHotbar(On_Player.orig_ScrollHotbar orig, Player self, int Offset) {
+		if (!self.mount.IsMount<Star_Soldier>()) orig(self, Offset);
 	}
 	public override void SetMount(Player player, ref bool skipDust) => player.mount._mountSpecificData = new MountHandler();
 	struct HideItemHUD : IBroken {
@@ -449,6 +453,12 @@ public class Star_Soldier : ModMount {
 		if (GetHandler(player) is not MountHandler handler) return false;
 		handler.HandleHurt(player, in info);
 		return true;
+	}
+	public bool ModifyTriggers(Player player, TriggersSet triggersSet) {
+		for (int i = 1; i <= 10; i++) triggersSet.KeyStatus["Hotbar" + i] = false;
+		triggersSet.HotbarPlus = false;
+		triggersSet.HotbarMinus = false;
+		return false;
 	}
 	public static MountHandler GetHandler(Player player) {
 		if (!player.mount.IsMount<Star_Soldier>()) return null;
@@ -1566,8 +1576,6 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 	public class MountHandler {
 		int time;
 		int hoverIndex = 0;
-		bool hotbarPlus;
-		bool hotbarMinus;
 		Star_Soldier_Weapon leftClickSelection;
 		Star_Soldier_Weapon rightClickSelection;
 		public void Update(Player player) {
@@ -1894,7 +1902,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			if (player.breath != player.breathMax) { //O2 bar
 				Vector2 position = new(8, Main.screenHeight - 8);
 				Vector2 width = new(8, 0);
-				Vector2 height = new(0, -64);
+				Vector2 height = new(0, -96);
 				vertices[0].Position = new(position, 0);
 				vertices[1].Position = new(position + height, 0);
 				vertices[2].Position = new(position + width, 0);
@@ -2010,9 +2018,12 @@ public class Star_Soldier_UI : SwitchableUIState {
 			Player player = Main.LocalPlayer;
 
 			int y = 8;
-			if (Main.mapStyle == 1 && Main.mapEnabled) y += 335;
 			int lineSpacing = 22;
 			if (Main.screenHeight < 650) lineSpacing = 20;
+			if (Main.mapStyle == 1 && Main.mapEnabled) {
+				y = Main.screenHeight - 8 - 29;
+				lineSpacing *= -1;
+			}
 
 			for (int i = 0; i < InfoDisplayLoader.InfoDisplayCount; i++) {
 				InfoDisplay display = InfoDisplays.Value[i];
@@ -2024,7 +2035,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 					continue;
 				}
 				Color infoTextColor = Main.MouseTextColorReal.MultiplyRGBA(Color.OrangeRed);
-				Color infoTextShadowColor = Color.Transparent;
+				Color infoTextShadowColor = Color.OrangeRed.MultiplyRGB(new(100, 100, 100));
 				string text = display.DisplayValue(ref infoTextColor, ref infoTextShadowColor);
 				string name = "";
 				switch (display) {
@@ -2142,6 +2153,17 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (string.IsNullOrEmpty(text)) continue;
 
 				Vector2 size = FontAssets.MouseText.Value.MeasureString(text);
+
+				spriteBatch.DrawString(
+					FontAssets.MouseText.Value,
+					text,
+					new Vector2(Main.screenWidth - size.X - 8, y) + Vector2.UnitX,
+					infoTextColor.MultiplyRGB(new(100, 100, 100)),
+					0f,
+					default,
+					Vector2.One,
+					SpriteEffects.None,
+				0f);
 
 				spriteBatch.DrawString(
 					FontAssets.MouseText.Value,
