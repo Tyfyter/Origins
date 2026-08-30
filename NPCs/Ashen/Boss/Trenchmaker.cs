@@ -45,7 +45,7 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen.Boss {
 	[AutoloadBossHead]
-	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker>, IAshenEnemy, IBossChecklistEntry, IMinions {
+	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker>, IAshenEnemy, IBossChecklistEntry, IMinions, IBossTitleInfo {
 		public enum GunKind : byte {
 			Cannon,
 			Launcher,
@@ -403,10 +403,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			set;
 		}
 		public string BossName => nameof(Trenchmaker);
-		public bool HasEntry => true;
-		public float EntryPosition => 3f;
+		public bool HasBossEntry => true;
+		public float BossEntryPosition => 3f;
 		public bool DownedCondition => NPC.downedBoss2;
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["availability"] = OriginsModIntegrations.IfEvil<Ashen_Alt_Biome>(),
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition"),
 			["spawnItems"] = ModContent.ItemType<Distress_Beacon>(),
@@ -436,6 +436,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 		};
+		public string TitleText => this.GetTitleText();
 		public static List<int> Minions = [];
 		public List<int> BossMinions => Minions;
 		public override void FindFrame(int frameHeight) {

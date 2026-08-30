@@ -17,10 +17,10 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscB {
 	public class Chambersite_Sentinel : ModNPC, IBossChecklistEntry {
 		public string BossName => nameof(Chambersite_Sentinel);
-		public float EntryPosition => 7.2f;
-		public EntryType EntryType => EntryType.MiniBoss;
+		public float BossEntryPosition => 7.2f;
+		public BossEntryType BossEntryType => BossEntryType.MiniBoss;
 		public bool DownedCondition => ProgressFlags.DownedChambersiteSentinel.IsSet;
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
 			["overrideHeadTextures"] = "Origins/Textures/EmptySprite"
 		};

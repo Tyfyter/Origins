@@ -37,7 +37,7 @@ using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
 	[AutoloadBossHead]
-	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat, IBossChecklistEntry {
+	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat, IBossChecklistEntry, IBossTitleInfo {
 		static AutoLoadingTexture UpperLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper";
 		static AutoLoadingTexture LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
 		static AutoLoadingTexture fwPortrait = "Origins/UI/Fiberglass_Weaver_Preview";
@@ -52,9 +52,9 @@ namespace Origins.NPCs.Fiberglass {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Fiberglass_Weaver_Preview");
 		public string BossName => nameof(Fiberglass_Weaver);
-		public float EntryPosition => 4.7f;
+		public float BossEntryPosition => 4.7f;
 		public bool DownedCondition => ProgressFlags.DownedFiberglassWeaver.IsSet;
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
 			["spawnItems"] = ModContent.ItemType<Shaped_Glass>(),
 			["collectibles"] = new List<int> {
@@ -76,6 +76,7 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 		};
+		public string TitleText => this.GetTitleText();
 
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;

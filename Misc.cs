@@ -3267,6 +3267,13 @@ namespace Origins {
 			}
 			return new(flavorText);
 		}
+		[Pure]
+		public static string GetTitleText(this ModNPC npc) {
+			string key = $"Mods.{npc.Mod.Name}.NPCs.{npc.Name}.BossTitle";
+			return Language.GetOrRegister(key, () => "<PH> title text here").Value;
+		}
+		[Pure]
+		public static string GetTitleText<TNPC>() where TNPC : ModNPC => ModContent.GetInstance<TNPC>().GetTitleText();
 		public static void KillsCountTowardsNPC<TOther>(this NPC npc, BestiaryEntry bestiaryEntry) where TOther : ModNPC => npc.KillsCountTowardsNPC(ModContent.NPCType<TOther>(), bestiaryEntry);
 		public static void KillsCountTowardsNPC(this NPC npc, int other, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other], true);

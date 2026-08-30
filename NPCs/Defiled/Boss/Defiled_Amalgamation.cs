@@ -46,7 +46,7 @@ using static Origins.NPCs.Defiled.Boss.Defiled_Spike_Indicator;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer, IMinions, IBossChecklistEntry {
+	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer, IMinions, IBossChecklistEntry, IBossTitleInfo {
 		static AutoLoadingTexture bossCheckPortrait = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Boss_Checklist";
 		static AutoLoadingTexture RightArmTexture = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Right_Arm";
 		static AutoLoadingTexture RightArmGlowTexture = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Right_Arm_Glow";
@@ -55,9 +55,9 @@ namespace Origins.NPCs.Defiled.Boss {
 		static AutoLoadingTexture torsoPath = bodyPartsPath + "Torso";
 		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 		public string BossName => nameof(Defiled_Amalgamation);
-		public float EntryPosition => 3f;
+		public float BossEntryPosition => 3f;
 		public bool DownedCondition => NPC.downedBoss2;
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["availability"] = OriginsModIntegrations.IfEvil<Defiled_Wastelands_Alt_Biome>(),
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Defiled_Amalgamation.BossChecklistIntegration.SpawnCondition"),
 			["spawnItems"] = ModContent.ItemType<Nerve_Impulse_Manipulator>(),
@@ -78,6 +78,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				}
 			}
 		};
+		public string TitleText => this.GetTitleText();
 
 		public string CustomSpritePath => "DefiledAmalg";
 		public AssimilationAmount? Assimilation => 0.04f;

@@ -106,6 +106,8 @@ namespace Origins {
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
 		Mod avalon;
 		public static Mod Avalon { get => instance.avalon; set => instance.avalon = value; }
+		Mod bossTitle;
+		public static Mod BossTitle { get => instance.bossTitle; set => instance.bossTitle = value; }
 		Func<bool> checkAprilFools;
 		public static Func<bool> CheckAprilFools {
 			get => OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools ?
@@ -216,14 +218,14 @@ namespace Origins {
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 				for (int i = NPCID.Count; i < NPCLoader.NPCCount; i++) {
-					if (NPCLoader.GetNPC(i) is IBossChecklistEntry entry && entry.HasEntry) {
+					if (NPCLoader.GetNPC(i) is IBossChecklistEntry entry && entry.HasBossEntry) {
 						string CallType() {
-							switch (entry.EntryType) {
-								case EntryType.Boss:
+							switch (entry.BossEntryType) {
+								case BossEntryType.Boss:
 								return "LogBoss";
-								case EntryType.MiniBoss:
+								case BossEntryType.MiniBoss:
 								return "LogMiniBoss";
-								case EntryType.Invasion:
+								case BossEntryType.Invasion:
 								return "LogEvent";
 								default:
 								return string.Empty;
@@ -232,10 +234,10 @@ namespace Origins {
 						bossChecklist.Call(CallType(),
 							mod,
 							entry.BossName.Replace("_", ""),
-							entry.EntryPosition,
+							entry.BossEntryPosition,
 							() => entry.DownedCondition,
 							entry.EnemyTypes[0] == 0 ? i : entry.EnemyTypes,
-							entry.EntryInfo
+							entry.BossEntryInfo
 						);
 					}
 				}
@@ -450,6 +452,16 @@ namespace Origins {
 				Type type = Avalon.Code.GetType("Avalon.Data.Sets.ItemSets");
 				List<int> list = (List<int>)type.GetField("HallowedChest", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 				list[1] = ItemType<The_Calibrator>();
+			}
+			if (ModLoader.TryGetMod("BossNameDisplay", out instance.bossTitle)) {
+				for (int i = NPCID.Count; i < NPCLoader.NPCCount; i++) {
+					if (NPCLoader.GetNPC(i) is IBossTitleInfo entry && entry.HasTitle) {
+						instance.bossTitle.Call("RegisterBossTitle", i, entry.TitleText);
+						instance.bossTitle.Call("RegisterBossCategory", i, entry.TitleType.ToString());
+						if (entry.TitleColor is not null)
+							instance.bossTitle.Call("SetBossTitleColor", i, entry.TitleColor.Value.X, entry.TitleColor.Value.Y, entry.TitleColor.Value.Z);
+					}
+				}
 			}
 		}
 		public static void LateLoad() {
@@ -1377,21 +1389,31 @@ namespace Origins {
 	public interface IBardDamageClassOverride {
 		DamageClass DamageType { get; }
 	}
-	public enum EntryType {
+	public enum BossEntryType {
 		Boss,
 		MiniBoss,
 		Invasion
 	}
 	public interface IBossChecklistEntry {
 		string BossName { get; }
-		bool HasEntry { get => true; }
-		float EntryPosition { get; }
-		EntryType EntryType { get => EntryType.Boss; }
+		bool HasBossEntry { get => true; }
+		float BossEntryPosition { get; }
+		BossEntryType BossEntryType { get => BossEntryType.Boss; }
 		bool DownedCondition { get; }
 		int EnemyType { get => 0; }
 		List<int> EnemyTypes { get => new() { EnemyType }; }
-		Dictionary<string, object> EntryInfo { get; }
-
+		Dictionary<string, object> BossEntryInfo { get; }
+	}
+	public enum BossTitleType {
+		Vanilla,
+		Modded,
+		SuperBoss
+	}
+	public interface IBossTitleInfo {
+		bool HasTitle { get => true; }
+		string TitleText { get; }
+		Vector3? TitleColor { get => null; }
+		BossTitleType TitleType { get => BossTitleType.Modded; }
 	}
 	[ReinitializeDuringResizeArrays]
 	public class ModCompatSets {

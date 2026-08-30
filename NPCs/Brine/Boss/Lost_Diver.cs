@@ -89,7 +89,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	[AutoloadBossHead]
-	public class Lost_Diver : Brine_Pool_NPC, IBossChecklistEntry {
+	public class Lost_Diver : Brine_Pool_NPC, IBossChecklistEntry, IBossTitleInfo {
 		protected static AutoLoadingTexture ldTexture = "Origins/NPCs/Brine/Boss/Rock_Bottom";
 		public static int HeadID { get; private set; } = -1;
 		public override bool AggressivePathfinding => true;
@@ -146,11 +146,11 @@ namespace Origins.NPCs.Brine.Boss {
 			set => NPC.localAI[3] = (int)value;
 		}
 		public string BossName => nameof(Lost_Diver);
-		public float EntryPosition => 7.3f;
+		public float BossEntryPosition => 7.3f;
 		public bool DownedCondition => ProgressFlags.DownedLostDiver.IsSet;
-		public bool HasEntry => Type == ModContent.NPCType<Lost_Diver>();
+		public bool HasBossEntry => Type == ModContent.NPCType<Lost_Diver>();
 		public List<int> EnemyTypes => new() { Type, ModContent.NPCType<Lost_Diver_Transformation>(), ModContent.NPCType<Mildew_Carrion>() };
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Lost_Diver.BossChecklistIntegration.SpawnCondition"),
 			["spawnItems"] = ModContent.ItemType<Lost_Picture_Frame>(),
 			["collectibles"] = new List<int> {
@@ -172,6 +172,8 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 			}
 		};
+		public bool HasTitle => Type == ModContent.NPCType<Lost_Diver>();
+		public string TitleText => this.GetTitleText();
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
 		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);

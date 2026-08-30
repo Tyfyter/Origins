@@ -36,7 +36,7 @@ using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor, IMinions, IBossChecklistEntry {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor, IMinions, IBossChecklistEntry, IBossTitleInfo {
 		public AssimilationAmount? Assimilation => 0.03f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -61,10 +61,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static List<int> Minions = [];
 		List<int> IMinions.BossMinions => Minions;
 		public string BossName => "WorldCracker";
-		public float EntryPosition => 3f;
+		public float BossEntryPosition => 3f;
 		public bool DownedCondition => NPC.downedBoss2;
 		public List<int> EnemyTypes => new() { Type, ModContent.NPCType<World_Cracker_Body>(), ModContent.NPCType<World_Cracker_Tail>() };
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["availability"] = OriginsModIntegrations.IfEvil<Riven_Hive_Alt_Biome>(),
 			["spawnItems"] = ModContent.ItemType<Sus_Ice_Cream>(),
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.World_Cracker_Head.BossChecklistIntegration.SpawnCondition"),
@@ -179,6 +179,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 		};
+		public string TitleText => this.GetTitleText();
 
 		static int[] bossHeads = new int[4];
 		public override void Load() {

@@ -1978,7 +1978,7 @@ CROSS-MOD CONTENT:
 |---
 (^) AlchemistNPC Lite sell TO stuff
 (^) Avalon biome lock box support
-(X) Cinematic Boss Intros support
+(^3, ⚿) Cinematic Boss Intros support
 (^) Fargo's Altar Exterminator effect evils
 (#2) Fargo's alternate boss summons
 (ᗢ) Fargo's caught npcs

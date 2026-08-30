@@ -7,6 +7,7 @@ Chunky_Slime.DisplayName: Chunky Slime
 Defiled_Amalgamation: {
 	DisplayName: "{§Defiled} Amalgamation"
 	BossChecklistIntegration.SpawnCondition: Use [i:Origins/Nerve_Impulse_Manipulator] or break 3 {§Defiled} Fissures in a {§Defiled_Wastelands} chasm.
+	BossTitle: <PH> title text here
 }
 
 Defiled_Brute.DisplayName: "{§Defiled} Krusher"
@@ -30,6 +31,7 @@ Enchanted_Fiberglass_Sword.DisplayName: Enchanted Fiberglass Sword
 Fiberglass_Weaver: {
 	DisplayName: Fiberglass Weaver
 	BossChecklistIntegration.SpawnCondition: Use [i:Origins/Shaped_Glass], or randomly in the Fiberglass Undergrowth.
+	BossTitle: <PH> title text here
 }
 
 Swarmer.DisplayName: Swarmer
@@ -65,6 +67,8 @@ World_Cracker_Head: {
 		EntryName: World Cracker
 		SpawnCondition: Use [i:Origins/Sus_Ice_Cream] or break 3 Gel Blisters in a {§Riven_Hive} chasm.
 	}
+
+	BossTitle: <PH> title text here
 }
 
 World_Cracker_Tail.DisplayName: World Cracker
@@ -334,12 +338,19 @@ Lost_Diver: {
 		SpawnCondition: Use [i:Origins/Lost_Picture_Frame] in the Brine Pools, or defeat a {$Mods.Origins.NPCs.Rock_Bottom.DisplayName}
 		EntryName: Lost Diver
 	}
+
+	BossTitle: <PH> title text here
 }
 
-Lost_Diver_Transformation.DisplayName: Lost Diver Transformation
-Mildew_Carrion.DisplayName: "{§Mildew_Carrion}"
+Lost_Diver_Transformation.DisplayName: Lost Diver?
+
+Mildew_Carrion: {
+	DisplayName: "{§Mildew_Carrion}"
+	BossTitle: <PH> title text here
+}
+
 Trijaw_Shark_Feesh.DisplayName: Trijaw Shark Feesh
-Lost_Diver_Spawn.DisplayName: Lost Diver Spawn
+Lost_Diver_Spawn.DisplayName: ???
 Rock_Bottom.DisplayName: Rock Bottom
 Boulder_Mimic.DisplayName: Boulder Mimic
 Catacomb_Clearer.DisplayName: Catacomb Clearer
@@ -350,7 +361,7 @@ Cannihound.DisplayName: Cannihound
 Aqueoua.DisplayName: Aqueoua
 Shelly_Aqueoua.DisplayName: Shelly Aqueoua
 Defiled_Chrysalis.DisplayName: "{§Defiled} Chrysalis"
-Defiled_Chrysalis_Nearby_Spawn.DisplayName: "{§Defiled} Chrysalis Nearby Spawn"
+Defiled_Chrysalis_Nearby_Spawn.DisplayName: "{§Defiled} Chrysalis"
 Abandoned_Bomb.DisplayName: Abandoned Bomb
 Defiled_Broadcaster.DisplayName: "{§Defiled} Broadcaster"
 
@@ -369,6 +380,7 @@ Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglass Slime
 Shimmer_Construct: {
 	DisplayName: Shimmer Construct
 	BossChecklistIntegration.SpawnCondition: Shimmer an {$NPCName.EyeofCthulhu}
+	BossTitle: <PH> title text here
 }
 
 Chambersite_Bunny.DisplayName: Chambersite Bunny
@@ -389,7 +401,7 @@ Shimmer_Turret_Chunk3.DisplayName: Shimmer Turret
 Goo_Wall.DisplayName: Amoebic Goo Wall
 
 Debug_Shoot_NPC: {
-	DisplayName: Debug_ Shoot_ N P C
+	DisplayName: Debug Shoot NPC
 
 	TownNPCMood: {
 		Content: I am content.
@@ -418,6 +430,8 @@ Trenchmaker: {
 		SpawnCondition: Use [i:Origins/Distress_Beacon] or break 3 Heat Vents in an {§Ashen} factory.
 		EntryName: "{$DisplayNameGeneric}"
 	}
+
+	BossTitle: <PH> title text here
 }
 
 Pinwheel.DisplayName: Pinwheel

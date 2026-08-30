@@ -43,13 +43,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
-	public class Shimmer_Construct : ModNPC, IStateBoss<Shimmer_Construct>, IJournalEntrySource, IMinions, IBossChecklistEntry {
+	public class Shimmer_Construct : ModNPC, IStateBoss<Shimmer_Construct>, IJournalEntrySource, IMinions, IBossChecklistEntry, IBossTitleInfo {
 		internal static ArmorShaderData MatrixCombine { get; set; }
 		internal static ArmorShaderData SmoothShimmer { get; set; }
 		public string BossName => nameof(Shimmer_Construct);
-		public float EntryPosition => 6.91f;
+		public float BossEntryPosition => 6.91f;
 		public bool DownedCondition => ProgressFlags.DownedShimmerConstruct.IsSet;
-		public Dictionary<string, object> EntryInfo => new() {
+		public Dictionary<string, object> BossEntryInfo => new() {
 			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
 			["collectibles"] = new List<int> {
 				RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
@@ -75,6 +75,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 		};
+		public string TitleText => this.GetTitleText();
 		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
 		public class Shimmer_Construct_Entry : JournalEntry {
 			public override string TextKey => "Shimmer_Construct";

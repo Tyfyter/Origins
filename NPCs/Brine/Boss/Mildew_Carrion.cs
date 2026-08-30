@@ -156,9 +156,10 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	[AutoloadBossHead]
-	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry>, IMinions {
+	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry>, IMinions, IBossTitleInfo {
 		internal static IItemDropRule normalDropRule;
 
+		public string TitleText => this.GetTitleText();
 		public static List<int> Minions = [];
 		List<int> IMinions.BossMinions => Minions;
 		public override bool AggressivePathfinding => true;

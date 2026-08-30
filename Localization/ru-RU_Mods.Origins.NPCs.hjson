@@ -7,6 +7,7 @@ Chunky_Slime.DisplayName: Коренастый слизень
 Defiled_Amalgamation: {
 	DisplayName: Осквернённое Слияние
 	BossChecklistIntegration.SpawnCondition: Используйте [i:Origins/Nerve_Impulse_Manipulator] или сломайте 3 осквернённые трещины в пропасти Осквернённых_пустошей.
+	// BossTitle: <PH> title text here
 }
 
 Defiled_Brute.DisplayName: Осквернённый крушитель
@@ -30,6 +31,7 @@ Enchanted_Fiberglass_Sword.DisplayName: Зачарованный стеклов�
 Fiberglass_Weaver: {
 	DisplayName: Стекловолоконный ткач
 	BossChecklistIntegration.SpawnCondition: Используйте [i:Origins/Shaped_Glass] или случайно найдите в Стеклянной Роще.
+	// BossTitle: <PH> title text here
 }
 
 Swarmer.DisplayName: Роевик
@@ -65,6 +67,8 @@ World_Cracker_Head: {
 		EntryName: Содрогатель миров
 		SpawnCondition: Используйте [i:Origins/Sus_Ice_Cream] или сломайте 3 гелиевые опухоли в пропасти Разрезанного улья.
 	}
+
+	// BossTitle: <PH> title text here
 }
 
 World_Cracker_Tail.DisplayName: Содрогатель миров
@@ -334,10 +338,17 @@ Lost_Diver: {
 		SpawnCondition: Используйте [i:Origins/Lost_Picture_Frame] в Солёных прудах или убейте {$Mods.Origins.NPCs.Rock_Bottom.DisplayName}
 		EntryName: Потерянный Дайвер
 	}
+
+	// BossTitle: <PH> title text here
 }
 
 Lost_Diver_Transformation.DisplayName: Трансформация Потерянного Дайвера
-Mildew_Carrion.DisplayName: "{§Mildew_Carrion}"
+
+Mildew_Carrion: {
+	DisplayName: "{§Mildew_Carrion}"
+	// BossTitle: <PH> title text here
+}
+
 Trijaw_Shark_Feesh.DisplayName: Рыба трёхчелюстной акулы
 Lost_Diver_Spawn.DisplayName: Выводок Потерянного Дайвера
 Rock_Bottom.DisplayName: Каменистое дно
@@ -369,6 +380,7 @@ Enchanted_Fiberglass_Slime.DisplayName: Зачарованный стеклов�
 Shimmer_Construct: {
 	DisplayName: Конструкт Мерцания
 	BossChecklistIntegration.SpawnCondition: Окуните {$NPCName.EyeofCthulhu} в Мерцание
+	// BossTitle: <PH> title text here
 }
 
 Chambersite_Bunny.DisplayName: Чемберситовый кролик
@@ -418,6 +430,8 @@ Trenchmaker: {
 		SpawnCondition: Используйте [i:Origins/Distress_Beacon] или сломайте 3 вентиляционных отверстия на фабрике Пепелища.
 		EntryName: "{$DisplayNameGeneric}"
 	}
+
+	// BossTitle: <PH> title text here
 }
 
 Pinwheel.DisplayName: Ротор
