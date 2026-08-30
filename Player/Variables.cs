@@ -773,9 +773,8 @@ namespace Origins {
 			riptideLegs = false;
 			necroSet = false;
 			necroSet2 = false;
-			if (necroSetAmount > 0) {
-				necroSetAmount -= 1 + necroSetAmount * 0.01f;
-			}
+			if (necroSetAmount > 0) necroSetAmount.Cooldown(rate: 1 + necroSetAmount * 0.01f);
+			Min(ref necroSetAmount, 25000000f);
 			novaSet = false;
 			tendonSet = false;
 			acridSet = false;
