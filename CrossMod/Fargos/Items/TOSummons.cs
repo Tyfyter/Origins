@@ -5,7 +5,9 @@ using PegasusLib.Networking;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod.Fargos.Items {
@@ -45,6 +47,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 		protected override void Perform() {
 			NPC.NewNPCDirect(NPC.GetBossSpawnSource(PlayerID), Pos, Type);
+			ChatHelper.BroadcastChatMessage(Language.GetText("Announcement.HasAwoken").ToNetworkText(ModContent.GetModNPC(Type).DisplayName.Value), new Color(175, 75, 255));
 		}
 	}
 	#endregion
