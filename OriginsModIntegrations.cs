@@ -459,7 +459,7 @@ namespace Origins {
 						instance.bossTitle.Call("RegisterBossTitle", i, entry.TitleText);
 						instance.bossTitle.Call("RegisterBossCategory", i, entry.TitleType.ToString());
 						if (entry.TitleColor is not null)
-							instance.bossTitle.Call("SetBossTitleColor", i, entry.TitleColor.Value.X, entry.TitleColor.Value.Y, entry.TitleColor.Value.Z);
+							instance.bossTitle.Call("SetBossTitleColor", i, entry.TitleColor.Value.R, entry.TitleColor.Value.G, entry.TitleColor.Value.B);
 					}
 				}
 			}
@@ -1412,7 +1412,10 @@ namespace Origins {
 	public interface IBossTitleInfo {
 		bool HasTitle { get => true; }
 		string TitleText { get; }
-		Vector3? TitleColor { get => null; }
+		/// <summary>
+		/// The alpha isn't used
+		/// </summary>
+		Color? TitleColor { get => null; }
 		BossTitleType TitleType { get => BossTitleType.Modded; }
 	}
 	[ReinitializeDuringResizeArrays]
