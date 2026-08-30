@@ -1,4 +1,5 @@
 ﻿using Origins.NPCs.Ashen;
+using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
 using PegasusLib.Networking;
@@ -61,6 +62,14 @@ namespace Origins.CrossMod.Fargos.Items {
 	}
 	public class Suspicious_Trash_Compactor : TOSummons<Trash_Compactor_Mimic> {
 		public override int SortingPriority => 6;
+	}
+	public class High_Powered_Green_Laser : TOSummons<Fearmaker>, IBroken {
+		public static string BrokenReason => "change from fearmaker to HA-24";
+		public override int SortingPriority => 5;
+	}
+	public class Mech_Figurine : TOSummons<Fearmaker>, IBroken {
+		public static string BrokenReason => "change from fearmaker to D2L2";
+		public override int SortingPriority => 5;
 	}
 	#endregion
 	#region Bosses
