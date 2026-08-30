@@ -83,7 +83,7 @@ namespace Origins.NPCs.Brine {
 			).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 10) //Metroid reference
 			).WithOnSuccess(
-				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3)
+				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 50, 1, 3)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) {

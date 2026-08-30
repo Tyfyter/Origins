@@ -1,12 +1,9 @@
 ﻿using Avalon;
-using Avalon.ModSupport.MLL;
-using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
 using Origins.UI;

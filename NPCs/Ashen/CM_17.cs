@@ -41,9 +41,9 @@ namespace Origins.NPCs.Ashen {
 			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
 		}
 		public override void SetDefaults() {
-			NPC.lifeMax = 180;
-			NPC.defense = 22;
-			NPC.damage = 24;
+			NPC.lifeMax = 3000;
+			NPC.defense = 29;
+			NPC.damage = 42;
 			NPC.width = 142;
 			NPC.height = 88;
 			NPC.value = Item.buyPrice(0, 0, 6);

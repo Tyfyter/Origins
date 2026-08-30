@@ -7762,7 +7762,7 @@ Glitter_Glue: {
 	Tooltip:
 		'''
 		Releases colorful homing stars when enemies are nearby
-		25% increased damage during the day
+		Projectiles have 25% increased damage during the day
 		Increased velocity and homing during the night
 		3 second cooldown
 		'''

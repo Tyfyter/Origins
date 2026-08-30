@@ -27,7 +27,7 @@ public class Decorative_Ashes : ModItem {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
 		Item.master = true;
-		Item.damage = 81;
+		Item.damage = 76;
 		Item.DamageType = DamageClasses.Explosive;
 		Item.shoot = ModContent.ProjectileType<Decorative_Ashes_Missile>();
 		Item.knockBack = 1;
