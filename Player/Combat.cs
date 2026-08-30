@@ -83,7 +83,7 @@ namespace Origins {
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {
 			if (wishingGlassActive) return false;
-			if (!Main.rand.NextBool(ammoConsumptionChance.Value)) return false;
+			if (!Main.rand.NextBool(ammoConsumptionChance)) return false;
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
 				if (endlessExplosives && Main.rand.NextBool(15, 100)) return false;
 				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
