@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -53,6 +54,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
 	static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
 	static AutoLoadingTexture forearmTexture = typeof(Star_Soldier).GetDefaultTMLName("_Forearm");
+	public static DynamicSpriteFont font;
 	public static HashSet<int> RainbowDyes;
 	/*public static ArmorShaderSet<bool> HasDye { get; } = new() { // use me when "ForceInitialize" from PegasusLib is usable by other mods
 		[(Main.pixelShader, "ArmorColoredRainbow")] = true,
@@ -426,6 +428,23 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			GameShaders.Armor.GetShaderIdFromItemId(ItemID.MidnightRainbowDye)
 		];
 		On_Player.ScrollHotbar += On_Player_ScrollHotbar;
+		if (!Main.dedServ) {
+			Asset<Texture2D> fontTexture = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font");
+			Task.Run(FontAssets.ItemStack.Wait).ContinueWith(__ => {
+				fontTexture.Wait();
+				Rectangle glyph = new(0, 84, 20, 28);
+				Rectangle padding = new(0, 0, 0, 28);
+				Vector3 kerning = new(2, 0, 0);
+				FontGenerator.CharRange range = new(fontTexture.Value, 'A'..'Z', glyph, padding, kerning) {
+					GlyphXChange = 40
+				};
+				font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 24, '*',
+					range,
+					range with { Range = 'A'..'Z' },
+					range with { Range = '0'..'9', StartGlyph = glyph with { Y = 84 } }
+				);
+			});
+		}
 	}
 	static void On_Player_ScrollHotbar(On_Player.orig_ScrollHotbar orig, Player self, int Offset) {
 		if (!self.mount.IsMount<Star_Soldier>()) orig(self, Offset);
