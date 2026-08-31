@@ -1,7 +1,9 @@
 ﻿using Fargowiltas.Items.Summons.Deviantt;
+using Fargowiltas.Projectiles;
 using Origins.NPCs.Ashen;
 using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Dungeon;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using PegasusLib.Networking;
@@ -81,15 +83,22 @@ namespace Origins.CrossMod.Fargos.Items {
 	#endregion
 
 	public class ShimmerFargoItemToNPC : GlobalItem {
+		public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (item.type == ModContent.ItemType<AmalgamatedSpirit>()) {
+				Vector2 pos = new((int)player.position.X + Main.rand.Next(-800, 800), (int)player.position.Y + Main.rand.Next(-1000, -250));
+				Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), pos, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, ModContent.NPCType<Etherealizer>());
+			}
+			return true;
+		}
 		public override bool CanShoot(Item item, Player player) {
 			if (item.type == ModContent.ItemType<HeartChocolate>()) {
 				return !player.ZoneShimmer;
 			}
-			return base.CanShoot(item, player);
+			return true;
 		}
 		public override bool CanUseItem(Item item, Player player) {
-			if (item.type == ModContent.ItemType<HeartChocolate>()) return base.CanUseItem(item, player) || player.ZoneShimmer;
-			return base.CanUseItem(item, player);
+			if (item.type == ModContent.ItemType<HeartChocolate>()) return ModContent.GetInstance<HeartChocolate>().CanUseItem(player) || player.ZoneShimmer;
+			return true;
 		}
 		public override bool? UseItem(Item item, Player player) {
 			if (item.type == ModContent.ItemType<HeartChocolate>() && player.ZoneShimmer) {
@@ -98,7 +107,7 @@ namespace Origins.CrossMod.Fargos.Items {
 				new TOSummons_Action(player.whoAmI, ModContent.NPCType<Fae_Nymph>(), pos).Perform();
 				return true;
 			}
-			return base.UseItem(item, player);
+			return null;
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 			if (item.type == ModContent.ItemType<HeartChocolate>()) {
@@ -108,7 +117,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		public override void Update(Item item, ref float gravity, ref float maxFallSpeed) {
 			if (!NetmodeActive.MultiplayerClient && item.shimmerWet && !item.shimmered) {
 				int npcToSummon = 0;
-				bool conditionToSummon() => true;
+				Func<bool> conditionToSummon = () => true;
 				bool useWholeStack = true;
 				bool hasShimmered = false;
 				float dist = float.PositiveInfinity;
@@ -117,11 +126,13 @@ namespace Origins.CrossMod.Fargos.Items {
 					if (!player.dead && Minimize(ref dist, player.DistanceSQ(item.Center))) index = player.whoAmI;
 				}
 				IEntitySource source = NPC.GetBossSpawnSource(index);
+
 				if (item.type == ModContent.ItemType<HeartChocolate>()) {
 					npcToSummon = ModContent.NPCType<Fae_Nymph>();
 				}
+
 				bool SpawnNPC() {
-					if (NPC.NewNPCDirect(source, item.Center, npcToSummon).whoAmI == Main.maxNPCs) return true;
+					if (!conditionToSummon() || NPC.NewNPCDirect(source, item.Center, npcToSummon).whoAmI == Main.maxNPCs) return true;
 					SoundEngine.PlaySound(SoundID.Roar, item.Center);
 					ChatHelper.BroadcastChatMessage(Language.GetText("Announcement.HasAwoken").ToNetworkText(ModContent.GetModNPC(npcToSummon).DisplayName.Value), new Color(175, 75, 255));
 					item.stack--;
