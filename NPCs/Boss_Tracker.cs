@@ -20,7 +20,6 @@ namespace Origins.NPCs {
 		public bool downedDefiledMimic;
 		public bool downedRivenMimic;
 		public bool downedTrashCompactorMimic;
-		public bool downedFaeNymph;
 
 		public override void Load() {
 			{
@@ -97,7 +96,6 @@ namespace Origins.NPCs {
 			if (downedDefiledMimic) ProgressFlags.DownedDefiledMimic.Set(true);
 			if (downedRivenMimic) ProgressFlags.DownedRivenMimic.Set(true);
 			if (downedTrashCompactorMimic) ProgressFlags.DownedTrashCompactorMimic.Set(true);
-			if (downedFaeNymph) ProgressFlags.DownedFaeNymph.Set(true);
 		}
 		public override void ClearWorld() => clearWorld(this);
 	}
