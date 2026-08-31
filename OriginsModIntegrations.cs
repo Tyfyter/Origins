@@ -255,10 +255,10 @@ namespace Origins {
 				FargosMutant.Call("AddEvilAltar", Riven_Altar.ID);
 
 				FargosMutant.Call("AddStat", (int)ItemID.Bomb,
-					() => Language.GetTextValueWith("Mods.Origins.CrossMod.Fargos.StatSheet.ExplosiveDamage",
+					() => Language.GetTextValue("Mods.Origins.CrossMod.Fargos.StatSheet.ExplosiveDamage",
 					Math.Round(Main.LocalPlayer.GetTotalDamage(DamageClasses.Explosive).Additive * Main.LocalPlayer.GetTotalDamage(DamageClasses.Explosive).Multiplicative * 100f - 100f)));
 				FargosMutant.Call("AddStat", (int)ItemID.Bomb,
-					() => Language.GetTextValueWith("Mods.Origins.CrossMod.Fargos.StatSheet.ExplosiveCritical",
+					() => Language.GetTextValue("Mods.Origins.CrossMod.Fargos.StatSheet.ExplosiveCritical",
 					(int)Main.LocalPlayer.GetTotalCritChance(DamageClasses.Explosive)));
 
 				FargosMutant.Call("AddPermaUpgrade", ContentSamples.ItemsByType[ItemType<Mojo_Injection>()], () => Main.LocalPlayer.OriginPlayer().mojoInjection);
