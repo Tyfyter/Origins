@@ -3553,10 +3553,10 @@ namespace Origins {
 		}
 		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2 origin, Color color, Vector2 scale) {
 			string text = obj.ToString();
-			DynamicSpriteFont font = FontAssets.ItemStack.Value;
-			Vector2 spacing = font.MeasureString(text) / 2;
+			DynamicSpriteFont font = FontAssets.MouseText.Value;
+			Vector2 spacing = ChatManager.GetStringSize(font, text, scale) * 0.5f;
 			origin.Y += spacing.Y;
-			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - (spacing * (scale * 0.5f)), color, 0, origin, scale);
+			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - spacing, color, 0, origin, scale);
 		}
 		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null, float scale = 1) {
 			return DrawDebugTextAbove(spritebatch, obj, position, origin ?? Vector2.Zero, color ?? Color.White, new Vector2(scale));
