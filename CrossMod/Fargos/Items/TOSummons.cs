@@ -1,12 +1,17 @@
-﻿using Origins.NPCs.Ashen;
+﻿using Fargowiltas.Items.Summons.Deviantt;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using PegasusLib.Networking;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -74,4 +79,73 @@ namespace Origins.CrossMod.Fargos.Items {
 	#endregion
 	#region Bosses
 	#endregion
+
+	public class ShimmerFargoItemToNPC : GlobalItem {
+		public override bool CanShoot(Item item, Player player) {
+			if (item.type == ModContent.ItemType<HeartChocolate>()) {
+				return !player.ZoneShimmer;
+			}
+			return base.CanShoot(item, player);
+		}
+		public override bool CanUseItem(Item item, Player player) {
+			if (item.type == ModContent.ItemType<HeartChocolate>()) return base.CanUseItem(item, player) || player.ZoneShimmer;
+			return base.CanUseItem(item, player);
+		}
+		public override bool? UseItem(Item item, Player player) {
+			if (item.type == ModContent.ItemType<HeartChocolate>() && player.ZoneShimmer) {
+				SoundEngine.PlaySound(SoundID.Roar, player.Center);
+				Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250));
+				new TOSummons_Action(player.whoAmI, ModContent.NPCType<Fae_Nymph>(), pos).Perform();
+				return true;
+			}
+			return base.UseItem(item, player);
+		}
+		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
+			if (item.type == ModContent.ItemType<HeartChocolate>()) {
+				tooltips.Insert("Tooltip0", "Mods.Origins.CrossMod.Fargos.Items.HeartChocolate.Tooltip", "SummonExtraTooltip");
+			}
+		}
+		public override void Update(Item item, ref float gravity, ref float maxFallSpeed) {
+			if (!NetmodeActive.MultiplayerClient && item.shimmerWet && !item.shimmered) {
+				int npcToSummon = 0;
+				bool conditionToSummon() => true;
+				bool useWholeStack = true;
+				bool hasShimmered = false;
+				float dist = float.PositiveInfinity;
+				int index = Main.maxPlayers;
+				foreach (Player player in Main.ActivePlayers) {
+					if (!player.dead && Minimize(ref dist, player.DistanceSQ(item.Center))) index = player.whoAmI;
+				}
+				IEntitySource source = NPC.GetBossSpawnSource(index);
+				if (item.type == ModContent.ItemType<HeartChocolate>()) {
+					npcToSummon = ModContent.NPCType<Fae_Nymph>();
+				}
+				bool SpawnNPC() {
+					if (NPC.NewNPCDirect(source, item.Center, npcToSummon).whoAmI == Main.maxNPCs) return true;
+					SoundEngine.PlaySound(SoundID.Roar, item.Center);
+					ChatHelper.BroadcastChatMessage(Language.GetText("Announcement.HasAwoken").ToNetworkText(ModContent.GetModNPC(npcToSummon).DisplayName.Value), new Color(175, 75, 255));
+					item.stack--;
+					if (item.stack <= 0) item.active = false;
+					return false;
+				}
+				if (conditionToSummon()) {
+					item.shimmerTime += 0.02f;
+					if (item.shimmerTime > 0.9f) {
+						item.shimmerTime = 0.9f;
+						if (useWholeStack) {
+							for (int i = Math.Min(item.stack, Main.maxNPCs); i > 0; i--) {
+								if (SpawnNPC()) {
+									hasShimmered = true;
+									break;
+								}
+							}
+						} else hasShimmered = SpawnNPC();
+					}
+				}
+				if (item.active && hasShimmered) {
+					item.shimmered = true;
+				}
+			}
+		}
+	}
 }

@@ -2,3 +2,4 @@ ExpandedTooltips.Fountain: Силы, окружающие биом, станов
 RecipeBrowserAnyArmor: Все
 ExplosiveDamage: Взрывной урон: {0}
 ExplosiveCritical: Критический взрывной урон: {0}
+// Fargos.Items.HeartChocolate.Tooltip: Summons {$NPCs.Fae_Nymph.DisplayName} while in the Aether or thrown into shimmer
