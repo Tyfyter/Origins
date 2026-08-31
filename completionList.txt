@@ -183,7 +183,7 @@ WORLD GENERATION:
 
 OTHER:
 |---
-(X) Ashen Font !!!
+(#, ^2) Ashen Font !!!
 (X) Cubekon Tinkerer's Modifiers
 (^) Defiled "Chrysalis" Spawning
 (^) Equipment Lubing mechanics
