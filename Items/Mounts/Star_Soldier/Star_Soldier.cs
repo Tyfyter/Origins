@@ -54,6 +54,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
 	static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
 	static AutoLoadingTexture forearmTexture = typeof(Star_Soldier).GetDefaultTMLName("_Forearm");
+	public static DynamicSpriteFont Font { get; private set; }
 	public static DynamicSpriteFont FontLarge { get; private set; }
 	public static HashSet<int> RainbowDyes;
 	/*public static ArmorShaderSet<bool> HasDye { get; } = new() { // use me when "ForceInitialize" from PegasusLib is usable by other mods
@@ -429,6 +430,32 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		];
 		On_Player.ScrollHotbar += On_Player_ScrollHotbar;
 		if (!Main.dedServ) {
+			Asset<Texture2D> fontTexture = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font");
+			Task.Run(FontAssets.ItemStack.Wait).ContinueWith(__ => {
+				fontTexture.Wait();
+				Rectangle glyph = new(0, 0, 10, 14);
+				Rectangle padding = new(0, 0, 0, 14);
+				Vector3 kerning = new(1, 10, 0);
+				FontGenerator.CharRange range = new(fontTexture.Value, 'A'..'Z', glyph, padding, kerning) {
+					GlyphXChange = 11
+				};
+				FontGenerator.CharRange Range(Range chars, int? y = null, int? x = null) {
+					return range with { Range = chars, StartGlyph = glyph with { X = x ?? glyph.X, Y = y ?? glyph.Y } };
+				}
+				FontGenerator.CharRange Single(char @char, int y, int x) {
+					return range with { Range = @char..@char, StartGlyph = glyph with { X = x, Y = y } };
+				}
+				Font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 15, '*',
+					range,
+					Range('a'..'z'),
+					Range(' '..'9', 15),
+					Range(':'..'@', 30),
+					Range('['..'`', 30, 77),
+					Range('{'..'~', 30, 143),
+					Single('©', 30, 187),
+					Range('‘'..'‟', 30, 198)
+				);
+			});
 			Asset<Texture2D> fontTextureLarge = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font_Large");
 			Task.Run(FontAssets.ItemStack.Wait).ContinueWith(__ => {
 				fontTextureLarge.Wait();
@@ -1947,7 +1974,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				spriteBatch.DrawString(
-					Star_Soldier.FontLarge,
+					Star_Soldier.Font,
 					"O2",
 					position + width + height + Vector2.UnitX * 4,
 					//nearest.XY() - Star_Soldier.Font.MeasureString(text) * uiScale * Vector2.UnitY,
@@ -2026,7 +2053,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (!nearestNPC.dontTakeDamage) builder.Append($"{nearestNPC.GetLifePercent():P0}");
 				string text = builder.ToString().Trim();
 				spriteBatch.DrawString(
-					Star_Soldier.FontLarge,
+					Star_Soldier.Font,
 					text,
 					nearest.XY() + new Vector2(nearest.Z, 0),
 					//nearest.XY() - Star_Soldier.Font.MeasureString(text) * uiScale * Vector2.UnitY,
@@ -2045,7 +2072,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			if (Main.playerInventory) return;
 
 			spriteBatch.DrawString(
-				Star_Soldier.FontLarge,
+				Star_Soldier.Font,
 				"""
 				ABCDEFGHIJKLMNOPQRSTUVWXYZ
 				abcdefghijklmnopqrstuvwxyz
@@ -2196,10 +2223,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				InfoDisplayLoader.ModifyDisplayParameters(display, ref text, ref name, ref infoTextColor, ref infoTextShadowColor);
 				if (string.IsNullOrEmpty(text)) continue;
 
-				Vector2 size = FontAssets.MouseText.Value.MeasureString(text);
+				Vector2 size = Star_Soldier.Font.MeasureString(text);
 
 				spriteBatch.DrawString(
-					FontAssets.MouseText.Value,
+					Star_Soldier.Font,
 					text,
 					new Vector2(Main.screenWidth - size.X - 8, y) + Vector2.UnitX,
 					infoTextColor.MultiplyRGB(new(100, 100, 100)),
@@ -2210,7 +2237,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				0f);
 
 				spriteBatch.DrawString(
-					FontAssets.MouseText.Value,
+					Star_Soldier.Font,
 					text,
 					new Vector2(Main.screenWidth - size.X - 8, y),
 					infoTextColor,
@@ -2226,12 +2253,12 @@ public class Star_Soldier_UI : SwitchableUIState {
 			Player player = Main.LocalPlayer;
 			int depth = -(int)(((player.position.Y + player.height) * 2f / 16f) - Main.worldSurface * 2.0);
 
-			Vector2 size = FontAssets.MouseText.Value.MeasureString(depth.ToString());
+			Vector2 size = Star_Soldier.Font.MeasureString(depth.ToString());
 
 			spriteBatch.DrawString(
-				FontAssets.MouseText.Value,
-				depth.ToString(),
-				new Vector2(Main.screenWidth - size.X - 8 - 48, Main.screenHeight * 0.5f),
+				Star_Soldier.Font,
+				$"{depth}'",
+				new Vector2(Main.screenWidth - size.X - 8 - 52, Main.screenHeight * 0.5f),
 				Color.OrangeRed,
 				0f,
 				default,
