@@ -3,8 +3,8 @@
 
 Fargos: {
 	StatSheet: {
-		// ExplosiveDamage: Explosive Damage: {0}
-		// ExplosiveCritical: Explosive Critical: {0}
+		// ExplosiveDamage: Explosive Damage: {0}%
+		// ExplosiveCritical: Explosive Critical: {0}%
 	}
 
 	// Items.HeartChocolate.Tooltip: Summons {$NPCs.Fae_Nymph.DisplayName} while in the Aether or thrown into shimmer

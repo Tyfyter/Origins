@@ -54,7 +54,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
 	static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
 	static AutoLoadingTexture forearmTexture = typeof(Star_Soldier).GetDefaultTMLName("_Forearm");
-	public static DynamicSpriteFont font;
+	public static DynamicSpriteFont FontLarge { get; private set; }
 	public static HashSet<int> RainbowDyes;
 	/*public static ArmorShaderSet<bool> HasDye { get; } = new() { // use me when "ForceInitialize" from PegasusLib is usable by other mods
 		[(Main.pixelShader, "ArmorColoredRainbow")] = true,
@@ -429,13 +429,13 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		];
 		On_Player.ScrollHotbar += On_Player_ScrollHotbar;
 		if (!Main.dedServ) {
-			Asset<Texture2D> fontTexture = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font");
+			Asset<Texture2D> fontTextureLarge = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font_Large");
 			Task.Run(FontAssets.ItemStack.Wait).ContinueWith(__ => {
-				fontTexture.Wait();
-				Rectangle glyph = new(0, 84, 20, 28);
+				fontTextureLarge.Wait();
+				Rectangle glyph = new(0, 0, 20, 28);
 				Rectangle padding = new(0, 0, 0, 28);
-				Vector3 kerning = new(2, 0, 0);
-				FontGenerator.CharRange range = new(fontTexture.Value, 'A'..'Z', glyph, padding, kerning) {
+				Vector3 kerning = new(2, 20, 0);
+				FontGenerator.CharRange range = new(fontTextureLarge.Value, 'A'..'Z', glyph, padding, kerning) {
 					GlyphXChange = 40
 				};
 				FontGenerator.CharRange Range(Range chars, int? y = null, int? x = null) {
@@ -444,11 +444,11 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				FontGenerator.CharRange Single(char @char, int y, int x) {
 					return range with { Range = @char..@char, StartGlyph = glyph with { X = x, Y = y } };
 				}
-				font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 24, '*',
+				FontLarge = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 30, '*',
 					range,
-					Range('A'..'Z'),
+					Range('a'..'z'),
 					Range(' '..'9', 29),
-					Range(':'..'?', 58),
+					Range(':'..'@', 58),
 					Range('['..'`', 58, 280),
 					Range('{'..'~', 58, 520),
 					Single('©', 58, 680)
@@ -1947,10 +1947,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				spriteBatch.DrawString(
-					FontAssets.ItemStack.Value,
+					Star_Soldier.FontLarge,
 					"O2",
 					position + width + height + Vector2.UnitX * 4,
-					//nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
+					//nearest.XY() - Star_Soldier.Font.MeasureString(text) * uiScale * Vector2.UnitY,
 					Color.OrangeRed,
 					0,
 					default,
@@ -2026,10 +2026,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (!nearestNPC.dontTakeDamage) builder.Append($"{nearestNPC.GetLifePercent():P0}");
 				string text = builder.ToString().Trim();
 				spriteBatch.DrawString(
-					FontAssets.ItemStack.Value,
+					Star_Soldier.FontLarge,
 					text,
 					nearest.XY() + new Vector2(nearest.Z, 0),
-					//nearest.XY() - FontAssets.ItemStack.Value.MeasureString(text) * uiScale * Vector2.UnitY,
+					//nearest.XY() - Star_Soldier.Font.MeasureString(text) * uiScale * Vector2.UnitY,
 					(nearestNPC.friendly || NPCID.Sets.CountsAsCritter[nearestNPC.type]) ? Color.Lime : Color.OrangeRed,
 					0,
 					default,
@@ -2043,6 +2043,22 @@ public class Star_Soldier_UI : SwitchableUIState {
 		static readonly FastStaticFieldInfo<List<InfoDisplay>> InfoDisplays = new(typeof(InfoDisplayLoader), nameof(InfoDisplays));
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
 			if (Main.playerInventory) return;
+
+			spriteBatch.DrawString(
+				Star_Soldier.FontLarge,
+				"""
+				ABCDEFGHIJKLMNOPQRSTUVWXYZ
+				abcdefghijklmnopqrstuvwxyz
+				 !$#"%&'()*+,-./0123456789
+				:;<=>?@[\]^_`{|}~©
+				""",
+				new Vector2(8, 8),
+				Color.OrangeRed,
+				0f,
+				default,
+				Vector2.One,
+				SpriteEffects.None,
+			0f);
 			Player player = Main.LocalPlayer;
 
 			int y = 8;
