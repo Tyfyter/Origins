@@ -251,7 +251,7 @@ ENEMY NPCS:
 (^) Gas Mask Zombie
 (X) Glade Bat
 (X) Glade Skeleton
-(X) Goo Wall
+(^) Goo Wall
 (^) Graveshield Zombie
 (^) Hammerhand
 (X) Limestone Creeper
