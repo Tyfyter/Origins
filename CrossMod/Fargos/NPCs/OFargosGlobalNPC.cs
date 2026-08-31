@@ -69,6 +69,9 @@ namespace Origins.CrossMod.Fargos.NPCs {
 				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Defiled_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedDefiledMimic", evilMimicCon));
 				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Riven_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedRivenMimic", evilMimicCon));
 				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Suspicious_Trash_Compactor>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedTrashCompactorMimic", evilMimicCon));
+
+				shop.InsertAfter<High_Powered_Green_Laser>(ModContent.ItemType<DilutedRainbowMatter>(), Condition.Hardmode);
+				shop.InsertAfter<Mech_Figurine>(ModContent.ItemType<DilutedRainbowMatter>(), Condition.Hardmode);
 			}
 		}
 	}
