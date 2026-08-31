@@ -57,18 +57,27 @@ namespace Origins.CrossMod.Fargos.NPCs {
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Artifiber_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 			}
 
-			if (shop.NpcType == ModContent.NPCType<Deviantt>() && shop.TryGetEntry(ModContent.ItemType<CorruptChest>(), out NPCShop.Entry corruptChest) && shop.TryGetEntry(ModContent.ItemType<HallowChest>(), out NPCShop.Entry hallowChest)) {
-				Func<bool> predicate = corruptChest.Conditions.FirstOrDefault()?.Predicate ?? (() => true);
-				bool evilMimicCon() => predicate() || ProgressFlags.DownedDefiledMimic.IsSet || ProgressFlags.DownedRivenMimic.IsSet || ProgressFlags.DownedTrashCompactorMimic.IsSet;
-				corruptChest.Disable();
-				shop.GetEntry(ModContent.ItemType<CrimsonChest>()).Disable();
+			if (shop.NpcType == ModContent.NPCType<Deviantt>()) {
+				if (shop.TryGetEntry(ModContent.ItemType<CorruptChest>(), out NPCShop.Entry corruptChest) && shop.TryGetEntry(ModContent.ItemType<HallowChest>(), out NPCShop.Entry hallowChest)) {
+					Func<bool> predicate = corruptChest.Conditions.FirstOrDefault()?.Predicate ?? (() => true);
+					bool evilMimicCon() => predicate() || ProgressFlags.DownedDefiledMimic.IsSet || ProgressFlags.DownedRivenMimic.IsSet || ProgressFlags.DownedTrashCompactorMimic.IsSet;
+					corruptChest.Disable();
+					shop.GetEntry(ModContent.ItemType<CrimsonChest>()).Disable();
 
-				shop.InsertAfter(hallowChest, new(ModContent.ItemType<CorruptChest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Fargowiltas.Conditions.MimicCorruptDown", evilMimicCon));
-				shop.InsertAfter(hallowChest, new(ModContent.ItemType<CrimsonChest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Fargowiltas.Conditions.MimicCrimsonDown", evilMimicCon));
+					shop.InsertAfter(hallowChest, new(ModContent.ItemType<CorruptChest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Fargowiltas.Conditions.MimicCorruptDown", evilMimicCon));
+					shop.InsertAfter(hallowChest, new(ModContent.ItemType<CrimsonChest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Fargowiltas.Conditions.MimicCrimsonDown", evilMimicCon));
 
-				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Defiled_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedDefiledMimic", evilMimicCon));
-				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Riven_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedRivenMimic", evilMimicCon));
-				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Suspicious_Trash_Compactor>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedTrashCompactorMimic", evilMimicCon));
+					shop.InsertAfter(hallowChest, new(ModContent.ItemType<Defiled_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedDefiledMimic", evilMimicCon));
+					shop.InsertAfter(hallowChest, new(ModContent.ItemType<Riven_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedRivenMimic", evilMimicCon));
+					shop.InsertAfter(hallowChest, new(ModContent.ItemType<Suspicious_Trash_Compactor>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedTrashCompactorMimic", evilMimicCon));
+				}
+
+				if (shop.TryGetEntry(ModContent.ItemType<HeartChocolate>(), out NPCShop.Entry heartChocolate) && shop.TryGetEntry(ModContent.ItemType<ClownLicense>(), out NPCShop.Entry clownLicense)) {
+					Func<bool> predicate = heartChocolate.Conditions.FirstOrDefault()?.Predicate ?? (() => true);
+					bool nymphCon() => predicate() || ProgressFlags.DownedFaeNymph;
+					heartChocolate.Disable();
+					shop.InsertAfter(clownLicense, new Item(ModContent.ItemType<HeartChocolate>()) { shopCustomPrice = Item.buyPrice(gold: 10) }, new Condition("Mods.Fargowiltas.Conditions.NymphDown", nymphCon));
+				}
 
 				shop.InsertAfter<High_Powered_Green_Laser>(ModContent.ItemType<DilutedRainbowMatter>(), Condition.Hardmode);
 				shop.InsertAfter<Mech_Figurine>(ModContent.ItemType<DilutedRainbowMatter>(), Condition.Hardmode);

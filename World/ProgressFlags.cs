@@ -1,14 +1,13 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using Origins.World.BiomeData;
-using System;
 using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace Origins.World; 
+namespace Origins.World;
 public class ProgressFlags : ProgressFlagSystem, IBroken {
 	static string IBroken.BrokenReason => "Use event directly";
 	public static ProgressFlag SolarEclipseOccurred { get; private set; }
@@ -27,6 +26,7 @@ public class ProgressFlags : ProgressFlagSystem, IBroken {
 	public static ProgressFlag DownedDefiledMimic { get; private set; }
 	public static ProgressFlag DownedRivenMimic { get; private set; }
 	public static ProgressFlag DownedTrashCompactorMimic { get; private set; }
+	public static ProgressFlag DownedFaeNymph { get; private set; }
 	const int current_version = 1;
 	public override void PostWorldLoad() {
 		base.PostWorldLoad();

@@ -1,12 +1,9 @@
 ﻿using Origins.World;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -23,7 +20,8 @@ namespace Origins.NPCs {
 		public bool downedDefiledMimic;
 		public bool downedRivenMimic;
 		public bool downedTrashCompactorMimic;
-		
+		public bool downedFaeNymph;
+
 		public override void Load() {
 			{
 				DynamicMethod _saveData = new("saveData", typeof(void), [typeof(TagCompound), typeof(Boss_Tracker)], true);
@@ -99,6 +97,7 @@ namespace Origins.NPCs {
 			if (downedDefiledMimic) ProgressFlags.DownedDefiledMimic.Set(true);
 			if (downedRivenMimic) ProgressFlags.DownedRivenMimic.Set(true);
 			if (downedTrashCompactorMimic) ProgressFlags.DownedTrashCompactorMimic.Set(true);
+			if (downedFaeNymph) ProgressFlags.DownedFaeNymph.Set(true);
 		}
 		public override void ClearWorld() => clearWorld(this);
 	}

@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.World;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -42,6 +43,9 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Fairy_Lotus>(), 2, 1));
+		}
+		public override void OnKill() {
+			ProgressFlags.DownedFaeNymph.Set();
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
@@ -110,6 +114,9 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Fairy_Lotus>(), 2, 1));
+		}
+		public override void OnKill() {
+			ProgressFlags.DownedFaeNymph.Set();
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

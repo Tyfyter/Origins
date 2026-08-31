@@ -712,7 +712,7 @@ namespace Origins {
 				} else if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo DrawAmbientOcclusion) {
 					MonoModHooks.Add(
 						DrawAmbientOcclusion,
-						((Func<object, RenderTarget2D, RenderTarget2D, RenderTarget2D, bool, bool, RenderTarget2D>  orig,
+						((Func<object, RenderTarget2D, RenderTarget2D, RenderTarget2D, bool, bool, RenderTarget2D> orig,
 						object self,
 						RenderTarget2D wallTarget,
 						RenderTarget2D tileTarget,
