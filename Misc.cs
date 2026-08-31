@@ -1907,6 +1907,10 @@ namespace Origins {
 		}
 		[Pure]
 		public static Vector2 Perpendicular(this Vector2 vector, int direction = 1) => new(vector.Y * direction, vector.X * -direction);
+		[Pure]
+		public static Vector2 RandomPosAround(this Vector2 initialPos, Vector4 rangeFromPos) {
+			return new(initialPos.X + Main.rand.NextFloat(rangeFromPos.X, rangeFromPos.Y), initialPos.Y + Main.rand.NextFloat(rangeFromPos.Z, rangeFromPos.W));
+		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox) {
 			float xoffset = 10f;
 			float yoffset = 24f;

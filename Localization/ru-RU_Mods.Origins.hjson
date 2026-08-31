@@ -38,6 +38,7 @@ Conditions: {
 	// WithJournalEntry: After transcribing "{0}"
 	// DownedEaterOfWorlds: "{$Conditions.DownedEaterOfWorlds}"
 	// DownedBrainOfCthulhu: "{$Conditions.DownedBrainOfCthulhu}"
+	// DownedFaeNymph: After defeating a {$NPCs.Fae_Nymph.DisplayName}
 }
 
 ModMenu: {
