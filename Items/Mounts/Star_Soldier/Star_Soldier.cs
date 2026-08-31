@@ -438,10 +438,20 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				FontGenerator.CharRange range = new(fontTexture.Value, 'A'..'Z', glyph, padding, kerning) {
 					GlyphXChange = 40
 				};
+				FontGenerator.CharRange Range(Range chars, int? y = null, int? x = null) {
+					return range with { Range = chars, StartGlyph = glyph with { X = x ?? glyph.X, Y = y ?? glyph.Y } };
+				}
+				FontGenerator.CharRange Single(char @char, int y, int x) {
+					return range with { Range = @char..@char, StartGlyph = glyph with { X = x, Y = y } };
+				}
 				font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 24, '*',
 					range,
-					range with { Range = 'A'..'Z' },
-					range with { Range = '0'..'9', StartGlyph = glyph with { Y = 84 } }
+					Range('A'..'Z'),
+					Range(' '..'9', 29),
+					Range(':'..'?', 58),
+					Range('['..'`', 58, 280),
+					Range('{'..'~', 58, 520),
+					Single('©', 58, 680)
 				);
 			});
 		}
