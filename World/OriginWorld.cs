@@ -300,9 +300,8 @@ namespace Origins {
 			}
 
 			if (!Main.SceneMetrics.HasSunflower && Main.dayTime) {
-				int team = Main.LocalPlayer.team;
-				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.type == Sunflower_Sunny.ID && projectile.ai[2] != 1 && team == Main.player[projectile.owner].team && projectile.Center.Clamp(Main.LocalPlayer.Hitbox).WithinRange(projectile.Center, 16 * 15)) {
+				foreach (Projectile projectile in Main.LocalPlayer.FriendlyProjectiles()) {
+					if (projectile.type == Sunflower_Sunny.ID && projectile.ai[2] != 1 && projectile.Center.Clamp(Main.LocalPlayer.Hitbox).WithinRange(projectile.Center, 16 * 15)) {
 						Main.SceneMetrics.HasSunflower = true;
 						break;
 					}

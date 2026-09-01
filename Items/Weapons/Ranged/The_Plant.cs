@@ -323,7 +323,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			bool CanTarget(Entity entity) {
 				if (entity is NPC npc) return npc.CanBeChasedBy(Projectile);
-				if (entity is Player player) return !player.dead && player.hostile && player.team != Main.player[Projectile.owner].team;
+				if (entity is Player player) return !player.dead && Projectile.owner != player.whoAmI && player.InOpposingTeam(Main.player[Projectile.owner]);
 				return false;
 			}
 		}
@@ -511,7 +511,7 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 			bool CanTarget(Entity entity) {
 				if (entity is NPC npc) return npc.CanBeChasedBy(Projectile);
-				if (entity is Player player) return !player.dead && player.hostile && player.team != Main.player[Projectile.owner].team;
+				if (entity is Player player) return !player.dead && Projectile.owner != player.whoAmI && player.InOpposingTeam(Main.player[Projectile.owner]);
 				return false;
 			}
 		}

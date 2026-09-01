@@ -277,8 +277,8 @@ namespace Origins.Projectiles {
 				if (tripper == -1) {
 					Player owner = Main.player[projectile.owner];
 					if (owner.hostile) {
-						foreach (Player player in Main.ActivePlayers) {
-							if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
+						foreach (Player player in owner.HostilePlayers()) {
+							if (!player.dead && magicTripwireHitbox.Intersects(player.Hitbox)) {
 								tripper = player.whoAmI + Main.maxNPCs + 1;
 								break;
 							}
@@ -294,7 +294,7 @@ namespace Origins.Projectiles {
 						int translatedTarget = unmissTarget - (Main.maxNPCs + 1);
 						if (Main.player.IndexInRange(translatedTarget)) {
 							Player playerTarget = Main.player[translatedTarget];
-							if (playerTarget.active && !playerTarget.dead && playerTarget.hostile && playerTarget.team != Main.player[projectile.owner].team) {
+							if (playerTarget.active && !playerTarget.dead && playerTarget.InOpposingTeam(Main.player[projectile.owner])) {
 								target = playerTarget;
 							}
 						}

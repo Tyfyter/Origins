@@ -179,7 +179,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Player player = Main.player[Projectile.owner];
 			if (newTarget.type == Type) return;
 			if (!newTarget.minion && !newTarget.sentry) return;
-			if ((player.team ^ Main.player[newTarget.owner].team) != 0) return;
+			if (player.InOpposingTeam(Main.player[newTarget.owner])) return;
 
 			float newPriority = newTarget.owner == Projectile.owner ? 2 : 1;
 			newPriority *= OriginsSets.Projectiles.MinionBuffReceiverPriority[newTarget.type];
@@ -196,7 +196,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public void TryTargetPlayer(Player newTarget, ref int? target, ref float priority) {
 			Player player = Main.player[Projectile.owner];
-			if ((player.team ^ newTarget.team) != 0) return;
+			if (player.InOpposingTeam(newTarget)) return;
 
 			float newPriority = newTarget.whoAmI == Projectile.owner ? 2 : 1;
 			int currentStrength = newTarget.OriginPlayer().relayRodStrength;

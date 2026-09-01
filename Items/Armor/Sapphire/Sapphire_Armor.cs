@@ -145,10 +145,9 @@ namespace Origins.Items.Armor.Sapphire {
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (NPCID.Sets.ProjectileNPC[npc.type] || npc.CanBeChasedBy(Projectile)) Push(npc, 0.5f);
 			}
-			for (int i = 0; i < Main.maxPlayers; i++) {
-				if (i == Projectile.owner) continue;
-				Player other = Main.player[i];
-				if (other.active && ((!other.hostile && !player.hostile) || other.team == player.team) && other.position.IsWithin(Projectile.Center, range)) {
+			foreach (Player other in player.FriendlyPlayers()) {
+				if (other.whoAmI == Projectile.owner) continue;
+				if (other.position.IsWithin(Projectile.Center, range)) {
 					other.AddBuff(Sapphire_Aura_Buff.ID, 5);
 				}
 			}

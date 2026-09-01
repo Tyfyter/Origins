@@ -126,8 +126,8 @@ namespace Origins.Projectiles {
 				if (!tripped) {
 					Player owner = Main.player[projectile.owner];
 					if (owner.hostile) {
-						foreach (Player player in Main.ActivePlayers) {
-							if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
+						foreach (Player player in owner.HostilePlayers()) {
+							if (!player.dead && magicTripwireHitbox.Intersects(player.Hitbox)) {
 								tripped = true;
 								break;
 							}

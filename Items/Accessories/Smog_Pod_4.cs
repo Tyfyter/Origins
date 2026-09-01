@@ -172,12 +172,10 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		float mult = Projectile.Opacity;
 		Player player = Main.player[Projectile.owner];
 
-		foreach (Player healee in Main.ActivePlayers) {
-			if (healee.team == player.team) {
-				Vector2 nearestPoint = healee.Center.Clamp(Projectile.Hitbox);
-				float distSQ = nearestPoint.Clamp(healee.Hitbox).DistanceSQ(nearestPoint);
-				if (distSQ < 16 * 16 * 15 * 15) Min(ref player.OriginPlayer().nearestSmogPod, distSQ);
-			}
+		foreach (Player healee in player.FriendlyPlayers()) {
+			Vector2 nearestPoint = healee.Center.Clamp(Projectile.Hitbox);
+			float distSQ = nearestPoint.Clamp(healee.Hitbox).DistanceSQ(nearestPoint);
+			if (distSQ < 16 * 16 * 15 * 15) Min(ref player.OriginPlayer().nearestSmogPod, distSQ);
 		}
 		Projectile.rotation = Projectile.ai[0] * MathHelper.Pi - MathHelper.PiOver2;
 		if (Main.SettingsEnabled_TilesSwayInWind) {

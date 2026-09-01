@@ -148,8 +148,8 @@ namespace Origins.Items.Tools {
 					}
 				}
 				if (player.hostile) {
-					foreach (Player other in Main.ActivePlayers) {
-						if (other.hostile && other.team != player.team && hitbox.Intersects(other.Hitbox)) {
+					foreach (Player other in player.HostilePlayers()) {
+						if (hitbox.Intersects(other.Hitbox)) {
 							Explode();
 							return;
 						}
@@ -295,8 +295,8 @@ namespace Origins.Items.Tools {
 					return;
 				}
 				if (owner.hostile) {
-					foreach (Player other in Main.ActivePlayers) {
-						if (other.hostile && other.team != owner.team && hitbox.Intersects(other.Hitbox)) {
+					foreach (Player other in owner.HostilePlayers()) {
+						if (hitbox.Intersects(other.Hitbox)) {
 							Projectile.Kill();
 							return;
 						}

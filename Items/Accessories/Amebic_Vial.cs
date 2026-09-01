@@ -42,12 +42,10 @@ namespace Origins.Items.Accessories {
 			const float maxDist = 64 * 64;
 			Vector2 target = default;
 			float bestWeight = 0;
-			Projectile projectile;
 			Vector2 currentPos;
 			Vector2 diff;
-			for (int i = 0; i < Main.maxProjectiles; i++) {
-				projectile = Main.projectile[i];
-				if (projectile.active && (projectile.hostile || (Main.player[projectile.owner].hostile && Main.player[projectile.owner].team != player.team)) && Amebic_Vial.CanBeDeflected[projectile.type]) {
+			foreach (Projectile projectile in player.HostileProjectiles()) {
+				if (Amebic_Vial.CanBeDeflected[projectile.type]) {
 					currentPos = projectile.Hitbox.ClosestPointInRect(player.MountedCenter);
 					diff = player.Hitbox.ClosestPointInRect(projectile.Center) - currentPos;
 					float dist = diff.LengthSquared();

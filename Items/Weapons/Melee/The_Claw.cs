@@ -238,7 +238,7 @@ namespace Origins.Items.Weapons.Melee {
 			// this won't change anything outside of this projectile unless an exception is thrown, because this runs after the global version
 			Player player = Main.player[Projectile.owner];
 			controlUseItem = player.controlUseItem;
-			if (OriginAccessibilityConfig.Instance.ItemSpecificConfigOptions.TheClaw_SwapInputs) player.controlUseItem = player.controlUseTile;
+			if (OriginAccessibilityConfig.ItemSpecificOptions.TheClaw_SwapInputs) player.controlUseItem = player.controlUseTile;
 			preAIRot = Projectile.localAI[1];
 			return base.PreAI();
 		}

@@ -3704,7 +3704,7 @@ namespace Origins {
 			}
 			if (!foundTarget && player.hostile && canPvP) {
 				foreach (Player target in Main.ActivePlayers) {
-					if (!target.dead && target.hostile && target.team != player.team) {
+					if (!target.dead && player.InOpposingTeam(target)) {
 						foundTarget |= selector(target);
 					}
 				}
@@ -6676,6 +6676,46 @@ namespace Origins {
 		}
 		public static void SetIDProp(this ModBlockType self) {
 			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
+		[ReinitializeDuringResizeArrays]
+		static class HEIInitializer {
+			static HEIInitializer() {
+				HostileEntityIterator<Player>.IsHostile = PlayerIsHostile;
+				HostileEntityIterator<NPC>.IsHostile = NPCIsHostile;
+				HostileEntityIterator<Projectile>.IsHostile = ProjectileIsHostile;
+				static bool PlayerIsHostile(Player other, Player toPlayer) => other.InOpposingTeam(toPlayer) && other != toPlayer;
+				static bool NPCIsHostile(NPC npc, Player toPlayer) => !npc.friendly && !NPCID.Sets.CountsAsCritter[npc.type]&& !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type];
+				static bool ProjectileIsHostile(Projectile projectile, Player toPlayer) => projectile.hostile || (Main.player[projectile.owner].InOpposingTeam(toPlayer) && projectile.owner != toPlayer.whoAmI);
+			}
+		}
+		public static HostileEntityIterator<Player> FriendlyPlayers(this Player player) => new(Main.ActivePlayers, player, false);
+		public static HostileEntityIterator<Player> HostilePlayers(this Player player) => new(Main.ActivePlayers, player, true);
+		public static HostileEntityIterator<NPC> FriendlyNPCs(this Player player) => new(Main.ActiveNPCs, player, false);
+		public static HostileEntityIterator<NPC> HostileNPCs(this Player player) => new(Main.ActiveNPCs, player, true);
+		public static HostileEntityIterator<Projectile> FriendlyProjectiles(this Player player) => new(Main.ActiveProjectiles, player, false);
+		public static HostileEntityIterator<Projectile> HostileProjectiles(this Player player) => new(Main.ActiveProjectiles, player, true);
+		public readonly ref struct HostileEntityIterator<T>(ActiveEntityIterator<T> baseIterator, Player player, bool hostile) where T : Entity {
+			public static Func<T, Player, bool> IsHostile;
+			readonly ActiveEntityIterator<T> baseIterator = baseIterator;
+			public ref struct Enumerator {
+				ActiveEntityIterator<T>.Enumerator enumerator;
+				readonly Player player;
+				readonly bool hostile;
+				public readonly T Current => enumerator.Current;
+				public Enumerator(ActiveEntityIterator<T>.Enumerator enumerator, Player player, bool hostile) {
+					this.enumerator = enumerator;
+					this.player = player;
+					this.hostile = hostile;
+				}
+				[MethodImpl(MethodImplOptions.AggressiveInlining)]
+				public bool MoveNext() {
+					while (enumerator.MoveNext()) {
+						if (IsHostile(enumerator.Current, player) == hostile) return true;
+					}
+					return false;
+				}
+			}
+			public Enumerator GetEnumerator() => new(baseIterator.GetEnumerator(), player, hostile);
 		}
 	}
 	public static class NetmodeActive {

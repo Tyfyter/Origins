@@ -524,12 +524,9 @@ namespace Origins.Items.Accessories {
 				}
 				Player owner = Main.player[Projectile.owner];
 				if (owner.hostile) {
-					int team = owner.team;
-					if (team == 0) team = -1;
-					foreach (Player player in Main.ActivePlayers) {
+					foreach (Player player in owner.HostilePlayers()) {
 						if (dist < 16) return dist;
 						if (player.whoAmI == Projectile.owner) continue;
-						if (!player.hostile || player.team == team) continue;
 						if (position.Clamp(player.Hitbox).DistanceSQ(position) >= dist * dist) continue;
 						float collisionPoint = 1;
 						if (Collision.CheckAABBvLineCollision(player.position, player.Size, position, position + direction * dist, 1, ref collisionPoint)) {
