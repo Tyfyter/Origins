@@ -787,14 +787,6 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		if (cooldown == 0) cooldownAlpha.Cooldown(rate: 1f / 15);
 		else cooldownAlpha = 1;
 	}
-	public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-		SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
-		SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
-	}
-	public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo) {
-		SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
-		SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
-	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		if (this.cooldownAlpha == 0 || cooldown >= CooldownTime) return;
 		float cooldownAlpha = this.cooldownAlpha * this.cooldownAlpha;
@@ -984,6 +976,14 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
+			SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
+			SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.3f), target.Center);
 		}
 		public struct LaserBladeDrawer {
 
