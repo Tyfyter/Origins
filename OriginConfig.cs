@@ -1214,12 +1214,14 @@ namespace Origins {
 	}
 	public class OriginAccessibilityConfig : ModConfig {
 		public static OriginAccessibilityConfig Instance;
+		public static ItemSpecificConfigs ItemSpecificOptions => Instance.ItemSpecificConfigOptions;
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 		[DefaultValue(false)]
 		public bool DisableDefiledWastelandsShader { get; set; }
 		public ItemSpecificConfigs ItemSpecificConfigOptions { get; set; } = new();
 		public record ItemSpecificConfigs(
-			bool TheClaw_SwapInputs = false
+			bool TheClaw_SwapInputs = false,
+			bool StarSoldier_HUDOutlines = true
 		) {
 			public ItemSpecificConfigs() : this(false) { }
 			public override string ToString() => "";
