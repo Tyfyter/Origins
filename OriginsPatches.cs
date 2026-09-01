@@ -1084,7 +1084,11 @@ namespace Origins {
 						) + ignoreAll);
 						if (Main.mouseRight && Main.mouseRightRelease) {
 							for (int j = 0; j < OriginsModIntegrations.compatRecommendations.Count; j++) {
-								if (OriginsModIntegrations.compatRecommendations[j].Key == "Mods.Origins.ModCompatNotes.HighFPSSupport") continue;
+								switch (OriginsModIntegrations.compatRecommendations[j].Key) {
+									case "Mods.Origins.ModCompatNotes.HighFPSSupport":
+									case "Mods.Origins.ModCompatNotes.AISlop":
+									continue;
+								}
 								DebugConfig.Instance.IgnoredCompatibilitySuggestions.Add(OriginsModIntegrations.compatRecommendations[j].Key);
 							}
 							for (int j = 0; j < OriginsModIntegrations.conditionalCompatRecommendations.Count; j++) {

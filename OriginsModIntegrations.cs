@@ -563,6 +563,7 @@ namespace Origins {
 				}
 			}
 			if (ModLoader.HasMod("HighFPSSupport")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.HighFPSSupport"));
+			if (ModLoader.HasMod("AiMessage")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.AISlop"));
 			if (ModLoader.HasMod("ferventarms")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.FerventArms"));
 			if (ModLoader.HasMod("Remnants")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.Remnants"));
 			if (ModLoader.TryGetMod("Munchies", out Mod munchies)) {
