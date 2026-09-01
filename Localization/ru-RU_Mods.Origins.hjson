@@ -2344,7 +2344,7 @@ Projectiles: {
 	// Star_Cell_Tracker.DisplayName: Star Cell Tracker
 	// Toy_Trenchmaker.DisplayName: Toy Trenchmaker
 	// Star_Soldier_Laser_Beam.DisplayName: Star Soldier Laser Beam
-	// Star_Soldier_Blade_P.DisplayName: Star Soldier Blade P
+	// Star_Soldier_Blade_P.DisplayName: Star Soldier Laser Blade
 }
 
 Prefixes: {
@@ -3370,6 +3370,11 @@ Configs: {
 		TheClaw_SwapInputs: {
 			// Label: "{$Items.The_Claw.DisplayName}: {$SwapInputs.Label}"
 			// Tooltip: "{$SwapInputs.Tooltip}"
+		}
+
+		StarSoldier_HUDOutlines: {
+			// Label: Star Soldier: HUD Outlines
+			// Tooltip: ""
 		}
 	}
 }
