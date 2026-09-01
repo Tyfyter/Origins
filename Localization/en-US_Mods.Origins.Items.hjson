@@ -95,7 +95,7 @@ Automated_Returns_Handler: {
 		Increases movement speed and acceleration
 		Provides light when worn
 		Allows the ability to climb walls and dash
-		Greatly increased return speed for grapple hooks and harpoon guns
+		Greatly increased return speed for grappling hooks, flails[ox:,] and harpoon guns
 		Gives a 10% chance to dodge attacks
 		'''
 }
