@@ -749,6 +749,12 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	public override bool NeedsAmmo(Player player) => false;
 	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale);
 	public virtual void PlaySound(Player player) { }
+	#region methods which are never used
+	public sealed override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) { }
+	public sealed override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) { }
+	public sealed override void ModifyHitPvp(Player player, Player target, ref Player.HurtModifiers modifiers) { }
+	public sealed override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo) { }
+	#endregion
 }
 public class Star_Soldier_Blade : Star_Soldier_Weapon {
 	static int CooldownTime => 60;
