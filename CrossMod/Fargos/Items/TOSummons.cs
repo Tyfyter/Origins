@@ -80,9 +80,8 @@ namespace Origins.CrossMod.Fargos.Items {
 	#endregion
 	#region Bosses
 	#endregion
-
+	[ExtendsFromMod("Fargowiltas")]// stops the class from being autoloaded or JIT compiled
 	public class FargoItemToNPC : GlobalItem {
-		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 		public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (item.type == ModContent.ItemType<AmalgamatedSpirit>()) {
 				Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), player.position.RandomPosAround(new(-800, 800, -1000, -250)), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, ModContent.NPCType<Etherealizer>());
