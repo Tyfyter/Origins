@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
-using Mono.Cecil;
 using Origins.Core;
 using Origins.CrossMod;
 using Origins.Graphics;
@@ -1907,6 +1906,20 @@ namespace Origins {
 		}
 		[Pure]
 		public static Vector2 Perpendicular(this Vector2 vector, int direction = 1) => new(vector.Y * direction, vector.X * -direction);
+		[Pure]
+		public static Vector2 GetLerpValue(this Vector2 vector, Vector2 from, Vector2 to, bool clamped = false) => new(
+			Utils.GetLerpValue(from.X, to.X, vector.X, clamped),
+			Utils.GetLerpValue(from.Y, to.Y, vector.Y, clamped)
+		);
+		/// <summary>
+		/// Multiplies a vector by a matrix
+		/// </summary>
+		/// <param name="value"> the input vector</param>
+		/// <param name="x">the vector used to determine the x component of the output</param>
+		/// <param name="y">the vector used to determine the y component of the output</param>
+		public static void MatrixMult(ref Vector2 value, Vector2 x, Vector2 y) {
+			value = new Vector2(Vector2.Dot(value, x), Vector2.Dot(value, y));
+		}
 		[Pure]
 		public static Vector2 RandomPosAround(this Vector2 initialPos, Vector4 rangeFromPos) {
 			return new(initialPos.X + Main.rand.NextFloat(rangeFromPos.X, rangeFromPos.Y), initialPos.Y + Main.rand.NextFloat(rangeFromPos.Z, rangeFromPos.W));
@@ -3933,6 +3946,8 @@ namespace Origins {
 				..items.Subsets(index + 1)
 			];
 		}
+		[Pure]
+		public static int Modulo(this IList list, int index) => EuiclidMod(index, list.Count);
 		public static IEnumerable<T> WalkWhile<T>(this T item, Predicate<T> predicate, Func<T, T> step) {
 			while (predicate(item)) {
 				yield return item;
@@ -6404,6 +6419,45 @@ namespace Origins {
 		[Pure]
 		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
 		[Pure]
+		public static bool Intersects(this Triangle self, Triangle other) {
+			// flip clockwise triangles 
+			if (self.Winding() < 0) self = new(self.a, self.c, self.b);
+			if (other.Winding() < 0) other = new(other.a, other.c, other.b);
+
+			Span<Vector2> selfPoints = stackalloc[] { self.a, self.b, self.c };
+			Span<Vector2> otherPoints = stackalloc[] { other.a, other.b, other.c };
+
+			// for each edge E of t1
+			for (int i = 0; i < 3; i++) {
+				int j = (i + 1) % 3;
+				// Check all points of t2 lay on the outside side
+				if (new Triangle(selfPoints[i], selfPoints[j], otherPoints[0]).Winding() <= float.Epsilon &&
+					new Triangle(selfPoints[i], selfPoints[j], otherPoints[1]).Winding() <= float.Epsilon &&
+					new Triangle(selfPoints[i], selfPoints[j], otherPoints[2]).Winding() <= float.Epsilon) {
+					return false;
+				}
+			}
+
+			// for each edge E of t2
+			for (int i = 0; i < 3; i++) {
+				int j = (i + 1) % 3;
+				// Check all points of t1 lay on the outside side
+				if (new Triangle(otherPoints[i], otherPoints[j], selfPoints[0]).Winding() <= float.Epsilon &&
+					new Triangle(otherPoints[i], otherPoints[j], selfPoints[1]).Winding() <= float.Epsilon &&
+					new Triangle(otherPoints[i], otherPoints[j], selfPoints[2]).Winding() <= float.Epsilon) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		[Pure]
+		static float Winding(this Triangle tri) {
+			return tri.a.X * (tri.b.Y - tri.c.Y)
+				 + tri.b.X * (tri.c.Y - tri.a.Y)
+				 + tri.c.X * (tri.a.Y - tri.b.Y);
+		}
+		[Pure]
 		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
 		[Pure]
 		public static void GetDisplayedDayTime(out string hours, out string minutes, out string seconds, out string half) {
@@ -6778,6 +6832,12 @@ namespace Origins {
 		public static T OrXIf<T>(this T value, T condition, T result) {
 			if (Equals(value, condition)) return result;
 			return value;
+		}
+		[Pure]
+		public static T EuiclidMod<T>(T a, T b) where T : INumber<T> {
+			T m = a % b;
+			if (m < T.Zero) m = (b < T.Zero) ? m - b : m + b;
+			return m;
 		}
 	}
 }

@@ -1,9 +1,12 @@
 ﻿using Avalon;
+using Avalon.ModSupport.MLL;
+using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Graphics.Primitives;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
 using Origins.Projectiles;
@@ -1628,7 +1631,7 @@ public class Star_Soldier_Proper_Buff : ModBuff {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 			mountID = MountID
 		};
-		Star_Soldier_UI.Sets.CustomBuffIndicator[Type] = _ => { };
+		Star_Soldier_UI.Sets.CustomBuffIndicator[Type] = (_, _) => false;
 	}
 	public override void Update(Player player, ref int buffIndex) {
 		OriginPlayer originPlayer = player.OriginPlayer();
@@ -1810,12 +1813,15 @@ public class Star_Soldier_Wagon_Buff : ModBuff {
 public class Star_Soldier_UI : SwitchableUIState {
 	[ReinitializeDuringResizeArrays]
 	public static class Sets {
-		public static Action<SpriteBatch>[] CustomBuffIndicator = BuffID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(CustomBuffIndicator)}")
+		public static Func<int, Vector2, bool>[] CustomBuffIndicator = BuffID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(CustomBuffIndicator)}")
 		.Description("Replaces the normal buff icon drawing when the player is using the Star Soldier mount")
-		.RegisterCustomSet<Action<SpriteBatch>>(null);
+		.RegisterCustomSet<Func<int, Vector2, bool>>(null);
 		public static Action<SpriteBatch>[] InfoDisplayOverride = new Action<SpriteBatch>[InfoDisplayLoader.InfoDisplayCount];
 		static Sets() {
 			InfoDisplayOverride[InfoDisplay.DepthMeter.Type] = InfoAccessoryHUD.DrawDepthMeter;
+			CustomBuffIndicator[BuffID.OnFire] = HPHUD.DrawFire(Color.Orange);
+			CustomBuffIndicator[BuffID.CursedInferno] = HPHUD.DrawFire(Color.Chartreuse, false);
+			CustomBuffIndicator[BuffID.OnFire3] = HPHUD.DrawFire(Color.OrangeRed);
 		}
 	}
 	static readonly AdvancedMiscShaderData healthBarShader = new(ModContent.Request<Effect>("Origins/Effects/HUD"), "HealthBar");
@@ -1911,6 +1917,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 		}
 	}
 	public class HPHUD : IUISegment {
+		public static Vector2 customBuffIndicatorPos;
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[6] {
 			new(default, Color.White, new(0, 0)),
 			new(default, Color.White, new(0.05f, 0)),
@@ -1932,6 +1939,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 			Vector2 hpSize = new Vector2(400, 16) * uiScale;
 			{ //HP bar
 				Vector2 position = new((Main.screenWidth - hpSize.X) * 0.5f, 8);
+				customBuffIndicatorPos = position;
+				if (doOutlines) customBuffIndicatorPos.X -= 8;
 				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
@@ -1977,8 +1986,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 				int hovered = -1;
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (player.buffType[i] > 0) {
-						if (Sets.CustomBuffIndicator[player.buffType[i]] is Action<SpriteBatch> customIcon) {
-							customIcon(spriteBatch);
+						if (Sets.CustomBuffIndicator[player.buffType[i]] is Func<int, Vector2, bool> customIcon) {
+							if (customIcon(i, uiScale)) hovered = i;
 							continue;
 						}
 						hovered = Main.DrawBuffIcon(hovered, i, currentPosition.X, currentPosition.Y);
@@ -1991,6 +2000,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 						Main.buffAlpha[i] = 0.4f;
 					}
 				}
+				if (PlayerInput.UsingGamepad && !Main.playerInventory)
+					hovered = -1;
 				if (hovered >= 0) {
 					int buffType = player.buffType[hovered];
 					string buffName = Lang.GetBuffName(buffType);
@@ -2004,6 +2015,64 @@ public class Star_Soldier_UI : SwitchableUIState {
 				}
 			}
 		}
+		static readonly Polygon firePolygon = Polygon.Import(48, Polygon.Alignment.TopRight,
+			new(139.39f, 158.13f),
+			new(115.05f, 275.74f),
+			new(94.78f, 93.25f),
+			new(24.10f, 259.51f),
+			new(11.36f, 338.30f),
+			new(42.06f, 450.11f),
+			new(179.36f, 528.90f),
+			new(132.13f, 471.97f),
+			new(116.79f, 393.34f),
+			new(146.92f, 411.30f),
+			new(141.12f, 374.80f),
+			new(185.15f, 308.18f),
+			new(199.64f, 360.90f),
+			new(221.65f, 381.17f),
+			new(236.13f, 400.87f),
+			new(250.04f, 356.84f),
+			new(262.20f, 378.86f),
+			new(258.73f, 404.93f),
+			new(260.47f, 423.46f),
+			new(233.82f, 530.64f),
+			new(345.63f, 468.07f),
+			new(383.86f, 366.69f),
+			new(365.90f, 247.35f),
+			new(329.41f, 121.63f),
+			new(305.86f, 180.67f),
+			new(304.50f, 255.46f),
+			new(272.63f, 178.41f),
+			new(241.93f, 62.54f),
+			new(181.68f, 12.14f)
+		);
+		public static Func<int, Vector2, bool> DrawFire(Color color, bool needsOil = true) => (buffIndex, uiScale) => {
+			Player player = Main.LocalPlayer;
+			Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			Color _color = color * (float.Sin((float)Main.timeForVisualEffects / 10f + buffIndex) * 0.25f + 0.75f);
+			for (int i = 0; i < firePolygon.vertices.Length; i++) firePolygon.vertices[i].Color = _color;
+			firePolygon
+			.ResetPositions()
+			.Translate(customBuffIndicatorPos)
+			.Draw();
+			customBuffIndicatorPos.X -= firePolygon.ScaledSize.X;
+
+			int buffTime = player.buffTime[buffIndex];
+			if (needsOil) {
+				int oiledIndex = player.FindBuffIndex(BuffID.Oiled);
+				if (oiledIndex >= 0) Min(ref buffTime, player.buffTime[oiledIndex]);
+			}
+			DrawText(
+				Main.spriteBatch,
+				$"{buffTime / 60f:0.0}",
+				customBuffIndicatorPos + Vector2.UnitY * (firePolygon.ScaledSize.Y + 4),
+				_color,
+				uiScale
+			);
+			return firePolygon.Contains(Main.MouseScreen);
+		};
 	}
 	public class O2HUD : IUISegment {
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4] {
