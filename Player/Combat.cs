@@ -784,6 +784,9 @@ namespace Origins {
 			return false;
 		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
+			if (Player.mount.IsMount<Star_Soldier>()) {
+				modifiers.DisableDust();
+			}
 			if (fullSend && modifiers.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				modifiers.FinalDamage *= 0.14f - fullSendHorseshoeBonus.Mul(0.07f);
 			}
