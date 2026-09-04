@@ -223,8 +223,8 @@ namespace Origins.Items.Mounts {
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.changeSize = true;
-			originPlayer.targetWidth = 12;
-			originPlayer.targetHeight = 12;
+			originPlayer.targetWidth = 14;
+			originPlayer.targetHeight = 14;
 		}
 	}
 	public class Ravel_Projectile_Layer : PlayerDrawLayer {
