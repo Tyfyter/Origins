@@ -1,6 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Fargowiltas.Items.Ammos;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -9,8 +7,6 @@ using Origins.Tiles.Other;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -75,6 +71,7 @@ namespace Origins.Items.Weapons.Summoner {
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;
 		}
+		public override bool NeedsAmmo(Player player) => true;
 	}
 	public class Smart_Turret_Buff : MinionBuff {
 		public override string Texture => "Origins/Buffs/Smart_Turret_Buff";
@@ -233,6 +230,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 				if (Math.Abs(directionToIdlePosition.X * distanceToIdlePosition) > 1) Projectile.direction = Math.Sign(directionToIdlePosition.X);
 				else Projectile.direction = Owner.direction;
+				Projectile.rotation = MathHelper.PiOver2 - 1.6f * Projectile.direction;
+
 				Projectile.tileCollide = false;
 				if (Projectile.localAI[0].CycleUp(6, 1)) Projectile.frame = (Projectile.frame + 1) % 18;
 				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
@@ -346,6 +345,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (IsBlocked(turret, in target)) return false;
 				if (!owner.PickAmmo(fromItem, out int projType, out float speed, out int damage, out float knockBack, out int usedAmmo)) return false;
 				Vector2 gunPos = turret.Center - new Vector2(9 * turret.direction, 20);
+				// here's where the shooting sounds go
 				SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), gunPos);
 				SoundEngine.PlaySound(SoundID.Item26.WithPitchRange(1.2f, 1.28f).WithVolume(0.1f), gunPos);
 				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), gunPos);

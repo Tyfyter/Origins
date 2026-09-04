@@ -1124,10 +1124,10 @@ SUMMONER WEAPONS:
 (X) Fiber Optic Whips
 (^) Matryoshka Doll
 (X) Mojo Mask Staff
-(#2, ^2) Neutron Soup !!!
+(☻) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
-(#2, ^2) SMART Wrench !!!
+(☻) SMART Wrench !!!
 (☻) Star Harvest !!!
 (X) Technomancer 4000
 (^) Terratotem
