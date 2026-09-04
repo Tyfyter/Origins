@@ -1707,30 +1707,44 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			};
 			if (leftClickSelection is null) {
 				for (int i = -1; i <= 1; i++) {
-					data.texture = options[(hoverIndex + i + options.Count) % options.Count].Icon.Value;
+					Star_Soldier_Weapon weapon = options[(hoverIndex + i + options.Count) % options.Count];
+					data.texture = weapon.Icon.Value;
 					data.position = iconsPos + i * 50 * Vector2.UnitY;
 					data.color = Color.White * (i == 0 ? 1 : 0.5f);
 					data.Draw(spriteBatch);
+					TryHover(data, weapon);
 				}
 			} else {
 				data.texture = leftClickSelection.Icon.Value;
 				data.position = iconsPos;
 				data.color = Color.White;
 				data.Draw(spriteBatch);
+				TryHover(data, leftClickSelection);
 			}
 			iconsPos = pos + Vector2.UnitX * (player.width * 0.5f + 40);
 			if (rightClickSelection is null) {
 				for (int i = -1; i <= 1; i++) {
-					data.texture = options[(hoverIndex + i + options.Count) % options.Count].Icon.Value;
+					Star_Soldier_Weapon weapon = options[(hoverIndex + i + options.Count) % options.Count];
+					data.texture = weapon.Icon.Value;
 					data.position = iconsPos + i * 50 * Vector2.UnitY;
 					data.color = Color.White * (i == 0 ? 1 : 0.5f);
 					data.Draw(spriteBatch);
+					TryHover(data, weapon);
 				}
 			} else {
 				data.texture = rightClickSelection.Icon.Value;
 				data.position = iconsPos;
 				data.color = Color.White;
 				data.Draw(spriteBatch);
+				TryHover(data, rightClickSelection);
+			}
+		}
+		static void TryHover(in DrawData data, Star_Soldier_Weapon selection) {
+			if (data.texture.Bounds.Recentered(data.position).Contains(Main.MouseScreen)) {
+				Main.hoverItemName = selection.Item.Name;
+				Main.HoverItem = selection.Item;
+				Main.HoverItem.SetNameOverride(Main.hoverItemName);
+				Main.instance.MouseText(Main.hoverItemName, selection.Item.rare, 0);
 			}
 		}
 	}
