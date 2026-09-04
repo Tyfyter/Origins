@@ -2345,6 +2345,7 @@ Projectiles: {
 	Toy_Trenchmaker.DisplayName: Toy Trenchmaker
 	Star_Soldier_Laser_Beam.DisplayName: Star Soldier Laser Beam
 	Star_Soldier_Blade_P.DisplayName: Star Soldier Laser Blade
+	Glitter_Glue_P.DisplayName: Glitter Glue
 }
 
 Prefixes: {
