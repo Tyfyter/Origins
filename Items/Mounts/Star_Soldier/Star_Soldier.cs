@@ -1,11 +1,7 @@
 ﻿using Avalon;
-using Avalon.ModSupport.MLL;
-using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework.Graphics;
-using ModLiquidLib;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
-using ModLiquidLib.Utils.LiquidContent;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
@@ -1928,21 +1924,16 @@ public class Star_Soldier_UI : SwitchableUIState {
 		public static bool playAlarm;
 		static float alarmVolumeMult;
 		static SlotId alarmSoundSlot;
-		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[6] {
-			new(default, Color.White, new(0, 0)),
-			new(default, Color.White, new(0.05f, 0)),
-			new(default, Color.White, new(0.05f, 1)),
-			new(default, Color.White, new(0.95f, 0)),
-			new(default, Color.White, new(0.95f, 1)),
-			new(default, Color.White, new(1f, 0))
-		};
-		static readonly short[] dices = [
-			0, 1, 2,
-			1, 3, 2,
-			2, 3, 4,
-			4, 3, 5,
-		];
-		static readonly Vector2[] positions = new Vector2[6];
+		static readonly Polygon healthBarPoly = Polygon.Import(
+			400,
+			Vector2.UnitX * 0.5f,
+			new(0, 0),
+			new(0.05f, 0),
+			new(0.95f, 0),
+			new(1f, 0),
+			new(0.95f, 0.04f),
+			new(0.05f, 0.04f)
+		);
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
 			bool doOutlines = OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_HUDOutlines;
 			Player player = Main.LocalPlayer;
@@ -1954,41 +1945,43 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-				for (int i = 0; i < vertices.Length; i++) {
-					positions[i] = position + hpSize * vertices[i].TextureCoordinate;
-					if (!doOutlines) continue;
-					vertices[i].Position = new Vector3(positions[i], 0);
-					if (vertices[i].TextureCoordinate.Y == 0) vertices[i].Position.Y -= 4;
-					else vertices[i].Position.Y += 2;
-					switch (vertices[i].TextureCoordinate.X) {
-						case 0:
-						vertices[i].Position.X -= 8;
-						break;
-						case 0.05f:
-						vertices[i].Position.X -= 2;
-						break;
-						case 0.95f:
-						vertices[i].Position.X += 2;
-						break;
-						case 1:
-						vertices[i].Position.X += 8;
-						break;
+				healthBarPoly.ResetPositions().Scale(uiScale).Translate(new(Main.screenWidth * 0.5f, 8));
+				if (doOutlines) {
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+					using Polygon.VertexCache _ = healthBarPoly.ModificationContext();
+					for (int i = 0; i < healthBarPoly.vertices.Length; i++) {
+						if (healthBarPoly.vertices[i].TextureCoordinate.Y == 0) healthBarPoly.vertices[i].Position.Y -= 4;
+						else healthBarPoly.vertices[i].Position.Y += 2;
+						switch (healthBarPoly.vertices[i].TextureCoordinate.X) {
+							case 0:
+							healthBarPoly.vertices[i].Position.X -= 8;
+							break;
+							case 0.05f:
+							healthBarPoly.vertices[i].Position.X -= 2;
+							break;
+							case 0.95f:
+							healthBarPoly.vertices[i].Position.X += 2;
+							break;
+							case 1:
+							healthBarPoly.vertices[i].Position.X += 8;
+							break;
+						}
+						healthBarPoly.vertices[i].Color = Color.OrangeRed.MultiplyRGB(new(100, 100, 100));
 					}
-					vertices[i].Color = Color.OrangeRed.MultiplyRGB(new(100, 100, 100));
+					healthBarPoly.Draw();
 				}
-				if (doOutlines) Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
-				for (int i = 0; i < vertices.Length; i++) {
-					vertices[i].Position = new Vector3(positions[i], 0);
-					vertices[i].Color = Color.White;
-				}
-
 				healthBarShader.Apply(null,
 					uColor,
 					uSecondaryColor,
 					uSaturation with { Value = handler.life / (float)Star_Soldier.MountHandler.MaxLife }
 				);
-				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+				healthBarPoly.Draw();
+				if (!Main.mouseText && healthBarPoly.Contains(Main.MouseScreen)) {
+					player.cursorItemIconEnabled = false;
+					string text = handler.life + "/" + Star_Soldier.MountHandler.MaxLife;
+					Main.instance.MouseTextHackZoom(text);
+					Main.mouseText = true;
+				}
 			}
 			{ //buff icons
 				Point position = new((int)((Main.screenWidth - hpSize.X) * 0.5f + hpSize.X * 0.075f), 28);
@@ -1998,7 +1991,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (player.buffType[i] > 0) {
 						if (Sets.CustomBuffIndicator[player.buffType[i]] is Func<int, Vector2, bool> customIcon) {
-							if (customIcon(i, uiScale)) hovered = i;
+							if (customIcon(i, uiScale)) {
+								hovered = i;
+								player.mouseInterface = true;
+							}
 							continue;
 						}
 						hovered = Main.DrawBuffIcon(hovered, i, currentPosition.X, currentPosition.Y);

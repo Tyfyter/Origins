@@ -124,8 +124,38 @@ public class Polygon : IMoveToPegFlag {
 		wireframeIndices = lines.SelectMany<UnorderedTuple<short>, short>(l => [l.a, l.b]).ToArray();
 		ResetVertices();
 	}
-	public static Polygon Import(float size, params Span<Vector2> vertexPositions) => Import(size, Alignment.TopLeft, vertexPositions);
 	public static Polygon Import(float size, Alignment alignment, params Span<Vector2> vertexPositions) {
+		switch (alignment) {
+			case Alignment.None:
+			Vector2 lowerBounds = new(float.PositiveInfinity);
+			Vector2 upperBounds = new(float.NegativeInfinity);
+			for (int i = 0; i < vertexPositions.Length; i++) {
+				Max(ref upperBounds.X, vertexPositions[i].X);
+				Max(ref upperBounds.Y, vertexPositions[i].Y);
+
+				Min(ref lowerBounds.X, vertexPositions[i].X);
+				Min(ref lowerBounds.Y, vertexPositions[i].Y);
+			}
+			for (int i = 0; i < vertexPositions.Length; i++) vertexPositions[i] *= size / upperBounds.Max();
+			return new Polygon(vertexPositions);
+
+			default:
+			return Import(size, Vector2.Zero, vertexPositions);
+
+			case Alignment.TopRight:
+			return Import(size, Vector2.UnitX, vertexPositions);
+
+			case Alignment.BottomLeft:
+			return Import(size, Vector2.UnitY, vertexPositions);
+
+			case Alignment.BottomRight:
+			return Import(size, Vector2.One, vertexPositions);
+
+			case Alignment.Center:
+			return Import(size, new Vector2(0.5f), vertexPositions);
+		}
+	}
+	public static Polygon Import(float size, Vector2 origin, params Span<Vector2> vertexPositions) {
 		Vector2 lowerBounds = new(float.PositiveInfinity);
 		Vector2 upperBounds = new(float.NegativeInfinity);
 		for (int i = 0; i < vertexPositions.Length; i++) {
@@ -135,30 +165,8 @@ public class Polygon : IMoveToPegFlag {
 			Min(ref lowerBounds.X, vertexPositions[i].X);
 			Min(ref lowerBounds.Y, vertexPositions[i].Y);
 		}
-
-		Vector2 offset = Vector2.Zero;
-		switch (alignment) {
-			case Alignment.None:
-			for (int i = 0; i < vertexPositions.Length; i++) vertexPositions[i] *= size / upperBounds.Max();
-			return new Polygon(vertexPositions);
-
-			case Alignment.TopRight:
-			offset = (lowerBounds + upperBounds) * Vector2.UnitX;
-			break;
-
-			case Alignment.BottomLeft:
-			offset = (lowerBounds + upperBounds) * Vector2.UnitY;
-			break;
-
-			case Alignment.BottomRight:
-			offset = (lowerBounds + upperBounds) * Vector2.One;
-			break;
-
-			case Alignment.Center:
-			offset = (lowerBounds + upperBounds) * 0.5f;
-			break;
-		}
-		for (int i = 0; i < vertexPositions.Length; i++) vertexPositions[i] = (vertexPositions[i] - lowerBounds - offset) * size / (upperBounds - lowerBounds).Max();
+		origin *= upperBounds - lowerBounds;
+		for (int i = 0; i < vertexPositions.Length; i++) vertexPositions[i] = (vertexPositions[i] - lowerBounds - origin) * size / (upperBounds - lowerBounds).Max();
 		return new Polygon(vertexPositions);
 	}
 	public enum Alignment {
@@ -295,16 +303,33 @@ public class Polygon : IMoveToPegFlag {
 		if (vertexPositions.Any(p => nextT.a != p && nextT.b != p && nextT.c != p && nextT.Contains(p))) return null;
 		return new(nextT, (short)a, around, (short)c);
 	}
+	readonly record struct TriOption(Triangle Tri, short A, short B, short C) : IComparable<TriOption> {
+		readonly float sortPriority = -GeometryUtils.AngleDif((Tri.a - Tri.b).ToRotation(), (Tri.c - Tri.b).ToRotation(), out _);//Area(Tri);
+		public readonly int CompareTo(TriOption other) => sortPriority.CompareTo(other.sortPriority);
+	}
 	struct Flag : IMovedToPegFlag;
-	static float Area(Triangle tri) => Math.Abs(Winding(tri)) * 0.5f;
-	static bool IsDegenerate(Triangle tri) => float.Abs(Area(tri)) <= float.Epsilon;
 	static float Winding(Triangle tri) {
 		return tri.a.X * (tri.b.Y - tri.c.Y)
 			 + tri.b.X * (tri.c.Y - tri.a.Y)
 			 + tri.c.X * (tri.a.Y - tri.b.Y);
 	}
-	readonly record struct TriOption(Triangle Tri, short A, short B, short C) : IComparable<TriOption> {
-		readonly float sortPriority = -GeometryUtils.AngleDif((Tri.a - Tri.b).ToRotation(), (Tri.c - Tri.b).ToRotation(), out _);//Area(Tri);
-		public readonly int CompareTo(TriOption other) => sortPriority.CompareTo(other.sortPriority);
+	public VertexCache ModificationContext() => new(this);
+	List<VertexPositionColorTexture[]> modificationCache;
+	int modificationCount;
+	public readonly ref struct VertexCache {
+		readonly Polygon polygon;
+		readonly VertexPositionColorTexture[] pool;
+		public VertexCache(Polygon polygon) {
+			this.polygon = polygon;
+			polygon.modificationCache ??= [];
+			if (polygon.modificationCount >= polygon.modificationCache.Count) polygon.modificationCache.Add(new VertexPositionColorTexture[polygon.vertices.Length]);
+			pool = polygon.modificationCache[polygon.modificationCount];
+			Array.Copy(polygon.vertices, pool, polygon.vertices.Length);
+			polygon.modificationCount++;
+		}
+		public readonly void Dispose() {
+			Array.Copy(pool, polygon.vertices, polygon.vertices.Length);
+			polygon.modificationCount--;
+		}
 	}
 }
