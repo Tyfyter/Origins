@@ -183,7 +183,7 @@ WORLD GENERATION:
 
 OTHER:
 |---
-(#, ^2) Ashen Font !!!
+(☻) Ashen Font !!!
 (X) Cubekon Tinkerer's Modifiers
 (^) Defiled "Chrysalis" Spawning
 (^) Equipment Lubing mechanics
@@ -322,7 +322,7 @@ ENEMY NPCS:
 (^) Rock Bottom
 (X) Rotting Husk
 (^) Savage Whip
-(#2, ^2) Scrapyard Stryder !!!
+(☻) Scrapyard Stryder !!!
 (^) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
@@ -1430,7 +1430,7 @@ TILES:
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(#3, ^2) Incinerator Pit !!!
+(☻) Incinerator Pit !!!
 (^) Industrial Door
 (X) Large Auto Assembler !!!
 (X) Large Conveyor Scooper !!!
