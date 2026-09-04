@@ -1381,11 +1381,12 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				Projectile.Kill();
 				return;
 			}
+			Projectile.hide = (Projectile.ai[2] == 1) == (owner.direction == 1);
 			Star_Soldier.InitializeColor(owner, ref colors);
 			Projectile.velocity = arm.gunRotation.ToRotationVector2();
 			arm.GetPositions(owner.MountedCenter, owner.fullRotation, owner.Directions, out _, out _, out Projectile.position);
-			Projectile.position += Projectile.velocity * 24;
-			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
+			Projectile.position += Projectile.velocity.Perpendicular(owner.direction) * 4;
+			Vector2 targetPos = Projectile.position + Projectile.velocity * Math.Max(Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64), 64);
 
 			//SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
 			//SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
@@ -1416,6 +1417,9 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				target.immuneTime = target.longInvince ? 16 : 8;
 			}
 		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			if (Projectile.hide) overPlayers.Add(index);
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
 			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
@@ -1436,8 +1440,8 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 				Vector2.One * 5 * Colors.AOEScale,
 				0,
 			0);
-			Vector2 diff = TargetPos - Projectile.position;
-			Vector2 position = Projectile.position;
+			Vector2 position = Projectile.position + Projectile.velocity * 62;
+			Vector2 diff = TargetPos - position;
 			position -= Main.screenPosition;
 			/*Main.spriteBatch.Draw(
 				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,
