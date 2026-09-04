@@ -160,6 +160,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 	}
 	public static PlayerDeathReason DeathReason(Player player) => PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Incinerator_Pit").SelectFrom(player.name).ToNetworkText());
 	public static void HurtEntity(Entity entity, Action<int> bounce, Func<bool, int> hurt) {
+		if (entity is null || bounce is null || hurt is null) return;
 		Rectangle hitbox = entity.Hitbox;
 		foreach (Point pos in hitbox.IterateTilesIn(CollisionExtensions.TileOrder.DescY)) {
 			Tile tile = Main.tile[pos];
