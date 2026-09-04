@@ -36,12 +36,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.height = 32;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.useStyle = ItemUseStyleID.RaiseLamp;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Red;
 			Item.UseSound = SoundID.Item117;
 			Item.buffType = Star_Harvest_Buff.ID;
 			Item.shoot = Star_Cell_Tracker.ID;
+			Item.shootSpeed = 1;
 			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -62,6 +63,11 @@ namespace Origins.Items.Weapons.Summoner {
 				player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			}
 			return false;
+		}
+		public override bool ModifyItemDraw(ref PlayerDrawSet drawInfo, ref DrawData drawData, ref DrawData? coloredDrawData, ref DrawData? glowMaskDrawData) {
+			drawData.rotation += MathHelper.PiOver2 * drawInfo.drawPlayer.direction * drawInfo.drawPlayer.gravDir;
+			drawData.origin = drawData.texture.Size() * new Vector2(0.5f, 1);
+			return true;
 		}
 	}
 	public class Star_Harvest_Buff : MinionBuff {
