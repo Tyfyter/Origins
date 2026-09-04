@@ -2503,8 +2503,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 						if (!player.merman && !player.ignoreWater) {
 							float multiplier = 1f;
 							bool[] moddedWet = player.GetModdedWetArray();
-							for (int j = 0; j < LiquidLoader.LiquidCount; j++) {
-								if (moddedWet[j - LiquidID.Count]) {
+							for (int j = 0; j < moddedWet.Length; j++) {
+								if (moddedWet[j]) {
 									LiquidLoader.StopWatchMPHMultiplier(i, ref multiplier);
 									goto skipVanillaWet;
 								}
