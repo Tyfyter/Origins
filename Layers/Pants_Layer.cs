@@ -7,7 +7,7 @@ namespace Origins.Layers {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
 			return drawInfo.drawPlayer.legs == Fiberglass_Legs.SlotID;
 		}
-		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.Skin, PlayerDrawLayers.Leggings);
+		public override Position GetDefaultPosition() => new BeforeParent(PlayerDrawLayers.Leggings);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			drawInfo.hidesBottomSkin = false;
 			drawInfo.drawPlayer.legs = 0;
