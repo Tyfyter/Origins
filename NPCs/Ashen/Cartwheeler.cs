@@ -171,7 +171,7 @@ namespace Origins.NPCs.Ashen {
 			bestiaryEntry.Icon = new NPCExtensions.RotatingUnlockableNPCEntryIcon(Type, -(Acceleration * 5));
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor) * NPC.ShimmerAlphaMult();
 			DrawData data = new(
 				eyeTexture,
 				NPC.Center - screenPos,

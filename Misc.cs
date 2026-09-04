@@ -5606,9 +5606,12 @@ namespace Origins {
 		public static Color GetTintColor(this NPC npc, Color baseColor) {
 			if (npc.IsABestiaryIconDummy) return baseColor;
 			NPCLoader.DrawEffects(npc, ref baseColor);
-			return npc.GetNPCColorTintedByBuffs(baseColor);
+			return npc.GetNPCColorTintedByBuffs(baseColor) * npc.ShimmerAlphaMult();
 		}
-
+		[Pure]
+		public static float ShimmerAlphaMult(this NPC npc) {
+			return npc.shimmerTransparency > 0f && !npc.CanApplyHunterPotionEffects() ? (1f - npc.shimmerTransparency) : 1;
+		}
 		[Pure]
 		public static bool CanBeAfflicted(this NPC npc, bool ignoreDontTakeDamage = false) {
 			if (npc.active && npc.lifeMax > 5 && (!npc.dontTakeDamage || ignoreDontTakeDamage) && !npc.friendly)
