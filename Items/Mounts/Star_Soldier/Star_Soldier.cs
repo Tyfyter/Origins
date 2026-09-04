@@ -18,6 +18,7 @@ using Origins.UI;
 using PegasusLib.Networking;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1924,6 +1925,9 @@ public class Star_Soldier_UI : SwitchableUIState {
 	}
 	public class HPHUD : IUISegment {
 		public static Vector2 customBuffIndicatorPos;
+		public static bool playAlarm;
+		static float alarmVolumeMult;
+		static SlotId alarmSoundSlot;
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[6] {
 			new(default, Color.White, new(0, 0)),
 			new(default, Color.White, new(0.05f, 0)),
@@ -1990,6 +1994,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Point position = new((int)((Main.screenWidth - hpSize.X) * 0.5f + hpSize.X * 0.075f), 28);
 				Point currentPosition = position;
 				int hovered = -1;
+				playAlarm = false;
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (player.buffType[i] > 0) {
 						if (Sets.CustomBuffIndicator[player.buffType[i]] is Func<int, Vector2, bool> customIcon) {
@@ -2020,6 +2025,19 @@ public class Star_Soldier_UI : SwitchableUIState {
 					BuffLoader.ModifyBuffText(buffType, ref buffName, ref buffTooltip, ref rare);
 					Main.instance.MouseTextHackZoom(buffName, rare, 0, buffTooltip);
 				}
+			}
+			if (playAlarm) {
+				alarmSoundSlot.PlaySoundIfInactive(Origins.Sounds.ShimmershotCharging, updateCallback: sound => {
+					if (!Main.LocalPlayer.mount.IsMount<Star_Soldier>()) {
+						playAlarm = false;
+						alarmVolumeMult = 0;
+						return false;
+					}
+					MathUtils.LinearSmoothing(ref alarmVolumeMult, playAlarm.ToInt(), 1f / 15);
+					sound.Volume = alarmVolumeMult;
+					sound.Pitch = ((float)Main.timeForVisualEffects / 30) % 1;
+					return alarmVolumeMult > 0;
+				});
 			}
 		}
 		static readonly Polygon firePolygon = Polygon.Import(48, Polygon.Alignment.TopRight,
@@ -2080,6 +2098,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				uiScale * 0.85f
 			);
 			customBuffIndicatorPos.X -= 8;
+			playAlarm = true;
 			return firePolygon.Contains(Main.MouseScreen);
 		};
 	}
