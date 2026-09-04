@@ -942,7 +942,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 			float rotMult = 0.05f;
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
-				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < 1 + Projectile.ai[0]) {
+				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < 1) {
 					Dust dust = Dust.NewDustDirect(
 						Projectile.position + vel * j,
 						Projectile.width, Projectile.height,
@@ -981,10 +981,10 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 			return false;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+			modifiers.ScalingArmorPenetration += 0.5f;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+			modifiers.ScalingArmorPenetration += 0.5f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			SoundEngine.PlaySound(SoundID.Item72.WithPitch(1.5f), target.Center);
