@@ -500,9 +500,6 @@ namespace Origins.Items {
 			}
 			return true;
 		}
-		public override void HoldItem(Item item, Player player) {
-			player.OriginPlayer().lastItemCheckNotSkipped = true;
-		}
 		public override bool WingUpdate(int wings, Player player, bool inUse) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.isFlying = inUse;

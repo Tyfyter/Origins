@@ -141,7 +141,7 @@ namespace Origins.Items.Weapons.Melee {
 				soulSnatcherTime -= soulSnatcherActive ? 0.25f : 1f;
 			} else if (soulSnatcherActive) {
 				soulSnatcherTime = 0;
-				if (player.ItemAnimationEndingOrEnded || player.HeldItem.ModItem is not Soul_Snatcher || player.channel) soulSnatcherActive = false;
+				if (player.ItemAnimationEndingOrEnded || !player.HeldItemIs<Soul_Snatcher>() || player.channel) soulSnatcherActive = false;
 			}
 			if (Main.netMode != NetmodeID.SinglePlayer && wasEmpowered != soulSnatcherActive) {
 				ModPacket packet = Origins.instance.GetPacket();

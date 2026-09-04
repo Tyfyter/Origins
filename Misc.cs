@@ -5,6 +5,7 @@ using ModLiquidLib.ModLoader;
 using Origins.Core;
 using Origins.CrossMod;
 using Origins.Graphics;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
@@ -1747,6 +1748,17 @@ namespace Origins {
 			return num;
 		}
 		public static void StartChanneling(this Player player, int projectileType) => startChanneling(player, projectileType);
+		[Pure]
+		public static bool HeldItemIs<TItem>(this Player player) where TItem : ModItem => player.OriginPlayer().lastItemCheckNotSkipped && player.HeldItem.ModItem is TItem;
+		[Pure]
+		public static bool HeldItemIs<TItem>(this Player player, [MaybeNullWhen(false)] out TItem item) where TItem : ModItem {
+			if (player.OriginPlayer().lastItemCheckNotSkipped && player.HeldItem.ModItem is TItem _item) {
+				item = _item;
+				return true;
+			}
+			item = null;
+			return false;
+		}
 
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {

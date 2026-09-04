@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Magic {
 		float opacity = 0;
 		public override void Draw(SpriteBatch spriteBatch) {
 			int blastFurnaceCharges = Main.LocalPlayer.OriginPlayer().blastFurnaceCharges;
-			if (opacity > 1 && Main.LocalPlayer.HeldItem.ModItem is not Blast_Furnace) opacity = 1;
+			if (opacity > 1 && !Main.LocalPlayer.HeldItemIs<Blast_Furnace>()) opacity = 1;
 			if (blastFurnaceCharges > 0) opacity = 2;
 			else MathUtils.LinearSmoothing(ref opacity, 0, 1f / 40);
 			if (opacity <= 0) return;

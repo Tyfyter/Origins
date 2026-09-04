@@ -770,6 +770,10 @@ namespace Origins {
 			} catch (Exception e) {
 				if (LogLoadingILError(nameof(AllowProjAboveWorld), e)) throw;
 			}
+			On_Player.ItemCheck_HandleMount += (On_Player.orig_ItemCheck_HandleMount orig, Player self) => {
+				self.OriginPlayer().lastItemCheckNotSkipped = true;
+				orig(self);
+			};
 		}
 
 		static void AllowProjAboveWorld(ILContext il) {

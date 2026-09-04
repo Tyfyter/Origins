@@ -208,7 +208,7 @@ namespace Origins.Items.Tools {
 			}
 			public override void ResetEffects() {
 				if (Player.whoAmI != Main.myPlayer) return;
-				if (Player.ItemAnimationEndingOrEnded || Player.HeldItem.ModItem is not Miter_Saw) {
+				if (Player.ItemAnimationEndingOrEnded || !Player.HeldItemIs<Miter_Saw>()) {
 					primaryHitNumber = 0;
 					SecondaryHitCharge = 0;
 					critAnimation = 0;

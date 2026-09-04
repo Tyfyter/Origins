@@ -88,7 +88,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			On_Player.HorizontalMovement += (orig, self) => {
 				int forceDirection = 0;
-				if (self.HeldItem.ModItem is Amnestic_Rose) forceDirection = self.direction;
+				if (self.HeldItemIs<Amnestic_Rose>()) forceDirection = self.direction;
 				orig(self);
 				if (forceDirection != 0) self.direction = forceDirection;
 				if (self.OriginPlayer().exoLegs) Exo_Legs.UpdateSpeeds(self);
@@ -255,7 +255,7 @@ namespace Origins.Items.Weapons.Magic {
 			public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
 				return drawInfo.shadow == 0 && drawInfo.heldItem.type == item.Type;
 			}
-			public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.Tails, PlayerDrawLayers.Wings);
+			public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Tails);
 			protected override void Draw(ref PlayerDrawSet drawInfo) {
 				OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
 				Rectangle frame = item.stemTexture.Frame(3);

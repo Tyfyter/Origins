@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void AI() {
 			float max_dist = 162 * Projectile.scale;
 			Player player = Main.player[Projectile.owner];
-			if (Projectile.owner == Main.myPlayer && (!player.active || player.dead || player.HeldItem.ModItem is not Accretion_Ribbon || Projectile.localAI[0] != player.HeldItem.prefix)) {
+			if (Projectile.owner == Main.myPlayer && (!player.active || player.dead || !player.HeldItemIs<Accretion_Ribbon>() || Projectile.localAI[0] != player.HeldItem.prefix)) {
 				Projectile.Kill();
 				return;
 			}

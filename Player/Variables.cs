@@ -1185,7 +1185,7 @@ namespace Origins {
 			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
 			pocketDimensionMonolithActive = false;
 			InfoAccMechShowAshenWires = false;
-			if (blastFurnaceCharges > 0 && Player.HeldItem.ModItem is not Blast_Furnace) blastFurnaceCharges = 0;
+			if (blastFurnaceCharges > 0 && !Player.HeldItemIs<Blast_Furnace>()) blastFurnaceCharges = 0;
 			hasThePlant = false;
 			autohandcannonJammed = false;
 
