@@ -2,6 +2,10 @@
 using Avalon.ModSupport.MLL;
 using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib;
+using ModLiquidLib.ModLoader;
+using ModLiquidLib.Utils;
+using ModLiquidLib.Utils.LiquidContent;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
@@ -107,9 +111,11 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			GetArm(0).UpdateRotations(player);
 			GetArm(1).UpdateRotations(player);
 
-			if (player.bleed) originPlayer.oiled = true;
+			if (player.bleed.TrySet(false)) originPlayer.oiled = true;
 
 			player.buffImmune[BuffID.Poisoned] = true;
+			player.buffImmune[BuffID.Weak] = true;
+			player.buffImmune[BuffID.WindPushed] = true;
 			if (!originPlayer.oiled) {
 				player.buffImmune[BuffID.OnFire] = true;
 				player.buffImmune[BuffID.OnFire3] = true;
@@ -223,7 +229,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
 		}
 		public void ItemCheck(Player player) {
-			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened);
+			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened && !player.mouseInterface);
 			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
 			GetArm(1).Weapon.PreItemCheck(player, this, ref GetArm(1));
 			GetArm(0).ItemCheck(player, ref player.controlUseItem);
@@ -454,7 +460,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				FontGenerator.CharRange Single(char @char, int y, int x) {
 					return range with { Range = @char..@char, StartGlyph = glyph with { X = x, Y = y } };
 				}
-				Font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 15, '*',
+				Font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 16, '*',
 					range,
 					Range('a'..'z'),
 					Range(' '..'9', 15),
@@ -2002,6 +2008,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				}
 				if (PlayerInput.UsingGamepad && !Main.playerInventory)
 					hovered = -1;
+				Main.bannerMouseOver = false;
 				if (hovered >= 0) {
 					int buffType = player.buffType[hovered];
 					string buffName = Lang.GetBuffName(buffType);
@@ -2064,13 +2071,15 @@ public class Star_Soldier_UI : SwitchableUIState {
 				int oiledIndex = player.FindBuffIndex(BuffID.Oiled);
 				if (oiledIndex >= 0) Min(ref buffTime, player.buffTime[oiledIndex]);
 			}
+			string text = $"{buffTime / 60f:0.0}";
 			DrawText(
 				Main.spriteBatch,
-				$"{buffTime / 60f:0.0}",
-				customBuffIndicatorPos + Vector2.UnitY * (firePolygon.ScaledSize.Y + 4),
+				text,
+				customBuffIndicatorPos + new Vector2((firePolygon.ScaledSize.X - Star_Soldier.Font.MeasureString(text).X) * 0.5f, firePolygon.ScaledSize.Y + 4),
 				_color,
-				uiScale
+				uiScale * 0.85f
 			);
+			customBuffIndicatorPos.X -= 8;
 			return firePolygon.Contains(Main.MouseScreen);
 		};
 	}
@@ -2441,6 +2450,42 @@ public class Star_Soldier_UI : SwitchableUIState {
 						if (player.getDPS() != 0) {
 							text = Language.GetTextValue("GameUI.DPS", player.getDPS());
 						}
+						break;
+					}
+					case StopwatchInfoDisplay: {
+						float currentSpeed = (player.velocity + player.instantMovementAccumulatedThisFrame).Length();
+						int speedSlices = (int)(1f + currentSpeed * 6f);
+						Min(ref speedSlices, player.speedSlice.Length);
+
+						float averageSpeed = 0f;
+						for (int j = speedSlices - 1; j > 0; j--) player.speedSlice[j] = player.speedSlice[j - 1];
+						player.speedSlice[0] = currentSpeed;
+						for (int m = 0; m < player.speedSlice.Length; m++) {
+							if (m < speedSlices) {
+								averageSpeed += player.speedSlice[m];
+							} else {
+								player.speedSlice[m] = averageSpeed / speedSlices;
+							}
+						}
+						averageSpeed /= speedSlices;
+						int pixelsPerMile = 42240;
+						int ticksPerHour = 216000;
+						float num20 = averageSpeed * ticksPerHour / pixelsPerMile;
+						if (!player.merman && !player.ignoreWater) {
+							float multiplier = 1f;
+							bool[] moddedWet = player.GetModdedWetArray();
+							for (int j = 0; j < LiquidLoader.LiquidCount; j++) {
+								if (moddedWet[j - LiquidID.Count]) {
+									LiquidLoader.StopWatchMPHMultiplier(i, ref multiplier);
+									goto skipVanillaWet;
+								}
+							}
+							if (player.shimmerWet) multiplier = 0.375f;
+							else if (player.honeyWet) multiplier = 0.25f;
+							else if (player.wet) multiplier = 0.5f;
+							skipVanillaWet:;
+						}
+						text = Language.GetTextValue("GameUI.Speed", Math.Round(num20));
 						break;
 					}
 					case CompassInfoDisplay: {
