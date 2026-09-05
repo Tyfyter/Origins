@@ -6809,6 +6809,14 @@ namespace Origins {
 		public static void Max<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
 			if (current < @new) current = @new;
 		}
+		public static void Min(ref Vector2 current, Vector2 @new) {
+			Min(ref current.X, @new.X);
+			Min(ref current.Y, @new.Y);
+		}
+		public static void Max(ref Vector2 current, Vector2 @new) {
+			Max(ref current.X, @new.X);
+			Max(ref current.Y, @new.Y);
+		}
 		public static void DirMin<T>(ref T current, T @new) where T : INumber<T> {
 			T sign = T.CopySign(T.One, @new);
 			if (current * sign > @new * sign) current = @new;

@@ -62,7 +62,12 @@ namespace Origins {
 				Player.tongued = true;
 			}
 			bool otherDash = Player.dashType != 0;
-			if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+			if (Player.mount.IsMount<Star_Soldier>()) {
+				otherDash = true;
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				Star_Soldier.GetHandler(Player).HandleDash(Player);
+			} else if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
 				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;

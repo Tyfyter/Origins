@@ -10,7 +10,7 @@ public class Polygon : IMoveToPegFlag {
 	public readonly VertexPositionColorTexture[] vertices;
 	public readonly Vector2[] uvPositions;
 	public readonly Vector2 baseSize;
-	public Vector2 ScaledSize { get; private set; }
+	public Vector2 TransformedSize { get; private set; }
 	readonly Vector2[] vertexPositions;
 	readonly short[] indices;
 	readonly short[] outlineIndices;
@@ -188,12 +188,12 @@ public class Polygon : IMoveToPegFlag {
 				uvPositions[i]
 			);
 		}
-		ScaledSize = baseSize;
+		TransformedSize = baseSize;
 		return this;
 	}
 	public Polygon ResetPositions() {
 		for (int i = 0; i < vertices.Length; i++) Pos(i) = vertexPositions[i];
-		ScaledSize = baseSize;
+		TransformedSize = baseSize;
 		return this;
 	}
 	public Polygon ResetColors() {
@@ -209,7 +209,7 @@ public class Polygon : IMoveToPegFlag {
 		for (int i = 0; i < vertices.Length; i++) {
 			Pos(i) *= scale;
 		}
-		ScaledSize *= scale;
+		TransformedSize *= scale;
 		return this;
 	}
 	public Polygon Translate(Vector2 offset) {
@@ -219,11 +219,16 @@ public class Polygon : IMoveToPegFlag {
 		return this;
 	}
 	public Polygon Rotate(float angle) {
+		Vector2 lowerBounds = new(float.PositiveInfinity);
+		Vector2 upperBounds = new(float.NegativeInfinity);
 		Vector2 x = new(MathF.Cos(angle), -MathF.Sin(angle));
 		Vector2 y = new(-x.Y, x.X);
 		for (int i = 0; i < vertices.Length; i++) {
 			OriginExtensions.MatrixMult(ref Pos(i), x, y);
+			Max(ref upperBounds, Pos(i));
+			Min(ref lowerBounds, Pos(i));
 		}
+		TransformedSize = upperBounds - lowerBounds;
 		return this;
 	}
 	public bool Contains(Vector2 point) {

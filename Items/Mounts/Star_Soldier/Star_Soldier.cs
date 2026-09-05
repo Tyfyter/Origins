@@ -73,10 +73,21 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		public static int MaxLife => 750;
 		public int life = MaxLife;
 		public int dotCount = 0;
+
 		public int bodyFrame;
 		public float bodyFrameCounter;
 		public int walkFrame;
 		public float walkFrameCounter;
+
+		public int maxDashes;
+		public int availableDashes;
+		public int dashCooldownMax;
+		public int dashCooldown;
+		public int dashLength;
+		public int dashTime;
+		public int dashSpeed;
+		public float dashAngle;
+
 		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
 		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
 		readonly WeakReference<Entity> lockOnTarget = new(null);
@@ -165,7 +176,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				} else {
 					float speed = Math.Abs(player.velocity.X);
 					if (speed < 0.5f) {
-						walkFrame = 0;
+						walkFrame = 17;
 						walkFrameCounter = 0;
 					} else {
 						if (player.velocity.X * player.direction < 0) {
@@ -203,7 +214,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				jumpCounter = 0;
 			}
 
-			if (player.controlJump && jumpCounter == 0) {
+			if ((player.controlJump && jumpCounter == 0) || dashTime > 0) {
 				if (bodyFrameCounter.CycleUp(4)) {
 					if (bodyFrame >= 2) {
 						//SoundEngine.PlaySound(SoundID.Item89.WithPitch(1.5f), player.Center);
@@ -226,13 +237,39 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
 		}
 		public void ItemCheck(Player player) {
+			dashCooldownMax = 135;
+			maxDashes = 0;
+			dashLength = 10;
+			dashSpeed = 8;
 			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened && !player.mouseInterface);
 			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
 			GetArm(1).Weapon.PreItemCheck(player, this, ref GetArm(1));
 			GetArm(0).ItemCheck(player, ref player.controlUseItem);
 			GetArm(1).ItemCheck(player, ref player.controlUseTile);
 		}
-
+		public void HandleDash(Player player) {
+			if (dashTime > 0) {
+				player.velocity.Y -= player.gravity;
+				player.velocity = player.velocity.RotatedBy(-dashAngle);
+				player.velocity.Y *= 0.75f;
+				Max(ref player.velocity.X, 16);
+				player.velocity = player.velocity.RotatedBy(dashAngle);
+				if (dashTime.Cooldown()) {
+					dashCooldown = dashCooldownMax;
+					player.velocity *= 0.65f;
+					availableDashes--;
+				}
+				return;
+			}
+			if (availableDashes < maxDashes && dashCooldown.CycleDown(dashCooldownMax)) availableDashes++;
+			if (availableDashes <= 0) return;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (originPlayer.dashDirection != 0 || originPlayer.dashDirectionY != 0) {
+				player.timeSinceLastDashStarted = 0;
+				dashAngle = float.Atan2((player.controlDown ? 1 : 0) - (player.controlUp ? 1 : 0), (player.controlRight ? 1 : 0) - (player.controlLeft ? 1 : 0));
+				dashTime = dashLength;
+			}
+		}
 		public struct Arm {
 			public Item item;
 			public int itemAnimation;
@@ -792,6 +829,11 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		if (arm.itemAnimation != 0) cooldown = CooldownTime;
 		if (cooldown == 0) cooldownAlpha.Cooldown(rate: 1f / 15);
 		else cooldownAlpha = 1;
+		Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(player);
+		handler.maxDashes++;
+		handler.dashCooldownMax -= 15;
+		handler.dashLength += 5;
+		handler.dashSpeed += 4;
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
 		if (this.cooldownAlpha == 0 || cooldown >= CooldownTime) return;
@@ -1881,6 +1923,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 		new O2HUD(),
 		new TargetingHUD(),
 		new InfoAccessoryHUD(),
+		new FuelHUD()
 	];
 	public Star_Soldier_UI() : base() {
 		OverrideSamplerState = SamplerState.PointClamp;
@@ -2096,7 +2139,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			.ResetPositions()
 			.Translate(customBuffIndicatorPos)
 			.Draw();
-			customBuffIndicatorPos.X -= firePolygon.ScaledSize.X;
+			customBuffIndicatorPos.X -= firePolygon.TransformedSize.X;
 
 			int buffTime = player.buffTime[buffIndex];
 			if (needsOil) {
@@ -2107,7 +2150,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			DrawText(
 				Main.spriteBatch,
 				text,
-				customBuffIndicatorPos + new Vector2((firePolygon.ScaledSize.X - Star_Soldier.Font.MeasureString(text).X) * 0.5f, firePolygon.ScaledSize.Y + 4),
+				customBuffIndicatorPos + new Vector2((firePolygon.TransformedSize.X - Star_Soldier.Font.MeasureString(text).X) * 0.5f, firePolygon.TransformedSize.Y + 4),
 				_color,
 				uiScale * 0.85f
 			);
@@ -2571,6 +2614,109 @@ public class Star_Soldier_UI : SwitchableUIState {
 				data.color *= 1 - float.Pow((i - depth) / 200f, 4);
 				data.position.Y -= i - depth;
 				data.Draw(spriteBatch);
+			}
+		}
+	}
+	public class FuelHUD : IUISegment {
+		static Polygon fuelBarPoly = Polygon.Import(
+			300,
+			Vector2.UnitX * 0.5f,
+			new(0, 0),
+			new(0.05f, 0),
+			new(0.95f, 0),
+			new(1f, 0),
+			new(0.95f, 0.04f),
+			new(0.05f, 0.04f)
+		);
+		float fuelBarPos;
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			bool doOutlines = OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_HUDOutlines;
+			Player player = Main.LocalPlayer;
+			MathUtils.LinearSmoothing(ref fuelBarPos, (player.mount._flyTime == player.mount._data.flightTimeMax).Mul(fuelBarPoly.baseSize.Y + doOutlines.Mul(4)), 4f);
+			Vector2 pos = new(-fuelBarPos, Main.screenHeight * 0.5f);
+			fuelBarPoly.ResetPositions().Rotate(-MathHelper.PiOver2).Scale(uiScale).Translate(pos);
+			{ //Fuel bar
+				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+				if (doOutlines) {
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+					using Polygon.VertexCache _ = fuelBarPoly.ModificationContext();
+					for (int i = 0; i < fuelBarPoly.vertices.Length; i++) {
+						if (fuelBarPoly.vertices[i].TextureCoordinate.Y == 0) fuelBarPoly.vertices[i].Position.X -= 2;
+						else fuelBarPoly.vertices[i].Position.X += 4;
+						switch (fuelBarPoly.vertices[i].TextureCoordinate.X) {
+							case 0:
+							fuelBarPoly.vertices[i].Position.Y += 8;
+							break;
+							case 0.05f:
+							fuelBarPoly.vertices[i].Position.Y += 2;
+							break;
+							case 0.95f:
+							fuelBarPoly.vertices[i].Position.Y -= 2;
+							break;
+							case 1:
+							fuelBarPoly.vertices[i].Position.Y -= 8;
+							break;
+						}
+						fuelBarPoly.vertices[i].Color = Color.OrangeRed.MultiplyRGB(new(100, 100, 100));
+					}
+					fuelBarPoly.Draw();
+					pos.X += 4;
+				}
+				healthBarShader.Apply(null,
+					uColor,
+					uSecondaryColor,
+					uSaturation with { Value = player.mount._flyTime / (float)player.mount._data.flightTimeMax }
+				);
+				fuelBarPoly.Draw();
+				pos.X += fuelBarPoly.TransformedSize.X;
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			}
+			if (handler.maxDashes > 0) {
+				int height = 275;
+				int segment = (int)((height * 0.75f) / handler.maxDashes);
+				pos.X += 2;
+				if (doOutlines) pos.X += 2;
+				for (int i = 0; i < handler.maxDashes; i++) {
+					Vector2 origin = new(0, segment * 0.5f + (height * ((i + 1f) / (handler.maxDashes + 1f) - 0.5f)) * 1.5f);
+					if (doOutlines) {
+						spriteBatch.Draw(
+							TextureAssets.MagicPixel.Value,
+							pos,
+							new Rectangle(0, 0, 12, segment + 4),
+							Color.OrangeRed.MultiplyRGB(new(100, 100, 100)),
+							0,
+							origin + new Vector2(2, 2),
+							1,
+							SpriteEffects.None,
+						0);
+					}
+					spriteBatch.Draw(
+						TextureAssets.MagicPixel.Value,
+						pos,
+						new Rectangle(0, 0, 8, segment),
+						i >= handler.availableDashes ? Color.Black : Color.OrangeRed,
+						0,
+						origin,
+						1,
+						SpriteEffects.None,
+					0);
+					if (i == handler.availableDashes && handler.dashTime <= 0) {
+						int cooldown = (int)(segment * (1 - handler.dashCooldown / (float)handler.dashCooldownMax));
+						spriteBatch.Draw(
+							TextureAssets.MagicPixel.Value,
+							pos + Vector2.UnitY * (segment - cooldown),
+							new Rectangle(0, 0, 8, cooldown),
+							Color.White,
+							0,
+							origin,
+							1,
+							SpriteEffects.None,
+						0);
+					}
+				}
+				pos.X += 8;
 			}
 		}
 	}
