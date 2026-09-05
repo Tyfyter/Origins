@@ -55,7 +55,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	static int BodyTextureFrames => 5;
 	AutoLoadingTexture bodyTexture = typeof(Star_Soldier).GetDefaultTMLName();
 	AutoLoadingTexture bodyGlowTexture = typeof(Star_Soldier).GetDefaultTMLName("_Glow");
-	static int LegTextureFrames => 18;
+	static int LegTextureFrames => 19;
 	AutoLoadingTexture frontLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Front_Leg");
 	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
 	static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
@@ -209,7 +209,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 					}
 				}
 			} else {
-				walkFrame = 15;
+				walkFrame = 18;
 				walkFrameCounter = 0;
 				jumpCounter = 0;
 			}
