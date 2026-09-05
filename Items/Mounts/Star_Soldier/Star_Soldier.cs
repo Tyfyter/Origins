@@ -482,7 +482,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			Asset<Texture2D> fontTexture = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font");
 			Task.Run(FontAssets.ItemStack.Wait).ContinueWith(__ => {
 				fontTexture.Wait();
-				Rectangle glyph = new(0, 0, 10, 14);
+				Rectangle glyph = new(0, 0, 10, 16);
 				Rectangle padding = new(0, 0, 0, 14);
 				Vector3 kerning = new(1, 10, 0);
 				FontGenerator.CharRange range = new(fontTexture.Value, 'A'..'Z', glyph, padding, kerning) {
@@ -497,12 +497,12 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				Font = FontGenerator.Monospace(FontAssets.ItemStack.Value, 0, 16, '*',
 					range,
 					Range('a'..'z'),
-					Range(' '..'9', 15),
-					Range(':'..'@', 30),
-					Range('['..'`', 30, 77),
-					Range('{'..'~', 30, 143),
-					Single('©', 30, 187),
-					Range('‘'..'‟', 30, 198)
+					Range(' '..'9', 17),
+					Range(':'..'@', 34),
+					Range('['..'`', 34, 77),
+					Range('{'..'~', 34, 143),
+					Single('©', 34, 187),
+					Range('‘'..'‟', 34, 198)
 				);
 			});
 			Asset<Texture2D> fontTextureLarge = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font_Large");
