@@ -71,6 +71,11 @@ namespace Origins {
 			public static SoundStyle MetalCreakClose = new("Origins/Sounds/Custom/MetalCreakClose");
 			public static SoundStyle MetalDoorOpen = new("Origins/Sounds/Custom/MetalDoorOpen");
 			public static SoundStyle MetalDoorClose = new("Origins/Sounds/Custom/MetalDoorClose");
+			public static SoundStyle Radio = new("Origins/Sounds/Custom/Radio", SoundType.Sound);
+			public static SoundStyle StarDash = new("Origins/Sounds/Custom/StarDash", 3);
+			public static SoundStyle ExternalStarDash = new("Origins/Sounds/Custom/StarDashOutside");
+			public static SoundStyle Alarm1 = new("Origins/Sounds/Custom/Alarm1");
+			public static SoundStyle Alarm2 = new("Origins/Sounds/Custom/Alarm2");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
@@ -130,7 +135,7 @@ namespace Origins {
 			public static SoundStyle HawkenThruster = new("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
 				IsLooped = true
 			};
-			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
+			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/Ambience/RadioBroadcaster1", SoundType.Ambient) {
 				IsLooped = true
 			}.WithPitch(2.5f);
 			public static SoundStyle StandingRefinery = new SoundStyle("Origins/Sounds/Custom/Generator", SoundType.Ambient) {

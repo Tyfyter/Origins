@@ -8550,18 +8550,39 @@ Fast_Conveyor_Belt_CC_Item: {
 }
 
 Star_Soldier_Summon_Item: {
-	// DisplayName: <PH> Star Soldier Summon Item
-	// Tooltip: ""
+	// DisplayName: Scrap Wagon
+	/* Tooltip:
+		'''
+		Summons a rideable wagon mount
+		'Seriously? That's it?'
+		''' */
 }
 
 Star_Soldier_Gun: {
-	// DisplayName: Star Soldier Gun
-	// Tooltip: ""
+	// DisplayName: PACT42 Chaingun
+	/* Tooltip:
+		'''
+		Rapidly firing chaingun, capable of complete destruction of armored targets
+		Utilizes default ammo when custom ammo not fed into magazine
+		32-round magazine
+		0.85s reload
+		8% spread
+		###
+		+10% chance not to consume ammo per arm
+		''' */
 }
 
 Star_Soldier_Pod: {
-	// DisplayName: Star Soldier Pod
-	// Tooltip: ""
+	// DisplayName: HEVL12 Rocket Pod
+	/* Tooltip:
+		'''
+		High-Explosive rocket pod quickly fires 4 rockets in a burst
+		Utilizes default munitions when custom munition not fed into magazine
+		1.67s reload
+		###
+		+10% velocity per arm
+		Rockets explode by proximity when doubled up
+		''' */
 }
 
 Star_Soldier_Laser: {

@@ -1905,7 +1905,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Ninja Ravel
 (^) Ravel
 (^) Spider Ravel
-(#2, ^2) SS-22 'Star Soldier' !!!
+(#2, ^2) Scrap Wagon (SS-22 'Star Soldier') !!!
 (^) Stealth Ravel
 (X) Sunflower Veil
 (X) Thrust Ravel

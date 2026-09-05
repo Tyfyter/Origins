@@ -47,8 +47,8 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 		Item.useAnimation = 20;
 		Item.useTime = 20;
 		Item.noMelee = true;
-		Item.rare = ItemRarityID.Blue;
-		Item.value = Item.sellPrice(gold: 1);
+		Item.rare = ItemRarityID.Yellow;
+		Item.value = Item.sellPrice(gold: 20);
 	}
 }
 public class Star_Soldier : ModMount, IModifyTriggers {
@@ -171,7 +171,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 						jumpCounter = 0;
 						if (player.controlJump) player.mount._data.jumpSpeed = 10;
 						else player.velocity.Y -= 12;
-
 					}
 				} else {
 					float speed = Math.Abs(player.velocity.X);
@@ -231,16 +230,18 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			}
 		}
 		public void HandleHurt(Player player, in Player.HurtInfo info) {
+			SoundEngine.PlaySound(SoundID.Item37.WithPitch(-1.1f).WithVolume(1f), player.Center);
+			SoundEngine.PlaySound(SoundID.NPCHit4.WithPitch(-0.5f).WithVolume(1f), player.Center);
 			life -= info.Damage;
 			if (life > 0) return;
 			player.mount.Dismount(player);
 			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
 		}
 		public void ItemCheck(Player player) {
-			dashCooldownMax = 135;
-			maxDashes = 0;
-			dashLength = 10;
-			dashSpeed = 8;
+			dashCooldownMax = 90 - maxDashes * 10;
+			maxDashes = 1;
+			dashLength = 19 - maxDashes * 6;
+			dashSpeed = 5;
 			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened && !player.mouseInterface);
 			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
 			GetArm(1).Weapon.PreItemCheck(player, this, ref GetArm(1));
@@ -252,9 +253,13 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				player.velocity.Y -= player.gravity;
 				player.velocity = player.velocity.RotatedBy(-dashAngle);
 				player.velocity.Y *= 0.75f;
-				Max(ref player.velocity.X, 16);
+				Max(ref player.velocity.X, 25);
 				player.velocity = player.velocity.RotatedBy(dashAngle);
 				if (dashTime.Cooldown()) {
+					SoundEngine.PlaySound(Origins.Sounds.StarDash.WithVolume(0.7f), player.Center);
+					/*SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitchRange(0.5f, 0.7f).WithVolume(0.8f), player.Center);
+					SoundEngine.PlaySound(SoundID.Item33.WithPitchRange(1.6f, 1.9f).WithVolume(0.8f), player.Center);
+					SoundEngine.PlaySound(SoundID.Item73, player.Center);*/
 					dashCooldown = dashCooldownMax;
 					player.velocity *= 0.65f;
 					availableDashes--;
@@ -821,6 +826,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
 		Item.UseSound = SoundID.Item105.WithPitch(-0.6f);
+		Item.rare = ItemRarityID.Yellow;
 	}
 	public override bool CanUseItem(Player player) => cooldown == 0;
 	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.statDefense.AdditiveBonus += 0.1f;
@@ -1158,7 +1164,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		Item.useAnimation = 3;
 		Item.useTime = 3;
 		Item.shootSpeed = 19;
-		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1.7f).WithVolume(0.6f);
+		Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1.7f).WithVolume(0.45f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
 		Item.crit += 4;
@@ -1168,6 +1174,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		Item.useAmmo = AmmoID.Bullet;
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
+		Item.rare = ItemRarityID.Yellow;
 	}
 	public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		Vector2 offset = Vector2.Normalize(velocity);
@@ -1284,6 +1291,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		Item.shoot = ModContent.ProjectileType<Star_Soldier_Laser_Beam>();
 		Item.noMelee = true;
 		Item.knockBack = 2.5f;
+		Item.rare = ItemRarityID.Yellow;
 	}
 	public override bool CanUseItem(Player player) => !recharging;
 	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.GetAttackSpeed(DamageClass.Magic) *= 1.1f;
@@ -1571,6 +1579,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
+		Item.rare = ItemRarityID.Yellow;
 	}
 	public override bool CanUseItem(Player player) => ammo > 0;
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
@@ -1626,6 +1635,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
+		Item.rare = ItemRarityID.Yellow;
 	}
 	public override bool CanUseItem(Player player) => !reloading && ammo > 0;
 	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.OriginPlayer().projectileSpeedBoost *= 1.1f;
@@ -2084,7 +2094,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				}
 			}
 			if (playAlarm) {
-				alarmSoundSlot.PlaySoundIfInactive(Origins.Sounds.ShimmershotCharging, updateCallback: sound => {
+				alarmSoundSlot.PlaySoundIfInactive(Origins.Sounds.Alarm1, updateCallback: sound => {
 					if (!Main.LocalPlayer.mount.IsMount<Star_Soldier>()) {
 						playAlarm = false;
 						alarmVolumeMult = 0;
@@ -2092,7 +2102,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 					}
 					MathUtils.LinearSmoothing(ref alarmVolumeMult, playAlarm.ToInt(), 1f / 15);
 					sound.Volume = alarmVolumeMult;
-					sound.Pitch = ((float)Main.timeForVisualEffects / 30) % 1;
+					sound.Pitch = 1.5f;
 					return alarmVolumeMult > 0;
 				});
 			}
@@ -2173,6 +2183,9 @@ public class Star_Soldier_UI : SwitchableUIState {
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
 			bool doOutlines = OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_HUDOutlines;
 			Player player = Main.LocalPlayer;
+			if (player.breath <= 0) {
+				//playAlarm = true;
+			}
 			if (player.breath != player.breathMax) { //O2 bar
 				Vector2 position = new(8, Main.screenHeight - 8);
 				Vector2 width = new(8, 0);

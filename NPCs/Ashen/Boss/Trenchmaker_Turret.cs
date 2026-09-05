@@ -396,6 +396,9 @@ namespace Origins.NPCs.Ashen.Boss {
 				int scale = (int)((Size - hitbox.Width) / 2);
 				hitbox.Inflate(scale, scale);
 			}
+			public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+				target.AddBuff(BuffID.OnFire3, 180);
+			}
 			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 				target.AddBuff(BuffID.OnFire3, hit.Crit ? 360 : 180);
 			}

@@ -92,7 +92,7 @@ namespace Origins.NPCs.Ashen {
 						NPC.velocity *= 0.97f;
 						if (NPC.ai[1] >= 100f) {
 							SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen.WithPitch(2f), NPC.Center);
-							SoundEngine.PlaySound(SoundID.Item66.WithPitch(-0.5f).WithVolume(0.2f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item66.WithPitch(-0.5f), NPC.Center);
 							NPC.netUpdate = true;
 							NPC.ai[0] = 2f;
 							NPC.ai[1] = 0f;
@@ -142,7 +142,7 @@ namespace Origins.NPCs.Ashen {
 							Color.Orange,
 							1.25f
 						);
-					SoundEngine.PlaySound(Origins.Sounds.RepairboyDeath.WithPitch(1.8f).WithVolume(0.2f), NPC.Center);
+					SoundEngine.PlaySound(Origins.Sounds.RepairboyDeath.WithPitch(1.8f), NPC.Center);
 					if (MathUtils.LinearSmoothing(ref NPC.ai[3], 0, 0.01f)) NPC.ai[3] = GetSquiggle() * 0.1f;
 					NPC.rotation += NPC.ai[3];
 					NPC.velocity = NPC.velocity.RotatedBy(NPC.ai[3]);

@@ -8550,33 +8550,77 @@ Fast_Conveyor_Belt_CC_Item: {
 }
 
 Star_Soldier_Summon_Item: {
-	DisplayName: <PH> Star Soldier Summon Item
-	Tooltip: ""
+	DisplayName: Scrap Wagon
+	Tooltip:
+		'''
+		Summons a rideable wagon mount
+		'Seriously? That's it?'
+		'''
 }
 
 Star_Soldier_Gun: {
-	DisplayName: Star Soldier Gun
-	Tooltip: ""
+	DisplayName: PACT42 Chaingun
+	Tooltip:
+		'''
+		Rapidly firing chaingun, capable of complete destruction of armored targets
+		Utilizes default ammo when custom ammo not fed into magazine
+		32-round magazine
+		0.85s reload
+		8% spread
+		###
+		+10% chance not to consume ammo per arm
+		'''
 }
 
 Star_Soldier_Pod: {
-	DisplayName: Star Soldier Pod
-	Tooltip: ""
+	DisplayName: HEVL12 Rocket Pod
+	Tooltip:
+		'''
+		High-Explosive rocket pod quickly fires 4 rockets in a burst
+		Utilizes default munitions when custom munition not fed into magazine
+		1.67s reload
+		###
+		+10% velocity per arm
+		Rockets explode by proximity when doubled up
+		'''
 }
 
 Star_Soldier_Laser: {
-	DisplayName: Star Soldier Laser
-	Tooltip: ""
+	DisplayName: HiPCL-6 Combat Laser
+	Tooltip:
+		'''
+		High-Powered combat laser firing a focused beam
+		Utilizes internal power system
+		Slower recharge after fully depleting capacitor
+		###
+		-10% laser duration per arm
+		Grants an energy shield when doubled up
+		'''
 }
 
 Star_Soldier_Droner: {
-	DisplayName: Star Soldier Droner
-	Tooltip: ""
+	DisplayName: DCU-4 Drone Pod
+	Tooltip:
+		'''
+		DOES NOTHING HAHAHA
+		Utilizes your mom
+		69s reload
+		###
+		+10% lock-on distance per arm
+		Grants an additional drone when doubled up
+		'''
 }
 
 Star_Soldier_Blade: {
-	DisplayName: Star Soldier Blade
-	Tooltip: ""
+	DisplayName: ASU-9u Laser Blade
+	Tooltip:
+		'''
+		Super-critical plasma blade easily shears most solid materials
+		Utilizes internal power system
+		1s recharge
+		###
+		+10% defense and extra dash charge per arm
+		'''
 }
 
 High_Powered_Green_Laser: {
