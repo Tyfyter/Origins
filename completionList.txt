@@ -1432,7 +1432,7 @@ TILES:
 (^) Gas Generator
 (☻) Incinerator Pit !!!
 (^) Industrial Door
-(X) Large Auto Assembler !!!
+(#, ^2) Large Auto Assembler !!!
 (X) Large Conveyor Scooper !!!
 (^) Large Storage Container
 (^) Laser Tag Console
