@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
 using Origins.Dev;
 using Origins.Events;
 using Origins.Items.Accessories;
@@ -7,17 +6,14 @@ using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
 using PegasusLib.Graphics;
 using ReLogic.Content;
-using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginsSets;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Neutron_Soup : ModItem, ICustomDrawItem {
@@ -34,8 +30,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 10f;
 			Item.mana = 24;
 			Item.knockBack = 1f;
-			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 10);
+			Item.rare = ItemRarityID.Red;
 			//Item.UseSound = SoundID.Item8;
 			Item.autoReuse = true;
 		}

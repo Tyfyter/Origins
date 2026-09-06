@@ -91,7 +91,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 	}
 
 	public void MinePower(int i, int j, int minePower, ref int damage) {
-		if (minePower < 55) damage = 0;
+		if (minePower < 70) damage = 0;
 	}
 	static readonly HashSet<Point> drawnPoints = [];
 	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {

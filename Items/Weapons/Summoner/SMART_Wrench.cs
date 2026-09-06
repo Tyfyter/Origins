@@ -346,9 +346,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (!owner.PickAmmo(fromItem, out int projType, out float speed, out int damage, out float knockBack, out int usedAmmo)) return false;
 				Vector2 gunPos = turret.Center - new Vector2(9 * turret.direction, 20);
 				// here's where the shooting sounds go
-				SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), gunPos);
+				SoundEngine.PlaySound(SoundID.Item61.WithPitch(2.2f).WithVolume(0.6f), gunPos);
+				/*SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), gunPos);
 				SoundEngine.PlaySound(SoundID.Item26.WithPitchRange(1.2f, 1.28f).WithVolume(0.1f), gunPos);
-				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), gunPos);
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), gunPos);*/
 				turret.SpawnProjectile(
 					new EntitySource_ItemUse_WithAmmo(owner, fromItem, usedAmmo),
 					gunPos,

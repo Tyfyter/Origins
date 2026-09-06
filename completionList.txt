@@ -54,7 +54,7 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
-(†) CM-17 'Watcher' !!! (remove debugging code after balance test)
+(#2, ^2) CM-17 'Watcher' !!! (remove debugging code after balance test)
 (#, $2, ^2) D2L2 'Warsaw' !!!
 (#, $2, ^2) HA-24 'Hawken' !!!
 (X, ^2) Ichor Storm
@@ -183,7 +183,7 @@ WORLD GENERATION:
 
 OTHER:
 |---
-(☻) Ashen Font !!!
+(^) Ashen Font
 (X) Cubekon Tinkerer's Modifiers
 (^) Defiled "Chrysalis" Spawning
 (^) Equipment Lubing mechanics
@@ -266,6 +266,7 @@ ENEMY NPCS:
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
+(X) Robot Arm
 (^) Robot Penguin
 (^) Scraptooth
 (^) Shattered Goldfish
@@ -322,7 +323,7 @@ ENEMY NPCS:
 (^) Rock Bottom
 (X) Rotting Husk
 (^) Savage Whip
-(☻) Scrapyard Stryder !!!
+(#2, ^2) Scrapyard Stryder !!! (needs sound code for steps)
 (^) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
@@ -421,7 +422,7 @@ NPC DIALOGUE:
 (^) Dryad
 (ᗢ) Witch Doctor
 
-(ᗢ) Brine Fiend
+(#2, ᗢ) Brine Fiend !!! (princess dialogue)
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
 (ᗢ) Mother Unit
@@ -441,19 +442,25 @@ ACHIEVEMENTS:
 (^) Cloning Factory
 (^) Cracked
 (^) Enough Yap
+(X) Flower Power!
 (^) Going Places
+(X) Hasta La Vista, Baby
 (^) It Was Watching
+(X) Just Like Metroid Lady
 (^) Kaiju
 (^) Killimanjaro
 (^) Martyrdom
+(X) Now That's Smarts!
 (^) Now You're the One Lying Broken
 (^) Peat Obsession
 (^) RIVEN WORMS
 (^) Slow Loading Bar
+(X) Standby For Wagonfall
 (々) The Signal, it's Calling !!!
 (^) There's Something in There!
 (@, ^3) They Look Like Good, Strong Hands, Don't They?
 (^) 'Till Death Mildew Us Part
+(X) Wait, This Isn't Jumpy Italian 2
 (^) Whismical!
 (^) Whole Blend Evil
 ---
@@ -1124,11 +1131,11 @@ SUMMONER WEAPONS:
 (X) Fiber Optic Whips
 (^) Matryoshka Doll
 (X) Mojo Mask Staff
-(☻) Neutron Soup !!!
+(#2, ^2) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
-(☻) SMART Wrench !!!
-(☻) Star Harvest !!!
+(#2, ^2) SMART Wrench !!!
+(#2, ^2) Star Harvest !!! (please see pre-existing feedback)
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
@@ -1430,7 +1437,7 @@ TILES:
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(☻) Incinerator Pit !!!
+(#2, ^2) Incinerator Pit !!!
 (^) Industrial Door
 (#, ^2) Large Auto Assembler !!!
 (X) Large Conveyor Scooper !!!
