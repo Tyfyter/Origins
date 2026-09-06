@@ -71,7 +71,7 @@ namespace Origins.Items.Weapons.Summoner {
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;
 		}
-		public override bool NeedsAmmo(Player player) => true;
+		public override bool NeedsAmmo(Player player) => false;
 	}
 	public class Smart_Turret_Buff : MinionBuff {
 		public override string Texture => "Origins/Buffs/Smart_Turret_Buff";
