@@ -546,7 +546,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	}
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
-		player.statDefense += 65 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
+		player.statDefense += 48 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
 		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
 		player.AddMaxBreath(200);
 		GetHandler(player)?.Update(player);
@@ -2365,8 +2365,9 @@ public class Star_Soldier_UI : SwitchableUIState {
 						handler.LockOnTarget = null;
 					} else {
 						handler.LockOnTarget = nearestEntity;
-						SoundEngine.PlaySound(SoundID.Chat.WithPitch(1.8f).WithVolume(0.6f), player.Center);
-						SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.6f).WithVolume(0.6f), player.Center);
+						SoundEngine.PlaySound(Origins.Sounds.ScannerPing.WithPitchRange(0.7f, 0.8f).WithVolume(0.3f), player.Center);
+						//SoundEngine.PlaySound(SoundID.Chat.WithPitch(1.8f).WithVolume(0.6f), player.Center);
+						//SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.6f).WithVolume(0.6f), player.Center);
 					}
 				}
 

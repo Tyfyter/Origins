@@ -2140,7 +2140,8 @@ VOLUME I MUSIC:
 (^) Smog Storm
 (X) Test of Ancients
 
-(^) Revelation
+(^) Ashen Warhead Music
+(X) Star Soldier Juggernaut Music
 ---
 
 VOLUME III MUSIC:
@@ -2193,4 +2194,7 @@ VOLUME III MUSIC:
 (X) Riven Invasion
 (X) Smog Storm
 (X) Test of Ancients
+
+(X) Ashen Warhead Music
+($2) Star Soldier Juggernaut Music
 ---

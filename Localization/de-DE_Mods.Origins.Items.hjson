@@ -8586,18 +8586,41 @@ Star_Soldier_Pod: {
 }
 
 Star_Soldier_Laser: {
-	// DisplayName: Star Soldier Laser
-	// Tooltip: ""
+	// DisplayName: HiPCL-6 Combat Laser
+	/* Tooltip:
+		'''
+		High-Powered combat laser firing a focused beam
+		Utilizes internal power system
+		Slower recharge after fully depleting capacitor
+		###
+		-10% laser duration per arm
+		Grants an energy shield when doubled up
+		''' */
 }
 
 Star_Soldier_Droner: {
-	// DisplayName: Star Soldier Droner
-	// Tooltip: ""
+	// DisplayName: DCU-4 Drone Pod
+	/* Tooltip:
+		'''
+		DOES NOTHING HAHAHA
+		Utilizes your mom
+		69s reload
+		###
+		+10% lock-on distance per arm
+		Grants an additional drone when doubled up
+		''' */
 }
 
 Star_Soldier_Blade: {
-	// DisplayName: Star Soldier Blade
-	// Tooltip: ""
+	// DisplayName: ASU-9u Laser Blade
+	/* Tooltip:
+		'''
+		Super-critical plasma blade easily shears most solid materials
+		Utilizes internal power system
+		1s recharge
+		###
+		+10% defense and extra dash charge per arm
+		''' */
 }
 
 High_Powered_Green_Laser: {

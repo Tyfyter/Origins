@@ -76,6 +76,7 @@ namespace Origins {
 			public static SoundStyle ExternalStarDash = new("Origins/Sounds/Custom/StarDashOutside");
 			public static SoundStyle Alarm1 = new("Origins/Sounds/Custom/Alarm1");
 			public static SoundStyle Alarm2 = new("Origins/Sounds/Custom/Alarm2");
+			public static SoundStyle ScannerPing = new("Origins/Sounds/Custom/ScannerPing");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
