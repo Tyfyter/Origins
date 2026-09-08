@@ -115,7 +115,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			Vector2 targetDir = (targetPos - shoulderPos).Normalized(out float targetDist);
 			if (targetDist < 45) targetPos = shoulderPos + targetDir * 45;
 			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, targetPos - player.Bottom).Perform();
-
+			
 			player.direction = (originPlayer.relativeTarget.X >= 0).ToDirectionInt();
 			GetArm(0).UpdateRotations(player);
 			GetArm(1).UpdateRotations(player);
@@ -1940,16 +1940,29 @@ public class Star_Soldier_UI : SwitchableUIState {
 	public static Parameter uColor = Parameter.uColor with { Value = Color.OrangeRed.ToVector3() };
 	public static Parameter uSecondaryColor = Parameter.uSecondaryColor with { Value = Vector3.Zero };
 	public static Parameter uSaturation = Parameter.uSaturation;
+	public static class Anchors {
+		public static Vector2 topCenter;
+		public static Vector2 leftCenter;
+		public static Vector2 rightCenter;
+		public static Vector2 bottomLeft;
+		public static void Reset() {
+			topCenter = new(Main.screenWidth * 0.5f, 8);
+			leftCenter = new(8, Main.screenHeight * 0.5f);
+			rightCenter = new(Main.screenWidth - 8, Main.screenHeight * 0.5f);
+			bottomLeft = new(8, Main.screenHeight - 8);
+		}
+	}
 	public override bool IsActive() {
 		if (Main.LocalPlayer.dead || !Main.LocalPlayer.mount.IsMount<Star_Soldier>()) return false;
 		OriginSystem.hideInterfaceLayers = Main.playerInventory ? hideLayersInventory : hideLayers;
 		return true;
 	}
 	// We could go full NieR and let the player interact with the UI components as items
-	readonly IUISegment[] uiSegments = [
+	IUISegment[] uiSegments = [
 		new WeaponHUD(),
 		new HPHUD(),
 		new O2HUD(),
+		new LavaHUD(),
 		new TargetingHUD(),
 		new InfoAccessoryHUD(),
 		new FuelHUD(),
@@ -1965,14 +1978,15 @@ public class Star_Soldier_UI : SwitchableUIState {
 		Main.UIScaleMatrix.Decompose(out Vector3 _uiScale, out _, out _);
 		Vector2 uiScale = _uiScale.XY();
 
+		Anchors.Reset();
 		for (int i = 0; i < uiSegments.Length; i++) uiSegments[i].Draw(spriteBatch, handler, uiScale);
 	}
 	interface IUISegment {
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale);
 	}
-	public static void DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, Vector2 scale) {
+	public static Vector2 DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, Vector2 scale) {
 		if (OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_HUDOutlines) {
-			ChatManager.DrawColorCodedStringWithShadow(
+			return ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				Star_Soldier.Font,
 				text,
@@ -1983,9 +1997,9 @@ public class Star_Soldier_UI : SwitchableUIState {
 				default,
 				scale,
 				spread: 1
-			);
+			) - position;
 		} else {
-			ChatManager.DrawColorCodedString(
+			return ChatManager.DrawColorCodedString(
 				spriteBatch,
 				Star_Soldier.Font,
 				text,
@@ -1994,7 +2008,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				0,
 				default,
 				scale
-			);
+			) - position;
 		}
 	}
 	public class WeaponHUD : IUISegment {
@@ -2078,7 +2092,6 @@ public class Star_Soldier_UI : SwitchableUIState {
 				int hovered = -1;
 				AlarmHUD.playAlarm = false;
 				if (player.burned) AlarmHUD.playAlarm = true;
-				if (player.lavaWet && !player.lavaImmune && player.lavaTime <= 0) AlarmHUD.playAlarm = true;
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (player.buffType[i] > 0) {
 						if (Sets.CustomBuffIndicator[player.buffType[i]] is Func<int, Vector2, bool> customIcon) {
@@ -2192,7 +2205,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			Player player = Main.LocalPlayer;
 			if (player.breath <= 0) AlarmHUD.playAlarm = true;
 			if (player.breath != player.breathMax) { //O2 bar
-				Vector2 position = new(8, Main.screenHeight - 8);
+				Vector2 position = Anchors.bottomLeft;
 				Vector2 width = new(8, 0);
 				Vector2 height = new(0, -128);
 				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
@@ -2211,6 +2224,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 
 					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 					Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+					Anchors.bottomLeft.X += 2;
 				}
 
 				for (int i = 0; i < vertices.Length; i++) {
@@ -2228,12 +2242,81 @@ public class Star_Soldier_UI : SwitchableUIState {
 				);
 				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-				DrawText(spriteBatch,
+				Anchors.bottomLeft.X += 8;
+				Anchors.bottomLeft.X += DrawText(spriteBatch,
 					"O2",
 					position + width + height + Vector2.UnitX * 4,
 					Color.OrangeRed,
 					uiScale * 0.85f
+				).X;
+				Anchors.bottomLeft.X += 8;
+			}
+		}
+	}
+	public class LavaHUD : IUISegment {
+		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4] {
+			new(default, Color.White, new(0, 0)),
+			new(default, Color.White, new(1, 0)),
+			new(default, Color.White, new(0, 1)),
+			new(default, Color.White, new(1, 1))
+		};
+		static readonly short[] dices = [
+			0, 1, 2,
+			1, 3, 2
+		];
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			bool doOutlines = OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_HUDOutlines;
+			Player player = Main.LocalPlayer;
+			if (player.lavaImmune) return;
+			if (player.lavaRose && player.ashWoodBonus) return;
+			float progress = player.lavaMax > 0 ? 1 - player.lavaTime / (float)player.lavaMax : player.lavaWet.ToInt();
+			if (progress > 0) { //Lava Charm bar
+				if (player.lavaWet && progress >= 0.9f) AlarmHUD.playAlarm = true;
+				Vector2 position = Anchors.bottomLeft;
+				Vector2 width = new(8, 0);
+				Vector2 height = new(0, -128);
+				Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+				Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+				Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+				if (doOutlines) {
+					for (int i = 0; i < vertices.Length; i++) {
+						Vector2 pos = position;
+						if (i % 2 != 0) pos += height - Vector2.UnitY * 2;
+						else pos.Y += 2;
+						if (i >= 2) pos += width + Vector2.UnitX * 2;
+						else pos.X -= 2;
+						vertices[i].Position = new(pos, 0);
+						vertices[i].Color = Color.OrangeRed.MultiplyRGB(new(100, 100, 100));
+					}
+
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+					Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+					Anchors.bottomLeft.X += 2;
+				}
+
+				for (int i = 0; i < vertices.Length; i++) {
+					Vector2 pos = position;
+					if (i % 2 != 0) pos += height;
+					if (i >= 2) pos += width;
+					vertices[i].Position = new(pos, 0);
+					vertices[i].Color = Color.White;
+				}
+
+				healthBarShader.Apply(null,
+					uColor,
+					uSecondaryColor,
+					uSaturation with { Value = progress }
 				);
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, dices, 0, 4);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				Anchors.bottomLeft.X += 8;
+				Anchors.bottomLeft.X += DrawText(spriteBatch,
+					"°A",
+					position + width + height + Vector2.UnitX * 4,
+					Color.OrangeRed,
+					uiScale * 0.85f
+				).X;
+				Anchors.bottomLeft.X += 8;
 			}
 		}
 	}
@@ -2254,6 +2337,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 			Player player = Main.LocalPlayer;
 			float nearestDist = float.PositiveInfinity;
 			Entity nearestEntity = default;
+			Rectangle rect = new(0, 0, 1, 1);
 			foreach (NPC npc in Main.ActiveNPCs) {
 				Rectangle hitbox = npc.Hitbox;
 				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
@@ -2270,12 +2354,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (!OriginExtensions.Intersects(actualSize.XY(), actualSize.ZW(), Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
 				float dist = Main.MouseScreen.Clamp(actualSize.XY(), actualSize.XY() + actualSize.ZW()).DistanceSQ(Main.MouseScreen);
 
-				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * offset_size;
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						paddedSize.XY() + lines[i].pos * paddedSize.ZW() - offset,
+						paddedSize.XY() + lines[i].pos * paddedSize.ZW(),
 						rect,
 						color,
 						0,
@@ -2300,12 +2382,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (!OriginExtensions.Intersects(actualSize.XY(), actualSize.ZW(), Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
 				float dist = Main.MouseScreen.Clamp(actualSize.XY(), actualSize.XY() + actualSize.ZW()).DistanceSQ(Main.MouseScreen);
 
-				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * offset_size;
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						paddedSize.XY() + lines[i].pos * paddedSize.ZW() - offset,
+						paddedSize.XY() + lines[i].pos * paddedSize.ZW(),
 						rect,
 						color,
 						0,
@@ -2328,12 +2408,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (!OriginExtensions.Intersects(actualSize.XY(), actualSize.ZW(), Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
 				float dist = Main.MouseScreen.Clamp(actualSize.XY(), actualSize.XY() + actualSize.ZW()).DistanceSQ(Main.MouseScreen);
 
-				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * offset_size;
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						paddedSize.XY() + lines[i].pos * paddedSize.ZW() - offset,
+						paddedSize.XY() + lines[i].pos * paddedSize.ZW(),
 						rect,
 						color,
 						0,
@@ -2395,7 +2473,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
 				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
 				actualSize = new(hitboxPos, hitboxSize.X, hitboxSize.Y);
-				paddedSize = actualSize + new Vector4(uiScale * offset_size, uiScale.X * offset_size * 2, uiScale.Y * offset_size * 2);
+				paddedSize = actualSize + new Vector4(uiScale * -offset_size, uiScale.X * offset_size * 2, uiScale.Y * offset_size * 2);
 			}
 		}
 	}
@@ -2403,7 +2481,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 		static readonly FastStaticFieldInfo<List<InfoDisplay>> InfoDisplays = new(typeof(InfoDisplayLoader), nameof(InfoDisplays));
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
 			if (Main.playerInventory) return;
-			DrawText(spriteBatch,
+			/*DrawText(spriteBatch,
 				"""
 				ABCDEFGHIJKLMNOPQRSTUVWXYZ
 				abcdefghijklmnopqrstuvwxyz
@@ -2413,7 +2491,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				new Vector2(8, 8),
 				Color.OrangeRed,
 				Vector2.One
-			);
+			);*/
 			Player player = Main.LocalPlayer;
 
 			int y = 8;
@@ -2607,12 +2685,12 @@ public class Star_Soldier_UI : SwitchableUIState {
 
 			DrawText(spriteBatch,
 				$"{depth}'",
-				new Vector2(Main.screenWidth - size.X - 8 - 52, Main.screenHeight * 0.5f),
+				Anchors.rightCenter - new Vector2(size.X + 8 + 52, 0),
 				Color.OrangeRed,
 				Vector2.One
 			);
 
-			Vector2 position = new(Main.screenWidth - 4, Main.screenHeight * 0.5f + 12);
+			Vector2 position = Anchors.rightCenter + new Vector2(4, 12);
 			DrawData smallTick = new(TextureAssets.MagicPixel.Value, position, new Rectangle(0, 0, 24, 2), Color.OrangeRed) {
 				origin = new(24, 1)
 			};
@@ -2624,6 +2702,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				data.position.Y -= i - depth;
 				data.Draw(spriteBatch);
 			}
+			Anchors.rightCenter.X -= 52 + 8 + size.X;
 		}
 	}
 	public class FuelHUD : IUISegment {
