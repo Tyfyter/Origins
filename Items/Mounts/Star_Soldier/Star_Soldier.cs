@@ -1747,6 +1747,9 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
+			for (int i = 0; i < options.Count; i++) {
+				if (options[i].Item.ToolTip is null) options[i].Item.SetDefaults(options[i].Item.type);
+			}
 			Player player = Main.LocalPlayer;
 			Vector2 pos = player.MountedCenter - Main.screenPosition;
 
@@ -1800,7 +1803,6 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			if (data.texture.Bounds.Recentered(data.position).Contains(Main.MouseScreen)) {
 				Main.hoverItemName = selection.Item.Name;
 				Main.HoverItem = selection.Item;
-				Main.HoverItem.SetNameOverride(Main.hoverItemName);
 				Main.instance.MouseText(Main.hoverItemName, selection.Item.rare, 0);
 			}
 		}
