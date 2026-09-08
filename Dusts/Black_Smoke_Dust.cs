@@ -25,11 +25,6 @@ namespace Origins.Dusts {
 				dust.scale -= 0.001f;
 			}
 			dust.position += dust.velocity;
-			if (!dust.noLight && !dust.noLightEmittence) {
-				float brightness = dust.scale * 1.4f;
-				Min(ref brightness, 0.6f);
-				Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), brightness, brightness * 0.65f, brightness * 0.4f);
-			}
 			dust.velocity *= 0.97f;
 			dust.rotation += dust.velocity.X * 0.25f;
 			dust.fadeIn++;
