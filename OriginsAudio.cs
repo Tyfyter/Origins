@@ -136,7 +136,7 @@ namespace Origins {
 			public static SoundStyle HawkenThruster = new("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
 				IsLooped = true
 			};
-			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/Ambience/RadioBroadcaster1", SoundType.Ambient) {
+			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
 				IsLooped = true
 			}.WithPitch(2.5f);
 			public static SoundStyle StandingRefinery = new SoundStyle("Origins/Sounds/Custom/Generator", SoundType.Ambient) {
