@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -607,6 +608,23 @@ namespace Origins {
 			);
 			public static bool[] DisableDirectionChange = MountID.Sets.Factory.CreateBoolSet();
 			public static bool[] HideTails = MountID.Sets.Factory.CreateNamedSet(nameof(HideTails)).RegisterBoolSet();
+			public static bool[] DoNotOffsetDust = MountID.Sets.Factory.CreateNamedSet(nameof(DoNotOffsetDust)).RegisterBoolSet();
+			static Mounts() {
+				if (DoNotOffsetDust.Length == MountID.Count) return;
+				try {
+					IL_PlayerDrawSet.BoringSetup_2 += RemoveMountDustOffset;
+				} catch (Exception e) {
+					if (Origins.LogLoadingILError(nameof(RemoveMountDustOffset), e)) throw;
+				}
+			}
+			static void RemoveMountDustOffset(ILContext il) {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.After, i => i.MatchStfld<PlayerDrawSet>(nameof(PlayerDrawSet.mountOffSet)));
+				c.EmitLdarg0();
+				c.EmitDelegate((ref PlayerDrawSet drawInfo) => {
+					if (drawInfo.drawPlayer.mount.Active && DoNotOffsetDust[drawInfo.drawPlayer.mount.Type]) drawInfo.Position.Y += drawInfo.mountOffSet;
+				});
+			}
 			public static class Create {
 				public static Func<Player, Vector2> SimpleEyePosition(int xOffset, int yOffset) => player => player.MountedCenter + player.Directions(2 + xOffset, 12 - player.height * 0.5f + yOffset);
 			}

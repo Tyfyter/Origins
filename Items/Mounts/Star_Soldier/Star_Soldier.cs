@@ -481,6 +481,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		OriginsSets.Mounts.DisableDirectionChange[Type] = true;
 		OriginsSets.Mounts.EyePosition[Type] = player => player.MountedCenter + player.Directions(new Vector2(24, -16));
 		OriginsSets.Mounts.HideTails[Type] = true;
+		OriginsSets.Mounts.DoNotOffsetDust[Type] = true;
 
 		RainbowDyes = [
 			GameShaders.Armor.GetShaderIdFromItemId(ItemID.RainbowDye),
@@ -579,7 +580,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
-	static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * ((player.height - Player.defaultHeight) * 0.5f - 8);
+	static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * (player.height - 24);
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle _, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
 		if (drawType == 3 && GetHandler(drawPlayer) is MountHandler handler) {
 			Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
