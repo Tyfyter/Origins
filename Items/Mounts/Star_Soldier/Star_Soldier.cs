@@ -126,6 +126,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			player.buffImmune[BuffID.Weak] = true;
 			player.buffImmune[BuffID.WindPushed] = true;
 			if (!originPlayer.oiled) {
+				player.fireWalk = true;
 				player.buffImmune[BuffID.OnFire] = true;
 				player.buffImmune[BuffID.OnFire3] = true;
 			}
