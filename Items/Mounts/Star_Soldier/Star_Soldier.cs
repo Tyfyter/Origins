@@ -107,6 +107,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (LockOnTarget is NPC target) {
 				if (!target.active) LockOnTarget = null;
+				else if (target.dontTakeDamage && !Star_Soldier_UI.Sets.IgnoreDontDakeDamageTargeting[target.type]) LockOnTarget = null;
 				else if (player.MountedCenter.Clamp(target.Hitbox).WithinRange(player.MountedCenter, 16 * 100) == false) LockOnTarget = null;
 			}
 			Vector2 targetPos = LockOnTarget?.Center ?? Main.MouseWorld;
@@ -1890,6 +1891,21 @@ public class Star_Soldier_UI : SwitchableUIState {
 		.Description("Replaces the normal buff icon drawing when the player is using the Star Soldier mount")
 		.RegisterCustomSet<Func<int, Vector2, bool>>(null);
 		public static Action<SpriteBatch>[] InfoDisplayOverride = new Action<SpriteBatch>[InfoDisplayLoader.InfoDisplayCount];
+		public static bool[] IgnoreDontDakeDamageTargeting = NPCID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(IgnoreDontDakeDamageTargeting)}")
+		.Description("Lets the Star Soldier mount's targeting interface display information about this type of NPC even if NPC.dontTakeDamage is true")
+		.RegisterBoolSet(
+			NPCID.BrainofCthulhu,
+			NPCID.MoonLordFreeEye,
+			NPCID.DD2LanePortal,
+			NPCID.Deerclops,
+			NPCID.EmpressButterfly,
+			NPCID.FairyCritterBlue,
+			NPCID.FairyCritterGreen,
+			NPCID.FairyCritterPink,
+			NPCID.Probe,
+			NPCID.GraniteGolem,
+			NPCID.GraniteFlyer
+		);
 		static Sets() {
 			InfoDisplayOverride[InfoDisplay.DepthMeter.Type] = InfoAccessoryHUD.DrawDepthMeter;
 			CustomBuffIndicator[BuffID.OnFire] = HPHUD.DrawFire(Color.Orange);
@@ -2245,46 +2261,43 @@ public class Star_Soldier_UI : SwitchableUIState {
 			(Vector2.One * 0.5f, new(0, 0, 4, 4)),
 		];
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			const int offset_size = 8;
 			Player player = Main.LocalPlayer;
 			float nearestDist = float.PositiveInfinity;
-			Vector4 nearest = default;
 			Entity nearestEntity = default;
 			foreach (NPC npc in Main.ActiveNPCs) {
 				Rectangle hitbox = npc.Hitbox;
 				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
+				Color color = Color.Lime;
+				if (!npc.friendly && !NPCID.Sets.CountsAsCritter[npc.type]) {
+					if (npc.dontTakeDamage && !Sets.IgnoreDontDakeDamageTargeting[npc.type]) continue;
+					color = Color.OrangeRed;
+				}
 
-				Color color = (npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]) ? Color.Lime : Color.OrangeRed;
 				if (npc == handler.LockOnTarget) color = Color.Red;
-				hitbox.X -= (int)Main.screenPosition.X;
-				hitbox.Y -= (int)Main.screenPosition.Y;
+				if (npc.dontTakeDamage) color = Color.DimGray;
 
-				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
-				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
-
-				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
-				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
+				GetDrawPositions(hitbox, out Vector4 actualSize, out Vector4 paddedSize);
+				if (!OriginExtensions.Intersects(actualSize.XY(), actualSize.ZW(), Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
+				float dist = Main.MouseScreen.Clamp(actualSize.XY(), actualSize.XY() + actualSize.ZW()).DistanceSQ(Main.MouseScreen);
 
 				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * 8;
-				Vector2 size = hitboxSize + offset * 2;
+				Vector2 offset = uiScale * offset_size;
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						hitboxPos + lines[i].pos * size - offset,
+						paddedSize.XY() + lines[i].pos * paddedSize.ZW() - offset,
 						rect,
 						color,
 						0,
 						lines[i].pos,
-						size * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
+						paddedSize.ZW() * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
 						SpriteEffects.None,
 					0);
 				}
 				if (NPCID.Sets.ProjectileNPC[npc.type]) continue;
 				if (npc.realLife != -1 && npc.realLife != npc.whoAmI) continue;
-				if (Minimize(ref nearestDist, dist)) {
-					nearest = new(hitboxPos - offset, size.X, size.Y);
-					nearestEntity = npc;
-				}
+				if (Minimize(ref nearestDist, dist)) nearestEntity = npc;
 			}
 			foreach (Player playerTarget in Main.ActivePlayers) {
 				if (playerTarget == player) continue;
@@ -2293,34 +2306,26 @@ public class Star_Soldier_UI : SwitchableUIState {
 
 				Color color = playerTarget.InOpposingTeam(player) ? Color.OrangeRed : Color.Lime;
 				if (playerTarget == handler.LockOnTarget) color = Color.Red;
-				hitbox.X -= (int)Main.screenPosition.X;
-				hitbox.Y -= (int)Main.screenPosition.Y;
 
-				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
-				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
-
-				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
-				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
+				GetDrawPositions(hitbox, out Vector4 actualSize, out Vector4 paddedSize);
+				if (!OriginExtensions.Intersects(actualSize.XY(), actualSize.ZW(), Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
+				float dist = Main.MouseScreen.Clamp(actualSize.XY(), actualSize.XY() + actualSize.ZW()).DistanceSQ(Main.MouseScreen);
 
 				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * 8;
-				Vector2 size = hitboxSize + offset * 2;
+				Vector2 offset = uiScale * offset_size;
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						hitboxPos + lines[i].pos * size - offset,
+						paddedSize.XY() + lines[i].pos * paddedSize.ZW() - offset,
 						rect,
 						color,
 						0,
 						lines[i].pos,
-						size * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
+						paddedSize.ZW() * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
 						SpriteEffects.None,
 					0);
 				}
-				if (Minimize(ref nearestDist, dist)) {
-					nearest = new(hitboxPos - offset, size.X, size.Y);
-					nearestEntity = playerTarget;
-				}
+				if (Minimize(ref nearestDist, dist)) nearestEntity = playerTarget;
 			}
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if (projectile.ModProjectile is not IArtifactMinion) continue;
@@ -2329,34 +2334,26 @@ public class Star_Soldier_UI : SwitchableUIState {
 
 				Color color = (projectile.hostile || Main.player[projectile.owner].InOpposingTeam(player)) ? Color.OrangeRed : Color.Lime;
 				if (projectile == handler.LockOnTarget) color = Color.Red;
-				hitbox.X -= (int)Main.screenPosition.X;
-				hitbox.Y -= (int)Main.screenPosition.Y;
 
-				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
-				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
-
-				if (!OriginExtensions.Intersects(hitboxPos, hitboxSize, Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
-				float dist = Main.MouseScreen.Clamp(hitboxPos, hitboxPos + hitboxSize).DistanceSQ(Main.MouseScreen);
+				GetDrawPositions(hitbox, out Vector4 actualSize, out Vector4 paddedSize);
+				if (!OriginExtensions.Intersects(actualSize.XY(), actualSize.ZW(), Vector2.Zero, Main.ScreenSize.ToVector2())) continue;
+				float dist = Main.MouseScreen.Clamp(actualSize.XY(), actualSize.XY() + actualSize.ZW()).DistanceSQ(Main.MouseScreen);
 
 				Rectangle rect = new(0, 0, 1, 1);
-				Vector2 offset = uiScale * 8;
-				Vector2 size = hitboxSize + offset * 2;
+				Vector2 offset = uiScale * offset_size;
 				for (int i = 0; i < lines.Length; i++) {
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
-						hitboxPos + lines[i].pos * size - offset,
+						paddedSize.XY() + lines[i].pos * paddedSize.ZW() - offset,
 						rect,
 						color,
 						0,
 						lines[i].pos,
-						size * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
+						paddedSize.ZW() * lines[i].dimensions.XY() / 3 + uiScale * lines[i].dimensions.ZW(),
 						SpriteEffects.None,
 					0);
 				}
-				if (Minimize(ref nearestDist, dist)) {
-					nearest = new(hitboxPos - offset, size.X, size.Y);
-					nearestEntity = projectile;
-				}
+				if (Minimize(ref nearestDist, dist)) nearestEntity = projectile;
 			}
 			Entity displayEntity = handler.LockOnTarget ?? nearestEntity;
 			if (displayEntity is not null) {
@@ -2395,12 +2392,21 @@ public class Star_Soldier_UI : SwitchableUIState {
 				}
 				if (handler.LockOnTarget is not null) color = Color.Red;
 				string text = builder.ToString().Trim();
+				GetDrawPositions(displayEntity.Hitbox, out _, out Vector4 paddedSize);
 				DrawText(spriteBatch,
 					text,
-					nearest.XY() + new Vector2(nearest.Z, 0),
+					paddedSize.XY() + new Vector2(paddedSize.Z, 0),
 					color,
 					uiScale
 				);
+			}
+			void GetDrawPositions(Rectangle hitbox, out Vector4 actualSize, out Vector4 paddedSize) {
+				hitbox.X -= (int)Main.screenPosition.X;
+				hitbox.Y -= (int)Main.screenPosition.Y;
+				Vector2 hitboxPos = hitbox.TopLeft().Transform(Main.GameViewMatrix.TransformationMatrix);
+				Vector2 hitboxSize = hitbox.BottomRight().Transform(Main.GameViewMatrix.TransformationMatrix) - hitboxPos;
+				actualSize = new(hitboxPos, hitboxSize.X, hitboxSize.Y);
+				paddedSize = actualSize + new Vector4(uiScale * offset_size, uiScale.X * offset_size * 2, uiScale.Y * offset_size * 2);
 			}
 		}
 	}

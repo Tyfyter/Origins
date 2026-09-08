@@ -94,6 +94,7 @@ namespace Origins.NPCs.Ashen {
 		public override void AI() {
 			NPC.velocity = default;
 			NPC.dontTakeDamage = IsDeactivated;
+			NPC.chaseable = !NPC.dontTakeDamage;
 			NPC.damage = NPC.dontTakeDamage ? 0 : NPC.defDamage;
 			if (NPC.dontTakeDamage) {
 				NPC.frame.Y = 4;
