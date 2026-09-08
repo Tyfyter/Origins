@@ -1,4 +1,5 @@
 ﻿using Avalon;
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
@@ -136,7 +137,12 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				dotCount -= player.lifeRegenCount;
 				player.lifeRegenCount = 0;
 			}
-			while (dotCount.CycleUp(120, 0)) life--;
+			int lifeLost = 0;
+			while (dotCount.CycleUp(120, 0)) {
+				life--;
+				lifeLost++;
+			}
+			if (lifeLost > 0) CombatText.NewText(player.Hitbox, CombatText.LifeRegen, lifeLost, dramatic: false, dot: true);
 
 			if (life <= 0) {
 				player.mount.Dismount(player);
