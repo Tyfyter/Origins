@@ -105,6 +105,7 @@ Brine_Fiend: {
 		DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
 		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
 		LikeNPC_Princess: "{NPCName} is adorable and kind. Her fascination in lihzarhd girl toys makes me feel so young again!"
+		Princess_LovesNPC: I like {NPCName}.
 	}
 
 	Dialogue: {

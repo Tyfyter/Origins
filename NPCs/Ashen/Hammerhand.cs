@@ -61,6 +61,7 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override bool PreAI() {
+			NPC.collideY |= NPC.velocity.Y == 0;
 			if (NPC.collideY && NPC.oldVelocity.Y >= HeavyFallThreshold) {
 				NPC.localAI[2] = FallRecoveryTime;
 			}
@@ -95,6 +96,7 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void FindFrame(int frameHeight) {
+			NPC.collideY |= NPC.velocity.Y == 0;
 			if (NPC.localAI[2] > 0) {
 				NPC.frameCounter = 0;
 				if (NPC.collideY) {

@@ -7,7 +7,7 @@
 Defiled_Amalgamation: {
 	// DisplayName: "{§Defiled} Amalgamation"
 	// BossChecklistIntegration.SpawnCondition: Use [i:Origins/Nerve_Impulse_Manipulator] or break 3 {§Defiled} Fissures in a {§Defiled_Wastelands} chasm.
-	// BossTitle: <PH> title text here
+	// BossTitle: Echo Chamber of Ferality, Lapdog of the {§Defiled}
 }
 
 // Defiled_Brute.DisplayName: "{§Defiled} Krusher"
@@ -31,7 +31,7 @@ Defiled_Amalgamation: {
 Fiberglass_Weaver: {
 	// DisplayName: Fiberglass Weaver
 	// BossChecklistIntegration.SpawnCondition: Use [i:Origins/Shaped_Glass], or randomly in the Fiberglass Undergrowth.
-	// BossTitle: <PH> title text here
+	// BossTitle: Opportunistic Arthropod of the Fiberglass
 }
 
 // Swarmer.DisplayName: Swarmer
@@ -68,7 +68,7 @@ World_Cracker_Head: {
 		// SpawnCondition: Use [i:Origins/Sus_Ice_Cream] or break 3 Gel Blisters in a {§Riven_Hive} chasm.
 	}
 
-	// BossTitle: <PH> title text here
+	// BossTitle: Ouroboros of Life and Death
 }
 
 // World_Cracker_Tail.DisplayName: World Cracker
@@ -104,8 +104,8 @@ Brine_Fiend: {
 		// LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
 		// DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
 		// HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
-		// LikeNPC_Princess: <PH>I like {NPCName}.
-		// Princess_LovesNPC: <PH>I like {NPCName}.
+		// LikeNPC_Princess: "{NPCName} is adorable and kind. Her fascination in lihzarhd girl toys makes me feel so young again!"
+		// Princess_LovesNPC: I like {NPCName}.
 	}
 
 	Dialogue: {
@@ -135,7 +135,7 @@ Brine_Fiend: {
 	// Name7: Miyt'ah
 	// Name8: Genni
 	// DisplayName: Brine Fiend
-	// Census.SpawnCondition: Conditions unknown
+	// Census.SpawnCondition: After defeating the Lost Diver
 }
 
 Defiled_Effigy: {
@@ -250,11 +250,11 @@ Dryad: {
 	// AshenWorld: The Ashen is mechanizing the world and polluting it! You must stop the Factory.
 	// CorruptWorld: The Corruption seeks to turn this world into a devoid wasteland! You must eliminate the infection.
 	// CrimsonWorld: The Crimson is bleeding the world of its purity. You must heal the world of this gouge.
-	// DefiledWorld1: My kind barely banished the {§Defiled} into the {§Dusk}. Now it's back from a disturbance and stronger than before…
+	// DefiledWorld1: My kind barely banished the {§Defiled} into {§Dusk}. Now it's back from a disturbance and stronger than before…
 	// DefiledWorld2: The {§Defiled} lives by its means, but even that is too much for the world…
 	// WindyDefiled: It's never wind in the {§Defiled} Wastelands, that's breathing…
 	// DefiledHeartDown: That's it for the {§Defiled}. Finish it up.
-	// BeforeDefeatS: Have you tried using purification powder on... wait a minute...
+	// BeforeDefeatTM: Have you tried using purification powder on... wait a minute...
 	// BeforeDefeatDA: Have you tried using purification powder on {§Defiled} Stone?
 	// BeforeDefeatWC: Have you tried using purification powder on {§Spug} Flesh?
 
@@ -339,14 +339,14 @@ Lost_Diver: {
 		// EntryName: Lost Diver
 	}
 
-	// BossTitle: <PH> title text here
+	// BossTitle: Forgotten Pride, a Hero Lost
 }
 
 // Lost_Diver_Transformation.DisplayName: Lost Diver?
 
 Mildew_Carrion: {
 	// DisplayName: "{§Mildew_Carrion}"
-	// BossTitle: <PH> title text here
+	// BossTitle: Preserved Remains, a Corpse Defiled
 }
 
 // Trijaw_Shark_Feesh.DisplayName: Trijaw Shark Feesh
@@ -380,7 +380,7 @@ DA_Body_Part: {
 Shimmer_Construct: {
 	// DisplayName: Shimmer Construct
 	// BossChecklistIntegration.SpawnCondition: Shimmer an {$NPCName.EyeofCthulhu}
-	// BossTitle: <PH> title text here
+	// BossTitle: A Mother's Denial, Safeguarded
 }
 
 // Chambersite_Bunny.DisplayName: Chambersite Bunny
@@ -415,7 +415,7 @@ Debug_Shoot_NPC: {
 	}
 }
 
-// Creme_Filled_Bat.DisplayName: Creme Filled Bat
+// Creme_Filled_Bat.DisplayName: Creme-Filled Bat
 // Peppered_Moth.DisplayName: Peppered Moth
 // Trash_Compactor_Mimic.DisplayName: Trash Compactor Mimic
 // BlotopusNPC.DisplayName: Blotopus
@@ -427,11 +427,11 @@ Trenchmaker: {
 	// DisplayNameGeneric: Trenchmaker
 
 	BossChecklistIntegration: {
-		// SpawnCondition: Use [i:Origins/Distress_Beacon] or break 3 Heat Vents in an {§Ashen} factory.
+		// SpawnCondition: Use [i:Origins/Distress_Beacon] or break 3 Heat Vents in the {§Ashen} Scrapyard.
 		// EntryName: "{$DisplayNameGeneric}"
 	}
 
-	// BossTitle: <PH> title text here
+	// BossTitle: Man-made Civilization Kill Vehicle
 }
 
 // Pinwheel.DisplayName: Pinwheel

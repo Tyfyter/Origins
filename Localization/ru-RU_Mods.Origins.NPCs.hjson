@@ -7,7 +7,7 @@ Chunky_Slime.DisplayName: Коренастый слизень
 Defiled_Amalgamation: {
 	DisplayName: Осквернённое Слияние
 	BossChecklistIntegration.SpawnCondition: Используйте [i:Origins/Nerve_Impulse_Manipulator] или сломайте 3 осквернённые трещины в пропасти Осквернённых_пустошей.
-	// BossTitle: <PH> title text here
+	// BossTitle: Echo Chamber of Ferality, Lapdog of the {§Defiled}
 }
 
 Defiled_Brute.DisplayName: Осквернённый крушитель
@@ -31,7 +31,7 @@ Enchanted_Fiberglass_Sword.DisplayName: Зачарованный стеклов�
 Fiberglass_Weaver: {
 	DisplayName: Стекловолоконный ткач
 	BossChecklistIntegration.SpawnCondition: Используйте [i:Origins/Shaped_Glass] или случайно найдите в Стеклянной Роще.
-	// BossTitle: <PH> title text here
+	// BossTitle: Opportunistic Arthropod of the Fiberglass
 }
 
 Swarmer.DisplayName: Роевик
@@ -68,7 +68,7 @@ World_Cracker_Head: {
 		SpawnCondition: Используйте [i:Origins/Sus_Ice_Cream] или сломайте 3 гелиевые опухоли в пропасти Разрезанного улья.
 	}
 
-	// BossTitle: <PH> title text here
+	// BossTitle: Ouroboros of Life and Death
 }
 
 World_Cracker_Tail.DisplayName: Содрогатель миров
@@ -254,7 +254,7 @@ Dryad: {
 	DefiledWorld2: "{§Defiled} живёт за счёт своих ресурсов, но даже это уже слишком для этого мира..."
 	WindyDefiled: В Осквернённых пустошах никогда не бывает ветров, это дыхание...
 	DefiledHeartDown: На этом для Скверны настал конец. Прикончи её.
-	BeforeDefeatS: Ты пробовал использовать очищающий порошок на... погоди-ка...
+	// BeforeDefeatTM: Have you tried using purification powder on... wait a minute...
 	BeforeDefeatDA: Ты пробовал использовать очищающий порошок на осквернённом камене?
 	BeforeDefeatWC: Ты пробовал использовать очищающий порошок на сгустке плоти?
 
@@ -339,14 +339,14 @@ Lost_Diver: {
 		EntryName: Потерянный Дайвер
 	}
 
-	// BossTitle: <PH> title text here
+	// BossTitle: Forgotten Pride, a Hero Lost
 }
 
 Lost_Diver_Transformation.DisplayName: Трансформация Потерянного Дайвера
 
 Mildew_Carrion: {
 	DisplayName: "{§Mildew_Carrion}"
-	// BossTitle: <PH> title text here
+	// BossTitle: Preserved Remains, a Corpse Defiled
 }
 
 Trijaw_Shark_Feesh.DisplayName: Рыба трёхчелюстной акулы
@@ -380,7 +380,7 @@ Enchanted_Fiberglass_Slime.DisplayName: Зачарованный стеклов�
 Shimmer_Construct: {
 	DisplayName: Конструкт Мерцания
 	BossChecklistIntegration.SpawnCondition: Окуните {$NPCName.EyeofCthulhu} в Мерцание
-	// BossTitle: <PH> title text here
+	// BossTitle: A Mother's Denial, Safeguarded
 }
 
 Chambersite_Bunny.DisplayName: Чемберситовый кролик
@@ -431,7 +431,7 @@ Trenchmaker: {
 		EntryName: "{$DisplayNameGeneric}"
 	}
 
-	// BossTitle: <PH> title text here
+	// BossTitle: Man-made Civilization Kill Vehicle
 }
 
 Pinwheel.DisplayName: Ротор
