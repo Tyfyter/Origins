@@ -1952,7 +1952,9 @@ public class Star_Soldier_UI : SwitchableUIState {
 		new O2HUD(),
 		new TargetingHUD(),
 		new InfoAccessoryHUD(),
-		new FuelHUD()
+		new FuelHUD(),
+
+		new AlarmHUD()
 	];
 	public Star_Soldier_UI() : base() {
 		OverrideSamplerState = SamplerState.PointClamp;
@@ -2011,9 +2013,6 @@ public class Star_Soldier_UI : SwitchableUIState {
 	}
 	public class HPHUD : IUISegment {
 		public static Vector2 customBuffIndicatorPos;
-		public static bool playAlarm;
-		static float alarmVolumeMult;
-		static SlotId alarmSoundSlot;
 		static readonly Polygon healthBarPoly = Polygon.Import(
 			400,
 			Vector2.UnitX * 0.5f,
@@ -2077,7 +2076,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Point position = new((int)((Main.screenWidth - hpSize.X) * 0.5f + hpSize.X * 0.075f), 28);
 				Point currentPosition = position;
 				int hovered = -1;
-				playAlarm = false;
+				AlarmHUD.playAlarm = false;
+				if (player.burned) AlarmHUD.playAlarm = true;
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (player.buffType[i] > 0) {
 						if (Sets.CustomBuffIndicator[player.buffType[i]] is Func<int, Vector2, bool> customIcon) {
@@ -2111,19 +2111,6 @@ public class Star_Soldier_UI : SwitchableUIState {
 					BuffLoader.ModifyBuffText(buffType, ref buffName, ref buffTooltip, ref rare);
 					Main.instance.MouseTextHackZoom(buffName, rare, 0, buffTooltip);
 				}
-			}
-			if (playAlarm) {
-				alarmSoundSlot.PlaySoundIfInactive(Origins.Sounds.Alarm1, updateCallback: sound => {
-					if (!Main.LocalPlayer.mount.IsMount<Star_Soldier>()) {
-						playAlarm = false;
-						alarmVolumeMult = 0;
-						return false;
-					}
-					MathUtils.LinearSmoothing(ref alarmVolumeMult, playAlarm.ToInt(), 1f / 15);
-					sound.Volume = alarmVolumeMult;
-					sound.Pitch = 1.5f;
-					return alarmVolumeMult > 0;
-				});
 			}
 		}
 		static readonly Polygon firePolygon = Polygon.Import(48, Polygon.Alignment.TopRight,
@@ -2184,7 +2171,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				uiScale * 0.85f
 			);
 			customBuffIndicatorPos.X -= 8;
-			playAlarm = true;
+			AlarmHUD.playAlarm = true;
 			return firePolygon.Contains(Main.MouseScreen);
 		};
 	}
@@ -2202,9 +2189,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
 			bool doOutlines = OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_HUDOutlines;
 			Player player = Main.LocalPlayer;
-			if (player.breath <= 0) {
-				//playAlarm = true;
-			}
+			if (player.breath <= 0) AlarmHUD.playAlarm = true;
 			if (player.breath != player.breathMax) { //O2 bar
 				Vector2 position = new(8, Main.screenHeight - 8);
 				Vector2 width = new(8, 0);
@@ -2641,7 +2626,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 		}
 	}
 	public class FuelHUD : IUISegment {
-		static Polygon fuelBarPoly = Polygon.Import(
+		static readonly Polygon fuelBarPoly = Polygon.Import(
 			300,
 			Vector2.UnitX * 0.5f,
 			new(0, 0),
@@ -2740,6 +2725,27 @@ public class Star_Soldier_UI : SwitchableUIState {
 					}
 				}
 				pos.X += 8;
+			}
+		}
+	}
+	public class AlarmHUD : IUISegment {
+		public static bool playAlarm;
+		static float alarmVolumeMult;
+		static SlotId alarmSoundSlot;
+
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			if (playAlarm) {
+				alarmSoundSlot.PlaySoundIfInactive(Origins.Sounds.Alarm1, updateCallback: sound => {
+					if (!Main.LocalPlayer.mount.IsMount<Star_Soldier>()) {
+						playAlarm = false;
+						alarmVolumeMult = 0;
+						return false;
+					}
+					MathUtils.LinearSmoothing(ref alarmVolumeMult, playAlarm.ToInt(), 1f / 15);
+					sound.Volume = alarmVolumeMult;
+					sound.Pitch = 1.5f;
+					return alarmVolumeMult > 0;
+				});
 			}
 		}
 	}
