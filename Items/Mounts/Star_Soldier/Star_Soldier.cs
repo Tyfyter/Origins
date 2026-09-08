@@ -2078,6 +2078,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				int hovered = -1;
 				AlarmHUD.playAlarm = false;
 				if (player.burned) AlarmHUD.playAlarm = true;
+				if (player.lavaWet && !player.lavaImmune && player.lavaTime <= 0) AlarmHUD.playAlarm = true;
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (player.buffType[i] > 0) {
 						if (Sets.CustomBuffIndicator[player.buffType[i]] is Func<int, Vector2, bool> customIcon) {
