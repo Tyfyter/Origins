@@ -2346,6 +2346,7 @@ Projectiles: {
 	// Star_Soldier_Laser_Beam.DisplayName: Star Soldier Laser Beam
 	// Star_Soldier_Blade_P.DisplayName: Star Soldier Laser Blade
 	// Glitter_Glue_P.DisplayName: Glitter Glue
+	// Star_Soldier_Pod_Missile.DisplayName: Star Soldier Pod Missile
 }
 
 Prefixes: {

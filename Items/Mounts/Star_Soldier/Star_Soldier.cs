@@ -1,13 +1,18 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Core;
 using Origins.Core.Shaders;
 using Origins.Dev;
+using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
+using Origins.NPCs.Ashen;
 using Origins.Projectiles;
 using Origins.UI;
 using PegasusLib.Networking;
@@ -33,6 +38,7 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using ThoriumMod.Buffs;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -1631,23 +1637,27 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 	}
 	public override void SetDefaults() {
-		Item.damage = 222;
+		Item.DefaultToCanisterLauncher<Star_Soldier_Pod_Missile>(222, 12, 6, 0, 0, true);
 		Item.DamageType = DamageClasses.Explosive;
-		Item.useAnimation = 48;
-		Item.useTime = 12;
-		Item.shootSpeed = 24;
+		Item.useAnimation *= AmmoMax;
 		Item.knockBack = 4f;
-		Item.useAmmo = AmmoID.Rocket;
-		Item.shoot = ProjectileID.RocketI;
 		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
-		Item.autoReuse = true;
 		Item.rare = ItemRarityID.Yellow;
 	}
 	public override bool CanUseItem(Player player) => !reloading && ammo > 0;
 	public override void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) => player.OriginPlayer().projectileSpeedBoost *= 1.1f;
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(verticalFrames: 2, frameY: reloading.ToInt());
+	}
+	public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		position += velocity
+			.Normalized(out _)
+			.Perpendicular(player.direction * (int)player.gravDir)
+			* (player.itemAnimation / player.itemTimeMax) switch {
+				3 or 1 => -10, //second & fourth come from the bottom
+				_ => 6 //first & third come from the top
+			};
 	}
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		if (arm.itemAnimation != 0) {
@@ -1688,6 +1698,164 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 			0);
 		}
 		position.Y += 8;
+	}
+	public class Star_Soldier_Pod_Missile : ModProjectile, ICanisterProjectile {
+		public static AutoLoadingAsset<Texture2D> outerTexture = typeof(Star_Soldier_Pod_Missile).GetDefaultTMLName("_Outer");
+		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Star_Soldier_Pod_Missile).GetDefaultTMLName("Inner");
+		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
+		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 4;
+			Origins.MagicTripwireRange[Type] = 40;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 1;
+			Projectile.timeLeft = 420;
+			Projectile.penetrate = 1;
+			Projectile.aiStyle = 0;
+			Projectile.alpha = 255;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (Projectile.velocity != default) Projectile.ai[1] = MathF.Round(60 / Projectile.velocity.Length());
+		}
+		public override void AI() {
+			if (Projectile.ai[1] > 0) {
+				Projectile.ai[1]--;
+				Projectile.numUpdates++;
+				return;
+			}
+			if (++Projectile.localAI[0] < 30) {
+				Projectile.velocity *= 0.97f;
+				if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation();
+				Projectile.frame = (int)((Projectile.localAI[0] / 30) * (Main.projFrames[Type] - 1));
+				return;
+			}
+			Projectile.frame = Main.projFrames[Type] - 1;
+			Color dustColor = default;
+			int dustType = DustID.Torch;
+			if (Projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile global)) {
+				if (global.CanisterData?.HasSpecialEffect ?? false) {
+					dustType = Tintable_Torch_Dust.ID;
+					dustColor = global.CanisterData.InnerColor with { A = 100 };
+				}
+			}
+			Vector2 dustBasePos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 35 - new Vector2(4);
+			for (int i = 0; i < 2; i++) {
+				Vector2 offset = Projectile.velocity * i * 0.5f;
+
+				if (Main.rand.NextBool(2)) {
+					Dust dust = Dust.NewDustDirect(
+						dustBasePos + offset - Projectile.velocity * 0.5f,
+						Projectile.width - 8,
+						Projectile.height - 8,
+						dustType,
+						0f,
+						0f,
+						100,
+						dustColor
+					);
+					dust.scale *= 1.4f + Main.rand.Next(10) * 0.1f;
+					dust.velocity *= 0.2f;
+					dust.noGravity = true;
+				}
+
+				if (Main.rand.NextBool(2)) {
+					Dust dust = Dust.NewDustDirect(
+						dustBasePos + offset - Projectile.velocity * 0.5f,
+						Projectile.width - 8,
+						Projectile.height - 8,
+						DustID.Smoke,
+						0f,
+						0f,
+						100,
+						default,
+						0.5f
+					);
+					dust.fadeIn = 0.5f + Main.rand.Next(5) * 0.1f;
+					dust.velocity *= 0.05f;
+				}
+			}
+			if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.alpha > 0)
+				Projectile.alpha -= 15;
+			if (Projectile.alpha < 0)
+				Projectile.alpha = 0;
+
+			float targetWeight = 300;
+			Vector2 targetPos = default;
+			bool foundTarget;
+			Player player = Main.player[Projectile.owner];
+			if (Star_Soldier.GetHandler(player)?.LockOnTarget is Entity entity) {
+				targetPos = entity.Center;
+				foundTarget = true;
+			} else {
+				foundTarget = player.DoHoming((target) => {
+					Vector2 currentPos = target.Center;
+					float dist = Math.Abs(Projectile.Center.X - currentPos.X) + Math.Abs(Projectile.Center.Y - currentPos.Y);
+					if (target is Player) dist *= 2.5f;
+					if (dist < targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
+						targetWeight = dist;
+						targetPos = currentPos;
+						return true;
+					}
+					return false;
+				});
+			}
+
+			Vector2 targetVelocity = foundTarget ? (targetPos - Projectile.Center).Normalized(out _) : Projectile.rotation.ToRotationVector2();
+			float scaleFactor = 16f;
+			float lerpValue = 0.083333336f;
+			targetVelocity *= scaleFactor;
+			Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, lerpValue);
+		}
+		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
+			Rectangle frame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+			Vector2 origin = spriteEffects.ApplyToOrigin(new(35, 10), frame);
+			if (!canisterData.HasSpecialEffect) {
+				Main.EntitySpriteDraw(
+					TextureAssets.Projectile[Type].Value,
+					projectile.Center - Main.screenPosition,
+					frame,
+					lightColor,
+					projectile.rotation,
+					origin,
+					projectile.scale,
+					spriteEffects
+				);
+				return;
+			}
+			Main.EntitySpriteDraw(
+				InnerTexture,
+				projectile.Center - Main.screenPosition,
+				frame,
+				canisterData.InnerColor,
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+			Main.EntitySpriteDraw(
+				OuterTexture,
+				projectile.Center - Main.screenPosition,
+				frame,
+				canisterData.OuterColor.MultiplyRGBA(lightColor),
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+		}
 	}
 }
 public class Star_Soldier_Proper_Buff : ModBuff {
