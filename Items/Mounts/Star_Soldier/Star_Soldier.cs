@@ -11,6 +11,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Ashen;
 using Origins.Projectiles;
@@ -497,6 +498,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		];
 		On_Player.ScrollHotbar += On_Player_ScrollHotbar;
 		if (!Main.dedServ) {
+			Mount_Icon_Layer.IconTexture[Type] = ModContent.Request<Texture2D>(typeof(Star_Soldier).GetDefaultTMLName("_Icon"));
 			Asset<Texture2D> fontTexture = ModContent.Request<Texture2D>("Origins/UI/Ashen_Font");
 			Task.Run(FontAssets.ItemStack.Wait).ContinueWith(__ => {
 				fontTexture.Wait();
