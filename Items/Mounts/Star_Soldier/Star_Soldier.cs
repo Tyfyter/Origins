@@ -301,7 +301,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			public void UpdateRotations(Player player) {
 				if (!Weapon.UpdateRotations(player, ref this)) return;
 				Vector2 relativeTarget = player.OriginPlayer().relativeTarget;
-				GetPositions(GetBodyCenter(player, player.Center), player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
+				GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
 				float targetRotation = (relativeTarget + player.Bottom - gunPos).ToRotation();
 
 				GeometryUtils.AngularSmoothing(ref gunRotation, targetRotation, 0.2f);
@@ -362,7 +362,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				EntitySource_ItemUse_WithAmmo projectileSource = new(player, item, usedAmmoItemId, nameof(Star_Soldier) + currentArm);
 				player.ApplyItemTime(item, callUseItem: false);
 
-				GetPositions(GetBodyCenter(player, player.Center), player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
+				GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
 
 				Vector2 vector = gunRotation.ToRotationVector2();
 				Vector2 velocity = vector * item.shootSpeed;
