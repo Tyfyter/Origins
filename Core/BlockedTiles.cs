@@ -10,6 +10,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Core {
 	internal class BlockedTiles : ModSystem {
+		public const byte mask_players = 0b0001;
+		public const byte mask_npcs = 0b0010;
+		public const byte mask_projectiles = 0b0100;
 		static Action clear;
 		public override void Load() {
 			clear = typeof(Main).Assembly.GetType("Terraria.TileData`1").MakeGenericType(typeof(Blocked_Tile_Data)).GetMethod("ClearEverything").CreateDelegate<Action>();
@@ -31,18 +34,18 @@ namespace Origins.Core {
 			}
 			foreach (Player player in Main.ActivePlayers) {
 				if (player.shimmering || player.dead || player.ghost) continue;
-				Set(player.Hitbox, 0b0001);
+				Set(player.Hitbox, mask_players);
 			}
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.noTileCollide) continue;
-				Set(npc.Hitbox, 0b0010);
+				Set(npc.Hitbox, mask_npcs);
 			}
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if (!projectile.tileCollide) continue;
-				Set(projectile.Hitbox, 0b0100);
+				Set(projectile.Hitbox, mask_projectiles);
 			}
 		}
-		public static bool Get(int i, int j, byte mask = 0b0011) => Main.tile[i, j].Get<Blocked_Tile_Data>().Get(mask);
+		public static bool Get(int i, int j, byte mask = mask_players | mask_npcs) => Main.tile[i, j].Get<Blocked_Tile_Data>().Get(mask);
 		struct Blocked_Tile_Data : ITileData {
 			byte data;
 			public void Set(byte mask) => data |= mask;

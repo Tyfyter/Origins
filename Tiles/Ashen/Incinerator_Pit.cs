@@ -4,7 +4,9 @@ using Origins.Core;
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
+using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -54,7 +56,17 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 		"XXXXXXXXXXXXX"
 	);
 	public override void Load() {
-		new TileItem(this, true).RegisterItem();
+		new TileItem(this)
+		.WithExtraStaticDefaults(item => ItemID.Sets.DisableAutomaticPlaceableDrop[item.type] = true)
+		.WithOnAddRecipes(item => {
+			Recipe.Create(item.type)
+			.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 10)
+			.AddIngredient<Scrap>(20)
+			.AddIngredient<Rotor>(2)
+			.AddTile<Metal_Presser>()
+			.Register();
+		})
+		.RegisterItem();
 		On_TileDrawing.PostDrawTiles += On_TileDrawing_PostDrawTiles;
 	}
 	static void On_TileDrawing_PostDrawTiles(On_TileDrawing.orig_PostDrawTiles orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets) {
@@ -104,6 +116,30 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 	public override void NearbyEffects(int i, int j, bool closer) {
 		if (closer) return;
 		activeSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
+	}
+	public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame, ref Vector2 position, ref Color color, bool validPlacement, ref SpriteEffects spriteEffects) {
+		frame.X /= 18;
+		frame.Y /= 18;
+
+		bool isPit = Shape[frame.X, frame.Y, 0] == 'O';
+
+		frame.X *= 16;
+		frame.Y *= 16;
+
+		if (isPit) {
+			spriteBatch.Draw(
+				TextureAssets.Tile[Incinerator_Pit_Pit.ID].Value,
+				position,
+				frame,
+				color,
+				0f,
+				Vector2.Zero,
+				1f,
+				spriteEffects,
+			0f);
+			return false;
+		}
+		return base.PreDrawPlacementPreview(i, j, spriteBatch, ref frame, ref position, ref color, validPlacement, ref spriteEffects);
 	}
 	class Sound : AEnvironmentSound {
 		public override void UpdateSound(Vector2 position) {
@@ -237,6 +273,49 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
 		ModContent.GetInstance<Incinerator_Pit_TE>().AddTileEntity(new(left, top), new());
 	}
+	bool placementIsUnsupported;
+	public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
+		Point pos = tile.GetTilePosition();
+		if (pos.X == left && pos.Y == top) {
+			placementIsUnsupported = true;
+			int width = Shape.Width;
+			int height = Shape.Height;
+			for (int j = 0; j < height; j++) {
+				for (int i = 0; i < width; i++) {
+					if (!Shape[i, j, style]) continue;
+					if (Main.tile[left + i, top + j].WallType != WallID.None) {
+						placementIsUnsupported = false;
+						goto checkSupported;
+					}
+					if (!Shape[i - 1, j, style] && IsValidAnchor(Main.tile[left + i - 1, top + j])) {
+						placementIsUnsupported = false;
+						goto checkSupported;
+					}
+					if (!Shape[i + 1, j, style] && IsValidAnchor(Main.tile[left + i + 1, top + j])) {
+						placementIsUnsupported = false;
+						goto checkSupported;
+					}
+					if (!Shape[i, j - 1, style] && IsValidAnchor(Main.tile[left + i, top + j - 1])) {
+						placementIsUnsupported = false;
+						goto checkSupported;
+					}
+					if (!Shape[i, j + 1, style] && IsValidAnchor(Main.tile[left + i, top + j + 1])) {
+						placementIsUnsupported = false;
+						goto checkSupported;
+					}
+				}
+			}
+		}
+		checkSupported:;
+		if (placementIsUnsupported) return true;
+		if (BlockedTiles.Get(pos.X, pos.Y)) return true;
+		return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
+	}
+	public static bool IsValidAnchor(Tile anchor) => anchor.HasTile && (Main.tileSolid[anchor.TileType] || TileID.Sets.IsBeam[anchor.TileType] || Main.tileRope[anchor.TileType] || anchor.TileType == TileID.MinecartTrack);
+	public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+		base.KillMultiTile(i, j, frameX, frameY);
+	}
+	public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) => noItem = true;
 	class Incinerator_Pit_TE : TESystem<Incinerator_Pit_TE.Data> {
 		public static Data GetData(Point16 position) {
 			ModContent.GetInstance<Incinerator_Pit_TE>().tileEntities.TryGetValue(position, out Data data);
@@ -394,6 +473,7 @@ public class Incinerator_Pit_Pit : Incinerator_Pit, IGlowingModTile {
 		base.SetStaticDefaults();
 		Main.tileSolid[Type] = false;
 		Main.tileLighted[Type] = true;
+		RegisterItemDrop(TileItem.ItemType<Incinerator_Pit>(), -1);
 	}
 	public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 		if (ShouldGlow(Main.tile[i, j])) {
