@@ -47,9 +47,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
 			if (AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.TryGetValue(weapon.type, out Dictionary<int, int> specificTypes) && specificTypes.ContainsKey(ammo.type)) return;
-			if (AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[weapon.type] != -1 &&
-				AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.TryGetValue(AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[weapon.type], out specificTypes)
-				&& specificTypes.ContainsKey(ammo.type)) return;
+			if (weapon.useAmmo != ModContent.ItemType<Resizable_Mine_Wood>() && AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[weapon.type] != -1) {
+				if (AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.TryGetValue(AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[weapon.type], out specificTypes) && specificTypes.ContainsKey(ammo.type)) return;
+			}
 			if (LauncherToProjectile.TryGetValue(weapon.type, out int proj)) {
 				type = proj;
 			} else {
