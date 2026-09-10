@@ -53,7 +53,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(SoundID.Roar, player.Center);
-			new TOSummons_Action(player, Type, true).Perform();
+			new TOSummons_Action(player, Type).Perform();
 			return true;
 		}
 		public override void AddRecipes() {
@@ -71,28 +71,22 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 	}
 
-	public record class TOSummons_Action(Player Player, int Type, bool TOSummon) : SyncedAction {
+	public record class TOSummons_Action(Player Player, int Type) : SyncedAction {
 		public override bool ServerOnly => true;
-		public TOSummons_Action() : this(default, default, true) { }
+		public TOSummons_Action() : this(default, default) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
-			Player = Main.player[reader.ReadInt16()],
-			Type = reader.ReadInt32(),
-			TOSummon = reader.ReadBoolean()
+			Player = ReadPlayer(reader),
+			Type = reader.ReadInt32()
 		};
 		public override void NetSend(BinaryWriter writer) {
-			writer.Write(Player.whoAmI);
+			WritePlayer(writer, Player);
 			writer.Write(Type);
-			writer.Write(TOSummon);
 		}
 		protected override void Perform() {
-			int type = Type;
-			TOSummons summonItem = null;
-			if (TOSummon && Player.HeldItem.type == Type && Player.HeldItem.ModItem is TOSummons SummonItem) {
-				summonItem = SummonItem;
-				type = SummonItem.SummonType;
-			}
-			NPC npc = NPC.NewNPCDirect(NPC.GetBossSpawnSource(Player.whoAmI), Player.Center.RandomPosAround(-800, 800, -800, -250), type);
-			summonItem?.ExtraSpawn(npc);
+			if (Player.HeldItem.type != Type || Player.HeldItem.ModItem is not TOSummons SummonItem) return;
+
+			NPC npc = NPC.NewNPCDirect(NPC.GetBossSpawnSource(Player.whoAmI), Player.Center.RandomPosAround(-800, 800, -800, -250), SummonItem.SummonType);
+			SummonItem.ExtraSpawn(npc);
 			ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", npc.FullName), new Color(175, 75, 255));
 		}
 	}
@@ -138,7 +132,10 @@ namespace Origins.CrossMod.Fargos.Items {
 		public override bool? UseItem(Item item, Player player) {
 			if (item.type == ModContent.ItemType<HeartChocolate>() && player.ZoneShimmer) {
 				SoundEngine.PlaySound(SoundID.Roar, player.Center);
-				new TOSummons_Action(player, ModContent.NPCType<Fae_Nymph>(), false).Perform();
+				if (!NetmodeActive.MultiplayerClient) {
+					NPC npc = NPC.NewNPCDirect(NPC.GetBossSpawnSource(player.whoAmI), player.Center.RandomPosAround(-800, 800, -800, -250), ModContent.NPCType<Fae_Nymph>());
+					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", npc.FullName), new Color(175, 75, 255));
+				}
 				return true;
 			}
 			return null;
