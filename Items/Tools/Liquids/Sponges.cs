@@ -92,7 +92,4 @@ namespace Origins.Items.Tools.Liquids {
 		}
 	}
 	public class Brine_Sponge : SpongeBase<Brine> { }
-	public class Amebic_Gel_Sponge : SpongeBase<Amebic_Gel> {
-		public override string Texture => typeof(Brine_Sponge).GetDefaultTMLName();
-	}
 }

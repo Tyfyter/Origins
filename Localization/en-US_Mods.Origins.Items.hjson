@@ -8178,11 +8178,6 @@ Amebic_Bucket: {
 	LiquidName: Amebic Gel
 }
 
-Amebic_Gel_Sponge: {
-	DisplayName: Amebic Gel Absorbant Sponge
-	Tooltip: Capable of soaking up endless amount of amebic gel
-}
-
 Burning_Oil_Bucket: {
 	DisplayName: Burning Oil Bucket (Debug)
 	LiquidName: Burning Oil
