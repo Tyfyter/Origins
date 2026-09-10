@@ -37,8 +37,7 @@ namespace Origins.Liquids {
 		public override bool IsActive(Player player, FishingAttempt attempt) => attempt.BobberInLiquid<Amebic_Gel>();
 		public override void SetStaticDefaults() {
 			Legendary.AddRange([
-				FishingCatch.Item(ItemType<Amebic_Gel_Bottomless_Bucket>()),
-				FishingCatch.Item(ItemType<Amebic_Gel_Sponge>())
+				FishingCatch.Item(ItemType<Amebic_Gel_Bottomless_Bucket>())
 			]);
 			Uncommon.AddRange([
 				FishingCatch.Item(ItemType<Tearracuda>()),
