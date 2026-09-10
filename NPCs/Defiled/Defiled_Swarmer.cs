@@ -84,10 +84,9 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public void SpawnWisp(NPC npc) {
-			TOEnergizedGlobalNPC swarmNPC = npc.GetSwarmNPC();
-			if (swarmNPC is not null && swarmNPC.getSwarmMinionBoss is not null && !TOEnergizedGlobalNPC.SwarmActive) return;
+			if (npc.GetSwarmNPC()?.getSwarmMinionBoss is not null && !TOEnergizedGlobalNPC.SwarmActive) return;
 			if (Main.masterMode || (Main.expertMode && Main.rand.NextBool())) {
-				EntitySource_Death source = new(swarmNPC?.getSwarmMinionBoss ?? npc);
+				EntitySource_Death source = new(npc.GetSwarmNPC()?.getSwarmMinionBoss ?? npc);
 				NPC.NewNPC(source, (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
 			}
 		}

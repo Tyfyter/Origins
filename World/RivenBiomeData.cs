@@ -4,6 +4,7 @@ using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
 using ModLiquidLib.ModLoader;
 using Origins.Backgrounds;
+using Origins.CrossMod.Fargos.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
@@ -63,6 +64,16 @@ namespace Origins.World.BiomeData {
 		public static Vector3 ColoredGlow(float intensity) => new Vector3(0.394f, 0.879f, 0.912f) * intensity * NormalGlowValue.GetValue();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			int worldCracker = NPCType<World_Cracker_Head>();
+			Rectangle screenRect = new Rectangle(0, 0, NPC.sWidth, NPC.sHeight).Recentered(player.Center);
+			Rectangle npcRect = new(0, 0, 5000 * 2, 5000 * 2);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.type == worldCracker) {
+					if (screenRect.Intersects(npcRect.Recentered(npc.Center))) {
+						if (npc.GetSwarmNPC()?.isSwarmBoss ?? false && TOEnergizedGlobalNPC.SwarmActive) OriginSystem.rivenTiles = NeededTiles + 1;
+					}
+				}
+			}
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
 

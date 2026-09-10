@@ -63,8 +63,7 @@ namespace Origins.World.BiomeData {
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.type == defiledAmalgamation) {
 					if (screenRect.Intersects(npcRect.Recentered(npc.Center))) {
-						TOEnergizedGlobalNPC swarmNPC = npc.GetSwarmNPC();
-						if (swarmNPC is not null && swarmNPC.isSwarmBoss && TOEnergizedGlobalNPC.SwarmActive) defiledTiles = NeededTiles + 1;
+						if (npc.GetSwarmNPC()?.isSwarmBoss ?? false && TOEnergizedGlobalNPC.SwarmActive) defiledTiles = NeededTiles + 1;
 						else defiledTiles += 100;
 					}
 					if (npc.target == player.whoAmI) defiledTiles += 100;

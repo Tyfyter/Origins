@@ -546,7 +546,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			worm.NPC.ai[3] = MaxArmorHealth;
 		}
 		public override void BossHeadSlot(ref int index) {
-			float ArmorHealthPercent = ((int)NPC.ai[3]) / (float)MaxArmorHealth;
+			float ArmorHealthPercent = Math.Min(((int)NPC.ai[3]) / (float)MaxArmorHealth, 1f);
 			index = bossHeads[(int)float.Floor((1 - ArmorHealthPercent) * (bossHeads.Length - 1))];
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

@@ -880,8 +880,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public void SpawnWisp(NPC npc) {
-			TOEnergizedGlobalNPC swarmNPC = npc.GetSwarmNPC();
-			if (swarmNPC is not null && swarmNPC.isSwarmBoss) return;
+			if (npc.GetSwarmNPC()?.isSwarmBoss ?? false) return;
 			if (AIState is state_split_amalgamation_active or state_split_amalgamation_start) {
 				NPC.NewNPC(npc.GetSource_Death(), (int)torso.position.X + Main.rand.Next(torso.width), (int)torso.position.Y + Main.rand.Next(torso.height), ModContent.NPCType<Defiled_Wisp>());
 				NPC.NewNPC(npc.GetSource_Death(), (int)arm.position.X + Main.rand.Next(arm.width), (int)arm.position.Y + Main.rand.Next(arm.height), ModContent.NPCType<Defiled_Wisp>());
