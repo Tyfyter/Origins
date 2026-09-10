@@ -21,6 +21,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.0125f;
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
