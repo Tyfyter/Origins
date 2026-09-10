@@ -193,6 +193,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int RedExplosionSize => (int)(48 + 16 * DifficultyMult);
 		public static float TanExplosionRange => 112 + 16 * DifficultyMult;
 		public static float TanExplosionSpread => 0.5f;
+		public override float WalkDist => 0;
 		#endregion stats
 		public override bool Ranged => true;
 		public override GunKind? ForGunType => GunKind.Launcher;

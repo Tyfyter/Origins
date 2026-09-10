@@ -10,7 +10,7 @@ using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
 
 namespace Origins.NPCs.Ashen.Boss {
-	//todo: force lee to become an animator, no
+	//todo: force lee to become an animator
 	public class Standing_Animation : LegAnimation {
 		public override void Load() {
 			defaultLegAnimation = this;
