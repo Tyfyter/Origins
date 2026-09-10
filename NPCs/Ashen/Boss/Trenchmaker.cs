@@ -146,6 +146,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { Position = new Vector2(0, -5) };
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Ashen_Biome>());
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.4f;
 			ModCompatSets.EnergizedBossItems[Type] = (ModContent.ItemType<Trenchmaker_Bag>(), TrophyTileBase.ItemType<Trenchmaker_Trophy>(), 0);
 			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
 				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),

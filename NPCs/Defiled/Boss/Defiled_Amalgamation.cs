@@ -137,6 +137,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			ID = Type;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
 			Origins.RasterizeAdjustment[Type] = (16, 0f, 0f);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.4f;
 			ModCompatSets.EnergizedBossItems[Type] = (ModContent.ItemType<Defiled_Amalgamation_Bag>(), TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(), 0);
 		}
 		public override void SetDefaults() {

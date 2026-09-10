@@ -28,7 +28,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionYOverride = -32,
 				Rotation = -MathHelper.PiOver2
 			};
-			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.05f;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.0285714285714286f;
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			Defiled_Amalgamation.Minions.Add(Type);
 		}
