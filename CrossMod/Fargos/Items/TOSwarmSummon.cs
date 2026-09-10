@@ -105,6 +105,9 @@ namespace Origins.CrossMod.Fargos.Items {
 				TOEnergizedGlobalNPC.UseHardmodeScaling = SwarmItem.UseHardmodeScaling;
 
 				NPC boss = NPC.NewNPCDirect(new EntitySource_BossSpawn(Player, OriginsModIntegrations.SwarmContext), Player.Center.RandomPosAround(-1000, 1000, -1000, -400), SwarmItem.SwarmType);
+
+				Fargowiltas.Fargowiltas.SwarmNoHyperActive = usedItems < 5;
+
 				SwarmItem.ExtraSpawn(boss);
 
 				Player.HeldItem.stack -= usedItems - 1;
@@ -127,6 +130,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 		public override void ExtraSpawn(NPC npc) {
 			npc.position.Y -= 400;
+			Fargowiltas.Fargowiltas.SwarmNoHyperActive = true;
 			(npc.ModNPC as Trenchmaker).SetAIState(StateBossMethods<Trenchmaker>.StateIndex<Spawning_Jets_State>());
 		}
 	}
