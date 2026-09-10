@@ -3,6 +3,7 @@ using ModLiquidLib.ID;
 using ModLiquidLib.Utils;
 using Origins.Buffs;
 using Origins.Core;
+using Origins.CrossMod.Fargos.NPCs;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
@@ -69,7 +70,13 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 			NPC.frame.Y = NPC.frame.Height * (int)NPC.ai[0];
 			if (NPC.ai[0] >= Main.npcFrameCount[Type]) {
+				bool isSwarm = NPC.GetSwarmNPC()?.isSwarmBoss ?? false;
+				if (isSwarm) TOEnergizedGlobalNPC.SpawningSwarmNPC = true;
 				NPC.Transform(ModContent.NPCType<Mildew_Carrion>());
+				if (isSwarm) {
+					TOEnergizedGlobalNPC.SpawningSwarmNPC = false;
+					NPC.GetSwarmNPC().isSwarmBoss = true;
+				}
 			}
 			return false;
 		}

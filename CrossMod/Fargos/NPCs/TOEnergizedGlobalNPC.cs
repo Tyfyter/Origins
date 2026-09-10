@@ -6,26 +6,35 @@ namespace Origins.CrossMod.Fargos.NPCs {
 	[ExtendsFromMod(nameof(Fargowiltas))]
 	public class TOEnergizedGlobalNPC : GlobalNPC {
 		public static bool SwarmActive;
+		public static bool SpawningSwarmNPC;
 		public static bool UseHardmodeScaling = false;
 		public static int SwarmItemsUsed = 0;
 		public bool isSwarmBoss = false;
 		public Entity getSwarmMinionBoss;
 
 		public override bool InstancePerEntity => true;
+		public void SetSwarmStats(NPC npc) {
+			int newHealth = (UseHardmodeScaling ? 160 : 28) * 1000;
+
+			npc.lifeMax = (int)(newHealth * ModCompatSets.EnergizedHealthMultiplier[npc.type]);
+			if (SwarmItemsUsed > 1) npc.lifeMax *= SwarmItemsUsed;
+			npc.life = npc.lifeMax;
+
+			Fargowiltas.Fargowiltas.HardmodeSwarmActive = UseHardmodeScaling;
+			Fargowiltas.Fargowiltas.SwarmItemsUsed = SwarmItemsUsed;
+			int minDamage = Fargowiltas.Fargowiltas.SwarmMinDamage * 2;
+			if (!npc.townNPC && npc.lifeMax > 10 && npc.damage > 0 && npc.damage < minDamage)
+				npc.damage = minDamage;
+		}
+		public override void SetDefaults(NPC entity) {
+			if (SpawningSwarmNPC) {
+				SetSwarmStats(entity);
+			}
+		}
 		public override void OnSpawn(NPC npc, IEntitySource source) {
 			isSwarmBoss = source?.Context == OriginsModIntegrations.SwarmContext;
 			if(isSwarmBoss || (source is EntitySource_Parent { Entity: NPC parent } && parent.GetGlobalNPC<TOEnergizedGlobalNPC>().isSwarmBoss)) {
-				int newHealth = (UseHardmodeScaling ? 160 : 28) * 1000;
-
-				npc.lifeMax = (int)(newHealth * ModCompatSets.EnergizedHealthMultiplier[npc.type]);
-				if (SwarmItemsUsed > 1) npc.lifeMax *= SwarmItemsUsed;
-				npc.life = npc.lifeMax;
-
-				Fargowiltas.Fargowiltas.HardmodeSwarmActive = UseHardmodeScaling;
-				Fargowiltas.Fargowiltas.SwarmItemsUsed = SwarmItemsUsed;
-				int minDamage = Fargowiltas.Fargowiltas.SwarmMinDamage * 2;
-				if (!npc.townNPC && npc.lifeMax > 10 && npc.damage > 0 && npc.damage < minDamage)
-					npc.damage = minDamage;
+				SetSwarmStats(npc);
 
 				if (source is EntitySource_Parent fromParent && !isSwarmBoss) getSwarmMinionBoss = fromParent.Entity;
 			}
