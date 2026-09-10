@@ -1,5 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Core;
@@ -9,7 +8,6 @@ using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
 using Origins.Misc;
@@ -39,7 +37,6 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using ThoriumMod.Buffs;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
