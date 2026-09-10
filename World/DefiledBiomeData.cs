@@ -4,6 +4,7 @@ using AltLibrary.Common.Systems;
 using AltLibrary.Core;
 using AltLibrary.Core.Generation;
 using Origins.Backgrounds;
+using Origins.CrossMod.Fargos.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
@@ -35,8 +36,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
-using static Terraria.WorldGen;
 using static Terraria.ModLoader.ModContent;
+using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome, IItemObtainabilityProvider {
@@ -61,7 +62,11 @@ namespace Origins.World.BiomeData {
 			Rectangle npcRect = new(0, 0, 5000 * 2, 5000 * 2);
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.type == defiledAmalgamation) {
-					if (screenRect.Intersects(npcRect.Recentered(npc.Center))) defiledTiles += 100;
+					if (screenRect.Intersects(npcRect.Recentered(npc.Center))) {
+						TOEnergizedGlobalNPC swarmNPC = npc.GetSwarmNPC();
+						if (swarmNPC is not null && swarmNPC.isSwarmBoss && TOEnergizedGlobalNPC.SwarmActive) defiledTiles = NeededTiles + 1;
+						else defiledTiles += 100;
+					}
 					if (npc.target == player.whoAmI) defiledTiles += 100;
 				} else if (npc.ModNPC is IDefiledEnemy && screenRect.Intersects(npcRect.Recentered(npc.Center))) {
 					defiledTiles += 5;
