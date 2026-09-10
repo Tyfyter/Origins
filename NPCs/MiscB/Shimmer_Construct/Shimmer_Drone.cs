@@ -18,6 +18,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			};
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.05f;
 			Shimmer_Construct.Minions.Add(Type);
 			AprilFoolsTextures.AddNPC(this);
 		}

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,6 +59,8 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Projectile.penetrate--;
 		}
+		public string? SpawnContext;
+		public override void OnSpawn(IEntitySource source) => SpawnContext = source.Context;
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.Center);
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
@@ -86,7 +89,7 @@ namespace Origins.NPCs.Brine.Boss {
 					}
 					if (canSpawn) {
 						NPC.NewNPC(
-							Projectile.GetSource_Death(),
+							Projectile.GetSource_Death(SpawnContext),
 							(int)bestPosition.X,
 							(int)bestPosition.Y,
 							npcType,
@@ -136,6 +139,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Mildew_Carrion.Minions.Add(Type);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.025f;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

@@ -139,6 +139,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Frame = 6
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
+			ModCompatSets.EnergizedBossItems[Type] = (ItemType<Shimmer_Construct_Bag>(), TrophyTileBase.ItemType<Shimmer_Construct_Trophy>(), 0);
 			AprilFoolsTextures.AddNPC(this);
 			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
 				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),
@@ -429,8 +430,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public override readonly string ToString() => $"type:{ID}, velocity:{velocity}, position:{position}, offset:{offset}, ";
 		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Construct).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF";
+		public static AutoLoadingTexture normalTexture = typeof(Shimmer_Construct).GetDefaultTMLName();
+		public static AutoLoadingTexture afTexture = typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			Vector2 position = NPC.Center + NPC.netOffset;

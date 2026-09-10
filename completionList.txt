@@ -1987,9 +1987,9 @@ CROSS-MOD CONTENT:
 (^) Avalon biome lock box support
 (^3, ⚿) Cinematic Boss Intros support
 (^) Fargo's Altar Exterminator effect evils
-(#2) Fargo's alternate boss summons
+(@, #2) Fargo's alternate boss summons
 (ᗢ) Fargo's caught npcs
-(X) Fargo's energized boss summons
+(@, #2) Fargo's energized boss summons
 (^) Fargo's Fountain biome change
 (X) Fargo's Purity Totem effects evils
 (ᗢ) Fargo's sell boss/rare npc summons

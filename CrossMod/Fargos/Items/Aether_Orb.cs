@@ -9,7 +9,7 @@ namespace Origins.CrossMod.Fargos.Items {
 	public class Aether_Orb : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
-			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
+			ItemID.Sets.SortingPriorityBossSpawns[Type] = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);

@@ -11,7 +11,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Shaped_Glass : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
-			ItemID.Sets.SortingPriorityBossSpawns[Type] = 1;
+			ItemID.Sets.SortingPriorityBossSpawns[Type] = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SuspiciousLookingEye);

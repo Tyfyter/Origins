@@ -20,21 +20,21 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy, IOnHitByNPC {
 		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
-		static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
-		static PegasusLib.AutoLoadingAsset<Texture2D> armPath = bodyPartsPath + "Arm";
-		static PegasusLib.AutoLoadingAsset<Texture2D> leg1Path = bodyPartsPath + "Leg1";
-		static PegasusLib.AutoLoadingAsset<Texture2D> leg2Path = bodyPartsPath + "Leg2";
-		static PegasusLib.AutoLoadingAsset<Texture2D> shoulderPath = bodyPartsPath + "Shoulder";
-		static PegasusLib.AutoLoadingAsset<Texture2D> torsoGlowPath = bodyPartsPath + "Torso_Glow";
+		static AutoLoadingTexture torsoPath = bodyPartsPath + "Torso";
+		static AutoLoadingTexture armPath = bodyPartsPath + "Arm";
+		static AutoLoadingTexture leg1Path = bodyPartsPath + "Leg1";
+		static AutoLoadingTexture leg2Path = bodyPartsPath + "Leg2";
+		static AutoLoadingTexture shoulderPath = bodyPartsPath + "Shoulder";
+		static AutoLoadingTexture torsoGlowPath = bodyPartsPath + "Torso_Glow";
 
-		static PegasusLib.AutoLoadingAsset<Texture2D> armGlowPath = bodyPartsPath + "Arm_Glow";
-		static PegasusLib.AutoLoadingAsset<Texture2D> leg1GlowPath = bodyPartsPath + "Leg1_Glow";
-		static PegasusLib.AutoLoadingAsset<Texture2D> leg2GlowPath = bodyPartsPath + "Leg2_Glow";
-		static PegasusLib.AutoLoadingAsset<Texture2D> shoulderGlowPath = bodyPartsPath + "Shoulder_Glow";
-		static PegasusLib.AutoLoadingAsset<Texture2D> RightArmPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
-		static PegasusLib.AutoLoadingAsset<Texture2D> RightArmGlowPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
-		static PegasusLib.AutoLoadingAsset<Texture2D> LeftArmPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
-		static PegasusLib.AutoLoadingAsset<Texture2D> LeftArmGlowPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
+		static AutoLoadingTexture armGlowPath = bodyPartsPath + "Arm_Glow";
+		static AutoLoadingTexture leg1GlowPath = bodyPartsPath + "Leg1_Glow";
+		static AutoLoadingTexture leg2GlowPath = bodyPartsPath + "Leg2_Glow";
+		static AutoLoadingTexture shoulderGlowPath = bodyPartsPath + "Shoulder_Glow";
+		static AutoLoadingTexture RightArmPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
+		static AutoLoadingTexture RightArmGlowPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
+		static AutoLoadingTexture LeftArmPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
+		static AutoLoadingTexture LeftArmGlowPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
 		Part PartType => (Part)(int)NPC.ai[0];
 		Defiled_Amalgamation DA;
 		int maxFrames = -1;

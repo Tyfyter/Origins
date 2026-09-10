@@ -5737,20 +5737,9 @@ Nerve_Flan: {
 	// Tooltip: "'Putting the soul in fan-dancing'"
 }
 
-Defiled_Chest: {
-	// DisplayName: "{§Defiled} Chest"
-	// Tooltip: Summons {§Defiled} Mimic
-}
-
-Riven_Chest: {
-	// DisplayName: "{§Riven} Chest"
-	// Tooltip: Summons {§Riven} Mimic
-}
-
-Suspicious_Trash_Compactor: {
-	// DisplayName: Suspicious Trash Compactor
-	// Tooltip: Summons Trash Compactor Mimic
-}
+// Defiled_Chest.DisplayName: "{§Defiled} Chest"
+// Riven_Chest.DisplayName: "{§Riven} Chest"
+// Suspicious_Trash_Compactor.DisplayName: Suspicious Trash Compactor
 
 Greater_Summoning_Potion: {
 	// DisplayName: Greater Summoning Potion
@@ -8627,12 +8616,40 @@ Star_Soldier_Blade: {
 		''' */
 }
 
-High_Powered_Green_Laser: {
-	// DisplayName: High Powered Green Laser
-	// Tooltip: ""
+// High_Powered_Green_Laser.DisplayName: High Powered Green Laser
+// Mech_Figurine.DisplayName: Mech Figurine
+// Glass_Webbing.DisplayName: Fiberglass Webbing
+// SummonDA.DisplayName: <PH> Summon DA
+// SummonLD.DisplayName: <PH> Summon LD
+// SummonTM.DisplayName: <PH> Summon TM
+// SummonWC.DisplayName: <PH> Summon WC
+
+OverloadFiberglass: {
+	// DisplayName: Fiberglass Dinner Dish
+	// SummonText: Fiberglass shards are in your flesh
 }
 
-Mech_Figurine: {
-	// DisplayName: Mech Figurine
-	// Tooltip: ""
+OverloadCracker: {
+	// DisplayName: Strange Ice Cream Machine
+	// SummonText: <PH> Summoned Overloaded Boss Text
+}
+
+OverloadDefiled: {
+	// DisplayName: Perfectly Intact Brain
+	// SummonText: <PH> Summoned Overloaded Boss Text
+}
+
+OverloadDiver: {
+	// DisplayName: <PH> Overload Diver
+	// SummonText: <PH> Summoned Overloaded Boss Text
+}
+
+OverloadTrenchmaker: {
+	// DisplayName: <PH> Overload Trenchmaker
+	// SummonText: <PH> Summoned Overloaded Boss Text
+}
+
+OverloadShimmer: {
+	// DisplayName: <PH> Overload Shimmer
+	// SummonText: <PH> Summoned Overloaded Boss Text
 }

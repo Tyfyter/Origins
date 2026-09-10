@@ -7,5 +7,15 @@ Fargos: {
 		// ExplosiveCritical: Explosive Critical: {0}%
 	}
 
-	// Items.HeartChocolate.Tooltip: Summons {$NPCs.Fae_Nymph.DisplayName} while in the Aether or thrown into shimmer
+	Items: {
+		GenericTooltip: {
+			// OverloadBoss: Summons an energized {0}
+			// OverloadNoEnergizer: "{0} doesn't have an energizer"
+			// SummonBoss: Summons the {0}
+			// SummonBossNoBiome: Summons the {0} in any biome
+			// SummonCreature: Summons {0}
+		}
+
+		// HeartChocolate.Tooltip: Summons {$NPCs.Fae_Nymph.DisplayName} while in the Aether or thrown into shimmer
+	}
 }

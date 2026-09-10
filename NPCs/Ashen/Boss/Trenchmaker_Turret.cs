@@ -64,6 +64,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				gunGlowTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}_Glow";
 			}
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Slow] = true;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.05f;
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			Minions.Add(Type);
 		}

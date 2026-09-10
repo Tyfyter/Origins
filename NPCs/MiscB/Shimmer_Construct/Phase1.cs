@@ -488,6 +488,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.2f;
 			SafeSetStaticDefaults();
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			Minions.Add(Type);

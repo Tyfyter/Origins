@@ -7,12 +7,14 @@ using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.CrossMod.Fargos.Items;
+using Origins.CrossMod.Fargos.NPCs;
 using Origins.Dev;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Armor.Other;
 using Origins.Items.Materials;
+using Origins.Items.Mounts.Star_Soldier;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
@@ -26,6 +28,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
 using Origins.NPCs.Ashen;
 using Origins.NPCs.Ashen.Boss;
@@ -36,6 +39,7 @@ using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Dungeon;
+using Origins.NPCs.Felnum;
 using Origins.NPCs.Fiberglass;
 using Origins.NPCs.MiscB;
 using Origins.NPCs.MiscB.Shimmer_Construct;
@@ -76,14 +80,11 @@ using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
 using static Terraria.ModLoader.ModContent;
+using AvalonHerbology = Avalon.Data.HerbologyData;
+using AvalonSets = Avalon.Data.Sets;
 using SetsTiles = Origins.OriginsSets.Tiles;
 using ThoriumTiles = ThoriumMod.Tiles;
 using ThoriumWalls = ThoriumMod.Walls;
-using AvalonSets = Avalon.Data.Sets;
-using AvalonHerbology = Avalon.Data.HerbologyData;
-using Origins.NPCs.Felnum;
-using Origins.Items.Weapons.Summoner.Minions;
-using Origins.Items.Mounts.Star_Soldier;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -131,6 +132,7 @@ namespace Origins {
 		}
 		static bool drawingAOMap;
 		public static bool DrawingAOMap => drawingAOMap;
+		public static string SwarmContext = "FromSwarm";
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
@@ -1433,5 +1435,7 @@ namespace Origins {
 		public static bool[] AnyTables { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		public static bool[] AnyBookcases { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		public static bool[] AnyCampfires { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static float[] EnergizedHealthMultiplier { get; } = NPCID.Sets.Factory.CreateFloatSet(1f);
+		public static (int Bag, int Trophy, int Energizer)[] EnergizedBossItems { get; } = NPCID.Sets.Factory.CreateCustomSet((0, 0, 0));
 	}
 }

@@ -87,6 +87,7 @@ namespace Origins.NPCs.Fiberglass {
 				Position = new Vector2(0f, -32f)
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
+			ModCompatSets.EnergizedBossItems[Type] = (ModContent.ItemType<Fiberglass_Weaver_Bag>(), TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(), 0);
 			AprilFoolsTextures.AddNPC(this);
 			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
 				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),

@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Origins.CrossMod.Fargos.NPCs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles.Defiled;
@@ -27,6 +28,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionYOverride = -32,
 				Rotation = -MathHelper.PiOver2
 			};
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.05f;
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			Defiled_Amalgamation.Minions.Add(Type);
 		}
@@ -82,6 +84,8 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public void SpawnWisp(NPC npc) {
+			TOEnergizedGlobalNPC swarmNPC = npc.GetSwarmNPC();
+			if (swarmNPC is not null && swarmNPC.getSwarmMinionBoss is not null && !TOEnergizedGlobalNPC.SwarmActive) return;
 			if (Main.masterMode || (Main.expertMode && Main.rand.NextBool())) {
 				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
 			}

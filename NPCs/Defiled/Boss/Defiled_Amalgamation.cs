@@ -136,6 +136,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			ID = Type;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
 			Origins.RasterizeAdjustment[Type] = (16, 0f, 0f);
+			ModCompatSets.EnergizedBossItems[Type] = (ModContent.ItemType<Defiled_Amalgamation_Bag>(), TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(), 0);
 		}
 		public override void SetDefaults() {
 			NPC.boss = true;
@@ -188,10 +189,10 @@ namespace Origins.NPCs.Defiled.Boss {
 
 		public override void OnSpawn(IEntitySource source) {
 			spawnDA = false;
-			if (Main.netMode == NetmodeID.Server) {
+			if (NetmodeActive.Server && source.Context != OriginsModIntegrations.SwarmContext) {
 				ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", NPC.GetTypeNetName()), new Color(222, 222, 222));
 			} else {
-				if (Main.netMode == NetmodeID.SinglePlayer) {
+				if (NetmodeActive.SinglePlayer && source.Context != OriginsModIntegrations.SwarmContext) {
 					Main.NewText(Language.GetTextValue("Announcement.HasAwoken", NPC.TypeName), 222, 222, 222);
 				}
 				SoundEngine.PlaySound(

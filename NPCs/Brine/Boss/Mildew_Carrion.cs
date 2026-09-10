@@ -179,6 +179,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0.8f);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+			ModCompatSets.EnergizedBossItems[Type] = (ModContent.ItemType<Lost_Diver_Bag>(), TrophyTileBase.ItemType<Lost_Diver_Trophy>(), 0);
 			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void Unload() {
@@ -270,7 +271,7 @@ namespace Origins.NPCs.Brine.Boss {
 						for (int i = Main.rand.RandomRound(difficultyMult * 0.5f + 0.75f); i > 0; i--) {
 							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (11 + difficultyMult) * Main.rand.NextFloat(0.8f, 1f);
 							Projectile.NewProjectile(
-								NPC.GetSource_FromAI(),
+								NPC.GetSource_FromAI(SpawnContext),
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
@@ -426,6 +427,8 @@ namespace Origins.NPCs.Brine.Boss {
 				);
 			}
 		}
+		public string? SpawnContext;
+		public override void OnSpawn(IEntitySource source) => SpawnContext = source.Context;
 		public override void OnKill() {
 			ProgressFlags.DownedLostDiver.Set();
 		}
@@ -467,6 +470,7 @@ namespace Origins.NPCs.Brine.Boss {
 			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.05f;
 			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void SetDefaults() {
@@ -670,6 +674,7 @@ namespace Origins.NPCs.Brine.Boss {
 			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.025f;
 		}
 		public override void SetDefaults() {
 			NPC.noGravity = true;

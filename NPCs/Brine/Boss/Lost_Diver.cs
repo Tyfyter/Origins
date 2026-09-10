@@ -503,10 +503,10 @@ namespace Origins.NPCs.Brine.Boss {
 		public float itemRotation;
 		public Rectangle bodyFrame = new(0, 0, 40, 56);
 		public Rectangle legFrame = new(0, 0, 40, 56);
-		AutoLoadingAsset<Texture2D> headTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Head";
-		AutoLoadingAsset<Texture2D> bodyTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Body";
-		AutoLoadingAsset<Texture2D> legTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Legs";
-		AutoLoadingAsset<Texture2D> backTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Back";
+		AutoLoadingTexture headTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Head";
+		AutoLoadingTexture bodyTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Body";
+		AutoLoadingTexture legTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Legs";
+		AutoLoadingTexture backTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Back";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (NPC.IsABestiaryIconDummy && !OriginsModIntegrations.CheckAprilFools()) AutoLoadingAsset<Texture2D>.Wait(headTexture, bodyTexture, legTexture, backTexture);
 			//conveniently, the drop it has that'd use the proper composite arms is the keytar, so nothing it's definitely going to do needs me to support them
@@ -773,8 +773,10 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.life <= 0) {
 			}
 		}
+		public string? SpawnContext;
+		public override void OnSpawn(IEntitySource source) => SpawnContext = source.Context;
 		public override void OnKill() {
-			NPC transformation = NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<Lost_Diver_Transformation>(), ai1: NPC.direction);
+			NPC transformation = NPC.NewNPCDirect(NPC.GetSource_Death(SpawnContext), NPC.Center, ModContent.NPCType<Lost_Diver_Transformation>(), ai1: NPC.direction);
 			transformation.Center = NPC.Center;
 			transformation.velocity = NPC.velocity;
 		}

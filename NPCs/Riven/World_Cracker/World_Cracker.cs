@@ -207,6 +207,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Riven_Hive>());
+			ModCompatSets.EnergizedBossItems[Type] = (ModContent.ItemType<World_Cracker_Bag>(), TrophyTileBase.ItemType<World_Cracker_Trophy>(), 0);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.0833333333333333f;
 		}
 		public override void Unload() {
 			ArmorTexture = null;

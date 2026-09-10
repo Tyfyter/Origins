@@ -1,11 +1,17 @@
 ﻿using Fargowiltas.Items.Summons.Deviantt;
 using Fargowiltas.Projectiles;
+using Origins.Items.Other.Consumables;
+using Origins.NPCs;
 using Origins.NPCs.Ashen;
 using Origins.NPCs.Ashen.Boss;
+using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Dungeon;
+using Origins.NPCs.Fiberglass;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
+using Origins.NPCs.Riven.World_Cracker;
 using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
@@ -17,12 +23,25 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Origins.NPCs.Ashen.Boss.Spawn_Trenchmaker_Action;
 
 namespace Origins.CrossMod.Fargos.Items {
 	#region Base Classes
-	public abstract class TOSummons<TSummon> : ModItem where TSummon : ModNPC {
+	public abstract class TOSummons<TSummon, TMaterial> : TOSummons<TSummon> where TSummon : ModNPC where TMaterial : ModItem {
+		public override int NormalSummonItem => ModContent.ItemType<TMaterial>();
+	}
+	public abstract class TOSummons<TSummon> : TOSummons where TSummon : ModNPC {
+		public override int SummonType => ModContent.NPCType<TSummon>();
+	}
+	public abstract class TOSummons : ModItem {
+		public abstract int SummonType { get; }
 		public abstract int SortingPriority { get; }
+		public virtual int NormalSummonItem { get; }
+		public virtual LocalizedText SummonName => NPCLoader.GetNPC(SummonType).DisplayName;
+		public virtual string TooltipKey => "SummonCreature";
+		public virtual void ExtraSpawn(NPC npc) { }
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
+		public override LocalizedText Tooltip => Language.GetText($"Mods.Origins.CrossMod.Fargos.Items.GenericTooltip.{TooltipKey}").WithFormatArgs(SummonName);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = SortingPriority;
 			Item.ResearchUnlockCount = 3;
@@ -34,27 +53,47 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(SoundID.Roar, player.Center);
-			new TOSummons_Action(player.whoAmI, ModContent.NPCType<TSummon>(), player.Center.RandomPosAround(new(-800, 800, -800, -250))).Perform();
+			new TOSummons_Action(player, Type, true).Perform();
 			return true;
+		}
+		public override void AddRecipes() {
+			if (NormalSummonItem > 0) {
+				CreateRecipe()
+				.AddIngredient(NormalSummonItem)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+
+				Recipe.Create(NormalSummonItem)
+				.AddIngredient(Type)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			}
 		}
 	}
 
-	public record class TOSummons_Action(int PlayerID, int Type, Vector2 Pos) : SyncedAction {
+	public record class TOSummons_Action(Player Player, int Type, bool TOSummon) : SyncedAction {
 		public override bool ServerOnly => true;
-		public TOSummons_Action() : this(default, default, default) { }
+		public TOSummons_Action() : this(default, default, true) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
-			PlayerID = reader.ReadInt16(),
+			Player = Main.player[reader.ReadInt16()],
 			Type = reader.ReadInt32(),
-			Pos = reader.ReadPackedVector2()
+			TOSummon = reader.ReadBoolean()
 		};
 		public override void NetSend(BinaryWriter writer) {
-			writer.Write(PlayerID);
+			writer.Write(Player.whoAmI);
 			writer.Write(Type);
-			writer.WritePackedVector2(Pos);
+			writer.Write(TOSummon);
 		}
 		protected override void Perform() {
-			NPC.NewNPCDirect(NPC.GetBossSpawnSource(PlayerID), Pos, Type);
-			ChatHelper.BroadcastChatMessage(Language.GetText("Announcement.HasAwoken").ToNetworkText(ModContent.GetModNPC(Type).DisplayName.Value), new Color(175, 75, 255));
+			int type = Type;
+			TOSummons summonItem = null;
+			if (TOSummon && Player.HeldItem.type == Type && Player.HeldItem.ModItem is TOSummons SummonItem) {
+				summonItem = SummonItem;
+				type = SummonItem.SummonType;
+			}
+			NPC npc = NPC.NewNPCDirect(NPC.GetBossSpawnSource(Player.whoAmI), Player.Center.RandomPosAround(-800, 800, -800, -250), type);
+			summonItem?.ExtraSpawn(npc);
+			ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", npc.FullName), new Color(175, 75, 255));
 		}
 	}
 	#endregion
@@ -77,14 +116,12 @@ namespace Origins.CrossMod.Fargos.Items {
 		public static string BrokenReason => "change from fearmaker to D2L2";
 		public override int SortingPriority => 5;
 	}
-	#endregion
-	#region Bosses
-	#endregion
+
 	[ExtendsFromMod("Fargowiltas")]// stops the class from being autoloaded or JIT compiled
 	public class FargoItemToNPC : GlobalItem {
 		public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (item.type == ModContent.ItemType<AmalgamatedSpirit>()) {
-				Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), player.position.RandomPosAround(new(-800, 800, -1000, -250)), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, ModContent.NPCType<Etherealizer>());
+				Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), player.position.RandomPosAround(-800, 800, -1000, -250), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, ModContent.NPCType<Etherealizer>());
 			}
 			return true;
 		}
@@ -101,7 +138,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		public override bool? UseItem(Item item, Player player) {
 			if (item.type == ModContent.ItemType<HeartChocolate>() && player.ZoneShimmer) {
 				SoundEngine.PlaySound(SoundID.Roar, player.Center);
-				new TOSummons_Action(player.whoAmI, ModContent.NPCType<Fae_Nymph>(), player.Center.RandomPosAround(new(-800, 800, -800, -250))).Perform();
+				new TOSummons_Action(player, ModContent.NPCType<Fae_Nymph>(), false).Perform();
 				return true;
 			}
 			return null;
@@ -164,4 +201,57 @@ namespace Origins.CrossMod.Fargos.Items {
 			}
 		}
 	}
+	#endregion
+	#region Bosses
+	public class SummonTM : TOSummons<Trenchmaker, Distress_Beacon> {
+		public override string Texture => typeof(Distress_Beacon).GetDefaultTMLName();
+		public override string TooltipKey => "SummonBossNoBiome";
+		public override LocalizedText SummonName => NPCLoader.GetNPC(SummonType).GetLocalization($"{nameof(DisplayName)}Generic");
+		public override int SortingPriority => 3;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.color = Color.Blue with { A = 220 };
+		}
+		public override void ExtraSpawn(NPC npc) {
+			npc.position.Y -= 400;
+			(npc.ModNPC as Trenchmaker).SetAIState(StateBossMethods<Trenchmaker>.StateIndex<Spawning_Jets_State>());
+		}
+	}
+	public class SummonDA : TOSummons<Defiled_Amalgamation, Nerve_Impulse_Manipulator> {
+		public override string Texture => typeof(Nerve_Impulse_Manipulator).GetDefaultTMLName();
+		public override string TooltipKey => "SummonBossNoBiome";
+		public override int SortingPriority => 3;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.color = Color.Blue with { A = 220 };
+		}
+	}
+	public class SummonWC : TOSummons<World_Cracker_Head, Sus_Ice_Cream> {
+		public override string Texture => typeof(Sus_Ice_Cream).GetDefaultTMLName();
+		public override string TooltipKey => "SummonBossNoBiome";
+		public override int SortingPriority => 3;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.color = Color.Blue with { A = 220 };
+		}
+	}
+	public class Glass_Webbing : TOSummons<Fiberglass_Weaver, Shaped_Glass> {
+		public override string Texture => typeof(Shaped_Glass).GetDefaultTMLName();
+		public override string TooltipKey => "SummonBoss";
+		public override int SortingPriority => 5;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.color = Color.Blue with { A = 220 };
+		}
+	}
+	public class SummonLD : TOSummons<Lost_Diver, Lost_Picture_Frame> {
+		public override string Texture => typeof(Lost_Picture_Frame).GetDefaultTMLName();
+		public override string TooltipKey => "SummonBoss";
+		public override int SortingPriority => 3;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.color = Color.Blue with { A = 220 };
+		}
+	}
+	#endregion
 }

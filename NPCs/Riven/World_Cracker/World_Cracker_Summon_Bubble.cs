@@ -21,6 +21,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.025f;
 			ID = Type;
 			World_Cracker_Head.Minions.Add(Type);
 		}
@@ -29,6 +30,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.NPCBestiaryDrawOffset[modNPC.Type] = NPCExtensions.HideInBestiary;
 			ContentSamples.NpcBestiaryRarityStars[modNPC.Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[modNPC.Type] = true;
+			ModCompatSets.EnergizedHealthMultiplier[modNPC.Type] = 0.05f;
 			World_Cracker_Head.Minions.Add(modNPC.Type);
 		}
 		public override void Unload() => ValidSpawns = null;
@@ -49,7 +51,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public static int HatchTime => 360 - 60 * World_Cracker_Head.DifficultyMult;
 		public override bool? CanFallThroughPlatforms() => true;
+		public Entity SpawnParent;
 		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parent) SpawnParent = parent.Entity;
 			if (NPC.ai[0] == 0) NPC.ai[0] = Main.rand.Next(ValidSpawns);
 		}
 		public override void AI() {
@@ -80,10 +84,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			const float guaranteed_health = 0.05f;
 			int npcType = (int)NPC.ai[0];
 			float healthPercent = (guaranteed_health + (NPC.ai[3] / HatchTime) * (1 - guaranteed_health));
+			IEntitySource source = new EntitySource_Parent(SpawnParent);
 			if (npcType == ModContent.NPCType<Amoeba_Bugger_WC>()) {
 				for (int i = (int)((3 + World_Cracker_Head.DifficultyMult) * healthPercent); i >= 0; i--) {
 					NPC.NewNPC(
-						NPC.GetSource_Death(),
+						source,
 						(int)NPC.Center.X,
 						(int)NPC.Center.Y,
 						npcType,
@@ -94,7 +99,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			} else if (npcType == ModContent.NPCType<World_Cracker_Exoskeleton_WC>()) {
 				for (int i = 0; i < 2 * healthPercent; i++) {
 					int index = NPC.NewNPC(
-						NPC.GetSource_Death(),
+						source,
 						(int)NPC.Center.X,
 						(int)NPC.Center.Y,
 						npcType
@@ -106,7 +111,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			} else {
 				int index = NPC.NewNPC(
-					NPC.GetSource_Death(),
+					source,
 					(int)NPC.Center.X,
 					(int)NPC.Center.Y,
 					npcType

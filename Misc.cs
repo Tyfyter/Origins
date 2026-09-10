@@ -4,8 +4,8 @@ using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
 using Origins.Core;
 using Origins.CrossMod;
+using Origins.CrossMod.Fargos.NPCs;
 using Origins.Graphics;
-using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
@@ -1933,8 +1933,24 @@ namespace Origins {
 			value = new Vector2(Vector2.Dot(value, x), Vector2.Dot(value, y));
 		}
 		[Pure]
+		public static Vector2 RandomPosAround(this Vector2 initialPos, float minX = -16, float maxX = 16, float minY = -16, float maxY = 16) {
+			return new(initialPos.X + Main.rand.NextFloat(minX, maxX), initialPos.Y + Main.rand.NextFloat(minY, maxY));
+		}
+		[Pure]
+		public static Vector2 RandomPosAround(this Vector2 initialPos, Vector2 rangeX, float minY, float maxY) {
+			return initialPos.RandomPosAround(rangeX.X, rangeX.Y, minY, maxY);
+		}
+		[Pure]
+		public static Vector2 RandomPosAround(this Vector2 initialPos, float minX, float maxX, Vector2 rangeY) {
+			return initialPos.RandomPosAround(minX, maxX, rangeY.X, rangeY.Y);
+		}
+		[Pure]
+		public static Vector2 RandomPosAround(this Vector2 initialPos, Vector2 rangeX, Vector2 rangeY) {
+			return initialPos.RandomPosAround(rangeX.X, rangeX.Y, rangeY.X, rangeY.Y);
+		}
+		[Pure]
 		public static Vector2 RandomPosAround(this Vector2 initialPos, Vector4 rangeFromPos) {
-			return new(initialPos.X + Main.rand.NextFloat(rangeFromPos.X, rangeFromPos.Y), initialPos.Y + Main.rand.NextFloat(rangeFromPos.Z, rangeFromPos.W));
+			return initialPos.RandomPosAround(rangeFromPos.X, rangeFromPos.Y, rangeFromPos.Z, rangeFromPos.W);
 		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox) {
 			float xoffset = 10f;
@@ -3968,6 +3984,11 @@ namespace Origins {
 		}
 		public static bool IsMount<TMount>(this Mount mount) where TMount : ModMount => mount.IsMount(ModContent.MountType<TMount>());
 		public static bool IsMount(this Mount mount, int type) => mount.Active && mount.Type == type;
+		[Pure]
+		public static TOEnergizedGlobalNPC GetSwarmNPC(this NPC npc) {
+			if (OriginsModIntegrations.FargosMutant is null) return null;
+			return npc.GetGlobalNPC<TOEnergizedGlobalNPC>();
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
