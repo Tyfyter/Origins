@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Avalon;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -88,7 +90,7 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 				if (AshenWireTile.DefaultIsPowered(position.X, position.Y) && timer.CycleUp(SpawnRate) && GetFacingDirection(position.X, position.Y) != 0) {
 					TileID.Sets.DrawTileInSolidLayer[Main.tile[position].TileType] = true;
 					int style = TileObjectData.GetTileStyle(Main.tile[position]);
-					Point spawnPos = new(position.X * 16, position.Y * 16);
+					Point spawnPos = new(position.X * 16 + 8, position.Y * 16);
 					int spawnType;
 					if (style != 0) {
 						spawnType = Main.rand.Next(hanging).Type;
@@ -165,7 +167,7 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 	}
 	public override void FindFrame(int frameHeight) {
 		DrawOffsetY = -4;
-		Collision.StepConveyorBelt(NPC, NPC.GravityMultiplier.Value);
+		Collision.StepConveyorBelt(NPC, Math.Sign(NPC.GravityMultiplier.Value));
 	}
 	public override bool SpecialOnKill() {
 		NPCLoader.OnKill(NPC);
@@ -182,7 +184,15 @@ public class Auto_Assembler_Item_Hanging(string texture, int width, int height) 
 			break;
 			case 1:
 			NPC.GravityMultiplier = MultipliableFloat.One * -1;
-			if (!NPC.collideY) NPC.ai[0] = 2;
+			if (!NPC.collideY) {
+				if (NPC.ai[1].Warmup(9)) NPC.ai[0] = 2;
+			} else {
+				NPC.ai[1] = 0;
+				if (Math.Abs(NPC.position.X - NPC.oldPosition.X) < 0.1f) {
+					NPC.ai[0] = 2;
+					NPC.GravityMultiplier = MultipliableFloat.One;
+				}
+			}
 			break;
 			case 2:
 			if (NPC.collideY && !NetmodeActive.MultiplayerClient) NPC.StrikeInstantKill();

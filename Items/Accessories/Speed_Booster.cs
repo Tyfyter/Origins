@@ -21,16 +21,12 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Back);
-			try {
-				IL_Collision.StepConveyorBelt += EnableFastConveyors;
-			} catch (Exception e) {
-				if (Origins.LogLoadingILError($"{nameof(EnableFastConveyors)}", e)) throw;
-			}
+			Origins.DoILEdit(Collision.StepConveyorBelt, EnableFastConveyors);
 		}
+		static int conveyorMaxValue = 0;
 		static void EnableFastConveyors(ILContext il) {
 			ILCursor c = new(il);
-			int maxValue = 0;
-			c.EmitDelegate<Action>(() => maxValue = 0);
+			c.EmitDelegate<Action>(() => conveyorMaxValue = 0);
 			//IL_03b9: ldloc.s 15
 			//IL_03bb: ldloc.s 16
 			//IL_03bd: mul
@@ -46,7 +42,7 @@ namespace Origins.Items.Accessories {
 				i => i.MatchMul()
 			);
 			c.EmitDelegate<Func<int, int>>(value => {
-				if (maxValue < Math.Abs(value)) maxValue = Math.Abs(value);
+				Max(ref conveyorMaxValue, Math.Abs(value));
 				return value;
 			});
 			c.GotoNext(MoveType.After,
@@ -55,7 +51,7 @@ namespace Origins.Items.Accessories {
 			);
 			c.EmitLdarg0();
 			c.EmitDelegate<Func<Vector2, Entity, Vector2>>((value, entity) => {
-				value *= maxValue;
+				value *= conveyorMaxValue;
 				if (entity is Player player) player.OriginPlayer().conveyorBeltModifiers?.Invoke(ref value, player);
 				return value;
 			});
