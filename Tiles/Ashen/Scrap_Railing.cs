@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Ammo;
+﻿using Origins.Core;
+using Origins.Items.Weapons.Ammo;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -233,6 +234,7 @@ public class Scrap_Railing : Platform_Tile {
 		TileID.Sets.CanBeSloped[Type] = true;
 		TileID.Sets.HasSlopeFrames[Type] = true;
 		Catwalk.OverrideTileNoAttach[Type] = false;
+		RopeConnectThroughOverride.Set[Type] = true;
 		Main.tileSolidTop[Type] = false;
 		Main.tileSolid[Type] = false;
 		DustType = DustID.Lihzahrd;
