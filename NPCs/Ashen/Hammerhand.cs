@@ -46,8 +46,8 @@ namespace Origins.NPCs.Ashen {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.lifeMax = 80;
-			NPC.defense = 22;
-			NPC.damage = 24;
+			NPC.defense = 8;
+			NPC.damage = 26;
 			NPC.width = 32;
 			NPC.height = 48;
 			NPC.value = Item.buyPrice(0, 0, 2);

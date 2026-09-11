@@ -61,18 +61,18 @@ BOSSES AND MINI-BOSSES:
 (X) Mistress
 (X) Zombie Paladin
 
+(ᗢ) Blue Lobster 'Tearror'
 (^) Defiled Amalgamation
 (ᗢ) Fiberglass Weaver
 (^) Shimmer Construct
 (#2, ^2) Trenchmaker !!!
-(ᗢ) World Cracker
 
 (^) Lost Diver/Mildew Carrion
 (X) Snowdrop
 
 (X) Arabel
-(X) Blue Lobster 'Tearror'
 (X) Crimson King
+(X) Fibulum Kraken
 (X) Mechamalgamation
 (X) Miscreant
 (X) Seer
@@ -221,6 +221,7 @@ ENEMY NPCS:
 (^) Conehead Zombie
 (X) Corrupt Reaper
 (^) Cranivore
+(X) Crawbaby
 (🤡) Creme-filled Bat
 (^) Crimbrain
 (X) Crying Creeper
@@ -529,7 +530,6 @@ ARMOR:
 
 ACCESSORIES:
 |---
-(X) 5G Broadband Wi-Fi Router
 (^) Abyssal Anchor
 (^) ACME Crate
 (^) Advanced Imaging
@@ -563,6 +563,7 @@ ACCESSORIES:
 (^) Danger Barrel
 (^) Decorative A.S.H.E.S.
 (^) Destructive Claws
+(X) Dial-Up Modem
 (^) Dim Starlight
 (^) Donor Wristband
 (^) Dryad's Inheritance
@@ -689,7 +690,7 @@ ACCESSORIES:
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
-(^) Refactoring Pieces
+(ᗢ) Refactoring Pieces
 (^) Retaliatory Tendril
 (^) Shield of Shimmer
 
@@ -1460,10 +1461,6 @@ TILES:
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (^) Radio Component
-(X) Ravel Lock: Builder
-(X) Ravel Lock: Snake
-(X) Ravel Lock: Stacker
-(X) Ravel Locker
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (X) Riven Pylon
@@ -1664,7 +1661,7 @@ MATERIALS:
 (X) Mystic Fragment
 (X) Nihilence Orb
 (^) Phoenum
-(X) Umbramere Bar
+(#, ^2) Umbramere Bar
 
 (^) Busted Servo
 (^) Geothermal Sludge
@@ -1693,6 +1690,7 @@ MISCELLANEOUS ITEMS:
 |---
 (^) Armor+ Power-Up
 (^) Defiled Mana
+(X) Intangible Treat
 (^) Large Chambersite
 (^) RAM Chip
 (^) Worn Paper: Famine
@@ -1854,7 +1852,7 @@ CONSUMABLES:
 (^) Fire Extinguisher
 (^) Gooey Water
 (^) Holiday Hair Dye
-(^) Latchkey
+(ᗢ) Latchkey
 (^) Lottery Ticket
 (^) Magic Gel Dropper
 (^) Magic Brine Dropper
@@ -1899,23 +1897,20 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Chromatic Scale (Rainbow Pangolin)
 (^) Chew Toy (Chee Toy)
 (^) Gelatin Bloom Brooch
+(X) Kitsuni Origins
 (^) Strange Power-Up (Platformer Mech)
 
 (^) Chambersite Minecart
-(^) Dash Ravel
-(^) Depth Ravel
-(X) Drill Ravel
-(X) Grapple Ravel
+(␡) Dash Ravel
+(␡) Depth Ravel
 (^) Impenetrable Trashcan Lid
 (^) Indestructible Saddle
-(^) Ninja Ravel
-(^) Ravel
-(^) Spider Ravel
+(␡) Ninja Ravel
+(␡) Ravel
+(␡) Spider Ravel
 (#2, ^2) Scrap Wagon (SS-22 'Star Soldier') !!!
-(^) Stealth Ravel
+(␡) Stealth Ravel
 (X) Sunflower Veil
-(X) Thrust Ravel
-(X) True Ravel
 ---
 
 
