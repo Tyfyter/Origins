@@ -167,6 +167,10 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 		DrawOffsetY = -4;
 		Collision.StepConveyorBelt(NPC, NPC.GravityMultiplier.Value);
 	}
+	public override bool SpecialOnKill() {
+		NPCLoader.OnKill(NPC);
+		return true;
+	}
 }
 [Autoload(false)]
 public class Auto_Assembler_Item_Hanging(string texture, int width, int height) : Auto_Assembler_Item_Grounded(texture, width, height) {
