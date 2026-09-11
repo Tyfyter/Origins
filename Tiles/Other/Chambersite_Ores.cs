@@ -11,6 +11,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -22,7 +23,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
 	#region base classes
-	public class Chambersite_Ore : OriginTile {
+	public class Chambersite_Ore : ComplexFrameTile {
 		public static List<Chambersite_Ore> chambersiteTiles = [];
 		public virtual int StoneTile => TileID.Stone;
 		public virtual int StoneItem => ItemID.StoneBlock;
@@ -54,11 +55,11 @@ namespace Origins.Tiles.Other {
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) Overlay = Request<Texture2D>(OverlayPath);
 			Main.tileSolid[Type] = true;
-			Main.tileStone[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 600;
+			Main.tileMergeDirt[Type] = Main.tileMergeDirt[StoneTile];
 			Main.tileMerge[Type] = Main.tileMerge[StoneTile];
 			Main.tileMerge[Type][StoneTile] = true;
 			Main.tileMerge[StoneTile][Type] = true;
@@ -86,13 +87,13 @@ namespace Origins.Tiles.Other {
 			OriginExtensions.DrawTileGlow(texture, Lighting.GetColor(i, j), i, j, spriteBatch);
 		}
 		protected CustomTilePaintLoader.CustomTileVariationKey PaintKey { get; private set; }
-		internal record struct ChambersiteParmeters(ModTile Tile, ModItem Item, string TileOverlay, string ItemOverlay, Func<int> DustType, Func<SoundStyle> HitSound, params string[] LegacyNames) {
+		internal record struct ChambersiteParmeters(ModTile Tile, ModItem Item, string TileOverlay, string ItemOverlay, Func<int> DustType, Func<SoundStyle> HitSound, (MergeKey, string)[] MergeOverlays = null, params string[] LegacyNames) {
 			public Func<SoundStyle> HitSound { get; } = HitSound ?? (() => SoundID.Tink);
 		}
 		public static string overlay_path_base = "Origins/Tiles/Overlays/Chambersite/Chambersite_Ore_";
-		public static ModTile Create(ModTile baseTile, ModItem baseItem, Func<int> dustType, string tileOverlay = null, string itemOverlay = null, Func<SoundStyle> hitSound = null, params string[] legacyNames) {
+		public static ModTile Create(ModTile baseTile, ModItem baseItem, Func<int> dustType, string tileOverlay = null, string itemOverlay = null, Func<SoundStyle> hitSound = null, (MergeKey, string)[] mergeOverlays = null, params string[] legacyNames) {
 			if (baseItem.Mod != baseTile.Mod) throw new ArgumentException($"{nameof(baseTile)} and {nameof(baseItem)} must be from the same mod, I don't know what you're doing, but I do know that it's a bad idea", nameof(baseItem));
-			Chambersite_Ore_Modular tile = new(new(baseTile, baseItem, tileOverlay, itemOverlay, dustType, hitSound, legacyNames));
+			Chambersite_Ore_Modular tile = new(new(baseTile, baseItem, tileOverlay, itemOverlay, dustType, hitSound, mergeOverlays, legacyNames));
 			baseTile.Mod.AddContent(tile);
 			return tile;
 		}
@@ -146,6 +147,10 @@ namespace Origins.Tiles.Other {
 		public override void Load() {
 			base.Load();
 			if (parameters.LegacyNames is not null) ModTypeLookup<ModTile>.RegisterLegacyNames(this, parameters.LegacyNames);
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			if (parameters.MergeOverlays is null) yield break;
+			yield return new MultiTileMergeOverlay(parameters.MergeOverlays);
 		}
 	}
 	#endregion

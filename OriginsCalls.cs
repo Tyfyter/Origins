@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Utils;
 using Origins.Items.Tools.Liquids;
+using Origins.Tiles;
 using Origins.Tiles.Other;
 using System;
 using Terraria.Audio;
@@ -54,7 +55,8 @@ namespace Origins {
 									((Delegate)args[3]).CastDelegate<Func<int>>(),
 									args.GetIfInRange(4) as string,
 									args.GetIfInRange(5) as string,
-									((Delegate)args.GetIfInRange(6))?.CastDelegate<Func<SoundStyle>>()
+									((Delegate)args.GetIfInRange(6))?.CastDelegate<Func<SoundStyle>>(),
+									args.GetIfInRange(7) as (ComplexFrameTile.MergeKey, string)[]
 								);
 							}
 							case CallTypeExtension.Wall: {

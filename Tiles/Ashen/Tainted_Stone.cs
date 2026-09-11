@@ -10,12 +10,19 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Ashen {
 	public class Tainted_Stone : ComplexFrameTile, IAshenTile {
 		public ModItem Item { get; private set; }
+		private static readonly (MergeKey tileType, string texture)[] MergeOverlays = [
+				(TileID.Dirt, merge + "Dirt_Overlay"),
+				(TileID.Mud, merge + "Mud_Overlay"),
+				(TileID.Ash, merge + "Ash_Overlay"),
+				(TileType<Sootsand>(), merge + "Sootsand_Overlay"),
+				(TileType<Murky_Sludge>(), merge + "Murk_Overlay"),
+				(TileType<Ashen_Murky_Sludge_Grass>(), merge + "Murk_Overlay")];
 		public override void Load() {
 			Mod.AddContent(Item = new TileItem(this).WithExtraStaticDefaults(static item => {
 				item.ResearchUnlockCount = 100;
 				ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, item.type);
 			}));
-			Chambersite_Ore.Create(this, Item, () => Ashen_Biome.DefaultTileDust);
+			Chambersite_Ore.Create(this, Item, () => Ashen_Biome.DefaultTileDust, mergeOverlays: MergeOverlays);
 		}
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
@@ -53,14 +60,7 @@ namespace Origins.Tiles.Ashen {
 			yield return new TileMergeOverlay(merge + "Sootsand_Overlay", TileType<Sootsand>());
 			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Murky_Sludge>(), TileType<Ashen_Murky_Sludge_Grass>());
 			/*/
-			yield return new MultiTileMergeOverlay(
-				(TileID.Dirt, merge + "Dirt_Overlay"),
-				(TileID.Mud, merge + "Mud_Overlay"),
-				(TileID.Ash, merge + "Ash_Overlay"),
-				(TileType<Sootsand>(), merge + "Sootsand_Overlay"),
-				(TileType<Murky_Sludge>(), merge + "Murk_Overlay"),
-				(TileType<Ashen_Murky_Sludge_Grass>(), merge + "Murk_Overlay")
-			);
+			yield return new MultiTileMergeOverlay(MergeOverlays);
 			//*/
 		}
 		public override void RandomUpdate(int i, int j) {

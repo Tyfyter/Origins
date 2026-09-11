@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Origins.Tiles.Defiled {
 				item.ResearchUnlockCount = 100;
 				ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, item.type);
 			}));
-			Chambersite_Ore.Create(this, Item, () => Defiled_Wastelands.DefaultTileDust, hitSound: () => Origins.Sounds.DefiledIdle);
+			Chambersite_Ore.Create(this, Item, () => Defiled_Wastelands.DefaultTileDust, hitSound: () => Origins.Sounds.DefiledIdle, mergeOverlays: [(TileID.Sets.Mud, merge + "Mud_Overlay")]);
 		}
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Defiled_Pot>(), 0, 0));

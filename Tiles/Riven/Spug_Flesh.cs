@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System;
@@ -14,6 +15,9 @@ namespace Origins.Tiles.Riven {
 	[LegacyName("Riven_Flesh")]
 	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public ModItem Item { get; private set; }
+		private static readonly (MergeKey tileType, string texture)[] MergeOverlays = [
+				(TileType<Calcified_Riven_Flesh>(), merge + "Spug_Calcified_Overlay"),
+				(TileID.Sets.Mud, merge + "Mud_Overlay")];
 		public class Spug_Flesh_Entry : JournalEntry {
 			public override string TextKey => "Spug_Flesh";
 			public override JournalSortIndex SortIndex => new("Riven", 11);
@@ -56,8 +60,7 @@ namespace Origins.Tiles.Riven {
 			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay(merge + "Spug_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
-			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Sets.Mud);
+			yield return new MultiTileMergeOverlay(MergeOverlays);
 		}
 		public override void PostTileFrame(int i, int j, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
 			if (WorldGen.genRand.NextBool(12) && !CheckOtherTilesGlow(i, j)) {
@@ -159,7 +162,7 @@ namespace Origins.Tiles.Riven {
 				JournalEntry.AddJournalEntry<Spug_Flesh_Entry>(ref OriginsSets.Items.JournalEntries[item.type]);
 			}));
 			this.SetupGlowKeys();
-			Chambersite_Ore.Create(this, Item, () => Riven_Hive.DefaultTileDust, Chambersite_Ore.overlay_path_base + "Flesh", legacyNames: "Chambersite_Ore_Riven_Flesh");
+			Chambersite_Ore.Create(this, Item, () => Riven_Hive.DefaultTileDust, Chambersite_Ore.overlay_path_base + "Flesh", mergeOverlays: MergeOverlays, legacyNames: "Chambersite_Ore_Riven_Flesh");
 			ModTypeLookup<ModItem>.RegisterLegacyNames(Item, "Riven_Flesh_Item");
 		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }

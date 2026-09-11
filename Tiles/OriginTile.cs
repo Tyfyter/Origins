@@ -3,6 +3,7 @@ using Origins.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
@@ -409,15 +410,53 @@ namespace Origins.Tiles {
 			}
 			static Direction skipMask;
 		}
+		public readonly struct MergeKey {
+			public readonly Kind kind;
+			readonly int tileType;
+			readonly bool[] tileArray;
+
+			MergeKey(int tile) {
+				tileType = tile;
+				kind = Kind.Int;
+			}
+			MergeKey(bool[] tile) {
+				tileArray = tile;
+				kind = Kind.BoolSet;
+			}
+
+			public enum Kind : byte {
+				Invalid,
+				Int,
+				BoolSet
+			}
+
+			public static implicit operator MergeKey(int value) => new(value);
+			public static implicit operator MergeKey(bool[] value) => new(value);
+			public static explicit operator int(MergeKey value) => value.kind == Kind.Int ? value.tileType : throw new InvalidOperationException($"Attempted to get {Kind.Int} value from union when kind is {value.kind}");
+			public static explicit operator bool[](MergeKey value) => value.kind == Kind.BoolSet ? value.tileArray : throw new InvalidOperationException($"Attempted to get {Kind.Int} value from union when kind is {value.kind}");
+		}
 		public class MultiTileMergeOverlay : TileOverlay {
 			protected override string TexturePath { get; }
 			readonly TextureData[] textures;
 			readonly int parentFrameHeight;
-			public MultiTileMergeOverlay(params (int tileType, string texture)[] overlays) : this(270, overlays) { }
-			public MultiTileMergeOverlay(int parentFrameHeight, params (int tileType, string texture)[] overlays) {
+			List<(bool[] tiles, string texture)> something = [];
+			public MultiTileMergeOverlay(params (MergeKey tileType, string texture)[] overlays) : this(270, overlays) { }
+			public MultiTileMergeOverlay(int parentFrameHeight, params (MergeKey tileType, string texture)[] overlays) {
 				this.parentFrameHeight = parentFrameHeight;
 				textures = TileID.Sets.Factory.CreateCustomSet<TextureData>(default);
-				for (int i = 0; i < overlays.Length; i++) textures[overlays[i].tileType] = new(overlays[i].texture);
+				for (int i = 0; i < overlays.Length; i++) {
+					switch (overlays[i].tileType.kind) {
+						case MergeKey.Kind.Int: {
+							textures[(int)overlays[i].tileType] = new(overlays[i].texture);
+							break;
+						}
+
+						case MergeKey.Kind.BoolSet: {
+							something.Add(((bool[])overlays[i].tileType, overlays[i].texture));
+							break;
+						}
+					}
+				}
 			}
 			public override void SetupTexture() {
 				for (int i = 0; i < textures.Length; i++) {
@@ -425,6 +464,13 @@ namespace Origins.Tiles {
 				}
 			}
 			public override void SetupOther(int type) {
+				for (int i = 0; i < something.Count; i++) {
+					for (int j = 0; j < something[i].tiles.Length; j++) {
+						if (!textures[j].Exists) continue;
+						if (something[i].tiles[j]) textures[j] = new(something[i].texture);
+					}
+				}
+				something = null;
 				for (int i = 0; i < textures.Length; i++) {
 					if (!textures[i].Exists) continue;
 					Main.tileMerge[type][i] = true;
