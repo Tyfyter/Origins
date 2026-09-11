@@ -11,6 +11,7 @@ using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -135,6 +136,7 @@ namespace Origins.NPCs.Ashen {
 			return base.PreAI();
 		}
 		public override void FindFrame(int frameHeight) {
+			int frameY = NPC.frame.Y;
 			if (NPC.velocity.Y != 0) {
 				NPC.frame.Y = NPC.frame.Height * 5;
 				NPC.frameCounter = 0;
@@ -145,6 +147,15 @@ namespace Origins.NPCs.Ashen {
 			else {
 				NPC.frame.Y = NPC.frame.Height * 6;
 				NPC.frameCounter = 0;
+			}
+			if (frameY != NPC.frame.Y) {
+				switch (NPC.frame.Y / NPC.frame.Height) {
+					case 2:
+					case 5: {
+						SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep, NPC.Bottom);
+						break;
+					}
+				}
 			}
 			NPC.spriteDirection = NPC.direction;
 		}

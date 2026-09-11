@@ -324,7 +324,7 @@ ENEMY NPCS:
 (^) Rock Bottom
 (X) Rotting Husk
 (^) Savage Whip
-(#2, ^2) Scrapyard Stryder !!! (needs sound code for steps)
+(†) Scrapyard Stryder !!! (has sound code for steps)
 (^) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
