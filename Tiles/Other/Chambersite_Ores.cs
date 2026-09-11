@@ -33,6 +33,7 @@ namespace Origins.Tiles.Other {
 		public virtual Color MapColor => FromHexRGB(0x116166);
 		public new virtual SoundStyle HitSound => SoundID.Tink;
 		public new virtual int DustType => DustID.Stone;
+		public virtual (MergeKey, string)[] MergeOverlays => null;
 		public virtual string OverlayPath => "Origins/Tiles/Overlays/Chambersite/Chambersite_Ore";
 		public virtual string ItemOverlayPath => "Origins/Tiles/Overlays/Chambersite/Chambersite_Ore_Item";
 		protected Asset<Texture2D> Overlay { get; private set; }
@@ -63,6 +64,7 @@ namespace Origins.Tiles.Other {
 			Main.tileMerge[Type] = Main.tileMerge[StoneTile];
 			Main.tileMerge[Type][StoneTile] = true;
 			Main.tileMerge[StoneTile][Type] = true;
+			if (MergeOverlays is null) Main.tileStone[Type] = Main.tileStone[StoneTile];
 			for (int i = 0; i < chambersiteTiles.Count; i++) {
 				if (chambersiteTiles[i].Type != Type) {
 					Main.tileMerge[Type][chambersiteTiles[i].Type] = true;
@@ -143,6 +145,7 @@ namespace Origins.Tiles.Other {
 		public override string ItemOverlayPath => parameters.ItemOverlay ?? base.ItemOverlayPath;
 		public override SoundStyle HitSound => parameters.HitSound();
 		public override int DustType => parameters.DustType();
+		public override (MergeKey, string)[] MergeOverlays => parameters.MergeOverlays;
 		public override Recipe ItemRecipe(Item item) => base.ItemRecipe(item).SortAfterFirstRecipesOf(GetOre(TileID.Stone).Item.Type);
 		public override void Load() {
 			base.Load();
