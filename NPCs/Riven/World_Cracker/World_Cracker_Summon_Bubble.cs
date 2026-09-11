@@ -21,7 +21,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
-			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.025f;
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.02f;
 			ID = Type;
 			World_Cracker_Head.Minions.Add(Type);
 		}
@@ -147,6 +147,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			World_Cracker_Summon_Bubble.MakeWorldCrackerMinion(this);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.02f;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -163,6 +164,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			World_Cracker_Summon_Bubble.MakeWorldCrackerMinion(this);
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.0333333333333333f;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -179,6 +181,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				Position = new(-10, 3),
 				PortraitPositionXOverride = -8
 			};
+			ModCompatSets.EnergizedHealthMultiplier[Type] = 0.0222222222222222f;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
