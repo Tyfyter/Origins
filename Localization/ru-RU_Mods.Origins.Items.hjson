@@ -8648,3 +8648,13 @@ OverloadShimmer: {
 	// DisplayName: <PH> Overload Shimmer
 	// SummonText: <PH> Summoned Overloaded Boss Text
 }
+
+Auto_Assembler_Item: {
+	// DisplayName: Auto Assembler
+	// Tooltip: ""
+}
+
+Conveyor_Scooper_Item: {
+	// DisplayName: Conveyor Scooper
+	// Tooltip: ""
+}

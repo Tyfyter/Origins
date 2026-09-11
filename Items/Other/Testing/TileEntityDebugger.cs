@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -8,6 +10,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Other.Testing {
 	public class TileEntityDebugger : TestingItem, ICustomDrawItem {
+		internal static List<Func<IEnumerable<(Point16, object)>>> ComplexTESystems = [];
 		public override string Texture => "Terraria/Images/Item_" + ItemID.SpectreGoggles;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 0;
@@ -37,6 +40,20 @@ namespace Origins.Items.Other.Testing {
 							Color.FloralWhite * 0.25f
 						);
 						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, i + "", pos, Color.Beige, 0, Vector2.Zero, Vector2.One);
+					}
+				}
+			}
+			for (int i = 0; i < ComplexTESystems.Count; i++) {
+				foreach ((Point16 tePos, object te) in ComplexTESystems[i]()) {
+					Vector2 pos = tePos.ToWorldCoordinates(0, 0) - Main.screenPosition;
+					if (pos.X >= 0 && pos.Y >= 0 && pos.X <= Main.screenWidth && pos.Y <= Main.screenHeight) {
+						Main.spriteBatch.Draw(
+							TextureAssets.MagicPixel.Value,
+							pos,
+							frame,
+							Color.FloralWhite * 0.25f
+						);
+						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, $"{i}\n{te}", pos, Color.Beige, 0, Vector2.Zero, Vector2.One);
 					}
 				}
 			}

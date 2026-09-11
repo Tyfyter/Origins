@@ -2695,6 +2695,8 @@ Tiles: {
 	Ancient_Industrial_Door_Open.MapEntry: Ancient Industrial Door
 	Incinerator_Pit.MapEntry: Incinerator Pit
 	Incinerator_Pit_Pit.MapEntry: Incinerator Pit Pit
+	Auto_Assembler.MapEntry: Auto Assembler
+	Conveyor_Scooper.MapEntry: Conveyor Scooper
 }
 
 Liquids: {

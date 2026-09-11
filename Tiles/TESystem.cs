@@ -1,22 +1,15 @@
-﻿using Origins.Items.Tools.Wiring;
-using Origins.Tiles.Defiled;
+﻿using Origins.Items.Other.Testing;
 using PegasusLib.Networking;
-using Stubble.Core.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.ObjectData;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Tiles {
 	public abstract class TESystem : ModSystem {
@@ -76,6 +69,7 @@ namespace Origins.Tiles {
 		public override void Load() {
 			CTESystemType = (ushort)ComplexTESystems.Count;
 			ComplexTESystems.Add(this);
+			TileEntityDebugger.ComplexTESystems.Add(() => tileEntities.Select(kvp => (kvp.Key, (object)kvp.Value)));
 			OriginPlayer.SyncToNewPlayer += DoFullSync;
 			Type isyncedAction = typeof(SyncedAction).GetInterface("ISyncedAction");
 			if (isyncedAction is null) {
