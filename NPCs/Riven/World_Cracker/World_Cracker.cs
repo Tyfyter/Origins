@@ -56,7 +56,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		internal static IItemDropRule normalDropRule;
 		internal static IItemDropRule armorBreakDropRule;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public int OriginalMaxArmorHealth { get; set; }
 
 		public static List<int> Minions = [];
 		List<int> IMinions.BossMinions => Minions;
@@ -268,7 +269,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.WCIdle, NPC.Center);
-			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
+			float ArmorHealthPercent = this.ArmorHealthPercent();
 			NPC.defense = 100 * (int)(ArmorHealthPercent);
 			//ForcedTargetPosition = Main.MouseWorld;
 			//Acceleration = 1;
@@ -458,9 +459,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
 			if (ArmorHealth > 0) {
-				if (ArmorHealth < MaxArmorHealth) {
+				if (ArmorHealth < OriginalMaxArmorHealth) {
 					float alpha = Lighting.Brightness((int)(NPC.Center.X / 16f), (int)(NPC.Center.Y / 16f));
-					Main.instance.DrawHealthBar(position.X, position.Y, ArmorHealth, MaxArmorHealth, alpha, scale);
+					Main.instance.DrawHealthBar(position.X, position.Y, ArmorHealth, OriginalMaxArmorHealth, alpha, scale);
 				}
 				return false;
 			}
@@ -522,7 +523,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 		}
 		public static void DrawArmor(Texture2D armorTexture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, int frameIndex, int frameCount, NPC npc, int damageFrameCount, Vector2 originOffset = default) {
-			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
+			float ArmorHealthPercent = (npc.ModNPC as IDrawWCArmor)?.ArmorHealthPercent() ?? 0;
 			if (ArmorHealthPercent <= 0f) return;
 			Rectangle frame = armorTexture.Frame(frameCount, damageFrameCount, frameIndex, (int)float.Floor((1 - ArmorHealthPercent) * damageFrameCount));
 			SpriteEffects spriteEffects = SpriteEffects.None;
@@ -544,9 +545,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		internal static void CommonWormInit(Worm worm) {
 			// These two properties handle the movement of the worm
 			worm.NPC.ai[3] = MaxArmorHealth;
+			if (worm is IDrawWCArmor wc) wc.OriginalMaxArmorHealth = MaxArmorHealth;
 		}
 		public override void BossHeadSlot(ref int index) {
-			float ArmorHealthPercent = Math.Min(((int)NPC.ai[3]) / (float)MaxArmorHealth, 1f);
+			float ArmorHealthPercent = this.ArmorHealthPercent();
 			index = bossHeads[(int)float.Floor((1 - ArmorHealthPercent) * (bossHeads.Length - 1))];
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -646,7 +648,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public override bool SharesImmunityFrames => true;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public int OriginalMaxArmorHealth { get; set; }
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
 		public override float SegmentSeparation => 90;
 		public override void SetStaticDefaults() {
@@ -666,7 +669,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
 		public override void AI() {
-			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
+			float ArmorHealthPercent = this.ArmorHealthPercent();
 			if (ArmorHealthPercent > 0f) {
 				NPC.defense = 100 * (int)(ArmorHealthPercent);
 			} else {
@@ -708,9 +711,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
-			if (ArmorHealth > 0 && ArmorHealth < MaxArmorHealth) {
+			if (ArmorHealth > 0 && ArmorHealth < OriginalMaxArmorHealth) {
 				float alpha = Lighting.Brightness((int)(NPC.Center.X / 16f), (int)(NPC.Center.Y / 16f));
-				Main.instance.DrawHealthBar(position.X, position.Y, ArmorHealth, MaxArmorHealth, alpha, scale);
+				Main.instance.DrawHealthBar(position.X, position.Y, ArmorHealth, OriginalMaxArmorHealth, alpha, scale);
 			}
 			return false;
 		}
@@ -746,10 +749,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeRegenCount = 0;
 		}
 	}
-	public class World_Cracker_Tail : WormTail, IRivenEnemy {
+	public class World_Cracker_Tail : WormTail, IRivenEnemy, IDrawWCArmor {
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override bool SharesImmunityFrames => true;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public int OriginalMaxArmorHealth { get; set; }
 		public override float SegmentSeparation => 96;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
@@ -768,7 +772,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
 		public override void AI() {
-			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
+			float ArmorHealthPercent = this.ArmorHealthPercent();
 			NPC.defense = 20 * (int)(ArmorHealthPercent);
 			NPC.life = NPC.lifeMax - 1;
 
@@ -793,9 +797,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
-			if (ArmorHealth > 0 && ArmorHealth < MaxArmorHealth) {
+			if (ArmorHealth > 0 && ArmorHealth < OriginalMaxArmorHealth) {
 				float alpha = Lighting.Brightness((int)(NPC.Center.X / 16f), (int)(NPC.Center.Y / 16f));
-				Main.instance.DrawHealthBar(position.X, position.Y, ArmorHealth, MaxArmorHealth, alpha, scale);
+				Main.instance.DrawHealthBar(position.X, position.Y, ArmorHealth, OriginalMaxArmorHealth, alpha, scale);
 			}
 			return false;
 		}
@@ -812,6 +816,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeRegen = 0;
 			NPC.lifeRegenCount = 0;
 		}
+		void IDrawWCArmor.DrawSegmentArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }
 	}
 	public class Boss_Bar_WC : ModBossBar {
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
@@ -827,7 +832,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			const int total_frames = head_frames + body_frames + tail_frames;
 			const int damage_frames = 3;
 			void AddFrame(NPC currentNPC, int frameNumX) {
-				Rectangle frame = texture.Frame(total_frames, damage_frames, frameNumX, (int)float.Floor((1 - currentNPC.ai[3] / MaxArmorHealth) * damage_frames));
+				int maxArmorHealth = (currentNPC.ModNPC as IDrawWCArmor)?.OriginalMaxArmorHealth ?? MaxArmorHealth;
+				Rectangle frame = texture.Frame(total_frames, damage_frames, frameNumX, (int)float.Floor((1 - currentNPC.ai[3] / maxArmorHealth) * damage_frames));
 				totalWidth += frame.Width;
 				frames.Add(frame);
 			}
@@ -1025,6 +1031,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public interface IDrawWCArmor {
+		int ArmorHealth { get; set; }
+		int OriginalMaxArmorHealth { get; set; }
 		void DrawSegmentArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor);
+	}
+	file static class WCExtensions {
+		public static float ArmorHealthPercent(this IDrawWCArmor self) => self.ArmorHealth / (float)self.OriginalMaxArmorHealth.OrXIf(0, MaxArmorHealth);
 	}
 }
