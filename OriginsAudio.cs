@@ -289,7 +289,8 @@ namespace Origins {
 				PitchVariance = 0.3f
 			};
 			Sounds.WCScream = new SoundStyle("Origins/Sounds/Custom/WCScream", SoundType.Sound) {
-				PitchVariance = 0.3f
+				PitchVariance = 0.3f,
+				SoundLimitBehavior = SoundLimitBehavior.IgnoreNew
 			};
 		}
 	}
