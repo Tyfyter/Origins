@@ -172,6 +172,7 @@ WORLD GENERATION:
 
 (X) Cubekon Temple
 (X) Defiled Mazes
+(X) Ice Biome Heart Crystal Chamber
 (X) Psymanti Camp
 (X) Underglade Crypt
 
@@ -337,6 +338,7 @@ ENEMY NPCS:
 (#, ^2) VV-13 !!!
 
 (X) Clockwork
+(X) Crystal Prison
 (X) Cursed Dwarf
 (@2/3, #) Electromancer
 (^, 赏) Etherealizer
@@ -1439,6 +1441,7 @@ TILES:
 (^) Gas Generator
 (#2, ^2) Incinerator Pit !!!
 (^) Industrial Door
+(X) Infused Quakerock
 (#, ^2) Large Auto Assembler !!!
 (#, ^2) Large Conveyor Scooper !!!
 (^) Large Storage Container
@@ -1459,6 +1462,7 @@ TILES:
 (X) Ocean Dungeon Chest
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
+(X) Quakerock
 (X) Qube Generator
 (^) Radio Component
 (^) Riven Campfire
