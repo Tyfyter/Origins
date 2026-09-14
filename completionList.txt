@@ -425,7 +425,7 @@ NPC DIALOGUE:
 (^) Dryad
 (ᗢ) Witch Doctor
 
-(#2, ᗢ) Brine Fiend !!! (princess dialogue)
+(⚿, ᗢ) Brine Fiend !!! (princess dialogue)
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
 (ᗢ) Mother Unit
