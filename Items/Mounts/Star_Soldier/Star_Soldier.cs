@@ -110,7 +110,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (LockOnTarget is NPC target) {
 				if (!target.active) LockOnTarget = null;
-				else if (target.dontTakeDamage && !Star_Soldier_UI.Sets.IgnoreDontDakeDamageTargeting[target.type]) LockOnTarget = null;
+				else if (Star_Soldier_UI.Sets.OverrideDontDakeDamageTargeting[target.type] ?? target.dontTakeDamage) LockOnTarget = null;
 				else if (player.MountedCenter.Clamp(target.Hitbox).WithinRange(player.MountedCenter, 16 * 100) == false) LockOnTarget = null;
 			}
 			Vector2 targetPos = LockOnTarget?.Center ?? Main.MouseWorld;
@@ -2066,20 +2066,20 @@ public class Star_Soldier_UI : SwitchableUIState {
 		.Description("Replaces the normal buff icon drawing when the player is using the Star Soldier mount")
 		.RegisterCustomSet<Func<int, Vector2, bool>>(null);
 		public static Action<SpriteBatch>[] InfoDisplayOverride = new Action<SpriteBatch>[InfoDisplayLoader.InfoDisplayCount];
-		public static bool[] IgnoreDontDakeDamageTargeting = NPCID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(IgnoreDontDakeDamageTargeting)}")
-		.Description("Lets the Star Soldier mount's targeting interface display information about this type of NPC even if NPC.dontTakeDamage is true")
-		.RegisterBoolSet(
-			NPCID.BrainofCthulhu,
-			NPCID.MoonLordFreeEye,
-			NPCID.DD2LanePortal,
-			NPCID.Deerclops,
-			NPCID.EmpressButterfly,
-			NPCID.FairyCritterBlue,
-			NPCID.FairyCritterGreen,
-			NPCID.FairyCritterPink,
-			NPCID.Probe,
-			NPCID.GraniteGolem,
-			NPCID.GraniteFlyer
+		public static bool?[] OverrideDontDakeDamageTargeting = NPCID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(OverrideDontDakeDamageTargeting)}")
+		.Description("Lets the Star Soldier mount's targeting interface display information about this type of NPC even if NPC.dontTakeDamage is true, or prevents it even if NPC.dontTakeDamage is false")
+		.RegisterCustomSet<bool?>(null,
+			NPCID.BrainofCthulhu, false,
+			NPCID.MoonLordFreeEye, false,
+			NPCID.DD2LanePortal, false,
+			NPCID.Deerclops, false,
+			NPCID.EmpressButterfly, false,
+			NPCID.FairyCritterBlue, false,
+			NPCID.FairyCritterGreen, false,
+			NPCID.FairyCritterPink, false,
+			NPCID.Probe, false,
+			NPCID.GraniteGolem, false,
+			NPCID.GraniteFlyer, false
 		);
 		static Sets() {
 			InfoDisplayOverride[InfoDisplay.DepthMeter.Type] = InfoAccessoryHUD.DrawDepthMeter;
@@ -2515,7 +2515,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				if (hitbox.Width == 0 || hitbox.Height == 0) continue;
 				Color color = Color.Lime;
 				if (!npc.friendly && !NPCID.Sets.CountsAsCritter[npc.type]) {
-					if (npc.dontTakeDamage && !Sets.IgnoreDontDakeDamageTargeting[npc.type]) continue;
+					if (Sets.OverrideDontDakeDamageTargeting[npc.type] ?? npc.dontTakeDamage) continue;
 					color = Color.OrangeRed;
 				}
 

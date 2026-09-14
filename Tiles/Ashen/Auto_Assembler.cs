@@ -1,5 +1,6 @@
 ﻿using Avalon;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Mounts.Star_Soldier;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -152,6 +153,7 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 	public Vector2 OldPlatformPosition { get; set; }
 	public override void SetStaticDefaults() {
 		//NPCID.Sets.ConveyorBeltCollision[Type] = true;
+		Star_Soldier_UI.Sets.OverrideDontDakeDamageTargeting[Type] = true;
 	}
 	public override void SetDefaults() {
 		NPC.lifeMax = 10;
