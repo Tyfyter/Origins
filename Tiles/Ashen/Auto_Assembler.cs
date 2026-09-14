@@ -1,6 +1,5 @@
-﻿using Avalon;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Mounts.Star_Soldier;
+﻿using Origins.Items.Mounts.Star_Soldier;
+using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -16,10 +14,11 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen;
 public class Auto_Assembler : ModTile, IAshenWireTile {
+	const short dir_size = 2 * 3 * 18;
 	public static int SpawnRate => 180;
 	public override void Load() {
 		new TileItem(this)
-		.WithExtraStaticDefaults(this.DropTileItem)
+		.WithExtraStaticDefaults(item => ItemID.Sets.DisableAutomaticPlaceableDrop[item.type] = true)
 		.RegisterItem();
 		AddGrounded(1, 14, 14);
 		AddGrounded(2, 22, 10);
@@ -40,49 +39,49 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 		Main.tileLighted[Type] = true;
 		TileID.Sets.DrawTileInSolidLayer[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+		TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
 		TileObjectData.newTile.SetHeight(3);
+		TileObjectData.newTile.SetOriginBottomCenter();
+		TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+		TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
+		TileObjectData.addAlternate(2);
+
 		TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 		TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
+		TileObjectData.newAlternate.Origin = new(1, 0);
 		TileObjectData.newAlternate.AnchorTop = new(AnchorType.SolidBottom, 0, 3);
+		TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 		TileObjectData.addAlternate(1);
+		TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+		TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
+		TileObjectData.newAlternate.Origin = new(1, 0);
+		TileObjectData.newAlternate.AnchorTop = new(AnchorType.SolidBottom, 0, 3);
+		TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
+		TileObjectData.addAlternate(3);
 		TileObjectData.addTile(Type);
 		AddMapEntry(new Color(194, 69, 12), CreateMapEntryName());
 		DustType = Ashen_Biome.DefaultTileDust;
 	}
 	public override void PlaceInWorld(int i, int j, Item item) {
 		int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
-		ModContent.GetInstance<Auto_Assembler_TE>().AddTileEntity(TileObjectData.TopLeft(i, j) + new Point16(1, 1 - (style != 0).ToDirectionInt()), new());
+		ModContent.GetInstance<Auto_Assembler_TE>().AddTileEntity(TileObjectData.TopLeft(i, j) + new Point16(1, 1 - ((style & 1) != 0).ToDirectionInt()), new());
 	}
-	public static int GetFacingDirection(int i, int j) {
-		Tile tile = Main.tile[i, j];
-		int style = TileObjectData.GetTileStyle(tile);
-		int dir = 0;
-		i -= (tile.TileFrameX / 18) % 3;
-		j -= tile.TileFrameY / 18;
-		if (style != 0) {
-			j -= 1;
-		} else {
-			j += 3;
-		}
-		for (int x = 0; x < 3; x++) {
-			if (!WorldGen.InWorld(i + x, j)) continue;
-			tile = Main.tile[i + x, j];
-			if (!tile.HasTile) continue;
-			dir += TileID.Sets.ConveyorDirection[tile.TileType];
-		}
-		if (dir == 0) dir = 1;
-		return dir * (style == 0).ToDirectionInt();
-	}
-	bool isDrawingFlipped;
-	public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
-		isDrawingFlipped = GetFacingDirection(i, j) < 0;
-		if (isDrawingFlipped) spriteEffects ^= SpriteEffects.FlipHorizontally;
-	}
-	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
-		if (isDrawingFlipped) tileFrameX += (short)(36 - (tileFrameX % (3 * 18)) * 2);
-	}
+	public static int GetFacingDirection(int i, int j) => (Main.tile[i, j].TileFrameX < dir_size).ToDirectionInt();
 	void IAshenWireTile.UpdatePowerState(int i, int j, bool powered) { }
-	void IAshenWireTile.HitWire(int i, int j) { }
+	public override void HitWire(int i, int j) {
+		if (!Ashen_Wire_Data.HittingAshenWires) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int y = 0; y < data.Height; y++) {
+				for (int x = 0; x < data.Width; x++) {
+					Tile tile = Main.tile[left + x, top + y];
+					if (tile.TileType != Type) continue;
+					tile.TileFrameX += dir_size;
+					tile.TileFrameX %= dir_size * 2;
+				}
+			}
+		}
+	}
 	class Auto_Assembler_TE : TESystem<Auto_Assembler_TE.Data> {
 		protected override bool IsValidTile(Tile tile) => tile.TileIsType<Auto_Assembler>();
 		public class Data() : ITileEntityData {
@@ -101,7 +100,7 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 					int style = TileObjectData.GetTileStyle(Main.tile[position]);
 					Point spawnPos = new(position.X * 16 + 8, position.Y * 16);
 					int spawnType;
-					if (style != 0) {
+					if ((style & 1) != 0) {
 						spawnType = Main.rand.Next(hanging).Type;
 						spawnPos.Y += ContentSamples.NpcsByNetId[spawnType].height;
 					} else {
@@ -140,8 +139,8 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 		Mod.AddContent(instance);
 		hanging.Add(instance);
 	}
-	static List<Auto_Assembler_Item_Grounded> grounded = [];
-	static List<Auto_Assembler_Item_Hanging> hanging = [];
+	static readonly List<Auto_Assembler_Item_Grounded> grounded = [];
+	static readonly List<Auto_Assembler_Item_Hanging> hanging = [];
 }
 [Autoload(false)]
 public class Auto_Assembler_Item_Grounded(string texture, int width, int height) : ModNPC, IPlatformNPC {
@@ -185,9 +184,11 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 		float x = NPC.position.X;
 		Collision.StepConveyorBelt(NPC, Math.Sign(NPC.GravityMultiplier.Value));
 		if (NPC.collideY && NPC.position.X == x) {
-			int tileType = ModContent.TileType<Auto_Assembler>();
+			int assembler = ModContent.TileType<Auto_Assembler>();
+			int scooper = ModContent.TileType<Conveyor_Scooper>();
 			foreach (Point pos in NPC.Hitbox.IterateTilesIn()) {
-				if (Main.tile[pos].TileIsType(tileType)) {
+				Tile tile = Main.tile[pos];
+				if (tile.HasTile && (tile.TileType == assembler || tile.TileType == scooper)) {
 					Vector2 movement = Collision.TileCollision(
 						NPC.position,
 						new Vector2(Auto_Assembler.GetFacingDirection(pos.X, pos.Y) * 2.5f, 0),
