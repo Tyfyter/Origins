@@ -1162,33 +1162,31 @@ namespace Origins {
 				Player.velocity += platformDismountVelocity;
 			}
 			NPC standOnNPC = null;
-			if (!Player.controlDown) {
-				Vector2 playerDiff = Player.position - Player.oldPosition;
-				if (playerDiff.Y == 0) playerDiff.Y = Player.gravity;
-				playerDiff.Y += Player.gravity;
-				Vector2 playerPos = Player.BottomLeft - playerDiff;
-				//playerPos.Y = float.BitDecrement(playerPos.Y);
-				if (standingOnPlatformNPC is not null && standingOnPlatformNPC.position.Y > standingOnPlatformNPC.oldPosition.Y) playerDiff.Y += standingOnPlatformNPC.position.Y - standingOnPlatformNPC.oldPosition.Y;
-				float minCollisionTime = float.PositiveInfinity;
-				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.ModNPC is not IPlatformNPC strider || !strider.CanStandOnPlatform(Player)) continue;
-					Vector2 npcDiff = strider.GetPlatformPos() - strider.OldPlatformPosition;
-					if (npcDiff.Y > playerDiff.Y) continue;
-					if (CollisionExtensions.CheckMovingAALines(playerPos, Player.width, playerDiff, strider.OldPlatformPosition, strider.PlatformWidth, npcDiff) is not float collisionTime) continue;
-					if (Minimize(ref minCollisionTime, collisionTime)) standOnNPC = npc;
-				}
-				if (standOnNPC is not null && standOnNPC != standingOnPlatformNPC) {
-					Player.velocity -= standOnNPC.velocity - (standingOnPlatformNPC?.velocity ?? Vector2.Zero);
-				}
-				if (!float.IsPositiveInfinity(minCollisionTime) && standOnNPC.ModNPC is IPlatformNPC platform) {
-					minCollisionTime = float.BitDecrement(minCollisionTime);
-					Player.position = Player.oldPosition + playerDiff * minCollisionTime;
-					Vector2 npcDiff = platform.GetPlatformPos() - platform.OldPlatformPosition;
-					Vector2 playerMovementMult = new(1 - platform.PlatformStickyness(Player), 0);
-					Vector2 platformMovementMult = new(platform.PlatformGrip(Player), 1);
-					using (Player.velocity.ScopedOverride((playerDiff * playerMovementMult + npcDiff * platformMovementMult) * (1 - minCollisionTime))) {
-						Player.DryCollision(false, false);
-					}
+			Vector2 playerDiff = Player.position - Player.oldPosition;
+			if (playerDiff.Y == 0) playerDiff.Y = Player.gravity;
+			playerDiff.Y += Player.gravity;
+			Vector2 playerPos = Player.BottomLeft - playerDiff;
+			//playerPos.Y = float.BitDecrement(playerPos.Y);
+			if (standingOnPlatformNPC is not null && standingOnPlatformNPC.position.Y > standingOnPlatformNPC.oldPosition.Y) playerDiff.Y += standingOnPlatformNPC.position.Y - standingOnPlatformNPC.oldPosition.Y;
+			float minCollisionTime = float.PositiveInfinity;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.ModNPC is not IPlatformNPC strider || !strider.CanStandOnPlatform(Player)) continue;
+				Vector2 npcDiff = strider.GetPlatformPos() - strider.OldPlatformPosition;
+				if (npcDiff.Y > playerDiff.Y) continue;
+				if (CollisionExtensions.CheckMovingAALines(playerPos, Player.width, playerDiff, strider.OldPlatformPosition, strider.PlatformWidth, npcDiff) is not float collisionTime) continue;
+				if (Minimize(ref minCollisionTime, collisionTime)) standOnNPC = npc;
+			}
+			if (standOnNPC is not null && standOnNPC != standingOnPlatformNPC) {
+				Player.velocity -= standOnNPC.velocity - (standingOnPlatformNPC?.velocity ?? Vector2.Zero);
+			}
+			if (!float.IsPositiveInfinity(minCollisionTime) && standOnNPC.ModNPC is IPlatformNPC platform) {
+				minCollisionTime = float.BitDecrement(minCollisionTime);
+				Player.position = Player.oldPosition + playerDiff * minCollisionTime;
+				Vector2 npcDiff = platform.GetPlatformPos() - platform.OldPlatformPosition;
+				Vector2 playerMovementMult = new(1 - platform.PlatformStickyness(Player), 0);
+				Vector2 platformMovementMult = new(platform.PlatformGrip(Player), 1);
+				using (Player.velocity.ScopedOverride((playerDiff * playerMovementMult + npcDiff * platformMovementMult) * (1 - minCollisionTime))) {
+					Player.DryCollision(false, false);
 				}
 			}
 			standingOnPlatformNPC = standOnNPC;
