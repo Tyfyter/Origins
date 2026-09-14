@@ -41,7 +41,7 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture gunTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Gun");
 		static AutoLoadingTexture gunGlowTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Gun_Glow");
 		public static float MaxTargetDist => 16 * 75;
-		public static float ShotRate => 67 - ContentExtensions.DifficultyDamageMultiplier * 7;
+		public static float ShotRate => 132 - ContentExtensions.DifficultyDamageMultiplier * 7;
 		public static int ShotDamage => (int)(35 * ContentExtensions.DifficultyDamageMultiplier);
 		public static float ShotVelocity => 12;
 		public bool IsDeactivated {
