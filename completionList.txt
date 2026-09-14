@@ -705,7 +705,7 @@ ACCESSORIES:
 (^) Fiberglass Dagger
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
-(☻) Glitter Glue !!! (just needs yellow color during day)
+(☻) Glitter Glue !!! (has color during day, also has some adjustments)
 (^) Lunatic's Rune
 (^) Mysterious Spray
 (^) Retool Arm
@@ -1439,7 +1439,7 @@ TILES:
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(#2, ^2) Incinerator Pit !!!
+(☻) Incinerator Pit !!!
 (^) Industrial Door
 (X) Infused Quakerock
 (#, ^2) Large Auto Assembler !!!

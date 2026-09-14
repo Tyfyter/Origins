@@ -52,7 +52,7 @@ Arabel: {
 
 
 			*****
-			For now, it's time for your bedtime. You need to get some sleep for your big day tomorrow. Oh? Of course, my son. I'll also tuck Rocky in his bed for you too. There. He's all warm and cozy, ready to have crazy dreams of falling just like you. Sleep tight, my little munchkin.
+			For now, it's time for bed. You need to get some sleep for your big day tomorrow. Oh? Of course, my son. I'll also tuck Rocky in his bed for you too. There. He's all warm and cozy, ready to have crazy dreams of falling just like you. Sleep tight, dear.
 			''' */
 	}
 
@@ -76,14 +76,14 @@ Lost_Crone: {
 		[header:Unsought Organ (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Unsought_Organ]
 		*****
-		I sought a wealth of knowledge and that led me here. I couldn't get anywhere being the middleman of it all, filling in for the role in everybody else's life. I pursued knowledge because I had nothing else. In order to get what I had wished, I had to divulge in little misdeeds. This kind of magic came with its curses, but I could've cared less about what the others thought. Despite my curses, I found my place in the world as its maintainer.
+		I sought a wealth of knowledge that led me here. I couldn't get anywhere being the middleman of it all, filling in for the role in everybody else's life. I pursued knowledge because I had nothing else. In order to get what I had wished, I had to divulge in little misdeeds. This kind of magic came with its curses, but I could've cared less about what others thought. Despite my curses, I found my place in the world as its maintainer.
 		''' */
 	/* Sunder_Gut.Text:
 		'''
 		[header:Sunder Gut (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Sunder_Gut]
 		*****
-		Because I was so far into the gray, I could help those who cowered to the light while helping those who festered in darkness. I met many faces and went to many places, seeing the kinds of people that made my life interesting. But, people only recognized me because I was dangerous. Truly interesting people can be sometimes, it gives me my own excuses to be just as selfish. This selfishness and lust for knowledge had to be paid, however, and my debts only began to weigh.
+		Because I was so far into the gray, I could help those who cowered to the light while helping those who festered in darkness. I met many faces and went to many places, seeing the kinds of people that made my life interesting. But, people only recognized me because I was dangerous. Truly interesting people can be sometime. It gives me my own excuses to be just as selfish but the selfishness and lust for knowledge had to be paid.
 		''' */
 	/* Haggard_Artery.Text:
 		'''
@@ -110,7 +110,7 @@ Riven: {
 		[header:Alkahest (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Alkahest]
 		*****
-		The universal solvent, alkahest. How the parasite is uniquely capable of generating it is unclear, but it could very easily be just part of its biologic processes.
+		The universal solvent, alkahest. How the parasite is uniquely capable of generating it is unclear, but it could very easily just be part of its biologic processes.
 		''' */
 	/* Vorpal_Sword.Text:
 		'''
@@ -124,7 +124,7 @@ Riven: {
 		[header:Salty Seed (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Tools/Salty_Seed]
 		*****
-		It needs two things to keep it alive: salt and heat. Salt expedites the production of valuable alkahest. It uses heat to power its metabolism, which it gets by digesting things in the form of waste heat.
+		It needs two things to keep it alive: salt and heat. Salt expedites the production of alkahest, and heat powers its metabolism.
 		''' */
 
 	Primordial_Permafrost: {
@@ -136,7 +136,7 @@ Riven: {
 
 
 			*****
-			Without that heat, the amoeba can't do anything. This is why it often falls victim to sources of cold. The snow is its greatest weakness, if only the Dryad Clan knew that.
+			Without that heat, the amoeba can't do anything. That's why it often falls victim to sources of cold. The snow is its greatest weakness, if only the Dryad Clan knew that.
 			''' */
 	}
 
@@ -145,14 +145,14 @@ Riven: {
 		[header:Symbiote Skull (5/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Symbiote_Skull]
 		*****
-		Strangely, the life we've found in the hive maintains its autonomy from the parasite, albeit with a little of its influence by controlling their gut microbiomes like a true parasite.
+		Strangely, the life we've found in the hive maintains its autonomy from the parasite, albeit with a little of its influence by controlling their gut microbiomes.
 		''' */
 	/* Riven_Carapace.Text:
 		'''
 		[header:{§Riven} Carapace (6/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Riven_Carapace]
 		*****
-		It's also worth noting the amoeba itself is incapable of any intelligent thought. It is simply a creature tying to survive, but it's changing its environment instead of adapting to it. I suppose you can do that when you can digest anything.
+		It's also worth noting the amoeba itself is incapable of any intelligent thought. It's simply a creature tying to survive, but changing its environment instead of adapting to it. I suppose you can do that when you can eat anything.
 		''' */
 
 	Riven_Protoform: {
@@ -164,7 +164,7 @@ Riven: {
 
 
 			*****
-			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. These creatures also seem to exhibit some instabilities in their genetic makeup that allows them to adapt so spontaneously and effectively.
+			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. These creatures also seem to exhibit some instabilities in their genetic makeup that allows them to evolve spontaneously.
 			''' */
 	}
 
@@ -173,7 +173,7 @@ Riven: {
 		[header:Amoebeye (8/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Amoebeye]
 		*****
-		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. It is most interesting...
+		And, interestingly enough these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. It is most interesting...
 		''' */
 	/* Savage_Whip.Text:
 		'''
@@ -187,14 +187,14 @@ Riven: {
 		[header:Teardown (10/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Summoner/Teardown]
 		*****
-		But, we already know. The amoeba's origins are stained by the blood of Cthulhu. Cthulhu's blood had spilled into the world, a random cavern the parasite had remained dormant in for eons. The parasite was affected, transforming into something wicked. It is not evil by nature, it is evil by design.
+		But, we already know. The amoeba's origins are stained by the blood of Cthulhu. Cthulhu's blood had spilled into the world, where the parasite had remained dormant for eons. The parasite transformed into something evil by desgin, not by nature.
 		''' */
 	/* Seam_Beam.Text:
 		'''
 		[header:Seam Beam (11/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Seam_Beam]
 		*****
-		I thought the {§Defiled} being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to consume it whole it as an evil.
+		I thought the {§Defiled} being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to consume it whole as an evil.
 		''' */
 
 	Spug_Flesh: {
@@ -240,7 +240,7 @@ Brine_Fiend: {
 		[header:Sea Dragon (4/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Sea_Dragon]
 		*****
-		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would quickly shape her to be who she is today. She started brewing concoctions to make herself more resistant, however.
+		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would make her adapt quickly. She started brewing concoctions to make herself more resistant.
 		''' */
 	/* Hearty_Broth.Text:
 		'''
@@ -484,7 +484,7 @@ Brine_Pool_And_Lost_Diver: {
 		[header:Boat Rocker (4/9)]
 		[jimage/sc2d:Origins/Items/Weapons/Ranged/Boat_Rocker] [jimage/sc2dw800:Origins/Items/Weapons/Ranged/Boat_Rocker_Alt]
 		*****
-		???: One shot, slam it down. Two shots, wave it all around. Three shots, blunt side for the pound. Four shots, kick the ground. Five, the aim is sound. What brings yah, Penny?
+		???: One shot, slam it down. Two shots, wave it around. Three shots, blunt side to pound. Four shots, kick the ground. Five, the aim is sound. What brings yah, Penny?
 
 		Penny: I came to bring you a gift. These beads are fitting for an adventurous soul such as yourself.
 
@@ -503,7 +503,7 @@ Brine_Pool_And_Lost_Diver: {
 
 		???: Are you out of your tank?! I'm going to die if I do that!
 
-		Penny: Not with those beads around your neck. They're faith beads, old relics created by our ancestors to be blessed by the ocean gods before we could breathe underwater. Now they're just fancy hierlooms.
+		Penny: Not with those beads around your neck. They're faith beads, old relics created by our ancestors to be blessed by the ocean god himself before we could breathe underwater. Now they're just fancy hierlooms.
 
 		???: Woah, this feels awesome!
 		''' */
@@ -512,7 +512,7 @@ Brine_Pool_And_Lost_Diver: {
 		[header:Lost Picture Frame (6/9)]
 		[jimage/sc3d:Origins/Items/Other/Consumables/Lost_Picture_Frame]
 		*****
-		A picture of the sunset we used to adore all the time together. It was unfortunate, letting her go that day. Whenever I needed that fire in my heart, I thought of her.
+		A picture of the sunset we used to adore all the time together. It was unfortunate, letting her go that day. Whenever I needed that fire in my heart I thought of her.
 		''' */
 	/* Crown_Jewel.Text:
 		'''
@@ -670,7 +670,7 @@ The_Crimson: {
 
 
 			*****
-			It was an undertaking established the first Crimson King; a man known for his brutish leadership. All of his people were equally as barbaric and unhinged and, overtime, would become further strained from reality through indulgence.
+			It was an undertaking established by the first Crimson King; a man known for his brash leadership. All of his people were equally as barbaric and unhinged, and overtime would become further strained from reality through indulgence.
 			''' */
 	}
 
@@ -683,7 +683,7 @@ The_Crimson: {
 
 
 			*****
-			Even in present time, the beast's blood rains and continues to satiate the blood-thirsty, deranged denizens of this horrible place. They hardly resemble any kind of civilization anymore.
+			Even in present time, the beast's blood rains and continues to satiate the bloodthirsty, deranged denizens of this horrible place. They hardly resemble any kind of civilization anymore.
 			''' */
 	}
 
@@ -709,7 +709,7 @@ The_Crimson: {
 
 
 			*****
-			Their king was loved by his people. He drank from the blood with no care to celebrate his trophy, but only found it to empower him. So, he made sure his inheritors would also drink from the same chalice.
+			Their king was loved by his people. He drank from the blood with no care to celebrate his trophy, only finding it to empower him. So, he made sure his inheritors would also drink from the same chalice.
 			''' */
 	}
 
@@ -775,7 +775,7 @@ Ashen_Armor: {
 		[header:Ashen Breastplate (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Breastplate]
 		*****
-		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Sovereignty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them successful and allowed many of these suits to created. The suit was not the best quality, but it was capable for what little it had.
+		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Sovereignty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them successful and allowed many of these suits to be produced. The suit was not the best quality, but it was capable for what little it had.
 		''' */
 	/* Ashen_Greaves.Text:
 		'''
@@ -863,7 +863,7 @@ Birth_Of_The_Gods: {
 			[jimage/sc3d:Terraria/Images/Item_1291]
 
 			*****
-			Terraria's Dryads were its true keepers, bringing about life and acting on behalf of the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
+			Terraria's dryads were its true maintainers, bringing about life and acting on behalf of the world. Among their vast responsibility, their duties also were to cultivate a balanced ecosystem; of such were the Forbidden Fruit. The Forbidden Fruit are Terraria's form of entrusted power to individuals they are provided to, but only the dryads knew of how to cultivate these plants.
 			''' */
 	}
 
@@ -875,7 +875,7 @@ Birth_Of_The_Gods: {
 			[jimage/sc3d:Terraria/Images/Item_1570]
 
 			*****
-			Some possessed this knowledge and hunted the Dryadkin for their Forbidden Fruit. The Dryad Clan had become jaded and lost trust in any outsiders who previously knew them. But, 16 of these fruits still remained whether protected by them or already outside of their control.
+			Some possessed this knowledge and hunted the dryadkin for the Forbidden Fruit. The Dryad Clan had become jaded and lost trust in any outsiders who previously knew them, but seven of these fruits still remained whether protected by them or already outside of their control.
 			''' */
 	}
 
@@ -887,7 +887,7 @@ Birth_Of_The_Gods: {
 			[jimage/sc3d:Terraria/Images/Item_3460]
 
 			*****
-			And, there were those who ruined it for all, like that of Cthulhu's war against Terraria, which resulted in the death of all but one dryad who ran away. The search for godhood became a lost dream that day, but it gave way for the world to finally find balance. Terrarians exist to help with this and remove all gods for good.
+			And, there were those who ruined it for all, like that of Cthulhu's war against Terraria, which resulted in the death of all but one of the dryadkin. The search for Terraria's trusted power became a lost dream, but it gave way for the world to finally find balance. Terrarians exist to help with this and keep the power away from any one being.
 			''' */
 	}
 }
@@ -904,7 +904,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Terraria/Images/Item_497]
 
 			*****
-			Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire as he chose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been, but, it was still a slaughter.
+			Neptune was a benevolent leader of the merkin of Aqi, and god of the Terrarian seas. His avatar wasn't warped by any external desire as he chose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world as well, encountering different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been.
 			''' */
 	}
 
@@ -913,7 +913,7 @@ Ocean_Tribe: {
 		[header:Shark (2/{$SeriesLength})]
 		[jportrait/s1.2dw600:Shark]
 		*****
-		The merfolk's battle against Cthulhu was quick and violent. Neptune commanding the initial cavalry was a tactical failure that lead to his demise. Despite the unduly circumstances he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune was consumed by Cthulhu, which made Cthulhu even more powerful.
+		The merkin's battle against Cthulhu was spontaneous. Neptune commanding the initial cavalry was a tactical failure that lead to his demise. Despite the unduly circumstances he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably however, Neptune was consumed by Cthulhu, which made Cthulhu even more powerful.
 		''' */
 
 	Shell_Pile: {
@@ -924,7 +924,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Terraria/Images/Item_4090]
 
 			*****
-			Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh. Cthulhu would await his release from R'yleh in the darkness of the abyss.
+			Although heavy casualties were sustained, merkin sorcerers successfully managed to trap and contain Cthulhu in R'yleh. Cthulhu would await his release from R'yleh in the darkness of the abyss.
 			''' */
 	}
 
@@ -936,7 +936,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Origins/Items/Weapons/Summoner/Deep_Ocean_Pearl]
 
 			*****
-			The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from his havoc. There was a reform attempted by Neptune's closest but without their idol to give them guidance, the dream began to fade as people fled. I was just a merling at that time, which helped me fail to understand how awful life in Aqi was.
+			The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from this disaster. There was a reform attempted by Neptune's most devout followers, but without their idol to give them guidance the reform did not amount to anything. I was just a merling at that time, which made me all the more naive to the catastrophe.
 			''' */
 	}
 
@@ -948,7 +948,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Terraria/Images/Item_268]
 
 			*****
-			I instead found joy infatuated by a naive diver who entertained himself by taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
+			When Aqi fell, I instead found msyelf infatuated by a young diver who had a thirst for adventure. I would always secretly watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared that love for a long time. 
 			''' */
 	}
 }
@@ -960,7 +960,7 @@ Trenchmaker: {
 		[header:Trenchmaker]
 		[jimage/s1d:Origins/NPCs/Ashen/Boss/Trenchmaker]
 		*****
-		It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew came to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Do not get me wrong, the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since Lauren sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-22S was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-22S. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-S and TM-M lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the other network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack from quick reflexes, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I promised myself to never leave until the "Ashen" is powered off for good, so here I am.
+		It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Don't get me wrong the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since my wife sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-22S was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-22S. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-S and TM-M lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I ran away, my son and wife none-the-wiser to the attrocities I committed.
 		''' */
 }
 
@@ -979,7 +979,7 @@ Worn_Paper: {
 		''' */
 	/* Self_Preservation.Text:
 		'''
-		I was quite lucky. By the time the war engines turned on us I was out on a scrap run at AT-BSQ2, the facility was an old comms tower connecting the 2nd and 9th quadrants. We managed to get the comms array working again, which was powerful enough to relay messages that were being sent directly from the Mother Unit.
+		I was quite lucky. By the time the war engines turned on us. I was out on a scrap run at AT-BSQ2, the facility was an old comms tower connecting the 2nd and 9th quadrants. We managed to get the comms array working again, which was powerful enough to relay messages that were being sent directly from the Mother Unit.
 		The facility having no power was the reason why the other smokesites in the surrounding area were inactive, but there were chills running down our spines after we powered it back on and intercepted the Mother Unit’s orders.
 		If it weren’t for my cowardice we'd be dead sooner.
 		We’ve been camped out here and brought in the buggy in-case we need a fast escape.
@@ -999,7 +999,7 @@ Worn_Paper: {
 
 		Bill: Oh, didn't know you were a smog tester. Got a good look at the undercarriage there? Nothing too rusty?
 
-		Pat: Well. You're surely smelly, but good at the comebacks.
+		Pat: Well. You're surely smelly, but good at comebacks.
 
 		Matt: Can you two shut the hell up?
 
@@ -1013,7 +1013,7 @@ Worn_Paper: {
 		'''
 		Manager: I checked it multiple times. The amount is not just wrong, the shipment itself is not what we ordered.
 
-		Worker: I have no idea about this, LGT. I explicitly remember putting it into the message to V-FSQ3 that we needed a shipment of fresh food stocks. The invoice number lines up too.
+		Worker: I have no idea about this, LGT. I explicitly remember signaling to V-FSQ3 that we needed a shipment of fresh food stocks. The invoice number lines up too.
 
 		Manager: Instead, we got 18 tons of military technology. Could the message have gotten intercepted and changed in transit?
 
@@ -1025,14 +1025,14 @@ Worn_Paper: {
 		''' */
 	/* They_Found_Us.Text:
 		'''
-		We were compromised when a pack of packhunters came in and searched the place. We almost escaped but they were alerted by the buggy’s engine.
+		We were compromised when the packhunters came in and searched the place. We almost escaped but they were alerted by the buggy’s engine.
 		We drove about 8km before an HA-24 stopped us. I ran to this replenishment facility and found a power suit still in here. It’s a really good hiding place when you lock up in fear all the time. I can’t leave, but I can’t just starve myself. I’m just living off of whatever I can find.
 		''' */
 	/* Mean_Baby.Text:
 		'''
 		It's just a big baby. Who in their right mind made it this way? Here we are just trying to keep the stupid thing asleep, like it's supposed to be our job.
 		When the thing wakes up, we have to shock it with these tasers to calm it, and then sing it lullabies.
-		And for some reason, the lullabies actually work? Isn't this thing our POWERPLANT FOR THE ENTIRE POWER GRID? Whoever the hell thought making it a war machine, let alone with this much spite, deserves to be put in the pool of sanguinite we're having to sweat through everyday doing this crap.
+		And for some reason, the lullabies actually work? Isn't this thing our POWERPLANT FOR THE ENTIRE POWER GRID? Whoever the hell thought making it a war engine, let alone with this much spite, deserves to be put in the pool of sanguinite we're having to sweat through everyday doing this crap.
 		''' */
 	/* Workplace_Safety_Concern.Text:
 		'''
@@ -1048,12 +1048,12 @@ Worn_Paper: {
 		We’ve even cleaned out the entirety of hydroponics repeatedly, but none of the aquaculture survives.
 		The water supply is poisoned and it seems no amount of plumbing work will fix that.
 		We can’t rely on our own food production facilities anymore unless you plan on replacing the entire laborer caste with war engines.
-		I hope you have that deal with for them to provide us with food.
+		I hope you have that deal with them to provide us with food.
 		We’re going to need it.
 
 		Signed,
 
-		Sen.T. Romer
+		AGSenT Romer
 		''' */
 }
 
@@ -1064,11 +1064,11 @@ Worn_Paper: {
 		// Name: Explosive Weapons
 		/* Text:
 			'''
-			Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by adversary defense. They also tend to be more expensive and rely heavily on your aim because of their often-slow velocities. Generally, the equipment is also the lowest in terms of defense, and there is still the added risk of blowing yourself up with your own explosives!
+			Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by adversary defense. They also tend to be more expensive and rely heavily on your aim because of their often slow velocities. Generally, the equippable armor is also the lowest in terms of defense, and there is still the added risk of blowing yourself up with your own explosives!
 
 			It's not all that bad to run with the rockets, however, it just requires a different level of play that running other classes might not have. Fortunately, some explosive weapons are safe to the user, but if they aren't there are plenty of items to provide you with "self-damage" protection. Not to mention, your explosives will only deal self-damage according to your own defense too!
 
-			Being a "demolitionist", as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
+			Being a "demolitionist," as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
 
 			Oh, and one more thing: grenades are good for crowd-control, dynamite is good for single targets and bombs are an in-between. Yes, dynamite and bombs can be used offensively despite blowing up the world. That's just what a Pincushion from the Clothier is for. Also, look for any armor penetration bonuses to make them ignore defense and deal more damage!
 			''' */
@@ -1103,7 +1103,7 @@ Worn_Paper: {
 		[header:Eccentric Stone]
 		[jimage/sc2d:Origins/Items/Accessories/Eccentric_Stone]
 		*****
-		This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate, but yet weren't able to free me from. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so carelessly is unforgivable.
+		This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so recklessly is unforgivable.
 		''' */
 
 	Felnum: {
@@ -1147,7 +1147,7 @@ Worn_Paper: {
 		[header:Stone Mask]
 		[jimage/sc3d:Origins/Items/Accessories/Stone_Mask]
 		*****
-		Ah, I know of this mask, from history of torn-away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
+		Ah, I know of this mask from history of torn away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
 		''' */
 
 	Captured_Mojo: {
