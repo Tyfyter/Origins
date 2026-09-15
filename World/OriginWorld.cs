@@ -2,6 +2,7 @@
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs.Ashen;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.NPCs.Riven;
 using Origins.Questing;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
@@ -388,6 +389,27 @@ namespace Origins {
 				WorldGen.KillTile(i, j, true);
 				if (q-- < 0) {
 					break;
+				}
+			}
+			double rate = WorldGen.GetWorldUpdateRate();
+			if (rate == 0) return;
+			if (OriginConfig.Instance.QuirkyEvilSpread) {
+				Riven_Hive_Alt_Biome riven = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
+				for (int i = 0; i < Main.maxTilesX * Main.maxTilesY * 4.5E-05f * rate; i++) {
+					Point pos = new(Main.rand.Next(10, Main.maxTilesX - 10), Main.rand.Next(10, Main.maxTilesY - 20));
+					Tile tile = Framing.GetTileSafely(pos);
+					if (tile.HasUnactuatedTile && AltLibrary.Common.TileSets.OwnedByBiomeID[tile.TileType] == riven.Type) {
+						bool foundNPC = false;
+						foreach (NPC npc in Main.ActiveNPCs) {
+							if (npc?.ModNPC is IRivenEnemy && npc.WithinRange(pos.ToWorldCoordinates(), 10 * 16)) {
+								foundNPC = true;
+								break;
+							}
+						}
+						if (foundNPC) {
+							WorldGen.SpreadInfectionToNearbyTile(pos.X, pos.Y, riven.ConversionType);
+						}
+					}
 				}
 			}
 		}
