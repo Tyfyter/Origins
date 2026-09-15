@@ -86,7 +86,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 
 		public override void SetDefaults() {
-			Main.projFrames[Type] = 14;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 46;
 			Projectile.height = 36;

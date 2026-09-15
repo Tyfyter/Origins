@@ -1894,7 +1894,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
-(#, ^2) Dysfunctional Table Saw (Sprockey) !!!
+(☻) Dysfunctional Table Saw (Sprockey) !!!
 (^) Smith's Hammer (Walking Furnace)
 (^) Suspicious Looking Pebble (Defiled Blight)
 

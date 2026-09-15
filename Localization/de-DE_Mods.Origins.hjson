@@ -1518,6 +1518,11 @@ Buffs: {
 		// DisplayName: Star Soldier
 		// Description: Status: DEPLOYED
 	}
+
+	Sprockey_Buff: {
+		// DisplayName: Sprockey
+		// Description: <PH>
+	}
 }
 
 DamageClassName: {
@@ -2347,6 +2352,7 @@ Projectiles: {
 	// Star_Soldier_Blade_P.DisplayName: Star Soldier Laser Blade
 	// Glitter_Glue_P.DisplayName: Glitter Glue
 	// Star_Soldier_Pod_Missile.DisplayName: Star Soldier Pod Missile
+	// Sprockey.DisplayName: Sprockey
 }
 
 Prefixes: {

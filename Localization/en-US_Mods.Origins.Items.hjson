@@ -8668,3 +8668,8 @@ Large_Conveyor_Scooper_Item: {
 	DisplayName: Large Conveyor Scooper
 	Tooltip: ""
 }
+
+Dysfunctional_Table_Saw: {
+	DisplayName: Dysfunctional Table Saw
+	Tooltip: <PH>
+}
