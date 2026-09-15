@@ -8658,3 +8658,13 @@ Conveyor_Scooper_Item: {
 	// DisplayName: Conveyor Scooper
 	// Tooltip: ""
 }
+
+Large_Auto_Assembler_Item: {
+	// DisplayName: Large Auto Assembler
+	// Tooltip: ""
+}
+
+Large_Conveyor_Scooper_Item: {
+	// DisplayName: Large Conveyor Scooper
+	// Tooltip: ""
+}

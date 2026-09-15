@@ -1,5 +1,7 @@
-﻿using Origins.Items.Tools.Wiring;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -8,8 +10,9 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen;
-public class Conveyor_Scooper : ModTile {
-	const short dir_size = 2 * 3 * 18;
+public class Large_Conveyor_Scooper : ModTile {
+	public static int ID { get; private set; }
+	const short dir_size = 2 * 4 * 18;
 	public override void Load() {
 		new TileItem(this)
 		.WithExtraStaticDefaults(item => ItemID.Sets.DisableAutomaticPlaceableDrop[item.type] = true)
@@ -22,7 +25,8 @@ public class Conveyor_Scooper : ModTile {
 		TileID.Sets.DrawTileInSolidLayer[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 		TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
-		TileObjectData.newTile.SetHeight(3);
+		TileObjectData.newTile.Width = 4;
+		TileObjectData.newTile.SetHeight(7);
 		TileObjectData.newTile.SetOriginBottomCenter();
 		TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 		TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
@@ -43,6 +47,8 @@ public class Conveyor_Scooper : ModTile {
 		TileObjectData.addTile(Type);
 		AddMapEntry(new Color(194, 69, 12), CreateMapEntryName());
 		DustType = Ashen_Biome.DefaultTileDust;
+		if (!Main.dedServ) backTexture = ModContent.Request<Texture2D>(Texture + "_Back");
+		ID = Type;
 	}
 	public override void HitWire(int i, int j) {
 		if (!Ashen_Wire_Data.HittingAshenWires) {
@@ -57,5 +63,12 @@ public class Conveyor_Scooper : ModTile {
 				}
 			}
 		}
+	}
+	static Asset<Texture2D> backTexture;
+	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+		if (TileID.Sets.DrawTileInSolidLayer[Type] == false) drawData.drawTexture = backTexture.Value;
+	}
+	internal static void SetDrawLayer(bool solidLayer) {
+		TileID.Sets.DrawTileInSolidLayer[ID] = solidLayer;
 	}
 }

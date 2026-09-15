@@ -1,36 +1,45 @@
-﻿using Origins.Items.Mounts.Star_Soldier;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen;
-public class Auto_Assembler : ModTile, IAshenWireTile {
-	const short dir_size = 2 * 3 * 18;
+public class Large_Auto_Assembler : ModTile, IAshenWireTile {
+	const short dir_size = 2 * 4 * 18;
 	public static int SpawnRate => 180;
 	public override void Load() {
 		new TileItem(this)
 		.WithExtraStaticDefaults(item => ItemID.Sets.DisableAutomaticPlaceableDrop[item.type] = true)
 		.RegisterItem();
-		AddGrounded(1, 14, 14);
-		AddGrounded(2, 22, 10);
-		AddGrounded(3, 22, 18);
-		AddGrounded(4, 44, 22);
-		AddGrounded(5, 30, 14);
-		AddGrounded(6, 40, 20);
-		AddGrounded(7, 20, 20);
-		AddHanging(1, 38, 36);
-		AddHanging(3, 42, 32);
-		AddHanging(4, 38, 28);
-		AddHanging(5, 50, 24);
+		AddGrounded(1, 108, 22);
+		AddGrounded(2, 54, 44);
+		AddGrounded(3, 78, 34);
+		AddGrounded(4, 110, 32);
+		AddGrounded(5, 124, 38);
+		AddGrounded(6, 70, 30);
+		AddGrounded(7, 70, 30);
+		AddHanging(1, 14, 110);
+		AddHanging(2, 14, 98);
+		AddHanging(3, 48, 104);
+		AddHanging(4, 58, 90);
+		AddHanging(5, 36, 86);
+		int tmLeg = hanging.Count;
+		AddHanging(6, 30, 96);
+		Large_Auto_Assembler_Item_Hanging afLeg = new(typeof(Large_Auto_Assembler_Item_Hanging).GetDefaultTMLName("6_AF"), 30, 100);
+		Mod.AddContent(afLeg);
+		AprilFoolsAssetSwitcher<Large_Auto_Assembler_Item_Hanging>.Add(() => ref CollectionsMarshal.AsSpan(hanging)[tmLeg], afLeg);
 	}
 
 	public override void SetStaticDefaults() {
@@ -40,7 +49,8 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 		TileID.Sets.DrawTileInSolidLayer[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 		TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
-		TileObjectData.newTile.SetHeight(3);
+		TileObjectData.newTile.Width = 4;
+		TileObjectData.newTile.SetHeight(7);
 		TileObjectData.newTile.SetOriginBottomCenter();
 		TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 		TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
@@ -64,7 +74,7 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 	}
 	public override void PlaceInWorld(int i, int j, Item item) {
 		int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
-		ModContent.GetInstance<Auto_Assembler_TE>().AddTileEntity(TileObjectData.TopLeft(i, j) + new Point16(1, 1 - ((style & 1) != 0).ToDirectionInt()), new());
+		ModContent.GetInstance<Large_Auto_Assembler_TE>().AddTileEntity(TileObjectData.TopLeft(i, j) + new Point16(1, ((style & 1) == 0).Mul(6)), new());
 	}
 	public static int GetFacingDirection(int i, int j) => (Main.tile[i, j].TileFrameX < dir_size).ToDirectionInt();
 	void IAshenWireTile.UpdatePowerState(int i, int j, bool powered) { }
@@ -82,13 +92,13 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 			}
 		}
 	}
-	class Auto_Assembler_TE : TESystem<Auto_Assembler_TE.Data> {
-		protected override bool IsValidTile(Tile tile) => tile.TileIsType<Auto_Assembler>();
+	class Large_Auto_Assembler_TE : TESystem<Large_Auto_Assembler_TE.Data> {
+		protected override bool IsValidTile(Tile tile) => tile.TileIsType<Large_Auto_Assembler>();
 		public class Data() : ITileEntityData {
 			int timer;
 			public void Update(Point16 position) {
 				if (NetmodeActive.MultiplayerClient) return;
-				if (AshenWireTile.DefaultIsPowered(position.X, position.Y) && timer.CycleUp(SpawnRate) && GetFacingDirection(position.X, position.Y) != 0) {
+				if (AshenWireTile.DefaultIsPowered(position.X, position.Y) && timer.CycleUp(SpawnRate)) {
 					//if no players are within this range, skip spawning the item
 					const float max_dist = 16 * 250;
 					Vector2 worldCoords = position.ToWorldCoordinates();
@@ -129,70 +139,78 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 			public bool IsDirty { get; set; }
 		}
 	}
-	void AddGrounded(int num, int width, int height) {
-		Auto_Assembler_Item_Grounded instance = new(typeof(Auto_Assembler_Item_Grounded).GetDefaultTMLName(num.ToString()), width, height);
+	Large_Auto_Assembler_Item_Grounded AddGrounded(int num, int width, int height) {
+		Large_Auto_Assembler_Item_Grounded instance = new(typeof(Large_Auto_Assembler_Item_Grounded).GetDefaultTMLName(num.ToString()), width, height);
 		Mod.AddContent(instance);
 		grounded.Add(instance);
+		return instance;
 	}
-	void AddHanging(int num, int width, int height) {
-		Auto_Assembler_Item_Hanging instance = new(typeof(Auto_Assembler_Item_Hanging).GetDefaultTMLName(num.ToString()), width, height);
+	Large_Auto_Assembler_Item_Hanging AddHanging(int num, int width, int height) {
+		Large_Auto_Assembler_Item_Hanging instance = new(typeof(Large_Auto_Assembler_Item_Hanging).GetDefaultTMLName(num.ToString()), width, height);
 		Mod.AddContent(instance);
 		hanging.Add(instance);
+		return instance;
 	}
-	static readonly List<Auto_Assembler_Item_Grounded> grounded = [];
-	static readonly List<Auto_Assembler_Item_Hanging> hanging = [];
+	static readonly List<Large_Auto_Assembler_Item_Grounded> grounded = [];
+	static readonly List<Large_Auto_Assembler_Item_Hanging> hanging = [];
 }
 [Autoload(false)]
-public class Auto_Assembler_Item_Grounded(string texture, int width, int height) : ModNPC, IPlatformNPC {
-	public override string Texture => texture;
-	public override string Name { get; } = texture.Split('/')[^1];
-	protected override bool CloneNewInstances => true;
-	public Vector2 PlatformOffset => default;
-	public float PlatformWidth => NPC.width;
-	public Vector2 OldPlatformPosition { get; set; }
-	public override void SetStaticDefaults() {
-		//NPCID.Sets.ConveyorBeltCollision[Type] = true;
-		Star_Soldier_UI.Sets.OverrideDontDakeDamageTargeting[Type] = true;
-	}
-	public override void SetDefaults() {
-		NPC.lifeMax = 10;
-		NPC.width = width;
-		NPC.height = height;
-		NPC.defense = 10;
-		NPC.knockBackResist = 0;
-		NPC.CanBeReplacedByOtherNPCs = true;
-		NPC.behindTiles = true;
-		NPC.chaseable = false;
-		NPC.HitSound = SoundID.NPCHit4;
-	}
-	public override bool PreHoverInteract(bool mouseIntersects) => false;
+public class Large_Auto_Assembler_Item_Grounded(string texture, int width, int height) : Auto_Assembler_Item_Grounded(texture, width, height), IPlatformNPC {
 	public override void PostAI() {
-		int type = ModContent.TileType<Conveyor_Scooper>();
+		if (NPC.ai[2] == 1) {
+			NPC.ai[1] += 1f / 30;
+			NPC.scale = float.Pow(Math.Min(0.85f, 32f / NPC.width), NPC.ai[1]);
+			if (NPC.ai[1] >= 1) NPC.active = false;
+			return;
+		}
+		int type = ModContent.TileType<Large_Conveyor_Scooper>();
 		Rectangle hitbox = NPC.Hitbox;
 		int xDiff = (int)(NPC.position.X - NPC.oldPosition.X);
 		hitbox.X += Math.Abs(xDiff);
 		if (xDiff < 0) hitbox.X += Math.Abs(xDiff);
 		hitbox.Width -= Math.Abs(xDiff) * 2;
 		hitbox.Y -= (int)(2 * NPC.GravityMultiplier.Value);
+		hitbox.Height -= 2;
 		if (NPC.collideY) NPC.velocity.X *= 0.93f;
-		foreach (Point item in hitbox.IterateTilesIn()) {
-			if (!Main.tile[item].TileIsType(type)) return;
+		int dir = 0;
+		foreach (Point pos in hitbox.IterateTilesIn()) {
+			Tile tile = Main.tile[pos];
+			if (!tile.TileIsType(type)) return;
+			int scoopDir = Large_Auto_Assembler.GetFacingDirection(pos.X, pos.Y);
+			switch (dir * scoopDir) {
+				case 0:
+				dir = scoopDir;
+				break;
+				case -1:
+				return;
+			}
 		}
-		NPC.active = false;
+		float center = TileObjectData.TopLeft(hitbox.Center().ToTileCoordinates16()).ToWorldCoordinates(0, 0).X + 32 - NPC.width * 0.5f;
+		center += dir * 2;
+		if ((NPC.position.X - (center - dir * 8)) * dir >= 0) {
+			NPC.position.X = center;
+			NPC.ai[1] = 0;
+			NPC.ai[2] = 1;
+			NPC.direction = dir;
+		}
 	}
 	public override void FindFrame(int frameHeight) {
 		DrawOffsetY = -4;
+		if (NPC.ai[2] == 1) return;
 		float x = NPC.position.X;
 		Collision.StepConveyorBelt(NPC, Math.Sign(NPC.GravityMultiplier.Value));
 		if (NPC.collideY && NPC.position.X == x) {
-			int assembler = ModContent.TileType<Auto_Assembler>();
-			int scooper = ModContent.TileType<Conveyor_Scooper>();
-			foreach (Point pos in NPC.Hitbox.IterateTilesIn()) {
+			int assembler = ModContent.TileType<Large_Auto_Assembler>();
+			int scooper = ModContent.TileType<Large_Conveyor_Scooper>();
+			CollisionExtensions.TileOrder order = default;
+			Point16 centerPos = NPC.Center.ToTileCoordinates16();
+			if (Main.tile[centerPos].TileIsType(assembler) && Large_Auto_Assembler.GetFacingDirection(centerPos.X, centerPos.Y) > 0) order = CollisionExtensions.TileOrder.DescX;
+			foreach (Point pos in NPC.Hitbox.IterateTilesIn(order)) {
 				Tile tile = Main.tile[pos];
 				if (tile.HasTile && (tile.TileType == assembler || tile.TileType == scooper)) {
 					Vector2 movement = Collision.TileCollision(
 						NPC.position,
-						new Vector2(Auto_Assembler.GetFacingDirection(pos.X, pos.Y) * 2.5f, 0),
+						new Vector2(Large_Auto_Assembler.GetFacingDirection(pos.X, pos.Y) * 2.5f, 0),
 						NPC.width,
 						NPC.height,
 						false,
@@ -209,11 +227,45 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 		NPCLoader.OnKill(NPC);
 		return true;
 	}
-	public virtual bool CanStandOnPlatform(Player player) => true;
+	public override Color? GetAlpha(Color drawColor) {
+		if (NPC.ai[2] == 1) {
+			float alpha = 1 - NPC.ai[1];
+			float brightness = alpha * alpha * alpha * alpha;
+			return new((int)(brightness * drawColor.R), (int)(brightness * drawColor.G), (int)(brightness * drawColor.B), (int)(drawColor.A * alpha));
+		}
+		return drawColor;
+	}
+	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+		drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+		drawColor = GetAlpha(drawColor) ?? drawColor;
+		Texture2D texture = TextureAssets.Npc[Type].Value;
+		Vector2 originPos = new(0.5f, 0);
+		if (NPC.GravityMultiplier.Value > 0) originPos.Y = 1;
+		screenPos.X += float.Pow(8, 1 - Math.Min(NPC.ai[1], 1)) * NPC.direction;
+		spriteBatch.Draw(
+			texture,
+			NPC.position + NPC.Size * originPos - screenPos,
+			NPC.frame,
+			drawColor,
+			0,
+			NPC.frame.Size() * originPos,
+			NPC.scale,
+			0,
+		0);
+		return false;
+	}
 }
 [Autoload(false)]
-public class Auto_Assembler_Item_Hanging(string texture, int width, int height) : Auto_Assembler_Item_Grounded(texture, width, height) {
+public class Large_Auto_Assembler_Item_Hanging(string texture, int width, int height) : Large_Auto_Assembler_Item_Grounded(texture, width, height) {
+	public override void SetStaticDefaults() {
+		base.SetStaticDefaults();
+		Main.npcFrameCount[Type] = 9;
+	}
 	public override void AI() {
+		if (NPC.ai[2] == 1) {
+			NPC.GravityMultiplier = MultipliableFloat.One * -1;
+			return;
+		}
 		switch ((int)NPC.ai[0]) {
 			case 0:
 			NPC.GravityMultiplier = MultipliableFloat.One * -1;

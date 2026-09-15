@@ -3533,20 +3533,28 @@ namespace Origins {
 		/// </summary>
 		[Pure]
 		public static ScopedOverride<T> ScopedOverride<T>(ref this T variable, T value) where T : struct => new(ref variable, value);
-		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
+		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default, Vector2 velocity = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			float amt = 10; // as to try to not spawn to many dusts
 			for (float c = 0; c < area.Width; c += area.Width / amt) {
-				EfficientDust.NewDustDirect(pos + new Vector2(c, 0), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
+				Dust dust = EfficientDust.NewDustDirect(pos + new Vector2(c, 0), 0, 0, dustType, 0, 0, newColor: color);
+				dust.noGravity = true;
+				dust.velocity = velocity;
 			}
 			for (float c = 0; c < area.Height; c += area.Height / amt) {
-				EfficientDust.NewDustDirect(pos + new Vector2(0, c), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
+				Dust dust = EfficientDust.NewDustDirect(pos + new Vector2(0, c), 0, 0, dustType, 0, 0, newColor: color);
+				dust.noGravity = true;
+				dust.velocity = velocity;
 			}
 			for (float c = 0; c < area.Width; c += area.Width / amt) {
-				EfficientDust.NewDustDirect(pos + new Vector2(c, area.Height), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
+				Dust dust = EfficientDust.NewDustDirect(pos + new Vector2(c, area.Height), 0, 0, dustType, 0, 0, newColor: color);
+				dust.noGravity = true;
+				dust.velocity = velocity;
 			}
 			for (float c = 0; c < area.Height; c += area.Height / amt) {
-				EfficientDust.NewDustDirect(pos + new Vector2(area.Width, c), 0, 0, dustType, 0, 0, newColor: color).noGravity = true;
+				Dust dust = EfficientDust.NewDustDirect(pos + new Vector2(area.Width, c), 0, 0, dustType, 0, 0, newColor: color);
+				dust.noGravity = true;
+				dust.velocity = velocity;
 			}
 		}
 		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default, bool useScreenPos = true) {

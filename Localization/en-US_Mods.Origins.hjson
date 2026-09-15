@@ -2697,6 +2697,8 @@ Tiles: {
 	Incinerator_Pit_Pit.MapEntry: Incinerator Pit Pit
 	Auto_Assembler.MapEntry: Auto Assembler
 	Conveyor_Scooper.MapEntry: Conveyor Scooper
+	Large_Auto_Assembler.MapEntry: Large Auto Assembler
+	Large_Conveyor_Scooper.MapEntry: Large Conveyor Scooper
 }
 
 Liquids: {

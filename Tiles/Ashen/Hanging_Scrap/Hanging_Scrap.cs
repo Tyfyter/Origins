@@ -282,6 +282,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 			} else {
 				fromNonSolids.Clear();
 			}
+			Large_Conveyor_Scooper.SetDrawLayer(solidLayer);
 		}
 
 		public void Unload() { }
