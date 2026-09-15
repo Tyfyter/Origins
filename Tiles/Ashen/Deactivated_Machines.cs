@@ -74,7 +74,8 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
-		public static bool IsValidAnchor(Tile anchor) => anchor.HasTile && (Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType]) && !Main.tileNoAttach[anchor.TileType];
+		public static bool IsValidAnchor(Tile anchor) =>
+			anchor.HasTile && (Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType]) && (TileID.Sets.Platforms[anchor.TileType] ||!Main.tileNoAttach[anchor.TileType]);
 		public static bool IsPart(int i, int j, int style) {
 			return Shape[style, i, j];
 		}
