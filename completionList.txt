@@ -1418,7 +1418,7 @@ TILES:
 (^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire
-(#, ^2) Auto Assembler !!!
+(☻) Auto Assembler !!!
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
@@ -1426,7 +1426,7 @@ TILES:
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station
-(#, ^2) Conveyor Scooper !!!
+(☻) Conveyor Scooper !!!
 (X) Defiled Boulder
 (^) Defiled Campfire
 (^) Defiled Dungeon Chest
@@ -1442,8 +1442,8 @@ TILES:
 (☻) Incinerator Pit !!!
 (^) Industrial Door
 (X) Infused Quakerock
-(#, ^2) Large Auto Assembler !!!
-(#, ^2) Large Conveyor Scooper !!!
+(☻) Large Auto Assembler !!!
+(☻) Large Conveyor Scooper !!!
 (^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)

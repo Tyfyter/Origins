@@ -23,13 +23,13 @@ public class Large_Auto_Assembler : ModTile, IAshenWireTile {
 		new TileItem(this)
 		.WithExtraStaticDefaults(item => ItemID.Sets.DisableAutomaticPlaceableDrop[item.type] = true)
 		.RegisterItem();
-		AddGrounded(1, 108, 22);
+		AddGrounded(1, 22, 108);
 		AddGrounded(2, 54, 44);
-		AddGrounded(3, 78, 34);
-		AddGrounded(4, 110, 32);
-		AddGrounded(5, 124, 38);
-		AddGrounded(6, 70, 30);
-		AddGrounded(7, 70, 30);
+		AddGrounded(3, 34, 78);
+		AddGrounded(4, 32, 110);
+		AddGrounded(5, 38, 124);
+		AddGrounded(6, 30, 70);
+		AddGrounded(7, 30, 70);
 		AddHanging(1, 14, 110);
 		AddHanging(2, 14, 98);
 		AddHanging(3, 48, 104);
@@ -156,10 +156,11 @@ public class Large_Auto_Assembler : ModTile, IAshenWireTile {
 }
 [Autoload(false)]
 public class Large_Auto_Assembler_Item_Grounded(string texture, int width, int height) : Auto_Assembler_Item_Grounded(texture, width, height), IPlatformNPC {
+	public static float SmoothingDist => 8;
 	public override void PostAI() {
 		if (NPC.ai[2] == 1) {
-			NPC.ai[1] += 1f / 30;
-			NPC.scale = float.Pow(Math.Min(0.85f, 32f / NPC.width), NPC.ai[1]);
+			NPC.ai[1] += 1f / (15 + NPC.width);
+			NPC.scale = float.Pow(Math.Min(0.85f, 26f / NPC.width), NPC.ai[1]);
 			if (NPC.ai[1] >= 1) NPC.active = false;
 			return;
 		}
@@ -187,7 +188,7 @@ public class Large_Auto_Assembler_Item_Grounded(string texture, int width, int h
 		}
 		float center = TileObjectData.TopLeft(hitbox.Center().ToTileCoordinates16()).ToWorldCoordinates(0, 0).X + 32 - NPC.width * 0.5f;
 		center += dir * 2;
-		if ((NPC.position.X - (center - dir * 8)) * dir >= 0) {
+		if ((NPC.position.X - (center - dir * SmoothingDist)) * dir >= 0) {
 			NPC.position.X = center;
 			NPC.ai[1] = 0;
 			NPC.ai[2] = 1;
@@ -208,9 +209,10 @@ public class Large_Auto_Assembler_Item_Grounded(string texture, int width, int h
 			foreach (Point pos in NPC.Hitbox.IterateTilesIn(order)) {
 				Tile tile = Main.tile[pos];
 				if (tile.HasTile && (tile.TileType == assembler || tile.TileType == scooper)) {
+					NPC.spriteDirection = Large_Auto_Assembler.GetFacingDirection(pos.X, pos.Y);
 					Vector2 movement = Collision.TileCollision(
 						NPC.position,
-						new Vector2(Large_Auto_Assembler.GetFacingDirection(pos.X, pos.Y) * 2.5f, 0),
+						new Vector2(NPC.spriteDirection * 2.5f, 0),
 						NPC.width,
 						NPC.height,
 						false,
@@ -241,7 +243,7 @@ public class Large_Auto_Assembler_Item_Grounded(string texture, int width, int h
 		Texture2D texture = TextureAssets.Npc[Type].Value;
 		Vector2 originPos = new(0.5f, 0);
 		if (NPC.GravityMultiplier.Value > 0) originPos.Y = 1;
-		screenPos.X += float.Pow(8, 1 - Math.Min(NPC.ai[1], 1)) * NPC.direction;
+		screenPos.X += float.Pow(SmoothingDist, 1 - NPC.ai[1]) * NPC.direction;
 		spriteBatch.Draw(
 			texture,
 			NPC.position + NPC.Size * originPos - screenPos,
@@ -250,7 +252,7 @@ public class Large_Auto_Assembler_Item_Grounded(string texture, int width, int h
 			0,
 			NPC.frame.Size() * originPos,
 			NPC.scale,
-			0,
+			NPC.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 		0);
 		return false;
 	}
