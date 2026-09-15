@@ -33,6 +33,9 @@ namespace Origins.NPCs.Ashen {
 			6 => 2,
 			_ => 0
 		} - 7);
+		ref float Rotation => ref NPC.localAI[0];
+		ref float SweepTime => ref NPC.localAI[1];
+		float Sweep => float.Sin(SweepTime / (300 / MathHelper.TwoPi)) * 0.35f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -52,6 +55,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.knockBackResist = 0.3f;
 			NPC.value = 75;
 			NPC.target = Main.maxPlayers;
+			SweepTime = Main.rand.NextFloat(180);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,
 			];
@@ -122,7 +126,7 @@ namespace Origins.NPCs.Ashen {
 		bool seesTarget;
 		Triangle GetViewTriangle(float aggro) {
 			float viewDist = 16 * 18 + aggro * 0.5f;
-			float baseRatio = 0.5f + NPC.ai[2];
+			float baseRatio = 0.4f + NPC.ai[2] * 0.15f;
 			return new(
 				viewPos,
 				viewPos + (viewDirection + viewDirection.Perpendicular(1) * baseRatio) * viewDist,
@@ -147,7 +151,8 @@ namespace Origins.NPCs.Ashen {
 			float acceleration = 0.15f;
 			switch (NPC.aiAction) {
 				case 0:// walking
-				GeometryUtils.AngularSmoothing(ref NPC.rotation, 1.57f * NPC.direction - MathHelper.PiOver2, 0.05f);
+				SweepTime++;
+				GeometryUtils.AngularSmoothing(ref Rotation, 1.57f * NPC.direction - MathHelper.PiOver2 + Sweep, 0.05f);
 				if (targetInvalid) {
 					if (NPC.ai[3] >= 60) {
 						NPC.direction *= -1;
@@ -173,11 +178,11 @@ namespace Origins.NPCs.Ashen {
 					break;
 				}
 				acceleration = 0.4f;
-				NPC.rotation = targetDirection.ToRotation();
+				Rotation = targetDirection.ToRotation();
 				break;
 				case 2:// looking
 				acceleration = 0f;
-				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
+				GeometryUtils.AngularSmoothing(ref Rotation, targetDirection.ToRotation(), 0.05f);
 				if (seesTarget) {
 					NPC.ai[0]++;
 					NPC.ai[1] = 0;
@@ -197,7 +202,8 @@ namespace Origins.NPCs.Ashen {
 				}
 				break;
 				case 3:// searching for lost target
-				GeometryUtils.AngularSmoothing(ref NPC.rotation, 1.57f * NPC.direction - MathHelper.PiOver2, 0.05f);
+				SweepTime += 1.5f;
+				GeometryUtils.AngularSmoothing(ref Rotation, 1.57f * NPC.direction - MathHelper.PiOver2 + Sweep * 1.5f, 0.05f);
 				acceleration = 0.18f;
 				if (seesTarget) {
 					NPC.aiAction = 1;
@@ -216,7 +222,7 @@ namespace Origins.NPCs.Ashen {
 				break;
 				case 4:// flashing
 				acceleration = 0f;
-				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
+				GeometryUtils.AngularSmoothing(ref Rotation, targetDirection.ToRotation(), 0.05f);
 				if (++NPC.ai[0] > 15) {
 					Triangle flashTriangle = GetViewTriangle(FlashRangeBoost);
 					SoundEngine.PlaySound(SoundID.Camera, NPC.Center);
@@ -263,7 +269,7 @@ namespace Origins.NPCs.Ashen {
 				switch (NPC.aiAction) {
 					case 0:
 					case 3:
-					NPC.rotation = MathHelper.PiOver2 - 1.57f * NPC.direction;
+					Rotation = MathHelper.PiOver2 - 1.57f * NPC.direction;
 					break;
 				}
 			}
@@ -284,7 +290,7 @@ namespace Origins.NPCs.Ashen {
 				if (shouldJump) NPC.velocity.Y -= 8;
 			}
 			NPC.spriteDirection = NPC.direction;
-			viewDirection = NPC.rotation.ToRotationVector2();
+			viewDirection = Rotation.ToRotationVector2();
 			if (NPC.confused) NPC.StrikeOtherNPCs();
 		}
 		public override void FindFrame(int frameHeight) {
@@ -331,9 +337,11 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.aiAction);
+			writer.Write(SweepTime);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadInt32();
+			SweepTime = reader.ReadSingle();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit) {
 			if (NPC.confused && hit.HitDirection == NPC.direction) {
@@ -368,7 +376,7 @@ namespace Origins.NPCs.Ashen {
 				null,
 				drawColor,
 				glowColor,
-				NPC.rotation + MathHelper.Pi,
+				Rotation + MathHelper.Pi,
 				headTexture.Value.Size() * new Vector2(1, 0.5f),
 				NPC.scale,
 				NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None
