@@ -20,7 +20,7 @@ public class Glitter_Glue : ModItem {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
 		Item.master = true;
-		Item.damage = 40;
+		Item.damage = 17;
 		Item.DamageType = DamageClass.Magic;
 		Item.shoot = ModContent.ProjectileType<Glitter_Glue_P>();
 		Item.knockBack = 1;
