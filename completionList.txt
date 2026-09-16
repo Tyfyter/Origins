@@ -258,7 +258,7 @@ ENEMY NPCS:
 (^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
-(☻) Packhunter !!!
+(#2, ^2) Packhunter !!!
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
@@ -1439,7 +1439,7 @@ TILES:
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(☻) Incinerator Pit !!!
+(@, ^3) Incinerator Pit !!!
 (^) Industrial Door
 (X) Infused Quakerock
 (☻) Large Auto Assembler !!!
