@@ -565,6 +565,7 @@ namespace Origins.NPCs.Ashen.Boss {
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Trenchmaker_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Trenchmaker_Mask>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Dysfunctional_Table_Saw>(), 20));
 			normalDropRule.OnSuccess(new ScrewdriverRule(ModContent.ItemType<Screwdriver>(), 4));
 
 			npcLoot.Add(new DropBasedOnExpertMode(

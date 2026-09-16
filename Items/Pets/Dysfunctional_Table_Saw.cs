@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Pets;
-using System.Collections;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
