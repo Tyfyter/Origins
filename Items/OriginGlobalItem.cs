@@ -27,6 +27,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
 		internal static bool isOriginsItemCloningDefaults = false;
+		bool hasUnlockedJournalEntries = false;
+		public override bool InstancePerEntity => true;
 		public override void SetDefaults(Item item) {
 			bool statsModified = false;
 			switch (item.type) {
@@ -342,7 +344,8 @@ namespace Origins.Items {
 						quest.UpdateInventoryEvent(item);
 					}
 				}
-				if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) player.OriginPlayer().UnlockJournalEntry(OriginsSets.Items.JournalEntries[item.type]);
+				if (hasUnlockedJournalEntries.TrySet(true) && !string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type]))
+					player.OriginPlayer().UnlockJournalEntry(OriginsSets.Items.JournalEntries[item.type]);
 			}
 		}
 		static OneFromRulesRule originsDevSetRule;

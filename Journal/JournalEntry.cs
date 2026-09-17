@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Origins.Tiles.Other;
-using Origins.World.BiomeData;
-using rail;
+﻿using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +27,10 @@ namespace Origins.Journal {
 				return Language.GetOrRegister(nameKey, PrettyPrintName);
 			}
 		}
+		public LocalizedText FullText => Language.GetText($"Mods.{Mod.Name}.Journal.{FullTextKey}.Text");
 		public virtual string[] Aliases => [];
 		public virtual ArmorShaderData TextShader => null;
+		public virtual DynamicSpriteFont FontOverride => null;
 		public virtual Color BaseColor => Color.Black;
 		//µ will definitely sort it after anything we'll use in a key
 		public virtual JournalSortIndex SortIndex => new("µUncategorized", 0);
@@ -48,6 +46,7 @@ namespace Origins.Journal {
 			_ = DisplayName.Value;
 			SetStaticDefaults();
 		}
+		public virtual void OnUnlock() { }
 		internal int GetQueryIndex(string query) {
 			IEnumerable<int> indecies = Aliases
 				.Select(v => {

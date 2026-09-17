@@ -11,6 +11,7 @@ using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
+using Origins.Journal;
 using Origins.Layers;
 using Origins.Questing;
 using Origins.Tiles.Ashen;
@@ -179,6 +180,10 @@ namespace Origins {
 		}
 		public override void PostUpdateMiscEffects() {
 			Debugging.LogFirstRun(PostUpdateMiscEffects);
+			while (untriggeredJournalEntries.TryPop(out string journalEntryKey)) {
+				if (Journal_Registry.Entries.TryGetValue(journalEntryKey, out JournalEntry entry)) entry.OnUnlock();
+				else untriggeredUnloadedJournalEntries.Add(journalEntryKey);
+			}
 			if (hasThePlant) {
 				for (int i = 0; i < Player.inventory.Length; i++) {
 					Item ammo = Player.inventory[i];

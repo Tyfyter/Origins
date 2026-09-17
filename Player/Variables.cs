@@ -636,6 +636,8 @@ namespace Origins {
 		public bool onSlope = false;
 		public HashSet<string> unlockedJournalEntries = [];
 		public HashSet<string> unreadJournalEntries = [];
+		public Stack<string> untriggeredJournalEntries = [];
+		public List<string> untriggeredUnloadedJournalEntries = [];
 		public HashSet<string> startedQuests = [];
 		public int dashDirection = 0;
 		public int dashDirectionY = 0;
@@ -1420,8 +1422,9 @@ namespace Origins {
 			if (!journalUnlocked) return;
 			bool playSound = false;
 			foreach (string entryName in entryNames.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
-				if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
+				if (Player.IsLocallyOwned() && unlockedJournalEntries.Add(entryName)) {
 					unreadJournalEntries.Add(entryName);
+					untriggeredJournalEntries.Push(entryName);
 					playSound = true;
 				}
 			}

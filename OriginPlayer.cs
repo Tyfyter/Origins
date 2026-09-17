@@ -857,6 +857,9 @@ namespace Origins {
 			if (unreadJournalEntries is not null) {
 				tag.Add("UnreadJournalEntries", unreadJournalEntries.ToList());
 			}
+			if (untriggeredJournalEntries is not null) {
+				tag.Add("UntriggeredJournalEntries", untriggeredJournalEntries.Union(untriggeredUnloadedJournalEntries).ToList());
+			}
 			if (startedQuests is not null) {
 				tag.Add("UnlockedQuests", startedQuests.ToList());
 			}
@@ -906,6 +909,9 @@ namespace Origins {
 			}
 			if (tag.SafeGet<List<string>>("UnreadJournalEntries") is List<string> _unreadJournalEntries) {
 				unreadJournalEntries = _unreadJournalEntries.ToHashSet();
+			}
+			if (tag.SafeGet<List<string>>("UntriggeredJournalEntries") is List<string> _untriggeredJournalEntries) {
+				untriggeredJournalEntries = new(_untriggeredJournalEntries);
 			}
 			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> unlockedQuests) {
 				startedQuests = unlockedQuests.ToHashSet();

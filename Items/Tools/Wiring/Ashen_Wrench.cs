@@ -1,5 +1,6 @@
 ﻿using MonoMod.Utils;
 using Origins.Items.Materials;
+using Origins.Journal;
 using PegasusLib.Content;
 using System;
 using System.Collections;
@@ -44,7 +45,10 @@ public class Ashen_Grand_Design_White_Logic : Ashen_Grand_Design {
 	public override void AddRecipes() => AddAllRecipes();
 }
 [ReinitializeDuringResizeArrays]
-public abstract class AshenWireTool : WireTool {
+public abstract class AshenWireTool : WireTool, IJournalEntrySource<AshenWireTool.First_Contact_Entry> {
+	public class First_Contact_Entry : SprockeyEntry {
+		public override JournalSortIndex SortIndex => base.SortIndex with { Part = 0 };
+	}
 	public static bool[] IsScrewdriver = ItemID.Sets.Factory.CreateBoolSet();
 	protected abstract Upgrades Parts { get; }
 	[Flags]

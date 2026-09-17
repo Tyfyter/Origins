@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameInput;
@@ -17,11 +16,9 @@ using System.Text;
 using Origins.Journal;
 using Terraria.Graphics.Shaders;
 using Origins.Questing;
-using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
-using static System.Net.Mime.MediaTypeNames;
 using Origins.UI.Snippets;
 
 namespace Origins.UI {
@@ -47,6 +44,7 @@ namespace Origins.UI {
 		Rectangle bounds;
 		float scale;
 		int scrollWheelValue = 0;
+		DynamicSpriteFont baseFont = FontAssets.MouseText.Value;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
@@ -83,7 +81,7 @@ namespace Origins.UI {
 		public void SetText(string text, Color baseColor) {
 			float width = bounds.Width * 0.5f - XMarginTotal;
 			float height = bounds.Height - yMargin * 2.5f;
-			DynamicSpriteFont font = FontAssets.MouseText.Value;
+			DynamicSpriteFont font = baseFont;
 			Vector2 cursor = Vector2.Zero;
 			Vector2 result = cursor;
 			Vector2 baseScale = Vector2.One;
@@ -249,6 +247,7 @@ namespace Origins.UI {
 			pages = snippetPages.ToList();
 		}
 		public void SwitchMode(Journal_UI_Mode newMode, string key, bool resetPageNumber = true) {
+			baseFont = FontAssets.MouseText.Value;
 			if (newMode != mode) {
 				lastPageOffset = pageOffset;
 				lastMode = timeSinceSwitch == 0 ? lastMode : mode;
@@ -260,7 +259,8 @@ namespace Origins.UI {
 				case Journal_UI_Mode.Normal_Page: {
 					JournalEntry entry = Journal_Registry.Entries[key];
 					currentEffect = entry.TextShader;
-					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.FullTextKey}.Text")), entry.BaseColor);
+					baseFont = entry.FontOverride ?? baseFont;
+					SetText(FormatTags(entry.FullText.Value), entry.BaseColor);
 					OriginPlayer.LocalOriginPlayer.unreadJournalEntries.Remove(key);
 				}
 				break;
@@ -309,7 +309,7 @@ namespace Origins.UI {
 									new CalculatedStyle(bounds.X + xMarginOuter,
 									bounds.Y + yMargin,
 									bounds.Width * 0.5f - XMarginTotal,
-									FontAssets.MouseText.Value.MeasureString("_").Y)
+									baseFont.MeasureString("_").Y)
 								) {
 									Text = key ?? ""
 								}
@@ -366,7 +366,7 @@ namespace Origins.UI {
 							inkColor = Color.White;
 						}
 					}
-					float lineSpace = FontAssets.MouseText.Value.LineSpacing;
+					float lineSpace = baseFont.LineSpacing;
 					for (int i = 0; i < OriginPlayer.LocalOriginPlayer.journalText.Count; i++) {
 						if (i < OriginPlayer.LocalOriginPlayer.journalText.Count) {
 							List<TextSnippet> page = ChatManager.ParseMessage(OriginPlayer.LocalOriginPlayer.journalText[i], inkColor);
@@ -516,7 +516,7 @@ namespace Origins.UI {
 					bool canEnterWritingMode = true;
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
-							FontAssets.MouseText.Value,
+							baseFont,
 							pagePos,
 							inkColor,
 							0,
@@ -526,7 +526,7 @@ namespace Origins.UI {
 						);
 					} else {
 						ChatManager.DrawColorCodedString(spriteBatch,
-							FontAssets.MouseText.Value,
+							baseFont,
 							pages[i + pageOffset].ToArray(),
 							pagePos,
 							Color.White,
@@ -908,9 +908,9 @@ namespace Origins.UI {
 						} else {
 							spriteBatch.DrawString(font, zwnjSides[0], currentPosition, color, rotation, origin, baseScale * textSnippet.Scale * scale, SpriteEffects.None, 0f);
 							Vector2 cursorOffset = new(font.MeasureString(zwnjSides[0]).X * baseScale.X * scale, 0);
-							Vector2 cursorSize = FontAssets.MouseText.Value.MeasureString("^");
+							Vector2 cursorSize = baseFont.MeasureString("^");
 							spriteBatch.DrawString(
-								FontAssets.MouseText.Value,
+								baseFont,
 								"^",
 								currentPosition + cursorOffset + cursorSize * new Vector2(0f, 0.5f),
 								color.MultiplyRGBA(new(0.25f, 0.25f, 0.25f, 0.85f)),
