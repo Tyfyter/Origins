@@ -25,6 +25,7 @@ using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Banners;
 using Origins.Tiles.Other;
+using Origins.UI.Snippets;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -860,6 +861,7 @@ namespace Origins {
 			if (untriggeredJournalEntries is not null) {
 				tag.Add("UntriggeredJournalEntries", untriggeredJournalEntries.Union(untriggeredUnloadedJournalEntries).ToList());
 			}
+			tag.Add("SprockeyHelpRate", sprockeyHelpRate.ToString());
 			if (startedQuests is not null) {
 				tag.Add("UnlockedQuests", startedQuests.ToList());
 			}
@@ -912,6 +914,9 @@ namespace Origins {
 			}
 			if (tag.SafeGet<List<string>>("UntriggeredJournalEntries") is List<string> _untriggeredJournalEntries) {
 				untriggeredJournalEntries = new(_untriggeredJournalEntries);
+			}
+			if (tag.SafeGet<string>("SprockeyHelpRate") is string _sprockeyHelpRate && !Enum.TryParse(_sprockeyHelpRate, out sprockeyHelpRate)) {
+				sprockeyHelpRate = Sprockey_Help_Rate_Handler.Options.NotSelectedYet;
 			}
 			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> unlockedQuests) {
 				startedQuests = unlockedQuests.ToHashSet();

@@ -27,6 +27,8 @@ namespace Origins.UI {
 		public static AutoCastingAsset<Texture2D> PageTexture;
 		public static AutoCastingAsset<Texture2D> TabsTexture;
 		public static AutoLoadingAsset<Texture2D> ArrowsTexture = "Origins/UI/Lore/Journal_Arrows";
+		public static bool shouldRefresh;
+		string lastKey;
 		UIElement baseElement;
 		List<List<TextSnippet>> pages;
 		List<float> pageScale;
@@ -118,7 +120,9 @@ namespace Origins.UI {
 					finishPage();
 				}
 				if (textSnippet is Journal_Control_Handler.Journal_Control_Snippet ctrl) {
-					ctrl.Process(new(this, finishPage, ref i, ref telemetryLength, (int)(height / lineSpace), (int)width));
+					bool shouldBreak = false;
+					ctrl.Process(new(this, finishPage, ref i, ref telemetryLength, (int)(height / lineSpace), (int)width, ref shouldBreak));
+					if (shouldBreak) break;
 					continue;
 				}
 				if (textSnippet is Image_Handler.Image_Snippet { options.TwoPage: true } imageSnippet) {
@@ -247,6 +251,7 @@ namespace Origins.UI {
 			pages = snippetPages.ToList();
 		}
 		public void SwitchMode(Journal_UI_Mode newMode, string key, bool resetPageNumber = true) {
+			lastKey = key;
 			baseFont = FontAssets.MouseText.Value;
 			if (newMode != mode) {
 				lastPageOffset = pageOffset;
@@ -748,6 +753,8 @@ namespace Origins.UI {
 					SwitchMode(switchMode.Value, "");
 					pageOffset = oldPageOffset;
 				}
+			} else if (shouldRefresh.TrySet(false) && lastKey is not null) {
+				SwitchMode(mode, lastKey);
 			}
 		}
 		int memoPage_selectedSide = -1;

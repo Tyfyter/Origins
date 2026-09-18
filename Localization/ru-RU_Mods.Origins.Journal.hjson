@@ -1071,11 +1071,20 @@ Worn_Paper: {
 }
 
 Wire_Tutorial: {
+	// DisplayName: Ashen Wiring
+
+	HelpRate: {
+		// Never: "[NEVER]"
+		// Rarely: "[RARELY]"
+		// Frequently: "[EVERY TIME]"
+		// UnavailableTooltip: Unavailable
+	}
+
 	First_Contact: {
 		// Name: First Contact
 		/* Text:
 			'''
-			“Aughhhhh. Bzzt. Zapple-do-bang. Bibbity-bop-boop. Alright, I’m done with the onomatopoeias. Hi, my name is Sprockey, Sprockey the Sprocket (not a gear).”
+			“Aughhhhh. Bzzt. Zapple-do-bang. Bibbity-bop-boop. Alright, I’m done with the onomatopoeia. Hi, my name is Sprockey, Sprockey the Sprocket (not a gear).”
 
 			“I am the helpful virtual assistant installed into your registered SMART Screwdriver. I am here to help any craftsmen and up on how to do their jobs more effectively.”
 
@@ -1083,12 +1092,12 @@ Wire_Tutorial: {
 
 			“Due to popular demand for such a quality of life feature to be built into my programming, I must ask how frequently you’d like me to offer hints. Please select an option below.”
 
-			[EVERY TIME] [RARELY] [NEVER]
+			[sprockeyhr:Frequently] [sprockeyhr:Rarely] [sprockeyhr:Never]
+			[jctrl/break_if_sprockey_unselected:_]Selected: [sprockeyhr:Selected]
 
 			“Excellent. Just remember, however, if you didn’t select [NEVER] you will always be prompted my helpful tips the first time you encounter something new. Whether you like it or not.”
 
 			“I am (not) excited to be working with you on all of your engineering projects. Just don’t be annoying and waste my time and we’ll be great friends!”
-			[key:Origins/Forbidden Voice]
 			''' */
 	}
 
@@ -1105,7 +1114,6 @@ Wire_Tutorial: {
 	// Any_Powerable: <PH>
 	// White_Wire_Upgrade: <PH>
 	// Logic_Component_Upgrade: <PH>
-	// DisplayName: Wire_Tutorial
 }
 
 µTutorial: {

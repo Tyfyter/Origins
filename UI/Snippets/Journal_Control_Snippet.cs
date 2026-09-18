@@ -45,6 +45,12 @@ namespace Origins.UI.Snippets {
 					};
 					return;
 
+					case "break_if_sprockey_unselected":
+					Process = parameters => {
+						parameters.shouldBreak = Main.LocalPlayer.OriginPlayer().sprockeyHelpRate == Sprockey_Help_Rate_Handler.Options.NotSelectedYet;
+					};
+					break;
+
 					default:
 					if (skipNextN.Match(options) is Match { Success: true } skipCount && int.TryParse(skipCount.Groups[1].Value, out skipLength)) goto case "skip_next_if";
 					break;
@@ -135,11 +141,12 @@ namespace Origins.UI.Snippets {
 				return ret;
 			}
 		}
-		public readonly ref struct JournalControlParams(Journal_UI_Open self, Action finishPage, ref int snippetIndex, ref float telemetryLength, int maxLines, int maxWidth) {
+		public readonly ref struct JournalControlParams(Journal_UI_Open self, Action finishPage, ref int snippetIndex, ref float telemetryLength, int maxLines, int maxWidth, ref bool shouldBreak) {
 			public readonly Journal_UI_Open self = self;
 			public readonly Action finishPage = finishPage;
 			public readonly ref int snippetIndex = ref snippetIndex;
 			public readonly ref float telemetryLength = ref telemetryLength;
+			public readonly ref bool shouldBreak = ref shouldBreak;
 			public readonly JournalExpressionParams ExpressionParams => new(maxLines, maxLines * maxWidth);
 		}
 		public record struct JournalExpressionParams(int MaxLines, int MaxLength);

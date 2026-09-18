@@ -15,6 +15,7 @@ using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Projectiles.Misc;
+using Origins.UI.Snippets;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -639,6 +640,7 @@ namespace Origins {
 		public Stack<string> untriggeredJournalEntries = [];
 		public List<string> untriggeredUnloadedJournalEntries = [];
 		public HashSet<string> startedQuests = [];
+		public Sprockey_Help_Rate_Handler.Options sprockeyHelpRate = Sprockey_Help_Rate_Handler.Options.NotSelectedYet;
 		public int dashDirection = 0;
 		public int dashDirectionY = 0;
 		public int dashDelay = 0;

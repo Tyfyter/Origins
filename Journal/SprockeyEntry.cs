@@ -6,8 +6,12 @@ using Terraria;
 namespace Origins.Journal; 
 public abstract class SprockeyEntry : JournalEntry {
 	public override DynamicSpriteFont FontOverride => Star_Soldier.Font;
-	public override JournalSortIndex SortIndex => new("Wire_Tutorial", 1);
+	public override JournalSortIndex SortIndex => new("Wire_Tutorial", 100);
 	public override void OnUnlock() {
+		switch (Main.LocalPlayer.OriginPlayer().sprockeyHelpRate) {
+			case UI.Snippets.Sprockey_Help_Rate_Handler.Options.Never:
+			return;
+		}
 		string[] lines = FullText.Value.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 		for (int i = 0; i < lines.Length; i++) {
 			PopupText.NewText(new AdvancedPopupRequest() {
