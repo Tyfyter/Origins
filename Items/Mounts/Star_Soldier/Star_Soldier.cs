@@ -248,9 +248,10 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
 		}
 		public void ItemCheck(Player player) {
-			dashCooldownMax = 90 - maxDashes * 10;
+			/// these are default stats, change stat changes in <see cref="Star_Soldier_Blade.UpdateEquipped"/> to change boosts
+			dashCooldownMax = 90;
 			maxDashes = 1;
-			dashLength = 19 - maxDashes * 6;
+			dashLength = 19;
 			dashSpeed = 5;
 			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened && !player.mouseInterface);
 			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
@@ -266,10 +267,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				Max(ref player.velocity.X, 25);
 				player.velocity = player.velocity.RotatedBy(dashAngle);
 				if (dashTime.Cooldown()) {
-					SoundEngine.PlaySound(Origins.Sounds.StarDash.WithVolume(0.7f), player.Center);
-					/*SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitchRange(0.5f, 0.7f).WithVolume(0.8f), player.Center);
-					SoundEngine.PlaySound(SoundID.Item33.WithPitchRange(1.6f, 1.9f).WithVolume(0.8f), player.Center);
-					SoundEngine.PlaySound(SoundID.Item73, player.Center);*/
 					dashCooldown = dashCooldownMax;
 					player.velocity *= 0.65f;
 					availableDashes--;
@@ -283,6 +280,10 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				player.timeSinceLastDashStarted = 0;
 				dashAngle = float.Atan2((player.controlDown ? 1 : 0) - (player.controlUp ? 1 : 0), (player.controlRight ? 1 : 0) - (player.controlLeft ? 1 : 0));
 				dashTime = dashLength;
+				SoundEngine.PlaySound(Origins.Sounds.StarDash.WithVolume(0.7f), player.Center);
+				/*SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitchRange(0.5f, 0.7f).WithVolume(0.8f), player.Center);
+				SoundEngine.PlaySound(SoundID.Item33.WithPitchRange(1.6f, 1.9f).WithVolume(0.8f), player.Center);
+				SoundEngine.PlaySound(SoundID.Item73, player.Center);*/
 			}
 		}
 		public struct Arm {
@@ -2938,6 +2939,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 				int segment = (int)((height * 0.75f) / handler.maxDashes);
 				pos.X += 2;
 				if (doOutlines) pos.X += 2;
+				int visualDashCount = handler.availableDashes;
+				if (handler.dashTime > 0) visualDashCount--;
 				for (int i = 0; i < handler.maxDashes; i++) {
 					Vector2 origin = new(0, segment * 0.5f + (height * ((i + 1f) / (handler.maxDashes + 1f) - 0.5f)) * 1.5f);
 					if (doOutlines) {
@@ -2956,7 +2959,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 						TextureAssets.MagicPixel.Value,
 						pos,
 						new Rectangle(0, 0, 8, segment),
-						i >= handler.availableDashes ? Color.Black : Color.OrangeRed,
+						i >= visualDashCount ? Color.Black : Color.OrangeRed,
 						0,
 						origin,
 						1,
