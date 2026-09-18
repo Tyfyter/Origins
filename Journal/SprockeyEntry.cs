@@ -2,6 +2,7 @@
 using ReLogic.Graphics;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Origins.Journal; 
 public abstract class SprockeyEntry : JournalEntry {
@@ -21,4 +22,22 @@ public abstract class SprockeyEntry : JournalEntry {
 			}, Main.LocalPlayer.Top);
 		}
 	}
+	public static void AddEntryOnUse<TEntry>(ModItem item) where TEntry : SprockeyEntry => AddEntryOnUse<TEntry>(item.Item);
+	public static void AddEntryOnUse<TEntry>(Item item) where TEntry : SprockeyEntry => AddEntryOnUse<TEntry>(item.type);
+	public static void AddEntryOnUse<TEntry>(int type) where TEntry : SprockeyEntry => AddJournalEntry<TEntry>(ref OriginsSets.Items.JournalEntriesOnUse[type]);
 }
+public class Any_Powerable_Entry : SprockeyEntry {
+	public override JournalSortIndex SortIndex => base.SortIndex with { Part = 1 };
+}
+public class Transistor_Entry : SprockeyEntry { }
+public class Delay_Component_Entry : SprockeyEntry { }
+public class Logic_Components_Entry : SprockeyEntry { }
+public class Radio_Component_Entry : SprockeyEntry { }
+public class Edge_Detector_Entry : SprockeyEntry { }
+public class Mechanical_Key_Node_Entry : SprockeyEntry { }
+public class Gas_Generator_Entry : SprockeyEntry { }
+public class Solar_Battery_Entry : SprockeyEntry { }
+public class Wind_Turbine_Entry : SprockeyEntry { }
+public class Wave_Energy_Converter_Entry : SprockeyEntry { }
+public class White_Wire_Upgrade_Entry : SprockeyEntry { }
+public class Logic_Component_Upgrade_Entry : SprockeyEntry { }

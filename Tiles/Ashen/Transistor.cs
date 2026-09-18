@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -251,6 +252,7 @@ namespace Origins.Tiles.Ashen {
 	public class Transistor_Item : ModItem, ISpecialTilePreviewItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			SprockeyEntry.AddEntryOnUse<Transistor_Entry>(this);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Transistor>());

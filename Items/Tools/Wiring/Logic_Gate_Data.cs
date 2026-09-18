@@ -2,6 +2,7 @@
 using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.UI;
 using PegasusLib.Content;
@@ -51,6 +52,8 @@ namespace Origins.Items.Tools.Wiring {
 			Main.RegisterItemAnimation(Type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.Value });
 			OriginsSets.Items.AshenWireable[Type] = true;
 			ItemID.Sets.SortingPriorityWiring[Type] = 81;
+			SprockeyEntry.AddEntryOnUse<Any_Powerable_Entry>(this);
+			SprockeyEntry.AddEntryOnUse<Logic_Components_Entry>(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Actuator);

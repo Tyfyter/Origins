@@ -96,8 +96,17 @@ public abstract class AshenWireTool : WireTool, IJournalEntrySource<AshenWireToo
 			[Upgrades.Logic] = ModContent.ItemType<Screwdriver_Upgrade_Logic>()
 		};
 		foreach (AshenWireTool tool in ModContent.GetContent<AshenWireTool>()) items.Add(tool.Parts, tool.Type);
+		int i = Recipe.numRecipes;
 		ContentExtensions.CreateCombinationRecipes(items);
+		for (; i < Recipe.numRecipes; i++) {
+			Recipe recipe = Main.recipe[i];
+			if (recipe.createItem?.ModItem is not AshenWireTool wireTool) continue;
+			if (wireTool.Parts.Has(Upgrades.White)) recipe.AddOnCraftCallback(UnlockEntry<White_Wire_Upgrade_Entry>);
+			if (wireTool.Parts.Has(Upgrades.Logic)) recipe.AddOnCraftCallback(UnlockEntry<Logic_Component_Upgrade_Entry>);
+		}
 	}
+	static void UnlockEntry<TEntry>(Recipe r, Item i, List<Item> c, Item d) where TEntry : SprockeyEntry =>
+		Main.LocalPlayer.OriginPlayer().UnlockJournalEntry(ModContent.GetInstance<TEntry>().FullName);
 }
 public abstract class WireTool : ModItem, IWireTool {
 	public abstract IEnumerable<WireMode> Modes { get; }

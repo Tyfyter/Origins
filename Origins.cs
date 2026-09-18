@@ -940,6 +940,7 @@ namespace Origins {
 				if (ItemLoader.GetItem(i)?.Mod?.Name == "SpiritReforged") continue;
 				Item item = new(i);
 				OriginsSets.Items.AshenWireable[i] = item.createTile > -1 && TileLoader.GetTile(item.createTile) is IAshenWireTile;
+				if (OriginsSets.Items.AshenWireable[i]) SprockeyEntry.AddEntryOnUse<Any_Powerable_Entry>(i);
 			}
 		}
 		static void LoadCloudBottoms() {

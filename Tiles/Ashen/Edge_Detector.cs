@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace Origins.Tiles.Ashen {
 		public sealed override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithExtraStaticDefaults(SprockeyEntry.AddEntryOnUse<Edge_Detector_Entry>)
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type, 4)
 				.AddIngredient(ItemID.Lens)

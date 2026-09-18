@@ -4,6 +4,7 @@ using Origins.Graphics;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
 using System;
@@ -31,6 +32,7 @@ public class Gas_Generator : ModTile {
 	public static int FuelPerBucket => 60 * 60 * 5;
 	public override void Load() {
 		new TileItem(this)
+		.WithExtraStaticDefaults(SprockeyEntry.AddEntryOnUse<Gas_Generator_Entry>)
 		.WithExtraDefaults(item => {
 			item.CloneDefaults(ItemID.Sawmill);
 			item.createTile = Type;

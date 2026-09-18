@@ -1089,6 +1089,8 @@ namespace Origins {
 					if (loopedItemUseSound.IsValid && SoundEngine.TryGetActiveSound(loopedItemUseSound, out ActiveSound sound)) sound.Stop();
 				}
 			}
+			if (Player.itemTimeMax != 0 && Player.itemTime == Player.itemTimeMax && !string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntriesOnUse[Player.HeldItem.type]) && Player.HeldItem.GetGlobalItem<OriginGlobalItem>().hasUnlockedOnUseJournalEntries.TrySet(true))
+				UnlockJournalEntry(OriginsSets.Items.JournalEntriesOnUse[Player.HeldItem.type]);
 			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
 		}
 		void RunExtraItemCheck() {

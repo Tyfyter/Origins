@@ -1087,178 +1087,192 @@ Wire_Tutorial: {
 			“I am (not) excited to be working with you on all of your engineering projects. Just don’t be annoying and waste my time and we’ll be great friends!”
 			'''
 	}
+
 	Any_Powerable: {
 		Name: Power
 		Text:
-		'''
-		“Looks like we’re finally getting into the power mechanics, aren’t we? You just placed down something that requires power in order to work. A lot of things you place down would normally require power to work, but the magic of the world allows it I suppose.”
+			'''
+			“Looks like we’re finally getting into the power mechanics, aren’t we? You just placed down something that requires power in order to work. A lot of things you place down would normally require power to work, but the magic of the world allows it I suppose.”
 
-		“Not in this case, though. In order to use this tile, you’ll need to connect it to a power source with one of the 3 power-compatible wire types. Those being orange, black and white.”
+			“Not in this case, though. In order to use this tile, you’ll need to connect it to a power source with one of the 3 power-compatible wire types. Those being orange, black and white.”
 
-		“You can make it any kind of power source like a gas generator, wind turbine or solar battery. Just be wary of their different methods of power generation.”
-		'''
+			“You can make it any kind of power source like a gas generator, wind turbine or solar battery. Just be wary of their different methods of power generation.”
+			'''
 	}
+
 	Transistor: {
 		Name: Transistors
 		Text:
-		'''
-		“Oh, it appears you have placed down a transistor. These ones have caused engineers all around the most trouble.”
+			'''
+			“Oh, it appears you have placed down a transistor. These ones have caused engineers all around the most trouble.”
 
-		“Transistors are easy, so I’ll be frank with you. They’re meant to supply power depending on their toggle state controlled by wires in the center of the 1x3 or 3x1 pattern.”
+			“Transistors are easy, so I’ll be frank with you. They’re meant to supply power depending on their toggle state controlled by wires in the center of the 1x3 or 3x1 pattern.”
 
-		“The arrow pointing in to the middle is the input. The arrow pointing away from itself is the output. You get the idea.”
+			“The arrow pointing in to the middle is the input. The arrow pointing away from itself is the output. You get the idea.”
 
-		“And, be sure to use a different wire color for the middle toggle, otherwise you’ll break it.”
-		'''
+			“And, be sure to use a different wire color for the middle toggle, otherwise you’ll break it.”
+			'''
 	}
+
 	Delay_Component: {
 		Name: Delay Components
 		Text:
-		'''
-		“Delay components are stupid easy. Don’t get held up using them the wrong way. They don’t even have wire hooks.”
+			'''
+			“Delay components are stupid easy. Don’t get held up using them the wrong way. They don’t even have wire hooks.”
 
-		“When you interact with a delay component, the timer function will be visible at the bottom of the circuit box. Press ‘-‘ to decrease time, and ‘+’ to increase it.”
+			“When you interact with a delay component, the timer function will be visible at the bottom of the circuit box. Press ‘-‘ to decrease time, and ‘+’ to increase it.”
 
-		“If you don’t want bad arthritis when you (finally) grow up, you can hold ‘SHIFT’ while pressing these buttons to scale the difference by 10.”
+			“If you don’t want bad arthritis when you (finally) grow up, you can hold ‘SHIFT’ while pressing these buttons to scale the difference by 10.”
 
-		“Once you’ve set up the delay time to be as long as desired, get out of the circuit box by right-clicking the component and run a wire through it.”
+			“Once you’ve set up the delay time to be as long as desired, get out of the circuit box by right-clicking the component and run a wire through it.”
 
-		<SIC> (could easily be misinterpreted)
-		“It will simply change its power on/off state for as long as its delay time was set. If you don’t supply it enough power before it can change its power state, its time to charge up for its power on state will reset.”
+			<SIC> (could easily be misinterpreted)
+			“It will simply change its power on/off state for as long as its delay time was set. If you don’t supply it enough power before it can change its power state, its time to charge up for its power on state will reset.”
 
-		“That one always trips up junior tinkerers.”
-		'''
+			“That one always trips up junior tinkerers.”
+			'''
 	}
+
 	Logic_Components: {
 		Name: Logic Components
 		Text:
-		'''
-		<SIC> (should probably explain how signal outputs work)
-		“Is that a logic component you just placed down? How unexpected for someone of your… likeness.”
+			'''
+			<SIC> (should probably explain how signal outputs work)
+			“Is that a logic component you just placed down? How unexpected for someone of your… likeness.”
 
-		“Logic components are great because they can be placed in a layer of their own similar to wires, but also because they send signals/power through only when their conditions are satisfied.”
+			“Logic components are great because they can be placed in a layer of their own similar to wires, but also because they send signals/power through only when their conditions are satisfied.”
 
-		“You can also connect multiple wires to them at once and specify inputs and outputs through their circuit boxes by interacting with them.”
+			“You can also connect multiple wires to them at once and specify inputs and outputs through their circuit boxes by interacting with them.”
 
-		“For more information about their logic and conditions, simply just hold ‘SHIFT’ while hovering over the component in your inventory.”
+			“For more information about their logic and conditions, simply just hold ‘SHIFT’ while hovering over the component in your inventory.”
 
-		“Lastly, if a wire is already hooked up to a hook in the circuit box, don’t be a dummy. If you want to change the wire hooked up to a specific hook, just unhook the one currently on it, then drag and drop the desired wire to that hook. If you attempt to hook two wires to one hook, you’ll risk electric shock and even death.”
+			“Lastly, if a wire is already hooked up to a hook in the circuit box, don’t be a dummy. If you want to change the wire hooked up to a specific hook, just unhook the one currently on it, then drag and drop the desired wire to that hook. If you attempt to hook two wires to one hook, you’ll risk electric shock and even death.”
 
-		“Nah, I was just joking about that last part. Still, don’t be stupid.”
-		'''
+			“Nah, I was just joking about that last part. Still, don’t be stupid.”
+			'''
 	}
+
 	Radio_Component: {
 		Name: Radio Components
 		Text:
-		'''
-		<SIC> (refers to power as signal, likely to be confusing)
-		“Oooh! A radio component! These ones are somewhat complex. Ever dreamed of connecting your circuits wirelessly? Recent advancements in Mechanicus technology have allowed this to be possible.”
+			'''
+			<SIC> (refers to power as signal, likely to be confusing)
+			“Oooh! A radio component! These ones are somewhat complex. Ever dreamed of connecting your circuits wirelessly? Recent advancements in Mechanicus technology have allowed this to be possible.”
 
-		“A radio component comes with a circuit box, channel selector and mode switch. The channel selector is that illuminated number on the bottom. Each channel group has 12 separate channels before it changes to a new color. You can change the channel group with ‘-‘ and ‘+’. For faster increments, you can also press and hold ‘SHIFT’ while pressing the buttons.”
+			“A radio component comes with a circuit box, channel selector and mode switch. The channel selector is that illuminated number on the bottom. Each channel group has 12 separate channels before it changes to a new color. You can change the channel group with ‘-‘ and ‘+’. For faster increments, you can also press and hold ‘SHIFT’ while pressing the buttons.”
 
-		“Right next to the channel selector is the mode switch. Radio components come with 3 modes: Broadcast Mode, Receiver Mode and Signal Mode. Broadcast Mode sends a signal whenever it is input with one itself. Receiver Mode picks up the signals of broadcasting radio components on the same channel, and sends out a signal according to that. Signal Mode simply switches the radio component to be compatible with red, blue, green and yellow wires.”
+			“Right next to the channel selector is the mode switch. Radio components come with 3 modes: Broadcast Mode, Receiver Mode and Signal Mode. Broadcast Mode sends a signal whenever it is input with one itself. Receiver Mode picks up the signals of broadcasting radio components on the same channel, and sends out a signal according to that. Signal Mode simply switches the radio component to be compatible with red, blue, green and yellow wires.”
 
-		“It is important for radio components to be set to the same channel if they are meant to interact with each other. A broadcaster set the Orange 8 channel cannot interact with a receiver set to the Blue 5 channel.”
+			“It is important for radio components to be set to the same channel if they are meant to interact with each other. A broadcaster set the Orange 8 channel cannot interact with a receiver set to the Blue 5 channel.”
 
-		“Other than that, just ensure you are also hooking up wires to the circuit box so the radio component can actually transmit signals across a circuit.”
-		'''
+			“Other than that, just ensure you are also hooking up wires to the circuit box so the radio component can actually transmit signals across a circuit.”
+			'''
 	}
+
 	Edge_Detector: {
 		Name: Edge Detectors
 		Text:
-		'''
-		<SIC> (refers to power as signal, likely to be confusing)
-		“Edge detector, huh? Interesting. These ones are pretty straightforward once you understand what they’re used for.”
+			'''
+			<SIC> (refers to power as signal, likely to be confusing)
+			“Edge detector, huh? Interesting. These ones are pretty straightforward once you understand what they’re used for.”
 
-		“All an edge detector does is send a signal in a circuit at the edge of an update in signal state. Essentially, when a signal source is about to be done sending that signal through the circuit, the edge detector will send a signal. This also goes for when a signal is about to be sent in a circuit.”
+			“All an edge detector does is send a signal in a circuit at the edge of an update in signal state. Essentially, when a signal source is about to be done sending that signal through the circuit, the edge detector will send a signal. This also goes for when a signal is about to be sent in a circuit.”
 
-		“Edge detectors are really useful in cases where a mechanism is needed to be toggled in tandem with other mechanisms.”
+			“Edge detectors are really useful in cases where a mechanism is needed to be toggled in tandem with other mechanisms.”
 
-		“That’s it. Were you even paying attention?”
-		'''
+			“That’s it. Were you even paying attention?”
+			'''
 	}
+
 	Mechanical_Key_Node: {
 		Name: Mechanical Key Nodes
 		Text:
-		'''
-		<SIC> (MKNs do need power to work, and industrial doors are always locked when powered)
-		“Is that a mechanical key node? How did you get your hands on that? Only regional administrators are allowed to fabricate these kinds of locks. Whatever, it’s my job to be helpful I guess.”
+			'''
+			<SIC> (MKNs do need power to work, and industrial doors are always locked when powered)
+			“Is that a mechanical key node? How did you get your hands on that? Only regional administrators are allowed to fabricate these kinds of locks. Whatever, it’s my job to be helpful I guess.”
 
-		“Mechanical key nodes as you’ve seen are used to lock up industrial doors. In order to effectively lock up an industrial door with a mechanical key node, ensure that the node is accessible (especially with one present on either side), that the node is wired to the door and that the door has power.”
+			“Mechanical key nodes as you’ve seen are used to lock up industrial doors. In order to effectively lock up an industrial door with a mechanical key node, ensure that the node is accessible (especially with one present on either side), that the node is wired to the door and that the door has power.”
 
-		“That last point is especially important. While they’re perfectly operational without power, industrial doors cannot lock if they do not have power.”
+			“That last point is especially important. While they’re perfectly operational without power, industrial doors cannot lock if they do not have power.”
 
-		“Additionally, ensure your mechanical key node is wired either directly or indirectly with the door. You can transmit a lock state of the door through logic components if needed.”
+			“Additionally, ensure your mechanical key node is wired either directly or indirectly with the door. You can transmit a lock state of the door through logic components if needed.”
 
-		“Be wary of locking yourself in or out of things when using this. Industrial doors are tough as nails when they’re locked. And, your safety when trying to squeeze through those teeth is completely out the door. It would be entertaining to watch that happen, however.”
-		'''
+			“Be wary of locking yourself in or out of things when using this. Industrial doors are tough as nails when they’re locked. And, your safety when trying to squeeze through those teeth is completely out the door. It would be entertaining to watch that happen, however.”
+			'''
 	}
+
 	Gas_Generator: {
 		Name: Gas Generators
 		Text:
-		'''
-		“A gas generator! How wasteful! In order to properly use a gas generator for power generation, pay close attention.”
+			'''
+			“A gas generator! How wasteful! In order to properly use a gas generator for power generation, pay close attention.”
 
-		“Using gas as fuel, you’ll need to dump oil buckets into the gas generator to fill it up. The gas generator will burn through gas and generate power for up to 10 minutes. It takes two oil buckets to fill a gas generator to full. An indicator screen on the generator will indicate how much fuel is left in the generator before it needs to be refueled.”
+			“Using gas as fuel, you’ll need to dump oil buckets into the gas generator to fill it up. The gas generator will burn through gas and generate power for up to 10 minutes. It takes two oil buckets to fill a gas generator to full. An indicator screen on the generator will indicate how much fuel is left in the generator before it needs to be refueled.”
 
-		“You can get more oil buckets from oil derricks or by filling up some empty buckets at oil reservoirs yourself.”
+			“You can get more oil buckets from oil derricks or by filling up some empty buckets at oil reservoirs yourself.”
 
-		“The Administrator Board would like me to remind you that using a gas generator as a standalone source of power generation is not advised and is wasteful of oil.”
-		'''
+			“The Administrator Board would like me to remind you that using a gas generator as a standalone source of power generation is not advised and is wasteful of oil.”
+			'''
 	}
+
 	Solar_Battery: {
 		Name: Solar Batteries
 		Text:
-		'''
-		“Is that a solar battery I see? It is! Well, we’re trying to make our own power it seems. So, let me give you a simple rundown before you get caught up in a freeze.”
+			'''
+			<SIC> (power drain is not connected to usage)
+			“Is that a solar battery I see? It is! Well, we’re trying to make our own power it seems. So, let me give you a simple rundown before you get caught up in a freeze.”
 
-		“Solar batteries can store up to 3 minutes of power after charging in the sun during the day. They otherwise generate unlimited power during the day assuming the weather is clear.”
+			“Solar batteries can store up to 3 minutes of power after charging in the sun during the day. They otherwise generate unlimited power during the day assuming the weather is clear.”
 
-		“The power charge of solar batteries will only be decreased if there is something connected to the batteries sapping power. So, you can cycle between multiple different batteries throughout the night to keep up the power supply.”
+			“The power charge of solar batteries will only be decreased if there is something connected to the batteries sapping power. So, you can cycle between multiple different batteries throughout the night to keep up the power supply.”
 
-		“To check the charge status of the solar battery, just right click on it at any time to check.”
-		'''
+			“To check the charge status of the solar battery, just right click on it at any time to check.”
+			'''
 	}
+
 	Wind_Turbine: {
 		Name: Wind Turbines
 		Text:
-		'''
-		“Wind turbines are pretty neat when they’re actually useful. There can’t be wind all the time, but I’ll give you the basic rundown to use them to the best you can.”
+			'''
+			“Wind turbines are pretty neat when they’re actually useful. There can’t be wind all the time, but I’ll give you the basic rundown to use them to the best you can.”
 
-		“Wind turbines do not care if it’s nighttime, and neither need gas to generate power. They simply need there to be wind to pass through them so they can generate power.”
+			“Wind turbines do not care if it’s nighttime, and neither need gas to generate power. They simply need there to be wind to pass through them so they can generate power.”
 
-		“It would also be wise not to obstruct them so they can catch as much wind as possible.”
-		'''
+			“It would also be wise not to obstruct them so they can catch as much wind as possible.”
+			'''
 	}
+
 	Wave_Energy_Converter: {
 		Name: Wave Energy Converters
 		Text:
-		'''
-		“Oh wow, you managed to find a wave energy converter. These are a pretty rare find given they haven’t even gotten out of the prototyping stage. Regardless, there are still some things I know about their functionality in my precepts.”
+			'''
+			“Oh wow, you managed to find a wave energy converter. These are a pretty rare find given they haven’t even gotten out of the prototyping stage. Regardless, there are still some things I know about their functionality in my precepts.”
 
-		“In order to get any kind of use out of a wave energy converter, you need to place them in large pools of water, like an ocean. They will generate power as long as there are ocean waves present.”
+			“In order to get any kind of use out of a wave energy converter, you need to place them in large pools of water, like an ocean. They will generate power as long as there are ocean waves present.”
 
-		“For some odd reason, ocean waves only appear in specific worlds with a high spirit presence. Don’t ask me why, the Administrator Board restricts me from talking about anything magical in explicit details.”
-		'''
+			“For some odd reason, ocean waves only appear in specific worlds with a high spirit presence. Don’t ask me why, the Administrator Board restricts me from talking about anything magical in explicit details.”
+			'''
 	}
+
 	White_Wire_Upgrade: {
 		Name: "{$Items.Screwdriver_Upgrade_White}"
 		Text:
-		'''
-		“Look at that. Your SMART Screwdriver can now work with the intricate security mechanisms built into white wires. The security mechanisms are merely only to make them tamper-proof and allow some of our analog security contraptions to not break.”
+			'''
+			“Look at that. Your SMART Screwdriver can now work with the intricate security mechanisms built into white wires. The security mechanisms are merely only to make them tamper-proof and allow some of our analog security contraptions to not break.”
 
-		“To place white wires, simply right click with your upgraded Screwdriver and select the white wire icon from the pop-up menu. To cut white wires, just interface that same menu and click the center icon bubble to swap to wire cutter mode.”
-		'''
+			“To place white wires, simply right click with your upgraded Screwdriver and select the white wire icon from the pop-up menu. To cut white wires, just interface that same menu and click the center icon bubble to swap to wire cutter mode.”
+			'''
 	}
+
 	Logic_Component_Upgrade: {
 		Name: "{$Items.Screwdriver_Upgrade_Logic}"
 		Text:
-		'''
-		<SIC> (making logic components placable with the screwdriver would be impractical for users)
-		“Great work! Your SMART Screwdriver can now open up and screw together logic components, giving you advanced security access.”
+			'''
+			<SIC> (making logic components placable with the screwdriver would be impractical for users)
+			“Great work! Your SMART Screwdriver can now open up and screw together logic components, giving you advanced security access.”
 
-		“To place logic components, simply right click with your upgraded Screwdriver and select the logic component icon from the pop-up menu. To pick logic components, just interface that same menu and click the center icon bubble to swap to wire cutter mode.”
-		'''
+			“To place logic components, simply right click with your upgraded Screwdriver and select the logic component icon from the pop-up menu. To pick logic components, just interface that same menu and click the center icon bubble to swap to wire cutter mode.”
+			'''
 	}
 }
 

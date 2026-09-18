@@ -278,7 +278,9 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (originPlayer.dashDirection != 0 || originPlayer.dashDirectionY != 0) {
 				player.timeSinceLastDashStarted = 0;
-				dashAngle = float.Atan2((player.controlDown ? 1 : 0) - (player.controlUp ? 1 : 0), (player.controlRight ? 1 : 0) - (player.controlLeft ? 1 : 0));
+				Vector2 dir = new((player.controlRight ? 1 : 0) - (player.controlLeft ? 1 : 0), (player.controlDown ? 1 : 0) - (player.controlUp ? 1 : 0));
+				if (dir == default) dir = Vector2.UnitX * -player.direction;
+				dashAngle = dir.ToRotation();
 				dashTime = dashLength;
 				SoundEngine.PlaySound(Origins.Sounds.StarDash.WithVolume(0.7f), player.Center);
 				/*SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitchRange(0.5f, 0.7f).WithVolume(0.8f), player.Center);

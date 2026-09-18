@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
+using Origins.Journal;
 using Origins.UI;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
@@ -29,6 +30,7 @@ namespace Origins.Tiles.Ashen {
 		public override void Load() {
 			new TileItem(this, textureOverride: Texture)
 			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithExtraStaticDefaults(SprockeyEntry.AddEntryOnUse<Delay_Component_Entry>)
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type, 5)
 				.AddRecipeGroup(ALRecipeGroups.CopperBars)

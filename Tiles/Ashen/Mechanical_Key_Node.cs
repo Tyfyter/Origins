@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Tools.Wiring;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
 using System;
@@ -220,6 +221,7 @@ namespace Origins.Tiles.Ashen {
 			protected override bool CloneNewInstances => true;
 			public override void SetStaticDefaults() {
 				Item.ResearchUnlockCount = 100;
+				SprockeyEntry.AddEntryOnUse<Mechanical_Key_Node_Entry>(this);
 			}
 			public override void SetDefaults() {
 				Item.DefaultToPlaceableTile(tile.Type);

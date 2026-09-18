@@ -35,6 +35,9 @@ namespace Origins {
 			public static string[] JournalEntries { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntries)}")
 			.Description("Controls which items are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
+			public static string[] JournalEntriesOnUse { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntriesOnUse)}")
+			.Description("Controls which items are associated with which journal entries, multiple entries can be assigned by separating them with semicolons, entries in this set will only be unlocked by using the item")
+			.RegisterCustomSet<string>(null);
 			public static bool[] SwungNoMeleeMelees { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(SwungNoMeleeMelees)}")
 			.Description("Allows weapons with Item.noMelee to trigger effects meant for swung melee weapons")
 			.RegisterBoolSet(

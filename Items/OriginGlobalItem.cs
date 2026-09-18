@@ -28,6 +28,7 @@ namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
 		internal static bool isOriginsItemCloningDefaults = false;
 		bool hasUnlockedJournalEntries = false;
+		internal bool hasUnlockedOnUseJournalEntries = false;
 		public override bool InstancePerEntity => true;
 		public override void SetDefaults(Item item) {
 			bool statsModified = false;

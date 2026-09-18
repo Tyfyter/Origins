@@ -2,6 +2,7 @@
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Origins.Tiles.Ashen {
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public override void Load() {
 			new TileItem(this)
+			.WithExtraStaticDefaults(SprockeyEntry.AddEntryOnUse<Wind_Turbine_Entry>)
 			.WithExtraDefaults(item => {
 				item.CloneDefaults(ItemID.Sawmill);
 				item.createTile = Type;

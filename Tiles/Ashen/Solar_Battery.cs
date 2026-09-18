@@ -2,6 +2,7 @@
 using Origins.Items.Accessories;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Origins.UI;
 using Origins.World.BiomeData;
 using System.IO;
@@ -20,6 +21,7 @@ public class Solar_Battery : ModTile {
 	public override void Load() {
 		new TileItem(this)
 		.WithExtraStaticDefaults(this.DropTileItem)
+		.WithExtraStaticDefaults(SprockeyEntry.AddEntryOnUse<Solar_Battery_Entry>)
 		.WithExtraDefaults(item => {
 			item.CloneDefaults(ItemID.Sawmill);
 			item.createTile = Type;
