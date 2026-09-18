@@ -706,6 +706,7 @@ namespace Origins {
 		public bool isUsingScope;
 		public Vector2 platformDismountVelocity;
 		public NPC standingOnPlatformNPC;
+		public int[] itemCounts = ItemID.Sets.Factory.CreateIntSet();
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			iFramesFromHurt.Cooldown();

@@ -26,8 +26,14 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
+		struct CountItemsFlag : IBroken {
+			public static string BrokenReason => "Use SearchExtraInventories";
+		}
 		public override void UpdateEquips() {
 			Debugging.LogFirstRun(UpdateEquips);
+			Array.Clear(itemCounts);
+			foreach (Item item in Player.inventory) if(!item.IsAir) itemCounts[item.type] += item.stack;
+			foreach (Item item in Player.armor) if(!item.IsAir) itemCounts[item.type] += item.stack;
 		}
 		public override void PostUpdateEquips() {
 			Debugging.LogFirstRun(PostUpdateEquips);

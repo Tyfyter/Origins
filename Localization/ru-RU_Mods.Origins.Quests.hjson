@@ -599,3 +599,19 @@ Princess: {
 
 TravellingMerchant.GivenConfetti: Оу, что это? Я раньше не встречал подобного. Это станет отличным дополнением к моей коллекции.
 SkeletonMerchant.GivenConfetti: Прости конечно, но участником какой вечеринки я буду тут внизу?
+
+Community: {
+	SPE_Suggestions: {
+		// Name: Any Eyedeas?
+		/* Journal:
+			'''
+			{$Name}
+			Client: [npcname:Steampunker]
+
+			'{$Inquire}'
+
+			- [qs:Give <npcname:Steampunker> ideas for <itemname:Origins/Space_Pirates_Eye>]
+			''' */
+		// Inquire: <PH>
+	}
+}
