@@ -27,7 +27,7 @@ public class Large_Auto_Assembler : ModTile, IAshenWireTile {
 		AddGrounded(2, 54, 44);
 		AddGrounded(3, 34, 78);
 		AddGrounded(4, 32, 110);
-		AddGrounded(5, 38, 124);
+		AddGrounded(5, 38, 108);
 		AddGrounded(6, 30, 70);
 		AddGrounded(7, 30, 70);
 		AddHanging(1, 14, 110);
