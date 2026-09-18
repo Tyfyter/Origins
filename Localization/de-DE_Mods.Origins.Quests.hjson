@@ -120,6 +120,7 @@ PartyGirl: {
 
 			- [qs{3}:Give any {1} Town NPCs {2} Confetti ({0}/{1})]
 			- [qs{4}:Tell the client that everyone has {$ItemName.Confetti}]
+			Rewards: "A party, silly!"
 			Unlocks: [i:PartyGirlGrenade]
 			''' */
 		// Inquire: HI! So, I would like to prepare for a party sometime soon and nobody else seems to be prepared for it. Can you give everyone some confetti? Someone’s got to throw the confetti so I figured everyone can!
@@ -592,7 +593,7 @@ Demolitionist: {
 
 Princess: {
 	// GivenConfetti: Aww~! Confetti! I'll be ready for any party that comes my way thanks to you, my loyal subject!
-	// BrineFiendNearby: "[npcname:Origins/Brine_Fiend]> is so cool and is so good at brewing! It's so fun to hang out with her!"
+	// BrineFiendNearby: "[npcname:Origins/Brine_Fiend] is so cool and is so good at brewing! It's so fun to hang out with her!"
 	// CubekonTinkerer: "[npcname:Origins/Cubekon_Tinkerer] is so smart and laid-back! I'm grateful we can come to terms despite our differences!"
 	// DefiledEffigyNearby: I'm sad for them, but I couldn't seem to understand what they were all about before they tried infecting me! I'd rather keep my distance as much as my heart aches for them.
 }

@@ -1,12 +1,13 @@
-﻿using Origins.Tiles;
-using PegasusLib;
+﻿using PegasusLib.Networking;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
@@ -73,6 +74,7 @@ namespace Origins.Questing {
 			Stage = 1;
 			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
 			ShouldSync = true;
+			Main.LocalPlayer.QuickSpawnItem(new EntitySource_Gift(npc), ItemID.Confetti, 100);
 		}
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.PartyGirl && HasGivenAllConfetti;
 		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister(loc_key + "ReadyToComplete").Value;
@@ -80,6 +82,7 @@ namespace Origins.Questing {
 			Main.npcChatText = Language.GetTextValue(loc_key + "Complete");
 			Stage = 2;
 			ShouldSync = true;
+			new Start_Party_Action(Main.LocalPlayer, npc).Perform();
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
@@ -117,6 +120,16 @@ namespace Origins.Questing {
 		}
 		public override void ReceiveSync(BinaryReader reader) {
 			Stage = reader.ReadInt32();
+		}
+		public record class Start_Party_Action(Player Player, NPC PartyGirl) : AutoSyncedAction {
+			public override bool ServerOnly => true;
+			protected override void Perform() {
+				BirthdayParty.GenuineParty = true;
+				NPC.freeCake = true;
+				WorldGen.BroadcastText(NetworkText.FromKey("Game.BirthdayParty_2", PartyGirl.GetGivenOrTypeNetName(), Player.name), new Color(255, 0, 160));
+				NetMessage.SendData(MessageID.WorldData);
+				AchievementsHelper.NotifyProgressionEvent(25);
+			}
 		}
 	}
 	[Autoload(false)]
