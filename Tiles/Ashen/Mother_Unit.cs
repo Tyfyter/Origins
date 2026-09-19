@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.World.BiomeData;
+using PegasusLib;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -52,6 +54,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.HookPlaceOverride = Shape.Place;
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.FlattenAnchors = true;
+			this.SetAnimationHeight();
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
@@ -66,6 +69,9 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (frameCounter.CycleUp(8)) frame.CycleUp(6);
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (IsUnanchored(i, j)) {

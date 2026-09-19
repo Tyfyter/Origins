@@ -123,7 +123,7 @@ PartyGirl: {
 			Rewards: "A party, silly!"
 			Unlocks: [i:PartyGirlGrenade]
 			''' */
-		// Inquire: HI! So, I would like to prepare for a party sometime soon and nobody else seems to be prepared for it. Can you give everyone some confetti? Someone’s got to throw the confetti so I figured everyone can!
+		// Inquire: HI! So, I want to throw a party sometime soon and nobody else seems to be ready for it. Can you give everyone some confetti? Someone’s got to throw the confetti so I figured everyone can!
 		// Start: Sweet!
 		// ReadyToComplete: All good to go?
 		// Complete: Haha! Now everyone’s forced to participate in the fun! Quite the role model!
