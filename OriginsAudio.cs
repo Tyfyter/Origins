@@ -46,8 +46,13 @@ namespace Origins {
 			public static SoundStyle MuffledHitMale = new("Origins/Sounds/Custom/ModifiedPlayer/Male_Hit_Mask", 3, SoundType.Sound);
 			public static SoundStyle MuffledHitFemale = new("Origins/Sounds/Custom/ModifiedPlayer/Female_Hit_Mask", 3, SoundType.Sound);
 			public static SoundStyle MaleNecromancerBlurb = new("Origins/Sounds/Custom/Blurbs/MaleNecromancer", 3, SoundType.Sound);
+			public static SoundStyle FemaleNecromancerBlurb = new("Origins/Sounds/Custom/Blurbs/FemaleNecromancer", 3, SoundType.Sound);
 			public static SoundStyle PsymantiShamanBlurb = new("Origins/Sounds/Custom/Blurbs/PsymantiShaman", 4, SoundType.Sound);
 			public static SoundStyle SprockeyBlurb = new("Origins/Sounds/Custom/Blurbs/Sprockey", 4, SoundType.Sound);
+			public static SoundStyle MotherUnitBlurb = new("Origins/Sounds/Custom/Blurbs/MotherUnit", SoundType.Sound);
+			public static SoundStyle ArabelBlurb = new("Origins/Sounds/Custom/Blurbs/Arabel", 2, SoundType.Sound);
+			public static SoundStyle DefiledEffigyBlurb = new("Origins/Sounds/Custom/Blurbs/DefiledEffigy", 3, SoundType.Sound);
+
 
 			public static SoundStyle MultiWhip = SoundID.Item153;
 			public static SoundStyle Krunch = SoundID.Item36;
