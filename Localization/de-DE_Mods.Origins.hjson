@@ -1520,8 +1520,8 @@ Buffs: {
 	}
 
 	Sprockey_Buff: {
-		// DisplayName: Sprockey
-		// Description: <PH>
+		// DisplayName: Sprockey the Sprocket
+		// Description: Everyone from the Mechanicus knows Sprockey!
 	}
 }
 

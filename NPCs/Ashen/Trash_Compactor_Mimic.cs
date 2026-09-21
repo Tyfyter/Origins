@@ -61,6 +61,9 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
 			npcLoot.Add(ScavengerBonus.RAM(5, 15, amountDroppedMaximum: 2));
 		}
+		struct WrongGores : IBroken {
+			public static string BrokenReason => "Spawning defiled gores instead of ashen gores";
+		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");

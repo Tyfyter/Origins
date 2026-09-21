@@ -1139,8 +1139,7 @@ Wire_Tutorial: {
 
 			“Once you’ve set up the delay time to be as long as desired, get out of the circuit box by right-clicking the component and run a wire through it.”
 
-			<SIC> (could easily be misinterpreted)
-			“It will simply change its power on/off state for as long as its delay time was set. If you don’t supply it enough power before it can change its power state, its time to charge up for its power on state will reset.”
+			“After ensuring the component has a power source, it will begin charging power up to the set delay time. If you don’t supply it enough power before it can reach its power on state, its charging time will reset back to zero.”
 
 			“That one always trips up junior tinkerers.”
 			''' */
@@ -1150,10 +1149,11 @@ Wire_Tutorial: {
 		// Name: Logic Components
 		/* Text:
 			'''
-			<SIC> (should probably explain how signal outputs work)
 			“Is that a logic component you just placed down? How unexpected for someone of your… likeness.”
 
-			“Logic components are great because they can be placed in a layer of their own similar to wires, but also because they send signals/power through only when their conditions are satisfied.”
+			“Logic components are great because they can be placed in a layer of their own similar to wires, but also because they send signals or power only when their conditions are satisfied.”
+
+			"You can hook both signal and power wires to them. Signal wires are red, blue, green and yellow; while power wires are orange, black and white. Signal wires only send signals and are not compatible with powerable objects other than a transistor. Powerable wires are able to power powerable objects and are used in a majority of Ashen constructs."
 
 			“You can also connect multiple wires to them at once and specify inputs and outputs through their circuit boxes by interacting with them.”
 
@@ -1169,12 +1169,11 @@ Wire_Tutorial: {
 		// Name: Radio Components
 		/* Text:
 			'''
-			<SIC> (refers to power as signal, likely to be confusing)
 			“Oooh! A radio component! These ones are somewhat complex. Ever dreamed of connecting your circuits wirelessly? Recent advancements in Mechanicus technology have allowed this to be possible.”
 
 			“A radio component comes with a circuit box, channel selector and mode switch. The channel selector is that illuminated number on the bottom. Each channel group has 12 separate channels before it changes to a new color. You can change the channel group with ‘-‘ and ‘+’. For faster increments, you can also press and hold ‘SHIFT’ while pressing the buttons.”
 
-			“Right next to the channel selector is the mode switch. Radio components come with 3 modes: Broadcast Mode, Receiver Mode and Signal Mode. Broadcast Mode sends a signal whenever it is input with one itself. Receiver Mode picks up the signals of broadcasting radio components on the same channel, and sends out a signal according to that. Signal Mode simply switches the radio component to be compatible with red, blue, green and yellow wires.”
+			“Right next to the channel selector is the mode switch. Radio components come with 3 modes: Broadcast Mode, Receiver Mode and Signal Mode. Broadcast Mode sends a power signal whenever it is input with one itself. Receiver Mode picks up the power signals of broadcasting radio components on the same channel, and sends out a power signal according to that. Signal Mode simply switches the radio component to be compatible with red, blue, green and yellow wires.”
 
 			“It is important for radio components to be set to the same channel if they are meant to interact with each other. A broadcaster set the Orange 8 channel cannot interact with a receiver set to the Blue 5 channel.”
 
@@ -1186,10 +1185,9 @@ Wire_Tutorial: {
 		// Name: Edge Detectors
 		/* Text:
 			'''
-			<SIC> (refers to power as signal, likely to be confusing)
 			“Edge detector, huh? Interesting. These ones are pretty straightforward once you understand what they’re used for.”
 
-			“All an edge detector does is send a signal in a circuit at the edge of an update in signal state. Essentially, when a signal source is about to be done sending that signal through the circuit, the edge detector will send a signal. This also goes for when a signal is about to be sent in a circuit.”
+			“All an edge detector does is send a power signal in a circuit at the edge of an update in signal state. Essentially, when a signal source is about to be done sending that signal through the circuit, the edge detector will send a signal itself. This also goes for when a signal is about to be sent in a circuit.”
 
 			“Edge detectors are really useful in cases where a mechanism is needed to be toggled in tandem with other mechanisms.”
 
@@ -1201,12 +1199,9 @@ Wire_Tutorial: {
 		// Name: Mechanical Key Nodes
 		/* Text:
 			'''
-			<SIC> (MKNs do need power to work, and industrial doors are always locked when powered)
 			“Is that a mechanical key node? How did you get your hands on that? Only regional administrators are allowed to fabricate these kinds of locks. Whatever, it’s my job to be helpful I guess.”
 
-			“Mechanical key nodes as you’ve seen are used to lock up industrial doors. In order to effectively lock up an industrial door with a mechanical key node, ensure that the node is accessible (especially with one present on either side), that the node is wired to the door and that the door has power.”
-
-			“That last point is especially important. While they’re perfectly operational without power, industrial doors cannot lock if they do not have power.”
+			“Mechanical key nodes as you’ve seen are used to lock up industrial doors. In order to effectively lock up an industrial door with a mechanical key node, ensure that the node is accessible (especially with one present on either side), and that the node itself has power.”
 
 			“Additionally, ensure your mechanical key node is wired either directly or indirectly with the door. You can transmit a lock state of the door through logic components if needed.”
 
@@ -1232,12 +1227,11 @@ Wire_Tutorial: {
 		// Name: Solar Batteries
 		/* Text:
 			'''
-			<SIC> (power drain is not connected to usage)
 			“Is that a solar battery I see? It is! Well, we’re trying to make our own power it seems. So, let me give you a simple rundown before you get caught up in a freeze.”
 
 			“Solar batteries can store up to 3 minutes of power after charging in the sun during the day. They otherwise generate unlimited power during the day assuming the weather is clear.”
 
-			“The power charge of solar batteries will only be decreased if there is something connected to the batteries sapping power. So, you can cycle between multiple different batteries throughout the night to keep up the power supply.”
+			“The power charge of solar batteries is sapped at all times, so they only provide a temporary amount of power throughout the night.”
 
 			“To check the charge status of the solar battery, just right click on it at any time to check.”
 			''' */
@@ -1281,10 +1275,11 @@ Wire_Tutorial: {
 		// Name: "{$Items.Screwdriver_Upgrade_Logic}"
 		/* Text:
 			'''
-			<SIC> (making logic components placable with the screwdriver would be impractical for users)
 			“Great work! Your SMART Screwdriver can now open up and screw together logic components, giving you advanced security access.”
 
-			“To place logic components, simply right click with your upgraded Screwdriver and select the logic component icon from the pop-up menu. To pick logic components, just interface that same menu and click the center icon bubble to swap to wire cutter mode.”
+			“To place logic components, simply right click with the selected logic component in your hotbar. To pick logic components, just interface your SMART Screwdriver selection menu and click the center icon bubble to swap to wire cutter mode and select the Logic Component icon afterwards.”
+
+			"Some logic components may be physically visible in the world, in which case you can remove them by mining them."
 			''' */
 	}
 }

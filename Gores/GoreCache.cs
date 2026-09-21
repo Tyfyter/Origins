@@ -7,9 +7,10 @@ namespace Origins.Gores;
 public sealed class GoreCache {
 	public static GoreCache Ashen_Generic = new("NPCs/Ashen_Gore", 4);
 	#region impl
+	readonly string name;
 	readonly int[] variants;
 	GoreCache(string name, int count = 1, int start = 1) {
-		name = "Origins/Gores/" + name;
+		this.name = name = "Origins/Gores/" + name;
 		variants = count > 0 ? new int[count] : throw new ArgumentException("Count must be one or greater", nameof(count));
 		for (int i = 0; i < count; i++) {
 			variants[i] = Origins.instance.GetGoreSlot(name + (i + start));

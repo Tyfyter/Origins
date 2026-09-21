@@ -194,15 +194,6 @@ namespace Origins.NPCs.Brine {
 			target.AddBuff(BuffID.Venom, Main.rand.Next(120, 180));
 			target.AddBuff(Toxic_Shock_Debuff.ID, Main.rand.Next(180, 240));
 		}
-		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
-			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
-		}
-		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
-			int halfWidth = NPC.width / 2;
-			int baseX = player.direction > 0 ? 0 : halfWidth;
-			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(yMult: -0.5f), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
-		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				Origins.instance.SpawnGoreByName(
