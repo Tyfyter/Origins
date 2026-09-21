@@ -25,7 +25,16 @@ namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		static HashSet<PlayerDrawLayer> vanillaLayers;
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
-			vanillaLayers ??= new(new FastStaticFieldInfo<IReadOnlyList<PlayerDrawLayer>>(typeof(PlayerDrawLayers), "VanillaLayers").Value);
+			if (vanillaLayers is null) {
+				vanillaLayers = [];
+				foreach (PlayerDrawLayer layer in new FastStaticFieldInfo<IReadOnlyList<PlayerDrawLayer>>(typeof(PlayerDrawLayers), "VanillaLayers").Value) {
+					vanillaLayers.Add(layer);
+				}
+				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
+					if (PlayerDrawLayerLoader.DrawOrder[i] is PlayerDrawLayerSlot slot && vanillaLayers.Contains(slot.Layer)) vanillaLayers.Add(slot);
+				}
+				vanillaLayers.RemoveWhere(layer => layer is not PlayerDrawLayerSlot && layer.GetDefaultPosition() is PlayerDrawLayer.Multiple);
+			}
 			Item item = drawInfo.heldItem;
 			if (item.ModItem is ICustomDrawItem custom && custom.HideNormalDraw) PlayerDrawLayers.HeldItem.Hide();
 			PlayerDrawLayers.CaptureTheGem.Hide();
