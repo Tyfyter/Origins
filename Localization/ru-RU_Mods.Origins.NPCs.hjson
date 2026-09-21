@@ -219,6 +219,7 @@ Cubekon_Tinkerer: {
 		LikeNPC_GoblinTinkerer_Unusable: То, как {NPCName} работает в своей мастерской, всегда меня привлекало. Ему просто нужны правильные инструменты, и его будет не остановить.
 		LikeNPC_Mechanic_Unusable: "{NPCName} (GoblinT) и {NPCName} (Mechanic) так мило смотрятся вместе... Я почти завидую..."
 		DislikeNPC: "{NPCName}... бедняга, которого мне хотелось бы знать получше..."
+		// Princess_LovesNPC: "{NPCName} is so smart and laid-back! I'm grateful we can come to terms despite our differences!"
 	}
 }
 

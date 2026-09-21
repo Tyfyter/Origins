@@ -105,7 +105,7 @@ Brine_Fiend: {
 		// DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
 		// HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
 		// LikeNPC_Princess: "{NPCName} is adorable and kind. Her fascination in lihzarhd girl toys makes me feel so young again!"
-		// Princess_LovesNPC: <PH>I like {NPCName}.
+		// Princess_LovesNPC: "{NPCName} is so cool and is so good at brewing! It's so fun to hang out with her!"
 	}
 
 	Dialogue: {
@@ -164,7 +164,7 @@ Defiled_Effigy: {
 		// DislikeNPC_Truffle_Unusable: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
 		// HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
 		// LikeNPC_Princess: We like {NPCName}.
-		// Princess_LovesNPC: We like {NPCName}.
+		// Princess_LovesNPC: I'm sad for the {NPCName}, but I couldn't seem to understand what they were all about before they tried infecting me! I'd rather keep my distance as much as my heart aches for them.
 	}
 
 	Dialogue: {
@@ -219,6 +219,7 @@ Cubekon_Tinkerer: {
 		// LikeNPC_GoblinTinkerer_Unusable: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
 		// LikeNPC_Mechanic_Unusable: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
 		// DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
+		// Princess_LovesNPC: "{NPCName} is so smart and laid-back! I'm grateful we can come to terms despite our differences!"
 	}
 }
 

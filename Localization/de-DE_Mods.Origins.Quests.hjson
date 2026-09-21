@@ -590,14 +590,7 @@ Demolitionist: {
 // Wizard.GivenConfetti: Oh, how nifty.
 // Steampunker.GivenConfetti: Great! Now we just need the fog machines and firework cannons!
 // Santa.GivenConfetti: Hoho! Giving gifts is supposed to be my pleasure!
-
-Princess: {
-	// GivenConfetti: Aww~! Confetti! I'll be ready for any party that comes my way thanks to you, my loyal subject!
-	// BrineFiendNearby: "[npcname:Origins/Brine_Fiend] is so cool and is so good at brewing! It's so fun to hang out with her!"
-	// CubekonTinkerer: "[npcname:Origins/Cubekon_Tinkerer] is so smart and laid-back! I'm grateful we can come to terms despite our differences!"
-	// DefiledEffigyNearby: I'm sad for them, but I couldn't seem to understand what they were all about before they tried infecting me! I'd rather keep my distance as much as my heart aches for them.
-}
-
+// Princess.GivenConfetti: Aww~! Confetti! I'll be ready for any party that comes my way thanks to you, my loyal subject!
 // TravellingMerchant.GivenConfetti: Oh, what is this? I haven't seen this before. This will make a fine addition to my collection.
 // SkeletonMerchant.GivenConfetti: Sorry, but what party will I be throwing all alone down here?
 
