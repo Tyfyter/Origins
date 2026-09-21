@@ -211,16 +211,18 @@ namespace Origins.Tiles.Ashen {
 						bool TryCrush(Entity entity) {
 							if (!entity.Hitbox.Intersects(hitbox)) return false;
 							float targetPush = top * 16 + crush - entity.position.Y;
-							Vector2 push = new(0, targetPush);
-							Vector4 slopeCollision = Collision.SlopeCollision(entity.position, push, entity.width, entity.height, fall: true);
-							Vector2 position = slopeCollision.XY();
-							push = slopeCollision.ZW();
-							push = Collision.TileCollision(position, push, entity.width, entity.height, fallThrough: true, fall2: true);
-							if (push.Y == targetPush) {
+							while (targetPush > 0) {
+								float pushPart = float.Min(targetPush, 16);
+								Vector2 push = new(0, pushPart);
+								Vector4 slopeCollision = Collision.SlopeCollision(entity.position, push, entity.width, entity.height, fall: true);
+								Vector2 position = slopeCollision.XY();
+								push = slopeCollision.ZW();
+								push = Collision.TileCollision(position, push, entity.width, entity.height, fallThrough: true, fall2: true);
 								entity.position = position + push;
-								return false;
+								if (push.Y != pushPart) return true;
+								targetPush -= pushPart;
 							}
-							return true;
+							return false;
 						}
 						if (!NetmodeActive.Server) {
 							Player player = Main.LocalPlayer;
