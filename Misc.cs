@@ -5,6 +5,7 @@ using ModLiquidLib.ModLoader;
 using Origins.Core;
 using Origins.CrossMod;
 using Origins.CrossMod.Fargos.NPCs;
+using Origins.Gores;
 using Origins.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs.MiscB.Shimmer_Construct;
@@ -1811,6 +1812,7 @@ namespace Origins {
 			if (mod.TryFind(name, out ModGore modGore)) return modGore.Type;
 			return mod.TryFind(name.Split('/')[^1], out modGore) ? modGore.Type : 0;
 		}
+		[Obsolete("Use GoreCache instead")]
 		public static int SpawnGoreByName(this Mod mod, IEntitySource source, Vector2 Position, Vector2 Velocity, string name, float Scale = 1) {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			return Gore.NewGore(source, Position, Velocity, mod.GetGoreSlot(name), Scale);
