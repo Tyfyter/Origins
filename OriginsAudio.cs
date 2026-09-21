@@ -45,6 +45,9 @@ namespace Origins {
 		public static class Sounds {
 			public static SoundStyle MuffledHitMale = new("Origins/Sounds/Custom/ModifiedPlayer/Male_Hit_Mask", 3, SoundType.Sound);
 			public static SoundStyle MuffledHitFemale = new("Origins/Sounds/Custom/ModifiedPlayer/Female_Hit_Mask", 3, SoundType.Sound);
+			public static SoundStyle MaleNecromancerBlurb = new("Origins/Sounds/Custom/Blurbs/MaleNecromancer", 3, SoundType.Sound);
+			public static SoundStyle PsymantiShamanBlurb = new("Origins/Sounds/Custom/Blurbs/PsymantiShaman", 4, SoundType.Sound);
+			public static SoundStyle SprockeyBlurb = new("Origins/Sounds/Custom/Blurbs/Sprockey", 4, SoundType.Sound);
 
 			public static SoundStyle MultiWhip = SoundID.Item153;
 			public static SoundStyle Krunch = SoundID.Item36;
@@ -77,6 +80,7 @@ namespace Origins {
 			public static SoundStyle Alarm1 = new("Origins/Sounds/Custom/Alarm1");
 			public static SoundStyle Alarm2 = new("Origins/Sounds/Custom/Alarm2");
 			public static SoundStyle ScannerPing = new("Origins/Sounds/Custom/ScannerPing");
+			public static SoundStyle DefileUp = new("Origins/Sounds/Custom/Defile_Up");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
@@ -116,6 +120,14 @@ namespace Origins {
 			public static SoundStyle PackhunterDeath = new("Origins/Sounds/Custom/Packhunter_Death");
 			public static SoundStyle Haha24 = new("Origins/Sounds/Custom/Haha24");
 			public static SoundStyle VV13Idle = new("Origins/Sounds/Custom/VV13_Idle", 3);
+			public static SoundStyle ArabelHeartbeat = new("Origins/Sounds/Custom/Arabel_Heartbeat");
+			public static SoundStyle ArabelSwish = new("Origins/Sounds/Custom/Arabel_Magic1");
+			public static SoundStyle ArabelDrone = new("Origins/Sounds/Custom/Arabel_Magic2");
+			public static SoundStyle ArabelWoopGleam = new("Origins/Sounds/Custom/Arabel_Magic3");
+			public static SoundStyle ArabelFwoom = new("Origins/Sounds/Custom/Arabel_Magic4");
+			public static SoundStyle ArabelTrinkle = new("Origins/Sounds/Custom/Arabel_Magic5");
+			public static SoundStyle ArabelTwinkle = new("Origins/Sounds/Custom/Arabel_Magic6");
+			public static SoundStyle Arabel80sDowntone = new("Origins/Sounds/Custom/Arabel_Magic7");
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",

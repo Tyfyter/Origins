@@ -71,7 +71,7 @@ namespace Origins.Tiles.Ashen {
 			offsetY = 2;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (frameCounter.CycleUp(8)) frame.CycleUp(6);
+			if (frameCounter.CycleUp(16)) frame.CycleUp(6);
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (IsUnanchored(i, j)) {

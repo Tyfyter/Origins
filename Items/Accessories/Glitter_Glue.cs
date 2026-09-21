@@ -20,7 +20,7 @@ public class Glitter_Glue : ModItem {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
 		Item.master = true;
-		Item.damage = 17;
+		Item.damage = 40;
 		Item.DamageType = DamageClass.Magic;
 		Item.shoot = ModContent.ProjectileType<Glitter_Glue_P>();
 		Item.knockBack = 1;
@@ -28,7 +28,6 @@ public class Glitter_Glue : ModItem {
 		Item.useAnimation = Item.useTime;
 		Item.useLimitPerAnimation = 12; // controls burst count
 		Item.value = Item.sellPrice(gold: 5);
-		Item.ArmorPenetration += 3;
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) => player.OriginPlayer().glitterGlue = Item;
 	public override bool MagicPrefix() => true;
@@ -64,6 +63,7 @@ public class Glitter_Glue_P : ModProjectile {
 		Projectile.usesLocalNPCImmunity = true;
 		Projectile.localNPCHitCooldown = 60;
 		isDay = Main.dayTime;
+		//Projectile.ArmorPenetration += 3;
 	}
 	public override void AI() {
 		bool startup = false;

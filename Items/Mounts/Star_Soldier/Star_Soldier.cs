@@ -1639,7 +1639,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 	}
 	public override void SetDefaults() {
-		Item.DefaultToCanisterLauncher<Star_Soldier_Pod_Missile>(222, 12, 6, 0, 0, true);
+		Item.DefaultToCanisterLauncher<Star_Soldier_Pod_Missile>(184, 12, 6, 0, 0, true);
 		Item.DamageType = DamageClasses.Explosive;
 		Item.useAnimation *= AmmoMax;
 		Item.knockBack = 4f;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -113,6 +114,10 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 						spawnPos.Y,
 						spawnType
 					);
+
+					SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-1f).WithVolume(0.5f));
+					SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.5f).WithVolume(0.7f));
+					SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd.WithPitch(-0.6f).WithVolume(0.2f));
 				}
 			}
 
@@ -210,6 +215,19 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 		return true;
 	}
 	public virtual bool CanStandOnPlatform(Player player) => true;
+	public override void HitEffect(NPC.HitInfo hit) {
+		if (NPC.life <= 0) {
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+			for (int i = 0; i < 7; i++) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
+		} else if (Main.rand.NextBool(5)) {
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+		}
+	}
 }
 [Autoload(false)]
 public class Auto_Assembler_Item_Hanging(string texture, int width, int height) : Auto_Assembler_Item_Grounded(texture, width, height) {
@@ -244,4 +262,17 @@ public class Auto_Assembler_Item_Hanging(string texture, int width, int height) 
 		}
 	}
 	public override bool CanStandOnPlatform(Player player) => NPC.ai[0] == 2;
+	public override void HitEffect(NPC.HitInfo hit) {
+		if (NPC.life <= 0) {
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+			for (int i = 0; i < 7; i++) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
+		} else if (Main.rand.NextBool(5)) {
+			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+		}
+	}
 }
