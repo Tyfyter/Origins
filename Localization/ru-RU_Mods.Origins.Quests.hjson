@@ -60,6 +60,7 @@ Guide: {
 			Награда: [i:SpelunkerPotion] x5, [i:Origins/Eye_Of_Aether] x5
 			'''
 		Inquire: Это нехорошо, похоже, что [evil:_] начало распространяться прям на тебе! Если ты сможешь найти Дриаду, то она сможет помочь, но если что-то пойдёт не так, то у меня есть кое-что, что поможет тебе вылечиться самостоятельно.
+		// InquireRemembered: That isn't good, it sounds like the [evil:_] started spreading to you! If you can find a Dryad she'll be able to cure you next time it happens, but if you can't, I have some things that should help you make a cure for yourself.
 		Start: Вот, тебе нужно будет найти [itemhint/NaturesGift:волшебный цветок] и принести его к Эфиру. Это поможет тебе убить двух зайцев одним выстрелом.
 	}
 }

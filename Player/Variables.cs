@@ -36,6 +36,7 @@ namespace Origins {
 		#region assimilation
 		public const float assimilation_max = 1f;
 		public int timeSinceRivenAssimilated = 0;
+		public bool hasBeenAssimilated;
 		AssimilationInfo[] assimilationData = [];
 		void ValidateAssimilations() {
 			if (assimilationData.Length != AssimilationLoader.Debuffs.Count) {

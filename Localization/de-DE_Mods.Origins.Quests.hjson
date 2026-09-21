@@ -60,6 +60,7 @@ Guide: {
 			Reward: [i:SpelunkerPotion] x5, [i:Origins/Eye_Of_Aether] x5
 			''' */
 		// Inquire: That isn't good, it looks like the [evil:_] has started spreading to you! If you can find a Dryad she'll be able to cure you, but if you can't, I have some things that should help you make a cure for yourself.
+		// InquireRemembered: That isn't good, it sounds like the [evil:_] started spreading to you! If you can find a Dryad she'll be able to cure you next time it happens, but if you can't, I have some things that should help you make a cure for yourself.
 		// Start: Here, you'll need to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to the Aether, these should help you find both.
 	}
 }

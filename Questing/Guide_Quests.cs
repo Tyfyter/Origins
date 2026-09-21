@@ -72,8 +72,12 @@ namespace Origins.Questing {
 		public override bool SaveToWorld => false;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 0;
-		public override bool CanStart(NPC npc) => npc.type == NPCID.Guide && !Started && (Main.LocalPlayer?.OriginPlayer()?.IterateAssimilation()?.Any(a => a.Percent > 0) ?? false);
-		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire", Main.worldName);
+		public override bool CanStart(NPC npc) => npc.type == NPCID.Guide && !Started && (Main.LocalPlayer?.OriginPlayer()?.hasBeenAssimilated ?? false);
+		public override string GetInquireText(NPC npc) {
+			if (Main.LocalPlayer?.OriginPlayer()?.IterateAssimilation()?.Any(a => a.Percent > 0) ?? false) return Language.GetTextValue(loc_key + "Inquire", Main.worldName);
+			return Language.GetTextValue(loc_key + "InquireRemembered", Main.worldName);
+		}
+
 		public override void OnAccept(NPC npc) {
 			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
 			Main.LocalPlayer.QuickSpawnItem(npc.GetSource_GiftOrReward(NameKey), ItemID.SpelunkerPotion, 5);

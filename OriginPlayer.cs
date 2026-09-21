@@ -492,7 +492,10 @@ namespace Origins {
 			Debugging.LogFirstRun(PreUpdate);
 			if (OriginConfig.Instance.Assimilation) {
 				foreach (AssimilationInfo info in IterateAssimilation()) {
-					if (info.Percent > 0) Player.AddBuff(info.Type.Type, 5);
+					if (info.Percent > 0) {
+						Player.AddBuff(info.Type.Type, 5);
+						hasBeenAssimilated = true;
+					}
 				}
 			}
 			if (rivenWet = Player.GetWet(LiquidLoader.LiquidType<Amebic_Gel>())) {
@@ -846,6 +849,7 @@ namespace Origins {
 			}
 			tag.Add("MimicSetSelection", mimicSetChoices);
 			tag.Add("journalUnlocked", journalUnlocked);
+			tag.Add("hasBeenAssimilated", hasBeenAssimilated);
 			if (journalDye is not null) {
 				tag.Add("JournalDye", journalDye);
 			}
@@ -923,6 +927,9 @@ namespace Origins {
 			}
 			if (tag.ContainsKey("journalUnlocked")) {
 				journalUnlocked = tag.Get<bool>("journalUnlocked");
+			}
+			if (tag.ContainsKey("hasBeenAssimilated")) {
+				hasBeenAssimilated = tag.Get<bool>("hasBeenAssimilated");
 			}
 			journalText = tag.SafeGet<List<string>>("JournalText") ?? journalText;
 			questsTag = tag.SafeGet<TagCompound>("Quests");
