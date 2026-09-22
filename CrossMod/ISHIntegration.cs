@@ -48,6 +48,7 @@ namespace Origins.CrossMod {
 				return versionTags.TrySelect<(string name, HashSet<string> items), string>(DoSelect);
 			}));
 			itemSourceHelper.Call("AddItemTagProvider", (Func<Item, IEnumerable<string>>)(item => (ItemCategories.Categories[item.type] ?? []).Where(IsWikiCategoryTagFriendly)));
+			itemSourceHelper.Call("AddItemTagProvider", (Func<Item, IEnumerable<string>>)(item => (item.ModItem?.Mod is Origins && DebugConfig.ShouldBeUnobtainable(item.ModItem)) ? ["Unobtainable"] : []));
 		}
 		/// <summary>
 		/// Categories which are already a filter or would otherwise be pointless to include

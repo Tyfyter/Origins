@@ -1021,8 +1021,8 @@ namespace Origins {
 			readonly IEnumerator IEnumerable.GetEnumerator() => this;
 			readonly void IDisposable.Dispose() { }
 		}
+		public static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable { Expect: true };
 		public static List<string> GetUnobtainableItems(bool includeExpected = false) {
-			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable { Expect: true };
 			HashSet<int> obtainableItems = [];
 			void AddObtainableItem(int type) {
 				obtainableItems.Add(type);
