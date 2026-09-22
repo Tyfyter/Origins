@@ -1249,7 +1249,7 @@ Wire_Tutorial: {
 	}
 
 	White_Wire_Upgrade: {
-		// Name: "{$Items.Screwdriver_Upgrade_White}"
+		// Name: "{$Items.Screwdriver_Upgrade_White.DisplayName}"
 		/* Text:
 			'''
 			“Look at that. Your SMART Screwdriver can now work with the intricate security mechanisms built into white wires. The security mechanisms are merely only to make them tamper-proof and allow some of our analog security contraptions to not break.”
@@ -1259,7 +1259,7 @@ Wire_Tutorial: {
 	}
 
 	Logic_Component_Upgrade: {
-		// Name: "{$Items.Screwdriver_Upgrade_Logic}"
+		// Name: "{$Items.Screwdriver_Upgrade_Logic.DisplayName}"
 		/* Text:
 			'''
 			“Great work! Your SMART Screwdriver can now open up and screw together logic components, giving you advanced security access.”
