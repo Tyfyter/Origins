@@ -313,7 +313,7 @@ namespace Origins.NPCs.Ashen {
 		public static float LaserRange => 8 * 16;
 		public void SharedAI() {
 			ConnectedWatchlings.Clear();
-			for (int i = NPC.whoAmI + 1; i < Main.npc.Length; i++) {
+			for (int i = NPC.whoAmI - 1; i >= 0; i--) {
 				NPC target = Main.npc[i];
 				if (!target.active) continue;
 				if (NPC.Center.WithinRange(target.Center, LaserRange) &&
