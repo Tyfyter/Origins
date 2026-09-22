@@ -419,18 +419,23 @@ namespace Origins.NPCs.Ashen {
 		public override void AI() {
 			NPC.rotation += MathHelper.Pi;
 			SharedAI();
+			Vector2 targetDir = NPC.DirectionTo(NPC.targetRect.Center());
 			const float min_dist = 16 * 5;
 			Vector2 totalSeparation = default;
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (other.type != Type) continue;
 				if (other == NPC) continue;
 				Vector2 diff = NPC.Center - other.Center;
+				if (diff.LengthSquared() >= min_dist * min_dist) continue;
+				diff -= targetDir * (Vector2.Dot(targetDir, diff) * 0.1f);
 				float distSq = diff.LengthSquared();
-				if (distSq >= min_dist * min_dist || distSq == 0) continue;
+				if (distSq == 0) continue;
 				totalSeparation += diff / (distSq / min_dist);
 			}
 			if (totalSeparation != default && !totalSeparation.HasNaNs()) {
-				NPC.velocity += totalSeparation.Normalized(out _) * 0.1f;
+				float speed = NPC.velocity.Length();
+				NPC.velocity += totalSeparation.Normalized(out _) * 0.25f;
+				if (NPC.velocity != default) NPC.velocity = NPC.velocity.Normalized(out _) * speed;
 			}
 		}
 		public override void FindFrame(int frameHeight) {
