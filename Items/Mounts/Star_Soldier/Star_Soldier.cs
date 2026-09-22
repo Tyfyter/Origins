@@ -183,8 +183,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 						else player.velocity.Y -= 12;
 					}
 				} else {
-					float speed = Math.Abs(player.velocity.X);
-					if (speed < 0.5f) {
+					float speed = player.velocity.X.Abs(out int moveDir);
+					if (speed < 0.5f && (player.controlRight.ToInt() - player.controlLeft.ToInt()) == 0) {
 						walkFrame = 17;
 						walkFrameCounter = 0;
 					} else {
