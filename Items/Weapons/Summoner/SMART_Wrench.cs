@@ -203,6 +203,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse { Item: Item item }) fromItem = item;
 		}
+		public override void TargetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+			Vector2 pos = Projectile.Center - new Vector2(9 * Projectile.direction, 20);
+			bool lineOfSight = CollisionExt.CanHitRay(pos, npc.Center);
+
+			for (int j = 0; j < 20 && !lineOfSight; j++) {
+				lineOfSight = CollisionExt.CanHitRay(pos, Main.rand.NextVector2FromRectangle(npc.Hitbox));
+			}
+			if (lineOfSight) base.TargetingAlgorithm(npc, targetPriorityMultiplier, isPriorityTarget, ref foundTarget);
+		}
 		public override void MoveTowardsTarget() {
 			if (fromItem is null || fromItem.ModItem is not SMART_Wrench) {
 				Projectile.Kill();
