@@ -305,7 +305,6 @@ namespace Origins.NPCs.Ashen {
 		public override void AI() {
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) NPC.spriteDirection = NPC.direction;
-			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
 
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (NPC.velocity.Y == 0f && NPC.NPCCanStickToWalls()) Transform<Watchling_Wall>();
@@ -347,6 +346,7 @@ namespace Origins.NPCs.Ashen {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			for (int i = 0; i < ConnectedWatchlings.Count; i++) {
 				NPC connected = Main.npc[ConnectedWatchlings[i]];
+				if (connected.Center.HasNaNs()) continue;
 				using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				Vector2 diff = connected.Center - NPC.Center;
@@ -419,6 +419,19 @@ namespace Origins.NPCs.Ashen {
 		public override void AI() {
 			NPC.rotation += MathHelper.Pi;
 			SharedAI();
+			const float min_dist = 16 * 5;
+			Vector2 totalSeparation = default;
+			foreach (NPC other in Main.ActiveNPCs) {
+				if (other.type != Type) continue;
+				if (other == NPC) continue;
+				Vector2 diff = NPC.Center - other.Center;
+				float distSq = diff.LengthSquared();
+				if (distSq >= min_dist * min_dist || distSq == 0) continue;
+				totalSeparation += diff / (distSq / min_dist);
+			}
+			if (totalSeparation != default && !totalSeparation.HasNaNs()) {
+				NPC.velocity += totalSeparation.Normalized(out _) * 0.1f;
+			}
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(4, 3..);
