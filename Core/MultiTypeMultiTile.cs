@@ -112,8 +112,11 @@ namespace Origins.Core {
 			public readonly int Width => shape.GetLength(1);
 			public readonly int Height => shape.GetLength(2);
 			public readonly ShapeMapTile this[int i, int j, int style] => shape.IndexInRange(style, i, j) ? shape[style, i, j] : ' ';
-			public readonly ushort? GetType(int i, int j, int style) => GetType(this[style, i, j]);
-			public readonly ushort? GetType(ShapeMapTile tile) => key[tile.Value];
+			public readonly ushort? GetType(int i, int j, int style) => GetType(this[i, j, style]);
+			public readonly ushort? GetType(ShapeMapTile tile) {
+				key.TryGetValue(tile.Value, out ushort? value);
+				return value;
+			}
 			public ShapeMap(Dictionary<char, ushort?> key, ShapeMapTile[,,] shape) {
 				if (key.ContainsValue(0)) return;
 				this.shape = shape;
@@ -144,6 +147,7 @@ namespace Origins.Core {
 			public static bool operator true(ShapeMap x) => x.IsValid;
 			public static bool operator false(ShapeMap x) => !x.IsValid;
 			public static ShapeMap operator |(ShapeMap left, ShapeMap right) => left.IsValid ? left : right;
+			public static ShapeMap operator &(ShapeMap left, ShapeMap right) => left.IsValid ? right : left;
 		}
 		public static ShapeMapTile[,,] GenerateShapeMap(params string[] map) {
 			int height = map.Length;

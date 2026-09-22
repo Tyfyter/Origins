@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using Origins.Graphics;
 using Origins.World.BiomeData;
-using PegasusLib;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -11,9 +10,12 @@ using Terraria.ObjectData;
 using static Origins.Core.MultiTypeMultiTile;
 
 namespace Origins.Tiles.Ashen {
-	public class Mother_Unit : OriginTile, IMultiTypeMultiTile {
+	public class Mother_Unit : OriginTile, IMultiTypeMultiTile, IGlowingModTile {
 		public static int ID { get; private set; }
-		public static ShapeMap Shape => field = field || new ShapeMap(
+		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Mother_Unit).GetDefaultTMLName() + "_Glow";
+		public Color GlowColor => Color.White;
+		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
+		public static ShapeMap Shape => field || (field = new ShapeMap(
 			new() {
 				['X'] = (ushort)ModContent.TileType<Mother_Unit>()
 			}, 
@@ -32,8 +34,41 @@ namespace Origins.Tiles.Ashen {
 			"XXXXXX|XXXXXX",
 			"XXXXXX|XXXXXX",
 			"XXXXXX|XXXXXX"
-		);
-		public override void Load() => new TileItem(this, true).RegisterItem();
+		));
+		public static ShapeMap GlowShape => field || (field = new ShapeMap(
+			new() {
+				['X'] = 16,
+				['T'] = 10,
+				['H'] = 8
+			},
+			"      |      ",
+			"      |      ",
+			"      |      ",
+			"      |      ",
+			"      |      ",
+			"      |      ",
+			" TTTTT|TTTTT ",
+			" XXXXX|XXXXX ",
+			" XXXXX|XXXXX ",
+			" XXXXX|XXXXX ",
+			" XXXXX|XXXXX ",
+			"  HXXX|XXXH  ",
+			"      |      ",
+			"      |      ",
+			"      |      "
+		));
+		void IGlowingModTile.FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
+			int xFrame = tile.TileFrameX / 18;
+			int style = xFrame / GlowShape.Width;
+			xFrame -= style * GlowShape.Width;
+			if (GlowShape.GetType(xFrame, tile.TileFrameY / 18, style) is not ushort brightness || brightness <= 0) return;
+			color.DoFancyGlow(GlowColor.ToVector3() * new Vector3(0.0625f * brightness, 0.02f * brightness, 0), tile.TileColor);
+		}
+		public override void Load() {
+			new TileItem(this, true).RegisterItem();
+			this.SetupGlowKeys();
+		}
+
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
@@ -80,6 +115,7 @@ namespace Origins.Tiles.Ashen {
 			}
 			return base.TileFrame(i, j, ref resetFrame, ref noBreak);
 		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) => this.DrawTileGlow(i, j, spriteBatch);
 		public static bool IsUnanchored(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			return IsUnanchored(i, j, tile.TileFrameX, tile.TileFrameY, TileObjectData.GetTileStyle(tile));
@@ -113,5 +149,6 @@ namespace Origins.Tiles.Ashen {
 			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => Shape[x - left, y - top, style];
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }

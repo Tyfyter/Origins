@@ -1022,7 +1022,7 @@ namespace Origins {
 			readonly void IDisposable.Dispose() { }
 		}
 		public static List<string> GetUnobtainableItems(bool includeExpected = false) {
-			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable || item is TileItem { IsDebug: true };
+			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable { Expect: true };
 			HashSet<int> obtainableItems = [];
 			void AddObtainableItem(int type) {
 				obtainableItems.Add(type);
@@ -1237,5 +1237,7 @@ namespace Origins {
 		[DefaultValue(1f), Range(0, 1)]
 		public float RivenAsimilationMultiplier = 1f;
 	}
-	public interface IExpectToBeUnobtainable;
+	public interface IExpectToBeUnobtainable {
+		public bool Expect => true;
+	}
 }

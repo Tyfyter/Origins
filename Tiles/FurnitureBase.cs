@@ -891,12 +891,13 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null, string nameOverride = null) : ModItem() {
+	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null, string nameOverride = null, bool? unobtainable = null) : ModItem(), IExpectToBeUnobtainable {
 		private static readonly Dictionary<ModTile, TileItem> itemsByTile = [];
 		private static readonly Dictionary<ModTile, TileItem> debugItemsByTile = [];
 		[field: CloneByReference]
 		public ModTile Tile { get; } = tile;
 		public bool IsDebug { get; } = debug;
+		bool IExpectToBeUnobtainable.Expect { get; } = unobtainable ?? debug;
 		public override string Name => nameOverride ?? Tile.Name + "_Item";
 		public override string Texture => textureOverride ?? (IsDebug ? Tile.Texture : (Tile.Texture + "_Item"));
 		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), Tile.PrettyPrintName);
