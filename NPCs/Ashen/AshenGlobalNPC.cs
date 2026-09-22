@@ -20,6 +20,8 @@ namespace Origins.NPCs.Ashen {
 					NPCID.Sets.SpecificDebuffImmunity[type][BuffID.Poisoned] = true;
 					NPCID.Sets.SpecificDebuffImmunity[type][BuffID.OnFire] = true;
 					NPCID.Sets.SpecificDebuffImmunity[type][BuffID.OnFire3] = true;
+					NPCID.Sets.SpecificDebuffImmunity[type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+					NPCID.Sets.SpecificDebuffImmunity[type][ModContent.BuffType<Toxic_Shock_Strengthen_Debuff>()] = true;
 				}
 			}
 			npcCache = null;

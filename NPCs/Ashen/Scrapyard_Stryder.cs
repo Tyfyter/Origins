@@ -37,8 +37,6 @@ namespace Origins.NPCs.Ashen {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 7;
-			NPCID.Sets.SpecificDebuffImmunity[Type][BuffType<Toxic_Shock_Debuff>()] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][BuffType<Toxic_Shock_Strengthen_Debuff>()] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(15, 45), PortraitPositionXOverride = -5, PortraitPositionYOverride = 0 };
 			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
 		}
