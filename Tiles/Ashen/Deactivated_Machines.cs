@@ -75,7 +75,7 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 		public static bool IsValidAnchor(Tile anchor) =>
-			anchor.HasTile && (Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType]) && (TileID.Sets.Platforms[anchor.TileType] ||!Main.tileNoAttach[anchor.TileType]);
+			anchor.HasUnactuatedTile && (Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType]) && (TileID.Sets.Platforms[anchor.TileType] || !Main.tileNoAttach[anchor.TileType]);
 		public static bool IsPart(int i, int j, int style) {
 			return Shape[style, i, j];
 		}
@@ -130,11 +130,11 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart, Type);
-			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, 4, 1);
+			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
-			TileObjectData.newAlternate.AnchorBottom = new(AnchorType.SolidTile, 4, 3);
+			TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addAlternate(3);
 			TileObjectData.addTile(Type);
 			RegisterItemDrop(ModContent.ItemType<Deactivated_Trenchmaker_Item>(), -1);
@@ -147,6 +147,16 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY >= (Shape.GetLength(2) - 1) * 18) {
+				if (!Deactivated_Trenchmaker.IsValidAnchor(Main.tile[i, j + 1])) {
+					WorldGen.KillTile(i, j);
+					return false;
+				}
+			}
+			return true;
 		}
 		public static bool IsPart(int i, int j, int style) {
 			return Shape[style, i, j];
@@ -165,6 +175,7 @@ namespace Origins.Tiles.Ashen {
 		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
 			Point pos = tile.GetTilePosition();
 			if (!IsPart(pos.X - left, pos.Y - top, style)) return false;
+			if (pos.Y - top == 8 && !Deactivated_Trenchmaker.IsValidAnchor(Main.tile[pos.X, pos.Y + 1])) return true;
 			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);

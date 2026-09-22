@@ -28,6 +28,7 @@ public abstract class StyleSelectingTileItem : ModItem {
 	public virtual void OnSetStaticDefaults() { }
 	public virtual void OnSetDefaults() { }
 	public override void HoldItem(Player player) {
+		if (Main.mouseItem?.type == Type) Main.mouseItem = Item;
 		if (PlayerInput.Triggers.JustPressed.Up && Item.placeStyle.CycleUp(tiles[index].StyleCount)) {
 			index.CycleUp(tiles.Length);
 		} else if (PlayerInput.Triggers.JustPressed.Down && (--Item.placeStyle < 0)) {

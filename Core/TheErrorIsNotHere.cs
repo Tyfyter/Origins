@@ -3,7 +3,8 @@ using Origins.Projectiles;
 using System.Diagnostics;
 using Terraria;
 
-namespace Origins.Core; 
+namespace Origins.Core;
+[StackTraceHidden]
 internal class IgnoreThisLineOfTheStackTraceThisCodeChangesNothingItJustReadsData {
 	internal static void LoadCurrentEntity() {
 		On_Projectile.Update += [DebuggerStepThrough] (orig, self, i) => {
