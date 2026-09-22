@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.UI.Chat;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,6 +37,18 @@ public abstract class StyleSelectingTileItem : ModItem {
 			Item.placeStyle = tiles[index].StyleCount - 1;
 		}
 		Item.createTile = tiles[index].Type;
+	}
+	public override void ModifyTooltips(List<TooltipLine> tooltips) {
+		for (int i = 0; i < tooltips.Count; i++) tooltips[i].Replace("<down>", GenerateSubs("Down")).Replace("<up>", GenerateSubs("Up"));
+	}
+	static string GenerateSubs(string input) {
+		return GenerateGlyphList(PlayerInput.CurrentProfile.InputModes[PlayerInput.UsingGamepad ? InputMode.XBoxGamepad : InputMode.Keyboard].KeyStatus[input]);
+	}
+	static string GenerateGlyphList(List<string> list) {
+		if (list.Count == 0) return "";
+		string text = GlyphTagHandler.GenerateTag(list[0]);
+		for (int i = 1; i < list.Count; i++) text = text + "/" + GlyphTagHandler.GenerateTag(list[i]);
+		return text;
 	}
 	protected abstract IEnumerable<StyleSelectingTile> SetupTiles();
 	protected static StyleSelectingTile Tile<T>() where T : ModTile, IStyleSelectingTile => ModContent.GetInstance<T>();

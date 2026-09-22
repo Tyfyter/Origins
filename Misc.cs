@@ -4922,6 +4922,10 @@ namespace Origins {
 			}
 			tooltips.Insert(index + 1, line);
 		}
+		public static TooltipLine Replace(this TooltipLine tooltip, string text, string replacement) {
+			tooltip.Text = tooltip.Text.Replace(text, replacement);
+			return tooltip;
+		}
 		public static void ForceEnableCrit(this Item item) => CritType.ForceEnableCrit(item);
 	}
 	public static class NPCExtensions {
