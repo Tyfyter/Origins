@@ -25,7 +25,7 @@ namespace Origins.Buffs {
 		public override bool InstancePerEntity => true;
 		public bool blinded = false;
 		public bool blindable = false;
-		NPCAimedTarget lastTarget;
+		public NPCAimedTarget lastTarget;
 		public override void Load() {
 			On_NPC.GetTargetData += static (orig, self, ignorePlayerTankPets) => {
 				if (self.TryGetGlobalNPC(out Blind_Debuff_Global global)) {

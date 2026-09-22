@@ -6459,6 +6459,8 @@ namespace Origins {
 		[Pure]
 		public static bool IsWithin(this Entity a, Entity b, float range) => a.Center.Clamp(b.Hitbox).IsWithin(b.Center.Clamp(a.Hitbox), range);
 		[Pure]
+		public static bool IsWithin(this Entity a, Rectangle b, float range) => a.Center.Clamp(b).IsWithin(b.Center().Clamp(a.Hitbox), range);
+		[Pure]
 		public static bool IsWithin(this Rectangle hitbox, Vector2 position, float range) => position.IsWithin(position.Clamp(hitbox), range);
 		[Pure]
 		public static bool IsWithinRectangular(this Entity a, Entity b, Vector2 range) => a.Center.Clamp(b.Hitbox).IsWithinRectangular(b.Center.Clamp(a.Hitbox), range);

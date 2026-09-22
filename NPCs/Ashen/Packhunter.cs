@@ -76,6 +76,13 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
+			Blind_Debuff_Global blindGlobal = NPC.GetGlobalNPC<Blind_Debuff_Global>();
+			if (blindGlobal.blinded) {
+				ref NPCAimedTarget targ = ref blindGlobal.lastTarget;
+				targ.Hitbox = NPC.targetRect;
+				(targ.Position, targ.Width, targ.Height) = (NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height);
+				return;
+			}
 			TargetSearchResults searchResults = SearchForTarget(NPC, NPC.confused ? TargetSearchFlag.NPCs : TargetSearchFlag.Players, SearchFilter, ConfusedSearchFilter);
 			seesTarget = searchResults.FoundTarget;
 			if (searchResults.FoundTarget) {
@@ -241,8 +248,36 @@ namespace Origins.NPCs.Ashen {
 						foreach (NPC npc in Main.ActiveNPCs) {
 							if (flashTriangle.Intersects(npc.Hitbox)) npc.AddBuff(Blind_Debuff.ID, 120);
 						}
+					} else if (!NPC.GetGlobalNPC<OriginGlobalNPC>().silencedDebuff) {
+						foreach (NPC npc in Main.ActiveNPCs) {
+							if (npc.type == Type && !npc.confused && npc.IsWithin(NPC.targetRect, 60 * 30) && npc != NPC) {
+								npc.direction = (NPC.targetRect.Center.X > npc.Center.X).ToDirectionInt();
+								npc.targetRect = NPC.targetRect;
+								npc.aiAction = 5;
+								npc.ai[0] = 0;
+								npc.netUpdate = true;
+							}
+						}
 					}
 					NPC.aiAction = 1;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+				}
+				break;
+				case 5:// searching for pinged target
+				SweepTime += 1.5f;
+				GeometryUtils.AngularSmoothing(ref Rotation, 1.57f * NPC.direction - MathHelper.PiOver2 + Sweep * 1.75f, 0.05f);
+				acceleration = 0.23f;
+				if (seesTarget) {
+					NPC.aiAction = 1;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+					break;
+				}
+				if (NPC.collideX) NPC.direction *= -1;
+				if (++NPC.ai[0] > 60 * 10) {
+					NPC.target = Main.maxPlayers;
+					NPC.aiAction = 0;
 					NPC.ai[0] = 0;
 					NPC.netUpdate = true;
 				}
