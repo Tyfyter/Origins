@@ -8513,7 +8513,11 @@ Ancient_Industrial_Door_Item: {
 
 Incinerator_Pit_Item: {
 	DisplayName: Incinerator Pit
-	Tooltip: ""
+	Tooltip: 
+		'''
+		Grinds items and entities to bits
+		Grinded objects turn into generated power
+		'''
 }
 
 Robot_Toy_Controller: {

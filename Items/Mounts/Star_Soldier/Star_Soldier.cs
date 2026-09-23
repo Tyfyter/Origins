@@ -1230,8 +1230,8 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override void UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) {
 		float factor = (recoilTime >= 6 ? (1 - (recoilTime - 6f) / 3f) : recoilTime / 6f) * player.direction * player.gravDir;
 		float shoulderOffset = -0.1f * factor;
-		float forearmOffset = -0.035f * factor;
-		float gunOffset = 0.035f * factor;
+		float forearmOffset = -0.0225f * factor;
+		float gunOffset = 0.07f * factor;
 		arm.shoulderRotation += shoulderOffset;
 		arm.forearmRotation += forearmOffset;
 		arm.gunRotation += gunOffset;

@@ -1136,7 +1136,7 @@ SUMMONER WEAPONS:
 (#2, ^2) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
-(#2, ^2) SMART Wrench !!!
+(^) SMART Wrench
 (#2, ^2) Star Harvest !!! (please see pre-existing feedback)
 (X) Technomancer 4000
 (^) Terratotem
@@ -1439,7 +1439,7 @@ TILES:
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(@, ^3) Incinerator Pit !!!
+(^) Incinerator Pit
 (^) Industrial Door
 (X) Infused Quakerock
 (☻) Large Auto Assembler !!!
@@ -1894,7 +1894,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
-(☻) Dysfunctional Table Saw (Sprockey) !!!
+(#2, ^2) Dysfunctional Table Saw (Sprockey) !!! (needs use gores)
 (^) Smith's Hammer (Walking Furnace)
 (^) Suspicious Looking Pebble (Defiled Blight)
 
