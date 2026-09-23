@@ -1514,7 +1514,7 @@ TILES:
 (^) Heat Vent
 (^) Hydrothermal Vent
 (^) Incomplete Standing Refinery
-(#3, ^2) Industrial Work Bench
+(^) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble
 (^) Marrowick Coral
