@@ -43,7 +43,7 @@ namespace Origins.CrossMod.Fargos.NPCs {
 			if (isSwarmBoss) {
 				(int Bag, int Trophy, int Energizer) = ModCompatSets.EnergizedBossItems[npc.type];
 
-				if (Bag > 0) npc.DropItemInstanced(npc.Center, npc.Size, Bag, SwarmItemsUsed * 5);
+				if (Bag > 0) npc.DropItemInstanced(npc.Center, npc.Size, Bag, (SwarmItemsUsed * 5) - Main.expertMode.ToInt());
 				if (Trophy > 0 && SwarmItemsUsed >= 3) Item.NewItem(npc.GetSource_Loot(), npc.Hitbox, Trophy, SwarmItemsUsed / 3);
 				if (Energizer > 0 && SwarmItemsUsed >= 10) Item.NewItem(npc.GetSource_Loot(), npc.Hitbox, Energizer, SwarmItemsUsed / 10);
 
