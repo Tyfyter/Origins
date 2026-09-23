@@ -1177,6 +1177,8 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	int ammo = AmmoMax;
 	int reloadTime = 0;
 	bool usedFakeAmmo;
+	int recoilTime = 0;
+	float recoilMult = 0;
 	public override void SetDefaults() {
 		Item.damage = 50;
 		Item.DamageType = DamageClass.Ranged;
@@ -1207,11 +1209,34 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 		if (arm.itemAnimation != 0) {
 			//SoundEngine.PlaySound(SoundID.Item61.WithPitch(2f), player.Center);
 			reloadTime = 0;
-			if (arm.itemTime == arm.itemTimeMax && usedFakeAmmo) ammo--;
-		} else if (ammo < AmmoMax && reloadTime.Warmup(ReloadLength)) {
-			SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.Center);
-			ammo = AmmoMax;
+			if (arm.itemTime == arm.itemTimeMax) {
+				recoilTime = 9;
+				if (usedFakeAmmo) ammo--;
+				MathUtils.LinearSmoothing(ref recoilMult, 1, 0.1f);
+			}
+		} else {
+			recoilMult.Cooldown(0, recoilMult * 0.1f + 0.01f);
+			if (ammo < AmmoMax && reloadTime.Warmup(ReloadLength)) {
+				SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.Center);
+				ammo = AmmoMax;
+			}
 		}
+		recoilTime.Cooldown();
+	}
+	public override void UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) {
+		float factor = (recoilTime >= 6 ? (1 - (recoilTime - 6f) / 3f) : recoilTime / 6f) * player.direction * player.gravDir;
+		float shoulderOffset = -0.1f * factor;
+		float forearmOffset = -0.035f * factor;
+		float gunOffset = 0.035f * factor;
+		arm.shoulderRotation += shoulderOffset;
+		arm.forearmRotation += forearmOffset;
+		arm.gunRotation += gunOffset;
+
+		base.UpdateRotations(player, ref arm);
+
+		arm.shoulderRotation -= shoulderOffset;
+		arm.forearmRotation -= forearmOffset;
+		arm.gunRotation -= gunOffset;
 	}
 	public override bool? CanChooseAmmo(Item ammo, Player player) {
 		usedFakeAmmo = false;
