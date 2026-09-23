@@ -1,6 +1,4 @@
-﻿using Origins.Core;
-using Origins.CrossMod.Fargos.Items;
-using Origins.Items.Accessories;
+﻿using Origins.Items.Accessories;
 using Origins.Items.Armor.Chambersite;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Magic;
@@ -11,14 +9,11 @@ using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
+using PegasusLib.Networking;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Text;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -611,5 +606,81 @@ namespace Origins {
 			packet.Write(recipientIndex);
 			packet.Send();
 		}
+	}
+	public readonly struct NetResponseKey {
+		[ThreadStatic]
+		static bool isProcessingResponse;
+		public static bool IsProcessingResponse => isProcessingResponse;
+		static readonly uint[] lastSentTick = new uint[byte.MaxValue + 1];
+		static readonly Action<BinaryReader>[] trigger = new Action<BinaryReader>[byte.MaxValue + 1];
+		static byte currentIndex;
+		readonly bool valid;
+		public readonly byte index;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "Not supposed to stay public")]
+		public NetResponseKey(byte index) {
+			this.index = index;
+			valid = true;
+		}
+		public static implicit operator byte(NetResponseKey value) {
+			if (!value.valid) throw new InvalidOperationException("Invalid NetResponseKey");
+			return value.index;
+		}
+		internal static void HandleUnconsumed() {
+			unchecked {
+				byte i = currentIndex++;
+				do {
+					if (lastSentTick[i] >= OriginSystem.gameTickCount - 600) break;
+					if (trigger[i] is not null) {
+						Origins.instance.Logger.Error($"NetResponseKey {i} ({trigger[i]}) left unconsumed, clearing");
+						trigger[i] = null;
+					}
+					i++;
+				} while (i == currentIndex);
+			}
+		}
+		public static NetResponseKey Create(Action<BinaryReader> action) {
+			if (trigger[currentIndex] is not null) Origins.instance.Logger.Error($"NetResponseKey {currentIndex} ({trigger[currentIndex]}) left unconsumed, overwriting");
+			lastSentTick[currentIndex] = OriginSystem.gameTickCount;
+			trigger[currentIndex] = action;
+			unchecked {
+				return new NetResponseKey(currentIndex++);
+			}
+		}
+		public static NetResponseKey ConsumeItem(Item item, int consumeCount = 1) => Create(reader => item.stack -= reader.ReadBoolean().Mul(consumeCount));
+		public static NetResponseKey ConsumeItemsByte(Item item, byte maxConsumed = byte.MaxValue) => Create(reader => item.stack -= byte.Min(reader.ReadByte(), maxConsumed));
+		public static NetResponseKey ConsumeItems(Item item, ushort maxConsumed = 9999) => Create(reader => item.stack -= ushort.Min(reader.ReadUInt16(), maxConsumed));
+		public readonly void Respond(Player to, Action<BinaryWriter> write) {
+			MemoryStream stream = new();
+			write(new(stream));
+			stream.TryGetBuffer(out ArraySegment<byte> buffer);
+			Respond(to, buffer);
+		}
+		public readonly void Respond(Player to, params Span<byte> data) {
+			Response_Action response = new(index, data.ToArray());
+			if (NetmodeActive.SinglePlayer) {
+				response.Perform();
+			} else {
+				response.Send(to.whoAmI);
+			}
+		}
+		record class Response_Action(byte Index, byte[] Data) : AutoSyncedAction {
+			public Response_Action() : this(default, default) { }
+			protected override void Perform() {
+				if (trigger[Index] is not Action<BinaryReader> action) throw new InvalidOperationException("NetResponseKey never created or already consumed");
+				action(new BinaryReader(Data.ToMemoryStream()));
+				trigger[Index] = null;
+			}
+			[AutoSyncSend<byte[]>]
+			public static void WriteArray(BinaryWriter writer, byte[] items) {
+				writer.Write7BitEncodedInt(items.Length);
+				writer.Write(items);
+			}
+			[AutoSyncReceive<byte[]>]
+			public static byte[] ReadArray(BinaryReader reader) => reader.ReadBytes(reader.Read7BitEncodedInt());
+		}
+		struct BetterImplFlag : IBroken {
+			static string IBroken.BrokenReason => "Better implementation (hide index, send as NetResponseKey, allow ISyncedAction to be used as a wrapper) possible with new PegasusLib features";
+		}
+
 	}
 }

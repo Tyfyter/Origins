@@ -334,6 +334,7 @@ namespace Origins {
 			unchecked {
 				gameTickCount++;
 			}
+			NetResponseKey.HandleUnconsumed();
 			Nuke_Launch_Program.Update();
 		}
 		public static uint gameTickCount = 0;

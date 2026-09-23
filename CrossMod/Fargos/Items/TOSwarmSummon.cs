@@ -56,13 +56,14 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(SoundID.Roar, player.Center);
-			new TOSwarms_Action(player, Type).Perform();
+			new TOSwarms_Action(player, Type, NetResponseKey.ConsumeItemsByte(Item)).Perform();
 			return true;
 		}
 		public override bool CanUseItem(Player player) {
 			//return true;
 			return !Fargowiltas.Fargowiltas.SwarmActive && !TOEnergizedGlobalNPC.SwarmActive && ExtraUseConditions(player);
 		}
+		public override bool ConsumeItem(Player player) => NetResponseKey.IsProcessingResponse;
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(NonSwarmItem)
@@ -84,17 +85,9 @@ namespace Origins.CrossMod.Fargos.Items {
 	}
 
 	[ExtendsFromMod("Fargowiltas")]
-	public record class TOSwarms_Action(Player Player, int Type) : SyncedAction {
+	public record class TOSwarms_Action(Player Player, int Type, byte ResponseKey) : AutoSyncedAction {
 		public override bool ServerOnly => true;
-		public TOSwarms_Action() : this(default, default) { }
-		public override SyncedAction NetReceive(BinaryReader reader) => this with {
-			Player = Main.player[reader.ReadInt16()],
-			Type = reader.ReadInt32()
-		};
-		public override void NetSend(BinaryWriter writer) {
-			writer.Write(Player.whoAmI);
-			writer.Write(Type);
-		}
+		public TOSwarms_Action() : this(default, default, default) { }
 		protected override void Perform() {
 			if (Player.HeldItem.type == Type && Player.HeldItem.ModItem is TOSwarmSummon SwarmItem) {
 				TOEnergizedGlobalNPC.SwarmActive = true;
@@ -110,9 +103,11 @@ namespace Origins.CrossMod.Fargos.Items {
 
 				SwarmItem.ExtraSpawn(boss);
 
-				Player.HeldItem.stack -= usedItems - 1;
+				new NetResponseKey(ResponseKey).Respond(Player, (byte)usedItems);
 
 				ChatHelper.BroadcastChatMessage(NetworkText.FromKey(SwarmItem.GetLocalizationKey("SummonText")), new Color(175, 75, 255));
+			} else {
+				new NetResponseKey(ResponseKey).Respond(Player, (byte)0);
 			}
 		}
 	}

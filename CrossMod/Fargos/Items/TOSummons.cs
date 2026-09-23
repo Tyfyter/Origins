@@ -170,7 +170,7 @@ namespace Origins.CrossMod.Fargos.Items {
 					if (item.stack <= 0) item.active = false;
 					return false;
 				}
-				if (conditionToSummon()) {
+				if (npcToSummon != 0 && conditionToSummon()) {
 					item.shimmerTime += 0.02f;
 					if (item.shimmerTime > 0.9f) {
 						item.shimmerTime = 0.9f;
