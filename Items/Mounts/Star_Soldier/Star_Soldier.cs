@@ -803,6 +803,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	}
 	public override void AutoStaticDefaults() {
 		base.AutoStaticDefaults();
+		Item.ResearchUnlockCount = 0;
 		Icon = ModContent.Request<Texture2D>(Texture + "_Icon");
 	}
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
