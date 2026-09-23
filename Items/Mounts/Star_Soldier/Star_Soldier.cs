@@ -298,6 +298,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			public float shoulderRotation;
 			public float forearmRotation;
 			public float gunRotation;
+			public float rotationSpeedMult;
 			public readonly Star_Soldier_Weapon Weapon => (Star_Soldier_Weapon)item.ModItem;
 			public readonly void GetPositions(Vector2 basePosition, float baseRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
 				shoulderPos = basePosition - (new Vector2(4, 20) * directions).RotatedBy(baseRotation);
@@ -306,21 +307,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				gunPos = forearmPos + (new Vector2(20, 16) * directions).RotatedBy(baseRotation + forearmRotation);
 			}
 			public void UpdateRotations(Player player) {
-				if (!Weapon.UpdateRotations(player, ref this)) return;
-				Vector2 relativeTarget = player.OriginPlayer().relativeTarget;
-				GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
-				float targetRotation = (relativeTarget + player.Bottom - gunPos).ToRotation();
-
-				GeometryUtils.AngularSmoothing(ref gunRotation, targetRotation, 0.2f);
-				if (!float.IsFinite(gunRotation)) gunRotation = 0;
-
-				GeometryUtils.AngularSmoothing(ref forearmRotation, targetRotation, 0.2f);
-				if (!float.IsFinite(forearmRotation)) forearmRotation = 0;
-
-				float baseRot = MathHelper.PiOver2 - player.direction * 2f;
-				targetRotation = baseRot + Math.Clamp(GeometryUtils.AngleDif(baseRot, targetRotation, out int dir) * dir * player.direction, -0.9f, MathHelper.PiOver4) * player.direction;
-				GeometryUtils.AngularSmoothing(ref shoulderRotation, targetRotation, 0.1f);
-				if (!float.IsFinite(shoulderRotation)) shoulderRotation = 0;
+				rotationSpeedMult = 1;
+				Weapon.UpdateRotations(player, ref this);
 			}
 			public void ItemCheck(Player player, ref bool control) {
 				Arm.player = player;
@@ -809,7 +797,22 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 	public virtual void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
 	public virtual void PreItemCheck(Player player, Star_Soldier.MountHandler handler, ref Star_Soldier.MountHandler.Arm arm) { }
 	public virtual void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) { }
-	public virtual bool UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) => true;
+	public virtual void UpdateRotations(Player player, ref Star_Soldier.MountHandler.Arm arm) {
+		Vector2 relativeTarget = player.OriginPlayer().relativeTarget;
+		arm.GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
+		float targetRotation = (relativeTarget + player.Bottom - gunPos).ToRotation();
+
+		GeometryUtils.AngularSmoothing(ref arm.gunRotation, targetRotation, 0.2f * arm.rotationSpeedMult);
+		if (!float.IsFinite(arm.gunRotation)) arm.gunRotation = 0;
+
+		GeometryUtils.AngularSmoothing(ref arm.forearmRotation, targetRotation, 0.2f * arm.rotationSpeedMult);
+		if (!float.IsFinite(arm.forearmRotation)) arm.forearmRotation = 0;
+
+		float baseRot = MathHelper.PiOver2 - player.direction * 2f;
+		targetRotation = baseRot + Math.Clamp(GeometryUtils.AngleDif(baseRot, targetRotation, out int dir) * dir * player.direction, -0.9f, MathHelper.PiOver4) * player.direction;
+		GeometryUtils.AngularSmoothing(ref arm.shoulderRotation, targetRotation, 0.1f * arm.rotationSpeedMult);
+		if (!float.IsFinite(arm.shoulderRotation)) arm.shoulderRotation = 0;
+	}
 	public override bool NeedsAmmo(Player player) => false;
 	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale);
 	public virtual void PlaySound(Player player) { }
