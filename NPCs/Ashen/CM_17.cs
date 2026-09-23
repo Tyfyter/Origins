@@ -419,7 +419,7 @@ namespace Origins.NPCs.Ashen {
 		public override void AI() {
 			NPC.rotation += MathHelper.Pi;
 			SharedAI();
-			Vector2 targetDir = NPC.DirectionTo(NPC.targetRect.Center());
+			Vector2 targetDir = NPC.DirectionTo(Main.player[NPC.target].Center);
 			const float min_dist = 16 * 5;
 			Vector2 totalSeparation = default;
 			foreach (NPC other in Main.ActiveNPCs) {
@@ -427,7 +427,7 @@ namespace Origins.NPCs.Ashen {
 				if (other == NPC) continue;
 				Vector2 diff = NPC.Center - other.Center;
 				if (diff.LengthSquared() >= min_dist * min_dist) continue;
-				diff -= targetDir * (Vector2.Dot(targetDir, diff) * 0.1f);
+				diff -= targetDir * Vector2.Dot(targetDir, diff);
 				float distSq = diff.LengthSquared();
 				if (distSq == 0) continue;
 				totalSeparation += diff / (distSq / min_dist);
