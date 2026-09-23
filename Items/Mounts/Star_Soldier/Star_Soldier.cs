@@ -1213,6 +1213,10 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 				recoilTime = 9;
 				if (usedFakeAmmo) ammo--;
 				MathUtils.LinearSmoothing(ref recoilMult, 1, 0.1f);
+				arm.GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
+				Vector2 dir = arm.gunRotation.ToRotationVector2();
+				Vector2 vel = dir.Perpendicular((int)(player.direction * player.gravDir)) * 4 - dir * 3;
+				EfficientDust.NewDustDirect(gunPos, 4, 4, TM_Bullet_Casing.ID, vel.X, vel.Y).position = gunPos + dir * 4;
 			}
 		} else {
 			recoilMult.Cooldown(0, recoilMult * 0.1f + 0.01f);

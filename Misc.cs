@@ -6783,6 +6783,12 @@ namespace Origins {
 		public static void SetIDProp(this ModBlockType self) {
 			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
 		}
+		public static void SetIDProp(this ModGore self) {
+			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
+		public static void SetIDProp(this ModDust self) {
+			if (self.GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, self.Type);
+		}
 		[ReinitializeDuringResizeArrays]
 		static class HEIInitializer {
 			static HEIInitializer() {
