@@ -49,6 +49,7 @@ public class Large_Auto_Assembler : ModTile, IAshenWireTile {
 		Main.tileLighted[Type] = true;
 		TileID.Sets.DrawTileInSolidLayer[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+		TileObjectData.newTile.LavaDeath = false;
 		TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
 		TileObjectData.newTile.Width = 4;
 		TileObjectData.newTile.SetHeight(7);

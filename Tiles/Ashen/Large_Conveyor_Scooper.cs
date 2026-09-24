@@ -24,6 +24,7 @@ public class Large_Conveyor_Scooper : ModTile {
 		Main.tileLighted[Type] = true;
 		TileID.Sets.DrawTileInSolidLayer[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+		TileObjectData.newTile.LavaDeath = false;
 		TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
 		TileObjectData.newTile.Width = 4;
 		TileObjectData.newTile.SetHeight(7);
