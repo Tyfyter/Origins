@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
-	public class Safe_Buff : ModBuff {
+	public class Safe_Buff : ModBuff, ICustomWikiStat {
 		public static int ID { get; private set; }
 		public string[] Categories => [
 			WikiCategories.ExplosiveBoostBuff
@@ -12,7 +12,8 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage = new StatModifier(0, 0);
+			ref StatModifier explosiveSelfDamage = ref player.OriginPlayer().explosiveSelfDamage;
+			explosiveSelfDamage = explosiveSelfDamage.CombineWith(new StatModifier(0, 0));
 		}
 	}
 }
