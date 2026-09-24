@@ -196,7 +196,10 @@ namespace Origins.Tiles.Ashen {
 				return 0;
 			}
 			public void Update(Point16 position) {
-				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
+				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) {
+					TargetOpen = false;
+					if (frame < max_frame) /*play sound here*/;
+				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					frameCounter = 0;

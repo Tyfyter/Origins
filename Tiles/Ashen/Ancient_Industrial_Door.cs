@@ -180,7 +180,10 @@ namespace Origins.Tiles.Ashen {
 			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
 			public const int max_frame = 5;
 			public void Update(Point16 position) {
-				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
+				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) {
+					TargetOpen = false;
+					if (frame < max_frame) /*play sound here*/;
+				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					frameCounter = 0;
