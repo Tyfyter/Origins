@@ -88,7 +88,7 @@ namespace Origins.Walls {
 		}
 	}
 	public class Fortified_Steel_Wall2 : Fortified_Steel_Wall {
-		public override Color MapColor => FromHexRGB(0x170c0f);
+		public override Color MapColor => FromHexRGB(0x3b2b21);
 		public override int BGCount => 1;
 		public override int HammerPower => 80;
 		public override void SetStaticDefaults() {

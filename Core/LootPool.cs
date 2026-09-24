@@ -7,6 +7,7 @@ using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
+using Origins.Items.Vanity.Dev.cher;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
@@ -177,13 +178,13 @@ public class Ashen_Mineral : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Oil_Bucket>(), 2, 80, 260));
-		AddRule(ItemDropRule.Common(ItemID.TinOre, 1, 21, 270));
-		AddRule(ItemDropRule.Common(ItemID.LeadOre, 2, 38, 250));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Silicon_Ore_Item>(), 1, 40, 200));
-		AddRule(ItemDropRule.Common(ItemID.SilverOre, 2, 45, 220));
-		AddRule(ItemDropRule.Common(ItemID.TungstenOre, 2, 60, 200));
-		AddRule(ItemDropRule.Common(ItemID.Amber, 4, 20, 25));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Oil_Bucket>(), 2, 15, 56));
+		AddRule(ItemDropRule.Common(ItemID.TinOre, 1, 21, 180));
+		AddRule(ItemDropRule.Common(ItemID.LeadOre, 2, 38, 165));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Silicon_Ore_Item>(), 1, 40, 121));
+		AddRule(ItemDropRule.Common(ItemID.SilverOre, 2, 45, 144));
+		AddRule(ItemDropRule.Common(ItemID.TungstenOre, 2, 60, 100));
+		AddRule(ItemDropRule.Common(ItemID.Amber, 4, 10, 25));
 	}
 }
 public class Ashen_Supplies : LootPool {
@@ -238,13 +239,13 @@ public class Ashen_Medical : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 5, 8, 16));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 2, 3, 11));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 2, 16));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 2, 1, 11));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 4, 3, 8));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Rasterwrap>(), 3, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Brightsee>(), 3, 5, 15));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 3, 3, 8));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Rasterwrap>(), 2, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Brightsee>(), 2, 5, 11));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Unmarked_Antidote>(), 1, 1, 4));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Medicinal_Acid>(), 2, 1, 3));
 	}
@@ -252,13 +253,13 @@ public class Ashen_Medical : LootPool {
 public class Ashen_MedicalLore : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 5, 8, 16));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 2, 3, 11));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 4, 3, 8));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Rasterwrap>(), 3, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Brightsee>(), 3, 5, 15));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 3, 3, 8));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Rasterwrap>(), 2, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Brightsee>(), 2, 5, 11));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Unmarked_Antidote>(), 1, 1, 4));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Medicinal_Acid>(), 2, 1, 3));
 	}
@@ -274,6 +275,7 @@ public class Ashen_Personal : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<First_Dream>(), 250));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Pincushion>(), 40));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Nineball>(), 25));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 3));
@@ -287,7 +289,7 @@ public class Ashen_Personal : LootPool {
 		AddRule(ItemDropRule.Common(ItemID.FlowerPacketPink, 4, 1, 3));
 		AddRule(ItemDropRule.Common(ItemID.FlowerPacketBlue, 4, 1, 5));
 		AddRule(ItemDropRule.Common(ItemID.FlowerPacketYellow, 4, 1, 8));
-		AddRule(ItemDropRule.Common(ItemID.GenderChangePotion, 14));
+		AddRule(ItemDropRule.Common(ItemID.GenderChangePotion, 7));
 		AddRule(ItemDropRule.Common(ItemID.DrumSet, 10));
 		AddRule(ItemDropRule.Common(ItemID.Fertilizer, 10));
 		AddRule(ItemDropRule.Common(ItemID.GoldWatch, 10));
@@ -305,47 +307,47 @@ public class Ashen_Rations : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ItemID.Bacon, 4, 8, 29));
-		AddRule(ItemDropRule.Common(ItemID.BBQRibs, 4, 5, 22));
-		AddRule(ItemDropRule.Common(ItemID.Burger, 4, 4, 36));
-		AddRule(ItemDropRule.Common(ItemID.Hotdog, 4, 3, 32));
-		AddRule(ItemDropRule.Common(ItemID.Steak, 4, 2, 25));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Bread>(), 2, 8, 28));
-		AddRule(ItemDropRule.Common(ItemID.FriedEgg, 4, 10, 22));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 8, 1, 2));
+		AddRule(ItemDropRule.Common(ItemID.Bacon, 7, 8, 29));
+		AddRule(ItemDropRule.Common(ItemID.BBQRibs, 7, 5, 22));
+		AddRule(ItemDropRule.Common(ItemID.Burger, 7, 4, 36));
+		AddRule(ItemDropRule.Common(ItemID.Hotdog, 7, 3, 32));
+		AddRule(ItemDropRule.Common(ItemID.Steak, 7, 2, 25));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Bread>(), 3, 8, 28));
+		AddRule(ItemDropRule.Common(ItemID.FriedEgg, 7, 3, 22));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 7, 1, 2));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Potato>(), 1, 2, 20));
-		AddRule(ItemDropRule.Common(ItemID.Apple, 4, 16, 32));
-		AddRule(ItemDropRule.Common(ItemID.Banana, 4, 18, 38));
-		AddRule(ItemDropRule.Common(ItemID.Lemon, 4, 12, 30));
-		AddRule(ItemDropRule.Common(ItemID.Peach, 4, 14, 26));
-		AddRule(ItemDropRule.Common(ItemID.Grapes, 4, 16, 28));
-		AddRule(ItemDropRule.Common(ItemID.MilkCarton, 4, 10, 24));
-		AddRule(ItemDropRule.Common(ItemID.CoffeeCup, 4, 20, 40));
-		AddRule(ItemDropRule.Common(ItemID.FruitJuice, 4, 16, 36));
+		AddRule(ItemDropRule.Common(ItemID.Apple, 7, 3, 32));
+		AddRule(ItemDropRule.Common(ItemID.Banana, 7, 4, 38));
+		AddRule(ItemDropRule.Common(ItemID.Lemon, 7, 1, 30));
+		AddRule(ItemDropRule.Common(ItemID.Peach, 7, 1, 26));
+		AddRule(ItemDropRule.Common(ItemID.Grapes, 7, 3, 28));
+		AddRule(ItemDropRule.Common(ItemID.MilkCarton, 7, 4, 24));
+		AddRule(ItemDropRule.Common(ItemID.CoffeeCup, 7, 7, 40));
+		AddRule(ItemDropRule.Common(ItemID.FruitJuice, 7, 5, 36));
 	}
 }
 public class Ashen_Armory : LootPool {
 	public class Rarer : LootPool {
 		public override void SetStaticDefaults() {
 			Sequential = true;
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Switchblade_Broadsword>(), 2, 1, 3));
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Soldering_Iron>(), 2));
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Defective_Mortar_Shell>(), 2));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Switchblade_Broadsword>(), 1, 1, 3));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Soldering_Iron>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Defective_Mortar_Shell>()));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Clunkaclusta>()));
 		}
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Tactical_SMG>(), 2, 1, 3));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Grease_Gun>(), 5, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<DMR>(), 10, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Grease_Gun>(), 3, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<DMR>(), 5, 1, 2));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 3));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flashbang>(), 2, 35, 185));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Link_Grenade>(), 1, 50, 150));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Armor_Piercing_Bullet>(), 3, 55, 210));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Link_Grenade>(), 1, 8, 150));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Armor_Piercing_Bullet>(), 3, 55, 277));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Metal_Slug>(), 1, 15, 99));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Resizable_Mine_Iron>(), 1, 110, 240));
-		AddRule(ItemDropRule.Common(ItemID.SilverBullet, 3, 100, 200));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Resizable_Mine_Iron>(), 1, 80, 380));
+		AddRule(ItemDropRule.Common(ItemID.SilverBullet, 3, 100, 400));
 	}
 }
 public class Ashen_HeavyArmory : LootPool {
@@ -359,7 +361,7 @@ public class Ashen_HeavyArmory : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Self_Preservation>()));
-		AddRule(ItemDropRule.Common(ItemID.RocketIII, 1, 250, 360));
+		AddRule(ItemDropRule.Common(ItemID.RocketIII, 1, 125, 520));
 	}
 }
 public class Ashen_Closet : LootPool {
@@ -397,10 +399,11 @@ public class Ashen_Command : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 1, 1, 2));
-		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 7, 24));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 1, 3, 7));
+		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 29, 88));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>()));
 		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
+		AddRule(ItemDropRule.Common(ItemID.CoffeeCup));
 	}
 }
 public class Ashen_Lab : LootPool {

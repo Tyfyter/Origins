@@ -40,7 +40,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
+			AddMapEntry(new Color(220, 77, 1), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
