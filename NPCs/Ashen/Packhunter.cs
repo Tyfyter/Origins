@@ -217,6 +217,7 @@ namespace Origins.NPCs.Ashen {
 					NPC.aiAction = 1;
 					NPC.ai[0] = 0;
 					NPC.netUpdate = true;
+					AlertOthers();
 					break;
 				}
 				if (NPC.collideX) NPC.direction *= -1;
@@ -248,17 +249,7 @@ namespace Origins.NPCs.Ashen {
 						foreach (NPC npc in Main.ActiveNPCs) {
 							if (flashTriangle.Intersects(npc.Hitbox)) npc.AddBuff(Blind_Debuff.ID, 120);
 						}
-					} else if (!NPC.GetGlobalNPC<OriginGlobalNPC>().silencedDebuff) {
-						foreach (NPC npc in Main.ActiveNPCs) {
-							if (npc.type == Type && !npc.confused && npc.IsWithin(NPC.targetRect, 60 * 30) && npc != NPC) {
-								npc.direction = (NPC.targetRect.Center.X > npc.Center.X).ToDirectionInt();
-								npc.targetRect = NPC.targetRect;
-								npc.aiAction = 5;
-								npc.ai[0] = 0;
-								npc.netUpdate = true;
-							}
-						}
-					}
+					} else AlertOthers();
 					NPC.aiAction = 1;
 					NPC.ai[0] = 0;
 					NPC.netUpdate = true;
@@ -267,12 +258,21 @@ namespace Origins.NPCs.Ashen {
 				case 5:// searching for pinged target
 				SweepTime += 1.5f;
 				GeometryUtils.AngularSmoothing(ref Rotation, 1.57f * NPC.direction - MathHelper.PiOver2 + Sweep * 1.75f, 0.05f);
-				acceleration = 0.23f;
+				acceleration = 0.3f;
 				if (seesTarget) {
 					NPC.aiAction = 1;
 					NPC.ai[0] = 0;
 					NPC.netUpdate = true;
 					break;
+				}
+				Triangle viewTriangle = GetViewTriangle(0);
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.type == Type && npc != NPC && npc.aiAction == 1 && viewTriangle.Intersects(npc.Hitbox)) {
+						NPC.direction = npc.direction;
+						NPC.netUpdate = true;
+						acceleration = 0.4f;
+						break;
+					}
 				}
 				if (NPC.collideX) NPC.direction *= -1;
 				if (++NPC.ai[0] > 60 * 10) {
@@ -329,6 +329,21 @@ namespace Origins.NPCs.Ashen {
 			viewDirection = Rotation.ToRotationVector2();
 			if (NPC.confused) NPC.StrikeOtherNPCs();
 		}
+
+		void AlertOthers() {
+			if (!NPC.GetGlobalNPC<OriginGlobalNPC>().silencedDebuff) {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.type == Type && !npc.confused && npc.IsWithin(NPC.targetRect, 60 * 30) && npc != NPC) {
+						npc.direction = (NPC.targetRect.Center.X > npc.Center.X).ToDirectionInt();
+						npc.targetRect = NPC.targetRect;
+						npc.aiAction = 5;
+						npc.ai[0] = 0;
+						npc.netUpdate = true;
+					}
+				}
+			}
+		}
+
 		public override void FindFrame(int frameHeight) {
 			DrawOffsetY = 0;
 			switch (NPC.aiAction) {
@@ -351,6 +366,9 @@ namespace Origins.NPCs.Ashen {
 					NPC.DoFrames(9, 0..4, speed);
 					break;
 					case 1:
+					NPC.DoFrames(18, 4..8, speed);
+					break;
+					case 5:
 					NPC.DoFrames(18, 4..8, speed);
 					break;
 				}
