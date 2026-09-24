@@ -3,7 +3,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.Utils;
-using Origins.Dusts;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Threading;
 using System;
@@ -11,27 +11,50 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Graphics {
 	[ReinitializeDuringResizeArrays]
 	public class EfficientDust : ILoadable {
+		public const int dust_layer_normal = 0;
+		public const int dust_layer_behind = 1;
+		public const int dust_layer_slots = 2;
 		public static Action<Dust>[] UpdateDustCallback = DustID.Sets.Factory.CreateCustomSet<Action<Dust>>(null);
 		public static Asset<Texture2D>[] DustTexture = DustID.Sets.Factory.CreateCustomSet<Asset<Texture2D>>(null);
 		public static DrawDustFunc[] DustDrawFuncs = DustID.Sets.Factory.CreateCustomSet<DrawDustFunc>(null);
 		public static Action<Dust>[] SpawnDustCallback = DustID.Sets.Factory.CreateCustomSet<Action<Dust>>(null);
-		static Dust[] dust = new Dust[Main.maxDust].Select(_ => new Dust()).ToArray();
+		static DustArray dust;
 		public static Action<int, int, float, float, float> TestEmitLight;
+		public static bool DebugMode { 
+			get;
+			set => field = value && System.Diagnostics.Debugger.IsAttached;
+		}
+		static EfficientDust() {
+			for (int i = 0; i < Main.maxDust * dust_layer_slots; i++) dust[i] = new();
+		}
 		public void Load(Mod mod) {
 			if (NetmodeActive.Server) {
-				dust = null;
 				return;
 			}
-			IL_Main.DrawDust += (il) => new ILCursor(il).EmitCall(((Action)DrawDust).Method);
-			IL_Dust.UpdateDust += (il) => new ILCursor(il).EmitCall(((Action)UpdateDust).Method);
+			IL_Main.DrawDust += (il) => new ILCursor(il).EmitCall(DoDrawDust);
+			IL_Dust.UpdateDust += (il) => new ILCursor(il).EmitCall(UpdateDust);
+			[MethodImpl(MethodImplOptions.AggressiveInlining)] static void DoDrawDust() => DrawDust();
+			Overlays.Scene.OnActivate(new Behind(), default);
+		}
+		class Behind() : Overlay(EffectPriority.VeryLow, RenderLayers.TilesAndNPCs) {
+			public override void Activate(Vector2 position, params object[] args) { }
+			public override void Deactivate(params object[] args) { }
+			public override void Draw(SpriteBatch spriteBatch) => DrawDust(dust_layer_behind);
+			public override bool IsVisible() => !Main.gameMenu;
+			public override void Update(GameTime gameTime) {
+				Mode = OverlayMode.Active;
+				Opacity = 1;
+			}
 		}
 		internal static void SetupDefaults() {
 			for (int i = 0; i < UpdateDustCallback.Length; i++) {
@@ -303,13 +326,14 @@ namespace Origins.Graphics {
 				}
 			}
 		}
-		static void DrawDust() {
+		static void DrawDust(int layer = dust_layer_normal) {
 			if (NetmodeActive.Server) return;
 			Rectangle rectangle = new((int)Main.screenPosition.X - 500 - 4, (int)Main.screenPosition.Y - 50 - 4, Main.screenWidth + 1000, Main.screenHeight + 100);
 			Color defaultColor = default;
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-			for (int i = 0; i < dust.Length; i++) {
-				Dust dust = EfficientDust.dust[i];
+			bool startNew = !Main.spriteBatch.IsRunning();
+			if (startNew) Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+			for (int i = 0; i < Main.maxDust; i++) {
+				Dust dust = EfficientDust.dust[i + Main.maxDust * layer];
 				if (!dust.active || !rectangle.Contains(dust.position)) continue;
 				if (DustDrawFuncs[dust.type] is DrawDustFunc func) {
 					func(dust);
@@ -325,12 +349,18 @@ namespace Origins.Graphics {
 					Main.spriteBatch.Draw(texture, dust.position - Main.screenPosition, dust.frame, dust.GetColor(lightColor), dust.rotation, new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
 				}
 			}
-			Main.spriteBatch.End();
+			if (startNew) Main.spriteBatch.End();
 		}
 		static void UpdateDust() {
 			if (NetmodeActive.Server) return;
 			reachedFakeDust = false;
-			FastParallel.For(0, dust.Length, (fromInclusive, toExclusive, _) => {
+			if (DebugMode) {
+				UpdateDusts(0, Main.maxDust * dust_layer_slots, null);
+			} else {
+				FastParallel.For(0, Main.maxDust * dust_layer_slots, UpdateDusts);
+			}
+			Purge();
+			static void UpdateDusts(int fromInclusive, int toExclusive, object _) {
 				for (int i = fromInclusive; i < toExclusive; i++) {
 					Dust dust = EfficientDust.dust[i];
 					if (dust.active) {
@@ -342,14 +372,15 @@ namespace Origins.Graphics {
 						}
 					}
 				}
-			});
-			Purge();
+			}
 		}
 		static readonly Dust fakeDust = new();
 		static bool reachedFakeDust = false;
 		public static Dust NewDustPerfect(Vector2 Position, int Type, Vector2? Velocity = null, int Alpha = 0, Color newColor = default, float Scale = 1f) =>
 			NewDustDirect(Position, 0, 0, Type, Velocity?.X ?? (Main.rand.Next(-20, 21) * 0.1f), Velocity?.Y ?? (Main.rand.Next(-20, 21) * 0.1f), Alpha, newColor, Scale);
-		public static Dust NewDustDirect(Vector2 Position, int Width, int Height, int Type, float SpeedX = 0f, float SpeedY = 0f, int Alpha = 0, Color newColor = default, float Scale = 1f) {
+		public static Dust NewDustDirect(Vector2 Position, int Width, int Height, int Type, float SpeedX, float SpeedY, int Alpha, Color newColor, float Scale) =>
+			NewDustDirect(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale, dust_layer_normal);
+		public static Dust NewDustDirect(Vector2 Position, int Width, int Height, int Type, float SpeedX = 0f, float SpeedY = 0f, int Alpha = 0, Color newColor = default, float Scale = 1f, int Layer = 0) {
 			bool perfect = Width == 0 && Height == 0;
 			if (UpdateDustCallback[Type] is null) {
 				return perfect ?
@@ -363,8 +394,8 @@ namespace Origins.Graphics {
 			if (Width < 5) Width = 5;
 			if (Height < 5) Height = 5;
 			if (!ChildSafety.Disabled && !ChildSafety.SafeDust[Type]) Type = DustID.Smoke;
-			for (int i = 0; i < dust.Length; i++) {
-				Dust dust = EfficientDust.dust[i];
+			for (int i = 0; i < Main.maxDust; i++) {
+				Dust dust = EfficientDust.dust[i + Main.maxDust * Layer];
 				if (!dust.active) {
 					dust.fadeIn = 0f;
 					dust.active = true;
@@ -463,6 +494,16 @@ namespace Origins.Graphics {
 			return dust => update(dust);
 		}
 		static List<(Type[] parameterTypes, MethodInfo method)> replacementMethods;
+		[InlineArray(Main.maxDust * dust_layer_slots)]
+		struct DustArray {
+			Dust element;
+		}
 	}
 	public delegate void DrawDustFunc(Dust dust);
+	file static class EfficientDustExt {
+		public static void EmitCall(this ILCursor cursor, Delegate @delegate) {
+			if (!@delegate.Method.IsStatic) throw new ArgumentException("delegate must be static");
+			cursor.EmitCall(@delegate.Method);
+		}
+	}
 }

@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		static void EfficientifyDust(ILContext il) {
 			ILCursor c = new(il);
 			while (c.TryGotoNext(MoveType.Before, i => i.MatchCall<Dust>(nameof(Dust.NewDustDirect)))) {
-				c.Next.Operand = il.Import(((Delegate)EfficientDust.NewDustDirect).Method);
+				c.Next.Operand = il.Import(((On_Dust.orig_NewDustDirect)EfficientDust.NewDustDirect).Method);
 			}
 			c = new(il);
 

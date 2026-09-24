@@ -91,8 +91,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		public int dashSpeed;
 		public float dashAngle;
 
-		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()) };
-		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()) };
+		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()), Index = 0 };
+		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()), Index = 1 };
 		readonly WeakReference<Entity> lockOnTarget = new(null);
 		public Entity LockOnTarget {
 			get => lockOnTarget.TryGetTarget(out Entity target) ? target : null;
@@ -289,6 +289,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			}
 		}
 		public struct Arm {
+			public int Index { get; init; }
 			public Item item;
 			public int itemAnimation;
 			public int itemAnimationMax;
@@ -299,6 +300,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			public float forearmRotation;
 			public float gunRotation;
 			public float rotationSpeedMult;
+			public readonly bool IsFront(Player player) => (Index == 1) == (player.direction == 1);
+			public readonly bool IsBack(Player player) => (Index == 1) != (player.direction == 1);
 			public readonly Star_Soldier_Weapon Weapon => (Star_Soldier_Weapon)item.ModItem;
 			public readonly void GetPositions(Vector2 basePosition, float baseRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
 				shoulderPos = basePosition - (new Vector2(4, 20) * directions).RotatedBy(baseRotation);
@@ -1216,7 +1219,9 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 				arm.GetPositions(player.MountedCenter, player.fullRotation, player.Directions, out _, out _, out Vector2 gunPos);
 				Vector2 dir = arm.gunRotation.ToRotationVector2();
 				Vector2 vel = dir.Perpendicular((int)(player.direction * player.gravDir)) * 4 - dir * 3;
-				EfficientDust.NewDustDirect(gunPos, 4, 4, TM_Bullet_Casing.ID, vel.X, vel.Y).position = gunPos + dir * 4;
+				Dust dust = EfficientDust.NewDustDirect(gunPos, 4, 4, TM_Bullet_Casing.ID, vel.X, vel.Y, Layer: arm.IsBack(player).Mul(EfficientDust.dust_layer_behind));
+				dust.position = gunPos + dir * 4;
+				dust.customData = Main.rand.NextFloat(0.2f, 1f) * player.direction * player.gravDir;
 			}
 		} else {
 			recoilMult.Cooldown(0, recoilMult * 0.1f + 0.01f);
