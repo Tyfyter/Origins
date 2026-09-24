@@ -2019,6 +2019,20 @@ namespace Origins {
 			}
 			return true;
 		}
+		public static bool LinearSmoothing<T>(ref T smoothed, T target, T rate) where T : INumberBase<T>, IComparisonOperators<T, T, bool> {
+			if (target != smoothed) {
+				if (T.Abs(target - smoothed) < rate) {
+					smoothed = target;
+				} else {
+					if (target > smoothed) {
+						smoothed += rate;
+					} else if (target < smoothed) {
+						smoothed -= rate;
+					}
+				}
+			}
+			return smoothed == target;
+		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool LinearSmoothing(ref Vector2 smoothed, Vector2 target, float rate) {
 			if (target != smoothed) {

@@ -267,7 +267,13 @@ public class Large_Auto_Assembler_Item_Hanging(string texture, int width, int he
 		base.SetStaticDefaults();
 		Main.npcFrameCount[Type] = 9;
 	}
+	public override void SetDefaults() {
+		base.SetDefaults();
+		NPC.lavaImmune = true;
+	}
 	public override void AI() {
+		NPC.frame.Y = NPC.frame.Height * (int)(NPC.frameCounter * (Main.npcFrameCount[Type] - 1));
+		OriginExtensions.LinearSmoothing(ref NPC.frameCounter, NPC.lavaWet.ToInt(), 1f / (NPC.lavaWet ? 30 : 60));
 		if (NPC.ai[2] == 1) {
 			NPC.GravityMultiplier = MultipliableFloat.One * -1;
 			return;
