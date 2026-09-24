@@ -4,7 +4,6 @@ using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.Tiles;
 using Origins.World.BiomeData;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -187,7 +186,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			lastSpawnInfo = spawnInfo;
-			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, false) * Defiled_Wastelands.SpawnRates.Nearby * ContentExtensions.DifficultyDamageMultiplier;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, false) * Defiled_Wastelands.SpawnRates.Nearby * ContentExtensions.DifficultyDamageMultiplier * OriginConfig.Instance.DefiledChrysalisWeightMult;
 		}
 		static NPCSpawnInfo lastSpawnInfo;
 		public override int SpawnNPC(int tileX, int tileY) {

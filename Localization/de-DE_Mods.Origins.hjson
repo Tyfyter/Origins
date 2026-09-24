@@ -3005,6 +3005,11 @@ Configs: {
 				Ashen: Ignores any obstacles such as sunflowers and trees, and can spread further but much slower.
 				''' */
 		}
+
+		DefiledChrysalisWeightMult: {
+			// Label: Defiled Chrysalis Spawn Rate
+			// Tooltip: ""
+		}
 	}
 
 	DebugConfig: {

@@ -96,6 +96,9 @@ namespace Origins {
 			[new("Terraria/SummonDamageClass")] = 0.25f
 		};
 
+		[DefaultValue(1)]
+		public float DefiledChrysalisWeightMult = 1;
+
 		[JsonIgnore]
 		public static bool GraveshieldZombiesShouldDropAsItem => ServerSideAccessibility.Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
 
