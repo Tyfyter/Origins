@@ -251,10 +251,13 @@ public class Ashen_Medical : LootPool {
 	}
 }
 public class Ashen_MedicalLore : LootPool {
+	struct IncorrectArgs : IBroken {
+		static string IBroken.BrokenReason => "Some rules temporarily removed because minimumDropped was greater than maximumDropped";
+	}
 	public override void SetStaticDefaults() {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13));
+		//AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35));
+		//AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 3, 3, 8));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 3));
