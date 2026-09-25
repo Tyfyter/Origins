@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -157,6 +158,7 @@ public class Auto_Assembler_Item_Grounded(string texture, int width, int height)
 	public Vector2 PlatformOffset => default;
 	public float PlatformWidth => NPC.width;
 	public Vector2 OldPlatformPosition { get; set; }
+	public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.Auto_Assembler_Item.{nameof(DisplayName)}");
 	public override void SetStaticDefaults() {
 		//NPCID.Sets.ConveyorBeltCollision[Type] = true;
 		Star_Soldier_UI.Sets.OverrideDontDakeDamageTargeting[Type] = true;

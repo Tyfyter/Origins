@@ -21,6 +21,7 @@ namespace Origins.NPCs {
 		}
 		public static void DrawGlow(SpriteBatch spriteBatch, Vector2 screenPos, Texture2D glowTexture, NPC npc, Color color) {
 			if (glowTexture is not null) {
+				if (!npc.behindTiles && !npc.hide) goto success;
 				Tile tile = Framing.GetTileSafely(npc.TopLeft.ToTileCoordinates());
 				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
 
