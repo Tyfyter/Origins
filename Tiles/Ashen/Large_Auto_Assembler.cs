@@ -274,6 +274,7 @@ public class Large_Auto_Assembler_Item_Hanging(string texture, int width, int he
 	}
 	public override void AI() {
 		NPC.frame.Y = NPC.frame.Height * (int)(NPC.frameCounter * (Main.npcFrameCount[Type] - 1));
+		if (!NPC.lavaWet) NPC.lavaWet = Collision.LavaCollision(NPC.position, NPC.width, NPC.height);
 		OriginExtensions.LinearSmoothing(ref NPC.frameCounter, NPC.lavaWet.ToInt(), 1f / (NPC.lavaWet ? 30 : 270));
 		if (NPC.ai[2] == 1) {
 			NPC.GravityMultiplier = MultipliableFloat.One * -1;
