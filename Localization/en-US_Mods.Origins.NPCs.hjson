@@ -478,4 +478,4 @@ Watchling.DisplayName: Watchling
 Watchling_Wall.DisplayName: "{$Watchling.DisplayName}"
 Auto_Assembler_Item.DisplayName: Auto Assembler Item
 HA_24.DisplayName: HA-24
-HA_24_Flying.DisplayName: "{$HA_24.DisplayName}"
+HA_24_Flying.DisplayName: "{§HA_24.DisplayName}"

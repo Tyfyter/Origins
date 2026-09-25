@@ -268,7 +268,19 @@ namespace Origins {
 			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
 				Match subMatch = substitutionRegex.Match(text.Value.Value);
 				while (subMatch.Success) {
-					LocalizationMethods._value.SetValue(text.Value, text.Value.Value.Replace(subMatch.Groups[0].Value, Language.GetTextValue(subMatch.Groups[1].Value)));
+					string key = subMatch.Groups[1].Value;
+					string originalKey = key;
+					if (text.Key.Contains("HA_24_Flying.DisplayName")) ;
+					if (!Language.Exists(key)) {
+						int count = 0;
+						string[] parts = text.Key.Split('.');
+						do {
+							key = $"{string.Join('.', parts.Take(count))}.{originalKey}";
+							count++;
+						} while (count < parts.Length && !Language.Exists(key)) ;
+						if (!Language.Exists(key)) key = originalKey;
+					}
+					LocalizationMethods._value.SetValue(text.Value, text.Value.Value.Replace(subMatch.Groups[0].Value, Language.GetTextValue(key)));
 					subMatch = substitutionRegex.Match(text.Value.Value);
 				}
 			}
