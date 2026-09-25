@@ -1,20 +1,12 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
-using Origins.Backgrounds;
-using Origins.Items.Other.Dyes;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles.Other;
-using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
-using System.Numerics;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
+using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -121,6 +113,28 @@ namespace Origins.Walls {
 			if (OriginClientConfig.Instance.DisableCoolVisualEffects) return true;
 			if (!drawingFancyLight && (OriginsModIntegrations.FancyLighting is null || drawWalls.Count <= 0)) drawWalls.Push(new(i, j));
 			return true;
+		}
+		static readonly FrameCachedValue<float> minLight = new(GetMinLight);
+		static float GetMinLight() {
+			int num;
+			float num2;
+			if (Lighting.Mode == LightMode.Retro) {
+				num2 = (Main.tileColor.R - 55) / 255f;
+				if (num2 < 0f) num2 = 0f;
+			} else {
+				num = (Main.tileColor.R + Main.tileColor.G + Main.tileColor.B) / 3;
+				if (Lighting.Mode == LightMode.Trippy) {
+					num2 = (num - 55) / 255f;
+					if (num2 < 0f) num2 = 0f;
+				} else num2 = (float)(num * 0.4) / 255f;
+			}
+			return num2 - Lighting.GlobalBrightness / 255;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			float num2 = minLight.GetValue();
+			r = num2;
+			g = num2;
+			b = num2;
 		}
 	}
 	public class Fiberglass_Wall_Safe : Fiberglass_Wall {
