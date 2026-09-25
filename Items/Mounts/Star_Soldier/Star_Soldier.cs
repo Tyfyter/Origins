@@ -1613,10 +1613,6 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 	}
 }
 public class Star_Soldier_Droner : Star_Soldier_Weapon {
-	static int AmmoMax => 1;
-	static int ReloadLength => 15 * 60;
-	int ammo = AmmoMax;
-	int reloadTime = 0;
 	public override void SetStaticDefaults() {
 		Origins.AddGlowMask(this);
 	}
@@ -1634,37 +1630,10 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		Item.autoReuse = true;
 		Item.rare = ItemRarityID.Yellow;
 	}
-	public override bool CanUseItem(Player player) => ammo > 0;
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
-		if (arm.itemAnimation != 0) {
-			reloadTime = 0;
-			if (arm.itemTime == arm.itemTimeMax) ammo--;
-		} else if (ammo < AmmoMax) {
-			if (reloadTime.CycleUp(ReloadLength)) {
-				SoundEngine.PlaySound(SoundID.Item53.WithPitch(0.5f), player.Center);
-				ammo.Warmup(AmmoMax);
-			}
-		}
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
-		int width = 64;
-		int segment = width / AmmoMax;
-		for (int i = 0; i < AmmoMax; i++) {
-			Color color = Color.OrangeRed;
-			if (i >= ammo) color = Color.Black;
-			spriteBatch.Draw(
-				TextureAssets.MagicPixel.Value,
-				position,
-				new Rectangle(0, 0, segment, 4),
-				color,
-				0,
-				new Vector2(segment * 0.5f, 2),
-				1,
-				SpriteEffects.None,
-			0);
-		}
-		position.Y += 8;
 	}
 }
 public class Star_Soldier_Pod : Star_Soldier_Weapon {
