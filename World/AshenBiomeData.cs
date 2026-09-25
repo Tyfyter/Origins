@@ -2,6 +2,8 @@
 using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
+using CalamityMod.Prefixes;
+using ModLiquidLib.ModLoader;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -18,6 +20,7 @@ using Origins.NPCs.Ashen;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
+using Origins.Tiles.Ashen.Hanging_Scrap;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -27,6 +30,7 @@ using System.Linq;
 using System.Security.Policy;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Generation;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
 using Terraria.Graphics.Effects;
@@ -140,452 +144,6 @@ namespace Origins.World.BiomeData {
 			}
 		}
 		public static class Gen {
-			public enum FeatureType {
-				CHUNK,
-				CUSP,
-				CAVE,
-			}
-			public static void StartHive(int i, int j) {
-				Vector2 pos = new(i, j);
-				ushort fleshBlockType = (ushort)TileType<Tainted_Stone>();
-				ushort fleshWallType = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
-				int oreID = TileType<Sanguinite_Ore>();
-				HashSet<ushort> cleaveReplacables = [fleshBlockType];
-				Tile tile;
-				int X0 = int.MaxValue;
-				int X1 = 0;
-				int Y0 = int.MaxValue;
-				int Y1 = 0;
-				List<(int x, int y, FeatureType type, bool rightSide)> features = [];
-
-				float targetTwist = genRand.NextFloat(-0.5f, 0.5f);
-				PolarVec2 speed = new(8, genRand.NextFloat(-0.5f, 0.5f) + MathHelper.PiOver2);
-				double strength = 32;
-				double baseStrength = strength;
-				strength = Math.Pow(strength, 2);
-				const double wall_thickness = 24;
-				float decay = 1;
-				while (strength > 16) {
-					int minX = (int)(pos.X - (strength + wall_thickness) * 0.5);
-					int maxX = (int)(pos.X + (strength + wall_thickness) * 0.5);
-					int minY = (int)(pos.Y - (strength + wall_thickness) * 0.5);
-					int maxY = (int)(pos.Y + (strength + wall_thickness) * 0.5);
-					if (minX < 1) {
-						minX = 1;
-					}
-					if (maxX > Main.maxTilesX - 1) {
-						maxX = Main.maxTilesX - 1;
-					}
-					if (minY < 1) {
-						minY = 1;
-					}
-					if (maxY > Main.maxTilesY - 1) {
-						maxY = Main.maxTilesY - 1;
-					}
-					bool generatedChunk = false;
-					for (int x = minX; x < maxX; x++) {
-						for (int y = minY; y < maxY; y++) {
-							double wallOffset = (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
-							double dist = (Math.Pow(Math.Abs(x - pos.X), 2) + Math.Pow(Math.Abs(y - pos.Y), 2)) * wallOffset;
-							tile = Main.tile[x, y];
-							int compY = (int)(y + wallOffset);
-							if (dist > strength) {
-								double d = Math.Sqrt(dist);
-								if (d < baseStrength + wall_thickness && OriginExtensions.IsTileReplacable(x, y)) {
-									if (tile.WallType != fleshWallType) {
-										if (compY > j || (tile.HasTile && Main.tileSolid[tile.TileType])) {
-											SpreadRivenGrass(x, y);
-											tile.HasTile = true;
-											tile.TileType = fleshBlockType;
-											tile.WallType = fleshWallType;
-										} else if (tile.WallType != WallID.None) {
-											tile.WallType = fleshWallType;
-										}
-									}
-
-									if (compY > j && d < baseStrength + 8 && genRand.Next(1500000 + (int)strength) < strength + 424) {
-										features.Add((x, y, genRand.NextBool() ? FeatureType.CUSP : FeatureType.CAVE, x > i));
-									}
-									//WorldGen.SquareTileFrame(l, k);
-								}
-								continue;
-							}
-							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
-								if (TileID.Sets.Falling[tile.TileType]) {
-									Vector2 posMin = new(float.PositiveInfinity);
-									Vector2 posMax = new(float.NegativeInfinity);
-									Carver.DoCarve(
-										Carver.Climb(new(x, y), pos => {
-											if (!OriginExtensions.IsTileReplacable((int)pos.X, (int)pos.Y)) return false;
-											Tile tile = Framing.GetTileSafely(pos.ToPoint());
-											return tile.HasTile && TileID.Sets.Falling[tile.TileType];
-										}, ref posMin, ref posMax),
-										pos => {
-											Tile tile = Framing.GetTileSafely(pos.ToPoint());
-											tile.HasTile = false;
-											return 0;
-										},
-										posMin, posMax
-									);
-								}
-								if (OriginExtensions.IsTileReplacable(x, y)) {
-									tile.HasTile = false;
-								} else if (tile.HasTile && Main.tileSolid[tile.TileType]) {
-									tile.TileType = fleshBlockType;
-								}
-								//WorldGen.SquareTileFrame(l, k);
-								if (compY > j || tile.WallType != WallID.None) tile.WallType = fleshWallType;
-								if (x > X1) {
-									X1 = x;
-								} else if (x < X0) {
-									X0 = x;
-								}
-								if (y > Y1) {
-									Y1 = y;
-								} else if (y < Y0) {
-									Y0 = y;
-								}
-								if (!generatedChunk && genRand.Next(3000000) < strength + 924) {
-									features.Add((x, y, FeatureType.CHUNK, false));
-									//generatedChunk = true;
-								}
-							}
-						}
-					}
-					pos += (Vector2)speed;
-					if (OriginExtensions.LinearSmoothing(ref speed.Theta, targetTwist + MathHelper.PiOver2, 0.05f)) targetTwist = genRand.NextFloat(-0.5f, 0.5f);
-					strength *= decay;
-					speed.R = Math.Min(speed.R, (float)Math.Sqrt(strength));
-					decay -= 0.01f;
-				}
-				if (X0 < 1) {
-					X0 = 1;
-				}
-				if (Y0 > Main.maxTilesX - 1) {
-					Y0 = Main.maxTilesX - 1;
-				}
-				if (X1 < 1) {
-					X1 = 1;
-				}
-				if (Y1 > Main.maxTilesY - 1) {
-					Y1 = Main.maxTilesY - 1;
-				}
-				strength = Math.Pow(baseStrength, 2);
-				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X0, Y0);
-				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
-				Point[] directions = [new(1, 0), new(-1, 0), new(0, 1), new(0, -1)];
-				for (int index = 0; index < features.Count; index++) {
-					(int x, int y, FeatureType type, bool rightSide) = features[index];
-					tile = Main.tile[x, y];
-					switch (type) {
-						case FeatureType.CHUNK:
-						GenRunners.SpikeRunner(x, y,
-							fleshBlockType,
-							Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), genRand.NextFloat(4, 8)),
-							8,
-							twist: genRand.NextFloat(-2, 2) + MathHelper.Pi,
-							oreType: oreID,
-							oreRarity: 50
-						);
-						/*if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
-							Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;
-						}*/
-						break;
-						case FeatureType.CUSP:
-						GenRunners.SpikeRunner(x, y,
-							fleshBlockType,
-							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(2, 4)),
-							8,
-							twist: genRand.NextFloat(-0.2f, 0.2f),
-							oreType: oreID,
-							oreRarity: 50
-						);
-						break;
-						case FeatureType.CAVE:
-						Defiled_Wastelands.Gen.DefiledVeinRunner(
-							x, y,
-							5,
-							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(4, 8)),
-							12,
-							fleshBlockType,//fleshBlockType
-							6,
-							wallType: fleshWallType,
-							oreType: oreID,
-							oreRarity: 25
-						);
-						pos = Defiled_Wastelands.Gen.DefiledVeinRunner(
-							x, y,
-							5,
-							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? 0 : MathHelper.Pi), genRand.NextFloat(4, 8)),
-							genRand.NextFloat(12, 24),
-							fleshBlockType,//fleshBlockType
-							6,
-							wallType: fleshWallType,
-							oreType: oreID,
-							oreRarity: 25
-						).position;
-						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
-						break;
-					}
-					tile.HasTile = true;
-				}
-				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
-
-				/*for (int i0 = 0; i0 < genRange.Width; i0++) {
-					int x = genRange.X + i0;
-					int y = genRange.Y;
-					while (!Framing.GetTileSafely(x, y).HasSolidTile()) y++;
-				}*/
-				ushort rivenAltar = (ushort)TileType<Ashen_Altar>();
-				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
-					int tries = 0;
-					bool placed = false;
-					while (!placed && ++tries < 10000) {
-						int x = genRange.X + genRand.Next(0, genRange.Width);
-						int y = genRange.Y + genRand.Next(0, genRange.Height);
-						if (!Framing.GetTileSafely(x, y).HasTile) {
-							for (; !Framing.GetTileSafely(x, y).HasTile; y++) {
-								if (y > Main.maxTilesY) break;
-							}
-							y--;
-						} else {
-							while (Framing.GetTileSafely(x, y).HasTile && y > Main.worldSurface) {
-								y--;
-							}
-						}
-						bool tooHigh = true;
-						int y2 = y;
-						while (y2 > 0) {
-							y2--;
-							Tile _tile = Framing.GetTileSafely(x, y2);
-							if (_tile.HasTile) {
-								tooHigh = TileLoader.GetTile(_tile.TileType) is not IRivenTile;
-								break;
-							}
-						}
-						if (tooHigh) continue;
-						Place3x2(x, y, rivenAltar);
-						placed = Framing.GetTileSafely(x, y).TileIsType(rivenAltar);
-					}
-				}
-				ushort rivenLargePile = (ushort)TileType<Ashen_Large_Foliage>();
-				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
-					int tries = 18;
-					int x = genRange.X + genRand.Next(0, genRange.Width);
-					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
-					ushort type = rivenLargePile;
-					while (!PlaceObject(x, y, type, random: TileObjectData.GetTileData(type, 0).RandomStyleRange)) {
-						y--;
-						if (tries-- > 0) break;
-					}
-				}
-				ushort rivenMediumPile = (ushort)TileType<Ashen_Medium_Foliage>();
-				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
-					int tries = 18;
-					int x = genRange.X + genRand.Next(0, genRange.Width);
-					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
-					while (!PlaceObject(x, y, rivenMediumPile, random: TileObjectData.GetTileData(rivenMediumPile, 0).RandomStyleRange)) {
-						y--;
-						if (tries-- > 0) break;
-					}
-				}
-				for (int i0 = 0; i0 < genRange.Width; i0++) {
-					int i1 = i0 + genRange.X;
-					for (int j0 = genRange.Height; j0 >= 0; j0--) {
-						int j1 = j0 + genRange.Y;
-						if (Main.tile[i1, j1].LiquidAmount != 0)
-							LiquidMethods.SettleWaterAt(i1, j1);
-					}
-				}
-				NetMessage.SendTileSquare(-1, X0, Y0, X1, Y1);
-			}
-			public static void StartHive_Old(int i, int j) {
-				const float strength = 2.4f;
-				const float wallThickness = 4f;
-				ushort fleshID = (ushort)TileType<Tainted_Stone>();
-				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
-				ushort fleshWallID = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
-				int j2 = j;
-				if (j2 > Main.worldSurface) {
-					j2 = (int)Main.worldSurface;
-				}
-				for (; !SolidTile(i, j2); j2++) { }
-				Vector2 position = new(i, j2);
-				for (int x = i - 30; x < i + 30; x++) {
-					for (int y = j2 - 25; y < j2 + 15; y++) {
-						float diff = (((y - j2) * (y - j2) * 1.5f) + (x - i) * (x - i));
-						if (diff > 800) {
-							continue;
-						}
-						Main.tile[x, y].ResetToType(fleshID);
-						if (diff < 750) {
-							Main.tile[x, y].WallType = fleshWallID;
-						}
-					}
-				}
-				Vector2 vector = new Vector2(0, -1).RotatedByRandom(1.6f, genRand);
-				int distance = 0;
-				while (Main.tile[(int)position.X, (int)position.Y].HasTile && Main.tileSolid[Main.tile[(int)position.X, (int)position.Y].TileType]) {
-					//Main.tile[(int)position.X, (int)position.Y].ResetToType(TileID.EmeraldGemspark);
-					//SquareTileFrame((int)position.X, (int)position.Y);
-					position += vector;
-					if (++distance >= 160) {
-						break;
-					}
-				}
-				vector = -vector;
-				(Vector2 position, Vector2 velocity) last = (position, vector);
-				//Tile t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				(int x, int y, Vector2 direction, double length) startValues = ((int)last.position.X, (int)last.position.Y, last.velocity.RotatedByRandom(0.5f, genRand), distance * genRand.NextFloat(0.4f, 0.6f));
-				last = GenRunners.WalledVeinRunner(startValues.x, startValues.y, strength * genRand.NextFloat(0.9f, 1.1f), startValues.direction, startValues.length, weakFleshID, wallThickness);
-				//t.ResetToType(TileID.AmethystGemspark);
-				Vector2 manualVel = new(last.velocity.X, 0.2f);
-				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(0, 1).RotatedByRandom(0.2f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
-				//t.ResetToType(TileID.AmethystGemspark);
-				manualVel.X = -manualVel.X;
-				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(0, 1).RotatedByRandom(0.2f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
-				//t.ResetToType(TileID.AmethystGemspark);
-				for (int index = 0; index < 10; index++) {
-					//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-					last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), last.velocity.RotatedByRandom(0.8f, genRand), genRand.NextFloat(distance * 0.2f, distance * 0.3f), weakFleshID, wallThickness, wallType: fleshWallID);
-					if (index < 8) {
-						GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), last.velocity.RotatedBy(genRand.Next(2) * 2 - 1).RotatedByRandom(0.8f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
-					}
-					PolarVec2 vel = new(1, last.velocity.ToRotation());
-					OriginExtensions.AngularSmoothing(ref vel.Theta, MathHelper.PiOver2, 0.7f);
-					//t.ResetToType(TileID.AmethystGemspark);
-					last = (last.position, (Vector2)vel);
-				}
-				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				//t.ResetToType(TileID.AmethystGemspark);
-				Point caveCenter = HiveCave_Old((int)last.position.X, (int)last.position.Y);
-				Vector2 cavernOpening = last.position - caveCenter.ToVector2();
-				GenRunners.VeinRunner((int)last.position.X, (int)last.position.Y, strength, cavernOpening.SafeNormalize(Vector2.Zero), cavernOpening.Length());
-				GenRunners.VeinRunner(startValues.x, startValues.y, strength, startValues.direction, startValues.length);
-				(Vector2 position, Vector2 velocity)[] arms = new (Vector2 position, Vector2 velocity)[4];
-				arms[0] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(1, -0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				arms[1] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(1, 0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				arms[2] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(-1, -0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				arms[3] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(-1, 0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-			}
-			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
-				ushort fleshID = (ushort)TileType<Tainted_Stone>();
-				ushort fleshWallID = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
-				ushort blisterID = (ushort)TileType<Gel_Blister>();
-				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
-				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
-				Queue<Point> lesionPlacementSpots = new();
-				for (int x = i2 - (int)(33 * sizeMult + 5); x < i2 + (int)(33 * sizeMult + 5); x++) {
-					for (int y = j2 + (int)(28 * sizeMult + 4); y >= j2 - (int)(28 * sizeMult + 4); y--) {
-						float sq = Math.Max(Math.Abs(y - j2) * 1.5f, Math.Abs(x - i2));
-						float diff = (sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f;
-						if (diff * 0.9f > 35 * sizeMult * 35 * sizeMult) {
-							continue;
-						}
-						if (diff * 0.9f > (20 * sizeMult - 5) * (20 * sizeMult - 5)) {
-							diff = MathF.Sqrt(diff * (GenRunners.GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
-						} else {
-							diff = 0;
-						}
-						if (diff > 35 * sizeMult) {
-							continue;
-						}
-						if (OriginExtensions.IsTileReplacable(x, y)) {
-							Tile tile = Main.tile[x, y];
-							if (!OriginsSets.Walls.RivenWalls[tile.WallType]) {
-								tile.ResetToType(fleshID);
-								tile.WallType = fleshWallID;
-							}
-							if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult)) {
-								tile.SetActive(false);
-								if (diff > 34 * sizeMult - 5 && Main.tile[x, y + 1].TileIsType(fleshID)) {
-									lesionPlacementSpots.Enqueue(new Point(x, y));
-								}
-							}
-							WorldBiomeGeneration.ChangeRange.AddChangeToRange(x, y);
-						}
-					}
-				}
-				List<Point> validLesionPlacementSpots = [];
-				static bool CheckPos(int x, int y) {
-					return !Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x, y + 1].Slope == SlopeType.Solid;
-				}
-				while (lesionPlacementSpots.Count > 0) {
-					Point current = lesionPlacementSpots.Dequeue();
-					if (validLesionPlacementSpots.Contains(current)) continue;
-					if (CheckPos(current.X, current.Y) && CheckPos(current.X - 1, current.Y) && CheckPos(current.X + 1, current.Y) && CheckPos(current.X + 2, current.Y)) {
-						int minX = current.X;
-						int maxX = current.X;
-						for (int x = -1; x > -3; x--) {
-							if (CheckPos(current.X + x, current.Y)) {
-								if (x <= -2) minX--;
-							} else {
-								break;
-							}
-						}
-						for (int x = 1; x < 4; x++) {
-							if (CheckPos(current.X + x, current.Y)) {
-								if (x >= 2) maxX++;
-							} else {
-								break;
-							}
-						}
-						for (int x = minX; x < maxX; x++) {
-							validLesionPlacementSpots.Add(new(x, current.Y + 4));
-						}
-					}
-				}
-				bool placedBlister = false;
-				while (!placedBlister) {
-					placedBlister = PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
-				}
-				return new Point(i2, j2);
-			}
-			public static void SpreadRivenGrass(int i, int j) {
-				const int maxDepth = 150;
-				ushort grassType = (ushort)TileType<Ashen_Grass>();
-				Stack<(int x, int y, int depth)> stack = new();
-				stack.Push((i, j, 0));
-				while (stack.Count > 0) {
-					(int x, int y, int depth) = stack.Pop();
-					Tile tile = Framing.GetTileSafely(x, y);
-					if (tile.HasTile && tile.TileType == TileID.Grass) {
-						tile.TileType = grassType;
-						if (depth < maxDepth) {
-							stack.Push((x + 1, y, depth + 1));
-							stack.Push((x - 1, y, depth + 1));
-							stack.Push((x, y + 1, depth + 1));
-							stack.Push((x, y - 1, depth + 1));
-						}
-					}
-
-					for (int c = 0; c < 7; c++) {
-						tile = Framing.GetTileSafely(x, --y);
-						if (tile.HasTile) {
-							if (tile.TileType == TileID.Grass) {
-								if (depth < maxDepth) {
-									stack.Push((x, y, depth + 1));
-								}
-								break;
-							} else if (Main.tileSolid[tile.TileType]) {
-								break;
-							}
-						}
-					}
-				}
-			}
 		}
 	}
 	#region variations
@@ -756,20 +314,50 @@ namespace Origins.World.BiomeData {
 			}
 		}
 		public class Ashen_Generation_Pass : EvilBiomeGenerationPass {
+			public static List<Rectangle> scrapyards = [];
 			public override string ProgressMessage => Language.GetTextValue("Mods.Origins.AltBiomes.Ashen_Alt_Biome.GenPassName");
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
 				WorldBiomeGeneration.ChangeRange.ResetRange();
-				int y = (int)GenVars.worldSurface - 50;
-				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
 
-				Ashen_Biome.Gen.StartHive(evilBiomePosition, y);
+				ushort stoneType = (ushort)TileType<Tainted_Stone>();
+				ushort stoneWallType = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
 
-				int minY = WorldBiomeGeneration.ChangeRange.GetRange().Top;
-				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionWestBound, minY);
-				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionEastBound, minY);
+				ushort sludgeType = (ushort)TileType<Murky_Sludge>();
+				for (int i = evilBiomePositionWestBound; i < evilBiomePositionEastBound; i++) {
+					int top = 0;
+					bool setTop = false;
+					int sludgeDepth = genRand.Next(7, 16);
+					for (int j = (int)GenVars.worldSurfaceLow; j < GenVars.worldSurfaceHigh + 32; j++) {
+						Tile tile = Main.tile[i, j];
+						if (tile.HasTile && !(TileID.Sets.BreakableWhenPlacing[tile.TileType] || Main.tileCut[tile.TileType])) {
+							if (tile.TileType == TileID.Trees) {
+								OriginSystem.RemoveTree(i, j);
+								continue;
+							}
+							AreaAnalysis analysis = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, AreaAnalysis.HasFullSolidTile, analysis => analysis.Counted.Count > 200);
+							if (!analysis.Broke) {
+								for (int k = 0; k < analysis.Counted.Count; k++) {
+									tile = Main.tile[analysis.Counted[k]];
+									tile.HasTile = false;
+								}
+								continue;
+							}
+							if (setTop.TrySet(true)) top = j;
+							else if (j >= top + sludgeDepth) break;
+							tile.TileType = sludgeType;
+							WorldBiomeGeneration.ChangeRange.AddChangeToRange(i, j);
+						} else setTop = false;
+					}
+					for (int j = (int)GenVars.worldSurfaceLow; j < GenVars.worldSurfaceHigh + 32; j++) {
+						Tile tile = Main.tile[i, j];
+						tile.WallType = WallID.None;
+						if (tile.HasTile && !(TileID.Sets.BreakableWhenPlacing[tile.TileType] || Main.tileCut[tile.TileType])) break;
+					}
+				}
+
 				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
 				bool anyTiles;
-				int extendedMinY = minY;
+				int extendedMinY = range.Top;
 				do {
 					anyTiles = false;
 					extendedMinY--;
@@ -797,9 +385,93 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				OriginSystem.Instance.hasAshen = true;
+				scrapyards.Add(range);
 			}
 
 			public override void PostGenerateEvil() { }
+		}
+		public override void ModifyGenPass(List<GenPass> passes, GenPass originalPass) {
+			if (originalPass.Name == "Lakes") {
+				Ashen_Generation_Pass.scrapyards.Clear();
+				passes.Add(new PassLegacy("Scrap and Oil", (_, _) => {
+					for (int i = 0; i < Ashen_Generation_Pass.scrapyards.Count; i++) ScrapyardPass2(Ashen_Generation_Pass.scrapyards[i]);
+				}));
+			}
+			static void ScrapyardPass2(Rectangle scrapyard) {
+				ushort sludgeType = (ushort)TileType<Murky_Sludge>();
+				ushort scrapType = (ushort)TileType<Scrap_Heap>();
+				for (int j = 0; j < scrapyard.Height; j++) {
+					for (int i = 0; i < scrapyard.Width; i++) {
+						Tile tile = Main.tile[i, j];
+						if (tile.LiquidAmount > 0) {
+							tile.LiquidType = LiquidLoader.LiquidType<Oil>();
+							tile = Main.tile[i, j + 1];
+							if (tile.HasFullSolidTile()) {
+								int sludgeDepth = genRand.Next(7, 16);
+								for (int k = 1; k < sludgeDepth; k++) {
+									tile = Main.tile[i, j + k];
+									if (!tile.HasFullSolidTile()) break;
+									tile.TileType = sludgeType;
+								}
+							}
+						}
+					}
+				}
+				int tries = 1000;
+				for (int i = 0; i < scrapyard.Width / 50; i++) {
+					int x = scrapyard.X + genRand.Next(scrapyard.Width);
+					int y = scrapyard.Y + genRand.Next(scrapyard.Height);
+					Tile tile = Main.tile[x, y];
+					if (!tile.HasTile) {
+						if (tries > 0) {
+							i--;
+							tries--;
+						}
+						continue;
+					}
+					while (tile.HasTile) tile = Main.tile[x, --y];
+					Vector2 posMin = new(float.PositiveInfinity);
+					Vector2 posMax = new(float.NegativeInfinity);
+					Carver.Filter[] lemons = new Carver.Filter[genRand.Next(2, 5)];
+					for (int k = 0; k < lemons.Length; k++) {
+						lemons[k] = Carver.PointyLemon(
+							new(x, y),
+							scale: genRand.NextFloat(4, 8),
+							rotation: genRand.NextFloat(0, MathHelper.Pi),
+							aspectRatio: genRand.NextFloat(2, 3),
+							roundness: genRand.NextFloat(1, 2),
+							ref posMin,
+							ref posMax
+						);
+					}
+					Carver.DoCarve(
+						Carver.EmptyTile + Carver.Or(lemons),
+						pos => {
+							Tile tile = Framing.GetTileSafely(pos.ToPoint());
+							tile.HasTile = true;
+							tile.TileType = scrapType;
+							return 0;
+						},
+						posMin, posMax
+					);
+				}
+				tries = 1000;
+				for (int i = 0; i < scrapyard.Width / 10; i++) {
+					int x = scrapyard.X + genRand.Next(scrapyard.Width);
+					int y = scrapyard.Y + genRand.Next(scrapyard.Height);
+					Tile tile = Main.tile[x, y];
+					if (!tile.HasTile) {
+						if (tries > 0) {
+							i--;
+							tries--;
+						}
+						continue;
+					}
+					while (tile.HasTile) tile = Main.tile[x, --y];
+					y++;
+					new Hanging_Scrap_Action(new(x, y), new(HangingScrap.GetRandom(genRand), (Half)Main.rand.NextFloat(float.Tau))).Perform();
+				}
+			}
 		}
 		public class Ashen_Fishing_Pool : FishingLootPool<Ashen_Alt_Biome> {
 			public override bool IsActive(Player player, FishingAttempt attempt) => base.IsActive(player, attempt) && (attempt.BobberInLiquid(LiquidID.Water) || attempt.BobberInLiquid<Oil>());

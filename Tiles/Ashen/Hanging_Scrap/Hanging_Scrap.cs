@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.Reflection;
 using PegasusLib.Graphics;
@@ -18,6 +19,7 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Origins.Tiles.Ashen.Hanging_Scrap {
 	public class No_Hanging_Scrap : HangingScrap {
@@ -100,6 +102,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 	}
 	public abstract class HangingScrap : ModTexturedType {
 		static readonly List<HangingScrap> scrap = [];
+		public static int Count => scrap.Count - 1;
 		public byte Type { get; private set; }
 		public Asset<Texture2D> Texture2D { get; private set; }
 		protected sealed override void Register() {
@@ -121,6 +124,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		}
 		public static HangingScrap Get(int type) => scrap[type];
 		public static HangingScrap Get(byte type) => scrap[type];
+		public static byte GetRandom(UnifiedRandom rand) => (byte)(rand.Next(Count) + 1);
 		public abstract int ScrapValue { get; }
 		public abstract Vector2 Origin { get; }
 	}

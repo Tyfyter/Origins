@@ -77,6 +77,10 @@ namespace Origins.World {
 		public delegate bool Breaker(AreaAnalysis analysis);
 		public delegate bool Counter(Point position);
 		public static Point[] Orthogonals => [new(0, 1), new(0, -1), new(1, 0), new(-1, 0)];
+		//public static bool HasFullSolidTile { get; } = _HasFullSolidTile;
+		//public static bool DoNotBreak { get; } = _DoNotBreak;
+		public static bool HasFullSolidTile(Point position) => Main.tile[position].HasFullSolidTile();
+		public static bool DoNotBreak(AreaAnalysis _) => false;
 		public static AreaAnalysis March(int i, int j, Point[] directions, Counter shouldCount, Breaker shouldBreak, HashSet<Point> walkedSet, List<Point> countedList) {
 			AreaAnalysis analysis = new() {
 				minX = i,

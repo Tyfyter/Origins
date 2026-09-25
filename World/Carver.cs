@@ -67,6 +67,7 @@ namespace Origins.World {
 			Tile tile = Framing.GetTileSafely(pos.ToPoint());
 			output = !tile.HasTile || TileID.Sets.CanBeClearedDuringGeneration[tile.TileType];
 		}
+		public static Filter EmptyTile => TileFilter(tile => !tile.HasTile);
 		public static Filter CanBeReplaced => ActiveTileInSet(TileID.Sets.CanBeClearedDuringGeneration);
 		public static Filter CanBeReplacedWithOre => ActiveTileInSet(TileID.Sets.CanBeClearedDuringOreRunner);
 		public static Filter ActiveTileInSet(bool[] set) {
