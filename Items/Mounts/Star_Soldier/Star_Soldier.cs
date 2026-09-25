@@ -92,6 +92,10 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		public int dashSpeed;
 		public float dashAngle;
 
+		public int maxDrones;
+		public int availableDrones = int.MaxValue;
+		public int droneCooldown;
+
 		public Arm chosenItem = new() { item = new(ModContent.ItemType<Star_Soldier_Laser>()), Index = 0 };
 		public Arm altItem = new() { item = new(ModContent.ItemType<Star_Soldier_Gun>()), Index = 1 };
 		readonly WeakReference<Entity> lockOnTarget = new(null);
@@ -254,11 +258,22 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			maxDashes = 1;
 			dashLength = 19;
 			dashSpeed = 5;
+
+			maxDrones = 0;
+			droneCooldown.Cooldown();
 			using ScopedOverride<bool> _ = player.controlUseTile.ScopedOverride(player.controlUseTile && !player.tileInteractionHappened && !player.mouseInterface);
 			GetArm(0).Weapon.PreItemCheck(player, this, ref GetArm(0));
 			GetArm(1).Weapon.PreItemCheck(player, this, ref GetArm(1));
 			GetArm(0).ItemCheck(player, ref player.controlUseItem);
 			GetArm(1).ItemCheck(player, ref player.controlUseTile);
+
+			int remainingDrones = maxDrones - player.ownedProjectileCounts[ModContent.ProjectileType<Star_Soldier_Droner.Star_Soldier_Drone>()];
+			if (availableDrones < remainingDrones) {
+				if (droneCooldown == 0) {
+					availableDrones++;
+					droneCooldown = Star_Soldier_Droner.Cooldown;
+				}
+			} else Min(ref availableDrones, remainingDrones);
 		}
 		public void HandleDash(Player player) {
 			if (dashTime > 0) {
@@ -818,7 +833,7 @@ public abstract class Star_Soldier_Weapon : ModItem, IExpectToBeUnobtainable {
 		if (!float.IsFinite(arm.shoulderRotation)) arm.shoulderRotation = 0;
 	}
 	public override bool NeedsAmmo(Player player) => false;
-	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale);
+	public abstract void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm);
 	public virtual void PlaySound(Player player) { }
 	#region methods which are never used
 	public sealed override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) { }
@@ -864,7 +879,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 		handler.dashLength += 5;
 		handler.dashSpeed += 4;
 	}
-	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm) {
 		if (this.cooldownAlpha == 0 || cooldown >= CooldownTime) return;
 		float cooldownAlpha = this.cooldownAlpha * this.cooldownAlpha;
 		int width = 64;
@@ -1272,7 +1287,7 @@ public class Star_Soldier_Gun : Star_Soldier_Weapon {
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) {
 		drawData.sourceRect = drawData.texture.Frame(1, 4, 0, 0);
 	}
-	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm) {
 		int width = 64;
 		int halfWidth = width / 2;
 		spriteBatch.Draw(
@@ -1380,7 +1395,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 			}
 		}
 	}
-	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm) {
 		int width = 64;
 		int halfWidth = width / 2;
 		spriteBatch.Draw(
@@ -1614,6 +1629,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 	}
 }
 public class Star_Soldier_Droner : Star_Soldier_Weapon {
+	public static int Cooldown => 10 * 60;
 	public override void SetStaticDefaults() {
 		Origins.AddGlowMask(this);
 	}
@@ -1633,8 +1649,47 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 	}
 	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
+		Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(player);
+		handler.maxDrones += 1 + handler.maxDrones;
 	}
-	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+	public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		ref int availableDrones = ref Star_Soldier.GetHandler(player).availableDrones;
+		if (availableDrones <= 0) type = ProjectileID.Bullet;//set type to tag projectile
+		else availableDrones--;
+	}
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm) {
+		Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(Main.LocalPlayer);
+		if (arm.Index != 0 && handler.maxDrones != 1) return;
+		int width = 64;
+		int halfWidth = width / 2;
+		int cooldownWidth = (int)(width * (handler.droneCooldown / (float)Cooldown));
+		int availableDrones = handler.availableDrones;
+		for (int i = Main.LocalPlayer.ownedProjectileCounts[Item.shoot]; i < handler.maxDrones; i++) {
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				position,
+				new Rectangle(0, 0, width, 4),
+				Color.OrangeRed,
+				0,
+				new Vector2(halfWidth, 2),
+				1,
+				SpriteEffects.None,
+			0);
+			if (--availableDrones < 0 && handler.droneCooldown > 0) {
+				spriteBatch.Draw(
+					TextureAssets.MagicPixel.Value,
+					position,
+					new Rectangle(0, 0, cooldownWidth, 4),
+					Color.Black,
+					0,
+					new Vector2(cooldownWidth - halfWidth, 2),
+					1,
+					SpriteEffects.None,
+				0);
+				cooldownWidth = width;
+			}
+			position.Y += 8;
+		}
 	}
 	public class Star_Soldier_Drone : MinionBase, IArtifactMinion {
 		public int MaxLife { get; set; }
@@ -1679,6 +1734,9 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 			Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 16);
 		}
 		protected override void BasicAI() {
+			Projectile.frameCounter.Warmup(30);
+			Projectile.frame = Math.Max((Projectile.frameCounter - 12) / 6, 0);
+			if (Projectile.frameCounter < 12) return;
 			base.BasicAI();
 			if (Star_Soldier.GetHandler(Owner)?.LockOnTarget is NPC target) targetingData.TargetID = target.whoAmI;
 			bool foundTarget = targetingData.TargetID != -1;
@@ -1688,7 +1746,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 
 			if (foundTarget && Projectile.ai[0].CycleUp(6, SpeedModifier)) {
 				if (Projectile.ai[1].CycleUp(5) || !CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
-					if (Main.rand.NextBool(3)) Projectile.velocity += (Projectile.rotation + MathHelper.Pi * Main.rand.NextBool().ToInt()).ToRotationVector2() * 12;
+					if (RandomChoice(3)) Projectile.velocity += (Projectile.rotation + MathHelper.Pi * Main.rand.NextBool().ToInt()).ToRotationVector2() * 12;
 				} else {
 					Projectile.SpawnProjectile(
 						Projectile.GetSource_FromAI(),
@@ -1709,6 +1767,21 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 			} else {
 				Projectile.localAI[2]--;
 			}
+		}
+		/// <inheritdoc cref="RandomChoice(int, int)"/>
+		public bool RandomChoice(int consequent) => RandomChoice(1, consequent);
+		/// <summary>
+		/// If the projectile is not locally owned, do nothing
+		/// Otherwise, Returns true and set Projectile.netUpdate to true X out of Y times.
+		/// </summary>
+		/// <param name="antecedent">X</param>
+		/// <param name="consequent">Y</param>
+		/// <returns></returns>
+		public bool RandomChoice(int antecedent, int consequent) {
+			if (Projectile.IsLocallyOwned()) return false;
+			if (!Main.rand.NextBool(antecedent, consequent)) return false;
+			Projectile.netUpdate = true;
+			return true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.damage > 0) {
@@ -1798,7 +1871,7 @@ public class Star_Soldier_Pod : Star_Soldier_Weapon {
 		SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1f), player.MountedCenter);
 		SoundEngine.PlaySound(SoundID.Item113.WithPitch(1.2f), player.MountedCenter);
 	}
-	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm) {
 		int width = 64;
 		int segment = (int)((width * 0.75f) / AmmoMax);
 		for (int i = 0; i < AmmoMax; i++) {
@@ -2312,8 +2385,8 @@ public class Star_Soldier_UI : SwitchableUIState {
 			pos = pos.Floor();
 
 			//pos = pos.Transform(Main.UIScaleMatrix);
-			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
-			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale);
+			(handler.chosenItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale, in handler.chosenItem);
+			(handler.altItem.item?.ModItem as Star_Soldier_Weapon)?.DrawHud(spriteBatch, ref pos, scale, in handler.altItem);
 		}
 	}
 	public class HPHUD : IUISegment {
