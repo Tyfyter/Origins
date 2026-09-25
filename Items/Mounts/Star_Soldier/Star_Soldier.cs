@@ -7,6 +7,7 @@ using Origins.Dev;
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
@@ -1624,7 +1625,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		Item.shootSpeed = 15;
 		Item.knockBack = 4f;
 		Item.useAmmo = AmmoID.Rocket;
-		Item.shoot = ProjectileID.RocketI;
+		Item.shoot = ModContent.ProjectileType<Star_Soldier_Drone>();
 		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
@@ -1634,6 +1635,114 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale) {
+	}
+	public class Star_Soldier_Drone : MinionBase, IArtifactMinion {
+		public int MaxLife { get; set; }
+		public float Life { get; set; }
+		AutoLoadingAsset<Texture2D> glowTexture = typeof(Star_Soldier_Drone).GetDefaultTMLName("_Glow");
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Main.projFrames[Type] = 4;
+			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			ProjectileID.Sets.MinionCannotBeFreed[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.minion = true;
+			Projectile.width = 36;
+			Projectile.height = 36;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 60 * 10;
+			Projectile.friendly = true;
+			Projectile.ignoreWater = true;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			MaxLife = 100;
+		}
+		bool buff;
+		public override ref bool HasBuff(Player player) {
+			buff = player.mount.IsMount<Star_Soldier>();
+			return ref buff;
+		}
+		public override void MoveTowardsTarget() {
+			bool foundTarget = targetingData.TargetID != -1;
+			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
+
+			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
+			Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
+			if (distance == 0) return;
+			float speed = 0.3f * SpeedModifier;
+			if (distance <= 64) direction *= -1;
+			Projectile.velocity *= float.Lerp(0.9f, 0.98f, float.Abs(Vector2.Dot(direction, Projectile.velocity.Normalized(out _))));
+			if (distance <= 64 && distance > 38) return;
+			Projectile.velocity += direction * speed;
+			Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 16);
+		}
+		protected override void BasicAI() {
+			base.BasicAI();
+			if (Star_Soldier.GetHandler(Owner)?.LockOnTarget is NPC target) targetingData.TargetID = target.whoAmI;
+			bool foundTarget = targetingData.TargetID != -1;
+			if (foundTarget) {
+				Projectile.rotation = (targetingData.targetHitbox.Center() - Projectile.Center).ToRotation() + MathHelper.PiOver2;
+			}
+
+			if (foundTarget && Projectile.ai[0].CycleUp(6, SpeedModifier)) {
+				if (Projectile.ai[1].CycleUp(5) || !CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
+					if (Main.rand.NextBool(3)) Projectile.velocity += (Projectile.rotation + MathHelper.Pi * Main.rand.NextBool().ToInt()).ToRotationVector2() * 12;
+				} else {
+					Projectile.SpawnProjectile(
+						Projectile.GetSource_FromAI(),
+						Projectile.Center,
+						(Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8,
+						ModContent.ProjectileType<Robo_Tail_Probe_Laser>(),
+						Projectile.damage,
+						Projectile.knockBack
+					);
+				}
+			}
+			Lighting.AddLight(Projectile.Center, 0.5f, 0, 0);
+			if (Projectile.localAI[2] <= 0) {
+				if (this.GetHurtByHostiles()) {
+					// add sound
+					Projectile.localAI[2] = 20;
+				}
+			} else {
+				Projectile.localAI[2]--;
+			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.damage > 0) {
+				hit.HitDirection *= -1;
+				hit.Knockback = 6;
+				hit.Crit = false;
+				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+				this.DamageArtifactMinion(target.damage, new NPCDamageSource(target));
+				Projectile.ai[1] = 1;
+				Projectile.netUpdate = true;
+			}
+		}
+		public override void OnKill(int timeLeft) {
+			base.OnKill(timeLeft);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			SpriteEffects effect = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			Rectangle frame = TextureAssets.Projectile[Type].Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+			DrawData data = new(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				frame,
+				lightColor,
+				Projectile.rotation,
+				effect.ApplyToOrigin(new(26, 18), frame),
+				1,
+				effect
+			);
+			Main.EntitySpriteDraw(data);
+			data.texture = glowTexture;
+			data.color = Color.White;
+			Main.EntitySpriteDraw(data);
+			return false;
+		}
 	}
 }
 public class Star_Soldier_Pod : Star_Soldier_Weapon {

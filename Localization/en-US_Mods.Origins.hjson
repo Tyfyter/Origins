@@ -2353,6 +2353,7 @@ Projectiles: {
 	Glitter_Glue_P.DisplayName: Glitter Glue
 	Star_Soldier_Pod_Missile.DisplayName: Star Soldier Pod Missile
 	Sprockey.DisplayName: Sprockey
+	Star_Soldier_Drone.DisplayName: Star Soldier Drone
 }
 
 Prefixes: {
