@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = SoundID.Item92;
 		}
 		public override bool? UseItem(Player player) {
-			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f));
+			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f), player.Center);
 			return base.UseItem(player);
 		}
 		public override Vector2? HoldoutOffset() => new(-52f, -6);

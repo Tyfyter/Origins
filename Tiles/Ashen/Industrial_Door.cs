@@ -198,7 +198,7 @@ namespace Origins.Tiles.Ashen {
 			public void Update(Point16 position) {
 				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) {
 					TargetOpen = false;
-					if (frame < max_frame) /*play sound here*/;
+					if (frame < max_frame) SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f));
 				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {

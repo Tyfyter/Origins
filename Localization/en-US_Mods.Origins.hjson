@@ -3008,7 +3008,7 @@ Configs: {
 
 		DefiledChrysalisWeightMult: {
 			Label: Defiled Chrysalis Spawn Rate
-			Tooltip: ""
+			Tooltip: Changes the rate at which Defiled enemies will spawn on-screen nearby
 		}
 	}
 

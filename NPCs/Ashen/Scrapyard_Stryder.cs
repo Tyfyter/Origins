@@ -44,7 +44,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.aiStyle = NPCAIStyleID.Unicorn;
 			NPC.lifeMax = 475;
 			NPC.defense = 24;
-			NPC.damage = 48;
+			NPC.damage = 44;
 			NPC.width = 64;
 			NPC.height = 64;
 			NPC.value = 230;
@@ -110,6 +110,9 @@ namespace Origins.NPCs.Ashen {
 							NPC.ai[2] = 2;
 							projType = ProjectileType<Abrasion_Blaster_Explosion_Hostile>();
 						} else {
+							SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-0.5f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.ExternalStarDash.WithPitch(-0.2f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f), NPC.Center);
 							NPC.ai[2] = 0;
 							projType = ProjectileType<Abrasion_Blaster_Hostile>();
 							velocity = (targetPos - gunPos).SafeNormalize(new Vector2(NPC.spriteDirection, 0)) * 12;
@@ -154,7 +157,7 @@ namespace Origins.NPCs.Ashen {
 				switch (NPC.frame.Y / NPC.frame.Height) {
 					case 2:
 					case 5: {
-						SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep, NPC.Bottom);
+						SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(0.35f), NPC.Bottom);
 						break;
 					}
 				}
@@ -166,7 +169,7 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 5, amountDroppedMaximum: 11));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Phoenum>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ItemType<The_Muffler>(), 80));
+			npcLoot.Add(ItemDropRule.Common(ItemType<The_Muffler>(), 60));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

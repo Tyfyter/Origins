@@ -251,13 +251,10 @@ public class Ashen_Medical : LootPool {
 	}
 }
 public class Ashen_MedicalLore : LootPool {
-	struct IncorrectArgs : IBroken {
-		static string IBroken.BrokenReason => "Some rules temporarily removed because minimumDropped was greater than maximumDropped";
-	}
 	public override void SetStaticDefaults() {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()));
-		//AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35));
-		//AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35, 35));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13, 13));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 3, 3, 8));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 3));
@@ -427,5 +424,14 @@ public class Ashen_Lab : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 3, 15, 30));
 		AddRule(ItemDropRule.Common(ItemID.Wire, 3, 15, 60));
 		AddRule(ItemDropRule.Common(ItemID.Cog, 3, 10, 40));
+	}
+	public class Ashen_Oil : LootPool {
+		public override void SetStaticDefaults() {
+			AddRule(ItemDropRule.Common(ItemID.SilverCoin, 1, 1, 5));
+			AddRule(ItemDropRule.Common(ItemID.EmptyBucket, 1, 3, 18));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 5));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Sticky_Link_Grenade>(), 4, 25, 85));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 1, 1, 2));
+		}
 	}
 }

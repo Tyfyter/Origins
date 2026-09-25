@@ -4,6 +4,8 @@ using Origins.Graphics;
 using Origins.Misc;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts;
@@ -12,6 +14,7 @@ public class TM_Bullet_Casing : ModDust {
 	public override void SetStaticDefaults() {
 		this.SetIDProp();
 		EfficientDust.UpdateDustCallback[Type] = DoUpdate;
+		EfficientDust.DebugMode = true;
 	}
 	public override void OnSpawn(Dust dust) {
 		dust.frame = new(0, 0, 12, 6);
@@ -64,7 +67,7 @@ public class TM_Bullet_Casing : ModDust {
 			rotationSpeed *= 0.5f;
 			ping |= Math.Abs(oldVelocity.Y) > 4;
 		}
-		if (ping) /*sound here*/;
+		if (ping) SoundEngine.PlaySound(SoundID.Item15.WithPitch(0.5f), dust.position);
 		spin *= 5f;
 		if (newOldVelocity != oldVelocity) {
 			if (Math.Abs(spin) > 0.1f) {

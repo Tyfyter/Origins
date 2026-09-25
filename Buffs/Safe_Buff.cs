@@ -13,7 +13,7 @@ namespace Origins.Buffs {
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			ref StatModifier explosiveSelfDamage = ref player.OriginPlayer().explosiveSelfDamage;
-			explosiveSelfDamage = explosiveSelfDamage.CombineWith(new StatModifier(0, 0));
+			explosiveSelfDamage = explosiveSelfDamage.CombineWith(new StatModifier(0.8f, 1));
 		}
 	}
 }

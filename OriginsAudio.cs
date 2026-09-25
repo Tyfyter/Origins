@@ -126,13 +126,13 @@ namespace Origins {
 			public static SoundStyle Haha24 = new("Origins/Sounds/Custom/Haha24");
 			public static SoundStyle VV13Idle = new("Origins/Sounds/Custom/VV13_Idle", 3);
 			public static SoundStyle ArabelHeartbeat = new("Origins/Sounds/Custom/Arabel_Heartbeat");
-			public static SoundStyle ArabelSwish = new("Origins/Sounds/Custom/Arabel_Magic1");
-			public static SoundStyle ArabelDrone = new("Origins/Sounds/Custom/Arabel_Magic2");
-			public static SoundStyle ArabelWoopGleam = new("Origins/Sounds/Custom/Arabel_Magic3");
-			public static SoundStyle ArabelFwoom = new("Origins/Sounds/Custom/Arabel_Magic4");
-			public static SoundStyle ArabelTrinkle = new("Origins/Sounds/Custom/Arabel_Magic5");
-			public static SoundStyle ArabelTwinkle = new("Origins/Sounds/Custom/Arabel_Magic6");
-			public static SoundStyle Arabel80sDowntone = new("Origins/Sounds/Custom/Arabel_Magic7");
+			public static SoundStyle ArabelSwish = new("Origins/Sounds/Custom/ArabelMagic1");
+			public static SoundStyle ArabelDrone = new("Origins/Sounds/Custom/ArabelMagic2");
+			public static SoundStyle ArabelWoopGleam = new("Origins/Sounds/Custom/ArabelMagic3");
+			public static SoundStyle ArabelFwoom = new("Origins/Sounds/Custom/ArabelMagic4");
+			public static SoundStyle ArabelTrinkle = new("Origins/Sounds/Custom/ArabelMagic5");
+			public static SoundStyle ArabelTwinkle = new("Origins/Sounds/Custom/ArabelMagic6");
+			public static SoundStyle Arabel80sDowntone = new("Origins/Sounds/Custom/ArabelMagic7");
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",
