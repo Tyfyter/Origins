@@ -244,6 +244,9 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), player.Bottom);
 			}
 		}
+		struct TODO_DamageRedirection : IBroken {
+			public static string BrokenReason => "Use DamageRedirection";
+		}
 		public void HandleHurt(Player player, in Player.HurtInfo info) {
 			SoundEngine.PlaySound(SoundID.Item37.WithPitch(-1.1f).WithVolume(1f), player.Center);
 			SoundEngine.PlaySound(SoundID.NPCHit4.WithPitch(-0.5f).WithVolume(1f), player.Center);

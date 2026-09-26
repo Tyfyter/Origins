@@ -22,3 +22,6 @@ public class Mana_Shielding : DamageRedirectionToMana, IBroken {
 		player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 192);
 	}
 }*/
+struct TODO_Mana_Sheilding : Origins.IBroken {
+	public static string BrokenReason => "Use DamageRedirection";
+}
