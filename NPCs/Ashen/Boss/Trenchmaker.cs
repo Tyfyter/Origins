@@ -155,6 +155,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			this.SetupStates();
 		}
 		public GunKind GunType { get; private set; }
+		/// <summary>
+		/// Because network text javascripts it
+		/// </summary>
+		public string GunTypeNum => $"{(int)GunType:b2}";
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.width = 104;
@@ -180,11 +184,11 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.netUpdate = true;
 		}
 		public override void ModifyTypeName(ref string typeName) {
-			typeName = string.Format(typeName, (int)GunType);
+			typeName = string.Format(typeName, GunTypeNum);
 		}
 		public override LocalizedText DeathMessage => Language.GetText("Announcement.HasBeenDefeated_Single");
 		public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color) {
-			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs((int)GunType)).ToNetworkText();
+			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs(GunTypeNum)).ToNetworkText();
 			Mod.Logger.Debug(customText);
 			return true;
 		}
