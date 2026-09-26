@@ -437,6 +437,7 @@ namespace Origins {
 		public StatModifier explosiveBlastRadius = StatModifier.Default;
 		public StatModifier explosiveFuseTime = StatModifier.Default;
 		public int selfDamageRally = 0;
+		[AutoReset] public bool safePotion = false;
 		#endregion
 
 		#region summon stats

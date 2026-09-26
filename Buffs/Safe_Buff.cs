@@ -11,9 +11,6 @@ namespace Origins.Buffs {
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
-		public override void Update(Player player, ref int buffIndex) {
-			ref StatModifier explosiveSelfDamage = ref player.OriginPlayer().explosiveSelfDamage;
-			explosiveSelfDamage = explosiveSelfDamage.CombineWith(new StatModifier(0.8f, 1));
-		}
+		public override void Update(Player player, ref int buffIndex) => player.OriginPlayer().safePotion = true;
 	}
 }

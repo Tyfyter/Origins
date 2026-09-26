@@ -596,6 +596,7 @@ namespace Origins {
 			return currentExplosiveSelfDamage;
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
+			int baseDamage = CurrentHit.Damage;
 			if (trapCharm && proj.trap) {
 				modifiers.SourceDamage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
@@ -616,12 +617,16 @@ namespace Origins {
 				StatModifier currentExplosiveSelfDamage = GetSelfDamageModifier();
 
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
+				const float max_safe_mult = 0.3f;
+				if (safePotion && currentExplosiveSelfDamage.ApplyTo(baseDamage) > baseDamage * max_safe_mult) {
+					currentExplosiveSelfDamage = new StatModifier(1, max_safe_mult);
+				}
 				const float min_self_destruct_mult = 0.1f;
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
 					modifiers.ScalingArmorPenetration += 1;
-					if (currentExplosiveSelfDamage.ApplyTo(proj.damage) < proj.damage * min_self_destruct_mult) currentExplosiveSelfDamage = new StatModifier(1, min_self_destruct_mult);
+					if (currentExplosiveSelfDamage.ApplyTo(baseDamage) < baseDamage * min_self_destruct_mult) currentExplosiveSelfDamage = new StatModifier(1, min_self_destruct_mult);
 				}
-				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
+				if (currentExplosiveSelfDamage.ApplyTo(baseDamage) <= 0) modifiers.Cancel();
 
 				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
 				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
