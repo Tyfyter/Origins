@@ -144,22 +144,22 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		class NormalSound : AFanSound {
-			public override SoundStyle Sound { get; } = new("Origins/Sounds/Custom/Air_Vent1") {
+			public override SoundStyle Sound { get; } = new("Origins/Sounds/Custom/Air_Vent1", SoundType.Ambient) {
 				IsLooped = true
 			};
 		}
 		class BrokenSound : AFanSound {
-			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent2") {
+			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent2", SoundType.Ambient) {
 				IsLooped = true
 			};
 		}
 		class ScreamingSound : AFanSound {
-			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent3") {
+			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent3", SoundType.Ambient) {
 				IsLooped = true
 			};
 		}
 		class AlternateSound : AFanSound {
-			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent4") {
+			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent4", SoundType.Ambient) {
 				IsLooped = true
 			};
 		}
