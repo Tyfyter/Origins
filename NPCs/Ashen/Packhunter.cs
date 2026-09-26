@@ -194,7 +194,7 @@ namespace Origins.NPCs.Ashen {
 				if (seesTarget) {
 					NPC.ai[0]++;
 					NPC.ai[1] = 0;
-					SoundEngine.SoundPlayer.Play(Origins.Sounds.PackhunterChatter.WithPitch(MathHelper.Clamp(NPC.ai[0]/30, 0, 2)), NPC.Center);
+					SoundEngine.SoundPlayer.Play(Origins.Sounds.PackhunterChatter.WithPitch(MathHelper.Clamp(NPC.ai[0] / 30, 0, 2)), NPC.Center);
 				} else {
 					NPC.ai[1]++;
 				}
@@ -312,7 +312,7 @@ namespace Origins.NPCs.Ashen {
 			if ((NPC.collideX || Math.Abs(NPC.velocity.X) < 0.05f) && targetInvalid) {
 				if (NPC.collideY || NPC.ai[3] > 0) NPC.ai[3]++;
 			} else NPC.ai[3] = 0;
-			if (NPC.collideY && Math.Abs(NPC.velocity.Y) == 0) {
+			if (NPC.collideY && NPC.velocity.Y == 0) {
 				bool shouldJump = false;
 				if (NPC.collideX && preStepOffY == NPC.gfxOffY) shouldJump = true;
 				else if (!targetInvalid) {
@@ -333,7 +333,7 @@ namespace Origins.NPCs.Ashen {
 		void AlertOthers() {
 			if (!NPC.GetGlobalNPC<OriginGlobalNPC>().silencedDebuff) {
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.type == Type && !npc.confused && npc.IsWithin(NPC.targetRect, 60 * 30) && npc != NPC) {
+					if (npc.type == Type && npc.aiAction is 0 or 3 && !npc.confused && npc.IsWithin(NPC.targetRect, 112 * 16) && npc != NPC) {
 						npc.direction = (NPC.targetRect.Center.X > npc.Center.X).ToDirectionInt();
 						npc.targetRect = NPC.targetRect;
 						npc.aiAction = 5;

@@ -234,6 +234,19 @@ public class HA_24_Flying : HA_24, IPlatformNPC {
 					NPC.target = newTarget;
 					NPC.aiAction = 1;
 					NPC.netUpdate = true;
+					if (!NPC.GetGlobalNPC<OriginGlobalNPC>().silencedDebuff) {
+						int packhunter = ModContent.NPCType<Packhunter>();
+						Rectangle target = NPC.GetTargetData().Hitbox;
+						foreach (NPC npc in Main.ActiveNPCs) {
+							if (npc.type == packhunter && npc.aiAction is 0 or 3 && !npc.confused && npc.IsWithin(NPC.targetRect, 112 * 16)) {
+								npc.direction = (target.Center.X > npc.Center.X).ToDirectionInt();
+								npc.targetRect = target;
+								npc.aiAction = 5;
+								npc.ai[0] = 0;
+								npc.netUpdate = true;
+							}
+						}
+					}
 				}
 				if (patrolMin != 0 && NPC.direction < 0 && LaserStartPos.X < patrolMin) NPC.direction *= -1;
 				else if (patrolMax != 0 && NPC.direction > 0 && LaserStartPos.X > patrolMax) NPC.direction *= -1;
