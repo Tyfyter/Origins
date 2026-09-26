@@ -125,9 +125,9 @@ public class Large_Auto_Assembler : ModTile, IAshenWireTile {
 						spawnPos.Y,
 						spawnType
 					);
-					SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-1f).WithVolume(0.5f));
-					SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.3f).WithVolume(1f));
-					SoundEngine.PlaySound(Origins.Sounds.SawEnd.WithPitch(-0.8f).WithVolume(0.15f));
+					SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-1f).WithVolume(0.5f), position.ToWorldCoordinates());
+					SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.3f).WithVolume(1f), position.ToWorldCoordinates());
+					SoundEngine.PlaySound(Origins.Sounds.SawEnd.WithPitch(-0.8f).WithVolume(0.15f), position.ToWorldCoordinates());
 				}
 			}
 

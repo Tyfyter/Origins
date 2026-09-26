@@ -118,9 +118,9 @@ public class Auto_Assembler : ModTile, IAshenWireTile {
 						spawnType
 					);
 
-					SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-1f).WithVolume(0.5f));
-					SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.5f).WithVolume(0.7f));
-					SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd.WithPitch(-0.6f).WithVolume(0.2f));
+					SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-1f).WithVolume(0.5f), position.ToWorldCoordinates());
+					SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.5f).WithVolume(0.7f), position.ToWorldCoordinates());
+					SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd.WithPitch(-0.6f).WithVolume(0.2f), position.ToWorldCoordinates());
 				}
 			}
 
