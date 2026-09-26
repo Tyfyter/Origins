@@ -173,22 +173,6 @@ namespace Origins.NPCs.Ashen {
 				this.GetBestiaryFlavorText()
 			);
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life <= 0) {
-				Gore.NewGore(
-					NPC.GetSource_Death(),
-					NPC.Center + new Vector2(10 * NPC.direction, -2).RotatedBy(NPC.rotation),
-					NPC.velocity,
-					Mod.GetGoreSlot("Gores/NPCs/Malfunctioning_Missile_Gore2")
-				);
-				Gore.NewGore(
-					NPC.GetSource_Death(),
-					NPC.Center + new Vector2(-33 * NPC.direction, -2).RotatedBy(NPC.rotation),
-					NPC.velocity,
-					Mod.GetGoreSlot("Gores/NPCs/Malfunctioning_Missile_Gore1")
-				);
-			}
-		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.ai[0] == 2) {
 				NPC.frameCounter = 0.0;
@@ -217,6 +201,18 @@ namespace Origins.NPCs.Ashen {
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(10 * NPC.direction, -2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Malfunctioning_Missile_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-33 * NPC.direction, -2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Malfunctioning_Missile_Gore1")
+				);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[0]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[1]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[2]);

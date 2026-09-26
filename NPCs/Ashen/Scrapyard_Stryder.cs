@@ -203,10 +203,6 @@ namespace Origins.NPCs.Ashen {
 					NPC.velocity,
 					Mod.GetGoreSlot("Gores/NPCs/Scrapyard_Stryder_Gore1")
 				);
-			}
-		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life <= 0) {
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[0]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[1]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[2]);
