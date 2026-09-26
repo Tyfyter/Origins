@@ -2354,6 +2354,7 @@ Projectiles: {
 	Star_Soldier_Pod_Missile.DisplayName: Star Soldier Pod Missile
 	Sprockey.DisplayName: Sprockey
 	Star_Soldier_Drone.DisplayName: Star Soldier Drone
+	CM_17_Laser.DisplayName: CM-17 Laser
 }
 
 Prefixes: {

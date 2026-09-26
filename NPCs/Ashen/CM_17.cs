@@ -1,22 +1,28 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
+using Origins.Core.Shaders;
 using Origins.Dev;
 using Origins.Gores;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
+using Origins.NPCs.Ashen.Boss;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.NPCs.Ashen.Boss.Fire_Lasers_State;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
@@ -28,6 +34,7 @@ namespace Origins.NPCs.Ashen {
 		public AutoLoadingTexture lowerArm = typeof(CM_17).GetDefaultTMLName() + "_Lower";
 		public AutoLoadingTexture upperArm = typeof(CM_17).GetDefaultTMLName() + "_Upper";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+		public Vector2 HeadPos => NPC.Center + new Vector2(-59, -5).Apply(SpriteEffects, default);
 
 		public static string BrokenReason => "remove debug info after balance testing";
 
@@ -57,6 +64,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public static int TimeToSpawnWatchlings => 2 * 60;
+		public static int LaserDamage => (int)(16 * ContentExtensions.DifficultyDamageMultiplier);
 		public override void AI() {
 			const int MaxWatchlings = 10; // desired max subtracted by 2
 			float accel = 0.15f;
@@ -76,7 +84,7 @@ namespace Origins.NPCs.Ashen {
 			detectRange.DrawDebugOutline(); // for debugging
 			fleeRange.DrawDebugOutline();
 			void AttemptRetarget() {
-				if (NPC.ai[3] == 0) accel = 0;
+				if (NPC.localAI[3] == 0) accel = 0;
 				NPC.ai[0] = 0;
 				NPC.TargetClosest(false);
 			}
@@ -86,18 +94,26 @@ namespace Origins.NPCs.Ashen {
 					if (npc?.ModNPC is Watchling { OwnerID: int OwnerID } && OwnerID == NPC.whoAmI) {
 						count++;
 					}
-					NPC.ai[1] = count; // for debugging
 					if (count >= MaxWatchlings) break;
 				}
 				return count >= MaxWatchlings;
 			}
-			if (!targetInvalid && (target.Hitbox.Intersects(detectRange) || NPC.ai[3] == 1)) {
-				NPC.ai[3] = 1;
+			if (!targetInvalid && (target.Hitbox.Intersects(detectRange) || NPC.localAI[3] == 1)) {
+				NPC.localAI[3] = 1;
+				bool canSpawnWatchling = true;
 				switch (NPC.aiAction) {
 					case 0:
 					targetMoveDirection = Math.Sign(target.Center.X - NPC.Center.X);
-					if ((NPC.ai[2].Cooldown() || NPC.ai[2] == 0) && !HasMaxWatchings()) {
+					if ((NPC.ai[2].Cooldown() || NPC.ai[2] == 0) && !HasMaxWatchings() && canSpawnWatchling) {
+						NPC.ai[1] = 30;
 						NPC.aiAction = 1;
+						NPC.netUpdate = true;
+					}
+					if (NPC.aiAction != 0) break;
+					if ((NPC.ai[1].Cooldown() || NPC.ai[1] == 0) && NPC.Center.IsWithin(target.Center, 35 * 16) && !target.Hitbox.Intersects(fleeRange)) {
+						NPC.ai[0] = 0;
+						NPC.ai[3] = (target.Center - NPC.Center).ToRotation();
+						NPC.aiAction = 2;
 						NPC.netUpdate = true;
 					}
 					break;
@@ -122,6 +138,48 @@ namespace Origins.NPCs.Ashen {
 						else accel = 0;
 					} else accel = 0;
 					break;
+
+					case 2: {
+						Vector2 diff = target.Center - HeadPos;
+						accel *= 0.35f * float.Pow(NPC.ai[1] / ChargeTime, 2) + 1.3f / diff.Length();
+						NPC.ai[1].Cooldown();
+						canSpawnWatchling = false;
+						switch (NPC.ai[0]) {
+							case 0: {
+								Vector2 dir = NPC.ai[3].ToRotationVector2();
+								NPC.SpawnProjectile(null,
+									HeadPos + dir * 16,
+									dir,
+									ProjectileType<CM_17_Laser>(),
+									ShotDamage,
+									1
+								);
+								NPC.ai[0] = 1;
+								NPC.ai[1] = ChargeTime;
+								break;
+							}
+							case 1: {
+								GeometryUtils.AngularSmoothing(ref NPC.ai[3], diff.ToRotation(), 0.04f * float.Pow(NPC.ai[1] / ChargeTime, 2) + 1.3f / diff.Length());
+								if (NPC.ai[1] == 0) {
+									NPC.ai[0] = 2;
+									NPC.ai[1] = ActiveTime;
+								}
+								break;
+							}
+							case 2: {
+								GeometryUtils.AngularSmoothing(ref NPC.ai[3], diff.ToRotation(), 1.8f / diff.Length());
+								if (NPC.ai[1] < ActiveTime - 16) canSpawnWatchling = true;
+								if (NPC.ai[1] == 0) {
+									NPC.ai[0] = 0;
+									NPC.ai[1] = 90;
+									NPC.aiAction = 0;
+									NPC.netUpdate = true;
+								}
+								break;
+							}
+						}
+						goto case 0;
+					}
 				}
 			} else AttemptRetarget();
 			HasMaxWatchings(); // for debugging
@@ -137,7 +195,7 @@ namespace Origins.NPCs.Ashen {
 				Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
 			}
 			if (accel != 0) NPC.direction = targetMoveDirection;
-			if (NPC.collideY && Math.Abs(NPC.velocity.Y) == 0) {
+			if (NPC.collideY && NPC.velocity.Y == 0) {
 				bool shouldJump = false;
 				if (NPC.collideX && preStepOffY == NPC.gfxOffY) shouldJump = true;
 				else if (!targetInvalid) {
@@ -153,10 +211,10 @@ namespace Origins.NPCs.Ashen {
 			NPC.spriteDirection = NPC.direction;
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
-			NPC.ai[3] = 1;
+			NPC.localAI[3] = 1;
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			if (!projectile.npcProj) NPC.ai[3] = 1;
+			if (!projectile.npcProj) NPC.localAI[3] = 1;
 		}
 		public static float BiomeSpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerInTown) return 0;
@@ -215,10 +273,13 @@ namespace Origins.NPCs.Ashen {
 			SetDrawData(drillBit.Value, new Vector2(-98, -26), NPC.rotation, drillBit.Frame(1, 2, 0, (int)NPC.localAI[0]));
 
 			// for debugging
+			NPCAimedTarget target = NPC.GetTargetData();
+			bool targetInvalid = target.Invalid || NPC.localAI[3] != 1;
 			spriteBatch.DrawDebugTextAbove(
-				$"{NPC.direction} {NPC.spriteDirection}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
+				$"{NPC.direction} {NPC.spriteDirection}, {NPC.aiAction}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
 				$"{NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}\n" +
-				$"{NPC.localAI[0]}, {NPC.localAI[1]}, {NPC.localAI[2]}, {NPC.localAI[3]}",
+				$"{NPC.localAI[0]}, {NPC.localAI[1]}, {NPC.localAI[2]}, {NPC.localAI[3]}\n" +
+				$"{target.Type}, {targetInvalid}",
 				NPC.Top - screenPos);
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
@@ -239,6 +300,164 @@ namespace Origins.NPCs.Ashen {
 			} else if (Main.rand.NextBool(5)) {
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic);
 			}
+		}
+	}
+	public class CM_17_Laser : ModProjectile {
+		public override string Texture => typeof(Fire_Lasers_State.Trenchmaker_Laser_P).GetDefaultTMLName();
+		static readonly AdvancedMiscShaderData hitAOEShader = new(Request<Effect>("Origins/Effects/Radial"), "TrenchmakerLaserHit", [
+			new("uOffset", new Vector2(0.5f)),
+			new("uScale", float.Sqrt(0.5f))
+		]);
+		static Parameter uImageOffset1;
+		static Parameter uColorMatrix0;
+		static Parameter uColorMatrix1;
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3200 + 64;
+			hitAOEShader.UseSamplerState(SamplerState.PointWrap)
+			.UseImage1(TextureAssets.MagicPixel);
+			GameShaders.Misc["Origins:TrenchmakerLaserHit"] = hitAOEShader;
+			hitAOEShader.LoadThen(() => {
+				hitAOEShader.CreateParameter(ref uImageOffset1, nameof(uImageOffset1), Vector2.Zero);
+				hitAOEShader.CreateParameter(ref uColorMatrix0, nameof(uColorMatrix0), Matrix.Identity);
+				hitAOEShader.CreateParameter(ref uColorMatrix1, nameof(uColorMatrix1), Matrix.Identity);
+			});
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.hostile = true;
+			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 5;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public Vector2 TargetPos {
+			get => new(Projectile.ai[0], Projectile.ai[1]);
+			set => (Projectile.ai[0], Projectile.ai[1]) = value;
+		}
+		bool IsActive {
+			get => Projectile.localAI[0] != 0;
+			set => Projectile.localAI[0] = value.ToInt();
+		}
+		public override void OnSpawn(IEntitySource source) {
+			Projectile.ai[2] = -1;
+			if (source is EntitySource_Parent { Entity: NPC owner }) {
+				Projectile.ai[2] = owner.whoAmI;
+			}
+		}
+		public static int ChargeTime => 65;
+		public static int ActiveTime => 55;
+		public override void AI() {
+			if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is not NPC { active: true } owner || owner.ModNPC is not CM_17 cm17 || owner.aiAction != 2) {
+				Projectile.Kill();
+				return;
+			}
+			IsActive = owner.ai[0] == 2;
+			Vector2 gunPos = cm17.HeadPos;
+			Projectile.localAI[1] = owner.ai[1];
+			Projectile.velocity = owner.ai[3].ToRotationVector2();
+			Projectile.position = gunPos;
+			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
+			if (IsActive) {
+				SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
+				SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.5f), Projectile.Center);
+				Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
+			}
+			Projectile.localAI[2] += 1f / 60;
+			TargetPos = targetPos;
+			float pitch = owner.ai[1] + 1;
+			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(pitch / 10).WithVolume(0.5f), Projectile.Center);
+			SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(pitch / 20).WithVolume(0.5f), Projectile.Center);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (!IsActive) return false;
+			if (targetHitbox.IsWithin(TargetPos, 16 * 5)) return true;
+			return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 12));
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
+			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+			float reduce = IsActive ? 0 : -(Projectile.localAI[1] / ChargeTime);
+			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
+				uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
+				uColorMatrix0 with {
+					Value = Matrix.Identity with {
+						M14 = reduce,
+						M24 = reduce,
+						M34 = reduce
+					}
+				},
+				uColorMatrix1
+			);
+			Main.spriteBatch.Draw(
+				TextureAssets.Projectile[Type].Value,
+				TargetPos - Main.screenPosition,
+				null,
+				new Color(255, IsActive ? 40 : 100, 0, 0),
+				Projectile.localAI[2],
+				Vector2.One * 128,
+				Vector2.One * 5,
+				0,
+			0);
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			Vector2 diff = TargetPos - Projectile.position;
+			Vector2 position = Projectile.position;
+			position -= Main.screenPosition;
+			float rotation = diff.ToRotation();
+			float dist = diff.Length();
+			const float scale = 1f / 256f;
+			DrawData data = new(
+				TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,//TextureAssets.MagicPixel.Value,
+				position,
+				null,
+				new Color(255, IsActive ? 40 : 100, 0, 0),
+				rotation,
+				Vector2.UnitY * 128,
+				new Vector2(dist * scale, 24 * scale),
+				0
+			);
+			data.Draw(Main.spriteBatch);
+			Rectangle frame = new(256 - (int)((Projectile.localAI[2] * 600) % 256), 0, (int)dist, 256);
+			data.scale.X = 1;
+			data.scale.Y *= 2;
+			data.texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape].Value;
+			float progress = 1 - Projectile.localAI[1] / ChargeTime;
+			progress *= progress;
+			if (IsActive) progress = 1;
+			Min(ref progress, 1);
+			data.color *= progress;
+			Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 24;
+			data.position = position + offset;
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+			data.sourceRect = frame;
+			data.Draw(Main.spriteBatch);
+			data.position = position - offset;
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+			data.sourceRect = frame;
+			data.Draw(Main.spriteBatch);
+			return false;
+		}
+		public static float Raymarch(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+			float dist = CollisionExt.Raymarch(position, direction, maxLength);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (dist < 16) return dist;
+				if (!npc.friendly) continue;
+				if (position.Clamp(npc.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+				float collisionPoint = 1;
+				if (Collision.CheckAABBvLineCollision(npc.position, npc.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+					Min(ref dist, collisionPoint);
+				}
+			}
+			foreach (Player player in Main.ActivePlayers) {
+				if (dist < 16) return dist;
+				if (position.Clamp(player.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+				float collisionPoint = 1;
+				if (Collision.CheckAABBvLineCollision(player.position, player.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+					Min(ref dist, collisionPoint);
+				}
+			}
+			return dist;
 		}
 	}
 	public class Watchling : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IBroken {
