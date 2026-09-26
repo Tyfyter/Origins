@@ -378,6 +378,30 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(1 * NPC.direction, -8).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Packhunter_Gore1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-13 * NPC.direction, 10).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Packhunter_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-22 * NPC.direction, -5).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Packhunter_Gore4")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(19 * NPC.direction, 7).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Packhunter_Gore3")
+				);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[0]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[1]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[2]);

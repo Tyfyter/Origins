@@ -173,6 +173,22 @@ namespace Origins.NPCs.Ashen {
 				this.GetBestiaryFlavorText()
 			);
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(10 * NPC.direction, -2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Malfunctioning_Missile_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-33 * NPC.direction, -2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Malfunctioning_Missile_Gore1")
+				);
+			}
+		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.ai[0] == 2) {
 				NPC.frameCounter = 0.0;

@@ -173,6 +173,40 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(9 * NPC.direction, -44).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Scrapyard_Stryder_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-14 * NPC.direction, -6).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Scrapyard_Stryder_Gore3")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(18 * NPC.direction, -9).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Scrapyard_Stryder_Gore5")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(14 * NPC.direction, -19).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Scrapyard_Stryder_Gore4")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-19 * NPC.direction, -22).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Scrapyard_Stryder_Gore1")
+				);
+			}
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[0]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[1]);
 				OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic[2]);

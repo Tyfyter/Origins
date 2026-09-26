@@ -225,6 +225,40 @@ namespace Origins.NPCs.Ashen {
 			NPC.width = NPC.height = 76;
 			NPC.knockBackResist = 0.4f;
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-30 * NPC.direction, 13).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Large_Gore1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(28 * NPC.direction, 24).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Large_Gore5")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-8 * NPC.direction, 15).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Large_Gore4")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(7 * NPC.direction, 3).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Large_Gore3")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(8 * NPC.direction, -22).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Large_Gore2")
+				);
+			}
+		}
 	}
 	public class Cartwheeler_Medium : Cartwheeler {
 		protected override float SpawnRate => Smog_Storm.SpawnRates.Cartwheeler_Medium;
@@ -240,6 +274,34 @@ namespace Origins.NPCs.Ashen {
 			NPC.knockBackResist = 0.6f;
 			this.CopyBanner<Cartwheeler_Large>();
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-3 * NPC.direction, -22).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Medium_Gore4")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(10 * NPC.direction, 24).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Medium_Gore3")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-6 * NPC.direction, 7).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Medium_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(14 * NPC.direction, -7).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Medium_Gore1")
+				);
+			}
+		}
 	}
 	public class Cartwheeler_Small : Cartwheeler {
 		protected override float SpawnRate => Smog_Storm.SpawnRates.Cartwheeler_Small;
@@ -254,6 +316,28 @@ namespace Origins.NPCs.Ashen {
 			NPC.width = NPC.height = 46;
 			NPC.knockBackResist = 0.8f;
 			this.CopyBanner<Cartwheeler_Large>();
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(5 * NPC.direction, 4).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Small_Gore1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-13 * NPC.direction, 12).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Small_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(6 * NPC.direction, -8).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Cartwheeler_Small_Gore3")
+				);
+			}
 		}
 	}
 }
