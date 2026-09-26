@@ -7,6 +7,7 @@ using Origins.Items.Materials;
 using Origins.Items.Tools;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -27,6 +28,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.noMelee = true;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.damage = 261;
+			Item.knockBack = 8;
 			Item.crit = 24;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
@@ -143,10 +145,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 					true,
 					sound: SoundID.Item62.WithVolumeScale(0.6f)
 				);
-				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+				ExplosiveGlobalProjectile.DealSelfDamage(Projectile, direction: Main.player[Projectile.owner].direction);
 				Projectile.ai[0] = 1;
 			}
 			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Self_Destruct_Flash>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+		}
+		public override bool? CanHitNPC(NPC target) {
+			Projectile.direction = Math.Sign(target.Center.X - Projectile.Center.X);
+			return base.CanHitNPC(target);
+		}
+		public override bool CanHitPlayer(Player target) {
+			Projectile.direction = Math.Sign(target.Center.X - Projectile.Center.X);
+			return base.CanHitPlayer(target);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type]) {

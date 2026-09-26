@@ -750,7 +750,7 @@ namespace Origins.Projectiles {
 				area.DrawDebugOutline();
 			}
 		}
-		public static void DealSelfDamage(Projectile projectile, int cooldownCounter = -1) {
+		public static void DealSelfDamage(Projectile projectile, int cooldownCounter = -1, int? direction = null) {
 			if (projectile.owner == Main.myPlayer) {
 				Player player = Main.LocalPlayer;
 				if (player.active && !player.dead && !player.immune) {
@@ -761,7 +761,7 @@ namespace Origins.Projectiles {
 						double damageDealt = player.Hurt(
 							PlayerDeathReason.ByProjectile(Main.myPlayer, projectile.whoAmI),
 							Main.DamageVar(projectile.damage, -player.luck),
-							Math.Sign(player.Center.X - projectile.Center.X),
+							direction ?? Math.Sign(player.Center.X - projectile.Center.X),
 							out Player.HurtInfo info,
 							true,
 							cooldownCounter: cooldownCounter
