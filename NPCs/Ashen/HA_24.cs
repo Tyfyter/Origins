@@ -84,6 +84,8 @@ public class HA_24 : Glowing_Mod_NPC, IAshenEnemy {
 		}
 	}
 	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+		NPC.KillsCountTowardsNPC<HA_24_Flying>(bestiaryEntry);
+
 		bestiaryEntry.AddTags(
 			this.GetBestiaryFlavorText()
 		);
