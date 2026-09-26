@@ -371,7 +371,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 					Damage = player.GetWeaponDamage(item);
 					Knockback = item.knockBack;
 				}
-				new Star_Soldier_Weapon_Sound(player, item.type).Perform();
+				if (item.UseSound is not null) new Star_Soldier_Weapon_Sound(player, item.type).Perform();
 				Knockback = player.GetWeaponKnockback(item, Knockback);
 				EntitySource_ItemUse_WithAmmo projectileSource = new(player, item, usedAmmoItemId, nameof(Star_Soldier) + currentArm);
 				player.ApplyItemTime(item, callUseItem: false);
@@ -1634,7 +1634,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.damage = 54;
+		Item.damage = 47;
 		Item.DamageType = DamageClass.Summon;
 		Item.useAnimation = 12;
 		Item.useTime = 12;
@@ -1642,7 +1642,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		Item.knockBack = 4f;
 		Item.useAmmo = AmmoID.Rocket;
 		Item.shoot = ModContent.ProjectileType<Star_Soldier_Drone>();
-		Item.UseSound = Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f);
+		Item.UseSound = null;
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.autoReuse = true;
 		Item.rare = ItemRarityID.Yellow;
@@ -1654,8 +1654,11 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 	}
 	public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		ref int availableDrones = ref Star_Soldier.GetHandler(player).availableDrones;
-		if (availableDrones <= 0) type = ProjectileID.Bullet;//set type to tag projectile
-		else availableDrones--;
+		if (availableDrones <= 0) {
+			//set type to tag projectile
+			type = ProjectileID.Bullet;
+			new Star_Soldier.MountHandler.Star_Soldier_Weapon_Sound(player, Type).Perform();
+		} else availableDrones--;
 	}
 	public override void DrawHud(SpriteBatch spriteBatch, ref Vector2 position, Vector2 scale, in Star_Soldier.MountHandler.Arm arm) {
 		Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(Main.LocalPlayer);
@@ -1710,9 +1713,9 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 			Projectile.timeLeft = 60 * 10;
 			Projectile.friendly = true;
 			Projectile.ignoreWater = true;
-			Projectile.tileCollide = false;
+			Projectile.tileCollide = true;
 			Projectile.netImportant = true;
-			MaxLife = 100;
+			MaxLife = 500;
 		}
 		bool buff;
 		public override ref bool HasBuff(Player player) {
@@ -1720,6 +1723,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 			return ref buff;
 		}
 		public override void MoveTowardsTarget() {
+			if (Star_Soldier.GetHandler(Owner)?.LockOnTarget is NPC target) targetingData.TargetID = target.whoAmI;
 			bool foundTarget = targetingData.TargetID != -1;
 			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
 
@@ -1734,19 +1738,19 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 			Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 16);
 		}
 		protected override void BasicAI() {
+			if (Projectile.soundDelay.TrySet(-1)) SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp.WithPitch(3f).WithVolume(0.6f), Projectile.Center);
 			Projectile.frameCounter.Warmup(30);
 			Projectile.frame = Math.Max((Projectile.frameCounter - 12) / 6, 0);
 			if (Projectile.frameCounter < 12) return;
 			base.BasicAI();
-			if (Star_Soldier.GetHandler(Owner)?.LockOnTarget is NPC target) targetingData.TargetID = target.whoAmI;
 			bool foundTarget = targetingData.TargetID != -1;
 			if (foundTarget) {
 				Projectile.rotation = (targetingData.targetHitbox.Center() - Projectile.Center).ToRotation() + MathHelper.PiOver2;
 			}
 
-			if (foundTarget && Projectile.ai[0].CycleUp(6, SpeedModifier)) {
+			if (foundTarget && Projectile.ai[0].CycleUp(8, SpeedModifier)) {
 				if (Projectile.ai[1].CycleUp(5) || !CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
-					if (RandomChoice(3)) Projectile.velocity += (Projectile.rotation + MathHelper.Pi * Main.rand.NextBool().ToInt()).ToRotationVector2() * 12;
+					if (RandomChoice(4)) Projectile.velocity += (Projectile.rotation + MathHelper.Pi * Main.rand.NextBool().ToInt()).ToRotationVector2() * 8;
 				} else {
 					Projectile.SpawnProjectile(
 						Projectile.GetSource_FromAI(),
@@ -1778,7 +1782,7 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		/// <param name="consequent">Y</param>
 		/// <returns></returns>
 		public bool RandomChoice(int antecedent, int consequent) {
-			if (Projectile.IsLocallyOwned()) return false;
+			if (!Projectile.IsLocallyOwned()) return false;
 			if (!Main.rand.NextBool(antecedent, consequent)) return false;
 			Projectile.netUpdate = true;
 			return true;
