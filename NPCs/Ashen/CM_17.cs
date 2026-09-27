@@ -63,7 +63,7 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
-		public static int TimeToSpawnWatchlings => 2 * 60;
+		public static int TimeToSpawnWatchlings => (int)(1.5f * 60);
 		public static int LaserDamage => (int)(16 * ContentExtensions.DifficultyDamageMultiplier);
 		public override void AI() {
 			const int MaxWatchlings = 10; // desired max subtracted by 2
@@ -78,11 +78,11 @@ namespace Origins.NPCs.Ashen {
 			Vector2 targetDirection = targetInvalid ? default : NPC.DirectionTo(NPC.targetRect.Center());
 			int targetMoveDirection = targetInvalid ? NPC.direction : float.Sign(targetDirection.X);
 			Rectangle detectRange = NPC.Hitbox;
-			Rectangle fleeRange = NPC.Hitbox;
+			Rectangle noLaserRange = NPC.Hitbox;
 			detectRange.Inflate(20 * 16, 15 * 16);
-			fleeRange.Inflate(8 * 16, 5 * 16); // for debugging
+			noLaserRange.Inflate(8 * 16, 5 * 16);
 			detectRange.DrawDebugOutline(); // for debugging
-			fleeRange.DrawDebugOutline();
+			noLaserRange.DrawDebugOutline(); // for debugging
 			void AttemptRetarget() {
 				if (NPC.localAI[3] == 0) accel = 0;
 				NPC.ai[0] = 0;
@@ -110,7 +110,7 @@ namespace Origins.NPCs.Ashen {
 						NPC.netUpdate = true;
 					}
 					if (NPC.aiAction != 0) break;
-					if ((NPC.ai[1].Cooldown() || NPC.ai[1] == 0) && NPC.Center.IsWithin(target.Center, 35 * 16) && !target.Hitbox.Intersects(fleeRange)) {
+					if ((NPC.ai[1].Cooldown() || NPC.ai[1] == 0) && NPC.Center.IsWithin(target.Center, 35 * 16) && !target.Hitbox.Intersects(noLaserRange)) {
 						NPC.ai[0] = 0;
 						NPC.ai[3] = (target.Center - NPC.Center).ToRotation();
 						NPC.aiAction = 2;
@@ -119,12 +119,13 @@ namespace Origins.NPCs.Ashen {
 					break;
 
 					case 1:
+					accel = 0;
 					Vector2 pos = NPC.Center + new Vector2(55, -4).Apply(SpriteEffects, default);
 					Dust.QuickDust(pos, Color.White); // for debugging
 					if (NPC.ai[0]++ == TimeToSpawnWatchlings * 0.5f) {
 						for (int i = 0; i < 3; i++) {
 							NPC watchling = NPC.SpawnNPC(null, (int)pos.X, (int)pos.Y, NPCType<Watchling>());
-							watchling.velocity = new Vector2(-targetMoveDirection * 2, -2) + Main.rand.NextVector2Circular(3, 3);
+							watchling.velocity = (new Vector2(2, -2) + Main.rand.NextVector2Circular(3, 3)).Apply(SpriteEffects, default);
 						}
 					} else if (NPC.ai[0] >= TimeToSpawnWatchlings) {
 						NPC.ai[0] = 0;
@@ -132,11 +133,6 @@ namespace Origins.NPCs.Ashen {
 						NPC.aiAction = 0;
 						NPC.netUpdate = true;
 					}
-					if (target.Hitbox.Intersects(fleeRange)) {
-						targetMoveDirection = -Math.Sign(target.Center.X - NPC.Center.X);
-						if (NPC.ai[0] < TimeToSpawnWatchlings * 0.5f) NPC.ai[0].Cooldown(rate: 2);
-						else accel = 0;
-					} else accel = 0;
 					break;
 
 					case 2: {
@@ -206,7 +202,7 @@ namespace Origins.NPCs.Ashen {
 						shouldJump = true;
 					}
 				}
-				if (shouldJump) NPC.velocity.Y -= 8;
+				if (shouldJump && NPC.aiAction != 1 && NPC.localAI[3] == 1) NPC.velocity.Y -= 8;
 			}
 			NPC.spriteDirection = NPC.direction;
 		}
@@ -303,7 +299,7 @@ namespace Origins.NPCs.Ashen {
 		}
 	}
 	public class CM_17_Laser : ModProjectile {
-		public override string Texture => typeof(Fire_Lasers_State.Trenchmaker_Laser_P).GetDefaultTMLName();
+		public override string Texture => typeof(Trenchmaker_Laser_P).GetDefaultTMLName();
 		static readonly AdvancedMiscShaderData hitAOEShader = new(Request<Effect>("Origins/Effects/Radial"), "TrenchmakerLaserHit", [
 			new("uOffset", new Vector2(0.5f)),
 			new("uScale", float.Sqrt(0.5f))
@@ -354,10 +350,9 @@ namespace Origins.NPCs.Ashen {
 				return;
 			}
 			IsActive = owner.ai[0] == 2;
-			Vector2 gunPos = cm17.HeadPos;
 			Projectile.localAI[1] = owner.ai[1];
 			Projectile.velocity = owner.ai[3].ToRotationVector2();
-			Projectile.position = gunPos;
+			Projectile.position = cm17.HeadPos;
 			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
 			if (IsActive) {
 				SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
