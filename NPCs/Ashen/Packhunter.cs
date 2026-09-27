@@ -430,6 +430,7 @@ namespace Origins.NPCs.Ashen {
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[3];
 		static readonly short[] dices = [0, 1, 2];
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.IsABestiaryIconDummy) Rotation = MathHelper.Pi * NPC.direction;
 			drawColor = NPC.GetTintColor(drawColor);
 			Color glowColor = Color.White;
 			using (NPC.oiled.ScopedOverride(false)) {

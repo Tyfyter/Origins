@@ -27,10 +27,9 @@ public class HA_24 : Glowing_Mod_NPC, IAshenEnemy {
 		NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 			Scale = 0.85f,
 			PortraitScale = 1,
-			Rotation = MathHelper.PiOver4 * 3,
-			Position = new Vector2(-3, 8),
-			PortraitPositionXOverride = 0,
-			PortraitPositionYOverride = 0
+			Position = new Vector2(20, 70),
+			PortraitPositionXOverride = -3,
+			PortraitPositionYOverride = 60
 		};
 	}
 	public override void SetDefaults() {
