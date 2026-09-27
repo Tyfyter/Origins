@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Melee;
@@ -28,6 +27,11 @@ namespace Origins.NPCs.Fiberglass {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Rotation = -MathHelper.PiOver4,
+				Direction = 1,
+				Position = new Vector2(0, 5)
+			};
 		}
 		public override void SetDefaults() {
 			NPC.noGravity = true;
@@ -154,6 +158,11 @@ namespace Origins.NPCs.Fiberglass {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Rotation = -MathHelper.PiOver4,
+				Direction = 1,
+				Position = new Vector2(5, -5)
+			};
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;

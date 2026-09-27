@@ -1,26 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using PegasusLib;
-using Mono.Cecil;
-using ThoriumMod.Empowerments;
 using Terraria.Audio;
 using Origins.Dusts;
-using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria.GameContent.Bestiary;
@@ -36,6 +27,11 @@ namespace Origins.NPCs.Fiberglass {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Rotation = -MathHelper.PiOver4,
+				Direction = 1,
+				Position = new Vector2(0, -5)
+			};
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
