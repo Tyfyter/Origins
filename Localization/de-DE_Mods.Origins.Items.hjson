@@ -3961,7 +3961,11 @@ Meteor: {
 
 Self_Destruct: {
 	// DisplayName: Self-Destruct
-	// Tooltip: Deal impressive damage for a massive area
+	/* Tooltip:
+		'''
+		Deal impressive damage for a massive area
+		'Self-damage protection not included!'
+		''' */
 }
 
 CORE_Generator: {
