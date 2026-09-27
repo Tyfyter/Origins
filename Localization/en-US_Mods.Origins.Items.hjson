@@ -1671,7 +1671,11 @@ Wrycoral_Item: {
 
 Absorption_Potion: {
 	DisplayName: Absorption Potion
-	Tooltip: Full protection from explosive self-damage
+	Tooltip:
+		'''
+		-80% explosive self-damage
+		Pre-existing higher self-damage reduction amounts override this
+		'''
 }
 
 Antisolve_Potion: {
@@ -3957,7 +3961,11 @@ Meteor: {
 
 Self_Destruct: {
 	DisplayName: Self-Destruct
-	Tooltip: Deal impressive damage for a massive area
+	Tooltip: 
+		'''
+		Deal impressive damage for a massive area
+		'Self-damage protection not included!'
+		'''
 }
 
 CORE_Generator: {

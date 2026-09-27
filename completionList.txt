@@ -303,7 +303,6 @@ ENEMY NPCS:
 (#, ^2) Defiled Weaver
 (X) Depth Crawler
 (X) False Geometry
-(X) Fibulum Squid
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
@@ -847,6 +846,7 @@ TOOLS:
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
 (^) Brine Bucket
+(X) Handler's Guide to Synapods
 (^) Multi-Bucket
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
@@ -911,6 +911,7 @@ MELEE WEAPONS:
 (X) Chiton Kursarigama
 (X) Executioner
 (X) Laser Tag Sabre
+(X) Mise of the King
 (^) Personal Laser Blade
 (X) Pile Bunker
 (X) Rocket Lance
@@ -1087,6 +1088,7 @@ SUMMONER WEAPONS:
 (^) Guardian Rod
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
+(X) Infested Scripture
 (^) Inject Incantation
 (^) Joint Pop
 (^) Maelstrom Incantation
@@ -1210,6 +1212,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb
 (^) Rattlesnake
 (^) Rocket Rifle
+(X) Serenade
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
 (^) Thermite Launcher
@@ -1386,6 +1389,7 @@ TILES:
 (^) Brine Water Fountain
 (@, ^3) Bug Cage
 (X) Busted Furniture
+(X) Cable Holder
 (X) Cancer Furniture
 (^) Chambersite Bunny Cage
 (^) Chambersite Squirrel Cage
@@ -1412,13 +1416,14 @@ TILES:
 (#3, ^2) Scrap Railing !!!
 (^) Shadow Torch
 (^) Strange Plant (Stardust)
+(X) Stray Cable
 (^) Traffic Cone
 
 (^) Ancient Industrial Door
 (^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire
-(☻) Auto Assembler !!!
+(^) Auto Assembler
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
@@ -1426,7 +1431,7 @@ TILES:
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station
-(☻) Conveyor Scooper !!!
+(^) Conveyor Scooper
 (X) Defiled Boulder
 (^) Defiled Campfire
 (^) Defiled Dungeon Chest
@@ -1442,8 +1447,8 @@ TILES:
 (^) Incinerator Pit
 (^) Industrial Door
 (X) Infused Quakerock
-(☻) Large Auto Assembler !!!
-(☻) Large Conveyor Scooper !!!
+(^) Large Auto Assembler
+(^) Large Conveyor Scooper
 (^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)
@@ -1482,13 +1487,13 @@ TILES:
 
 (X) Elderforge
 (^) Fabricator
-(X) Flesh Shredder
+(X) Flesh Shredder !!!
 (X) Interstellar Sampler
 (^) Medicine Fabricator
 (^) Metal Presser
 (X) Psymanti Mixing Station
 (X) Rite Shrine
-(X) The Demaker
+(X) The Demaker !!!
 
 (^) Acetabularia
 (^) Administrator Panel

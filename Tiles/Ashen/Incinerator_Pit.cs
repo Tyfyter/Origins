@@ -209,8 +209,8 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 				bounce(dir);
 				Rectangle dustRect = Rectangle.Intersect(hitbox, new(pos.X * 16, pos.Y * 16, 16, 16));
 				for (int i = 0; i < 4; i++) {
-					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f)/*, center*/);
-					SoundEngine.PlaySound(SoundID.Item146.WithPitch(1.5f).WithVolume(0.05f)/*, center*/);
+					SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(2.2f).WithVolume(0.05f), entity.position);
+					SoundEngine.PlaySound(SoundID.Item146.WithPitch(1.5f).WithVolume(0.05f), entity.position);
 					Dust dust = EfficientDust.NewDustDirect(
 						dustRect.TopLeft(),
 						dustRect.Width,

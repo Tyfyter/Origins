@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Gores;
 using Origins.Graphics;
 using Origins.Misc;
 using System;
@@ -67,7 +66,10 @@ public class TM_Bullet_Casing : ModDust {
 			rotationSpeed *= 0.5f;
 			ping |= Math.Abs(oldVelocity.Y) > 4;
 		}
-		if (ping) SoundEngine.PlaySound(SoundID.Item15.WithPitch(0.5f), dust.position);
+		if (ping) {
+			SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(2f, 2.2f).WithVolume(0.4f), dust.position);
+			SoundEngine.PlaySound(Origins.Sounds.BuletCasingDrop.WithPitchRange(0.1f, 0.3f).WithVolume(0.4f), dust.position);
+		}
 		spin *= 5f;
 		if (newOldVelocity != oldVelocity) {
 			if (Math.Abs(spin) > 0.1f) {
