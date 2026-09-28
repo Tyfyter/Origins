@@ -572,10 +572,11 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	public override void UpdateEffects(Player player) {
 		//SwitchableUIState.SharedInterfaces.ItemUseHUD.Hidden = true;
 		player.statDefense += 48 - player.armor[0].defense - player.armor[1].defense - player.armor[2].defense;
-		player.OriginPlayer().knockbackTaken.Base -= 4.5f;
+		OriginPlayer originPlayer = player.OriginPlayer();
+		originPlayer.knockbackTaken.Base -= 4.5f;
 		player.AddMaxBreath(200);
 		GetHandler(player)?.Update(player);
-		player.OriginPlayer().mountOnly = true;
+		originPlayer.mountOnly = true;
 		Max(ref player.accWatch, 5);
 		Max(ref player.accCompass, 2);
 		Max(ref player.accDepthMeter, 2);
@@ -3201,5 +3202,19 @@ public class Star_Soldier_UI : SwitchableUIState {
 				});
 			}
 		}
+	}
+}
+public class Surf_Music : ModSceneEffect {
+	public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+	// Just have to put the track in a wrapper that ignores requests to stop early
+	public override int Music => Origins.Music.SurfsUp;
+	public override bool IsSceneEffectActive(Player _) {
+		if (Music == -1) return false;
+		Rectangle bounds = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+		bounds.Inflate(Main.screenWidth, Main.screenHeight);
+		foreach (Player player in Main.ActivePlayers) {
+			if (player.Hitbox.Intersects(bounds) && player.mount.IsMount<Star_Soldier>() && player.OriginPlayer().standingOnPlatformNPC?.ModNPC is HA_24_Flying) return true;
+		}
+		return false;
 	}
 }
