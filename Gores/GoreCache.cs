@@ -6,6 +6,7 @@ namespace Origins.Gores;
 [ReinitializeDuringResizeArrays]
 public sealed class GoreCache {
 	public static GoreCache Ashen_Generic = new("NPCs/Ashen_Gore", 4);
+	public static GoreCache Fiberglass_Generic = new("NPCs/FG_Gore", 3);
 	#region impl
 	readonly string name;
 	readonly int[] variants;

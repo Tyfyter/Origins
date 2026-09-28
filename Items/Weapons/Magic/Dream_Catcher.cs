@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Gores;
 using Origins.Items.Weapons.Ranged;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Dream_Catcher : ModItem, ICustomDrawItem {
@@ -360,10 +361,10 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			if (player.dead || !player.active) {
-				Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, $"Gores/NPCs/FG{(Main.rand.NextBool() ? 1 : 3)}_Gore");
-				Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, "Gores/NPCs/FG3_Gore");
-				if (Main.rand.NextBool()) Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, "Gores/NPCs/FG2_Gore");
+				SpawnGoreByType(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, GoreCache.Fiberglass_Generic[Main.rand.NextBool() ? 0 : 2]);
+				SpawnGoreByType(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, GoreCache.Fiberglass_Generic[2]);
+				if (Main.rand.NextBool()) SpawnGoreByType(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, GoreCache.Fiberglass_Generic[1]);
 				SoundEngine.PlaySound(SoundID.Shatter, Projectile.Center);
 				Projectile.Kill();
 				return;

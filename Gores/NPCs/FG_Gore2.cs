@@ -1,14 +1,11 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using static Origins.OriginExtensions;
 using Terraria.DataStructures;
-using Tyfyter.Utils;
-using PegasusLib;
 
 namespace Origins.Gores.NPCs {
-	public class FG2_Gore : ModGore {
+	public class FG_Gore2 : ModGore {
 		public override void OnSpawn(Gore gore, IEntitySource source) {
 			gore.frame = 4;
 		}

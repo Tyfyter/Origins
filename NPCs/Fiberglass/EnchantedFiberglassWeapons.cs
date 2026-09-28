@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Gores;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -93,14 +94,14 @@ namespace Origins.NPCs.Fiberglass {
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
 			if (hit.Damage > NPC.life * 2f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 			if (NPC.life <= 0) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[1]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[2]);
 			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -225,14 +226,14 @@ namespace Origins.NPCs.Fiberglass {
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
 			if (hit.Damage > NPC.life * 2f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 			if (NPC.life <= 0) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[1]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[2]);
 			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -412,14 +413,14 @@ namespace Origins.NPCs.Fiberglass {
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
 			if (hit.Damage > NPC.life * 2f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 			if (NPC.life <= 0) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[1]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[2]);
 			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

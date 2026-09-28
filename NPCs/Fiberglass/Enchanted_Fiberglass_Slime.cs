@@ -1,19 +1,19 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Gores;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ranged;
-using Origins.LootConditions;
-using Origins.World.BiomeData;
-using Terraria;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
-using PegasusLib;
 using Origins.Tiles.Other;
 using Origins.Walls;
-using Terraria.GameContent.Bestiary;
+using Origins.World.BiomeData;
 using System.Linq;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Fiberglass {
 	public class Enchanted_Fiberglass_Slime : ModNPC {
@@ -103,13 +103,13 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (hit.Damage > NPC.life * 2f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{(Main.rand.NextBool() ? 1 : 3)}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[Main.rand.NextBool() ? 0 : 2]);
 			}
 			if (NPC.life <= 0) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[2]);
 			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{(Main.rand.NextBool() ? 1 : 3)}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[Main.rand.NextBool() ? 0 : 2]);
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

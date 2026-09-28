@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Gores;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -8,9 +11,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
-
-using Origins.Dev;
-using System;
 namespace Origins.Items.Weapons.Ranged {
 	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
@@ -117,7 +117,7 @@ namespace Origins.Items.Weapons.Ranged {
 				if (strung > 0 && --strung <= 0) {
 					SoundEngine.PlaySound(SoundID.Item102.WithPitch(1).WithVolume(0.75f), player.Center);
 					Vector2 pos = player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * (10 - player.direction * 2);
-					Gore.NewGoreDirect(player.GetSource_ItemUse(Item), pos, player.velocity, ModContent.GoreType<Gores.NPCs.FG2_Gore>()).position = pos;
+					OriginExtensions.SpawnGoreByType(player.GetSource_ItemUse(Item), pos, player.velocity, GoreCache.Fiberglass_Generic[1]);
 				}
 			} else if (player.ItemAnimationJustStarted) {
 				restringAnimation2 = player.OriginPlayer().itemComboAnimationTime > 0;

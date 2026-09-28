@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Dev;
+using Origins.Gores;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
 using Origins.Items.Other.Consumables;
@@ -363,11 +364,11 @@ namespace Origins.NPCs.Fiberglass {
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
 			if (NPC.life <= 0) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");
-			} else if (hit.Damage > NPC.lifeMax * 0.1f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[1]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[2]);
+			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 		}
 		public override void OnKill() {
