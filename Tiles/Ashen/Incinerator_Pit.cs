@@ -203,6 +203,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 			Tile tile = Main.tile[pos];
 			if (tile.TileType != Incinerator_Pit_Pit.ID) continue;
 			Point16 topLeft = new(pos.X - tile.TileFrameX / 18, pos.Y - tile.TileFrameY / 18);
+			if (Incinerator_Pit_TE.GetData(topLeft) is not Incinerator_Pit_TE.Data data) continue;
 			int sparks = ModContent.DustType<Spark_Dust>();
 			if (tile.TileFrameY <= 18) {
 				int dir = (tile.TileFrameX < 18 * 4).ToDirectionInt();
@@ -263,7 +264,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 					}
 				}
 				int power = hurt(tile.TileFrameY >= 18 * 3);
-				if (power > 0) Incinerator_Pit_TE.GetData(topLeft).Fuel += power;
+				if (power > 0) data.Fuel += power;
 			}
 			break;
 		}
