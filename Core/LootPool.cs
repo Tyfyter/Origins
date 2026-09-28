@@ -248,6 +248,7 @@ public class Ashen_Medical : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Brightsee>(), 2, 5, 11));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Unmarked_Antidote>(), 1, 1, 4));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Medicinal_Acid>(), 2, 1, 3));
+		AddRule(ItemDropRule.Common(ItemID.EyePatch, 25));
 	}
 }
 public class Ashen_MedicalLore : LootPool {
@@ -279,11 +280,20 @@ public class Ashen_Personal : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Pincushion>(), 40));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Nineball>(), 25));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 3));
-		AddRule(ItemDropRule.Common(ItemID.FamiliarShirt, 15));
-		AddRule(ItemDropRule.Common(ItemID.FamiliarPants, 15));
-		AddRule(ItemDropRule.Common(ItemID.Fedora, 20));
-		AddRule(ItemDropRule.Common(ItemID.BallaHat, 20));
-		AddRule(ItemDropRule.Common(ItemID.EngineeringHelmet, 20));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Bang_Snap>(), 10, 35, 70));
+		AddRule(ItemDropRule.Common(ItemID.FamiliarShirt, 1, 1, 3));
+		AddRule(ItemDropRule.Common(ItemID.FamiliarPants, 1, 1, 4));
+		AddRule(ItemDropRule.Common(ItemID.Fedora, 5, 1, 2));
+		AddRule(ItemDropRule.Common(ItemID.BallaHat, 10));
+		AddRule(ItemDropRule.Common(ItemID.EngineeringHelmet, 10));
+		AddRule(ItemDropRule.Common(ItemID.Beanie, 10, 1, 2));
+		AddRule(ItemDropRule.Common(ItemID.CatEars, 15));
+		AddRule(ItemDropRule.Common(ItemID.GangstaHat, 15));
+		AddRule(ItemDropRule.Common(ItemID.FuneralCoat, 20));
+		AddRule(ItemDropRule.Common(ItemID.FuneralPants, 20));
+		AddRule(ItemDropRule.Common(ItemID.FuneralHat, 20));
+		AddRule(ItemDropRule.Common(ItemID.VictorianGothDress, 20));
+		AddRule(ItemDropRule.Common(ItemID.VictorianGothHat, 20));
 		AddRule(ItemDropRule.Common(ItemID.SilverCoin, 1, 3, 11));
 		AddRule(ItemDropRule.Common(ItemID.FlowerPacketViolet, 4, 1, 7));
 		AddRule(ItemDropRule.Common(ItemID.FlowerPacketPink, 4, 1, 3));
@@ -294,7 +304,6 @@ public class Ashen_Personal : LootPool {
 		AddRule(ItemDropRule.Common(ItemID.Fertilizer, 10));
 		AddRule(ItemDropRule.Common(ItemID.GoldWatch, 10));
 		AddRule(ItemDropRule.Common(ItemID.ShadowCandle, 10));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Bang_Snap>(), 10, 35, 70));
 	}
 }
 public class Ashen_Rations : LootPool {
@@ -446,6 +455,28 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 5));
 			AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 			AddRule(ItemDropRule.Common(ItemID.CoffeeCup));
+		}
+	}
+	public class Ashen_Replenish : LootPool {
+		public override void SetStaticDefaults() {
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2, 1, 2));
+			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
+			AddRule(ItemDropRule.Common(ItemID.Grenade, 2, 8, 22));
+			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 5, 50));
+			AddRule(ItemDropRule.Common(ItemID.Goggles, 2, 1, 2));
+			AddRule(ItemDropRule.Common(ItemID.SilverCoin, 2, 1, 8));
+			AddRule(ItemDropRule.Common(ItemID.CopperCoin, 1, 25, 99));
+		}
+	}
+	public class Ashen_ReplenishLore : LootPool {
+		public override void SetStaticDefaults() {
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_They_Found_Us>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 1, 1, 2));
+			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
+			AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 25, 25));
+			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 81, 81));
+			AddRule(ItemDropRule.Common(ItemID.Goggles, 2, 1, 2));
+			AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 		}
 	}
 }
