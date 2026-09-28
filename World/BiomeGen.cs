@@ -2,6 +2,7 @@ using AltLibrary.Common.Systems;
 using ModLiquidLib.ModLoader;
 using Origins.Items.Accessories;
 using Origins.Liquids;
+using Origins.LootConditions;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
@@ -27,6 +28,7 @@ namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		public static List<Vector2> EvilSpikeAvoidancePoints = [];
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
+			SucceedOncePerWorldGenRule.Reset();
 			const double max_defiled_spike_size = 6.0;
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();

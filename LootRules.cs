@@ -128,6 +128,36 @@ public class ScavengerBonus(int itemType, int bonus = 1, int chanceDenominator =
 		}
 	}
 }
+public class SucceedOncePerWorldGenRule : IItemDropRule {
+	static readonly Condition condition = new();
+	static readonly List<SucceedOncePerWorldGenRule> rules = [];
+	static readonly ItemDropAttemptResult success = new () {
+		State = ItemDropAttemptResultState.Success
+	};
+	public static void Reset() {
+		for (int i = 0; i < rules.Count; i++) rules[i].nextResult = success;
+	}
+	ItemDropAttemptResult nextResult = success;
+	public SucceedOncePerWorldGenRule() => rules.Add(this);
+	public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
+	public bool CanDrop(DropAttemptInfo info) => true;
+	public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+		ratesInfo.AddCondition(condition);
+		Chains.ReportDroprates(ChainedRules, 1f, drops, ratesInfo);
+	}
+	public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+		(ItemDropAttemptResult result, nextResult) = (nextResult, default);
+		return result;
+	}
+	class Condition() : IItemDropRuleCondition, IIgnoreWhenHighlighting {
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => true;
+		public string GetConditionDescription() => Language.GetOrRegister($"Mods.Origins.Conditions.OnePerWorld").Value;
+	}
+	struct NeedsTesting : IBroken {
+		static string IBroken.BrokenReason => "Implemented before the gen required to test it";
+	}
+}
 public class DropLootPoolRule<TPool>(bool selectRandomly = false, int chanceDenominator = 1, int chanceNumerator = 1) : DropLootPoolRule(ModContent.GetInstance<TPool>(), selectRandomly, chanceDenominator, chanceNumerator) where TPool : LootPool { }
 public class DropLootPoolRule : IItemDropRule {
 	public LootPool pool;

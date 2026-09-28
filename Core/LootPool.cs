@@ -150,8 +150,8 @@ public class Ashen_GenericLore : LootPool {
 	public class Rarer : LootPool {
 		public override void SetStaticDefaults() {
 			Sequential = true;
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_The_Packing_Slip>()));
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Mean_Baby>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_The_Packing_Slip>()).OncePerWorld());
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Mean_Baby>()).OncePerWorld());
 		}
 	}
 	public override void SetStaticDefaults() {
@@ -253,7 +253,7 @@ public class Ashen_Medical : LootPool {
 }
 public class Ashen_MedicalLore : LootPool {
 	public override void SetStaticDefaults() {
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()).OncePerWorld());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35, 35));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13, 13));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
@@ -369,7 +369,7 @@ public class Ashen_HeavyArmory : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Self_Preservation>()));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Self_Preservation>()).OncePerWorld());
 		AddRule(ItemDropRule.Common(ItemID.RocketIII, 1, 125, 520));
 	}
 }
@@ -382,7 +382,7 @@ public class Ashen_Closet : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Loose_Wheel>()));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Loose_Wheel>()).OncePerWorld());
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b100).Type, 8, 2, 16));
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b111).Type, 8, 1, 17));
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b011).Type, 8, 1, 13));
@@ -470,7 +470,7 @@ public class Ashen_Lab : LootPool {
 	}
 	public class Ashen_ReplenishLore : LootPool {
 		public override void SetStaticDefaults() {
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_They_Found_Us>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_They_Found_Us>()).OncePerWorld());
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 1, 1, 2));
 			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 			AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 25, 25));
@@ -479,4 +479,7 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 		}
 	}
+}
+file static class LootPoolExensions {
+	public static IItemDropRule OncePerWorld(this IItemDropRule rule) => new SucceedOncePerWorldGenRule().WithOnSuccess(rule);
 }

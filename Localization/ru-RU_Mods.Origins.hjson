@@ -39,6 +39,7 @@ Conditions: {
 	// DownedEaterOfWorlds: "{$Conditions.DownedEaterOfWorlds}"
 	// DownedBrainOfCthulhu: "{$Conditions.DownedBrainOfCthulhu}"
 	// DownedFaeNymph: After defeating a {$NPCs.Fae_Nymph.DisplayName}
+	// OnePerWorld: One per world
 }
 
 ModMenu: {
