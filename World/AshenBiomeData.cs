@@ -89,7 +89,16 @@ namespace Origins.World.BiomeData {
 				ItemDropRule.NotScalingWithLuck(ItemType<Smiths_Hammer>()),
 				ItemDropRule.NotScalingWithLuck(ItemType<Seal_Of_Cinders>())
 			);
+
+			On_Cloud.cloudColor += On_Cloud_cloudColor;
 		}
+		static readonly FrameCachedValue<float> cloudAlphaMult = new(() => {
+			if (Main.gameMenu) return 1;
+			float alpha = Main.bgAlphaFarBackLayer[GetInstance<Ashen_Surface_Background>().Slot];
+			Max(ref alpha, Main.bgAlphaFarBackLayer[GetInstance<Ashen_Desert_Background>().Slot]);
+			return 1 - alpha;
+		});
+		static Color On_Cloud_cloudColor(On_Cloud.orig_cloudColor orig, Cloud self, Color bgColor) => orig(self, bgColor) * cloudAlphaMult.Value;
 		public override void Unload() {
 			FirstOrbDropRule = null;
 			OrbDropRule = null;
