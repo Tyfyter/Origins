@@ -379,7 +379,6 @@ public class Ashen_Closet : LootPool {
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b011).Type, 8, 1, 13));
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b001).Type, 8, 1, 15));
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b101).Type, 8, 1, 12));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 7));
 		AddRule(ItemDropRule.Common(ItemID.Bomb, 1, 65, 135));
 		AddRule(ItemDropRule.Common(ItemID.Dynamite, 1, 35, 80));
 		AddRule(ItemDropRule.Common(ItemID.TitaniumDrill));
@@ -400,6 +399,7 @@ public class Ashen_Command : LootPool {
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 1, 3, 7));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 1, 2));
 		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 29, 88));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>()));
 		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
@@ -432,6 +432,20 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 5));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Sticky_Link_Grenade>(), 4, 25, 85));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 1, 1, 2));
+		}
+	}
+	public class Ashen_Admin : LootPool {
+		/*public class Rarer : LootPool {
+			public override void SetStaticDefaults() {
+				Sequential = true;
+				AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 5));
+			}
+		}*/
+		public override void SetStaticDefaults() {
+			//AddRule(new DropLootPoolRule<Rarer>());
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 5));
+			AddRule(ItemDropRule.Common(ItemID.GoldCoin));
+			AddRule(ItemDropRule.Common(ItemID.CoffeeCup));
 		}
 	}
 }
