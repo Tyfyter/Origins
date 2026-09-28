@@ -1,20 +1,22 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Dusts;
+using Origins.Gores;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
-using Terraria.GameContent.ItemDropRules;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Origins.Dusts;
-using Origins.Dev;
-using Origins.Tiles.Other;
-using Terraria.GameContent.Bestiary;
+using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Fiberglass {
 	public class Enchanted_Fiberglass_Cannon : ModNPC, IWikiNPC {
@@ -103,14 +105,14 @@ namespace Origins.NPCs.Fiberglass {
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
 			if (hit.Damage > NPC.life * 2f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 			if (NPC.life <= 0) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[0]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[1]);
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic[2]);
 			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
-				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
+				SpawnGoreByType(NPC.GetSource_Death(), NPC.position, NPC.velocity, GoreCache.Fiberglass_Generic);
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
