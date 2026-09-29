@@ -1,10 +1,8 @@
-﻿using CalamityMod.Graphics.Renderers;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Core;
 using Origins.Core.Shaders;
-using Origins.Core.Structures;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Graphics;
@@ -634,14 +632,14 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		if (handler.fallAnimationTime >= 0) {
 			AnimationOffsets wholeOffset = wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
 			AnimationOffsets bothLegsOffset = bothLegsAnimation.GetValue(handler.fallAnimationTime);
-			backLegOffset += bothLegsOffset;
-			frontLegOffset += bothLegsOffset;
-			drawPosition += wholeOffset.Position * directions;
-			rotation += wholeOffset.Rotation * rotFlip;
 			backLegOffset = backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
 			frontLegOffset = frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
 			backLegFrame = backLegFrameAnimation.GetValue(handler.fallAnimationTime);
 			frontLegFrame = frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			backLegOffset += bothLegsOffset;
+			frontLegOffset += bothLegsOffset;
+			drawPosition += wholeOffset.Position * directions;
+			rotation += wholeOffset.Rotation * rotFlip;
 		}
 		Vector2 bodyCenter = GetBodyCenter(drawPlayer, drawPosition);
 		Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
