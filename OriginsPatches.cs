@@ -472,8 +472,6 @@ namespace Origins {
 			On_PlayerStatsSnapshot.ctor += On_PlayerStatsSnapshot_ctor;
 			IL_WaterfallManager.GetAlpha += FixWrongWaterfallAlpha_IL;
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
-			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
-			On_Main.DrawBlack += On_Main_DrawBlack;
 			On_Item.CloneDefaults += On_Item_CloneDefaults;
 			On_Lighting.AddLight_int_int_float_float_float += On_Lighting_AddLight_int_int_float_float_float;
 			On_Dust.NewDust += On_Dust_NewDust;

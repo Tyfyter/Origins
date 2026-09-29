@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Tiles.Other;
 using PegasusLib.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Drawing;
@@ -114,24 +116,8 @@ namespace Origins.Walls {
 			if (!drawingFancyLight && (OriginsModIntegrations.FancyLighting is null || drawWalls.Count <= 0)) drawWalls.Push(new(i, j));
 			return true;
 		}
-		static readonly FrameCachedValue<float> minLight = new(GetMinLight);
-		static float GetMinLight() {
-			int num;
-			float num2;
-			if (Lighting.Mode == LightMode.Retro) {
-				num2 = (Main.tileColor.R - 55) / 255f;
-				if (num2 < 0f) num2 = 0f;
-			} else {
-				num = (Main.tileColor.R + Main.tileColor.G + Main.tileColor.B) / 3;
-				if (Lighting.Mode == LightMode.Trippy) {
-					num2 = (num - 55) / 255f;
-					if (num2 < 0f) num2 = 0f;
-				} else num2 = (float)(num * 0.4) / 255f;
-			}
-			return num2 - Lighting.GlobalBrightness / 255;
-		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			float num2 = minLight.GetValue();
+			float num2 = OriginsModIntegrations.FancyLightingEngineActive.Mul(1f / 255);
 			r = num2;
 			g = num2;
 			b = num2;

@@ -103,6 +103,10 @@ namespace Origins.Items.Tools {
 				Projectile.velocity.Y = oldVelocity.Y * -bounce;
 				spin += (Projectile.velocity.X - Projectile.velocity.X * friction) * Math.Sign(oldVelocity.Y);
 				Projectile.velocity.X = Projectile.velocity.X * friction;
+				if (Math.Abs(Projectile.velocity.Y) <= 0.12f) {
+					Projectile.position.Y += newOldVelocity.Y;
+					Projectile.velocity.Y = 0;
+				}
 			}
 			spin *= 0.5f;
 			if (Math.Abs(spin) > 0.01f) {
