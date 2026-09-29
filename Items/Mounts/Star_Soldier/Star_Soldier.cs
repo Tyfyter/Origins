@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Graphics.Renderers;
+using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Core;
 using Origins.Core.Shaders;
+using Origins.Core.Structures;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Graphics;
@@ -21,6 +23,7 @@ using ReLogic.Graphics;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,14 +59,14 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 	}
 }
 public class Star_Soldier : ModMount, IModifyTriggers {
-	static int BodyTextureFrames => 5;
-	AutoLoadingTexture bodyTexture = typeof(Star_Soldier).GetDefaultTMLName();
-	AutoLoadingTexture bodyGlowTexture = typeof(Star_Soldier).GetDefaultTMLName("_Glow");
-	static int LegTextureFrames => 19;
-	AutoLoadingTexture frontLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Front_Leg");
-	AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
-	static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
-	static AutoLoadingTexture forearmTexture = typeof(Star_Soldier).GetDefaultTMLName("_Forearm");
+	public static int BodyTextureFrames => 5;
+	public static AutoLoadingTexture bodyTexture = typeof(Star_Soldier).GetDefaultTMLName();
+	public static AutoLoadingTexture bodyGlowTexture = typeof(Star_Soldier).GetDefaultTMLName("_Glow");
+	public static int LegTextureFrames => 19;
+	public static AutoLoadingTexture frontLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Front_Leg");
+	public static AutoLoadingTexture backLegTexture = typeof(Star_Soldier).GetDefaultTMLName("_Back_Leg");
+	public static AutoLoadingTexture shoulderTexture = typeof(Star_Soldier).GetDefaultTMLName("_Shoulder");
+	public static AutoLoadingTexture forearmTexture = typeof(Star_Soldier).GetDefaultTMLName("_Forearm");
 	public static DynamicSpriteFont Font { get; private set; }
 	public static DynamicSpriteFont FontLarge { get; private set; }
 	public static HashSet<int> RainbowDyes;
@@ -74,6 +77,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		[(Main.pixelShader, "ArmorMidnightRainbow")] = true
 	};*/
 	public class MountHandler {
+
+		public int fallAnimationTime = -1;
 		public static int MaxLife => 750;
 		public int life = MaxLife;
 		public int dotCount = 0;
@@ -322,11 +327,14 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			public readonly bool IsFront(Player player) => (Index == 1) == (player.direction == 1);
 			public readonly bool IsBack(Player player) => (Index == 1) != (player.direction == 1);
 			public readonly Star_Soldier_Weapon Weapon => (Star_Soldier_Weapon)item.ModItem;
-			public readonly void GetPositions(Vector2 basePosition, float baseRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
+			public static void GetPositions(Vector2 basePosition, float baseRotation, float shoulderRotation, float forearmRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
 				shoulderPos = basePosition - (new Vector2(4, 20) * directions).RotatedBy(baseRotation);
 				if (directions.Sum() == 0) baseRotation += MathHelper.Pi;
 				forearmPos = shoulderPos + (new Vector2(-22, 24) * directions).RotatedBy(baseRotation + shoulderRotation);
 				gunPos = forearmPos + (new Vector2(20, 16) * directions).RotatedBy(baseRotation + forearmRotation);
+			}
+			public readonly void GetPositions(Vector2 basePosition, float baseRotation, Vector2 directions, out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos) {
+				GetPositions(basePosition, baseRotation, shoulderRotation, forearmRotation, directions, out shoulderPos, out forearmPos, out gunPos);
 			}
 			public void UpdateRotations(Player player) {
 				rotationSpeedMult = 1;
@@ -439,7 +447,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 					data.color = Color.White;
 					playerDrawData.Add(data);
 				}
-
 			}
 		}
 		public record class Star_Soldier_Weapon_Sound(Player Player, int ItemType) : AutoSyncedAction {
@@ -565,7 +572,14 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	static void On_Player_ScrollHotbar(On_Player.orig_ScrollHotbar orig, Player self, int Offset) {
 		if (!self.mount.IsMount<Star_Soldier>()) orig(self, Offset);
 	}
-	public override void SetMount(Player player, ref bool skipDust) => player.mount._mountSpecificData = new MountHandler();
+	public override void SetMount(Player player, ref bool skipDust) {
+		player.mount._mountSpecificData = new MountHandler();
+	}
+#if DEBUG
+	public override void Dismount(Player player, ref bool skipDust) {
+		InitializeAnimation();
+	}
+#endif
 	struct HideItemHUD : IBroken {
 		static string IBroken.BrokenReason => "Hide item HUD";
 	}
@@ -601,61 +615,126 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	}
 	static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * (player.height - 24);
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle _, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-		if (drawType == 3 && GetHandler(drawPlayer) is MountHandler handler) {
-			Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
-			Vector2 bodyCenter = GetBodyCenter(drawPlayer, drawPosition);
-			Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
-			Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32).Transform(rotationMatrix);
-
-			(drawPlayer.direction == -1 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
-			playerDrawData.Add(new(
-				backLegTexture,
-				hips,
-				frame,
-				drawColor,
-				rotation,
-				spriteEffects.ApplyToOrigin(new(15, 23), frame),
-				drawScale,
-				spriteEffects
-			) {
-				shader = drawPlayer.cMount
-			});
-
-			frame = bodyTexture.Frame(verticalFrames: BodyTextureFrames, frameY: handler.bodyFrame);
-			DrawData bodyData = new(
-				bodyTexture,
-				bodyCenter,
-				frame,
-				drawColor,
-				rotation,
-				spriteEffects.ApplyToOrigin(new(59, 37), frame),
-				drawScale,
-				spriteEffects
-			) {
-				shader = drawPlayer.cMount
-			};
-			playerDrawData.Add(bodyData);
-			bodyData.texture = bodyGlowTexture;
-			bodyData.color = Color.White;
-			playerDrawData.Add(bodyData);
-
-			frame = frontLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: handler.walkFrame);
-			playerDrawData.Add(new(
-				frontLegTexture,
-				hips,
-				frame,
-				drawColor,
-				rotation,
-				spriteEffects.ApplyToOrigin(new(15, 23), frame),
-				drawScale,
-				spriteEffects
-			) {
-				shader = drawPlayer.cMount
-			});
-			(drawPlayer.direction == -1 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
-		}
+		if (drawType == 3 && GetHandler(drawPlayer) is MountHandler handler) DrawStarSoldier(playerDrawData, drawPlayer, drawPosition, drawColor, rotation, spriteEffects, drawScale, handler);
 		return false;
 	}
+
+	public static void DrawStarSoldier(List<DrawData> playerDrawData, Player drawPlayer, Vector2 drawPosition, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler) {
+		Vector2 directions = spriteEffects.ApplyToOrigin(Vector2.One, default);
+		float rotFlip = directions.X * directions.Y;
+		AnimationOffsets backLegOffset = default, bodyOffset = default, frontLegOffset = default;
+		int backLegFrame = handler.walkFrame, frontLegFrame = handler.walkFrame;
+#if DEBUG
+		Stopwatch stopwatch = Stopwatch.StartNew();
+		// Use a breakpoint on the statement below to "hot reload" animation
+		stopwatch.Stop();
+		if (stopwatch.ElapsedMilliseconds > 0) InitializeAnimation();
+#endif
+		#region drawing
+		if (handler.fallAnimationTime >= 0) {
+			AnimationOffsets wholeOffset = wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
+			AnimationOffsets bothLegsOffset = bothLegsAnimation.GetValue(handler.fallAnimationTime);
+			backLegOffset += bothLegsOffset;
+			frontLegOffset += bothLegsOffset;
+			drawPosition += wholeOffset.Position * directions;
+			rotation += wholeOffset.Rotation * rotFlip;
+			backLegOffset = backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
+			frontLegOffset = frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
+			backLegFrame = backLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			frontLegFrame = frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
+		}
+		Vector2 bodyCenter = GetBodyCenter(drawPlayer, drawPosition);
+		Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
+		Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: backLegFrame);
+		Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32).Transform(rotationMatrix);
+
+		(drawPlayer.direction == -1 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
+		playerDrawData.Add(new(
+			backLegTexture,
+			hips + backLegOffset.Position * directions,
+			frame,
+			drawColor,
+			rotation + backLegOffset.Rotation * rotFlip,
+			spriteEffects.ApplyToOrigin(new(15, 23), frame),
+			drawScale,
+			spriteEffects
+		) {
+			shader = drawPlayer.cMount
+		});
+
+		frame = bodyTexture.Frame(verticalFrames: BodyTextureFrames, frameY: handler.bodyFrame);
+		DrawData bodyData = new(
+			bodyTexture,
+			bodyCenter + bodyOffset.Position * directions,
+			frame,
+			drawColor,
+			rotation + bodyOffset.Rotation * rotFlip,
+			spriteEffects.ApplyToOrigin(new(59, 37), frame),
+			drawScale,
+			spriteEffects
+		) {
+			shader = drawPlayer.cMount
+		};
+		playerDrawData.Add(bodyData);
+		bodyData.texture = bodyGlowTexture;
+		bodyData.color = Color.White;
+		playerDrawData.Add(bodyData);
+
+		frame = frontLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: frontLegFrame);
+		playerDrawData.Add(new(
+			frontLegTexture,
+			hips + frontLegOffset.Position * directions,
+			frame,
+			drawColor,
+			rotation + frontLegOffset.Rotation * rotFlip,
+			spriteEffects.ApplyToOrigin(new(15, 23), frame),
+			drawScale,
+			spriteEffects
+		) {
+			shader = drawPlayer.cMount
+		});
+		(drawPlayer.direction == -1 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
+		#endregion
+	}
+	#region landing animation
+	static void InitializeAnimation() {
+		wholeOffsetAnimation = new(new(default, 0.5f)) {
+			new(3, new(Vector2.UnitY * 8, 0.5f), AnimationOffsets.Linear),
+			new(30, new(Vector2.Zero, 0.5f), AnimationOffsets.Linear.WithExponent(2)),
+			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+		};
+		bothLegsAnimation = new(new(default, 0)) {
+			new(3, new(Vector2.UnitY * -8, -0.5f), AnimationOffsets.Linear),
+			new(30, new(Vector2.Zero, -0.5f), AnimationOffsets.Linear.WithExponent(2)),
+			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+		};
+		backLegOffsetAnimation = new() {
+		};
+		frontLegOffsetAnimation = new() {
+		};
+		backLegFrameAnimation = new() {
+			KeyframeTypes.Step(8, 3)
+		};
+		frontLegFrameAnimation = new() {
+		};
+	}
+	record struct AnimationOffsets(Vector2 Position, float Rotation) {
+		public static KeyframeSet<AnimationOffsets>.Interpolation Linear { get; } = Interpolation(Vector2.Lerp, float.Lerp);
+		public static KeyframeSet<AnimationOffsets>.Interpolation Interpolation(KeyframeSet<Vector2>.Interpolation Position, KeyframeSet<float>.Interpolation Rotation) =>
+			(prevValue, nextValue, progress) => new(
+				Position(prevValue.Position, nextValue.Position, progress),
+				Rotation(prevValue.Rotation, nextValue.Rotation, progress)
+			);
+		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
+	}
+	static KeyframeSet<AnimationOffsets> wholeOffsetAnimation;
+	static KeyframeSet<AnimationOffsets> bothLegsAnimation;
+	static KeyframeSet<AnimationOffsets> backLegOffsetAnimation;
+	static KeyframeSet<AnimationOffsets> frontLegOffsetAnimation;
+	static KeyframeSet<int> backLegFrameAnimation;
+	static KeyframeSet<int> frontLegFrameAnimation;
+	static Star_Soldier() => InitializeAnimation();
+	#endregion
 	#endregion
 	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {
 		public Star_Soldier_Set_Weapons() : this(default, default, default) { }
@@ -1651,7 +1730,6 @@ public class Star_Soldier_Droner : Star_Soldier_Weapon {
 		Item.autoReuse = true;
 		Item.rare = ItemRarityID.Yellow;
 	}
-	public override void ModifyDrawData(Star_Soldier.MountHandler mountHandler, ref DrawData drawData) { }
 	public override void UpdateEquipped(Player player, ref Star_Soldier.MountHandler.Arm arm, bool control) {
 		Star_Soldier.MountHandler handler = Star_Soldier.GetHandler(player);
 		handler.maxDrones += 1 + handler.maxDrones;
@@ -2075,18 +2153,50 @@ public class Star_Soldier_Proper_Buff : ModBuff {
 }
 public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 	public class MountHandler {
-		int time;
+		static float GroundOffset => 56;
+		float fadeIconsOut = 1;
 		int hoverIndex = 0;
 		Star_Soldier_Weapon leftClickSelection;
 		Star_Soldier_Weapon rightClickSelection;
+		float fallPosition;
+		public Star_Soldier.MountHandler fallingStarSoldier;
 		public void Update(Player player) {
 			if (leftClickSelection is null || rightClickSelection is null) return;
-			if (++time > 60) {
+			MathUtils.LinearSmoothing(ref fadeIconsOut, 0, 1f / 60);
+			fallingStarSoldier ??= new() {
+				chosenItem = new() { item = new(leftClickSelection.Type), Index = 0 },
+				altItem = new() { item = new(rightClickSelection.Type), Index = 1 },
+				fallAnimationTime = 0
+			};
+			fallPosition += 48;
+			if (fallPosition > player.Bottom.Y - GroundOffset) {
+				fallPosition = player.Bottom.Y - GroundOffset;
+#if DEBUG
+				if (player.controlUp) 
+#endif
+				fallingStarSoldier.fallAnimationTime++;
+			}
+			if (fallingStarSoldier.fallAnimationTime > 60) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
 				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
 			}
 		}
 		public bool ModifyTriggers(Player player, TriggersSet triggersSet) {
+			if (leftClickSelection is not null && rightClickSelection is not null) {
+#if DEBUG
+				if (!player.controlUp && PlayerInput.ScrollWheelDelta.Abs(out int _dir) >= 120) {
+					fallingStarSoldier.fallAnimationTime -= _dir;
+					Max(ref fallingStarSoldier.fallAnimationTime, 0);
+				}
+#endif
+				PlayerInput.ScrollWheelDelta = 0;
+				for (int i = 1; i <= 10; i++) triggersSet.KeyStatus["Hotbar" + i] = false;
+				triggersSet.HotbarPlus = false;
+				triggersSet.HotbarMinus = false;
+				player.controlUseItem = false;
+				player.controlUseTile = false;
+				return false;
+			}
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			if (PlayerInput.ScrollWheelDelta.Abs(out int dir) >= 120) {
 				if (dir < 0) hoverIndex.CycleUp(options.Count);
@@ -2130,10 +2240,11 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			pos.X = ((int)pos.X) / scale.X;
 			pos.Y = ((int)pos.Y) / scale.Y;
 			Vector2 iconsPos = pos - Vector2.UnitX * (player.width * 0.5f + 40);
+			Color baseColor = Color.White * fadeIconsOut;
 			DrawData data = new(
 				options[0].Icon.Value,
 				iconsPos,
-				Color.White
+				baseColor
 			) {
 				origin = options[0].Icon.Value.Size() * 0.5f,
 				scale = new(0.85f)
@@ -2143,14 +2254,14 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 					Star_Soldier_Weapon weapon = options[(hoverIndex + i + options.Count) % options.Count];
 					data.texture = weapon.Icon.Value;
 					data.position = iconsPos + i * 50 * Vector2.UnitY;
-					data.color = Color.White * (i == 0 ? 1 : 0.5f);
+					data.color = baseColor * (i == 0 ? 1 : 0.5f);
 					data.Draw(spriteBatch);
 					TryHover(data, weapon);
 				}
 			} else {
 				data.texture = leftClickSelection.Icon.Value;
 				data.position = iconsPos;
-				data.color = Color.White;
+				data.color = baseColor;
 				data.Draw(spriteBatch);
 				TryHover(data, leftClickSelection);
 			}
@@ -2160,14 +2271,14 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 					Star_Soldier_Weapon weapon = options[(hoverIndex + i + options.Count) % options.Count];
 					data.texture = weapon.Icon.Value;
 					data.position = iconsPos + i * 50 * Vector2.UnitY;
-					data.color = Color.White * (i == 0 ? 1 : 0.5f);
+					data.color = baseColor * (i == 0 ? 1 : 0.5f);
 					data.Draw(spriteBatch);
 					TryHover(data, weapon);
 				}
 			} else {
 				data.texture = rightClickSelection.Icon.Value;
 				data.position = iconsPos;
-				data.color = Color.White;
+				data.color = baseColor;
 				data.Draw(spriteBatch);
 				TryHover(data, rightClickSelection);
 			}
@@ -2177,6 +2288,36 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				Main.hoverItemName = selection.Item.Name;
 				Main.HoverItem = selection.Item;
 				Main.instance.MouseText(Main.hoverItemName, selection.Item.rare, 0);
+			}
+		}
+		public void DrawFallingStar(List<DrawData> playerDrawData, Player drawPlayer, Vector2 drawPosition, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale) {
+			if (fallingStarSoldier is Star_Soldier.MountHandler fallingHandler) {
+				drawPosition.X -= drawPlayer.direction * 24;
+				drawPosition.Y = fallPosition - Main.screenPosition.Y;
+				float shoulderRotation = 0;
+				float forearmRotation = 0;
+				float gunRotation = 0;
+				if (drawPlayer.direction < 0) {
+					shoulderRotation = MathHelper.Pi - shoulderRotation;
+					forearmRotation = MathHelper.Pi - forearmRotation;
+					gunRotation = MathHelper.Pi - gunRotation;
+				}
+				fallingHandler.chosenItem.shoulderRotation = shoulderRotation;
+				fallingHandler.chosenItem.forearmRotation = forearmRotation;
+				fallingHandler.chosenItem.gunRotation = gunRotation;
+				fallingHandler.altItem.shoulderRotation = shoulderRotation;
+				fallingHandler.altItem.forearmRotation = forearmRotation;
+				fallingHandler.altItem.gunRotation = gunRotation;
+				Star_Soldier.DrawStarSoldier(
+					playerDrawData,
+					drawPlayer,
+					drawPosition,
+					drawColor,
+					rotation,
+					spriteEffects,
+					drawScale,
+					fallingHandler
+				);
 			}
 		}
 	}
@@ -2239,6 +2380,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			drawPosition.Y += 9;
 			return true;
 		}
+		if (drawType == 3) GetHandler(drawPlayer)?.DrawFallingStar(playerDrawData, drawPlayer, drawPosition, drawColor, rotation, spriteEffects, drawScale);
 		return false;
 	}
 	public class Star_Soldier_UI : SwitchableUIState {
