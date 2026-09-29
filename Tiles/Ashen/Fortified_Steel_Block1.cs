@@ -237,7 +237,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Fortified_Steel_Block1_Item : ModItem, ICustomWikiStat {
-		public virtual int MinePower => 65;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
@@ -258,14 +257,13 @@ namespace Origins.Tiles.Ashen {
 			.Register();
 		}
 		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
-			.WithFormatArgs(MinePower,
+			.WithFormatArgs(TileLoader.GetTile(Item.createTile).MinPick,
 			Language.GetText("Mods.Origins.Generic.Ashen_Factory"),
 			"Stone"
 		);
 	}
 	public class Fortified_Steel_Block2_Item : Fortified_Steel_Block1_Item {
 		public override string Texture => base.Texture.Replace("2", "1");
-		public override int MinePower => 100;
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block2>());
 		}
@@ -280,7 +278,6 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Fortified_Steel_Block3_Item : Fortified_Steel_Block1_Item {
 		public override string Texture => base.Texture.Replace("3", "1");
-		public override int MinePower => 210;
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block3>());
 		}
