@@ -67,8 +67,9 @@ public class TM_Bullet_Casing : ModDust {
 			ping |= Math.Abs(oldVelocity.Y) > 4;
 		}
 		if (ping) {
-			SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(2f, 2.2f).WithVolume(0.4f), dust.position);
-			SoundEngine.PlaySound(Origins.Sounds.BuletCasingDrop.WithPitchRange(0.1f, 0.3f).WithVolume(0.4f), dust.position);
+			float mult = MathHelper.Clamp(1.0f - dust.position.Distance(Main.Camera.Center) / 640, 0, 1);
+			SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(2f, 2.2f).WithVolume(0.4f * mult), dust.position);
+			SoundEngine.PlaySound(Origins.Sounds.BuletCasingDrop.WithPitchRange(0.1f, 0.3f).WithVolume(0.4f * mult), dust.position);
 		}
 		spin *= 5f;
 		if (newOldVelocity != oldVelocity) {
