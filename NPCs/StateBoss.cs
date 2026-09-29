@@ -91,7 +91,7 @@ namespace Origins.NPCs {
 		public virtual double GetWeight(TBoss boss, int[] previousStates) {
 			int index = Array.IndexOf(previousStates, Index);
 			if (index == -1) index = previousStates.Length;
-			float disincentivization = 1f;
+			const float disincentivization = 1f;
 			return (index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f) * disincentivization;
 		}
 		public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);

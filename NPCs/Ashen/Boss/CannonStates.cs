@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.Linq;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 
 namespace Origins.NPCs.Ashen.Boss {
@@ -131,6 +132,12 @@ namespace Origins.NPCs.Ashen.Boss {
 			public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 				behindNPCs.Add(index);
 			}
+		}
+		public override double GetWeight(Trenchmaker boss, int[] previousStates) {
+			double baseWeight = base.GetWeight(boss, previousStates);
+			if (baseWeight == 0) return 0;
+			if (false) return 0; //todo: check ceiling height
+			return baseWeight * baseWeight;
 		}
 	}
 }
