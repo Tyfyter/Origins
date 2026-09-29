@@ -470,6 +470,7 @@ namespace Origins {
 			public static TileBoolSetWithIndexes RivenBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static TileBoolSetWithIndexes AshenBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static TileBoolSetWithIndexes LimestoneBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
+			public static bool[] LavaAboveEmitsSmoke = TileID.Sets.Factory.CreateBoolSet();
 			public static bool[] GemTilesToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
 				.Description("Gem ores in this set can be corrupted into chambersite ores")
 				.RegisterBoolSet(

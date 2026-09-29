@@ -98,6 +98,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
+			OriginsSets.Tiles.LavaAboveEmitsSmoke[Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

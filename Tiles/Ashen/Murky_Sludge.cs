@@ -12,6 +12,7 @@ namespace Origins.Tiles.Ashen {
 			TilesForSound[Type] = true;
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			OriginsSets.Tiles.LavaAboveEmitsSmoke[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x2c212a));
 			DustType = DustID.Mud;
