@@ -133,6 +133,7 @@ namespace Origins.Tiles.Ashen {
 			ID = Type;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
+			MinPick = 210;
 		}
 		public bool IsValidTile(Tile tile, int left, int top, int style) {
 			if (Shape.Matches(tile, left, top, style)) return true;

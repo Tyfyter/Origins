@@ -8,6 +8,7 @@ using Origins.Items.Tools;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.Dev.cher;
+using Origins.Items.Vanity.Other.Sets.PEE;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
@@ -382,6 +383,7 @@ public class Ashen_Closet : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Loose_Wheel>()).OncePerWorld());
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b100).Type, 8, 2, 16));
 		AddRule(ItemDropRule.Common(Logic_Gate.Get(0b111).Type, 8, 1, 17));
@@ -408,7 +410,6 @@ public class Ashen_Command : LootPool {
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 1, 3, 7));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 1, 2));
 		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 29, 88));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>()));
 		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
@@ -452,7 +453,6 @@ public class Ashen_Lab : LootPool {
 		}*/
 		public override void SetStaticDefaults() {
 			//AddRule(new DropLootPoolRule<Rarer>());
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 5));
 			AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 			AddRule(ItemDropRule.Common(ItemID.CoffeeCup));
 		}
@@ -460,6 +460,9 @@ public class Ashen_Lab : LootPool {
 	public class Ashen_Replenish : LootPool {
 		public override void SetStaticDefaults() {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2, 1, 2));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Helmet>(), 2));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Breastplate>(), 2));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Greaves>(), 2));
 			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 			AddRule(ItemDropRule.Common(ItemID.Grenade, 2, 8, 22));
 			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 5, 50));
@@ -472,6 +475,9 @@ public class Ashen_Lab : LootPool {
 		public override void SetStaticDefaults() {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_They_Found_Us>()).OncePerWorld());
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 1, 1, 2));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Helmet>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Breastplate>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Greaves>()));
 			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 			AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 25, 25));
 			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 81, 81));

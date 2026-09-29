@@ -38,7 +38,7 @@ namespace Origins.Tiles.Ashen {
 			OriginsSets.Tiles.LavaAboveEmitsSmoke[Type] = true;
 			AddMapEntry(MapColor);
 
-			MinPick = 65;
+			MinPick = 110;
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
@@ -215,7 +215,7 @@ namespace Origins.Tiles.Ashen {
 		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			MinPick = 110;
+			MinPick = 200;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			DrawTilePattern(i, j, CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(paintKey, Main.tile[i, j].TileColor, patternTexture));

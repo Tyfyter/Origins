@@ -66,6 +66,7 @@ BOSSES AND MINI-BOSSES:
 (ᗢ) Fiberglass Weaver
 (^) Shimmer Construct
 (#2, ^2) Trenchmaker !!!
+(ᗢ) World Cracker
 
 (^) Lost Diver/Mildew Carrion
 (X) Snowdrop
@@ -156,7 +157,7 @@ WORLD GENERATION:
 |---
 (§, %2, #2) Ashen Factory !!!
 (§, %2, X) Ashen Outpost !!!
-(§, %2, X) Ashen Scrapyard !!!
+(§, X) Ashen Scrapyard !!!
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
@@ -193,7 +194,7 @@ OTHER:
 (^) Quest System General
 (#2) Quirky World Evil Spread mechanics !!!
 (X) NPC Portraits
-(#, $2, ^2) Sprockey Power Wiring Assisstant !!!
+(#, $2, ^2) Sprockey Power Wiring Assistant !!!
 (^) Summoner Plus Modifiers
 ---
 
@@ -262,7 +263,7 @@ ENEMY NPCS:
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
-(#, ^2) QM-76 'Quakemaker' !!!
+(#2, ^2) QM-76 'Quakemaker' !!!
 (^) Reject
 (^) Repairboy
 (^) Riven Penguin
@@ -424,7 +425,7 @@ NPC DIALOGUE:
 (^) Dryad
 (ᗢ) Witch Doctor
 
-(⚿, ᗢ) Brine Fiend !!! (princess dialogue)
+(ᗢ) Brine Fiend
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
 (ᗢ) Mother Unit
@@ -750,6 +751,7 @@ VANITY:
 (X) Decay Protector Set
 (^) Felnum Shock Glasses
 (X) Gore Protector Set
+(#, ^2) Jumpsuit !!!
 (^) Newsboy Cap
 (^) Pernicious Enterprise Employee Set
 (^) Sunflower Sandals
@@ -984,7 +986,7 @@ RANGED WEAPONS:
 (^) Harpoon Burst Rifle
 (^) HNO-3 "Viper"
 (^) Incision
-(X) Lag Spike
+(#, ^2) Lag Spike
 (^) Laser Line Bow
 (^) Mythril Harpoon Gun
 (X) Organ Donor
@@ -1001,8 +1003,8 @@ RANGED WEAPONS:
 (X) Disciple Maker
 (^) Dreikan
 (X) EAC Thunder
-(X) Fungi Pipe
-(X) Shroomshot
+(#, ^2) Fungi Pipe
+(#, ^2) Shroomshot
 (^) The P.L.A.N.T.
 (^) Tolruk
 
@@ -1440,6 +1442,7 @@ TILES:
 (^) Delay Component
 (^) Diode Component
 (^) Dirt Chest
+(X) Door Stopper !!!
 (^) Edge Detector
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
@@ -1487,13 +1490,13 @@ TILES:
 
 (X) Elderforge
 (^) Fabricator
-(X) Flesh Shredder !!!
+(#, ^2) Flesh Shredder !!!
 (X) Interstellar Sampler
 (^) Medicine Fabricator
 (^) Metal Presser
 (X) Psymanti Mixing Station
 (X) Rite Shrine
-(X) The Demaker !!!
+(#, ^2) The Demaker !!!
 
 (^) Acetabularia
 (^) Administrator Panel
@@ -1707,6 +1710,7 @@ MISCELLANEOUS ITEMS:
 (^) Worn Paper: Mean Baby
 (^) Worn Paper: Self-Preservation
 (^) Worn Paper: Smog Test
+(X) Worn Paper: The Nuke
 (^) Worn Paper: The Packing Slip
 (^) Worn Paper: They Found Us
 (^) Worn Paper: Workplace Safety Concern
@@ -1847,6 +1851,7 @@ CONSUMABLES:
 (X) Quantum Cell
 (^) Shaped Glass
 (^) Suspicious Looking Ice Cream
+(X) Suspicious Looking Slush
 (X) The Button
 
 (^) Basic Crate
@@ -2151,6 +2156,7 @@ VOLUME I MUSIC:
 (X) Test of Ancients
 
 (^) Ashen Warhead Music
+(X) Hawken Surfing Music !!!
 (X) Star Soldier Juggernaut Music
 ---
 
@@ -2206,5 +2212,6 @@ VOLUME III MUSIC:
 (X) Test of Ancients
 
 (X) Ashen Warhead Music
+(X) Hawken Surfing Music
 ($2) Star Soldier Juggernaut Music
 ---
