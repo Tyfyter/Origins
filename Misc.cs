@@ -4941,6 +4941,12 @@ namespace Origins {
 			return tooltip;
 		}
 		public static void ForceEnableCrit(this Item item) => CritType.ForceEnableCrit(item);
+		[Pure]
+		public static bool IsType<TItem>(this Item item) where TItem : ModItem => item.type == ModContent.ItemType<TItem>();
+		public static void MakeExplosive(this Item item, DamageClass? defaultOverride = null) {
+			if (item.DamageType == DamageClass.Default) item.DamageType = defaultOverride ?? DamageClasses.Explosive;
+			else item.DamageType = DamageClasses.ExplosiveVersion[item.DamageType];
+		}
 	}
 	public static class NPCExtensions {
 		public static void CopyBanner<TOther>(this ModNPC self) where TOther : ModNPC {
@@ -6362,6 +6368,10 @@ namespace Origins {
 		}
 		[Pure]
 		public static bool IsType<TProj>(this Projectile proj) where TProj : ModProjectile => proj.type == ModContent.ProjectileType<TProj>();
+		public static void MakeExplosive(this Projectile proj, DamageClass? defaultOverride = null) {
+			if (proj.DamageType == DamageClass.Default) proj.DamageType = defaultOverride ?? DamageClasses.Explosive;
+			else proj.DamageType = DamageClasses.ExplosiveVersion[proj.DamageType];
+		}
 	}
 	public static class ContentExtensions {
 		public static T[] RegisterSet<T>(this SetFactory.NamedSetKey set, T defaultState, params (int index, T value)[] inputs) => set.RegisterCustomSet<T>(defaultState,
