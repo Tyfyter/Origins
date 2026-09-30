@@ -717,12 +717,15 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		};
 	}
 	record struct AnimationOffsets(Vector2 Position, float Rotation) {
-		public static KeyframeSet<AnimationOffsets>.Interpolation Linear { get; } = Interpolation(Vector2.Lerp, float.Lerp);
-		public static KeyframeSet<AnimationOffsets>.Interpolation Interpolation(KeyframeSet<Vector2>.Interpolation Position, KeyframeSet<float>.Interpolation Rotation) =>
-			(prevValue, nextValue, progress) => new(
-				Position(prevValue.Position, nextValue.Position, progress),
-				Rotation(prevValue.Rotation, nextValue.Rotation, progress)
-			);
+		public static KeyframeSet<AnimationOffsets>.IInterpolation Linear { get; } = new Interpolation();
+		public readonly struct Interpolation : KeyframeSet<AnimationOffsets>.IInterpolation {
+			readonly AnimationOffsets KeyframeSet<AnimationOffsets>.IInterpolation.Interpolate(AnimationOffsets prevValue, AnimationOffsets nextValue, float progress) =>
+				new(
+					Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
+					float.Lerp(prevValue.Rotation, nextValue.Rotation, progress)
+				);
+			public readonly override string ToString() => "Linear";
+		}
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
 	}
 	static KeyframeSet<AnimationOffsets> wholeOffsetAnimation;
@@ -731,7 +734,31 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	static KeyframeSet<AnimationOffsets> frontLegOffsetAnimation;
 	static KeyframeSet<int> backLegFrameAnimation;
 	static KeyframeSet<int> frontLegFrameAnimation;
-	static Star_Soldier() => InitializeAnimation();
+	public static KeyframeAnimation animation = new Anim();
+	class Anim : KeyframeAnimation {
+		public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(default, 0.5f)) {
+			new(3, new(Vector2.UnitY * 8, 0.5f), AnimationOffsets.Linear),
+			new(30, new(Vector2.Zero, 0.5f), AnimationOffsets.Linear.WithExponent(2)),
+			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+		};
+		public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(new(default, 0)) {
+			new(3, new(Vector2.UnitY * -8, -0.5f), AnimationOffsets.Linear),
+			new(30, new(Vector2.Zero, -0.5f), AnimationOffsets.Linear.WithExponent(2)),
+			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+		};
+		public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new() {
+		};
+		public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new() {
+		};
+		public KeyframeSet<int> backLegFrameAnimation = new() {
+			KeyframeTypes.Step(8, 3)
+		};
+		public KeyframeSet<int> frontLegFrameAnimation = new() {
+		};
+	}
+	static Star_Soldier() {
+		InitializeAnimation();
+	}
 	#endregion
 	#endregion
 	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {
@@ -2174,7 +2201,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 #endif
 				fallingStarSoldier.fallAnimationTime++;
 			}
-			if (fallingStarSoldier.fallAnimationTime > 60) {
+			if (fallingStarSoldier.fallAnimationTime > Star_Soldier.animation.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
 				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
 			}
@@ -2227,6 +2254,9 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			return false;
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
+			if (fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
+				Star_Soldier.animation.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
+			}
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			for (int i = 0; i < options.Count; i++) {
 				if (options[i].Item.ToolTip is null) options[i].Item.SetDefaults(options[i].Item.type);
