@@ -4,6 +4,7 @@ using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Vanity.Dev.PlagueTexan;
+using Origins.Items.Vanity.Other.Sets.Jumpsuit;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
@@ -263,6 +264,15 @@ namespace Origins {
 				Player.itemAnimation = itemAnimation;
 			}
 			ShadowType.Draw(camera, Player);
+		}
+		public override void UpdateVisibleAccessories() {
+			int jumpsuit = ModContent.ItemType<Jumpsuit>();
+			if ((Player.armor[12]?.IsAir ?? true) && (Player.armor[11]?.type == jumpsuit || (Player.armor[1]?.type == jumpsuit && (Player.armor[2]?.IsAir ?? true)))) {
+				Player.legs = ModContent.GetInstance<Jumpsuit>().Item.legSlot;
+			}
+			if ((Player.armor[11]?.IsAir ?? true) && (Player.armor[12]?.type == jumpsuit || (Player.armor[2]?.type == jumpsuit && (Player.armor[1]?.IsAir ?? true)))) {
+				Player.body = ModContent.GetInstance<Jumpsuit>().Item.bodySlot;
+			}
 		}
 		internal void UpdateMurkySludgeSounds() {
 			Rectangle hitbox = Player.Hitbox;
