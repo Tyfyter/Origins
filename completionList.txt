@@ -397,6 +397,7 @@ STATUS EFFECTS:
 (X) Naloxone
 (X) Nausea
 (X) Psychosis
+(X) Short Breath
 (^) Solvent Tolerance
 (X) Symbiosis
 (^) Totally Safe
