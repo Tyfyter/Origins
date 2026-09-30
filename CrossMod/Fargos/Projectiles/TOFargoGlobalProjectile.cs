@@ -1,15 +1,22 @@
 ﻿using Fargowiltas.Projectiles.Explosives;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod.Fargos.Projectiles {
 	[ExtendsFromMod(nameof(Fargowiltas))]
 	public class TOFargoGlobalProjectile : GlobalProjectile {
-		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
-			return entity.type == ModContent.ProjectileType<ShurikenProj>();
+		public override void SetDefaults(Projectile proj) {
+			try {
+				FargosProjectile(proj);
+			} catch (Exception e) {
+				if (Origins.LogLoadingError("MissingCrossModItem", nameof(TOFargoGlobalProjectile), e)) throw;
+			}
 		}
-		public override void SetDefaults(Projectile entity) {
-			entity.DamageType = DamageClasses.ThrownExplosive;
+
+		[NoJIT]
+		public static void FargosProjectile(Projectile proj) {
+			if (proj.IsType<ShurikenProj>()) proj.MakeExplosive(DamageClasses.ThrownExplosive);
 		}
 	}
 }

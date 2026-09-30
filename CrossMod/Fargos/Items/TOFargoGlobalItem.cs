@@ -1,16 +1,27 @@
 ﻿using Fargowiltas.Items.Explosives;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod.Fargos.Items {
 	[ExtendsFromMod(nameof(Fargowiltas))]
 	public class TOFargoGlobalItem : GlobalItem {
-		public override bool AppliesToEntity(Item entity, bool lateInstantiation) {
-			return entity.type == ModContent.ItemType<BoomShuriken>();
-		}
 		public override void SetDefaults(Item item) {
-			item.DamageType = DamageClasses.ThrownExplosive;
-			item.StatsModifiedBy.Add(Mod);
+			try {
+				FargosItem(item);
+			} catch (Exception e) {
+				if (Origins.LogLoadingError("MissingCrossModItem", nameof(TOFargoGlobalItem), e)) throw;
+			}
+		}
+		[NoJIT]
+		public static void FargosItem(Item item) {
+			bool statsModified = false;
+			if (item.IsType<BoomShuriken>()) {
+				item.MakeExplosive(DamageClasses.ThrownExplosive);
+				statsModified = true;
+			}
+
+			if (statsModified) item.StatsModifiedBy.Add(Origins.instance);
 		}
 	}
 }
