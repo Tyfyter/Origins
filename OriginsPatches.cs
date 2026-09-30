@@ -725,7 +725,7 @@ namespace Origins {
 				Debugging.LogFirstRun(PressurePlateHelper.UpdatePlayerPosition);
 				OriginPlayer originPlayer = self.OriginPlayer();
 				originPlayer.UpdateNPCPlatforms();
-				if (originPlayer.weakShimmer) orig(self);
+				if (!originPlayer.weakShimmer) orig(self);
 				originPlayer.UpdateMurkySludgeSounds();
 				Incinerator_Pit.HurtEntity(self, 
 					dir => {
