@@ -47,7 +47,9 @@ namespace Origins.Walls {
 			orig(self);
 			if (OriginClientConfig.Instance.DisableCoolVisualEffects) return;
 			if (drawWalls is null) return;
-			if (OriginsModIntegrations.FancyLighting is not null) {
+			if (OriginsModIntegrations.FancyLightingEngineActive) {
+				if (OriginsModIntegrations.FancyLightingEnhancedGlowMaskSupport && !OriginsModIntegrations.FancyLightingDrawingRealLight) return;
+
 				RenderTarget2D wallTarget = Main.instance.wallTarget;
 				AnyWallsVisible = drawWalls.Count > 0;
 				if (!AnyWallsVisible) return;
@@ -117,7 +119,8 @@ namespace Origins.Walls {
 			return true;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			float num2 = OriginsModIntegrations.FancyLightingEngineActive.Mul(1f / 255);
+			if (!OriginsModIntegrations.FancyLightingEngineActive || OriginsModIntegrations.FancyLightingEnhancedGlowMaskSupport) return;
+			const float num2 = 1f / 255;
 			r = num2;
 			g = num2;
 			b = num2;

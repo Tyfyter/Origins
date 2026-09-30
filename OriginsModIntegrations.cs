@@ -103,6 +103,9 @@ namespace Origins {
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Func<bool> FancyLightingEngineEnabled;
 		public static bool FancyLightingEngineActive => instance?.FancyLightingEngineEnabled?.Invoke() ?? false;
+		Func<bool> FancyLightingUseEnhancedGlowMaskSupport;
+		public static bool FancyLightingEnhancedGlowMaskSupport => instance?.FancyLightingUseEnhancedGlowMaskSupport?.Invoke() ?? false;
+		public static bool FancyLightingDrawingRealLight { get; private set; }
 		Mod fargosMutant;
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
 		Mod avalon;
@@ -500,6 +503,7 @@ namespace Origins {
 				);
 			}
 			instance.FancyLightingEngineEnabled = () => false;
+			instance.FancyLightingUseEnhancedGlowMaskSupport = () => false;
 			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
 				instance.LoadFancyLighting();
 			} else {
@@ -702,6 +706,8 @@ namespace Origins {
 				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
 				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
 					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
+				FancyLightingUseEnhancedGlowMaskSupport = LightingConfig.GetMethod("get_UseEnhancedGlowMaskSupport", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
 
 				Type ambientOcclusionType = flAssembly.GetType("FancyLighting.AmbientOcclusion") ?? flAssembly.GetType("FancyLighting.Core.AmbientOcclusion");
 				if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {
@@ -735,7 +741,28 @@ namespace Origins {
 						})
 					);
 				}
-
+				if (fancyLighting.GetType().GetMethod("_Main_RenderWalls", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance) is MethodInfo _Main_RenderWalls) {
+					MonoModHooks.Modify(_Main_RenderWalls, il => {
+						ILCursor c = new(il);
+						int useEnhancedGlowMaskSupport = -1;
+						c.GotoNext(MoveType.After,
+							i => i.MatchCallOrCallvirt(LightingConfig, "get_UseEnhancedGlowMaskSupport"),
+							i => i.MatchStloc(out useEnhancedGlowMaskSupport)
+						);
+						ILLabel end = default;
+						c.GotoNext(MoveType.After,
+							i => i.MatchLdloc(useEnhancedGlowMaskSupport),
+							i => i.MatchBrfalse(out end)
+						);
+						MethodInfo fancyLightingDrawingRealLight = typeof(OriginsModIntegrations).GetProperty(nameof(FancyLightingDrawingRealLight)).SetMethod;
+						c.EmitLdcI4(1);
+						c.EmitCall(fancyLightingDrawingRealLight);
+						c.GotoLabel(end);
+						c.MoveBeforeLabels();
+						c.EmitLdcI4(0);
+						c.EmitCall(fancyLightingDrawingRealLight);
+					});
+				}
 			} catch (Exception e) {
 				FancyLighting = null;
 				FancyLightingEngineEnabled = null;
