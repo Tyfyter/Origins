@@ -8,6 +8,7 @@ using Origins.Items.Tools;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.Dev.cher;
+using Origins.Items.Vanity.Other.Sets.Jumpsuit;
 using Origins.Items.Vanity.Other.Sets.PEE;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
@@ -240,6 +241,7 @@ public class Ashen_Medical : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>(), 2));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 2, 16));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 2, 1, 11));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
@@ -255,6 +257,7 @@ public class Ashen_Medical : LootPool {
 public class Ashen_MedicalLore : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()).OncePerWorld());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>()));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35, 35));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13, 13));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
@@ -281,6 +284,7 @@ public class Ashen_Personal : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Pincushion>(), 40));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Nineball>(), 25));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>()));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Bang_Snap>(), 10, 35, 70));
 		AddRule(ItemDropRule.Common(ItemID.FamiliarShirt, 1, 1, 3));
 		AddRule(ItemDropRule.Common(ItemID.FamiliarPants, 1, 1, 4));
@@ -463,6 +467,7 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Helmet>(), 2));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Breastplate>(), 2));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Greaves>(), 2));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>(), 3, 1, 2));
 			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 			AddRule(ItemDropRule.Common(ItemID.Grenade, 2, 8, 22));
 			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 5, 50));

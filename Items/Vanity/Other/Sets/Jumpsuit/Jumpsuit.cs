@@ -9,14 +9,13 @@ namespace Origins.Items.Vanity.Other.Sets.Jumpsuit {
 	[AutoloadEquip(EquipType.Body, EquipType.Legs)]
 	public class Jumpsuit : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetDefaults() {
-			Item.value = Item.sellPrice(copper: 60);
 			Item.rare = ItemRarityID.Blue;
 			Item.vanity = true;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
-			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
+			.AddIngredient(ItemID.Silk, 30)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 15)
 			.AddTile(TileID.Loom)
 			.Register();
 		}

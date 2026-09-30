@@ -388,12 +388,19 @@ STATUS EFFECTS:
 (^) Adrenaline Rush
 (^) Antitoxin
 (^) Blood Transfusion
+(X) Clear Mind (Antidepressant)
 (^) Fast
+(X) Fentanyl
 (^) First Aid
+(X) Haloperidol
 (^) Morphine
+(X) Naloxone
+(X) Nausea
+(X) Psychosis
 (^) Solvent Tolerance
 (X) Symbiosis
 (^) Totally Safe
+(X) Uppity (Modafinil)
 (^) Vigil
 (^) Wrapped Up
 
@@ -751,7 +758,7 @@ VANITY:
 (X) Decay Protector Set
 (^) Felnum Shock Glasses
 (X) Gore Protector Set
-(#, ^2) Jumpsuit !!!
+(^) Jumpsuit
 (^) Newsboy Cap
 (^) Pernicious Enterprise Employee Set
 (^) Sunflower Sandals
@@ -1793,13 +1800,19 @@ CONSUMABLES:
 (^) Umami Broth
 
 (^5) Adrenaline
+(X) Anabolic Steroids
+(X) Antidepressant
 (^5) Blood Pack
 (^5) Bottomless Multi-Med
 (^5) Brightsee
+(X) Fentanyl
 (^5) Fire Band
+(X) Haloperidol
 (^5) Medicinal Acid
+(X) Modafinil
 (^5) Morphine
 (^5) Multi-Med
+(X) Naloxone
 (^5) Rasterwrap
 (^5) Sanguis Pack
 (^5) Unmarked Antidote
