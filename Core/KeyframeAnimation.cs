@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
@@ -16,7 +18,9 @@ public abstract class KeyframeAnimation {
 	public bool usesSubframes;
 	readonly List<IKeyframeSet> keyframeSets;
 	readonly List<TextSnippet[]> keyframeSetNames;
-
+	float lastTime;
+	public int modifyingInterpolation = -1;
+	public bool dragging = false;
 	protected KeyframeAnimation() {
 		keyframeSets = [];
 		keyframeSetNames = [];
@@ -28,7 +32,9 @@ public abstract class KeyframeAnimation {
 			Max(ref totalLength, item.Duration);
 		}
 	}
-	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime) {
+	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime) => DrawEditorUI(spriteBatch, new(ref currentTime));
+	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime) => DrawEditorUI(spriteBatch, new(ref currentTime));
+	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime) {
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 16;
 		for (int i = 0; i < keyframeSets.Count; i++) {
@@ -42,9 +48,12 @@ public abstract class KeyframeAnimation {
 				Vector2.One,
 				out int hoveredSnippet
 			);
-			if (hoveredSnippet != -1 && Main.mouseLeft && Main.mouseLeftRelease) selectedIndex = i;
+			if (hoveredSnippet != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
+				selectedIndex = i;
+				modifyingInterpolation = -1;
+			}
 			if (Main.mouseLeft && CurrentTimeline.Contains(Main.MouseScreen)) {
-				currentTime = (int)float.Round(ScreenPosToTimeline(Main.MouseScreen.X));
+				currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.MouseScreen.X));
 			}
 			DrawTimeline(spriteBatch, i == selectedIndex);
 			timelinePos.Y += 16;
@@ -59,38 +68,8 @@ public abstract class KeyframeAnimation {
 			keyframeSets[i].DrawEditorUI(spriteBatch, this, i == selectedIndex, currentTime);
 			timelinePos.Y += 16;
 		}
-	}
-	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime) {
-		timelinePos.X = Main.screenWidth * 0.5f;
-		timelinePos.Y = 16;
-		for (int i = 0; i < keyframeSets.Count; i++) {
-			ChatManager.DrawColorCodedStringWithShadow(
-				spriteBatch,
-				FontAssets.ItemStack.Value,
-				keyframeSetNames[i],
-				timelinePos - new Vector2(TimelineWidth * 0.5f + 4, 0) - ChatManager.GetStringSize(FontAssets.ItemStack.Value, keyframeSetNames[i], Vector2.One) * new Vector2(1, 0.5f),
-				0,
-				Vector2.Zero,
-				Vector2.One,
-				out int hoveredSnippet
-			);
-			if (hoveredSnippet != -1 && Main.mouseLeft && Main.mouseLeftRelease) selectedIndex = i;
-			if (Main.mouseLeft && CurrentTimeline.Contains(Main.MouseScreen)) {
-				currentTime = ScreenPosToTimeline(Main.MouseScreen.X);
-			}
-			DrawTimeline(spriteBatch, i == selectedIndex);
-			timelinePos.Y += 16;
-		}
-		spriteBatch.Draw(
-			TextureAssets.MagicPixel.Value,
-			new Rectangle((int)TimelineToScreenPos(currentTime) - 1, 0, 2, (int)timelinePos.Y),
-			Color.White
-		);
-		timelinePos.Y = 16;
-		for (int i = 0; i < keyframeSets.Count; i++) {
-			keyframeSets[i].DrawEditorUI(spriteBatch, this, i == selectedIndex, currentTime);
-			timelinePos.Y += 16;
-		}
+		if (lastTime.TrySet(currentTime)) modifyingInterpolation = -1;
+		if (!Main.mouseLeft) dragging = false;
 	}
 	public void DrawTimeline(SpriteBatch spriteBatch, bool isSelected) {
 		spriteBatch.Draw(
@@ -101,4 +80,51 @@ public abstract class KeyframeAnimation {
 	}
 	public float TimelineToScreenPos(float time) => Main.screenWidth * 0.5f + TimelineWidth * (time / totalLength - 0.5f);
 	public float ScreenPosToTimeline(float x) => ((x - Main.screenWidth * 0.5f) / TimelineWidth + 0.5f) * totalLength;
+	[StructLayout(LayoutKind.Explicit, Pack = 0)]
+	public readonly ref struct Time {
+		[FieldOffset(0)]
+		readonly ref float f;
+		[FieldOffset(0)]
+		readonly ref int i;
+		[FieldOffset(8)]
+		readonly Kind kind;
+		public readonly float Value {
+			get {
+				switch (kind) {
+					case Kind.Float:
+					return f;
+					case Kind.Int:
+					return i;
+					default:
+					throw new InvalidOperationException();
+				}
+			}
+			set {
+				switch (kind) {
+					case Kind.Float:
+					f = value;
+					break;
+					case Kind.Int:
+					i = (int)float.Round(value);
+					break;
+					default:
+					throw new InvalidOperationException();
+				}
+			}
+		}
+		public Time(ref float value) {
+			f = ref value;
+			kind = Kind.Float;
+		}
+		public Time(ref int value) {
+			i = ref value;
+			kind = Kind.Int;
+		}
+		public static implicit operator float(Time value) => value.Value;
+		enum Kind : byte {
+			Invalid,
+			Float,
+			Int
+		}
+	}
 }

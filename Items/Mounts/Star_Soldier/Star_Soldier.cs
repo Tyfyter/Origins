@@ -39,6 +39,7 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static Origins.Core.KeyframeModifiers;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -626,7 +627,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		Stopwatch stopwatch = Stopwatch.StartNew();
 		// Use a breakpoint on the statement below to "hot reload" animation
 		stopwatch.Stop();
-		if (stopwatch.ElapsedMilliseconds > 0) InitializeAnimation();
+		if (stopwatch.ElapsedMilliseconds > 0) animation = new Anim();
 #endif
 		#region drawing
 		if (handler.fallAnimationTime >= 0) {
@@ -698,13 +699,13 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	static void InitializeAnimation() {
 		wholeOffsetAnimation = new(new(default, 0.5f)) {
 			new(3, new(Vector2.UnitY * 8, 0.5f), AnimationOffsets.Linear),
-			new(30, new(Vector2.Zero, 0.5f), AnimationOffsets.Linear.WithExponent(2)),
-			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+			new(30, new(Vector2.Zero, 0.5f), [new SinEaseIn(), new Exponent(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
 		};
 		bothLegsAnimation = new(new(default, 0)) {
-			new(3, new(Vector2.UnitY * -8, -0.5f), AnimationOffsets.Linear),
-			new(30, new(Vector2.Zero, -0.5f), AnimationOffsets.Linear.WithExponent(2)),
-			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+			new(3, new(Vector2.UnitY * -8, -0.5f), []),
+			new(30, new(Vector2.Zero, -0.5f), [new Exponent(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
 		};
 		backLegOffsetAnimation = new() {
 		};
@@ -716,7 +717,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		frontLegFrameAnimation = new() {
 		};
 	}
-	record struct AnimationOffsets(Vector2 Position, float Rotation) {
+	record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
 		public static KeyframeSet<AnimationOffsets>.IInterpolation Linear { get; } = new Interpolation();
 		public readonly struct Interpolation : KeyframeSet<AnimationOffsets>.IInterpolation {
 			readonly AnimationOffsets KeyframeSet<AnimationOffsets>.IInterpolation.Interpolate(AnimationOffsets prevValue, AnimationOffsets nextValue, float progress) =>
@@ -727,6 +728,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			public readonly override string ToString() => "Linear";
 		}
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value) {
+		}
 	}
 	static KeyframeSet<AnimationOffsets> wholeOffsetAnimation;
 	static KeyframeSet<AnimationOffsets> bothLegsAnimation;
@@ -737,14 +740,14 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	public static KeyframeAnimation animation = new Anim();
 	class Anim : KeyframeAnimation {
 		public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(default, 0.5f)) {
-			new(3, new(Vector2.UnitY * 8, 0.5f), AnimationOffsets.Linear),
-			new(30, new(Vector2.Zero, 0.5f), AnimationOffsets.Linear.WithExponent(2)),
-			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+			new(3, new(Vector2.UnitY * 8, 0.5f), [new SinEaseIn(), new Exponent(2)]),
+			new(30, new(Vector2.Zero, 0.5f), [new Exponent(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
 		};
 		public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(new(default, 0)) {
-			new(3, new(Vector2.UnitY * -8, -0.5f), AnimationOffsets.Linear),
-			new(30, new(Vector2.Zero, -0.5f), AnimationOffsets.Linear.WithExponent(2)),
-			new(45, new(Vector2.Zero, 0f), AnimationOffsets.Linear.WithExponent(0.5f)),
+			new(3, new(Vector2.UnitY * -8, -0.5f), []),
+			new(30, new(Vector2.Zero, -0.5f), [new Exponent(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
 		};
 		public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new() {
 		};
