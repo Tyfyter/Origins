@@ -195,10 +195,16 @@ namespace Origins.Tiles.Ashen {
 				}
 				return 0;
 			}
+			static bool ShouldBlock(Tile tile) => tile.TileIsType<Door_Stopper>() && tile.TileFrameY == 0;
 			public void Update(Point16 position) {
-				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) {
-					TargetOpen = false;
-					if (frame < max_frame) SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
+				if (TargetOpen) {
+					if (Main.tile[position].TileFrameX >= 4 * 18) {
+						TargetOpen = false;
+						if (frame < max_frame) SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
+					} else if (frame < max_frame && (ShouldBlock(Main.tile[position + new Point16(0, -1)]) || ShouldBlock(Main.tile[position + new Point16(1, -1)]))) {
+						TargetOpen = false;
+						SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
+					}
 				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {

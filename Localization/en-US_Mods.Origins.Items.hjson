@@ -8699,3 +8699,8 @@ Jumpsuit: {
 	DisplayName: Jumpsuit
 	Tooltip: ""
 }
+
+Door_Stopper_Item: {
+	DisplayName: Door Stopper
+	Tooltip: ""
+}

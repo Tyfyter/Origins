@@ -19,245 +19,252 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Origins.Tiles.Ashen.Ancient_Industrial_Door_TE_System;
 
-namespace Origins.Tiles.Ashen {
-	public class Ancient_Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile {
-		public override void Load() {
-			new TileItem(this)
-			.WithExtraStaticDefaults(this.DropTileItem)
-			.WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
-				.AddRecipeGroup(RecipeGroupID.IronBar)
-				.AddIngredient<Scrap>(12)
-				.AddTile<Metal_Presser>()
-				.AddCondition(Condition.InGraveyard)
-				.Register();
-			}).RegisterItem();
-			this.SetupGlowKeys();
-		}
-		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) { }
-		public override void SetStaticDefaults() {
-			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
-			// Properties
-			TileID.Sets.CanBeSloped[Type] = false;
-			Main.tileSolid[Type] = true;
-			Main.tileLighted[Type] = true;
-			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
-			Catwalk.OverrideTileNoAttach[Type] = false;
-			Main.tileLavaDeath[Type] = false;
-			TileID.Sets.DrawsWalls[Type] = true;
-			TileID.Sets.HasOutlines[Type] = true;
-			TileID.Sets.DrawTileInSolidLayer[Type] = true;
-
-			// Names
-			AddMapEntry(FromHexRGB(0x756982), CreateMapEntryName());
-
-			// Placement
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
-			TileObjectData.newTile.FlattenAnchors = true;
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
-			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
-			TileObjectData.addAlternate(1);
-			TileObjectData.addTile(Type);
-			HitSound = SoundID.Tink;
-			DustType = Ashen_Biome.DefaultTileDust;
-
-			TileID.Sets.Suffocate[Type] = true;
-			BlockTileInteractions.TilesBlockInteraction[Type] = true;
-			ForceHoik.ForceHoikDirection[Type] = GetHoik;
-		}
-		public override bool CanExplode(int i, int j) => false;
-		public override bool Slope(int i, int j) => false;
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 18 * 4;
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = 0.001f;
-			g = 0.001f;
-			b = 0.001f;
-		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (!fail) fail = AshenWireTile.DefaultIsPowered(i, j);
-		}
-		public override void HitWire(int i, int j) {
-			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
-			if (!Ashen_Wire_Data.HittingAshenWires) Toggle(i, j);
-		}
-		public void UpdatePowerState(int i, int j, bool powered) => AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameX, 18 * 4);
-		public override bool RightClick(int i, int j) => Toggle(i, j);
-		public override void PlaceInWorld(int i, int j, Item item) {
-			FrameSurrounding(i, j, out int left, out int top);
-			ModContent.GetInstance<Ancient_Industrial_Door_TE_System>().AddTileEntity(new(left, top));
-		}
-		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
-			this.ApplyTileGlow(i, j, ref drawData);
-		}
-		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => Color.White;
-		public static bool Toggle(int i, int j, bool actuallyDo = true) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			Door_Animation animation = Ancient_Industrial_Door_TE_System.GetAnimation(new(left, top));
-			if (animation.IsAnimating) return false;
-			if (actuallyDo) new Ancient_Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
-			return true;
-		}
-		public static int GetHoik(int realSlope, Tile tile) => (tile.TileFrameX % 36 == 0) ? SlopeID.TopLeft : SlopeID.TopLeft;
+namespace Origins.Tiles.Ashen; 
+public class Ancient_Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile {
+	public override void Load() {
+		new TileItem(this)
+		.WithExtraStaticDefaults(this.DropTileItem)
+		.WithOnAddRecipes(item => {
+			Recipe.Create(item.type)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddIngredient<Scrap>(12)
+			.AddTile<Metal_Presser>()
+			.AddCondition(Condition.InGraveyard)
+			.Register();
+		}).RegisterItem();
+		this.SetupGlowKeys();
 	}
-	public class Ancient_Industrial_Door_Open : Ancient_Industrial_Door {
-		public override void Load() { }
-		public override string Texture => typeof(Ancient_Industrial_Door).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			Main.tileSolidTop[Type] = true;
-			TileID.Sets.Suffocate[Type] = false;
-			TileID.Sets.DrawTileInSolidLayer[Type] = true;
-			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
-			RegisterItemDrop(TileItem.Get<Ancient_Industrial_Door>().Type);
-			BlockTileInteractions.TilesBlockInteraction[Type] = false;
-			ForceHoik.ForceHoikDirection[Type] = null;
+	public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) { }
+	public override void SetStaticDefaults() {
+		if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+		// Properties
+		TileID.Sets.CanBeSloped[Type] = false;
+		Main.tileSolid[Type] = true;
+		Main.tileLighted[Type] = true;
+		Main.tileFrameImportant[Type] = true;
+		Main.tileNoAttach[Type] = true;
+		Catwalk.OverrideTileNoAttach[Type] = false;
+		Main.tileLavaDeath[Type] = false;
+		TileID.Sets.DrawsWalls[Type] = true;
+		TileID.Sets.HasOutlines[Type] = true;
+		TileID.Sets.DrawTileInSolidLayer[Type] = true;
+
+		// Names
+		AddMapEntry(FromHexRGB(0x756982), CreateMapEntryName());
+
+		// Placement
+		TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
+		TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
+		TileObjectData.newTile.FlattenAnchors = true;
+		TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+		TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
+		TileObjectData.addAlternate(1);
+		TileObjectData.addTile(Type);
+		HitSound = SoundID.Tink;
+		DustType = Ashen_Biome.DefaultTileDust;
+
+		TileID.Sets.Suffocate[Type] = true;
+		BlockTileInteractions.TilesBlockInteraction[Type] = true;
+		ForceHoik.ForceHoikDirection[Type] = GetHoik;
+	}
+	public override bool CanExplode(int i, int j) => false;
+	public override bool Slope(int i, int j) => false;
+	public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 18 * 4;
+	public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+		r = 0.001f;
+		g = 0.001f;
+		b = 0.001f;
+	}
+	public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+		if (!fail) fail = AshenWireTile.DefaultIsPowered(i, j);
+	}
+	public override void HitWire(int i, int j) {
+		UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
+		if (!Ashen_Wire_Data.HittingAshenWires) Toggle(i, j);
+	}
+	public void UpdatePowerState(int i, int j, bool powered) => AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameX, 18 * 4);
+	public override bool RightClick(int i, int j) => Toggle(i, j);
+	public override void PlaceInWorld(int i, int j, Item item) {
+		FrameSurrounding(i, j, out int left, out int top);
+		ModContent.GetInstance<Ancient_Industrial_Door_TE_System>().AddTileEntity(new(left, top));
+	}
+	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+		this.ApplyTileGlow(i, j, ref drawData);
+	}
+	public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+	public Color GlowColor => Color.White;
+	public static bool Toggle(int i, int j, bool actuallyDo = true) {
+		TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+		TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+		Door_Animation animation = Ancient_Industrial_Door_TE_System.GetAnimation(new(left, top));
+		if (animation.IsAnimating) return false;
+		if (actuallyDo) new Ancient_Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
+		return true;
+	}
+	public static int GetHoik(int realSlope, Tile tile) => (tile.TileFrameX % 36 == 0) ? SlopeID.TopLeft : SlopeID.TopLeft;
+}
+public class Ancient_Industrial_Door_Open : Ancient_Industrial_Door {
+	public override void Load() { }
+	public override string Texture => typeof(Ancient_Industrial_Door).GetDefaultTMLName();
+	public override void SetStaticDefaults() {
+		base.SetStaticDefaults();
+		Main.tileSolidTop[Type] = true;
+		TileID.Sets.Suffocate[Type] = false;
+		TileID.Sets.DrawTileInSolidLayer[Type] = true;
+		OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+		RegisterItemDrop(TileItem.Get<Ancient_Industrial_Door>().Type);
+		BlockTileInteractions.TilesBlockInteraction[Type] = false;
+		ForceHoik.ForceHoikDirection[Type] = null;
+	}
+	public override void PostSetDefaults() {
+		Main.tileBlockLight[Type] = false;
+		Main.tileNoSunLight[Type] = false;
+		TileID.Sets.DrawsWalls[Type] = true;
+	}
+	static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+		height = -1600;
+	}
+}
+public class Ancient_Industrial_Door_TE_System : TESystem {
+	Dictionary<Point16, Door_Animation> openDoors;
+	static bool[] IsAID;
+	public override void SetStaticDefaults() => IsAID = TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Ancient_Industrial_Door>(), ModContent.TileType<Ancient_Industrial_Door_Open>());
+	public override void PreUpdateEntities() {
+		openDoors ??= [];
+		for (int i = 0; i < tileEntityLocations.Count; i++) {
+			Point16 pos = tileEntityLocations[i];
+			Tile tile = Main.tile[pos];
+			if (tile.HasTile && IsAID[tile.TileType]) {
+				GetAnimation(pos).Update(pos);
+			} else {
+				tileEntityLocations.RemoveAt(i--);
+			}
 		}
-		public override void PostSetDefaults() {
-			Main.tileBlockLight[Type] = false;
-			Main.tileNoSunLight[Type] = false;
-			TileID.Sets.DrawsWalls[Type] = true;
-		}
-		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
-			height = -1600;
+		foreach (Point16 item in openDoors.Keys.Except(tileEntityLocations).ToArray()) {
+			openDoors.Remove(item);
 		}
 	}
-	public class Ancient_Industrial_Door_TE_System : TESystem {
-		Dictionary<Point16, Door_Animation> openDoors;
-		static bool[] IsAID;
-		public override void SetStaticDefaults() => IsAID = TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Ancient_Industrial_Door>(), ModContent.TileType<Ancient_Industrial_Door_Open>());
-		public override void PreUpdateEntities() {
-			openDoors ??= [];
-			for (int i = 0; i < tileEntityLocations.Count; i++) {
-				Point16 pos = tileEntityLocations[i];
-				Tile tile = Main.tile[pos];
-				if (tile.HasTile && IsAID[tile.TileType]) {
-					GetAnimation(pos).Update(pos);
-				} else {
-					tileEntityLocations.RemoveAt(i--);
+	public override void LoadWorldData(TagCompound tag) {
+		base.LoadWorldData(tag);
+		int closed = ModContent.TileType<Ancient_Industrial_Door>();
+		int open = ModContent.TileType<Ancient_Industrial_Door_Open>();
+		openDoors ??= [];
+		foreach (Point16 pos in tileEntityLocations) {
+			Tile tile = Main.tile[pos];
+			TileObjectData data = TileObjectData.GetTileData(tile);
+			if (data is null) continue;
+			TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
+			if (pos.X == left && pos.Y == top) {
+				if (tile.TileType == open) {
+					Door_Animation animation = GetAnimation(pos);
+					animation.TargetOpen = true;
+					animation.frame = Door_Animation.max_frame;
+				} else if (tile.TileType == closed) {
+					Door_Animation animation = GetAnimation(pos);
+					animation.TargetOpen = false;
+					animation.frame = 0;
 				}
 			}
-			foreach (Point16 item in openDoors.Keys.Except(tileEntityLocations).ToArray()) {
-				openDoors.Remove(item);
-			}
 		}
-		public override void LoadWorldData(TagCompound tag) {
-			base.LoadWorldData(tag);
-			int closed = ModContent.TileType<Ancient_Industrial_Door>();
-			int open = ModContent.TileType<Ancient_Industrial_Door_Open>();
-			openDoors ??= [];
-			foreach (Point16 pos in tileEntityLocations) {
-				Tile tile = Main.tile[pos];
-				TileObjectData data = TileObjectData.GetTileData(tile);
-				if (data is null) continue;
-				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
-				if (pos.X == left && pos.Y == top) {
-					if (tile.TileType == open) {
-						Door_Animation animation = GetAnimation(pos);
-						animation.TargetOpen = true;
-						animation.frame = Door_Animation.max_frame;
-					} else if (tile.TileType == closed) {
-						Door_Animation animation = GetAnimation(pos);
-						animation.TargetOpen = false;
-						animation.frame = 0;
-					}
-				}
-			}
-		}
-		public static Door_Animation GetAnimation(Point16 position) {
-			Dictionary<Point16, Door_Animation> openDoors = ModContent.GetInstance<Ancient_Industrial_Door_TE_System>().openDoors;
-			openDoors.TryAdd(position, new());
-			return openDoors[position];
-		}
-		public class Door_Animation {
-			public bool TargetOpen = false;
-			public int frame = 0;
-			public int frameCounter = 0;
-			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
-			public const int max_frame = 5;
-			public void Update(Point16 position) {
-				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) {
+	}
+	public static Door_Animation GetAnimation(Point16 position) {
+		Dictionary<Point16, Door_Animation> openDoors = ModContent.GetInstance<Ancient_Industrial_Door_TE_System>().openDoors;
+		openDoors.TryAdd(position, new());
+		return openDoors[position];
+	}
+	public class Door_Animation {
+		public bool TargetOpen = false;
+		public int frame = 0;
+		public int frameCounter = 0;
+		public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
+		public const int max_frame = 5;
+		static bool ShouldBlock(Tile tile) => tile.TileIsType<Door_Stopper>() && tile.TileFrameY == 0;
+		static bool IsBlocked(Point16 position) =>
+			ShouldBlock(Main.tile[position + new Point16(0, -1)]) || ShouldBlock(Main.tile[position + new Point16(1, -1)]) || ShouldBlock(Main.tile[position + new Point16(0, 3)]) || ShouldBlock(Main.tile[position + new Point16(1, 3)]);
+		public void Update(Point16 position) {
+			if (TargetOpen) {
+				if (Main.tile[position].TileFrameX >= 4 * 18) {
 					TargetOpen = false;
 					if (frame < max_frame) SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
+				} else if (frame < max_frame && IsBlocked(position)) {
+					TargetOpen = false;
+					SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
 				}
-				if (!IsAnimating) return;
-				if (++frameCounter > 4) {
-					frameCounter = 0;
-					frame += TargetOpen.ToDirectionInt();
-					ushort tileType = (ushort)(frame == max_frame ? ModContent.TileType<Ancient_Industrial_Door_Open>() : ModContent.TileType<Ancient_Industrial_Door>());
-					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
-					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
-					bool updateWater = TargetOpen && !WorldGen.noLiquidCheck && !NetmodeActive.MultiplayerClient && frame == max_frame;
-					for (int y = 0; y < data.Height; y++) {
-						for (int x = 0; x < data.Width; x++) {
-							Tile tile = Main.tile[left + x, top + y];
-							if (!IsAID[tile.TileType]) continue;
-							tile.TileType = tileType;
-							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
-							if (TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
-								Liquid.AddWater(left + x, top + y);
-							}
-						}
-						if (updateWater) {
-							Tile tile = Main.tile[left - 1, top + y];
-							if (tile.LiquidAmount > 0) Liquid.AddWater(left - 1, top + y);
-							tile = Main.tile[left + 2, top + y];
-							if (tile.LiquidAmount > 0) Liquid.AddWater(left + 2, top + y);
+			}
+			if (!IsAnimating) return;
+			if (++frameCounter > 4) {
+				frameCounter = 0;
+				frame += TargetOpen.ToDirectionInt();
+				ushort tileType = (ushort)(frame == max_frame ? ModContent.TileType<Ancient_Industrial_Door_Open>() : ModContent.TileType<Ancient_Industrial_Door>());
+				TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
+				TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
+				bool updateWater = TargetOpen && !WorldGen.noLiquidCheck && !NetmodeActive.MultiplayerClient && frame == max_frame;
+				for (int y = 0; y < data.Height; y++) {
+					for (int x = 0; x < data.Width; x++) {
+						Tile tile = Main.tile[left + x, top + y];
+						if (!IsAID[tile.TileType]) continue;
+						tile.TileType = tileType;
+						tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
+						if (TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
+							Liquid.AddWater(left + x, top + y);
 						}
 					}
-					if (!TargetOpen && frame < 4) {
-						Rectangle hitbox = new(left * 16, top * 16, 16 * 2, 16 * 3);
-						if (!NetmodeActive.Server) {
-							Player player = Main.LocalPlayer;
-							if (!player.shimmering) {
-								if (player.Hitbox.Intersects(hitbox)) {
-									player.Hurt(
-										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
-										player.statLife / (frame + 1),
-										0,
-										cooldownCounter: -2,
-										dodgeable: false,
-										knockback: 18,
-										scalingArmorPenetration: 1
-									);
-								}
+					if (updateWater) {
+						Tile tile = Main.tile[left - 1, top + y];
+						if (tile.LiquidAmount > 0) Liquid.AddWater(left - 1, top + y);
+						tile = Main.tile[left + 2, top + y];
+						if (tile.LiquidAmount > 0) Liquid.AddWater(left + 2, top + y);
+					}
+				}
+				if (!TargetOpen && frame < 4) {
+					Rectangle hitbox = new(left * 16, top * 16, 16 * 2, 16 * 3);
+					if (!NetmodeActive.Server) {
+						Player player = Main.LocalPlayer;
+						if (!player.shimmering) {
+							if (player.Hitbox.Intersects(hitbox)) {
+								player.Hurt(
+									PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
+									player.statLife / (frame + 1),
+									0,
+									cooldownCounter: -2,
+									dodgeable: false,
+									knockback: 18,
+									scalingArmorPenetration: 1
+								);
 							}
 						}
-						if (!NetmodeActive.MultiplayerClient) {
-							foreach (NPC npc in Main.ActiveNPCs) {
-								if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
-								if (npc.Hitbox.Intersects(hitbox)) {
-									npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
-								}
+					}
+					if (!NetmodeActive.MultiplayerClient) {
+						foreach (NPC npc in Main.ActiveNPCs) {
+							if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
+							if (npc.Hitbox.Intersects(hitbox)) {
+								npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
 							}
 						}
 					}
 				}
 			}
 		}
-		public record class Ancient_Industrial_Door_Action(Point16 Position, bool Open) : SyncedAction {
-			protected override bool ShouldPerform => GetAnimation(Position).TargetOpen != Open;
-			public Ancient_Industrial_Door_Action() : this(default, default) { }
-			public override SyncedAction NetReceive(BinaryReader reader) => this with {
-				Position = new(reader.ReadInt16(), reader.ReadInt16()),
-				Open = reader.ReadBoolean()
-			};
-			public override void NetSend(BinaryWriter writer) {
-				writer.Write((short)Position.X);
-				writer.Write((short)Position.Y);
-				writer.Write(Open);
-			}
-			protected override void Perform() {
-				GetAnimation(Position).TargetOpen = Open;
-				Vector2 soundPosition = Position.ToWorldCoordinates(16, 24);
-				SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-0.4f), soundPosition);
-				SoundEngine.PlaySound((Open ? Origins.Sounds.MetalCreakOpen : Origins.Sounds.MetalCreakClose).WithPitch(-0.4f), soundPosition);
-				SoundEngine.PlaySound(SoundID.NPCHit52, soundPosition);
-			}
+	}
+	public record class Ancient_Industrial_Door_Action(Point16 Position, bool Open) : SyncedAction {
+		protected override bool ShouldPerform => GetAnimation(Position).TargetOpen != Open;
+		public Ancient_Industrial_Door_Action() : this(default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Position = new(reader.ReadInt16(), reader.ReadInt16()),
+			Open = reader.ReadBoolean()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((short)Position.X);
+			writer.Write((short)Position.Y);
+			writer.Write(Open);
+		}
+		protected override void Perform() {
+			GetAnimation(Position).TargetOpen = Open;
+			Vector2 soundPosition = Position.ToWorldCoordinates(16, 24);
+			SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-0.4f), soundPosition);
+			SoundEngine.PlaySound((Open ? Origins.Sounds.MetalCreakOpen : Origins.Sounds.MetalCreakClose).WithPitch(-0.4f), soundPosition);
+			SoundEngine.PlaySound(SoundID.NPCHit52, soundPosition);
 		}
 	}
 }
