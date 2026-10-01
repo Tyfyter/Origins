@@ -74,7 +74,7 @@ namespace Origins.Walls {
 	}
 	public class Fortified_Steel_Wall1 : Fortified_Steel_Wall {
 		public override Color MapColor => FromHexRGB(0x3b2b21);
-		public override int HammerPower => 55;
+		public override int HammerPower => 80;
 		public override SoundStyle? HitSound => SoundID.Tink;
 		public override int BGCount => 3;
 		public override bool CanMineNatural(Player self, Item item, int i, int j) => NPC.downedBoss2;
@@ -98,7 +98,7 @@ namespace Origins.Walls {
 	}
 	public class Molten_Steel_Wall : Fortified_Steel_Wall {
 		public override Color MapColor => new(254, 194, 20);
-		public override int HammerPower => 80;
+		public override int HammerPower => 90;
 		public override int BGCount => 1;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

@@ -159,14 +159,13 @@ public class Ashen_GenericLore : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 5));
-		AddRule(ItemDropRule.Common(ItemID.Compass, 40));
-		AddRule(ItemDropRule.Common(ItemID.Ruler, 10));
-		AddRule(ItemDropRule.Common(ItemID.Toolbelt, 10));
-		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 5, 12));
-		AddRule(ItemDropRule.Common(ItemID.Goggles, 2, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 4, 1, 2));
-		AddRule(ItemDropRule.Common(ItemID.SilverCoin, 2, 2, 5));
-		AddRule(ItemDropRule.Common(ItemID.CopperCoin, 1, 37, 99));
+		AddRule(ItemDropRule.Common(ItemID.Compass, 5));
+		AddRule(ItemDropRule.Common(ItemID.Ruler, 5));
+		AddRule(ItemDropRule.Common(ItemID.Toolbelt, 5));
+		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 20, 48));
+		AddRule(ItemDropRule.Common(ItemID.Goggles));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2));
+		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 	}
 }
 public class Ashen_Mineral : LootPool {

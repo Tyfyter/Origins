@@ -1139,7 +1139,7 @@ Wire_Tutorial: {
 
 			“Once you’ve set up the delay time to be as long as desired, get out of the circuit box by right-clicking the component and run a wire through it.”
 
-			“After ensuring the component has a power source, it will begin charging power up to the set delay time. If you don’t supply it enough power before it can reach its power on state, its charging time will reset back to zero.”
+			“After ensuring the component has a power source, it will begin charging power up to the set delay time. If you don’t supply it enough power before it can reach its power on state, its charging time will reset back to zero. After fully charged and ticking time, it can be reset to max delay time by simply providing it with power again.”
 
 			“That one always trips up junior tinkerers.”
 			''' */
