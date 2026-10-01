@@ -1965,18 +1965,6 @@ namespace Origins {
 		}
 		#endregion worldgen
 		#region graphics
-		private void On_Main_DrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force) {
-			if ((OriginPlayer.LocalOriginPlayer?.ZoneVoidProgressSmoothed ?? 0) <= 0) orig(self, force);
-		}
-		private void On_TileLightScanner_ApplyHellLight(On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor) {
-			Vector3 value = lightColor;
-			orig(self, tile, x, y, ref value);
-			if ((OriginPlayer.LocalOriginPlayer?.ZoneVoidProgressSmoothed ?? 0) > 0) {
-				lightColor = Vector3.Lerp(value, lightColor, OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed * 1.5f);
-			} else {
-				lightColor = value;
-			}
-		}
 		public static RenderTarget2D currentScreenTarget;
 		private void On_FilterManager_BeginCapture(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
 			orig(self, screenTarget1, clearColor);
