@@ -10,7 +10,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Door_Stopper : OriginTile, IAshenTile, IAshenWireTile {
-		public virtual Color MapColor => FromHexRGB(0x5e3f2c);
 		public override void Load() => new TileItem(this).WithExtraStaticDefaults(this.DropTileItem).RegisterItem();
 		public override void SetStaticDefaults() {
 			BlockTileInteractions.TilesBlockInteraction[Type] = true;
