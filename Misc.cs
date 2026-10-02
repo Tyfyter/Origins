@@ -59,6 +59,7 @@ using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
+using static Origins.Core.CurveInterpolation;
 using SetsTiles = Origins.OriginsSets.Tiles;
 
 namespace Origins {
@@ -4012,6 +4013,17 @@ namespace Origins {
 		public static TOEnergizedGlobalNPC GetSwarmNPC(this NPC npc) {
 			if (OriginsModIntegrations.FargosMutant is null) return null;
 			return npc.GetGlobalNPC<TOEnergizedGlobalNPC>();
+		}
+		public static PropertyInfo GetInterfaceProperty(this Type type, string name, bool instance = true) {
+			BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | (instance ? BindingFlags.Instance : BindingFlags.Static);
+			PropertyInfo property = type.GetProperties(flags).FirstOrDefault(p => p.Name.Split('.')[^1] == name);
+			if (property is null) {
+				foreach (Type @interface in type.GetInterfaces()) {
+					property = @interface.GetProperties(flags).FirstOrDefault(p => p.Name.Split('.')[^1] == name);
+					if (property is not null) break;
+				}
+			}
+			return property;
 		}
 	}
 	public static class ShopExtensions {

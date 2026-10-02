@@ -706,8 +706,21 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
 			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref draggingGizmo, ref gizmoIndex, offset);
-			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 48);
+			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 32);
 		}
+		public static string Export(AnimationOffsets value) => $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
+	}
+	public record struct BackLegFrame(int Frame) : IAnimatableSpriteFrame<BackLegFrame> {
+		public static Texture2D Texture => backLegTexture;
+		public static int FrameCount => LegTextureFrames;
+		public static implicit operator BackLegFrame(int value) => new(value);
+		public static implicit operator int(BackLegFrame value) => value.Frame;
+	}
+	public record struct FrontLegFrame(int Frame) : IAnimatableSpriteFrame<FrontLegFrame> {
+		public static Texture2D Texture => frontLegTexture;
+		public static int FrameCount => LegTextureFrames;
+		public static implicit operator FrontLegFrame(int value) => new(value);
+		public static implicit operator int(FrontLegFrame value) => value.Frame;
 	}
 	public static Anim animation = new();
 	public class Anim : KeyframeAnimation {
@@ -725,10 +738,10 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		};
 		public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new() {
 		};
-		public KeyframeSet<int> backLegFrameAnimation = new() {
-			KeyframeTypes.Step(8, 3)
+		public KeyframeSet<BackLegFrame> backLegFrameAnimation = new() {
+			KeyframeTypes.Step<BackLegFrame>(8, 3)
 		};
-		public KeyframeSet<int> frontLegFrameAnimation = new() {
+		public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new() {
 		};
 	}
 	#endregion

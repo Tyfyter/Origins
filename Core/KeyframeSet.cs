@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using System.Text;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 using static Origins.Core.KeyframeAnimation;
@@ -62,12 +62,25 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				return;
 			}
 		}
+		Insert(keyframes.Count, new(
+			time,
+			GetValue(time),
+			Interpolation
+		));
 	}
 	public void GetAtIndex(int index) => keyframes.RemoveAt(index);
 	public void RemoveAtIndex(int index) => keyframes.RemoveAt(index);
 	IEnumerator<Keyframe> IEnumerable<Keyframe>.GetEnumerator() => keyframes.GetEnumerator();
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)keyframes).GetEnumerator();
-
+	public string Export() {
+		StringBuilder builder = new("new(");
+		builder.Append(ExportValue(start));
+		builder.Append(')');
+		builder.Append(" {\n");
+		for (int i = 0; i < keyframes.Count; i++) builder.AppendLine(keyframes[i].Export());
+		return builder.ToString();
+	}
+	public string ExportType() => $"KeyframeSet<{typeof(T).Name}>";
 	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime) {
 		if (isSelected && Main.mouseRight && Main.mouseRightRelease && animation.CurrentTimeline.Contains(Main.MouseScreen)) {
 			float time = animation.ScreenPosToTimeline(Main.MouseScreen.X);
@@ -146,7 +159,6 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			int moveSelectedTo = -1;
 			Max(ref width, FontAssets.ItemStack.Value.MeasureString(stack.BaseInterpolation.ToString()).X);
 			if (!stack.BaseInterpolation.IsModifiable) {
-				width += 18;
 				spriteBatch.Draw(
 					TextureAssets.MagicPixel.Value,
 					iPos - Vector2.One * 2,
@@ -217,7 +229,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			iPos.Y += 16 + 8;
 			snippets[0].Color = Color.White;
 			if (animation.modifyingInterpolation == -2) {
-				width = FontAssets.ItemStack.Value.MeasureString("Interpolated").X;
+				width = FontAssets.ItemStack.Value.MeasureString(CreateLinear is not null ? "Interpolated" : "Stepped").X;
 				spriteBatch.Draw(
 					TextureAssets.MagicPixel.Value,
 					iPos + new Vector2(-2, -2),
@@ -309,20 +321,27 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	}
 	void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, KeyframeAnimation animation, float time) {
 		Vector2 iPos = new((Main.screenWidth + KeyframeAnimation.TimelineWidth) * 0.5f + 8, 4);
-		TextSnippet[] snippets = [
-			new(),
-				new(" "),
-				new("X", Color.Red)
-		];
-		iPos.Y += 16 + 8;
+		TextSnippet[] snippets = [new()];
 		snippets[0].Color = Color.White;
-		float width = FontAssets.ItemStack.Value.MeasureString("Interpolated").X;
+		float width = FontAssets.ItemStack.Value.MeasureString((CreateLinear is not null ? "Interpolated" : "Stepped")).X;
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
 			iPos + new Vector2(-2, -2),
-			new(0, 0, (int)width + 4, (1 + (CreateLinear is not null).ToInt()) * 16 + 4),
+			new(0, 0, (int)width + 4, (2 + (CreateLinear is not null).ToInt()) * 16 + 4),
 			new Color(90, 90, 105)
 		);
+		snippets[0].Text = "Insert:";
+		ChatManager.DrawColorCodedStringWithShadow(
+			spriteBatch,
+			FontAssets.ItemStack.Value,
+			snippets,
+			iPos,
+			0,
+			Vector2.Zero,
+			Vector2.One,
+			out _
+		);
+		iPos.Y += 16;
 		int hoveredBase = -1;
 		if (CreateLinear is not null) {
 			snippets[0].Text = "Interpolated";
@@ -359,6 +378,16 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public T Target = Target;
 		public Keyframe(float time, T target, IInterpolation interpolation) : this(time, target, new InterpolationStack() { BaseInterpolation = interpolation }) { }
 		public readonly T GetValue(float time, float prevTime, T prevValue) => Interpolation.Interpolate(prevValue, Target, Utils.GetLerpValue(prevTime, Time, time));
+		public readonly string Export() {
+			StringBuilder builder = new("new(");
+			builder.Append(Time);
+			builder.Append("f, ");
+			builder.Append(ExportValue(Target));
+			builder.Append(", ");
+			builder.Append(Interpolation.Export());
+			builder.Append(')');
+			return builder.ToString();
+		}
 	}
 	public class InterpolationStack : List<IInterpolationModifier> {
 		IInterpolation baseInterpolation = CreateLinear?.Invoke();
@@ -383,6 +412,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public override string ToString() => baseInterpolation is StepInterpolation<T> ?
 			$"new StepInterpolation<{nameof(T)}>()" :
 			$"[{string.Join(", ", this.Select(i => i.Export()))}]";
+		public string Export() => ToString();
 	}
 	public interface IInterpolation {
 		public bool IsModifiable => true;
@@ -392,22 +422,29 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	public delegate void GizmoDrawer(SpriteBatch spriteBatch, ref T value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset);
 	public static GizmoDrawer DrawGizmo;
 	public static Func<IInterpolation> CreateLinear;
+	public static Func<T, string> ExportValue;
 	public interface ITypeHandler : IAutoload<ITypeHandler.Loader> {
 		public abstract static void DrawGizmo(SpriteBatch spriteBatch, ref T value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset);
 		public abstract static IInterpolation Linear { get; }
+		public abstract static string Export(T value);
 		class Loader : IAutoloader {
 			static readonly MethodInfo getDrawer = typeof(Loader).GetMethod("GetDrawer");
+			static readonly MethodInfo getExporter = typeof(Loader).GetMethod("GetExporter");
 			static void IAutoloader.Autoload(Mod mod, Type type) {
 				KeyframeSet<T>.DrawGizmo = (GizmoDrawer)getDrawer.MakeGenericMethod(type).Invoke(null, []);
-				CreateLinear = (type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).FirstOrDefault(p => p.Name.Split('.')[^1] == nameof(Linear)) ?? type.GetProperty(nameof(Linear))).GetMethod.CreateDelegate<Func<IInterpolation>>();
+				ExportValue = (Func<T, string>)getExporter.MakeGenericMethod(type).Invoke(null, []);
+				CreateLinear = type.GetInterfaceProperty(nameof(Linear), false).GetMethod.CreateDelegate<Func<IInterpolation>>();
 			}
 			public static GizmoDrawer GetDrawer<THandler>() where THandler : ITypeHandler => THandler.DrawGizmo;
+			public static Func<T, string> GetExporter<THandler>() where THandler : ITypeHandler => THandler.Export;
 		}
 	}
 }
 public interface IKeyframeSet {
 	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime);
 	public float Duration { get; }
+	public string Export();
+	public string ExportType();
 }
 public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolationModifier.Loader> {
 	public float ModifyProgress(float progress);
@@ -443,6 +480,7 @@ public static class KeyframeTypes {
 	public readonly struct FloatInterpolation : KeyframeSet<float>.IInterpolation, KeyframeSet<float>.ITypeHandler {
 		static KeyframeSet<float>.IInterpolation KeyframeSet<float>.ITypeHandler.Linear => new FloatInterpolation();
 		public readonly float Interpolate(float prevValue, float nextValue, float progress) => float.Lerp(prevValue, nextValue, progress);
+		public static string Export(float value) => $"{value}f";
 		static void KeyframeSet<float>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref float value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
 			throw new NotImplementedException();
 		}
@@ -474,10 +512,43 @@ public static class KeyframeTypes {
 			}
 			gizmoIndex++;
 		}
+		public static string Export(Vector2 value) => $"new({value.X}f, {value.Y}f)";
 	}
-
+	static readonly Polygon rotationHandle = new(
+		new(-1, -1),
+		new(1, -1),
+		new(1, 1),
+		new(-1, 1)
+	);
+	static float rotationHandleOffset;
 	public static void DrawRotationGizmo(SpriteBatch spriteBatch, ref float value, ref int draggingGizmo, ref int gizmoIndex, Vector2 pos, float size) {
+		pos = pos.Floor();
+		Vector2 end = (pos + (value - MathHelper.PiOver2).ToRotationVector2() * size).Floor();
+		spriteBatch.DrawLine(Color.White, pos + Main.screenPosition, end + Main.screenPosition);
+
+		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		rotationHandle.ResetPositions().Scale(4).Translate(end).Draw();
+		if (draggingGizmo == gizmoIndex) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
+		if (Main.mouseLeft && Main.mouseLeftRelease && rotationHandle.Contains(Main.MouseScreen)) {
+			rotationHandleOffset = value - (Main.MouseScreen - pos).ToRotation();
+			draggingGizmo = gizmoIndex;
+		}
 		gizmoIndex++;
+	}
+	public static void DrawAALine(Vector2 pos, Vector2 origin, int width, int height) {
+		Main.spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			pos,
+			new Rectangle(0, 0, 1, 1),
+			Color.White,
+			0,
+			origin,
+			new Vector2(width, height),
+			0,
+		0);
 	}
 }
 public static class KeyframeModifiers {
@@ -499,4 +570,61 @@ public static class KeyframeModifiers {
 		public readonly float ModifyProgress(float progress) => (MathF.Cos(progress * MathHelper.Pi) - 1) * -0.5f;
 		public readonly override string ToString() => "Sinusoidal Ease In/Out";
 	}
+}
+public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler where TSelf : struct, IAnimatableSpriteFrame<TSelf> {
+	public static abstract Texture2D Texture { get; }
+	public static abstract int FrameCount { get; }
+	public int Frame { get; set; }
+	static KeyframeSet<TSelf>.IInterpolation KeyframeSet<TSelf>.ITypeHandler.Linear { get; } = new Interpolation();
+	public readonly struct Interpolation : KeyframeSet<TSelf>.IInterpolation {
+		readonly TSelf KeyframeSet<TSelf>.IInterpolation.Interpolate(TSelf prevValue, TSelf nextValue, float progress) =>
+			prevValue with { Frame = (int)float.Round(float.Lerp(prevValue.Frame, prevValue.Frame, progress)) };
+		public readonly override string ToString() => "Linear";
+	}
+	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+		Vector2 pos = new(0, Main.screenHeight);
+		Rectangle frame = TSelf.Texture.Frame(verticalFrames: TSelf.FrameCount, frameY: 0);
+		Vector2 origin = new(0, frame.Height);
+		Rectangle selectedFrame = default;
+		Rectangle hoveredFrame = default;
+		int hoveredIndex = -1;
+		for (int i = 0; i < TSelf.FrameCount; i++) {
+			Main.spriteBatch.Draw(
+				TSelf.Texture,
+				pos,
+				frame,
+				Color.White,
+				0,
+				origin,
+				Vector2.One,
+				0,
+			0);
+			Rectangle current = new((int)pos.X, (int)(pos.Y - origin.Y), frame.Width, frame.Height);
+			if (i == value.Frame) selectedFrame = current;
+			else if (current.Contains(Main.MouseScreen)) {
+				hoveredFrame = current;
+				hoveredIndex = i;
+			}
+			pos.X += frame.Width + 4;
+			if (pos.X + frame.Width > Main.screenWidth) {
+				pos.X = 0;
+				pos.Y -= frame.Height + 4;
+			}
+			frame.Y += frame.Height;
+		}
+		DrawAALine(selectedFrame.TopLeft(), default, selectedFrame.Width, 2);
+		DrawAALine(selectedFrame.TopLeft(), default, 2, selectedFrame.Height);
+		DrawAALine(selectedFrame.BottomRight(), Vector2.One, selectedFrame.Width, 2);
+		DrawAALine(selectedFrame.BottomRight(), Vector2.One, 2, selectedFrame.Height);
+		if (hoveredIndex != -1) {
+			DrawAALine(hoveredFrame.TopLeft(), default, hoveredFrame.Width, 2);
+			DrawAALine(hoveredFrame.TopLeft(), default, 2, hoveredFrame.Height);
+			DrawAALine(hoveredFrame.BottomRight(), Vector2.One, hoveredFrame.Width, 2);
+			DrawAALine(hoveredFrame.BottomRight(), Vector2.One, 2, hoveredFrame.Height);
+			if (Main.mouseLeft && Main.mouseLeftRelease) value.Frame = hoveredIndex;
+		}
+	}
+	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => value.Frame.ToString();
+	public static abstract implicit operator TSelf(int value);
+	public static abstract implicit operator int(TSelf value);
 }

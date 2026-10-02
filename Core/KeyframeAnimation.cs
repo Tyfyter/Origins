@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
@@ -87,6 +88,18 @@ public abstract class KeyframeAnimation {
 	}
 	public float TimelineToScreenPos(float time) => Main.screenWidth * 0.5f + TimelineWidth * (time / totalLength - 0.5f);
 	public float ScreenPosToTimeline(float x) => ((x - Main.screenWidth * 0.5f) / TimelineWidth + 0.5f) * totalLength;
+	public string Export() {
+		StringBuilder builder = new();
+		for (int i = 0; i < keyframeSets.Count; i++) {
+			builder.Append(keyframeSets[i].ExportType());
+			builder.Append(keyframeSetNames[i][0].Text);
+			builder.Append(" = ");
+			builder.Append(keyframeSets[i].Export());
+			builder.Append(';');
+			builder.Append('\n');
+		}
+		return builder.ToString();
+	}
 	[StructLayout(LayoutKind.Explicit, Pack = 0)]
 	public readonly ref struct Time {
 		[FieldOffset(0)]
