@@ -224,7 +224,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				Vector2.One,
 				out int hoveredBase
 			);
-			if (moveSelectedTo != -1) {
+			if (moveSelectedTo != -1 && animation.modifyingInterpolation != -1) {
 				IInterpolationModifier toMove = stack[animation.modifyingInterpolation];
 				stack.RemoveAt(animation.modifyingInterpolation);
 				stack.Insert(moveSelectedTo, toMove);
@@ -308,9 +308,9 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 					Color.Black
 				);
 				Rectangle fram = new(0, 0, 1, 150);
-				Func<float, float> modifyProgress = animation.modifyingInterpolation > 0 ? stack[animation.modifyingInterpolation].ModifyProgress : stack.ModifyProgress;
+				Func<float, float> modifyProgress = animation.modifyingInterpolation >= 0 ? stack[animation.modifyingInterpolation].ModifyProgress : stack.ModifyProgress;
 				for (int i = 0; i < 150; i++) {
-					fram.Height = (int)(150 - stack.ModifyProgress(i / 150f) * 150);
+					fram.Height = (int)(150 - modifyProgress(i / 150f) * 150);
 					spriteBatch.Draw(
 						TextureAssets.MagicPixel.Value,
 						iPos + new Vector2(i, 0),

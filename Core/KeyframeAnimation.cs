@@ -78,6 +78,7 @@ public abstract class KeyframeAnimation {
 			draggingInterpolation = false;
 			draggingGizmo = -1;
 		}
+		if (modifyingInterpolation == -1) draggingInterpolation = false;
 	}
 	public void DrawTimeline(SpriteBatch spriteBatch, bool isSelected) {
 		spriteBatch.Draw(

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿#define EditAnimation
+using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Core;
@@ -2123,7 +2124,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			fallPosition += 48;
 			if (fallPosition > player.Bottom.Y - GroundOffset) {
 				fallPosition = player.Bottom.Y - GroundOffset;
-#if DEBUG
+#if DEBUG && EditAnimation
 				if (player.controlUp)
 #endif
 					fallingStarSoldier.fallAnimationTime++;
@@ -2181,11 +2182,19 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			return false;
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
+#if DEBUG && EditAnimation
 			if (fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
 				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
 				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
-				if (Keybindings.StarSoldierLockOn.JustPressed) Platform.Get<IClipboard>().Value = Landing_Animation.instance.Export();
+				Rectangle rect = new(0, Main.screenHeight / 2, 16, 16);
+				spriteBatch.Draw(
+					TextureAssets.MagicPixel.Value,
+					rect,
+					Color.Orange
+				);
+				if (Main.mouseLeft && Main.mouseLeftRelease && rect.Contains(Main.MouseScreen)) Platform.Get<IClipboard>().Value = Landing_Animation.instance.Export();
 			}
+#endif
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			for (int i = 0; i < options.Count; i++) {
 				if (options[i].Item.ToolTip is null) options[i].Item.SetDefaults(options[i].Item.type);
