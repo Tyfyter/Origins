@@ -3329,13 +3329,13 @@ public class Surf_Music : ModSceneEffect {
 public class Landing_Animation : KeyframeAnimation {
 	public static Landing_Animation instance = new();
 	public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(Vector2.Zero, 0.5f)) {
-		new(3, new(new(0f, 8f), 0.5f), [new SinEaseIn(), new Exponential(2)]),
-		new(30, new(Vector2.Zero, 0.5f), [new Exponential(2)]),
+		new(3, new(new(0f, 8f), 0.5f), [new SinEaseIn(), new Exponential(2f)]),
+		new(30, new(Vector2.Zero, 0.5f), [new Exponential(2f)]),
 		new(45, default, [new Exponential(0.5f)])
 	};
 	public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(default) {
 		new(3, new(new(0f, -8f), -0.5f), []),
-		new(30, new(Vector2.Zero, -0.5f), [new Exponential(2)]),
+		new(30, new(Vector2.Zero, -0.5f), [new Exponential(2f)]),
 		new(45, default, [new Exponential(0.5f)])
 	};
 	public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new(default) {
