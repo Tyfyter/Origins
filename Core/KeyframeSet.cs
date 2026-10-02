@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Extensions.Primitives;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
 using System;
 using System.Collections;
@@ -76,7 +77,13 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		builder.Append(ExportValue(start));
 		builder.Append(')');
 		builder.Append(" {\n");
-		for (int i = 0; i < keyframes.Count; i++) builder.AppendLine(keyframes[i].Export());
+		for (int i = 0; i < keyframes.Count; i++) {
+			builder.Append("\t\t");
+			builder.Append(keyframes[i].Export());
+			if (i + 1 < keyframes.Count) builder.Append(", \n");
+			else builder.Append('\n');
+		}
+		builder.Append("\t}");
 		return builder.ToString();
 	}
 	public string ExportType() => $"KeyframeSet<{typeof(T).Name}>";
@@ -380,7 +387,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public readonly string Export() {
 			StringBuilder builder = new("new(");
 			builder.Append(Time);
-			builder.Append("f, ");
+			builder.Append(Time == (int)Time ? ", " : "f, ");
 			builder.Append(ExportValue(Target));
 			builder.Append(", ");
 			builder.Append(Interpolation.Export());
@@ -409,7 +416,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			baseInterpolation = BaseInterpolation.Clone()
 		};
 		public override string ToString() => baseInterpolation is StepInterpolation<T> ?
-			$"new StepInterpolation<{nameof(T)}>()" :
+			$"new StepInterpolation<{typeof(T).Name}>()" :
 			$"[{string.Join(", ", this.Select(i => i.Export()))}]";
 		public string Export() => ToString();
 	}
@@ -511,7 +518,7 @@ public static class KeyframeTypes {
 			}
 			gizmoIndex++;
 		}
-		public static string Export(Vector2 value) => $"new({value.X}f, {value.Y}f)";
+		public static string Export(Vector2 value) => value == Vector2.Zero ? "Vector2.Zero" : $"new({value.X}f, {value.Y}f)";
 	}
 	static readonly Polygon rotationHandle = new(
 		new(-1, -1),
@@ -555,7 +562,7 @@ public static class KeyframeModifiers {
 	public record struct Exponential(float Exponent = 2) : IInterpolationModifier {
 		public readonly float ModifyProgress(float progress) => float.Pow(progress, Exponent);
 		public readonly override string ToString() => Exponent == 0 ? "Exponent" : $"Exponent({Exponent})";
-		readonly string IInterpolationModifier.Export() => $"new {nameof(Exponential)}({Exponent})";
+		readonly string IInterpolationModifier.Export() => $"new {nameof(Exponential)}({Exponent}f)";
 	}
 	public record struct SinEaseIn : IInterpolationModifier {
 		public readonly float ModifyProgress(float progress) => 1 - MathF.Cos(progress * MathHelper.PiOver2);

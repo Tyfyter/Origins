@@ -7006,10 +7006,7 @@ Medicinal_Acid: {
 
 Morphine: {
 	DisplayName: Morphine
-	Tooltip: 
-		'''
-		Increases life regeneration and maintains half your natural regeneration after getting hit while you have [buffhint/self:PotionSickness]
-		'''
+	Tooltip: Increases life regeneration and maintains half your natural regeneration after getting hit while you have [buffhint/self:PotionSickness]
 }
 
 Rasterwrap: {

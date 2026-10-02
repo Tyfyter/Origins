@@ -91,7 +91,9 @@ public abstract class KeyframeAnimation {
 	public string Export() {
 		StringBuilder builder = new();
 		for (int i = 0; i < keyframeSets.Count; i++) {
+			builder.Append("\tpublic ");
 			builder.Append(keyframeSets[i].ExportType());
+			builder.Append(' ');
 			builder.Append(keyframeSetNames[i][0].Text);
 			builder.Append(" = ");
 			builder.Append(keyframeSets[i].Export());

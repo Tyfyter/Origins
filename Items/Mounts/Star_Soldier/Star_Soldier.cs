@@ -18,6 +18,7 @@ using Origins.UI;
 using PegasusLib.Networking;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using ReLogic.OS;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -40,10 +41,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.Core.KeyframeModifiers;
-using static Origins.Items.Mounts.Star_Soldier.Landing_Animation;
+using static Origins.Core.KeyframeTypes;
 using AnimationOffsets = Origins.Items.Mounts.Star_Soldier.Landing_Animation.AnimationOffsets;
-using BackLegFrame = Origins.Items.Mounts.Star_Soldier.Landing_Animation.BackLegFrame;
-using FrontLegFrame = Origins.Items.Mounts.Star_Soldier.Landing_Animation.FrontLegFrame;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -131,7 +130,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			Vector2 targetDir = (targetPos - shoulderPos).Normalized(out float targetDist);
 			if (targetDist < 45) targetPos = shoulderPos + targetDir * 45;
 			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, targetPos - player.Bottom).Perform();
-			
+
 			player.direction = (originPlayer.relativeTarget.X >= 0).ToDirectionInt();
 			GetArm(0).UpdateRotations(player);
 			GetArm(1).UpdateRotations(player);
@@ -2125,9 +2124,9 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			if (fallPosition > player.Bottom.Y - GroundOffset) {
 				fallPosition = player.Bottom.Y - GroundOffset;
 #if DEBUG
-				if (player.controlUp) 
+				if (player.controlUp)
 #endif
-				fallingStarSoldier.fallAnimationTime++;
+					fallingStarSoldier.fallAnimationTime++;
 			}
 			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
@@ -2185,6 +2184,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			if (fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
 				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
 				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
+				if (Keybindings.StarSoldierLockOn.JustPressed) Platform.Get<IClipboard>().Value = Landing_Animation.instance.Export();
 			}
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			for (int i = 0; i < options.Count; i++) {
@@ -3139,7 +3139,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 				Vector2 size = Star_Soldier.Font.MeasureString(text);
 				infoTextColor = infoTextShadowColor * 2.55f;
 
-				DrawText(spriteBatch, 
+				DrawText(spriteBatch,
 					text,
 					new Vector2(Main.screenWidth - size.X - 8, y),
 					infoTextColor,
@@ -3319,25 +3319,26 @@ public class Surf_Music : ModSceneEffect {
 }
 public class Landing_Animation : KeyframeAnimation {
 	public static Landing_Animation instance = new();
-	public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(default, 0.5f)) {
-			new(3, new(Vector2.UnitY * 8, 0.5f), [new SinEaseIn(), new Exponential(2)]),
-			new(30, new(Vector2.Zero, 0.5f), [new Exponential(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
-		};
-	public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(new(default, 0)) {
-			new(3, new(Vector2.UnitY * -8, -0.5f), []),
-			new(30, new(Vector2.Zero, -0.5f), [new Exponential(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
-		};
-	public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new() {
+	public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(Vector2.Zero, 0.5f)) {
+		new(3, new(new(0f, 8f), 0.5f), [new SinEaseIn(), new Exponential(2)]),
+		new(30, new(Vector2.Zero, 0.5f), [new Exponential(2)]),
+		new(45, default, [new Exponential(0.5f)])
 	};
-	public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new() {
+	public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(default) {
+		new(3, new(new(0f, -8f), -0.5f), []),
+		new(30, new(Vector2.Zero, -0.5f), [new Exponential(2)]),
+		new(45, default, [new Exponential(0.5f)])
 	};
-	public KeyframeSet<BackLegFrame> backLegFrameAnimation = new() {
-			KeyframeTypes.Step<BackLegFrame>(8, 3)
-		};
-	public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new() {
+	public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new(default) {
 	};
+	public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new(default) {
+	};
+	public KeyframeSet<BackLegFrame> backLegFrameAnimation = new(0) {
+		new(8, 3, new StepInterpolation<BackLegFrame>())
+	};
+	public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new(0) {
+	};
+
 	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
 		public Vector2 Position = Position;
 		public float Rotation = Rotation;
@@ -3355,7 +3356,7 @@ public class Landing_Animation : KeyframeAnimation {
 			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref draggingGizmo, ref gizmoIndex, offset);
 			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 32);
 		}
-		public static string Export(AnimationOffsets value) => $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
+		public static string Export(AnimationOffsets value) => value == default ? "default" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
 	}
 	public record struct BackLegFrame(int Frame) : IAnimatableSpriteFrame<BackLegFrame> {
 		public static Texture2D Texture => Star_Soldier.backLegTexture;
