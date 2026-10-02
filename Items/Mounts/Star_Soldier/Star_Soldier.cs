@@ -2129,7 +2129,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 #endif
 				fallingStarSoldier.fallAnimationTime++;
 			}
-			if (fallingStarSoldier.fallAnimationTime > Star_Soldier.animation.totalLength) {
+			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
 				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
 			}
@@ -2183,8 +2183,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
 			if (fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
-				Star_Soldier.animation.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
-				Star_Soldier.animation.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
+				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
+				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
 			}
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;
 			for (int i = 0; i < options.Count; i++) {
