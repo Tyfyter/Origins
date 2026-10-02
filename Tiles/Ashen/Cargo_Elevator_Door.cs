@@ -247,6 +247,8 @@ namespace Origins.Tiles.Ashen {
 
 			readonly HashSet<Point> leftClosing = [];
 			readonly HashSet<Point> rightClosing = [];
+			static bool ShouldBlock(Tile tile) => tile.TileIsType<Door_Stopper>() && tile.TileFrameY == 0;
+			static bool ShouldBlock(Point16 position, int xOffset, int yOffset) => ShouldBlock(Main.tile[position.X + xOffset, position.Y + yOffset]);
 			public void Update(Point16 position) {
 				if ((Main.tile[position].TileFrameX >= 11 * 18) != (TargetFrame == locked_frame)) {
 					if (TargetFrame == locked_frame) {
@@ -255,6 +257,8 @@ namespace Origins.Tiles.Ashen {
 						TargetFrame = locked_frame;
 					}
 				}
+				if (TargetFrame == open_frame && (ShouldBlock(position, -1, 0) || ShouldBlock(position, -1, 1) || ShouldBlock(position, -1, 2)
+					|| ShouldBlock(position, 11, 0) || ShouldBlock(position, 11, 1) || ShouldBlock(position, 11, 2))) TargetFrame = closed_frame;
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 11 * 8, position.Y * 16 + 3 * 8));
