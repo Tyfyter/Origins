@@ -485,6 +485,7 @@ public class Phoenum : MaterialItem {
 	public override bool Hardmode => true;
 	public override void SetStaticDefaults() {
 		base.SetStaticDefaults();
+		Origins.AddGlowMask(this);
 		OriginsSets.Items.EvilMaterialAchievement[Type] = true;
 	}
 }

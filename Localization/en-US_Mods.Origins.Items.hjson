@@ -7006,7 +7006,10 @@ Medicinal_Acid: {
 
 Morphine: {
 	DisplayName: Morphine
-	Tooltip: Increases life regeneration while you have [buffhint/self:PotionSickness]
+	Tooltip: 
+		'''
+		Increases life regeneration and maintains half your natural regeneration after getting hit while you have [buffhint/self:PotionSickness]
+		'''
 }
 
 Rasterwrap: {
@@ -8702,5 +8705,5 @@ Jumpsuit: {
 
 Door_Stopper_Item: {
 	DisplayName: Door Stopper
-	Tooltip: ""
+	Tooltip: Locks connected powerable doors when it is unpowered
 }

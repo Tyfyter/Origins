@@ -1450,7 +1450,7 @@ TILES:
 (^) Delay Component
 (^) Diode Component
 (^) Dirt Chest
-(#, ^2) Door Stopper !!!
+(#2, ^2) Door Stopper !!! (dont forget glow)
 (^) Edge Detector
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder

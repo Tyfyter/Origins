@@ -258,7 +258,14 @@ namespace Origins.Tiles.Ashen {
 					}
 				}
 				if (TargetFrame == open_frame && (ShouldBlock(position, -1, 0) || ShouldBlock(position, -1, 1) || ShouldBlock(position, -1, 2)
-					|| ShouldBlock(position, 11, 0) || ShouldBlock(position, 11, 1) || ShouldBlock(position, 11, 2))) TargetFrame = closed_frame;
+					|| ShouldBlock(position, 11, 0) || ShouldBlock(position, 11, 1) || ShouldBlock(position, 11, 2))) {
+					TargetFrame = closed_frame;
+					SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
+					SoundEngine.PlaySound(Origins.Sounds.Bonk.WithPitch(1.5f), position.ToWorldCoordinates(16, 24));
+					SoundEngine.PlaySound(Origins.Sounds.MetalDoorClose.WithPitch(1.5f), position.ToWorldCoordinates(16, 24));
+					SoundEngine.PlaySound(SoundID.Item37.WithPitch(-1.4f).WithVolume(1f), position.ToWorldCoordinates(16, 24));
+					SoundEngine.PlaySound(SoundID.NPCHit4.WithPitch(-1.2f).WithVolume(1f), position.ToWorldCoordinates(16, 24));
+				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item143.WithPitch(-1.8f).WithVolume(0.1f), new Vector2(position.X * 16 + 11 * 8, position.Y * 16 + 3 * 8));

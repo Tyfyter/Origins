@@ -204,6 +204,10 @@ namespace Origins.Tiles.Ashen {
 					} else if (frame < max_frame && (ShouldBlock(Main.tile[position + new Point16(0, -1)]) || ShouldBlock(Main.tile[position + new Point16(1, -1)]))) {
 						TargetOpen = false;
 						SoundEngine.PlaySound(Origins.Sounds.Alarm2.WithPitch(-1f), position.ToWorldCoordinates(16, 24));
+						SoundEngine.PlaySound(Origins.Sounds.Bonk.WithPitch(1.5f), position.ToWorldCoordinates(16, 24));
+						SoundEngine.PlaySound(Origins.Sounds.MetalDoorClose.WithPitch(1.5f), position.ToWorldCoordinates(16, 24));
+						SoundEngine.PlaySound(SoundID.Item37.WithPitch(-1.4f).WithVolume(1f), position.ToWorldCoordinates(16, 24));
+						SoundEngine.PlaySound(SoundID.NPCHit4.WithPitch(-1.2f).WithVolume(1f), position.ToWorldCoordinates(16, 24));
 					}
 				}
 				if (!IsAnimating) return;
