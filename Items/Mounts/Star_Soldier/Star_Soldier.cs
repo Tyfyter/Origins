@@ -40,6 +40,10 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.Core.KeyframeModifiers;
+using static Origins.Items.Mounts.Star_Soldier.Landing_Animation;
+using AnimationOffsets = Origins.Items.Mounts.Star_Soldier.Landing_Animation.AnimationOffsets;
+using BackLegFrame = Origins.Items.Mounts.Star_Soldier.Landing_Animation.BackLegFrame;
+using FrontLegFrame = Origins.Items.Mounts.Star_Soldier.Landing_Animation.FrontLegFrame;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
@@ -618,20 +622,14 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		float rotFlip = directions.X * directions.Y;
 		AnimationOffsets backLegOffset = default, bodyOffset = default, frontLegOffset = default;
 		int backLegFrame = handler.walkFrame, frontLegFrame = handler.walkFrame;
-#if DEBUG
-		Stopwatch stopwatch = Stopwatch.StartNew();
-		// Use a breakpoint on the statement below to "hot reload" animation
-		stopwatch.Stop();
-		if (stopwatch.ElapsedMilliseconds > 0) animation = new Anim();
-#endif
 		#region drawing
 		if (handler.fallAnimationTime >= 0) {
-			AnimationOffsets wholeOffset = animation.wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
-			AnimationOffsets bothLegsOffset = animation.bothLegsAnimation.GetValue(handler.fallAnimationTime);
-			backLegOffset = animation.backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
-			frontLegOffset = animation.frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
-			backLegFrame = animation.backLegFrameAnimation.GetValue(handler.fallAnimationTime);
-			frontLegFrame = animation.frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			AnimationOffsets wholeOffset = Landing_Animation.instance.wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
+			AnimationOffsets bothLegsOffset = Landing_Animation.instance.bothLegsAnimation.GetValue(handler.fallAnimationTime);
+			backLegOffset = Landing_Animation.instance.backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
+			frontLegOffset = Landing_Animation.instance.frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
+			backLegFrame = Landing_Animation.instance.backLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			frontLegFrame = Landing_Animation.instance.frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
 			backLegOffset += bothLegsOffset;
 			frontLegOffset += bothLegsOffset;
 			drawPosition += wholeOffset.Position * directions;
@@ -690,61 +688,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		(drawPlayer.direction == -1 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
 		#endregion
 	}
-	#region landing animation
-	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
-		public Vector2 Position = Position;
-		public float Rotation = Rotation;
-		public static KeyframeSet<AnimationOffsets>.IInterpolation Linear { get; } = new Interpolation();
-		public readonly struct Interpolation : KeyframeSet<AnimationOffsets>.IInterpolation {
-			readonly AnimationOffsets KeyframeSet<AnimationOffsets>.IInterpolation.Interpolate(AnimationOffsets prevValue, AnimationOffsets nextValue, float progress) =>
-				new(
-					Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
-					float.Lerp(prevValue.Rotation, nextValue.Rotation, progress)
-				);
-			public readonly override string ToString() => "Linear";
-		}
-		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
-		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
-			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref draggingGizmo, ref gizmoIndex, offset);
-			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 32);
-		}
-		public static string Export(AnimationOffsets value) => $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
-	}
-	public record struct BackLegFrame(int Frame) : IAnimatableSpriteFrame<BackLegFrame> {
-		public static Texture2D Texture => backLegTexture;
-		public static int FrameCount => LegTextureFrames;
-		public static implicit operator BackLegFrame(int value) => new(value);
-		public static implicit operator int(BackLegFrame value) => value.Frame;
-	}
-	public record struct FrontLegFrame(int Frame) : IAnimatableSpriteFrame<FrontLegFrame> {
-		public static Texture2D Texture => frontLegTexture;
-		public static int FrameCount => LegTextureFrames;
-		public static implicit operator FrontLegFrame(int value) => new(value);
-		public static implicit operator int(FrontLegFrame value) => value.Frame;
-	}
-	public static Anim animation = new();
-	public class Anim : KeyframeAnimation {
-		public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(default, 0.5f)) {
-			new(3, new(Vector2.UnitY * 8, 0.5f), [new SinEaseIn(), new Exponential(2)]),
-			new(30, new(Vector2.Zero, 0.5f), [new Exponential(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
-		};
-		public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(new(default, 0)) {
-			new(3, new(Vector2.UnitY * -8, -0.5f), []),
-			new(30, new(Vector2.Zero, -0.5f), [new Exponential(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
-		};
-		public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new() {
-		};
-		public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new() {
-		};
-		public KeyframeSet<BackLegFrame> backLegFrameAnimation = new() {
-			KeyframeTypes.Step<BackLegFrame>(8, 3)
-		};
-		public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new() {
-		};
-	}
-	#endregion
 	#endregion
 	public record class Star_Soldier_Set_Weapons(Player Player, int MainHand, int OffHand) : AutoSyncedAction {
 		public Star_Soldier_Set_Weapons() : this(default, default, default) { }
@@ -3372,5 +3315,58 @@ public class Surf_Music : ModSceneEffect {
 			if (player.Hitbox.Intersects(bounds) && player.mount.IsMount<Star_Soldier>() && player.OriginPlayer().standingOnPlatformNPC?.ModNPC is HA_24_Flying) return true;
 		}
 		return false;
+	}
+}
+public class Landing_Animation : KeyframeAnimation {
+	public static Landing_Animation instance = new();
+	public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(default, 0.5f)) {
+			new(3, new(Vector2.UnitY * 8, 0.5f), [new SinEaseIn(), new Exponential(2)]),
+			new(30, new(Vector2.Zero, 0.5f), [new Exponential(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
+		};
+	public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(new(default, 0)) {
+			new(3, new(Vector2.UnitY * -8, -0.5f), []),
+			new(30, new(Vector2.Zero, -0.5f), [new Exponential(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
+		};
+	public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new() {
+	};
+	public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new() {
+	};
+	public KeyframeSet<BackLegFrame> backLegFrameAnimation = new() {
+			KeyframeTypes.Step<BackLegFrame>(8, 3)
+		};
+	public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new() {
+	};
+	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
+		public Vector2 Position = Position;
+		public float Rotation = Rotation;
+		public static KeyframeSet<AnimationOffsets>.IInterpolation Linear { get; } = new Interpolation();
+		public readonly struct Interpolation : KeyframeSet<AnimationOffsets>.IInterpolation {
+			readonly AnimationOffsets KeyframeSet<AnimationOffsets>.IInterpolation.Interpolate(AnimationOffsets prevValue, AnimationOffsets nextValue, float progress) =>
+				new(
+					Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
+					float.Lerp(prevValue.Rotation, nextValue.Rotation, progress)
+				);
+			public readonly override string ToString() => "Linear";
+		}
+		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref draggingGizmo, ref gizmoIndex, offset);
+			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 32);
+		}
+		public static string Export(AnimationOffsets value) => $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
+	}
+	public record struct BackLegFrame(int Frame) : IAnimatableSpriteFrame<BackLegFrame> {
+		public static Texture2D Texture => Star_Soldier.backLegTexture;
+		public static int FrameCount => Star_Soldier.LegTextureFrames;
+		public static implicit operator BackLegFrame(int value) => new(value);
+		public static implicit operator int(BackLegFrame value) => value.Frame;
+	}
+	public record struct FrontLegFrame(int Frame) : IAnimatableSpriteFrame<FrontLegFrame> {
+		public static Texture2D Texture => Star_Soldier.frontLegTexture;
+		public static int FrameCount => Star_Soldier.LegTextureFrames;
+		public static implicit operator FrontLegFrame(int value) => new(value);
+		public static implicit operator int(FrontLegFrame value) => value.Frame;
 	}
 }

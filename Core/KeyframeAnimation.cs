@@ -26,7 +26,7 @@ public abstract class KeyframeAnimation {
 	protected KeyframeAnimation() {
 		keyframeSets = [];
 		keyframeSetNames = [];
-		foreach (FieldInfo field in GetType().GetFields()) {
+		foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)) {
 			if (!field.FieldType.IsAssignableTo(typeof(IKeyframeSet))) continue;
 			IKeyframeSet item = (IKeyframeSet)field.GetValue(this);
 			keyframeSets.Add(item);

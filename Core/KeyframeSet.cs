@@ -12,7 +12,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
-using static Origins.Core.KeyframeAnimation;
 using static Origins.Core.KeyframeTypes;
 
 namespace Origins.Core;
