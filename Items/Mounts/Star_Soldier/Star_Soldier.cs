@@ -574,11 +574,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	public override void SetMount(Player player, ref bool skipDust) {
 		player.mount._mountSpecificData = new MountHandler();
 	}
-#if DEBUG
-	public override void Dismount(Player player, ref bool skipDust) {
-		InitializeAnimation();
-	}
-#endif
 	struct HideItemHUD : IBroken {
 		static string IBroken.BrokenReason => "Hide item HUD";
 	}
@@ -631,12 +626,12 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 #endif
 		#region drawing
 		if (handler.fallAnimationTime >= 0) {
-			AnimationOffsets wholeOffset = wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
-			AnimationOffsets bothLegsOffset = bothLegsAnimation.GetValue(handler.fallAnimationTime);
-			backLegOffset = backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
-			frontLegOffset = frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
-			backLegFrame = backLegFrameAnimation.GetValue(handler.fallAnimationTime);
-			frontLegFrame = frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			AnimationOffsets wholeOffset = animation.wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
+			AnimationOffsets bothLegsOffset = animation.bothLegsAnimation.GetValue(handler.fallAnimationTime);
+			backLegOffset = animation.backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
+			frontLegOffset = animation.frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
+			backLegFrame = animation.backLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			frontLegFrame = animation.frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
 			backLegOffset += bothLegsOffset;
 			frontLegOffset += bothLegsOffset;
 			drawPosition += wholeOffset.Position * directions;
@@ -696,28 +691,9 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		#endregion
 	}
 	#region landing animation
-	static void InitializeAnimation() {
-		wholeOffsetAnimation = new(new(default, 0.5f)) {
-			new(3, new(Vector2.UnitY * 8, 0.5f), AnimationOffsets.Linear),
-			new(30, new(Vector2.Zero, 0.5f), [new SinEaseIn(), new Exponent(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
-		};
-		bothLegsAnimation = new(new(default, 0)) {
-			new(3, new(Vector2.UnitY * -8, -0.5f), []),
-			new(30, new(Vector2.Zero, -0.5f), [new Exponent(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
-		};
-		backLegOffsetAnimation = new() {
-		};
-		frontLegOffsetAnimation = new() {
-		};
-		backLegFrameAnimation = new() {
-			KeyframeTypes.Step(8, 3)
-		};
-		frontLegFrameAnimation = new() {
-		};
-	}
-	record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
+	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
+		public Vector2 Position = Position;
+		public float Rotation = Rotation;
 		public static KeyframeSet<AnimationOffsets>.IInterpolation Linear { get; } = new Interpolation();
 		public readonly struct Interpolation : KeyframeSet<AnimationOffsets>.IInterpolation {
 			readonly AnimationOffsets KeyframeSet<AnimationOffsets>.IInterpolation.Interpolate(AnimationOffsets prevValue, AnimationOffsets nextValue, float progress) =>
@@ -728,26 +704,22 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			public readonly override string ToString() => "Linear";
 		}
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
-		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value) {
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref draggingGizmo, ref gizmoIndex, offset);
+			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 48);
 		}
 	}
-	static KeyframeSet<AnimationOffsets> wholeOffsetAnimation;
-	static KeyframeSet<AnimationOffsets> bothLegsAnimation;
-	static KeyframeSet<AnimationOffsets> backLegOffsetAnimation;
-	static KeyframeSet<AnimationOffsets> frontLegOffsetAnimation;
-	static KeyframeSet<int> backLegFrameAnimation;
-	static KeyframeSet<int> frontLegFrameAnimation;
-	public static KeyframeAnimation animation = new Anim();
-	class Anim : KeyframeAnimation {
+	public static Anim animation = new();
+	public class Anim : KeyframeAnimation {
 		public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(default, 0.5f)) {
-			new(3, new(Vector2.UnitY * 8, 0.5f), [new SinEaseIn(), new Exponent(2)]),
-			new(30, new(Vector2.Zero, 0.5f), [new Exponent(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
+			new(3, new(Vector2.UnitY * 8, 0.5f), [new SinEaseIn(), new Exponential(2)]),
+			new(30, new(Vector2.Zero, 0.5f), [new Exponential(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
 		};
 		public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(new(default, 0)) {
 			new(3, new(Vector2.UnitY * -8, -0.5f), []),
-			new(30, new(Vector2.Zero, -0.5f), [new Exponent(2)]),
-			new(45, new(Vector2.Zero, 0f), [new Exponent(0.5f)]),
+			new(30, new(Vector2.Zero, -0.5f), [new Exponential(2)]),
+			new(45, new(Vector2.Zero, 0f), [new Exponential(0.5f)]),
 		};
 		public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new() {
 		};
@@ -758,9 +730,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		};
 		public KeyframeSet<int> frontLegFrameAnimation = new() {
 		};
-	}
-	static Star_Soldier() {
-		InitializeAnimation();
 	}
 	#endregion
 	#endregion
@@ -2258,6 +2227,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
 			if (fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
+				Star_Soldier.animation.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
 				Star_Soldier.animation.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
 			}
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;

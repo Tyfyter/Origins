@@ -20,7 +20,8 @@ public abstract class KeyframeAnimation {
 	readonly List<TextSnippet[]> keyframeSetNames;
 	float lastTime;
 	public int modifyingInterpolation = -1;
-	public bool dragging = false;
+	public bool draggingInterpolation = false;
+	public int draggingGizmo = -1;
 	protected KeyframeAnimation() {
 		keyframeSets = [];
 		keyframeSetNames = [];
@@ -68,8 +69,14 @@ public abstract class KeyframeAnimation {
 			keyframeSets[i].DrawEditorUI(spriteBatch, this, i == selectedIndex, currentTime);
 			timelinePos.Y += 16;
 		}
-		if (lastTime.TrySet(currentTime)) modifyingInterpolation = -1;
-		if (!Main.mouseLeft) dragging = false;
+		if (lastTime.TrySet(currentTime)) {
+			modifyingInterpolation = -1;
+			draggingGizmo = -1;
+		}
+		if (!Main.mouseLeft) {
+			draggingInterpolation = false;
+			draggingGizmo = -1;
+		}
 	}
 	public void DrawTimeline(SpriteBatch spriteBatch, bool isSelected) {
 		spriteBatch.Draw(
