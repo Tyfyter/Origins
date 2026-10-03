@@ -1,12 +1,14 @@
 ﻿using Microsoft.Extensions.Primitives;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
+using PegasusLib.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
@@ -95,6 +97,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		}
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
 		bool showCreationSidebar = isSelected;
+		int gizmoIndex = 0;
 		for (int i = 0; i < keyframes.Length; i++) {
 			ref Keyframe keyframe = ref keyframes[i];
 			Vector2 pos = animation.timelinePos with { X = animation.TimelineToScreenPos(keyframe.Time) };
@@ -112,9 +115,8 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 					12,
 					Color.Black
 				);
-				DrawSidebar(spriteBatch, animation, keyframe);
-				int g = 0;
-				DrawGizmo?.Invoke(spriteBatch, ref keyframe.Target, ref animation.draggingGizmo, ref g, animation.gizmoBasePosition);
+				DrawSidebar(spriteBatch, animation, keyframe, ref gizmoIndex);
+				DrawGizmo?.Invoke(spriteBatch, ref keyframe.Target, ref animation.draggingGizmo, ref gizmoIndex, animation.gizmoBasePosition);
 			}
 			DrawDiamond(
 				spriteBatch,
@@ -153,7 +155,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			}
 		}
 
-		static void DrawSidebar(SpriteBatch spriteBatch, KeyframeAnimation animation, Keyframe keyframe) {
+		static void DrawSidebar(SpriteBatch spriteBatch, KeyframeAnimation animation, Keyframe keyframe, ref int gizmoIndex) {
 			InterpolationStack stack = keyframe.Interpolation;
 			Vector2 iPos = new((Main.screenWidth + KeyframeAnimation.TimelineWidth) * 0.5f + 8, 4);
 			TextSnippet[] snippets = [
@@ -318,10 +320,12 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 						new Color(90, 90, 105)
 					);
 				}
+				if (animation.modifyingInterpolation >= 0) {
+					spriteBatch.Restart(spriteBatch.GetState());
+					Span<IInterpolationModifier> modifiers = CollectionsMarshal.AsSpan(keyframe.Interpolation);
+					modifiers[animation.modifyingInterpolation].DrawGizmo(spriteBatch, iPos, ref animation.draggingGizmo, ref gizmoIndex);
+				}
 				iPos.Y += 150 + 4;
-			}
-			if (animation.modifyingInterpolation > 0) {
-
 			}
 		}
 	}
@@ -455,6 +459,7 @@ public interface IKeyframeSet {
 public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolationModifier.Loader> {
 	public float ModifyProgress(float progress);
 	public string Export() => $"new {GetType().Name}()";
+	public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref int draggingGizmo, ref int gizmoIndex) { }
 	class Loader : IAutoloader {
 		static void IAutoloader.Autoload(Mod mod, Type type) {
 			Func<IInterpolationModifier> func = CreateDefault(type);
@@ -497,19 +502,22 @@ public static class KeyframeTypes {
 		static Vector2 oldMousePos;
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref Vector2 value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
 			Rectangle rect = new Rectangle(0, 0, 16, 16).Recentered(value + offset);
-			DrawAALine(rect.TopLeft(), default, rect.Width, 2);
-			DrawAALine(rect.TopLeft(), default, 2, rect.Height);
-			DrawAALine(rect.BottomRight(), Vector2.One, rect.Width, 2);
-			DrawAALine(rect.BottomRight(), Vector2.One, 2, rect.Height);
+			bool isHovering = rect.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
+			Color color = Color.White;
+			if (!isHovering) color *= 0.5f;
+			DrawAALine(rect.TopLeft(), default, rect.Width, 2, color);
+			DrawAALine(rect.TopLeft(), default, 2, rect.Height, color);
+			DrawAALine(rect.BottomRight(), Vector2.One, rect.Width, 2, color);
+			DrawAALine(rect.BottomRight(), Vector2.One, 2, rect.Height, color);
 			if (draggingGizmo == gizmoIndex) value += Main.MouseScreen - oldMousePos;
-			if (Main.mouseLeft && Main.mouseLeftRelease && rect.Contains(Main.MouseScreen)) draggingGizmo = gizmoIndex;
+			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) draggingGizmo = gizmoIndex;
 			oldMousePos = Main.MouseScreen;
-			static void DrawAALine(Vector2 pos, Vector2 origin, int width, int height) {
+			static void DrawAALine(Vector2 pos, Vector2 origin, int width, int height, Color color) {
 				Main.spriteBatch.Draw(
 					TextureAssets.MagicPixel.Value,
 					pos,
 					new Rectangle(0, 0, 1, 1),
-					Color.White,
+					color,
 					0,
 					origin,
 					new Vector2(width, height),
@@ -536,7 +544,9 @@ public static class KeyframeTypes {
 		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-		rotationHandle.ResetPositions().Scale(4).Translate(end).Draw();
+		rotationHandle.ResetPositions().Scale(4).Rotate(value).Translate(end);
+		bool isHovering = rotationHandle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
+		rotationHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
 		if (draggingGizmo == gizmoIndex) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
 		if (Main.mouseLeft && Main.mouseLeftRelease && rotationHandle.Contains(Main.MouseScreen)) {
 			rotationHandleOffset = value - (Main.MouseScreen - pos).ToRotation();
@@ -563,6 +573,36 @@ public static class KeyframeModifiers {
 		public readonly float ModifyProgress(float progress) => float.Pow(progress, Exponent);
 		public readonly override string ToString() => Exponent == 0 ? "Exponent" : $"Exponent({Exponent})";
 		readonly string IInterpolationModifier.Export() => $"new {nameof(Exponential)}({Exponent}f)";
+		static readonly Polygon handle = new(
+			new(-1, 0),
+			new(0, -1),
+			new(1, 0),
+			new(0, 1)
+		);
+		static Vector2 handleOffset;
+		static float handleX = 0.5f;
+		static Vector2 lastMouse;
+		public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref int draggingGizmo, ref int gizmoIndex) {
+			Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			Vector2 mouse = (Main.MouseScreen - pos) / 150;
+			float handleY = 1 - float.Pow(handleX, Exponent);
+			handle.ResetPositions().Scale(6).Translate(pos + new Vector2(handleX, handleY) * 150);
+			bool isHovering = handle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
+			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
+			if (draggingGizmo == gizmoIndex && lastMouse.TrySet(mouse)) {
+				handleX = mouse.X + handleOffset.X;
+				Clamp(ref handleX, 0, 1);
+				Exponent = float.Log(1 - (mouse.Y - handleOffset.Y), handleX);
+			}
+			if (Main.mouseLeft && Main.mouseLeftRelease) {
+				handleOffset = new Vector2(handleX, handleY) - mouse;
+				draggingGizmo = gizmoIndex;
+			}
+			gizmoIndex++;
+		}
 	}
 	public record struct SinEaseIn : IInterpolationModifier {
 		public readonly float ModifyProgress(float progress) => 1 - MathF.Cos(progress * MathHelper.PiOver2);

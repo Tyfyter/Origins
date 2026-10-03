@@ -206,16 +206,12 @@ public class Polygon : IMoveToPegFlag {
 	}
 	public Polygon Scale(float scale) => Scale(new Vector2(scale));
 	public Polygon Scale(Vector2 scale) {
-		for (int i = 0; i < vertices.Length; i++) {
-			Pos(i) *= scale;
-		}
+		for (int i = 0; i < vertices.Length; i++) Pos(i) *= scale;
 		TransformedSize *= scale;
 		return this;
 	}
 	public Polygon Translate(Vector2 offset) {
-		for (int i = 0; i < vertices.Length; i++) {
-			Pos(i) += offset;
-		}
+		for (int i = 0; i < vertices.Length; i++) Pos(i) += offset;
 		return this;
 	}
 	public Polygon Rotate(float angle) {
@@ -229,6 +225,16 @@ public class Polygon : IMoveToPegFlag {
 			Min(ref lowerBounds, Pos(i));
 		}
 		TransformedSize = upperBounds - lowerBounds;
+		return this;
+	}
+	public Polygon MultiplyColor(Color scale) {
+		if (scale == Color.White) return this;
+		for (int i = 0; i < vertices.Length; i++) vertices[i].Color = vertices[i].Color.MultiplyRGBA(scale);
+		return this;
+	}
+	public Polygon MultiplyColor(float scale) {
+		if (scale == 1) return this;
+		for (int i = 0; i < vertices.Length; i++) vertices[i].Color *= scale;
 		return this;
 	}
 	public bool Contains(Vector2 point) {
