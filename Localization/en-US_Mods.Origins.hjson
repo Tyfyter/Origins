@@ -1524,6 +1524,11 @@ Buffs: {
 		DisplayName: Sprockey the Sprocket
 		Description: Everyone from the Mechanicus knows Sprockey!
 	}
+
+	Star_Soldier_Cooldown: {
+		DisplayName: Star Soldier Cooldown
+		Description: Mods.Origins.Buffs.Star_Soldier_Cooldown.Description
+	}
 }
 
 DamageClassName: {

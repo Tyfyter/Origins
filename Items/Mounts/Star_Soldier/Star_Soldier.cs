@@ -9,6 +9,7 @@ using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
@@ -83,6 +84,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 
 		public int fallAnimationTime = -1;
 		public static int MaxLife => 750;
+		public float LifePercent => life / (float)MaxLife;
 		public int life = MaxLife;
 		public int dotCount = 0;
 
@@ -120,6 +122,10 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		int fallCounter;
 		int jumpCounter;
 		public void Update(Player player) {
+			player.AddBuff(
+				ModContent.BuffType<Star_Soldier_Cooldown>(),
+				(int)float.Lerp(Star_Soldier_Cooldown.DamagedCooldown, Star_Soldier_Cooldown.IntactCooldown, Utils.GetLerpValue(0.25f, 1, LifePercent, true))
+			);
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (LockOnTarget is NPC target) {
 				if (!target.active) LockOnTarget = null;
@@ -160,7 +166,6 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			if (lifeLost > 0) CombatText.NewText(player.Hitbox, CombatText.LifeRegen, lifeLost, dramatic: false, dot: true);
 
 			if (life <= 0) {
-				player.mount.Dismount(player);
 				player.statLife -= player.statLifeMax2 / 4 - 1;
 				player.lifeRegenCount = -120;
 				return;
@@ -262,6 +267,10 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			if (life > 0) return;
 			player.mount.Dismount(player);
 			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
+		}
+		public static void ForceDismount(Player player) {
+			player.mount.Dismount(player);
+			player.AddBuff(ModContent.BuffType<Star_Soldier_Cooldown>(), Star_Soldier_Cooldown.ForceDismountCooldown);
 		}
 		public void ItemCheck(Player player) {
 			/// these are default stats, change stat changes in <see cref="Star_Soldier_Blade.UpdateEquipped"/> to change boosts
@@ -2326,6 +2335,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		MountData.swimFrameCount = MountData.inAirFrameCount;
 		MountData.swimFrameDelay = MountData.inAirFrameDelay;
 		MountData.swimFrameStart = MountData.inAirFrameStart;
+		OriginsSets.Mounts.MountCooldownBuff[Type] = ModContent.BuffType<Star_Soldier_Cooldown>();
 	}
 	public override void SetMount(Player player, ref bool skipDust) {
 		player.mount._mountSpecificData = new MountHandler();
@@ -2365,6 +2375,17 @@ public class Star_Soldier_Wagon_Buff : ModBuff {
 		BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 			mountID = MountID
 		};
+	}
+}
+public class Star_Soldier_Cooldown : ModBuff {
+	public static int IntactCooldown => 60 * 15;
+	public static int DamagedCooldown => 60 * 140;
+	public static int ForceDismountCooldown => 60 * 60 * 3;
+	public override string Texture => "Origins/Buffs/Star_Soldier_Cooldown";
+	public override void SetStaticDefaults() {
+		Main.debuff[Type] = true;
+		BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+		Star_Soldier_UI.Sets.CustomBuffIndicator[Type] = (_, _) => false;
 	}
 }
 public class Star_Soldier_UI : SwitchableUIState {

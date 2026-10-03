@@ -41,9 +41,6 @@ namespace Origins.Items.Tools {
 	public class Indestructible_Saddle_Mount : ModMount {
 		public static int ID { get; private set; }
 		public override void Load() {
-			On_Mount.CanMount += (orig, self, m, mountingPlayer) => {
-				return orig(self, m, mountingPlayer) && !(m == ID && mountingPlayer.HasBuff<Indestructible_Saddle_Mount_Cooldown>());
-			};
 			MonoModHooks.Add(typeof(Mount).GetProperty(
 				nameof(Mount.AllowDirectionChange)).GetGetMethod(),
 				static (Func<Mount, bool> orig, Mount self) => (!OriginsSets.Mounts.DisableDirectionChange.GetIfInRange(self.Type)) && orig(self)
@@ -79,6 +76,7 @@ namespace Origins.Items.Tools {
 			MountData.runningFrameStart = 0;
 			MountData.abilityCooldown = 300;
 			OriginsSets.Mounts.DisableDirectionChange[Type] = true;
+			OriginsSets.Mounts.MountCooldownBuff[Type] = ModContent.BuffType<Indestructible_Saddle_Mount_Cooldown>();
 			ID = Type;
 		}
 		public static float GetControlDir(Player player, bool isSpawning) {

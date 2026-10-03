@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Items.Tools;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using PegasusLib.Content;
 using System;
@@ -613,8 +615,13 @@ namespace Origins {
 			public static bool[] DisableDirectionChange = MountID.Sets.Factory.CreateBoolSet();
 			public static bool[] HideTails = MountID.Sets.Factory.CreateNamedSet(nameof(HideTails)).RegisterBoolSet();
 			public static bool[] DoNotOffsetDust = MountID.Sets.Factory.CreateNamedSet(nameof(DoNotOffsetDust)).RegisterBoolSet();
+			public static int[] MountCooldownBuff = MountID.Sets.Factory.CreateIntSet(0);
 			static Mounts() {
-				if (DoNotOffsetDust.Length == MountID.Count) return;
+				if (DoNotOffsetDust.Length == MountID.Count) {
+					On_Mount.CanMount += BlockMountOnCooldown;
+					IL_Player.ItemCheck_Inner += _ => { };
+					return;
+				}
 				try {
 					IL_PlayerDrawSet.BoringSetup_2 += RemoveMountDustOffset;
 				} catch (Exception e) {
@@ -628,6 +635,10 @@ namespace Origins {
 				c.EmitDelegate((ref PlayerDrawSet drawInfo) => {
 					if (drawInfo.drawPlayer.mount.Active && DoNotOffsetDust[drawInfo.drawPlayer.mount.Type]) drawInfo.Position.Y += drawInfo.mountOffSet;
 				});
+			}
+			static bool BlockMountOnCooldown(On_Mount.orig_CanMount orig, Mount self, int m, Player mountingPlayer) {
+				if (MountCooldownBuff[m] > 0 && mountingPlayer.HasBuff(MountCooldownBuff[m])) return false;
+				return orig(self, m, mountingPlayer);
 			}
 			public static class Create {
 				public static Func<Player, Vector2> SimpleEyePosition(int xOffset, int yOffset) => player => player.MountedCenter + player.Directions(2 + xOffset, 12 - player.height * 0.5f + yOffset);
