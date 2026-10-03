@@ -501,7 +501,9 @@ public static class KeyframeTypes {
 		public readonly Vector2 Interpolate(Vector2 prevValue, Vector2 nextValue, float progress) => Vector2.Lerp(prevValue, nextValue, progress);
 		static Vector2 oldMousePos;
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref Vector2 value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
-			Rectangle rect = new Rectangle(0, 0, 16, 16).Recentered(value + offset);
+			Vector2 scale = GizmoZoom;
+
+			Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(value * scale + offset);
 			bool isHovering = rect.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
 			Color color = Color.White;
 			if (!isHovering) color *= 0.5f;
@@ -509,7 +511,7 @@ public static class KeyframeTypes {
 			DrawAALine(rect.TopLeft(), default, 2, rect.Height, color);
 			DrawAALine(rect.BottomRight(), Vector2.One, rect.Width, 2, color);
 			DrawAALine(rect.BottomRight(), Vector2.One, 2, rect.Height, color);
-			if (draggingGizmo == gizmoIndex) value += Main.MouseScreen - oldMousePos;
+			if (draggingGizmo == gizmoIndex) value += (Main.MouseScreen - oldMousePos) / scale;
 			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) draggingGizmo = gizmoIndex;
 			oldMousePos = Main.MouseScreen;
 			static void DrawAALine(Vector2 pos, Vector2 origin, int width, int height, Color color) {
@@ -536,15 +538,16 @@ public static class KeyframeTypes {
 	);
 	static float rotationHandleOffset;
 	public static void DrawRotationGizmo(SpriteBatch spriteBatch, ref float value, ref int draggingGizmo, ref int gizmoIndex, Vector2 pos, float size) {
+		float scale = GizmoZoom.X;
 		pos = pos.Floor();
-		Vector2 end = (pos + (value - MathHelper.PiOver2).ToRotationVector2() * size).Floor();
+		Vector2 end = (pos + (value - MathHelper.PiOver2).ToRotationVector2() * (size * scale)).Floor();
 		spriteBatch.DrawLine(Color.White, pos + Main.screenPosition, end + Main.screenPosition);
 
 		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-		rotationHandle.ResetPositions().Scale(4).Rotate(value).Translate(end);
+		rotationHandle.ResetPositions().Scale(4 * scale).Rotate(value).Translate(end);
 		bool isHovering = rotationHandle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
 		rotationHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
 		if (draggingGizmo == gizmoIndex) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
@@ -566,6 +569,7 @@ public static class KeyframeTypes {
 			0,
 		0);
 	}
+	public static Vector2 GizmoZoom => new(Main.ForcedMinimumZoom * MathHelper.Clamp(Main.GameZoomTarget, 1f, 2f));
 }
 public static class KeyframeModifiers {
 	public static List<(string name, Func<IInterpolationModifier>)> modifierTypes = [];

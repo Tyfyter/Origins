@@ -3363,7 +3363,7 @@ public class Landing_Animation : KeyframeAnimation {
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
 			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref draggingGizmo, ref gizmoIndex, offset);
-			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position + offset, 32);
+			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref draggingGizmo, ref gizmoIndex, value.Position * GizmoZoom + offset, 32);
 		}
 		public static string Export(AnimationOffsets value) => value == default ? "default" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
 	}
