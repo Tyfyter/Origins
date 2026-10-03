@@ -489,6 +489,11 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 		}
 	}
+	public class Ashen_RAM : LootPool {
+		public override void SetStaticDefaults() {
+			AddRule(ItemDropRule.Common(ModContent.ItemType<RAM_Chip>(), 15, 5, 25));
+		}
+	}
 }
 file static class LootPoolExensions {
 	public static IItemDropRule OncePerWorld(this IItemDropRule rule) => new SucceedOncePerWorldGenRule().WithOnSuccess(rule);

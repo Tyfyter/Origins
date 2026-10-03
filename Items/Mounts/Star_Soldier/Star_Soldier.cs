@@ -2378,7 +2378,7 @@ public class Star_Soldier_Wagon_Buff : ModBuff {
 	}
 }
 public class Star_Soldier_Cooldown : ModBuff {
-	public static int IntactCooldown => 60 * 15;
+	public static int IntactCooldown => 60 * 1/*5*/;
 	public static int DamagedCooldown => 60 * 140;
 	public static int ForceDismountCooldown => 60 * 60 * 3;
 	public override string Texture => "Origins/Buffs/Star_Soldier_Cooldown";

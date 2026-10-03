@@ -1,5 +1,8 @@
 ﻿using Origins.Core;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,7 +13,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Door_Stopper : OriginTile, IAshenTile, IAshenWireTile {
-		public override void Load() => new TileItem(this).WithExtraStaticDefaults(this.DropTileItem).RegisterItem();
+		public override void Load() {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type, 2)
+				.AddRecipeGroup(ALRecipeGroups.AdamantiteBars)
+				.AddIngredient<Air_Tank>()
+				.AddIngredient<Scrap>(8)
+				.AddTile<Metal_Presser>()
+				.Register();
+			}).RegisterItem();
+		}
 		public override void SetStaticDefaults() {
 			BlockTileInteractions.TilesBlockInteraction[Type] = true;
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));

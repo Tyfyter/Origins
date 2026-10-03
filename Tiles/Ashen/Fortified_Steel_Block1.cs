@@ -245,12 +245,12 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block1>());
 		}
 		public override void AddRecipes() {
-			CreateRecipe(10)
+			CreateRecipe(50)
 			.AddRecipeGroup(RecipeGroupID.IronBar)
 			.AddIngredient<Scrap>(10)
 			.AddTile<Metal_Presser>()
 			.Register();
-			CreateRecipe(10)
+			CreateRecipe(50)
 			.AddIngredient(ItemID.Coal)
 			.AddRecipeGroup(RecipeGroupID.IronBar)
 			.AddTile<Metal_Presser>()
@@ -268,9 +268,9 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block2>());
 		}
 		public override void AddRecipes() {
-			CreateRecipe(10)
+			CreateRecipe(50)
 			.AddIngredient(ItemID.HellstoneBar)
-			.AddIngredient<Fortified_Steel_Block1_Item>(10)
+			.AddIngredient<Fortified_Steel_Block1_Item>(50)
 			.AddIngredient<Scrap>(10)
 			.AddTile<Metal_Presser>()
 			.Register();
@@ -282,9 +282,9 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block3>());
 		}
 		public override void AddRecipes() {
-			CreateRecipe(10)
+			CreateRecipe(50)
 			.AddIngredient(ItemID.ChlorophyteOre)
-			.AddIngredient<Fortified_Steel_Block2_Item>(10)
+			.AddIngredient<Fortified_Steel_Block2_Item>(50)
 			.AddIngredient<Scrap>(10)
 			.AddTile<Metal_Presser>()
 			.Register();

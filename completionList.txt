@@ -1423,7 +1423,7 @@ TILES:
 (^) Riven Torch
 (^) Riven Water Fountain
 (X) Ruined Portal
-(#3, ^2) Scrap Railing !!!
+(^) Scrap Railing
 (^) Shadow Torch
 (^) Strange Plant (Stardust)
 (X) Stray Cable
@@ -1714,6 +1714,7 @@ MISCELLANEOUS ITEMS:
 (^) Large Chambersite
 (^) RAM Chip
 (^) Worn Paper: Famine
+(X) Worn Paper: I Need Some Melatonin
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby
 (^) Worn Paper: Self-Preservation
@@ -2122,7 +2123,7 @@ VOLUME I MUSIC:
 |---
 
 (#, ^4) Ashen Factory !!!
-(X) Ashen Mines !!!
+(#, ^4) Ashen Mines !!!
 (#, ^4) Ashen Scrapyard !!!
 (^) Brine Pool
 (X) Cosmos
