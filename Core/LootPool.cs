@@ -138,12 +138,14 @@ public class Ashen_Generic : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2));
+		AddRule(ItemDropRule.Common(ItemID.FlareGun, 5));
+		AddRule(ItemDropRule.Common(ItemID.BlueFlare, 5, 35, 78));
 		AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 		AddRule(ItemDropRule.Common(ItemID.Ruler, 10));
 		AddRule(ItemDropRule.Common(ItemID.Toolbelt, 10));
 		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 5, 12));
 		AddRule(ItemDropRule.Common(ItemID.Goggles, 2, 1, 2));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 4, 1, 2));
 		AddRule(ItemDropRule.Common(ItemID.SilverCoin, 2, 2, 5));
 		AddRule(ItemDropRule.Common(ItemID.CopperCoin, 1, 37, 99));
 	}
@@ -159,12 +161,14 @@ public class Ashen_GenericLore : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 5));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2));
+		AddRule(ItemDropRule.Common(ItemID.FlareGun));
+		AddRule(ItemDropRule.Common(ItemID.BlueFlare, 1, 78, 78));
 		AddRule(ItemDropRule.Common(ItemID.Compass, 5));
 		AddRule(ItemDropRule.Common(ItemID.Ruler, 5));
 		AddRule(ItemDropRule.Common(ItemID.Toolbelt, 5));
 		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 20, 48));
 		AddRule(ItemDropRule.Common(ItemID.Goggles));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2));
 		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 	}
 }
@@ -180,9 +184,9 @@ public class Ashen_Mineral : LootPool {
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Oil_Bucket>(), 2, 15, 56));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Silicon_Ore_Item>(), 1, 40, 121));
 		AddRule(ItemDropRule.Common(ItemID.TinOre, 1, 21, 180));
 		AddRule(ItemDropRule.Common(ItemID.LeadOre, 2, 38, 165));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Silicon_Ore_Item>(), 1, 40, 121));
 		AddRule(ItemDropRule.Common(ItemID.SilverOre, 2, 45, 144));
 		AddRule(ItemDropRule.Common(ItemID.TungstenOre, 2, 60, 100));
 		AddRule(ItemDropRule.Common(ItemID.Amber, 4, 10, 25));
@@ -212,16 +216,17 @@ public class Ashen_Supplies : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Miter_Saw>(), 10, 1, 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Piledriver>(), 10, 1, 5));
 		AddRule(ItemDropRule.Common(TileItem.ItemType<Radio_Component>(), 8, 1, 7));
+		AddRule(ItemDropRule.Common(TileItem.Get<Modular_Light_Fixture>().Type, 7, 20, 40));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Transistor_Item>(), 7, 10, 25));
 		AddRule(ItemDropRule.Common(ItemID.Binoculars, 12));
 		AddRule(ItemDropRule.Common(ItemID.Bomb, 1, 65, 135));
 		AddRule(ItemDropRule.Common(ItemID.Dynamite, 1, 35, 80));
 		AddRule(ItemDropRule.Common(ItemID.Explosives, 2, 45, 90));
+		AddRule(ItemDropRule.Common(ItemID.FlareGun, 3));
 		AddRule(ItemDropRule.Common(ItemID.BlueFlare, 3, 35, 78));
 		AddRule(ItemDropRule.Common(ItemID.IronPickaxe, 7, 15, 35));
 		AddRule(ItemDropRule.Common(ItemID.IronHammer, 7, 12, 26));
 		AddRule(ItemDropRule.Common(ItemID.Minecart, 7, 10, 15));
-		AddRule(ItemDropRule.Common(TileItem.Get<Modular_Light_Fixture>().Type, 7, 20, 40));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Transistor_Item>(), 7, 10, 25));
 		AddRule(ItemDropRule.Common(ItemID.Wire, 7, 35, 125));
 		AddRule(ItemDropRule.Common(ItemID.OrangePaint, 7, 115, 250));
 		AddRule(ItemDropRule.Common(ItemID.Chain, 7, 80, 120));
@@ -413,8 +418,8 @@ public class Ashen_Command : LootPool {
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 1, 3, 7));
-		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 29, 88));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>()));
+		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 29, 88));
 		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
 		AddRule(ItemDropRule.Common(ItemID.CoffeeCup));
 	}
@@ -440,11 +445,13 @@ public class Ashen_Lab : LootPool {
 	}
 	public class Ashen_Oil : LootPool {
 		public override void SetStaticDefaults() {
-			AddRule(ItemDropRule.Common(ItemID.SilverCoin, 1, 1, 5));
-			AddRule(ItemDropRule.Common(ItemID.EmptyBucket, 1, 3, 18));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Distress_Beacon>(), 5));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Sticky_Link_Grenade>(), 4, 25, 85));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 1, 1, 2));
+			AddRule(ItemDropRule.Common(ItemID.SilverCoin, 1, 1, 5));
+			AddRule(ItemDropRule.Common(ItemID.EmptyBucket, 1, 3, 18));
+			AddRule(ItemDropRule.Common(ItemID.FlareGun, 8));
+			AddRule(ItemDropRule.Common(ItemID.BlueFlare, 8, 35, 78));
 		}
 	}
 	public class Ashen_Admin : LootPool {
@@ -467,6 +474,8 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Breastplate>(), 2));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Greaves>(), 2));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>(), 3, 1, 2));
+			AddRule(ItemDropRule.Common(ItemID.FlareGun, 8));
+			AddRule(ItemDropRule.Common(ItemID.BlueFlare, 8, 16, 48));
 			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 			AddRule(ItemDropRule.Common(ItemID.Grenade, 2, 8, 22));
 			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 5, 50));
@@ -482,6 +491,8 @@ public class Ashen_Lab : LootPool {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Helmet>()));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Breastplate>()));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<PEE_Greaves>()));
+			AddRule(ItemDropRule.Common(ItemID.FlareGun));
+			AddRule(ItemDropRule.Common(ItemID.BlueFlare, 1, 48, 48));
 			AddRule(ItemDropRule.Common(ItemID.Compass, 40));
 			AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 25, 25));
 			AddRule(ItemDropRule.Common(ItemID.MusketBall, 3, 81, 81));

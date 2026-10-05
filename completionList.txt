@@ -146,6 +146,7 @@ VANILLA MODIFICATIONS:
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)
 (^) Explosive Defense Punishment (increased affliction from defense)
 (^) Harpoon (new weapon to introduce sub-class)
+(X) More Feral Bite Debuffs
 (^) Proximity Mine Launcher to use Canisters
 (^) Rain armor buffs
 (^) Snow Armor is now craftable
@@ -190,6 +191,7 @@ OTHER:
 (^) Defiled "Chrysalis" Spawning
 (^) Equipment Lubing mechanics
 (^) Explosive Modifiers
+(X) Fluctuating Riven Walls
 (^) Journal
 (^) Quest System General
 (#2) Quirky World Evil Spread mechanics !!!
@@ -289,6 +291,7 @@ ENEMY NPCS:
 (^) Amoebic Mummy
 (^) Amoeba Bugger
 (^) Barnacle Mound
+(X) Barnacle Spitter
 (X) Beckonbug
 (^) Brine Latcher
 (^) Brine Serpent
@@ -303,6 +306,7 @@ ENEMY NPCS:
 (^) Defiled Watcher
 (#, ^2) Defiled Weaver
 (X) Depth Crawler
+(X) Esophageel
 (X) False Geometry
 (X) Hive Mind
 (^) Leaf Snapper
@@ -1841,9 +1845,9 @@ CONSUMABLES:
 (^) Jam Sandwich
 (^) Jelly Schnapps
 (^) Krunch Mix
+(ᗢ) Malware Bytes Candy Bar (formerly Pen Ink, this comment can be removed once it has been changed)
 (^) Nerve Flan
 (^) Pawpaw
-(^) Pen Ink
 (^) Periven
 (^) Petrified Prickly Pear
 (^) Potato
