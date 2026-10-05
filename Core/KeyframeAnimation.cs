@@ -39,6 +39,7 @@ public abstract class KeyframeAnimation {
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime) {
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 16;
+		Point minTimelineY = CurrentTimeline.TopLeft().ToPoint();
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
@@ -54,11 +55,11 @@ public abstract class KeyframeAnimation {
 				selectedIndex = i;
 				modifyingInterpolation = -1;
 			}
-			if (Main.mouseLeft && CurrentTimeline.Contains(Main.MouseScreen)) {
-				currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.MouseScreen.X));
-			}
 			DrawTimeline(spriteBatch, i == selectedIndex);
 			timelinePos.Y += 16;
+		}
+		if (Main.mouseLeft && CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen)) {
+			currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.MouseScreen.X));
 		}
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
