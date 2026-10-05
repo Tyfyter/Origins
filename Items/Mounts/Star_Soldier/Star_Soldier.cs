@@ -3379,7 +3379,7 @@ public class Landing_Animation : KeyframeAnimation {
 					Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
 					float.Lerp(prevValue.Rotation, nextValue.Rotation, progress)
 				);
-			public readonly override string ToString() => "Linear";
+			public readonly override string ToString() => "Interpolated";
 		}
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {

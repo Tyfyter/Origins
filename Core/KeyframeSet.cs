@@ -659,7 +659,7 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 	public readonly struct Interpolation : KeyframeSet<TSelf>.IInterpolation {
 		readonly TSelf KeyframeSet<TSelf>.IInterpolation.Interpolate(TSelf prevValue, TSelf nextValue, float progress) =>
 			prevValue with { Frame = (int)float.Round(float.Lerp(prevValue.Frame, prevValue.Frame, progress)) };
-		public readonly override string ToString() => "Linear";
+		public readonly override string ToString() => "Interpolated";
 	}
 	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
 		Vector2 pos = new(0, Main.screenHeight);
