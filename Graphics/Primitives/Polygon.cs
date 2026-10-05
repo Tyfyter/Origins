@@ -214,13 +214,16 @@ public class Polygon : IMoveToPegFlag {
 		for (int i = 0; i < vertices.Length; i++) Pos(i) += offset;
 		return this;
 	}
-	public Polygon Rotate(float angle) {
+	public Polygon Rotate(float angle, Vector2 origin = default) {
+		if (angle == 0) return this;
 		Vector2 lowerBounds = new(float.PositiveInfinity);
 		Vector2 upperBounds = new(float.NegativeInfinity);
 		Vector2 x = new(MathF.Cos(angle), -MathF.Sin(angle));
 		Vector2 y = new(-x.Y, x.X);
 		for (int i = 0; i < vertices.Length; i++) {
+			Pos(i) -= origin;
 			OriginExtensions.MatrixMult(ref Pos(i), x, y);
+			Pos(i) += origin;
 			Max(ref upperBounds, Pos(i));
 			Min(ref lowerBounds, Pos(i));
 		}

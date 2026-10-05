@@ -550,15 +550,13 @@ public static class KeyframeTypes {
 			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			handle.ResetVertices().Scale(8);
-			if (value) handle.Rotate(MathHelper.PiOver4);
+
+			handle.ResetVertices().Scale(8).Rotate(MathHelper.PiOver4).Translate(offset);
 			bool isHovering = handle.Contains(Main.MouseScreen);
-			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
-			if (value) {
-				using Polygon.VertexCache _ = handle.ModificationContext();
-				handle.Scale(6f / 8).Translate(offset).Draw();
-			}
-			handle.Translate(offset).DrawOutline();
+
+			handle.MultiplyColor(0.5f + isHovering.Mul(0.5f)).DrawOutline();
+			if (value) handle.Scale(6f / 8, offset).Draw();
+
 			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) value = !value;
 		}
 	}
