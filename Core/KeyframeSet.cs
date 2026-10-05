@@ -400,10 +400,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		}
 	}
 	public class InterpolationStack : List<IInterpolationModifier> {
-		IInterpolation baseInterpolation = CreateLinear?.Invoke();
+		IInterpolation baseInterpolation = Interpolatable ? CreateLinear?.Invoke() : new StepInterpolation<T>();
 		public ref IInterpolation BaseInterpolation {
 			get {
-				baseInterpolation ??= CreateLinear?.Invoke();
+				baseInterpolation ??= Interpolatable ? CreateLinear?.Invoke() : new StepInterpolation<T>();
 				return ref baseInterpolation;
 			}
 		}
@@ -431,22 +431,27 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	}
 	public delegate void GizmoDrawer(SpriteBatch spriteBatch, ref T value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset);
 	public static GizmoDrawer DrawGizmo;
+	public static bool Interpolatable = true;
 	public static Func<IInterpolation> CreateLinear;
 	public static Func<T, string> ExportValue;
 	public interface ITypeHandler : IAutoload<ITypeHandler.Loader> {
+		public virtual static bool Interpolatable => true;
 		public abstract static void DrawGizmo(SpriteBatch spriteBatch, ref T value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset);
 		public abstract static IInterpolation Linear { get; }
 		public abstract static string Export(T value);
 		class Loader : IAutoloader {
 			static readonly MethodInfo getDrawer = typeof(Loader).GetMethod("GetDrawer");
 			static readonly MethodInfo getExporter = typeof(Loader).GetMethod("GetExporter");
+			static readonly MethodInfo getInterpolatable = typeof(Loader).GetMethod("GetInterpolatable");
 			static void IAutoloader.Autoload(Mod mod, Type type) {
 				KeyframeSet<T>.DrawGizmo = (GizmoDrawer)getDrawer.MakeGenericMethod(type).Invoke(null, []);
 				ExportValue = (Func<T, string>)getExporter.MakeGenericMethod(type).Invoke(null, []);
-				CreateLinear = type.GetInterfaceProperty(nameof(Linear), false).GetMethod.CreateDelegate<Func<IInterpolation>>();
+				KeyframeSet<T>.Interpolatable = (bool)getInterpolatable.MakeGenericMethod(type).Invoke(null, []);
+				if (KeyframeSet<T>.Interpolatable) CreateLinear = type.GetInterfaceProperty(nameof(Linear), false).GetMethod.CreateDelegate<Func<IInterpolation>>();
 			}
 			public static GizmoDrawer GetDrawer<THandler>() where THandler : ITypeHandler => THandler.DrawGizmo;
 			public static Func<T, string> GetExporter<THandler>() where THandler : ITypeHandler => THandler.Export;
+			public static bool GetInterpolatable<THandler>() where THandler : ITypeHandler => THandler.Interpolatable;
 		}
 	}
 }
@@ -529,6 +534,33 @@ public static class KeyframeTypes {
 			gizmoIndex++;
 		}
 		public static string Export(Vector2 value) => value == Vector2.Zero ? "Vector2.Zero" : $"new({value.X}f, {value.Y}f)";
+	}
+	public readonly struct BoolInterpolation : KeyframeSet<bool>.ITypeHandler {
+		static bool KeyframeSet<bool>.ITypeHandler.Interpolatable => false;
+		static KeyframeSet<bool>.IInterpolation KeyframeSet<bool>.ITypeHandler.Linear => throw new NotImplementedException();
+		static string KeyframeSet<bool>.ITypeHandler.Export(bool value) => value ? "true" : "false";
+		static readonly Polygon handle = new(
+			new(-1, -1),
+			new(1, -1),
+			new(1, 1),
+			new(-1, 1)
+		);
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref bool value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+			Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			handle.ResetVertices().Scale(8);
+			if (value) handle.Rotate(MathHelper.PiOver4);
+			bool isHovering = handle.Contains(Main.MouseScreen);
+			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
+			if (value) {
+				using Polygon.VertexCache _ = handle.ModificationContext();
+				handle.Scale(6f / 8).Translate(offset).Draw();
+			}
+			handle.Translate(offset).DrawOutline();
+			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) value = !value;
+		}
 	}
 	static readonly Polygon rotationHandle = new(
 		new(-1, -1),

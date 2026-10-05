@@ -204,9 +204,9 @@ public class Polygon : IMoveToPegFlag {
 		for (int i = 0; i < vertices.Length; i++) vertices[i].TextureCoordinate = uvPositions[i];
 		return this;
 	}
-	public Polygon Scale(float scale) => Scale(new Vector2(scale));
-	public Polygon Scale(Vector2 scale) {
-		for (int i = 0; i < vertices.Length; i++) Pos(i) *= scale;
+	public Polygon Scale(float scale, Vector2 origin = default) => Scale(new Vector2(scale), origin);
+	public Polygon Scale(Vector2 scale, Vector2 origin = default) {
+		for (int i = 0; i < vertices.Length; i++) Pos(i) = (Pos(i) - origin) * scale + origin;
 		TransformedSize *= scale;
 		return this;
 	}

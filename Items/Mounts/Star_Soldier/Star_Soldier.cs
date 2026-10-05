@@ -3366,6 +3366,8 @@ public class Landing_Animation : KeyframeAnimation {
 	};
 	public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new(0) {
 	};
+	public KeyframeSet<bool> exampleBoolAnimation = new(false) {
+	};
 
 	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
 		public Vector2 Position = Position;
