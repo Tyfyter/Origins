@@ -302,7 +302,7 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool DebugMode = false;
 
-		[DefaultValue(false), ReloadRequired]
+		[DefaultValue(false)]
 		public bool AnimatorMode = false;
 
 		[DefaultValue(false)]

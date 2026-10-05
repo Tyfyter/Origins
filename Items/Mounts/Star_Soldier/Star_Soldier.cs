@@ -631,12 +631,12 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		int backLegFrame = handler.walkFrame, frontLegFrame = handler.walkFrame;
 		#region drawing
 		if (handler.fallAnimationTime >= 0) {
-			AnimationOffsets wholeOffset = Landing_Animation.instance.wholeOffsetAnimation.GetValue(handler.fallAnimationTime);
-			AnimationOffsets bothLegsOffset = Landing_Animation.instance.bothLegsAnimation.GetValue(handler.fallAnimationTime);
-			backLegOffset = Landing_Animation.instance.backLegOffsetAnimation.GetValue(handler.fallAnimationTime);
-			frontLegOffset = Landing_Animation.instance.frontLegOffsetAnimation.GetValue(handler.fallAnimationTime);
-			backLegFrame = Landing_Animation.instance.backLegFrameAnimation.GetValue(handler.fallAnimationTime);
-			frontLegFrame = Landing_Animation.instance.frontLegFrameAnimation.GetValue(handler.fallAnimationTime);
+			AnimationOffsets wholeOffset = Landing_Animation.instance.wholeOffsetAnimation.GetCurrentValue(handler.fallAnimationTime);
+			AnimationOffsets bothLegsOffset = Landing_Animation.instance.bothLegsAnimation.GetCurrentValue(handler.fallAnimationTime);
+			backLegOffset = Landing_Animation.instance.backLegOffsetAnimation.GetCurrentValue(handler.fallAnimationTime);
+			frontLegOffset = Landing_Animation.instance.frontLegOffsetAnimation.GetCurrentValue(handler.fallAnimationTime);
+			backLegFrame = Landing_Animation.instance.backLegFrameAnimation.GetCurrentValue(handler.fallAnimationTime);
+			frontLegFrame = Landing_Animation.instance.frontLegFrameAnimation.GetCurrentValue(handler.fallAnimationTime);
 			backLegOffset += bothLegsOffset;
 			frontLegOffset += bothLegsOffset;
 			drawPosition += wholeOffset.Position * directions;
@@ -2120,6 +2120,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		Star_Soldier_Weapon rightClickSelection;
 		float fallPosition;
 		public Star_Soldier.MountHandler fallingStarSoldier;
+		static bool playingAnimation;
 		public void Update(Player player) {
 			if (leftClickSelection is null || rightClickSelection is null) return;
 			MathUtils.LinearSmoothing(ref fadeIconsOut, 0, 1f / 60);
@@ -2131,8 +2132,9 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			fallPosition += 48;
 			if (fallPosition > player.Bottom.Y - GroundOffset) {
 				fallPosition = player.Bottom.Y - GroundOffset;
-#if DEBUG && EditAnimation
-				if (player.controlUp)
+#if EditAnimation
+				if (DebugConfig.Instance.AnimatorMode && Keybindings.PlayPauseAnimation.JustPressed) playingAnimation = !playingAnimation;
+				if (playingAnimation || !DebugConfig.Instance.AnimatorMode)
 #endif
 					fallingStarSoldier.fallAnimationTime++;
 			}
@@ -2189,8 +2191,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			return false;
 		}
 		public void DrawUI(SpriteBatch spriteBatch) {
-#if DEBUG && EditAnimation
-			if (fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
+#if EditAnimation
+			if (DebugConfig.Instance.AnimatorMode && fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
 				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
 				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
 				Rectangle rect = new(0, Main.screenHeight / 2, 16, 16);

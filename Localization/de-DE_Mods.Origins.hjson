@@ -2737,6 +2737,9 @@ Keybinds: {
 	// SmogPod.DisplayName: Smog Pod
 	// MultiBucket.DisplayName: Multi-Bucket
 	// StarSoldierLockOn.DisplayName: Star Soldier: Lock On
+	// PlayPauseAnimation.DisplayName: Play/Pause Animation
+	// InsertKeyframe.DisplayName: Insert Keyframe
+	// DeleteKeyframe.DisplayName: Delete Keyframe
 }
 
 Configs: {
@@ -3166,6 +3169,11 @@ Configs: {
 				Enables debugging items even in release builds
 				[c/FFA500:{$tModLoader.ModReloadRequiredMemberTooltip}]
 				''' */
+		}
+
+		AnimatorMode: {
+			// Label: Animator Mode
+			// Tooltip: Mods must be reloaded in order to register/unregister keybinds
 		}
 	}
 
