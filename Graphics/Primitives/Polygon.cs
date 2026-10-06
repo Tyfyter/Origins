@@ -12,6 +12,7 @@ public class Polygon : IMoveToPegFlag {
 	public readonly Vector2[] uvPositions;
 	public readonly Vector2 baseSize;
 	public Vector2 TransformedSize { get; private set; }
+	public Vector2 TransformedOrigin { get; private set; }
 	readonly Vector2[] vertexPositions;
 	readonly short[] indices;
 	readonly short[] outlineIndices;
@@ -190,11 +191,13 @@ public class Polygon : IMoveToPegFlag {
 			);
 		}
 		TransformedSize = baseSize;
+		TransformedOrigin = default;
 		return this;
 	}
 	public Polygon ResetPositions() {
 		for (int i = 0; i < vertices.Length; i++) Pos(i) = vertexPositions[i];
 		TransformedSize = baseSize;
+		TransformedOrigin = default;
 		return this;
 	}
 	public Polygon ResetColors() {
@@ -209,12 +212,15 @@ public class Polygon : IMoveToPegFlag {
 	public Polygon Scale(Vector2 scale, Vector2 origin = default) {
 		for (int i = 0; i < vertices.Length; i++) Pos(i) = (Pos(i) - origin) * scale + origin;
 		TransformedSize *= scale;
+		TransformedOrigin = (TransformedOrigin - origin) * scale + origin;
 		return this;
 	}
 	public Polygon Translate(Vector2 offset) {
 		for (int i = 0; i < vertices.Length; i++) Pos(i) += offset;
+		TransformedOrigin += offset;
 		return this;
 	}
+	public Polygon TranslateTo(Vector2 position) => Translate(position - TransformedOrigin);
 	public Polygon Rotate(float angle, Vector2 origin = default) {
 		if (angle == 0) return this;
 		Vector2 lowerBounds = new(float.PositiveInfinity);
@@ -229,6 +235,7 @@ public class Polygon : IMoveToPegFlag {
 			Min(ref lowerBounds, Pos(i));
 		}
 		TransformedSize = upperBounds - lowerBounds;
+		TransformedOrigin = new Vector2(Vector2.Dot(TransformedOrigin, x), Vector2.Dot(TransformedOrigin, y));
 		return this;
 	}
 	public Polygon FillColor(Color scale) {

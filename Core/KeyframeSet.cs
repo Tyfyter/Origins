@@ -16,6 +16,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
+using static Origins.Core.KeyframeAnimation;
 using static Origins.Core.KeyframeTypes;
 
 namespace Origins.Core;
@@ -104,6 +105,20 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	public void RemoveAtIndex(int index) => keyframes.RemoveAt(index);
 	IEnumerator<Keyframe> IEnumerable<Keyframe>.GetEnumerator() => keyframes.GetEnumerator();
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)keyframes).GetEnumerator();
+	public float PrevKeyframeTime(float currentTime) {
+		for (int i = keyframes.Count - 1; i >= 0; i--) {
+			Keyframe keyframe = keyframes[i];
+			if (currentTime > keyframe.Time) return keyframe.Time;
+		}
+		return float.NaN;
+	}
+	public float NextKeyframeTime(float currentTime) {
+		for (int i = 0; i < keyframes.Count; i++) {
+			Keyframe keyframe = keyframes[i];
+			if (currentTime < keyframe.Time) return keyframe.Time;
+		}
+		return float.NaN;
+	}
 	public string Export() {
 		StringBuilder builder = new("new(");
 		builder.Append(ExportValue(start));
@@ -542,8 +557,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	}
 }
 public interface IKeyframeSet {
-	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime);
 	public float Duration { get; }
+	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime);
+	public float PrevKeyframeTime(float currentTime);
+	public float NextKeyframeTime(float currentTime);
 	public string Export();
 	public string ExportType();
 }

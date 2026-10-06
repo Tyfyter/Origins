@@ -41,34 +41,50 @@ public abstract class KeyframeAnimation {
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref bool playing) {
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 12;
-		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-		buttonRect.ResetPositions().Translate(timelinePos);
-		if (DrawButton(default, out Color buttonColor)) playing = !playing;
-		playTriangle.ResetPositions().Translate(timelinePos);
-		if (playing) {
-			const float scale = icon_scale * 2;
-			Rectangle rect = new Rectangle(0, 0, (int)(scale / 3), (int)scale).Recentered(timelinePos);
-			spriteBatch.Draw(
-				TextureAssets.MagicPixel.Value,
-				rect.Add(new(scale * -0.333f, 0)),
-				buttonColor
-			);
-			spriteBatch.Draw(
-				TextureAssets.MagicPixel.Value,
-				rect.Add(new(scale * 0.333f, 0)),
-				buttonColor
-			);
-		} else {
-			playTriangle.FillColor(buttonColor).Draw(primitiveBatch);
-		}
-		const float button_full_size = button_size * 2;
-		if (DrawButton(new Vector2(button_full_size, 0), out buttonColor)) {
+		{
+			const float icon_size = icon_scale * 2;
+			const float button_size = button_scale * 2;
+			Vector2 buttonOffset = new(button_size + 2, 0);
+			buttonRect.ResetPositions();
+			playTriangle.ResetPositions();
+			keyframeDiamond.ResetPositions();
+			pauseRect.ResetPositions();
+			Vector2 buttonPos = timelinePos;
+			// pause/play
+			if (DrawButton(buttonPos, out Color buttonColor)) playing = !playing;
+			if (playing) {
+				playTriangle.FillColor(buttonColor).Draw(primitiveBatch);
+			} else {
+				pauseRect.FillColor(buttonColor).TranslateTo(buttonPos + new Vector2(icon_size * -0.333f, 0)).Draw(primitiveBatch);
+				pauseRect.Translate(new Vector2(icon_size * 0.666f, 0)).Draw(primitiveBatch);
+			}
 
-		}
-		playTriangle.Scale(half_bri_base, timelinePos).Translate(new Vector2(button_full_size - icon_scale * 0.5f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
+			// go to next keyframe
+			buttonPos = timelinePos + buttonOffset;
+			if (DrawButton(buttonPos, out buttonColor)) {
+				float nextKeyframe = keyframeSets[selectedIndex].NextKeyframeTime(currentTime);
+				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
+			}
+			playTriangle.Scale(0.95f, playTriangle.TransformedOrigin).TranslateTo(buttonPos - new Vector2(icon_scale * 0.85f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
+			keyframeDiamond.Scale(0.75f).FillColor(buttonColor).TranslateTo(buttonPos + new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
 
+			// go to last keyframe
+			buttonPos = timelinePos - buttonOffset;
+			if (DrawButton(buttonPos, out buttonColor)) {
+				float nextKeyframe = keyframeSets[selectedIndex].PrevKeyframeTime(currentTime);
+				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
+			}
+			playTriangle.Scale(new Vector2(-1, 1), playTriangle.TransformedOrigin).TranslateTo(buttonPos + new Vector2(icon_scale * 0.85f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
+			keyframeDiamond.FillColor(buttonColor).TranslateTo(buttonPos - new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
+
+			// go to start
+			buttonPos = timelinePos - buttonOffset * 2;
+			if (DrawButton(buttonPos, out buttonColor)) {
+				currentTime.Value = 0;
+			}
+			playTriangle.Translate(-buttonOffset - new Vector2(icon_size * 0.1f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
+			pauseRect.Scale(0.85f).FillColor(buttonColor).TranslateTo(buttonPos - new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
+		}
 		timelinePos.Y += 20;
 		Point minTimelineY = CurrentTimeline.TopLeft().ToPoint();
 		for (int i = 0; i < keyframeSets.Count; i++) {
@@ -113,8 +129,8 @@ public abstract class KeyframeAnimation {
 			draggingGizmo = -1;
 		}
 		if (modifyingInterpolation == -1) draggingInterpolation = false;
-		static bool DrawButton(Vector2 offset, out Color color) {
-			buttonRect.Translate(offset);
+		static bool DrawButton(Vector2 position, out Color color) {
+			buttonRect.TranslateTo(position);
 			bool hovered = buttonRect.Contains(Main.MouseScreen);
 			color = Color.White;
 			if (!hovered) color = Color.LightGray;
@@ -193,19 +209,25 @@ public abstract class KeyframeAnimation {
 		}
 	}
 
-	const float button_size = 10;
+	const float button_scale = 10;
 	const float half_bri_base = 0.8660254f;
-	const float icon_scale = button_size / (half_bri_base * 2);
+	const float icon_scale = button_scale / (half_bri_base * 2);
 	static readonly Polygon buttonRect = new(
-		new(-button_size, -button_size),
-		new(button_size, -button_size),
-		new(button_size, button_size),
-		new(-button_size, button_size)
+		new(-button_scale, -button_scale),
+		new(button_scale, -button_scale),
+		new(button_scale, button_scale),
+		new(-button_scale, button_scale)
 	);
 	static readonly Polygon playTriangle = new(
 		new(icon_scale, 0),
 		new(icon_scale * -0.5f, 5f),
 		new(icon_scale * -0.5f, -5f)
+	);
+	static readonly Polygon pauseRect = new(
+		new(-icon_scale / 3, -icon_scale),
+		new(icon_scale / 3, -icon_scale),
+		new(icon_scale / 3, icon_scale),
+		new(-icon_scale / 3, icon_scale)
 	);
 	static readonly Polygon keyframeDiamond = new(
 		new(-icon_scale, 0),

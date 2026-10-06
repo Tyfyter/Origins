@@ -2136,7 +2136,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				if (DebugConfig.Instance.AnimatorMode && Keybindings.PlayPauseAnimation.JustPressed) playingAnimation = !playingAnimation;
 				if (playingAnimation || !DebugConfig.Instance.AnimatorMode)
 #endif
-					fallingStarSoldier.fallAnimationTime++;
+					;// fallingStarSoldier.fallAnimationTime++;
 			}
 			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
