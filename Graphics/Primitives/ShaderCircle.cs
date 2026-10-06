@@ -13,9 +13,10 @@ public static class ShaderCircle {
 		new(default, default, Vector2.One)
 	};
 	static readonly short[] dices = [0, 1, 2, 3, 1, 2];
-	static readonly AdvancedMiscShaderData circleShader = new(ModContent.Request<Effect>("Origins/Effects/Radial"), "Circle");
+	static readonly AdvancedMiscShaderData circleShader;
 	static Parameter uScale;
 	static ShaderCircle() {
+		circleShader = new(ModContent.Request<Effect>("Origins/Effects/Radial"), "Circle");
 		circleShader.LoadThen(() => {
 			circleShader.CreateParameter(ref uScale, nameof(uScale), 0f);
 		});

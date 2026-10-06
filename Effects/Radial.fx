@@ -39,7 +39,7 @@ float4 StarSoldierLaserHit(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 }
 
 float4 Circle(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
-	float dist = length(uv - uOffset) * 2;
+	float dist = length(uv - float2(0.5, 0.5)) * 2;
 	return color * (step(dist, 1) * step(uScale, dist));
 }
 

@@ -119,9 +119,12 @@ public abstract class KeyframeAnimation {
 				Vector2.One,
 				out int hoveredSnippet
 			);
-			if (hoveredSnippet != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
-				selectedIndex = i;
-				modifyingInterpolation = -1;
+			if (hoveredSnippet != -1) {
+				Main.LocalPlayer.mouseInterface = true;
+				if (Main.mouseLeft && Main.mouseLeftRelease) {
+					selectedIndex = i;
+					modifyingInterpolation = -1;
+				}
 			}
 			DrawTimeline(spriteBatch, i == selectedIndex);
 			timelinePos.Y += 16;
@@ -144,8 +147,9 @@ public abstract class KeyframeAnimation {
 					Max(ref totalLength, minLength);
 				}
 			}
-		} else if (Main.mouseLeft && CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen)) {
-			currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.mouseX));
+		} else if (CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen)) {
+			Main.LocalPlayer.mouseInterface = true;
+			if (Main.mouseLeft) currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.mouseX));
 		}
 		gizmoTracker.Advance();
 		spriteBatch.Draw(
@@ -165,6 +169,7 @@ public abstract class KeyframeAnimation {
 		if (!Main.mouseLeft) draggingInterpolation = false;
 		if (modifyingInterpolation == -1) draggingInterpolation = false;
 		gizmoTracker.Update();
+		KeyframeTypes.oldMousePos = Main.MouseScreen;
 
 		static bool DrawButton(Vector2 position, string tooltip, out Color color) => DrawButtonColored(position, tooltip, Color.Gray, out color);
 		static bool DrawButtonColored(Vector2 position, string tooltip, Color baseColor, out Color color) {

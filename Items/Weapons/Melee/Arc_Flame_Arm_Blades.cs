@@ -1,8 +1,12 @@
 using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Dusts;
+using Origins.Graphics;
+using Origins.Items.Mounts.Star_Soldier;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
@@ -99,6 +103,7 @@ namespace Origins.Items.Weapons.Melee {
 			player.AddBuff(Blade_Dance_Buff.ID, 5 * 60);
 			player.AddBuff(Blade_Dance_Cooldown_Debuff.ID, 5 * 60);
 			SoundEngine.PlaySound(SoundID.Item37 with { PitchRange = (0.3f, 0.6f) }, player.Center);
+			Dust.NewDustPerfect(player.Top, ModContent.DustType<Blade_Dance_Dust>(), Vector2.Zero).customData = player;
 		}
 	}
 	public class Arc_Flame_Arm_Blades_Slash : ModProjectile {
@@ -234,6 +239,65 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override float CritMultiplier(Player player, Item item) => 10 / (1f + player.GetWeaponCrit(item) / 100f);
+	}
+	public class Blade_Dance_Dust : ModDust {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.FairyQueenRangedItemShot;
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			this.SetIDProp();
+			EfficientDust.UpdateDustCallback[Type] = DoUpdate;
+		}
+		public override void OnSpawn(Dust dust) {
+			dust.frame = new(0, 0, 12, 6);
+			dust.fadeIn = 30;
+			dust.scale = 1;
+		}
+		static KeyframeAnimation.PlayingState animationControls;
+		public static void DoUpdate(Dust dust) {
+			if (dust.customData is Entity { Top: Vector2 pos }) dust.position = pos;
+			if (animationControls.playing) dust.fadeIn += 1;
+			if (dust.fadeIn > Animation.instance.totalLength) {
+				if (animationControls.forceLoop) dust.fadeIn = 0;
+				else dust.active = false;
+			}
+		}
+		public override bool Update(Dust dust) {
+			DoUpdate(dust);
+			return false;
+		}
+		public override bool PreDraw(Dust dust) {
+			PosRotScale sword = Animation.instance.sword1.GetCurrentValue(dust.fadeIn);
+			Main.spriteBatch.Draw(
+				Texture2D.Value,
+				dust.position + sword.Position * dust.scale - Main.screenPosition,
+				null,
+				Color.Orange,
+				MathHelper.PiOver2 + sword.Rotation,
+				new(22, 9),
+				sword.Scale * dust.scale,
+				SpriteEffects.None,
+			0f);
+			sword = Animation.instance.sword2.GetCurrentValue(dust.fadeIn);
+			Main.spriteBatch.Draw(
+				Texture2D.Value,
+				dust.position + sword.Position * dust.scale - Main.screenPosition,
+				null,
+				Color.Orange,
+				MathHelper.PiOver2 + sword.Rotation,
+				new(22, 9),
+				sword.Scale * dust.scale,
+				SpriteEffects.None,
+			0f);
+			Animation.instance.gizmoBasePosition = dust.position - Main.screenPosition;
+			Animation.instance.DrawEditorUI(Main.spriteBatch, ref dust.fadeIn, ref animationControls);
+			return false;
+		}
+		public class Animation : KeyframeAnimation {
+			public static Animation instance = new();
+			static Animation() => Max(ref instance.totalLength, 30);
+			public KeyframeSet<PosRotScale> sword1 = new(new());
+			public KeyframeSet<PosRotScale> sword2 = new(new());
+		}
 	}
 }
 namespace Origins.Buffs {
