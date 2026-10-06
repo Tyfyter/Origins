@@ -3545,6 +3545,8 @@ namespace Origins {
 			}
 			return false;
 		}
+		[Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static N Square<N>(this N v) where N : IMultiplyOperators<N, N, N> => v * v;
 		/// <summary>
 		/// not really pure, but it's important that this is always observed by a <see langword="using"/>, and this provides a warning if it's not observed at all
 		/// </summary>

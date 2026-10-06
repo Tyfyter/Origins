@@ -40,6 +40,14 @@ namespace Origins {
 		public static ModKeybind InsertKeyframe { get; private set; }
 		[Keybind(null, Keys.Delete, DebugType.Animator)]
 		public static ModKeybind DeleteKeyframe { get; private set; }
+		[Keybind(null, Keys.G, DebugType.Animator)]
+		public static ModKeybind GrabGizmo { get; private set; }
+		[Keybind(null, Keys.R, DebugType.Animator)]
+		public static ModKeybind RotateGizmo { get; private set; }
+		[Keybind(null, Keys.S, DebugType.Animator)]
+		public static ModKeybind ScaleGizmo { get; private set; }
+		[Keybind(null, Keys.Escape, DebugType.Animator)]
+		public static ModKeybind CancelGizmo { get; private set; }
 		#endregion animation editor
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);

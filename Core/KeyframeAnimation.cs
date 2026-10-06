@@ -26,7 +26,7 @@ public abstract class KeyframeAnimation {
 	float lastTime;
 	public int modifyingInterpolation = -1;
 	public bool draggingInterpolation = false;
-	public int draggingGizmo = -1;
+	public GizmoTracker gizmoTracker = new();
 	protected KeyframeAnimation() {
 		keyframeSets = [];
 		keyframeSetNames = [];
@@ -41,6 +41,7 @@ public abstract class KeyframeAnimation {
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref PlayingState animationControls) {
+		gizmoTracker.ResetCurrent();
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 12;
 		{
@@ -125,9 +126,28 @@ public abstract class KeyframeAnimation {
 			DrawTimeline(spriteBatch, i == selectedIndex);
 			timelinePos.Y += 16;
 		}
-		if (Main.mouseLeft && CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen)) {
-			currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.MouseScreen.X));
+		Rectangle extendAnimationHandle = new((int)((Main.screenWidth + TimelineWidth) * 0.5f), minTimelineY.Y - 2, 2, (int)(timelinePos.Y - minTimelineY.Y - 2));
+		bool hoverExtend = extendAnimationHandle.Contains(Main.MouseScreen);
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			extendAnimationHandle,
+			hoverExtend || gizmoTracker.IsCurrent ? Color.Orange : Color.Orange * 0.5f
+		);
+		gizmoTracker.CheckSetCurrent(hoverExtend, null);
+		if (gizmoTracker.IsCurrent) {
+			float diff = extendAnimationHandle.Contains(Main.MouseScreen) ? 0 : (Main.mouseX - extendAnimationHandle.Center().X);
+			if (diff != 0) {
+				totalLength += diff * (totalLength / TimelineWidth) / 30f;
+				if (diff < 0) {
+					float minLength = 1;
+					for (int i = 0; i < keyframeSets.Count; i++) Max(ref minLength, keyframeSets[i].Duration);
+					Max(ref totalLength, minLength);
+				}
+			}
+		} else if (Main.mouseLeft && CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen)) {
+			currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.mouseX));
 		}
+		gizmoTracker.Advance();
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
 			new Rectangle((int)TimelineToScreenPos(currentTime) - 1, minTimelineY.Y - 2, 2, (int)(timelinePos.Y - minTimelineY.Y - 2)),
@@ -139,16 +159,13 @@ public abstract class KeyframeAnimation {
 			timelinePos.Y += 16;
 		}
 		spriteBatch.Restart(spriteBatch.GetState());
+		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 		primitiveBatch.Flush();
-		if (lastTime.TrySet(currentTime)) {
-			modifyingInterpolation = -1;
-			draggingGizmo = -1;
-		}
-		if (!Main.mouseLeft) {
-			draggingInterpolation = false;
-			draggingGizmo = -1;
-		}
+		if (lastTime.TrySet(currentTime)) modifyingInterpolation = -1;
+		if (!Main.mouseLeft) draggingInterpolation = false;
 		if (modifyingInterpolation == -1) draggingInterpolation = false;
+		gizmoTracker.Update();
+
 		static bool DrawButton(Vector2 position, string tooltip, out Color color) => DrawButtonColored(position, tooltip, Color.Gray, out color);
 		static bool DrawButtonColored(Vector2 position, string tooltip, Color baseColor, out Color color) {
 			buttonRect.TranslateTo(position);

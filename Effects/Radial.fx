@@ -38,11 +38,19 @@ float4 StarSoldierLaserHit(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	return mul(uFinalColorMatrix, value - overbrightness) + mul(uOverbrightMatrix, min(overbrightness, uOverbrightMax));
 }
 
+float4 Circle(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	float dist = length(uv - uOffset) * 2;
+	return color * (step(dist, 1) * step(uScale, dist));
+}
+
 technique Technique1 {
 	pass TrenchmakerLaserHit {
 		PixelShader = compile ps_2_0 TrenchmakerLaserHit();
 	}
 	pass StarSoldierLaserHit {
 		PixelShader = compile ps_2_0 StarSoldierLaserHit();
+	}
+	pass Circle {
+		PixelShader = compile ps_2_0 Circle();
 	}
 }

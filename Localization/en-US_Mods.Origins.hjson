@@ -2740,6 +2740,10 @@ Keybinds: {
 	PlayPauseAnimation.DisplayName: Play/Pause Animation
 	InsertKeyframe.DisplayName: Insert Keyframe
 	DeleteKeyframe.DisplayName: Delete Keyframe
+	GrabGizmo.DisplayName: Grab Gizmo
+	RotateGizmo.DisplayName: Rotate Gizmo
+	ScaleGizmo.DisplayName: Scale Gizmo
+	CancelGizmo.DisplayName: Cancel Gizmo
 }
 
 Configs: {

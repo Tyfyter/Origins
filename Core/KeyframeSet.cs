@@ -23,12 +23,18 @@ namespace Origins.Core;
 public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyframe> where T : IEquatable<T> {
 	public T start;
 	public T currentValue;
+	T resetValue;
+	public Vector2 gizmoOffset;
 	float lastProcessedTime;
 	int updateKeyframeAnimIndex = -1;
 	float updateKeyframeAnim = 0;
 	public List<Keyframe> keyframes = [];
 	public float Duration => keyframes.Count == 0 ? 0 : keyframes[^1].Time;
-	public KeyframeSet(T startValue) : this() => start = startValue;
+	public KeyframeSet(T startValue, Vector2 gizmoOffset = default) : this() {
+		start = startValue;
+		this.gizmoOffset = gizmoOffset;
+	}
+
 	public T GetCurrentValue(float time) {
 		if (!lastProcessedTime.TrySet(time)) return currentValue;
 		return currentValue = CalculateValue(time);
@@ -122,6 +128,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	public string Export() {
 		StringBuilder builder = new("new(");
 		builder.Append(ExportValue(start));
+		if (gizmoOffset != default) {
+			builder.Append(", ");
+			builder.Append(KeyframeSet<Vector2>.ExportValue(gizmoOffset));
+		}
 		builder.Append(')');
 		builder.Append(" {\n");
 		for (int i = 0; i < keyframes.Count; i++) {
@@ -147,8 +157,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		if (updateKeyframeAnim != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 1, 1f / 20)) updateKeyframeAnim = -1;
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
 		bool showCreationSidebar = isSelected;
-		int gizmoIndex = 0;
-		if (isSelected) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref animation.draggingGizmo, ref gizmoIndex, animation.gizmoBasePosition);
+		if (isSelected) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref animation.gizmoTracker, animation.gizmoBasePosition);
 		int deleteIndex = -1;
 		for (int i = 0; i < keyframes.Length; i++) {
 			float rotation = i == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim) * MathHelper.PiOver2 : 0;
@@ -172,7 +181,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 					Color.Black,
 					-rotation
 				);
-				DrawSidebar(spriteBatch, animation, keyframes, i, ref gizmoIndex);
+				DrawSidebar(spriteBatch, animation, keyframes, i, ref animation.gizmoTracker);
 				if (Keybindings.InsertKeyframe.JustPressed) {
 					keyframe.Target = currentValue;
 					AnimateKeyframeUpdate(i);
@@ -192,6 +201,9 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			if (Keybindings.InsertKeyframe.JustPressed) InsertAtCurrentFrame(currentTime);
 		}
 		if (deleteIndex != -1) RemoveAtIndex(deleteIndex);
+		if (animation.gizmoTracker.JustSelected) resetValue = currentValue;
+		else if (Keybindings.CancelGizmo.JustPressed && animation.gizmoTracker.Cancel()) currentValue = resetValue;
+		KeyframeTypes.oldMousePos = Main.MouseScreen;
 		static void DrawDiamond(SpriteBatch spriteBatch, Vector2 position, int size, Color color, float rotation) {
 			Rectangle frame = new(0, 0, size, size);
 			spriteBatch.Draw(
@@ -207,7 +219,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		}
 	}
 
-	void DrawSidebar(SpriteBatch spriteBatch, KeyframeAnimation animation, Span<Keyframe> keyframes, int keyframeIndex, ref int gizmoIndex) {
+	void DrawSidebar(SpriteBatch spriteBatch, KeyframeAnimation animation, Span<Keyframe> keyframes, int keyframeIndex, ref GizmoTracker gizmoTracker) {
 		ref Keyframe keyframe = ref keyframes[keyframeIndex];
 		float width = -1;
 		InterpolationStack stack = keyframe.Interpolation;
@@ -411,7 +423,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			}
 			if (animation.modifyingInterpolation >= 0) {
 				Span<IInterpolationModifier> modifiers = CollectionsMarshal.AsSpan(keyframe.Interpolation);
-				modifiers[animation.modifyingInterpolation].DrawGizmo(spriteBatch, iPos, ref animation.draggingGizmo, ref gizmoIndex);
+				modifiers[animation.modifyingInterpolation].DrawGizmo(spriteBatch, iPos, ref animation.gizmoTracker);
 			}
 			iPos.Y += 150 + 4;
 		}
@@ -531,14 +543,14 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public T Interpolate(T prevValue, T nextValue, float progress);
 		public IInterpolation Clone() => this;
 	}
-	public delegate void GizmoDrawer(SpriteBatch spriteBatch, ref T value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset);
+	public delegate void GizmoDrawer(SpriteBatch spriteBatch, ref T value, ref GizmoTracker gizmoTracker, Vector2 offset);
 	public static GizmoDrawer DrawGizmo;
 	public static bool Interpolatable = true;
 	public static Func<IInterpolation> CreateLinear;
 	public static Func<T, string> ExportValue;
 	public interface ITypeHandler : IAutoload<ITypeHandler.Loader> {
 		public virtual static bool Interpolatable => true;
-		public abstract static void DrawGizmo(SpriteBatch spriteBatch, ref T value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset);
+		public abstract static void DrawGizmo(SpriteBatch spriteBatch, ref T value, ref GizmoTracker gizmoTracker, Vector2 offset);
 		public abstract static IInterpolation Linear { get; }
 		public abstract static string Export(T value);
 		class Loader : IAutoloader {
@@ -568,7 +580,7 @@ public interface IKeyframeSet {
 public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolationModifier.Loader> {
 	public float ModifyProgress(float progress);
 	public string Export() => $"new {GetType().Name}()";
-	public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref int draggingGizmo, ref int gizmoIndex) { }
+	public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref GizmoTracker gizmoTracker) { }
 	class Loader : IAutoloader {
 		static void IAutoloader.Autoload(Mod mod, Type type) {
 			Func<IInterpolationModifier> func = CreateDefault(type);
@@ -597,32 +609,29 @@ public static class KeyframeTypes {
 		public readonly T Interpolate(T prevValue, T nextValue, float progress) => prevValue;
 		public readonly override string ToString() => "Stepped";
 	}
-	public readonly struct FloatInterpolation : KeyframeSet<float>.IInterpolation, KeyframeSet<float>.ITypeHandler {
+	/*public readonly struct FloatInterpolation : KeyframeSet<float>.IInterpolation, KeyframeSet<float>.ITypeHandler {
 		static KeyframeSet<float>.IInterpolation KeyframeSet<float>.ITypeHandler.Linear => new FloatInterpolation();
 		public readonly float Interpolate(float prevValue, float nextValue, float progress) => float.Lerp(prevValue, nextValue, progress);
 		public static string Export(float value) => $"{value}f";
-		static void KeyframeSet<float>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref float value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+		static void KeyframeSet<float>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref float value, ref GizmoTracker gizmoTracker, Vector2 offset) {
 			throw new NotImplementedException();
 		}
-	}
+	}*/
 	public readonly struct Vec2Interpolation : KeyframeSet<Vector2>.IInterpolation, KeyframeSet<Vector2>.ITypeHandler {
 		static KeyframeSet<Vector2>.IInterpolation KeyframeSet<Vector2>.ITypeHandler.Linear => new Vec2Interpolation();
 		public readonly Vector2 Interpolate(Vector2 prevValue, Vector2 nextValue, float progress) => Vector2.Lerp(prevValue, nextValue, progress);
-		static Vector2 oldMousePos;
-		public static void DrawGizmo(SpriteBatch spriteBatch, ref Vector2 value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref Vector2 value, ref GizmoTracker gizmoTracker, Vector2 offset) {
 			Vector2 scale = GizmoZoom;
-
+			if (gizmoTracker.IsCurrent) value += (Main.MouseScreen - oldMousePos) / scale;
 			Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(value * scale + offset);
-			bool isHovering = rect.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
+			bool isHovering = rect.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
 			Color color = Color.White;
 			if (!isHovering) color *= 0.5f;
 			DrawAALine(rect.TopLeft(), default, rect.Width, 2, color);
 			DrawAALine(rect.TopLeft(), default, 2, rect.Height, color);
 			DrawAALine(rect.BottomRight(), Vector2.One, rect.Width, 2, color);
 			DrawAALine(rect.BottomRight(), Vector2.One, 2, rect.Height, color);
-			if (draggingGizmo == gizmoIndex) value += (Main.MouseScreen - oldMousePos) / scale;
-			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) draggingGizmo = gizmoIndex;
-			oldMousePos = Main.MouseScreen;
+			gizmoTracker.CheckSetCurrent(isHovering, Keybindings.GrabGizmo);
 			static void DrawAALine(Vector2 pos, Vector2 origin, int width, int height, Color color) {
 				Main.spriteBatch.Draw(
 					TextureAssets.MagicPixel.Value,
@@ -635,7 +644,7 @@ public static class KeyframeTypes {
 					0,
 				0);
 			}
-			gizmoIndex++;
+			gizmoTracker.Advance();
 		}
 		public static string Export(Vector2 value) => value == Vector2.Zero ? "Vector2.Zero" : $"new({value.X}f, {value.Y}f)";
 	}
@@ -649,12 +658,7 @@ public static class KeyframeTypes {
 			new(1, 1),
 			new(-1, 1)
 		);
-		public static void DrawGizmo(SpriteBatch spriteBatch, ref bool value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
-			Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref bool value, ref GizmoTracker gizmoTracker, Vector2 offset) {
 			handle.ResetVertices().Scale(8).Rotate(MathHelper.PiOver4).Translate(offset);
 			bool isHovering = handle.Contains(Main.MouseScreen);
 
@@ -671,25 +675,39 @@ public static class KeyframeTypes {
 		new(-1, 1)
 	);
 	static float rotationHandleOffset;
-	public static void DrawRotationGizmo(SpriteBatch spriteBatch, ref float value, ref int draggingGizmo, ref int gizmoIndex, Vector2 pos, float size) {
+	public static void DrawRotationGizmo(SpriteBatch spriteBatch, ref float value, ref GizmoTracker gizmoTracker, Vector2 pos, float size) {
 		float scale = GizmoZoom.X;
 		pos = pos.Floor();
+		if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
 		Vector2 end = (pos + (value - MathHelper.PiOver2).ToRotationVector2() * (size * scale)).Floor();
 		spriteBatch.DrawLine(Color.White, pos + Main.screenPosition, end + Main.screenPosition);
 
-		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		rotationHandle.ResetPositions().Scale(4 * scale).Rotate(value).Translate(end);
-		bool isHovering = rotationHandle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
+		bool isHovering = rotationHandle.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
+		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 		rotationHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
-		if (draggingGizmo == gizmoIndex) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
-		if (Main.mouseLeft && Main.mouseLeftRelease && rotationHandle.Contains(Main.MouseScreen)) {
+		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+
+		if (gizmoTracker.CheckSetCurrent(isHovering, Keybindings.RotateGizmo)) {
 			rotationHandleOffset = value - (Main.MouseScreen - pos).ToRotation();
-			draggingGizmo = gizmoIndex;
 		}
-		gizmoIndex++;
+		gizmoTracker.Advance();
+	}
+	static float scaleHandleStart;
+	static float scaleHandleOffset;
+	public static void DrawScaleGizmo(SpriteBatch spriteBatch, ref float value, ref GizmoTracker gizmoTracker, Vector2 pos, float size) {
+		const float handle_thickness = 4;
+		float distSQ = (Main.MouseScreen - pos).LengthSquared();
+		if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) value = scaleHandleStart * (float.Sqrt(distSQ) / scaleHandleOffset);
+
+		bool isHovering = gizmoTracker.IsCurrent || (distSQ >= (size - handle_thickness).Square() && distSQ <= (size + handle_thickness).Square());
+		ShaderCircle.Draw(pos, size + handle_thickness, Color.White * (0.5f + isHovering.Mul(0.5f)), size - handle_thickness);
+
+		if (gizmoTracker.CheckSetCurrent(isHovering, Keybindings.ScaleGizmo)) {
+			scaleHandleStart = value;
+			scaleHandleOffset = float.Sqrt(distSQ);
+		}
+		gizmoTracker.Advance();
 	}
 	public static void DrawAALine(Vector2 pos, Vector2 origin, int width, int height) {
 		Main.spriteBatch.Draw(
@@ -704,6 +722,7 @@ public static class KeyframeTypes {
 		0);
 	}
 	public static Vector2 GizmoZoom => new(Main.ForcedMinimumZoom * MathHelper.Clamp(Main.GameZoomTarget, 1f, 2f));
+	public static Vector2 oldMousePos;
 }
 public static class KeyframeModifiers {
 	public static List<(string name, Func<IInterpolationModifier>)> modifierTypes = [];
@@ -762,7 +781,7 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 			prevValue with { Frame = (int)float.Round(float.Lerp(prevValue.Frame, prevValue.Frame, progress)) };
 		public readonly override string ToString() => "Interpolated";
 	}
-	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref int draggingGizmo, ref int gizmoIndex, Vector2 offset) {
+	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref GizmoTracker gizmoTracker, Vector2 offset) {
 		Vector2 pos = new(0, Main.screenHeight);
 		Rectangle frame = TSelf.Texture.Frame(verticalFrames: TSelf.FrameCount, frameY: 0);
 		Vector2 origin = new(0, frame.Height);
@@ -808,4 +827,60 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => value.Frame.ToString();
 	public static abstract implicit operator TSelf(int value);
 	public static abstract implicit operator int(TSelf value);
+}
+public struct GizmoTracker() {
+	int usingGizmo = -1;
+	int currentIndex;
+	bool usingMouseDown;
+	public bool JustSelected { readonly get; private set; }
+	public readonly bool IsCurrent => usingGizmo == currentIndex;
+	void SetCurrent() {
+		usingGizmo = currentIndex;
+		usingMouseDown = Main.mouseLeft;
+	}
+	public bool CheckSetCurrent(bool isHovered, ModKeybind keybind) {
+		if (IsCurrent) {
+			if ((Main.mouseLeft && Main.mouseLeftRelease) || (keybind?.JustPressed ?? false)) usingGizmo = -1;
+		} else if ((isHovered && Main.mouseLeft && Main.mouseLeftRelease) || (keybind?.JustPressed ?? false)) {
+			SetCurrent();
+			JustSelected = true;
+			return true;
+		}
+		return false;
+	}
+	public void ResetCurrent() => currentIndex = 0;
+	public void Advance() => currentIndex++;
+	public void Update() {
+		if (usingMouseDown && !Main.mouseLeft) usingGizmo = -1;
+		JustSelected = false;
+	}
+	public bool Cancel() {
+		if (usingGizmo != -1) {
+			usingGizmo = -1;
+			return true;
+		}
+		return false;
+	}
+}
+public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) : KeyframeSet<PosRotScale>.ITypeHandler {
+	public Vector2 Position = Position;
+	public float Rotation = Rotation;
+	public float Scale = Scale;
+	public static KeyframeSet<PosRotScale>.IInterpolation Linear { get; } = new Interpolation();
+	public readonly struct Interpolation : KeyframeSet<PosRotScale>.IInterpolation {
+		readonly PosRotScale KeyframeSet<PosRotScale>.IInterpolation.Interpolate(PosRotScale prevValue, PosRotScale nextValue, float progress) =>
+			new(
+				Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
+				float.Lerp(prevValue.Rotation, nextValue.Rotation, progress),
+				float.Lerp(prevValue.Scale, nextValue.Scale, progress)
+			);
+		public readonly override string ToString() => "Interpolated";
+	}
+	public static PosRotScale operator +(PosRotScale a, PosRotScale b) => new(a.Position + b.Position, a.Rotation + b.Rotation, a.Scale * b.Scale);
+	public static void DrawGizmo(SpriteBatch spriteBatch, ref PosRotScale value, ref GizmoTracker gizmoTracker, Vector2 offset) {
+		KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
+		KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, value.Position * GizmoZoom + offset, 32);
+		KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, value.Position * GizmoZoom + offset, 32);
+	}
+	public static string Export(PosRotScale value) => value == default ? "default" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
 }
