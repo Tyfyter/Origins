@@ -770,6 +770,40 @@ public static class KeyframeModifiers {
 		public readonly override string ToString() => "Sinusoidal Ease In/Out";
 	}
 }
+public struct GizmoTracker() {
+	int usingGizmo = -1;
+	int currentIndex;
+	bool usingMouseDown;
+	public bool JustSelected { readonly get; private set; }
+	public readonly bool IsCurrent => usingGizmo == currentIndex;
+	void SetCurrent() {
+		usingGizmo = currentIndex;
+		usingMouseDown = Main.mouseLeft;
+	}
+	public bool CheckSetCurrent(bool isHovered, ModKeybind keybind) {
+		if (IsCurrent) {
+			if ((Main.mouseLeft && Main.mouseLeftRelease) || (keybind?.JustPressed ?? false)) usingGizmo = -1;
+		} else if ((isHovered && Main.mouseLeft && Main.mouseLeftRelease) || (keybind?.JustPressed ?? false)) {
+			SetCurrent();
+			JustSelected = true;
+			return true;
+		}
+		return false;
+	}
+	public void ResetCurrent() => currentIndex = 0;
+	public void Advance() => currentIndex++;
+	public void Update() {
+		if (usingMouseDown && !Main.mouseLeft) usingGizmo = -1;
+		JustSelected = false;
+	}
+	public bool Cancel() {
+		if (usingGizmo != -1) {
+			usingGizmo = -1;
+			return true;
+		}
+		return false;
+	}
+}
 public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler, IEquatable<TSelf>, IEqualityOperators<TSelf, TSelf, bool> where TSelf : struct, IAnimatableSpriteFrame<TSelf> {
 	public static abstract Texture2D Texture { get; }
 	public static abstract int FrameCount { get; }
@@ -827,40 +861,6 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => value.Frame.ToString();
 	public static abstract implicit operator TSelf(int value);
 	public static abstract implicit operator int(TSelf value);
-}
-public struct GizmoTracker() {
-	int usingGizmo = -1;
-	int currentIndex;
-	bool usingMouseDown;
-	public bool JustSelected { readonly get; private set; }
-	public readonly bool IsCurrent => usingGizmo == currentIndex;
-	void SetCurrent() {
-		usingGizmo = currentIndex;
-		usingMouseDown = Main.mouseLeft;
-	}
-	public bool CheckSetCurrent(bool isHovered, ModKeybind keybind) {
-		if (IsCurrent) {
-			if ((Main.mouseLeft && Main.mouseLeftRelease) || (keybind?.JustPressed ?? false)) usingGizmo = -1;
-		} else if ((isHovered && Main.mouseLeft && Main.mouseLeftRelease) || (keybind?.JustPressed ?? false)) {
-			SetCurrent();
-			JustSelected = true;
-			return true;
-		}
-		return false;
-	}
-	public void ResetCurrent() => currentIndex = 0;
-	public void Advance() => currentIndex++;
-	public void Update() {
-		if (usingMouseDown && !Main.mouseLeft) usingGizmo = -1;
-		JustSelected = false;
-	}
-	public bool Cancel() {
-		if (usingGizmo != -1) {
-			usingGizmo = -1;
-			return true;
-		}
-		return false;
-	}
 }
 public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) : KeyframeSet<PosRotScale>.ITypeHandler {
 	public Vector2 Position = Position;
