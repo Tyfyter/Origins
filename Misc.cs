@@ -3294,11 +3294,11 @@ namespace Origins {
 			return self.IsGenericType && self.GetGenericTypeDefinition() == expectedType;
 		}
 		static class FlagsCache<T> where T : struct, Enum {
-			public static T[] possibleFlags;
+			public static T[] possibleFlags = Enum.GetValues<T>().Where(f => !f.Equals(default(T))).ToArray();
 		} 
 		[Pure]
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
-			T[] possibleFlags = FlagsCache<T>.possibleFlags ??= Enum.GetValues<T>().Where(f => !f.Equals(default(T))).ToArray();
+			T[] possibleFlags = FlagsCache<T>.possibleFlags;
 			for (int i = 0; i < possibleFlags.Length; i++) {
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
@@ -6940,6 +6940,25 @@ namespace Origins {
 			T m = a % b;
 			if (m < T.Zero) m = (b < T.Zero) ? m - b : m + b;
 			return m;
+		}
+	}
+	public static class Enumerators {
+		static class FlagsCache<T> where T : struct, Enum {
+			public static T[] possibleFlags = Enum.GetValues<T>().Where(f => !f.Equals(default(T))).ToArray();
+		}
+		[Pure]
+		public static Flags<T> EnumerateFlags<T>(this T value) where T : struct, Enum => new(value);
+		public ref struct Flags<T>(T value) where T : struct, Enum {
+			int index = -1;
+			readonly Span<T> possibleFlags = FlagsCache<T>.possibleFlags;
+			public readonly T Current => possibleFlags[index];
+			public bool MoveNext() {
+				while (++index < possibleFlags.Length) {
+					if (value.HasFlag(possibleFlags[index])) return true;
+				}
+				return false;
+			}
+			public readonly Flags<T> GetEnumerator() => this;
 		}
 	}
 }

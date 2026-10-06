@@ -322,7 +322,7 @@ namespace Origins.Tiles {
 				Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
 				Color color = GetColor(Lighting.GetColor(i, j));
 				Rectangle frame = new(0, 0, 16, 16);
-				void Do(IEnumerable<Direction> directions) {
+				void Do(Enumerators.Flags<Direction> directions) {
 					foreach (Direction direction in directions) {
 						Tile blendTile;
 						switch (direction) {
@@ -360,7 +360,7 @@ namespace Origins.Tiles {
 					}
 				}
 				Direction directions = GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18) & skipMask;
-				Do(directions.GetFlags());
+				Do(directions.EnumerateFlags());
 				if (Texture.Width() > 72) {
 					bool down = directions.HasFlag(Direction.Down);
 					bool up = directions.HasFlag(Direction.Up);
