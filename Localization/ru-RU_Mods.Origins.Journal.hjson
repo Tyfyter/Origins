@@ -605,8 +605,17 @@ The_Ashen: {
 		''' */
 
 	Scrap_Wagon: {
-		// Text: Mods.Origins.Journal.The_Ashen.Scrap_Wagon.Text
-		// Name: Scrap Wagon Entry
+		// Name: Fierce Competition
+		/* Text:
+			'''
+			Two of the Mechanicus’ smartest tinkerers, that wasn’t M.T. Neferly himself, put up against each other to not only construct a reliable space launch vehicle but also construct a self-sustaining, god-killing machine. The assignment was not simple, but he emplaced no other requirements other than that it be unlinked from the rest of the grid; he wanted these to be disconnected and fully autonomous from the Mother Unit in-case of emergency. He was smart about that.
+
+			My opponent was M.T. Ailah, known for her extensive research into Cubekonian technology. Her project was the I.C.A.R.U.S. Protocol, utilizing her signature reverse-engineered Cubekonian tech to make the system more powerful. Her idea was to launch a satellite at a heliocentric orbit around the sun such that it could collect from the solar storms for power.
+
+			My own was known as “Project STAR SOLDIER”, it would be in orbit around Terraria and utilize resources from the asteroid belt to continuously fabricate more units; not too distant of an idea from what Ailah had in mind. There was only one crux that Ailah had that I didn’t: I wasn’t as well-versed in Cubekonian technology as she was. I was just specialized in weapon systems and propulsion technology. When it came to things, I just simply wasn’t comparable to anything Ailah could do. So, I gave up on the STAR SOLDIER Project in its prototyping stage. It’s still functional, but… I only made it functional for my son to one day do something more with it.
+
+			It’s truly fascinating how such fierce competition brings the most out of people. Neferly knew that well.
+			''' */
 	}
 }
 

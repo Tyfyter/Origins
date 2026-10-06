@@ -349,7 +349,7 @@ namespace Origins.Items {
 					player.OriginPlayer().UnlockJournalEntry(OriginsSets.Items.JournalEntries[item.type]);
 			}
 		}
-		static OneFromRulesRule originsDevSetRule;
+		static OnePossibleFromRulesRule originsDevSetRule;
 		static VaryingRateLeadingRule devSetRealDropRule = new VaryingRateLeadingRule(16, 1, (new Conditions.TenthAnniversaryIsUp(), 8, 1)).WithOnSuccess(originsDevSetRule = new(1));
 		public static OneFromRulesRule OriginsDevSetRule => originsDevSetRule;
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {

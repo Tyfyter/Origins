@@ -375,3 +375,30 @@ internal interface IIgnoreWhenHighlighting : IAutoload<IIgnoreWhenHighlighting.A
 		}
 	}
 }
+public class OnePossibleFromRulesRule(int chanceDenominator, int chanceNumerator, params IItemDropRule[] options) : OneFromRulesRule(chanceDenominator, chanceNumerator, options), IItemDropRule, INestedItemDropRule {
+	public OnePossibleFromRulesRule(int chanceDenominator, params IItemDropRule[] options) : this(chanceDenominator, 1, options) { }
+	public new bool CanDrop(DropAttemptInfo info) {
+		for (int i = 0; i < options.Length; i++) {
+			if (options[i].CanDrop(info)) return true;
+		}
+		return false;
+	}
+	public new ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info, ItemDropRuleResolveAction resolveAction) {
+		ItemDropAttemptResult result = default;
+		if (info.rng.Next(chanceDenominator) < chanceNumerator) {
+			RangeRandom chances = new(info.rng, 0, options.Length);
+			for (int i = 0; i < options.Length; i++) {
+				if (!options[i].CanDrop(info)) chances.Multiply(i, i + 1, 0);
+			}
+			if (chances.AnyWeight) {
+				resolveAction(options[chances.Get()], info);
+				result.State = ItemDropAttemptResultState.Success;
+			} else {
+				result.State = ItemDropAttemptResultState.DoesntFillConditions;
+			}
+		} else {
+			result.State = ItemDropAttemptResultState.FailedRandomRoll;
+		}
+		return result;
+	}
+}
