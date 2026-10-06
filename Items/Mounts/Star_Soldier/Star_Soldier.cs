@@ -2120,7 +2120,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		Star_Soldier_Weapon rightClickSelection;
 		float fallPosition;
 		public Star_Soldier.MountHandler fallingStarSoldier;
-		static bool playingAnimation;
+		static KeyframeAnimation.PlayingState animationControls;
 		public void Update(Player player) {
 			if (leftClickSelection is null || rightClickSelection is null) return;
 			MathUtils.LinearSmoothing(ref fadeIconsOut, 0, 1f / 60);
@@ -2133,11 +2133,14 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			if (fallPosition > player.Bottom.Y - GroundOffset) {
 				fallPosition = player.Bottom.Y - GroundOffset;
 #if EditAnimation
-				if (DebugConfig.Instance.AnimatorMode && Keybindings.PlayPauseAnimation.JustPressed) playingAnimation = !playingAnimation;
-				if (playingAnimation || !DebugConfig.Instance.AnimatorMode)
+				if (DebugConfig.Instance.AnimatorMode && Keybindings.PlayPauseAnimation.JustPressed) animationControls.playing = !animationControls.playing;
+				if (animationControls.playing || !DebugConfig.Instance.AnimatorMode)
 #endif
-					;// fallingStarSoldier.fallAnimationTime++;
+				fallingStarSoldier.fallAnimationTime++;
 			}
+#if EditAnimation
+			if (animationControls.forceLoop && fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) fallingStarSoldier.fallAnimationTime = 0;
+#endif
 			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
 				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
@@ -2194,7 +2197,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 #if EditAnimation
 			if (DebugConfig.Instance.AnimatorMode && fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
 				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
-				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime, ref playingAnimation);
+				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime, ref animationControls);
 				Rectangle rect = new(0, Main.screenHeight / 2, 16, 16);
 				spriteBatch.Draw(
 					TextureAssets.MagicPixel.Value,

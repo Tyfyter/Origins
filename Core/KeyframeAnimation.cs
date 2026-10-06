@@ -36,9 +36,9 @@ public abstract class KeyframeAnimation {
 			Max(ref totalLength, item.Duration);
 		}
 	}
-	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref bool playing) => DrawEditorUI(spriteBatch, new(ref currentTime), ref playing);
-	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref bool playing) => DrawEditorUI(spriteBatch, new(ref currentTime), ref playing);
-	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref bool playing) {
+	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
+	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
+	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref PlayingState animationControls) {
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 12;
 		{
@@ -49,14 +49,15 @@ public abstract class KeyframeAnimation {
 			playTriangle.ResetPositions();
 			keyframeDiamond.ResetPositions();
 			pauseRect.ResetPositions();
+			loopSymbol.ResetPositions();
 			Vector2 buttonPos = timelinePos;
 			// pause/play
-			if (DrawButton(buttonPos, out Color buttonColor)) playing = !playing;
-			if (playing) {
-				playTriangle.FillColor(buttonColor).Draw(primitiveBatch);
-			} else {
+			if (DrawButton(buttonPos, out Color buttonColor)) animationControls.playing = !animationControls.playing;
+			if (animationControls.playing) {
 				pauseRect.FillColor(buttonColor).TranslateTo(buttonPos + new Vector2(icon_size * -0.333f, 0)).Draw(primitiveBatch);
 				pauseRect.Translate(new Vector2(icon_size * 0.666f, 0)).Draw(primitiveBatch);
+			} else {
+				playTriangle.TranslateTo(buttonPos).FillColor(buttonColor).Draw(primitiveBatch);
 			}
 
 			// go to next keyframe
@@ -67,6 +68,13 @@ public abstract class KeyframeAnimation {
 			}
 			playTriangle.Scale(0.95f, playTriangle.TransformedOrigin).TranslateTo(buttonPos - new Vector2(icon_scale * 0.85f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
 			keyframeDiamond.Scale(0.75f).FillColor(buttonColor).TranslateTo(buttonPos + new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
+
+			// loop
+			buttonPos = timelinePos + buttonOffset * 2;
+			if (DrawButtonColored(buttonPos, animationControls.forceLoop ? Color.CornflowerBlue : Color.Gray, out buttonColor)) {
+				animationControls.forceLoop = !animationControls.forceLoop;
+			}
+			loopSymbol.TranslateTo(buttonPos).FillColor(buttonColor).Draw(primitiveBatch);
 
 			// go to last keyframe
 			buttonPos = timelinePos - buttonOffset;
@@ -129,12 +137,13 @@ public abstract class KeyframeAnimation {
 			draggingGizmo = -1;
 		}
 		if (modifyingInterpolation == -1) draggingInterpolation = false;
-		static bool DrawButton(Vector2 position, out Color color) {
+		static bool DrawButton(Vector2 position, out Color color) => DrawButtonColored(position, Color.Gray, out color);
+		static bool DrawButtonColored(Vector2 position, Color baseColor, out Color color) {
 			buttonRect.TranslateTo(position);
 			bool hovered = buttonRect.Contains(Main.MouseScreen);
 			color = Color.White;
 			if (!hovered) color = Color.LightGray;
-			buttonRect.FillColor(color.MultiplyRGBA(Color.Gray)).Draw(primitiveBatch);
+			buttonRect.FillColor(color.MultiplyRGBA(baseColor)).Draw(primitiveBatch);
 			return hovered && Main.mouseLeft && Main.mouseLeftRelease;
 		}
 	}
@@ -208,6 +217,10 @@ public abstract class KeyframeAnimation {
 			Int
 		}
 	}
+	public struct PlayingState {
+		public bool playing;
+		public bool forceLoop;
+	}
 
 	const float button_scale = 10;
 	const float half_bri_base = 0.8660254f;
@@ -234,6 +247,13 @@ public abstract class KeyframeAnimation {
 		new(0, -icon_scale),
 		new(icon_scale, 0),
 		new(0, icon_scale)
+	);
+	static readonly Polygon loopSymbol = Polygon.Import(icon_scale * 2,
+		Polygon.Alignment.Center,
+		new(-icon_scale, 0),
+		new(icon_scale * 0.5f, 5f),
+		new(icon_scale * 0.25f, 0),
+		new(icon_scale * 0.5f, -5f)
 	);
 	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
 }
