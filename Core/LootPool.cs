@@ -138,6 +138,7 @@ public class Ashen_Generic : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2));
 		AddRule(ItemDropRule.Common(ItemID.FlareGun, 5));
 		AddRule(ItemDropRule.Common(ItemID.BlueFlare, 5, 35, 78));
@@ -162,6 +163,7 @@ public class Ashen_GenericLore : LootPool {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>(), 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>()));
 		AddRule(ItemDropRule.Common(ItemID.FlareGun));
 		AddRule(ItemDropRule.Common(ItemID.BlueFlare, 1, 78, 78));
 		AddRule(ItemDropRule.Common(ItemID.Compass, 5));
@@ -287,7 +289,7 @@ public class Ashen_Personal : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<First_Dream>(), 250));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Pincushion>(), 40));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Nineball>(), 25));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 2, 1, 2));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>()));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Bang_Snap>(), 10, 35, 70));
 		AddRule(ItemDropRule.Common(ItemID.FamiliarShirt, 1, 1, 3));

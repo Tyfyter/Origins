@@ -11,6 +11,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Magic;
+using Origins.Journal;
 using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Ashen;
@@ -45,7 +46,12 @@ using static Origins.Core.KeyframeTypes;
 using AnimationOffsets = Origins.Items.Mounts.Star_Soldier.Landing_Animation.AnimationOffsets;
 
 namespace Origins.Items.Mounts.Star_Soldier;
-public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
+public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat, IJournalEntrySource {
+	public string EntryName => "Origins/" + typeof(Scrap_Wagon_Entry).Name;
+	public class Scrap_Wagon_Entry : JournalEntry {
+		public override string TextKey => "Scrap_Wagon";
+		public override JournalSortIndex SortIndex => new("The_Ashen", 5);
+	}
 	public override string Texture => "Origins/Items/Mounts/Star_Soldier/Star_Soldier_Wagon_Front";
 	public override void SetDefaults() {
 		Item.DefaultToMount(ModContent.MountType<Star_Soldier_Wagon>());

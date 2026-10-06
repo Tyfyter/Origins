@@ -603,6 +603,11 @@ The_Ashen: {
 		 - Arm Comparator Unit links data with opposite arm for improved accuracy and logistics through wireless connection. Data broadcasting speeds are slow, but adjustments should still be timely. Range And Precision Processor measures muzzle velocity, impact time, spread, and other variables to improve weapon accuracy. The modular rocket pods utilize their own sensors for fire control data processing.
 		 - The ordinance launcher is completely hidden in the frontal armor plates. Quickly retracts the mechanism after a succesful launch. Heavily customizable to contain various mission-critical ordinance or support turrets when handling infantry.
 		''' */
+
+	Scrap_Wagon: {
+		// Text: Mods.Origins.Journal.The_Ashen.Scrap_Wagon.Text
+		// Name: Scrap Wagon Entry
+	}
 }
 
 The_Crimson: {

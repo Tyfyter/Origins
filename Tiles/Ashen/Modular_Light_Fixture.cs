@@ -175,8 +175,7 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
-		//TODO: Uncomment when done with concept builds
-		/*public bool IsPowered(int i, int j) {
+		public bool IsPowered(int i, int j) {
 			foreach (Point pos in CrawlEntireLight(i, j)) {
 				if (Main.tile[pos].Get<Ashen_Wire_Data>().AnyPower) return true;
 			}
@@ -194,7 +193,7 @@ namespace Origins.Tiles.Ashen {
 				tile.TileFrameY %= 18 * 3;
 				tile.TileFrameY += litMod;
 			}
-		}*/
+		}
 		static IEnumerable<Point> GetConnected(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			switch ((tile.TileFrameX / 18, (tile.TileFrameY / 18) % 3)) {
