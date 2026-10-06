@@ -2194,7 +2194,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 #if EditAnimation
 			if (DebugConfig.Instance.AnimatorMode && fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
 				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
-				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime);
+				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime, ref playingAnimation);
 				Rectangle rect = new(0, Main.screenHeight / 2, 16, 16);
 				spriteBatch.Draw(
 					TextureAssets.MagicPixel.Value,
@@ -2389,6 +2389,7 @@ public class Star_Soldier_Cooldown : ModBuff {
 	}
 }
 public class Star_Soldier_UI : SwitchableUIState {
+	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
 	[ReinitializeDuringResizeArrays]
 	public static class Sets {
 		public static Func<int, Vector2, bool>[] CustomBuffIndicator = BuffID.Sets.Factory.CreateNamedSet($"{nameof(Star_Soldier)}_{nameof(CustomBuffIndicator)}")
@@ -2481,6 +2482,10 @@ public class Star_Soldier_UI : SwitchableUIState {
 
 		Anchors.Reset();
 		for (int i = 0; i < uiSegments.Length; i++) uiSegments[i].Draw(spriteBatch, handler, uiScale);
+		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		primitiveBatch.Flush();
 	}
 	interface IUISegment {
 		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale);
@@ -2661,15 +2666,12 @@ public class Star_Soldier_UI : SwitchableUIState {
 		);
 		public static Func<int, Vector2, bool> DrawFire(Color color, bool needsOil = true) => (buffIndex, uiScale) => {
 			Player player = Main.LocalPlayer;
-			Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			Color _color = color * (float.Sin((float)Main.timeForVisualEffects / 10f + buffIndex) * 0.25f + 0.75f);
 			for (int i = 0; i < firePolygon.vertices.Length; i++) firePolygon.vertices[i].Color = _color;
 			firePolygon
 			.ResetPositions()
 			.Translate(customBuffIndicatorPos)
-			.Draw();
+			.Draw(primitiveBatch);
 			customBuffIndicatorPos.X -= firePolygon.TransformedSize.X;
 
 			int buffTime = player.buffTime[buffIndex];

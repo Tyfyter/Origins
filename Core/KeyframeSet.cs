@@ -394,7 +394,6 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				);
 			}
 			if (animation.modifyingInterpolation >= 0) {
-				spriteBatch.Restart(spriteBatch.GetState());
 				Span<IInterpolationModifier> modifiers = CollectionsMarshal.AsSpan(keyframe.Interpolation);
 				modifiers[animation.modifyingInterpolation].DrawGizmo(spriteBatch, iPos, ref animation.draggingGizmo, ref gizmoIndex);
 			}
@@ -642,7 +641,7 @@ public static class KeyframeTypes {
 			bool isHovering = handle.Contains(Main.MouseScreen);
 
 			handle.MultiplyColor(0.5f + isHovering.Mul(0.5f)).DrawOutline();
-			if (value) handle.Scale(6f / 8, offset).Draw();
+			if (value) handle.Scale(6f / 8, offset).Draw(KeyframeAnimation.primitiveBatch);
 
 			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) value = !value;
 		}
@@ -666,7 +665,7 @@ public static class KeyframeTypes {
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		rotationHandle.ResetPositions().Scale(4 * scale).Rotate(value).Translate(end);
 		bool isHovering = rotationHandle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
-		rotationHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
+		rotationHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
 		if (draggingGizmo == gizmoIndex) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
 		if (Main.mouseLeft && Main.mouseLeftRelease && rotationHandle.Contains(Main.MouseScreen)) {
 			rotationHandleOffset = value - (Main.MouseScreen - pos).ToRotation();
@@ -704,15 +703,11 @@ public static class KeyframeModifiers {
 		static float handleX = 0.5f;
 		static Vector2 lastMouse;
 		public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref int draggingGizmo, ref int gizmoIndex) {
-			Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			Vector2 mouse = (Main.MouseScreen - pos) / 150;
 			float handleY = 1 - float.Pow(handleX, Exponent);
 			handle.ResetPositions().Scale(6).Translate(pos + new Vector2(handleX, handleY) * 150);
 			bool isHovering = handle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
-			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw();
+			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
 			if (draggingGizmo == gizmoIndex && lastMouse.TrySet(mouse)) {
 				handleX = mouse.X + handleOffset.X;
 				Clamp(ref handleX, 0, 1);

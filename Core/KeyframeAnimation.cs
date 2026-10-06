@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics.Primitives;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,7 +13,7 @@ using Terraria.UI.Chat;
 namespace Origins.Core; 
 public abstract class KeyframeAnimation {
 	public static int TimelineWidth => 600;
-	public Rectangle CurrentTimeline => new Rectangle(0, 0, TimelineWidth, 8).Recentered(timelinePos);
+	public Rectangle CurrentTimeline => new Rectangle(0, 0, TimelineWidth, 12).Recentered(timelinePos);
 	public int selectedIndex = 0;
 	public Vector2 timelinePos;
 	public float totalLength;
@@ -34,11 +36,40 @@ public abstract class KeyframeAnimation {
 			Max(ref totalLength, item.Duration);
 		}
 	}
-	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime) => DrawEditorUI(spriteBatch, new(ref currentTime));
-	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime) => DrawEditorUI(spriteBatch, new(ref currentTime));
-	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime) {
+	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref bool playing) => DrawEditorUI(spriteBatch, new(ref currentTime), ref playing);
+	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref bool playing) => DrawEditorUI(spriteBatch, new(ref currentTime), ref playing);
+	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref bool playing) {
 		timelinePos.X = Main.screenWidth * 0.5f;
-		timelinePos.Y = 16;
+		timelinePos.Y = 12;
+		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+		Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		buttonRect.ResetPositions().Translate(timelinePos);
+		if (DrawButton(default, out Color buttonColor)) playing = !playing;
+		playTriangle.ResetPositions().Translate(timelinePos);
+		if (playing) {
+			const float scale = icon_scale * 2;
+			Rectangle rect = new Rectangle(0, 0, (int)(scale / 3), (int)scale).Recentered(timelinePos);
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				rect.Add(new(scale * -0.333f, 0)),
+				buttonColor
+			);
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				rect.Add(new(scale * 0.333f, 0)),
+				buttonColor
+			);
+		} else {
+			playTriangle.FillColor(buttonColor).Draw(primitiveBatch);
+		}
+		const float button_full_size = button_size * 2;
+		if (DrawButton(new Vector2(button_full_size, 0), out buttonColor)) {
+
+		}
+		playTriangle.Scale(half_bri_base, timelinePos).Translate(new Vector2(button_full_size - icon_scale * 0.5f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
+
+		timelinePos.Y += 20;
 		Point minTimelineY = CurrentTimeline.TopLeft().ToPoint();
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			ChatManager.DrawColorCodedStringWithShadow(
@@ -63,14 +94,16 @@ public abstract class KeyframeAnimation {
 		}
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
-			new Rectangle((int)TimelineToScreenPos(currentTime) - 1, 0, 2, (int)timelinePos.Y),
+			new Rectangle((int)TimelineToScreenPos(currentTime) - 1, minTimelineY.Y - 2, 2, (int)(timelinePos.Y - minTimelineY.Y - 2)),
 			Color.White
 		);
-		timelinePos.Y = 16;
+		timelinePos.Y = 32;
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			keyframeSets[i].DrawEditorUI(spriteBatch, this, i == selectedIndex, currentTime);
 			timelinePos.Y += 16;
 		}
+		spriteBatch.Restart(spriteBatch.GetState());
+		primitiveBatch.Flush();
 		if (lastTime.TrySet(currentTime)) {
 			modifyingInterpolation = -1;
 			draggingGizmo = -1;
@@ -80,6 +113,14 @@ public abstract class KeyframeAnimation {
 			draggingGizmo = -1;
 		}
 		if (modifyingInterpolation == -1) draggingInterpolation = false;
+		static bool DrawButton(Vector2 offset, out Color color) {
+			buttonRect.Translate(offset);
+			bool hovered = buttonRect.Contains(Main.MouseScreen);
+			color = Color.White;
+			if (!hovered) color = Color.LightGray;
+			buttonRect.FillColor(color.MultiplyRGBA(Color.Gray)).Draw(primitiveBatch);
+			return hovered && Main.mouseLeft && Main.mouseLeftRelease;
+		}
 	}
 	public void DrawTimeline(SpriteBatch spriteBatch, bool isSelected) {
 		spriteBatch.Draw(
@@ -151,4 +192,26 @@ public abstract class KeyframeAnimation {
 			Int
 		}
 	}
+
+	const float button_size = 10;
+	const float half_bri_base = 0.8660254f;
+	const float icon_scale = button_size / (half_bri_base * 2);
+	static readonly Polygon buttonRect = new(
+		new(-button_size, -button_size),
+		new(button_size, -button_size),
+		new(button_size, button_size),
+		new(-button_size, button_size)
+	);
+	static readonly Polygon playTriangle = new(
+		new(icon_scale, 0),
+		new(icon_scale * -0.5f, 5f),
+		new(icon_scale * -0.5f, -5f)
+	);
+	static readonly Polygon keyframeDiamond = new(
+		new(-icon_scale, 0),
+		new(0, -icon_scale),
+		new(icon_scale, 0),
+		new(0, icon_scale)
+	);
+	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
 }

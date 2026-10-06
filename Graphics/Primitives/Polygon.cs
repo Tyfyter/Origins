@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Terraria;
 
 namespace Origins.Graphics.Primitives;
@@ -230,6 +231,10 @@ public class Polygon : IMoveToPegFlag {
 		TransformedSize = upperBounds - lowerBounds;
 		return this;
 	}
+	public Polygon FillColor(Color scale) {
+		for (int i = 0; i < vertices.Length; i++) vertices[i].Color = scale;
+		return this;
+	}
 	public Polygon MultiplyColor(Color scale) {
 		if (scale == Color.White) return this;
 		for (int i = 0; i < vertices.Length; i++) vertices[i].Color = vertices[i].Color.MultiplyRGBA(scale);
@@ -248,64 +253,30 @@ public class Polygon : IMoveToPegFlag {
 		).Contains(point)) return true;
 		return false;
 	}
-	public void Draw() {
+	public void Draw(PrimitiveBatch primitiveBatch = null) {
 		if (indices.Length <= 0) return;
-		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indices, 0, indices.Length / 3);
-		/*for (int i = 0; i < indices.Length / 3; i++) {
-			Color color = Main.hslToRgb(i / (float)(indices.Length / 3), 1f, 0.4f);
-			using ScopedOverride<Color> a = vertices[indices[i * 3]].Color.ScopedOverride(color);
-			using ScopedOverride<Color> b = vertices[indices[i * 3 + 1]].Color.ScopedOverride(color.MultiplyRGB(Color.DarkGray));
-			using ScopedOverride<Color> c = vertices[indices[i * 3 + 2]].Color.ScopedOverride(color.MultiplyRGB(new(50, 50, 50)));
-			Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indices, i * 3, 1);
+		if (primitiveBatch is null) {
+			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indices, 0, indices.Length / 3);
+		} else {
+			primitiveBatch.AddFilled(this);
 		}
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineStrip, vertices, 0, vertices.Length, Enumerable.Range(0, vertices.Length).ToArray(), 0, vertices.Length);
-		for (int i = 0; i < indices.Length / 3; i++) {
-			Triangle trangle = new(vertices[indices[i * 3]].Position.XY(), vertices[indices[i * 3 + 1]].Position.XY(), vertices[indices[i * 3 + 2]].Position.XY());
-			Main.spriteBatch.DrawString(
-				Terraria.GameContent.FontAssets.ItemStack.Value,
-				i.ToString(),
-				(trangle.a + trangle.b + trangle.c) / 3,
-				Color.White
-			);
-			if (trangle.Contains(Main.MouseScreen)) {
-				Main.spriteBatch.DrawString(
-					Terraria.GameContent.FontAssets.ItemStack.Value,
-					indices[(i * 3)].ToString(),
-					trangle.a,
-					Color.White
-				);
-				Main.spriteBatch.DrawString(
-					Terraria.GameContent.FontAssets.ItemStack.Value,
-					indices[(i * 3 + 1)].ToString(),
-					trangle.b,
-					Color.White
-				);
-				Main.spriteBatch.DrawString(
-					Terraria.GameContent.FontAssets.ItemStack.Value,
-					indices[(i * 3 + 2)].ToString(),
-					trangle.c,
-					Color.White
-				);
-			}
+	}
+	public void DrawOutline(PrimitiveBatch primitiveBatch = null) {
+		if (primitiveBatch is null) {
+			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineStrip, vertices, 0, vertices.Length, outlineIndices, 0, vertices.Length);
+		} else {
+			primitiveBatch.AddOutline(this);
 		}
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(
-			PrimitiveType.LineStrip,
-			vertices,
-			0,
-			vertices.Length,
-			Enumerable.Range(0, vertexPositions.Length).SelectMany<int, short>(v => [(short)v, (short)((v + 1) % vertexPositions.Length)]).ToArray(),
-			0,
-			vertices.Length
-		);*/
 	}
-	public void DrawOutline() {
-		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineStrip, vertices, 0, vertices.Length, outlineIndices, 0, vertices.Length);
-	}
-	public void DrawWireframe() {
-		Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-		Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineList, vertices, 0, vertices.Length, wireframeIndices, 0, wireframeIndices.Length / 2);
+	public void DrawWireframe(PrimitiveBatch primitiveBatch = null) {
+		if (primitiveBatch is null) {
+			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineList, vertices, 0, vertices.Length, wireframeIndices, 0, wireframeIndices.Length / 2);
+		} else {
+			primitiveBatch.AddWireframe(this);
+		}
 	}
 	ref Vector2 Pos(int i) => ref Unsafe.As<Vector3, Vector2>(ref vertices[i].Position);
 	TriOption? VertexTri(List<short> remainingIndices, short around, int windingOrder = 1) {
@@ -344,6 +315,55 @@ public class Polygon : IMoveToPegFlag {
 		public readonly void Dispose() {
 			Array.Copy(pool, polygon.vertices, polygon.vertices.Length);
 			polygon.modificationCount--;
+		}
+	}
+	public class PrimitiveBatch {
+		readonly List<VertexPositionColorTexture> triVerts = [];
+		readonly List<short> triIndices = [];
+		readonly List<VertexPositionColorTexture> wireframeVerts = [];
+		readonly List<short> wireframeIndices = [];
+		readonly List<VertexPositionColorTexture> outlineVerts = [];
+		readonly List<short> outlineIndices = [];
+
+		public void Flush() {
+			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			if (triVerts.Count > 0) {
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, triVerts.ToArray(), 0, triVerts.Count, triIndices.ToArray(), 0, triIndices.Count / 3);
+				triVerts.Clear();
+				triIndices.Clear();
+			}
+			if (wireframeVerts.Count > 0) {
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineList, wireframeVerts.ToArray(), 0, wireframeVerts.Count, wireframeIndices.ToArray(), 0, wireframeIndices.Count / 2);
+				wireframeVerts.Clear();
+				wireframeIndices.Clear();
+			}
+			if (outlineVerts.Count > 0) {
+				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineList, outlineVerts.ToArray(), 0, outlineVerts.Count, outlineIndices.ToArray(), 0, outlineIndices.Count / 2);
+				outlineVerts.Clear();
+				outlineIndices.Clear();
+			}
+		}
+		public void AddFilled(Polygon polygon) {
+			short oldVerts = (short)triVerts.Count;
+			int i = triIndices.Count;
+			triVerts.AddRange(polygon.vertices);
+			triIndices.AddRange(polygon.indices);
+			for (; i < triIndices.Count; i++) triIndices[i] += oldVerts;
+		}
+		public void AddWireframe(Polygon polygon) {
+			short oldVerts = (short)wireframeVerts.Count;
+			int i = wireframeIndices.Count;
+			wireframeVerts.AddRange(polygon.vertices);
+			wireframeIndices.AddRange(polygon.wireframeIndices);
+			for (; i < wireframeVerts.Count; i++) wireframeIndices[i] += oldVerts;
+		}
+		public void AddOutline(Polygon polygon) {
+			short oldVerts = (short)triVerts.Count;
+			outlineVerts.AddRange(polygon.vertices);
+			for (int i = 0; i < polygon.outlineIndices.Length; i++) {
+				outlineIndices.Add((short)(polygon.outlineIndices[i] + oldVerts));
+				outlineIndices.Add((short)(polygon.outlineIndices[(i + 1) % polygon.outlineIndices.Length] + oldVerts));
+			}
 		}
 	}
 }
