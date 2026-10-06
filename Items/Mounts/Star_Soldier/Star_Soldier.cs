@@ -2198,13 +2198,6 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			if (DebugConfig.Instance.AnimatorMode && fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
 				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
 				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime, ref animationControls);
-				Rectangle rect = new(0, Main.screenHeight / 2, 16, 16);
-				spriteBatch.Draw(
-					TextureAssets.MagicPixel.Value,
-					rect,
-					Color.Orange
-				);
-				if (Main.mouseLeft && Main.mouseLeftRelease && rect.Contains(Main.MouseScreen)) Platform.Get<IClipboard>().Value = Landing_Animation.instance.Export();
 			}
 #endif
 			IReadOnlyList<Star_Soldier_Weapon> options = Star_Soldier_Weapon.Weapons;

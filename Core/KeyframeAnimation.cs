@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
 using PegasusLib.Graphics;
+using ReLogic.OS;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -8,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ModLoader.UI;
 using Terraria.UI.Chat;
 
 namespace Origins.Core; 
@@ -50,9 +52,10 @@ public abstract class KeyframeAnimation {
 			keyframeDiamond.ResetPositions();
 			pauseRect.ResetPositions();
 			loopSymbol.ResetPositions();
+			copyRect.ResetPositions();
 			Vector2 buttonPos = timelinePos;
 			// pause/play
-			if (DrawButton(buttonPos, out Color buttonColor)) animationControls.playing = !animationControls.playing;
+			if (DrawButton(buttonPos, animationControls.playing ? "Pause" : "Play", out Color buttonColor)) animationControls.playing = !animationControls.playing;
 			if (animationControls.playing) {
 				pauseRect.FillColor(buttonColor).TranslateTo(buttonPos + new Vector2(icon_size * -0.333f, 0)).Draw(primitiveBatch);
 				pauseRect.Translate(new Vector2(icon_size * 0.666f, 0)).Draw(primitiveBatch);
@@ -62,7 +65,7 @@ public abstract class KeyframeAnimation {
 
 			// go to next keyframe
 			buttonPos = timelinePos + buttonOffset;
-			if (DrawButton(buttonPos, out buttonColor)) {
+			if (DrawButton(buttonPos, "Next Keyframe", out buttonColor)) {
 				float nextKeyframe = keyframeSets[selectedIndex].NextKeyframeTime(currentTime);
 				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
 			}
@@ -71,14 +74,14 @@ public abstract class KeyframeAnimation {
 
 			// loop
 			buttonPos = timelinePos + buttonOffset * 2;
-			if (DrawButtonColored(buttonPos, animationControls.forceLoop ? Color.CornflowerBlue : Color.Gray, out buttonColor)) {
+			if (DrawButtonColored(buttonPos, "Loop", animationControls.forceLoop ? Color.CornflowerBlue : Color.Gray, out buttonColor)) {
 				animationControls.forceLoop = !animationControls.forceLoop;
 			}
 			loopSymbol.TranslateTo(buttonPos).FillColor(buttonColor).Draw(primitiveBatch);
 
 			// go to last keyframe
 			buttonPos = timelinePos - buttonOffset;
-			if (DrawButton(buttonPos, out buttonColor)) {
+			if (DrawButton(buttonPos, "Previous Keyframe", out buttonColor)) {
 				float nextKeyframe = keyframeSets[selectedIndex].PrevKeyframeTime(currentTime);
 				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
 			}
@@ -87,11 +90,20 @@ public abstract class KeyframeAnimation {
 
 			// go to start
 			buttonPos = timelinePos - buttonOffset * 2;
-			if (DrawButton(buttonPos, out buttonColor)) {
+			if (DrawButton(buttonPos, "Restart", out buttonColor)) {
 				currentTime.Value = 0;
 			}
 			playTriangle.Translate(-buttonOffset - new Vector2(icon_size * 0.1f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
 			pauseRect.Scale(0.85f).FillColor(buttonColor).TranslateTo(buttonPos - new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
+
+			// export to clipboard
+			buttonPos = timelinePos + (new Vector2(TimelineWidth, 0) - buttonOffset) * 0.5f;
+			if (DrawButton(buttonPos, "Export To Clipboard", out buttonColor)) {
+				Platform.Get<IClipboard>().Value = Export();
+			}
+			copyRect.TranslateTo(buttonPos - new Vector2(button_size * 0.05f)).FillColor(buttonColor).Draw(primitiveBatch);
+			copyRect.Translate(new Vector2(button_size * 0.075f)).FillColor(buttonColor.MultiplyRGB(Color.Gray)).Draw(primitiveBatch);
+			copyRect.Translate(new Vector2(button_size * 0.025f)).FillColor(buttonColor).Draw(primitiveBatch);
 		}
 		timelinePos.Y += 20;
 		Point minTimelineY = CurrentTimeline.TopLeft().ToPoint();
@@ -137,12 +149,13 @@ public abstract class KeyframeAnimation {
 			draggingGizmo = -1;
 		}
 		if (modifyingInterpolation == -1) draggingInterpolation = false;
-		static bool DrawButton(Vector2 position, out Color color) => DrawButtonColored(position, Color.Gray, out color);
-		static bool DrawButtonColored(Vector2 position, Color baseColor, out Color color) {
+		static bool DrawButton(Vector2 position, string tooltip, out Color color) => DrawButtonColored(position, tooltip, Color.Gray, out color);
+		static bool DrawButtonColored(Vector2 position, string tooltip, Color baseColor, out Color color) {
 			buttonRect.TranslateTo(position);
 			bool hovered = buttonRect.Contains(Main.MouseScreen);
 			color = Color.White;
 			if (!hovered) color = Color.LightGray;
+			else UICommon.TooltipMouseText(tooltip);
 			buttonRect.FillColor(color.MultiplyRGBA(baseColor)).Draw(primitiveBatch);
 			return hovered && Main.mouseLeft && Main.mouseLeftRelease;
 		}
@@ -254,6 +267,12 @@ public abstract class KeyframeAnimation {
 		new(icon_scale * 0.5f, 5f),
 		new(icon_scale * 0.25f, 0),
 		new(icon_scale * 0.5f, -5f)
+	);
+	static readonly Polygon copyRect = new(
+		new(-button_scale * 0.25f, -button_scale * 0.375f),
+		new(button_scale * 0.25f, -button_scale * 0.375f),
+		new(button_scale * 0.25f, button_scale * 0.375f),
+		new(-button_scale * 0.25f, button_scale * 0.375f)
 	);
 	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
 }
