@@ -2148,8 +2148,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		}
 		public bool ModifyTriggers(Player player, TriggersSet triggersSet) {
 			if (leftClickSelection is not null && rightClickSelection is not null) {
-#if DEBUG
-				if (!player.controlUp && PlayerInput.ScrollWheelDelta.Abs(out int _dir) >= 120) {
+#if EditAnimation
+				if (DebugConfig.Instance.AnimatorMode && PlayerInput.ScrollWheelDelta.Abs(out int _dir) >= 120) {
 					fallingStarSoldier.fallAnimationTime -= _dir;
 					Max(ref fallingStarSoldier.fallAnimationTime, 0);
 				}
