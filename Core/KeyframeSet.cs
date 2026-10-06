@@ -389,6 +389,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				iPos.Y += 16;
 			}
 		}
+		if (animation.modifyingInterpolation >= stack.Count) animation.modifyingInterpolation = -1;
 		if (stack.BaseInterpolation is not StepInterpolation<T>) {
 			iPos.Y += 8;
 			spriteBatch.Draw(
