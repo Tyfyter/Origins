@@ -12,7 +12,9 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Ashen {
 	public class Modular_Light_Fixture : OriginTile, IGlowingModTile/*, IAshenWireTile*/ {
 		public static Vector3 LightColor => new(1.05f, 0.75f, 0f);
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			this.SetIDProp();
 			// Properties
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = false;
@@ -36,12 +38,9 @@ namespace Origins.Tiles.Ashen {
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			bool CheckTile(int x, int y) => Framing.GetTileSafely(i + x, j + y).TileIsType(Type);
-			bool CheckTileSolid(int x, int y) {
-				Tile tile = Framing.GetTileSafely(i + x, j + y);
-				return tile.HasTile && (Main.tileSolid[tile.TileType] || TileID.Sets.IsBeam[tile.TileType] || tile.TileType == Type);
-			}
+			bool CheckSolid(int x, int y) => CheckTileSolid(i + x, j + y);
 			bool CheckTileSolidDown() {
-				if (CheckTileSolid(0, 1)) return true;
+				if (CheckSolid(0, 1)) return true;
 				Tile tile = Framing.GetTileSafely(i, j + 1);
 				return tile.HasTile && Main.tileSolidTop[tile.TileType];
 			}
@@ -127,10 +126,10 @@ namespace Origins.Tiles.Ashen {
 				tile.TileFrameY += litMod;
 				return false;
 			}
-			bool above = CheckTileSolid(0, -1);
+			bool above = CheckSolid(0, -1);
 			bool below = CheckTileSolidDown();
-			bool left = CheckTileSolid(-1, 0);
-			bool right = CheckTileSolid(1, 0);
+			bool left = CheckSolid(-1, 0);
+			bool right = CheckSolid(1, 0);
 			if (above && below) {
 				tile.TileFrameX = 18 * 2;
 				tile.TileFrameY = 0;
@@ -152,6 +151,17 @@ namespace Origins.Tiles.Ashen {
 			tile.TileFrameY += litMod;
 			return false;
 		}
+
+		static bool CheckTileSolid(int i, int j) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			return tile.HasTile && (Main.tileSolid[tile.TileType] || TileID.Sets.IsBeam[tile.TileType] || tile.TileType == ID);
+		}
+		public override bool CanPlace(int i, int j) =>
+			Main.tile[i, j].WallType != WallID.None ||
+			CheckTileSolid(i + 1, j) ||
+			CheckTileSolid(i - 1, j) ||
+			CheckTileSolid(i, j + 1) ||
+			CheckTileSolid(i, j - 1);
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (tile.TileFrameX == 0) {
