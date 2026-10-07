@@ -57,7 +57,7 @@ namespace Origins.Tiles.Ashen {
 		public override void HitWire(int i, int j) {
 			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
 		}
-		public bool IsPowered(int i, int j) => Main.tile[i, j].Get<Ashen_Wire_Data>().AnyPower;
+		public bool IsPowered(int i, int j) => AshenWireTile.DefaultIsPowered(i, j);
 		public void UpdatePowerState(int i, int j, bool powered) {
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameY.TrySet(powered.Mul<short>(18))) {
