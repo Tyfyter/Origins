@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Skies;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
@@ -125,6 +126,7 @@ namespace Origins.Backgrounds {
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, inColor.MultiplyRGB(new(112, 50, 18)), Opacity);
+		public override float GetCloudAlpha() => 1 - Opacity;
 		public override void Update(GameTime gameTime) {
 			MathUtils.LinearSmoothing(ref Opacity, isActive.ToInt(), 1f / 60);
 			position.X -= Main.windSpeedCurrent * 5;
@@ -134,6 +136,10 @@ namespace Origins.Backgrounds {
 			SkyManager.Instance["Origins:ZoneAshen"] = this;
 			On_Main.DrawStarsInBackground += On_Main_DrawStarsInBackground;
 			perlin = ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin");
+			On_AmbientSky.AnActiveSkyConflictsWithAmbience += On_AmbientSky_AnActiveSkyConflictsWithAmbience;
+		}
+		bool On_AmbientSky_AnActiveSkyConflictsWithAmbience(On_AmbientSky.orig_AnActiveSkyConflictsWithAmbience orig, AmbientSky self) {
+			return IsActive() || orig(self);
 		}
 		static Asset<Texture2D> perlin;
 		void On_Main_DrawStarsInBackground(On_Main.orig_DrawStarsInBackground orig, Main self, Main.SceneArea sceneArea, bool artificial) {
