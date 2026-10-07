@@ -33,6 +33,12 @@ namespace Origins.Liquids {
 					TreatAsWater(ref type, ref otherLiquid);
 					return orig(liquidX, liquidY, tileX, tileY, type, otherLiquid);
 				});
+			MonoModHooks.Add(typeof(LiquidHooks).GetMethod(nameof(LiquidHooks.GetLiquidMergeTypes)),
+				(orig_GetLiquidMergeTypes orig, int x, int y, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool[] liquidsNearby) => {
+					if (thisLiquidType == ID) thisLiquidType = LiquidID.Water;
+					liquidsNearby[LiquidID.Water] |= liquidsNearby[ID];
+					orig(x, y, thisLiquidType, out liquidMergeTileType, out liquidMergeType, liquidsNearby);
+				});
 		}
 		static void TreatAsWater(ref int type, ref int otherLiquid) {
 			if (type == LiquidID.Water || otherLiquid == LiquidID.Water) return;
@@ -204,5 +210,7 @@ namespace Origins.Liquids {
 		delegate void orig_LiquidMergeSounds(int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound);
 		delegate bool hook_PreLiquidMerge(orig_LiquidMergeTilesType orig, int liquidX, int liquidY, int tileX, int tileY, int type, int otherLiquid);
 		delegate bool orig_PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int type, int otherLiquid);
+		delegate void hook_GetLiquidMergeTypes(orig_GetLiquidMergeTypes orig, int x, int y, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool[] liquidsNearby);
+		delegate void orig_GetLiquidMergeTypes(int x, int y, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool[] liquidsNearby);
 	}
 }
