@@ -8,22 +8,16 @@ using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
-using Origins.Tiles.Limestone;
 using Origins.Tiles.Other;
-using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
-using PegasusLib;
-using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -129,6 +123,7 @@ namespace Origins {
 			peatSold = 0;
 			Repairboy.repairProgress?.Clear();
 			foreach (LootPool pool in ModContent.GetContent<LootPool>()) pool.sequenceIndex = 0;
+			Mechanical_Key_Node.ClearOverrides();
 		}
 		public override void LoadWorldData(TagCompound tag) {
 			Mod.Logger.Info("LoadWorldData called on netmode " + Main.netMode);
@@ -155,6 +150,7 @@ namespace Origins {
 			} else {
 				_voidLocks = [];
 			}
+			Mechanical_Key_Node.LoadOverrides(tag);
 
 			defiledResurgenceTiles = [];
 			defiledAltResurgenceTiles = [];
@@ -232,6 +228,7 @@ namespace Origins {
 				["pos"] = kvp.Key.ToVector2(),
 				["uuid"] = kvp.Value.ToString()
 			}).ToList());
+			Mechanical_Key_Node.SaveOverrides(tag);
 			TagCompound questsTag = [];
 			foreach (Quest quest in Quest_Registry.Quests) {
 				if (quest.SaveToWorld) {
@@ -391,6 +388,7 @@ namespace Origins {
 					break;
 				}
 			}
+			Mechanical_Key_Node.UpdateNPCUse();
 			double rate = WorldGen.GetWorldUpdateRate();
 			if (rate == 0) return;
 			if (OriginConfig.Instance.QuirkyEvilSpread) {

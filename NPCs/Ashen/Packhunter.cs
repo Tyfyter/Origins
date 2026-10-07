@@ -7,6 +7,7 @@ using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
+using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -328,6 +329,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.spriteDirection = NPC.direction;
 			viewDirection = Rotation.ToRotationVector2();
 			if (NPC.confused) NPC.StrikeOtherNPCs();
+			Mechanical_Key_Node.DoNPCUse(NPC);
 		}
 
 		void AlertOthers() {

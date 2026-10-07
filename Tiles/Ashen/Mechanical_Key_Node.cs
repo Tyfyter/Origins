@@ -15,13 +15,18 @@ using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using static Origins.Items.Tools.Wiring.Ashen_Wire_Data;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
+	[ReinitializeDuringResizeArrays]
 	public abstract class Mechanical_Key_Node : ModTile, IAshenPowerConduitTile, IGlowingModTile, IAshenWireTile {
+		public static byte[] OverrideClearance = TileID.Sets.Factory.CreateCustomSet<byte>(0);
+		public static int NPCOverrideRange => 8;
 		public Mechanical_Key_Node_Item Item { get; private set; }
 		public abstract int KeyType { get; }
+		public abstract byte NPCAccessLevel { get; }
 		public override string HighlightTexture => typeof(Mechanical_Key_Node).GetDefaultTMLName("_Highlight");
 		public virtual Color SwitchColor => FromHexRGB(0x7a391a);
 		public virtual Color MapColor => SwitchColor;
@@ -57,6 +62,7 @@ namespace Origins.Tiles.Ashen {
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 			TileID.Sets.HasOutlines[Type] = true;
+			OverrideClearance[Type] = NPCAccessLevel;
 			RegisterItemDrop(Item.Type);
 		}
 		public override void HitWire(int i, int j) {
@@ -171,20 +177,20 @@ namespace Origins.Tiles.Ashen {
 					_currentWireColor = new(ref Wiring._currentWireColor, 0)
 				};
 				public void Dispose() {
-					using var _running = running;
-					using var __wireList = _wireList;
-					using var __wireDirectionList = _wireDirectionList;
-					using var __toProcess = _toProcess;
-					using var __LampsToCheck = _LampsToCheck;
-					using var __GatesNext = _GatesNext;
-					using var __teleport = _teleport;
-					using var __inPumpX = _inPumpX;
-					using var __inPumpY = _inPumpY;
-					using var __numInPump = _numInPump;
-					using var __outPumpX = _outPumpX;
-					using var __outPumpY = _outPumpY;
-					using var __numOutPump = _numOutPump;
-					using var __currentWireColor = _currentWireColor;
+					running.Dispose();
+					_wireList.Dispose();
+					_wireDirectionList.Dispose();
+					_toProcess.Dispose();
+					_LampsToCheck.Dispose();
+					_GatesNext.Dispose();
+					_teleport.Dispose();
+					_inPumpX.Dispose();
+					_inPumpY.Dispose();
+					_numInPump.Dispose();
+					_outPumpX.Dispose();
+					_outPumpY.Dispose();
+					_numOutPump.Dispose();
+					_currentWireColor.Dispose();
 				}
 			}
 		}
@@ -250,30 +256,90 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
-	}
-	[LegacyName("Blue_Mechanical_Key_Node")]
-	public class Mechanical_Key_Node_Blue : Mechanical_Key_Node {
-		public override Color SwitchColor => new Color(0, 80, 240);
-		public override int KeyType => ItemType<Mechanical_Key_Blue>();
-	}
-	[LegacyName("Green_Mechanical_Key_Node")]
-	public class Mechanical_Key_Node_Green : Mechanical_Key_Node {
-		public override Color SwitchColor => new Color(16, 240, 0);
-		public override int KeyType => ItemType<Mechanical_Key_Green>();
-	}
-	[LegacyName("Orange_Mechanical_Key_Node")]
-	public class Mechanical_Key_Node_Orange : Mechanical_Key_Node {
-		public override Color SwitchColor => new Color(255, 81, 0);
-		public override int KeyType => ItemType<Mechanical_Key_Orange>();
+
+		public static MultiDictionary<Point16, Entity> usedByNPCs = [];
+		const float inv_sqrt_2 = 1f / 1.4142135f;
+		public static void AddNPCUse(Point16 pos, Entity npc) {
+			bool alreadyOverridden = false;
+			if (usedByNPCs.TryGetValue(pos, out IEnumerable<Entity> alreadyOverriding)) {
+				if (alreadyOverriding.Contains(npc)) return;
+				alreadyOverridden = alreadyOverriding.Any();
+			}
+			if (!alreadyOverridden && Main.tile[pos].TileFrameY == 0) return;
+			usedByNPCs.Add(pos, npc);
+			new Mechanical_Switch_Action(pos, false).Perform();
+		}
+		public static void DoNPCUse(Entity npc, int maxClearance = 2) {
+			if (NetmodeActive.MultiplayerClient) return;
+			int x = (int)(npc.Center.X / 16);
+			int y = (int)(npc.Center.Y / 16);
+			int overrideRange = NPCOverrideRange - 1;
+			Tile tile;
+			for (int j = 0; j < overrideRange * inv_sqrt_2; j++) {
+				for (int i = j; i < overrideRange; i++) {
+					int xPos = x + i * npc.direction;
+					if (i * i + j * j <= overrideRange * overrideRange && WorldGen.InWorld(xPos, y + j)) {
+						tile = Main.tile[xPos, y + j];
+						if (tile.HasTile && OverrideClearance[tile.TileType] > 0 && OverrideClearance[tile.TileType] <= maxClearance) AddNPCUse(new(xPos, y + j), npc);
+					}
+					if (j != 0 && i * i + j * j <= overrideRange * overrideRange && WorldGen.InWorld(xPos, y - j)) {
+						tile = Main.tile[xPos, y - j];
+						if (tile.HasTile && OverrideClearance[tile.TileType] > 0 && OverrideClearance[tile.TileType] <= maxClearance) AddNPCUse(new(xPos, y - j), npc);
+					}
+				}
+			}
+		}
+		static readonly Stack<Point16> removePositions = new();
+		internal static void UpdateNPCUse() {
+			foreach ((Point16 pos, IEnumerable<Entity> _npcs) in usedByNPCs.Keys.Select(k => (k, usedByNPCs[k]))) {
+				Vector2 worldPosition = pos.ToWorldCoordinates();
+				List<Entity> npcs = (List<Entity>)_npcs;
+				for (int i = npcs.Count - 1; i >= 0; i--) {
+					if (!npcs[i].active || !npcs[i].WithinRange(worldPosition, NPCOverrideRange * 16)) npcs.RemoveAt(i);
+				}
+				if (npcs.Count <= 0) removePositions.Push(pos);
+			}
+			while (removePositions.TryPop(out Point16 pos)) {
+				usedByNPCs.Remove(pos);
+				new Mechanical_Switch_Action(pos, true).Perform();
+			}
+		}
+		internal static void SaveOverrides(TagCompound tag) => tag["MKNOverrides"] = usedByNPCs.Keys.ToList();
+		internal static void LoadOverrides(TagCompound tag) {
+			if (tag.TryGet("MKNOverrides", out List<Point16> positions)) {
+				foreach (Point16 pos in positions) usedByNPCs.Add(pos, []);
+			}
+		}
+		internal static void ClearOverrides() => usedByNPCs.Clear();
 	}
 	[LegacyName("Purple_Mechanical_Switch", "Purple_Mechanical_Key_Node")]
 	public class Mechanical_Key_Node_Purple : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(109, 10, 145);
 		public override int KeyType => ItemType<Mechanical_Key_Purple>();
+		public override byte NPCAccessLevel => 1;
+	}
+	[LegacyName("Blue_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Blue : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(0, 80, 240);
+		public override int KeyType => ItemType<Mechanical_Key_Blue>();
+		public override byte NPCAccessLevel => 2;
+	}
+	[LegacyName("Green_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Green : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(16, 240, 0);
+		public override int KeyType => ItemType<Mechanical_Key_Green>();
+		public override byte NPCAccessLevel => 3;
 	}
 	[LegacyName("Yellow_Mechanical_Key_Node")]
 	public class Mechanical_Key_Node_Yellow : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(255, 179, 0);
 		public override int KeyType => ItemType<Mechanical_Key_Yellow>();
+		public override byte NPCAccessLevel => 4;
+	}
+	[LegacyName("Orange_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Orange : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(255, 81, 0);
+		public override int KeyType => ItemType<Mechanical_Key_Orange>();
+		public override byte NPCAccessLevel => 5;
 	}
 }
