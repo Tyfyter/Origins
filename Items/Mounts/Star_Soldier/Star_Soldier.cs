@@ -20,7 +20,6 @@ using Origins.UI;
 using PegasusLib.Networking;
 using ReLogic.Content;
 using ReLogic.Graphics;
-using ReLogic.OS;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -172,6 +171,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			if (life <= 0) {
 				player.statLife -= player.statLifeMax2 / 4 - 1;
 				player.lifeRegenCount = -120;
+				ForceDismount(player);
+				SpawnGores(player.GetSource_Misc("DOT"), player.Center, player.velocity, player.direction);
 				return;
 			}
 
@@ -261,6 +262,50 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 				SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), player.Bottom);
 			}
 		}
+		public static void SpawnGores(IEntitySource source, Vector2 center, Vector2 velocity, int direction) {
+			Gore.NewGore(
+				source,
+				center + new Vector2(12 * direction, 13),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore5")
+			);
+			Gore.NewGore(
+				source,
+				center + new Vector2(8 * direction, 27),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore6")
+			);
+			Gore.NewGore(
+				source,
+				center + new Vector2(-6 * direction, -26),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore3")
+			);
+			Gore.NewGore(
+				source,
+				center + new Vector2(25 * direction, -41),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore2")
+			);
+			Gore.NewGore(
+				source,
+				center + new Vector2(-20 * direction, -38),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore1")
+			);
+			Gore.NewGore(
+				source,
+				center + new Vector2(26 * direction, -2),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore4E")
+			);
+			Gore.NewGore(
+				source,
+				center + new Vector2(-6 * direction, -29),
+				velocity,
+				Origins.instance.GetGoreSlot("Gores/Star_Soldier_Gore7")
+			);
+		}
 		struct TODO_DamageRedirection : IBroken {
 			public static string BrokenReason => "Use DamageRedirection";
 		}
@@ -269,7 +314,8 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			SoundEngine.PlaySound(SoundID.NPCHit4.WithPitch(-0.5f).WithVolume(1f), player.Center);
 			life -= info.Damage;
 			if (life > 0) return;
-			player.mount.Dismount(player);
+			SpawnGores(player.GetSource_OnHurt(info.DamageSource), player.Center, player.velocity, player.direction);
+			ForceDismount(player);
 			player.Hurt(info with { Damage = player.statLifeMax2 / 4 });
 		}
 		public static void ForceDismount(Player player) {
@@ -624,13 +670,24 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		if (player.mount._mountSpecificData is not MountHandler data) player.mount._mountSpecificData = data = new MountHandler();
 		return data;
 	}
-	static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * (player.height - 24);
+	internal static Vector2 GetBodyCenter(Player player, Vector2 hitboxCenter) => hitboxCenter - Vector2.UnitY * (player.height - 24);
 	public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle _, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-		if (drawType == 3 && GetHandler(drawPlayer) is MountHandler handler) DrawStarSoldier(playerDrawData, drawPlayer, drawPosition, drawColor, rotation, spriteEffects, drawScale, handler);
+		if (drawType == 3 && GetHandler(drawPlayer) is MountHandler handler) {
+			DrawStarSoldier(
+				playerDrawData,
+				GetBodyCenter(drawPlayer, drawPosition),
+				drawPlayer.cMount,
+				drawColor,
+				rotation,
+				spriteEffects,
+				drawScale,
+				handler
+			);
+		}
 		return false;
 	}
 
-	public static void DrawStarSoldier(List<DrawData> playerDrawData, Player drawPlayer, Vector2 drawPosition, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler) {
+	public static void DrawStarSoldier(List<DrawData> playerDrawData, Vector2 bodyCenter, int cMount, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler) {
 		Vector2 directions = spriteEffects.ApplyToOrigin(Vector2.One, default);
 		float rotFlip = directions.X * directions.Y;
 		AnimationOffsets backLegOffset = default, bodyOffset = default, frontLegOffset = default;
@@ -645,15 +702,14 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			frontLegFrame = Landing_Animation.instance.frontLegFrameAnimation.GetCurrentValue(handler.fallAnimationTime);
 			backLegOffset += bothLegsOffset;
 			frontLegOffset += bothLegsOffset;
-			drawPosition += wholeOffset.Position * directions;
+			bodyCenter += wholeOffset.Position * directions;
 			rotation += wholeOffset.Rotation * rotFlip;
 		}
-		Vector2 bodyCenter = GetBodyCenter(drawPlayer, drawPosition);
 		Matrix rotationMatrix = Matrix.CreateRotationZ(rotation);
 		Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: backLegFrame);
-		Vector2 hips = bodyCenter + new Vector2(drawPlayer.direction * -16, 32).Transform(rotationMatrix);
+		Vector2 hips = bodyCenter + new Vector2(directions.X * -16, 32).Transform(rotationMatrix);
 
-		(drawPlayer.direction == -1 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
+		(rotFlip < 0 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
 		playerDrawData.Add(new(
 			backLegTexture,
 			hips + backLegOffset.Position * directions,
@@ -664,7 +720,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			drawScale,
 			spriteEffects
 		) {
-			shader = drawPlayer.cMount
+			shader = cMount
 		});
 
 		frame = bodyTexture.Frame(verticalFrames: BodyTextureFrames, frameY: handler.bodyFrame);
@@ -678,7 +734,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			drawScale,
 			spriteEffects
 		) {
-			shader = drawPlayer.cMount
+			shader = cMount
 		};
 		playerDrawData.Add(bodyData);
 		bodyData.texture = bodyGlowTexture;
@@ -696,9 +752,9 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 			drawScale,
 			spriteEffects
 		) {
-			shader = drawPlayer.cMount
+			shader = cMount
 		});
-		(drawPlayer.direction == -1 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
+		(rotFlip < 0 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
 		#endregion
 	}
 	#endregion
@@ -2287,8 +2343,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				fallingHandler.altItem.gunRotation = gunRotation;
 				Star_Soldier.DrawStarSoldier(
 					playerDrawData,
-					drawPlayer,
-					drawPosition,
+					Star_Soldier.GetBodyCenter(drawPlayer, drawPosition),
+					drawPlayer.cMount,
 					drawColor,
 					rotation,
 					spriteEffects,
@@ -2380,9 +2436,12 @@ public class Star_Soldier_Wagon_Buff : ModBuff {
 	}
 }
 public class Star_Soldier_Cooldown : ModBuff {
-	public static int IntactCooldown => 60 * 1/*5*/;
-	public static int DamagedCooldown => 60 * 140;
-	public static int ForceDismountCooldown => 60 * 60 * 3;
+	struct DebugFlag : IBroken {
+		static string IBroken.BrokenReason => "Set back to intended values";
+	}
+	public static int IntactCooldown => /*6*/0 * 15;
+	public static int DamagedCooldown => /*6*/0 * 140;
+	public static int ForceDismountCooldown => /*6*/0 * 60 * 3;
 	public override string Texture => "Origins/Buffs/Star_Soldier_Cooldown";
 	public override void SetStaticDefaults() {
 		Main.debuff[Type] = true;
