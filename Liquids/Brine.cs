@@ -18,11 +18,6 @@ namespace Origins.Liquids {
 	public class Brine : ModLiquid {
 		public static int ID { get; private set; }
 		public override void Load() {
-			MonoModHooks.Add(typeof(LiquidLoader).GetMethod(nameof(LiquidLoader.LiquidMergeTilesType)),
-				(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid) => {
-					TreatAsWater(ref type, ref otherLiquid);
-					return orig(i, j, type, otherLiquid);
-				});
 			MonoModHooks.Add(typeof(LiquidLoader).GetMethod(nameof(LiquidLoader.LiquidMergeSounds)),
 				(orig_LiquidMergeSounds orig, int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound) => {
 					TreatAsWater(ref type, ref otherLiquid);
@@ -204,11 +199,9 @@ namespace Origins.Liquids {
 			}
 			return LiquidLoader.PlayerLiquidMovement(LiquidID.Water, player, fallThrough, ignorePlats);
 		}
-		delegate int? hook_LiquidMergeTilesType(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid);
-		delegate int? orig_LiquidMergeTilesType(int i, int j, int type, int otherLiquid);
-		delegate void hook_LiquidMergeSounds(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound);
+		delegate void hook_LiquidMergeSounds(orig_LiquidMergeSounds orig, int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound);
 		delegate void orig_LiquidMergeSounds(int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound);
-		delegate bool hook_PreLiquidMerge(orig_LiquidMergeTilesType orig, int liquidX, int liquidY, int tileX, int tileY, int type, int otherLiquid);
+		delegate bool hook_PreLiquidMerge(orig_PreLiquidMerge orig, int liquidX, int liquidY, int tileX, int tileY, int type, int otherLiquid);
 		delegate bool orig_PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int type, int otherLiquid);
 		delegate void hook_GetLiquidMergeTypes(orig_GetLiquidMergeTypes orig, int x, int y, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool[] liquidsNearby);
 		delegate void orig_GetLiquidMergeTypes(int x, int y, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool[] liquidsNearby);
