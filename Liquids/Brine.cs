@@ -107,7 +107,7 @@ namespace Origins.Liquids {
 			// * Top/Side merging
 			// * Down merging
 			//
-			//Here we get which type the merging is based on the liquidY relitive to the tileY.
+			//Here we get which type the merging is based on the liquidY relative to the tileY.
 			//This is because liquidY and tileY are different in the down merging, but the same in the up/side merging
 			if (liquidY == tileY) {
 				//This is up/side merging for the liquid
