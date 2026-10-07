@@ -1,4 +1,6 @@
-﻿using Origins.Core;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
@@ -12,7 +14,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Door_Stopper : OriginTile, IAshenTile, IAshenWireTile {
+	public class Door_Stopper : OriginTile, IAshenTile, IAshenWireTile, IGlowingModTile {
 		public override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
@@ -24,6 +26,10 @@ namespace Origins.Tiles.Ashen {
 				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
+			this.SetupGlowKeys();
+		}
+		public void FancyLightingGlowColor(Tile tile, int x, int y, ref Vector3 color) {
+			if (ShouldGlow(tile)) color.DoFancyGlow(new(1.0f, 0.61f, 0.1f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
 			BlockTileInteractions.TilesBlockInteraction[Type] = true;
@@ -33,6 +39,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileFrameImportant[Type] = true;
+			Main.tileLighted[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
@@ -66,5 +73,22 @@ namespace Origins.Tiles.Ashen {
 				NetMessage.SendTileSquare(-1, i - sub, j, 2, 1);
 			}
 		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (ShouldGlow(Main.tile[i, j])) {
+				r = 0.125f;
+				g = 0.0775f;
+				b = 0.0125f;
+			}
+		}
+		public static bool ShouldGlow(Tile tile) {
+			if (tile.TileFrameY < 18) return false;
+			return tile.TileFrameY is 18 or 3 * 18;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (ShouldGlow(Main.tile[i, j])) this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
 	}
 }
