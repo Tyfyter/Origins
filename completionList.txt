@@ -105,6 +105,7 @@ TOWN NPC Quests:
 |---
 (^) TOWN NPC QUEST MECHANICS
 
+(X) Arabel - A Dance-Off
 (X) Arabel - My Love, My Life
 (^) Arms Dealer - Live Fire
 (^) Arms Dealer - Three Times the Charm
@@ -130,6 +131,7 @@ TOWN NPC Quests:
 (^) Stylist - Slick Styling
 (^) Stylist - To Be Crystal Clear…
 (^) Tax Collector - A Night of Uninterrupted Sleep
+(X) Wizard - A Dance-Off
 (^) Zoologist - Save the Critters!
 (^) Zoologist - Not Au-some…
 (^) Zoologist - Under the Starlight
@@ -453,24 +455,34 @@ ACHIEVEMENTS:
 (^) A True Hero
 (^) An Eye for an Eye
 (^) Auto-Immune Disease
+(X) Charming Little Bug People
 (^) Cheat Code
 (^) Cloning Factory
 (^) Cracked
 (^) Enough Yap
 (X) Flower Power!
+(X) Flush The System
 (^) Going Places
 (X) Hasta La Vista, Baby
+(X) Hope At Last
 (^) It Was Watching
+(X) It's Alive?!
 (X) Just Like Metroid Lady
 (^) Kaiju
 (^) Killimanjaro
+(X) Knowledge of Generations, Erased
+(X) Look No Further
 (^) Martyrdom
+(X) Mercy Call
 (X) Now That's Smarts!
 (^) Now You're the One Lying Broken
 (^) Peat Obsession
 (^) RIVEN WORMS
 (^) Slow Loading Bar
+(X) Snowdropped
 (X) Standby For Wagonfall
+(X) Stronger Than Gods
+(X) The Pet Project
 (々) The Signal, it's Calling !!!
 (^) There's Something in There!
 (@, ^3) They Look Like Good, Strong Hands, Don't They?
