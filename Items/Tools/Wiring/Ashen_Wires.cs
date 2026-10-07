@@ -230,6 +230,7 @@ namespace Origins.Items.Tools.Wiring {
 					TryPropegateDepowered(i - 1, j, wireType);
 					TryPropegateDepowered(i, j + 1, wireType);
 					TryPropegateDepowered(i, j - 1, wireType);
+					if (TileLoader.GetTile(Main.tile[i, j].TileType) is IAshenPowerConduitTile conduitTile) conduitTile.Poke(new(i, j), wireType);
 				}
 				Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
 			}
