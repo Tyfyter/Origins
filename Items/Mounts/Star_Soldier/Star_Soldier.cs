@@ -697,13 +697,13 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		AnimationOffsets backLegOffset = default, bodyOffset = default, frontLegOffset = default;
 		int backLegFrame = handler.walkFrame, frontLegFrame = handler.walkFrame;
 		#region drawing
-		if (handler.fallAnimationTime >= 1) {
+		/*if (handler.fallAnimationTime >= 1) {
 			//SoundEngine.PlaySound(Origins.Sounds.RivenBass.WithPitch(-handler.fallAnimationTime));
 			SoundEngine.PlaySound(SoundID.NPCDeath44.WithPitch(-0.5f * handler.fallAnimationTime / 10).WithVolume(0.2f));
 			SoundEngine.PlaySound(Origins.Sounds.PackhunterDeath.WithPitch(0.6f * handler.fallAnimationTime / 20).WithVolume(0.1f));
 			SoundEngine.PlaySound(Origins.Sounds.PowerStomp.WithPitch(1.3f * handler.fallAnimationTime / 5).WithVolume(0.2f));
 			SoundEngine.PlaySound(Origins.Sounds.VV13Idle.WithPitch(1.2f * handler.fallAnimationTime / 10).WithVolume(0.2f));
-		}
+		}*/
 		if (handler.fallAnimationTime >= 0) {
 			AnimationOffsets wholeOffset = Landing_Animation.instance.wholeOffsetAnimation.GetCurrentValue(handler.fallAnimationTime);
 			AnimationOffsets bothLegsOffset = Landing_Animation.instance.bothLegsAnimation.GetCurrentValue(handler.fallAnimationTime);
@@ -2210,9 +2210,9 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				if (animationControls.playing || !DebugConfig.Instance.AnimatorMode)
 #endif
 				fallingStarSoldier.fallAnimationTime++;
-				if (Main.rand.NextBool(15)) {
+				/*if (Main.rand.NextBool(15)) {
 					SoundEngine.PlaySound(Origins.Sounds.Alarm1.WithPitchRange(2.8f, 3.2f), player.Center);
-				}
+				}*/
 			}
 #if EditAnimation
 			if (animationControls.forceLoop && fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) fallingStarSoldier.fallAnimationTime = 0;
