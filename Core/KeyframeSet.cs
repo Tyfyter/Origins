@@ -397,9 +397,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				Vector2.One,
 				out int hoveredStep
 			);
+			iPos.Y += 16;
 			if (Main.mouseLeft && Main.mouseLeftRelease) {
-				if (hoveredBase != -1) stack.BaseInterpolation = CreateLinear();
-				else if (hoveredStep != -1) stack.BaseInterpolation = new KeyframeTypes.StepInterpolation<T>();
+				if (hoveredBase != -1) Do(new SetBaseInterpolation(this, keyframeIndex, CreateLinear()));
+				else if (hoveredStep != -1) Do(new SetBaseInterpolation(this, keyframeIndex, new StepInterpolation<T>()));
 			}
 		} else if (stack.BaseInterpolation.IsModifiable) {
 			for (int i = KeyframeModifiers.modifierTypes.Count - 1; i >= 0; i--) Max(ref width, FontAssets.ItemStack.Value.MeasureString(KeyframeModifiers.modifierTypes[i].name).X);
@@ -554,6 +555,20 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		}
 		Do(step, false);
 	}
+	abstract class KeyframeVariableStep<TVar>(KeyframeSet<T> set, int index, TVar value) : VariableUndoStep<TVar>(value) {
+		protected KeyframeSet<T> set = set;
+		protected int index = index;
+		public override string Text => $"Set Keyframe Value: {newValue}";
+		public override void Do() {
+			base.Do();
+			set.AnimateKeyframeUpdate(index);
+		}
+
+		public override void Undo() {
+			base.Undo();
+			set.AnimateKeyframeUpdate(index, -1);
+		}
+	}
 	class CreateKeyframe(KeyframeSet<T> set, int index, Keyframe keyframe) : UndoStep {
 		public override string Text => $"Create Keyframe: {keyframe}";
 		public override void Do() {
@@ -563,24 +578,20 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 
 		public override void Undo() => set.RemoveAtIndex(index);
 	}
-	class SetKeyframeTarget(KeyframeSet<T> set, int index, T value) : UndoStep {
-		readonly T oldValue = set[index].Target;
-		public override string Text => $"Set Keyframe Value: {value}";
-		public override void Do() {
-			set[index].Target = value;
-			set.AnimateKeyframeUpdate(index);
-		}
-
-		public override void Undo() {
-			set[index].Target = oldValue;
-			set.AnimateKeyframeUpdate(index, -1);
-		}
+	class SetKeyframeTarget(KeyframeSet<T> set, int index, T value) : KeyframeVariableStep<T>(set, index, value) {
+		public override string Text => $"Set Keyframe Value: {newValue}";
+		protected override ref T Variable => ref set[index].Target;
 	}
 	class DeleteKeyframe(KeyframeSet<T> set, int index) : UndoStep {
 		readonly Keyframe keyframe = set[index];
 		public override string Text => $"Delete Keyframe: {keyframe}";
 		public override void Do() => set.RemoveAtIndex(index);
 		public override void Undo() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
+	}
+	class SetBaseInterpolation(KeyframeSet<T> set, int index, IInterpolation value) : KeyframeVariableStep<IInterpolation>(set, index, value) {
+		readonly InterpolationStack stack = set[index].Interpolation;
+		public override string Text => $"Set Keyframe Interpolation: {newValue}";
+		protected override ref IInterpolation Variable => ref stack.BaseInterpolation;
 	}
 	class ModifyStartValue(KeyframeSet<T> set, T newValue) : UndoStep {
 		readonly T oldValue = set.start;
@@ -974,4 +985,15 @@ public abstract class UndoStep {
 			return currentIndex;
 		}
 	}
+}
+public abstract class VariableUndoStep<T> : UndoStep {
+	protected readonly T oldValue;
+	protected readonly T newValue;
+	protected VariableUndoStep(T newValue) {
+		this.newValue = newValue;
+		oldValue = Variable;
+	}
+	protected abstract ref T Variable { get; }
+	public override void Do() => Variable = newValue;
+	public override void Undo() => Variable = oldValue;
 }
