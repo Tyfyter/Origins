@@ -54,11 +54,11 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		return prevValue;
 	}
 	public void Add(Keyframe keyframe) => keyframes.Add(keyframe);
-	public void Insert(int index, Keyframe keyframe) => keyframes.Insert(index, keyframe);
-	protected void InsertAtCurrentFrame(float currentFrame, InterpolationStack Interpolation = null) {
+	public void Insert(int index, Keyframe keyframe) => Do(new CreateKeyframe(this, index, keyframe));
+	protected int InsertAtCurrentFrame(float currentFrame, InterpolationStack Interpolation = null) {
 		if (currentFrame == 0) {
 			start = GetCurrentValue(currentFrame);
-			return;
+			return -1;
 		}
 		for (int i = 0; i < keyframes.Count; i++) {
 			if (keyframes[i].Time >= currentFrame) {
@@ -70,7 +70,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 					));
 					AnimateKeyframeUpdate(i);
 				}
-				return;
+				return i;
 			}
 		}
 		AnimateKeyframeUpdate(keyframes.Count);
@@ -79,6 +79,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			GetCurrentValue(currentFrame),
 			Interpolation ?? new()
 		));
+		return keyframes.Count - 1;
 	}
 	public void GetAtIndex(int index) => keyframes.RemoveAt(index);
 	public void RemoveAtIndex(int index) => keyframes.RemoveAt(index);
@@ -122,6 +123,9 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		updateKeyframeAnim = 0;
 	}
 	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime) {
+		if (Keybindings.EditUndo.JustPressed) Undo();
+		else if (Keybindings.EditRedo.JustPressed) Redo();
+
 		if (updateKeyframeAnim != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 1, 1f / 20)) updateKeyframeAnim = -1;
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
 		bool showCreationSidebar = isSelected;
@@ -518,6 +522,27 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public T Interpolate(T prevValue, T nextValue, float progress);
 		public IInterpolation Clone() => this;
 	}
+	public void Do(UndoStep step, bool clearFuture = true) {
+		if (clearFuture) future.Clear();
+		step.Do();
+		history.Push(step);
+	}
+	public void Undo() {
+		if (!history.TryPop(out UndoStep step)) return;
+		step.Undo();
+		future.Push(step);
+	}
+	public void Redo() {
+		if (!future.TryPop(out UndoStep step)) return;
+		Do(step, false);
+	}
+	class CreateKeyframe(KeyframeSet<T> set, int index, Keyframe keyframe) : UndoStep {
+		public override string Text { get; }
+		public override void Do() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
+		public override void Undo() => set.keyframes.RemoveAt(index);
+	}
+	readonly Stack<UndoStep> history = [];
+	readonly Stack<UndoStep> future = [];
 	public delegate void GizmoDrawer(SpriteBatch spriteBatch, ref T value, ref GizmoTracker gizmoTracker, Vector2 offset);
 	public static GizmoDrawer DrawGizmo;
 	public static bool Interpolatable = true;
@@ -860,4 +885,9 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 		KeyframeTypes.DrawScaleGizmo(spriteBatch, ref value.Scale, ref gizmoTracker, value.Position * GizmoZoom + offset, 20);
 	}
 	public static string Export(PosRotScale value) => value == new PosRotScale() ? "new()" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f, {value.Scale}f)";
+}
+public abstract class UndoStep {
+	public abstract string Text { get; }
+	public abstract void Do();
+	public abstract void Undo();
 }
