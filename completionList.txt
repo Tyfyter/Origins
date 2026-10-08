@@ -160,7 +160,7 @@ WORLD GENERATION:
 |---
 (§, %2, #2) Ashen Factory !!!
 (§, %2, X) Ashen Outpost !!!
-(§, X) Ashen Scrapyard !!!
+(#2) Ashen Scrapyard !!!
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
@@ -168,14 +168,13 @@ WORLD GENERATION:
 (^) Limestone Cave
 (X) Overglade
 (^) Riven Hive
-(#2, 々) Repentance
+(X) Repentance
 (X) Underglade
 
 (X) Defiled Egregore
 (X) The Cosmos
 
 (X) Cubekon Temple
-(X) Defiled Mazes
 (X) Ice Biome Heart Crystal Chamber
 (X) Psymanti Camp
 (X) Underglade Crypt
@@ -183,6 +182,7 @@ WORLD GENERATION:
 (^) Chambersite Conversion
 (^) Felnum Veins
 (^) Natural Oil
+(X) Nerve Field Veins
 ---
 
 
