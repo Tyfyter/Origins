@@ -529,6 +529,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		lastProcessedTime = -1;
 	}
 	public void Undo() {
+		if (DebugConfig.Instance.HistoryLength == 0) {
+			Main.NewText("History is disabled");
+			return;
+		}
 		if (!history.TryPop(out UndoStep step)) {
 			Main.NewText("Nothing left to undo");
 			return;
@@ -538,6 +542,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		lastProcessedTime = -1;
 	}
 	public void Redo() {
+		if (DebugConfig.Instance.HistoryLength == 0) {
+			Main.NewText("History is disabled");
+			return;
+		}
 		if (!future.TryPop(out UndoStep step)) {
 			Main.NewText("Nothing left to redo");
 			return;
@@ -934,8 +942,8 @@ public abstract class UndoStep {
 	public abstract void Do();
 	public abstract void Undo();
 	public struct StepBuffer(int size) {
-		public readonly int Length => buffer.Length;
-		readonly UndoStep[] buffer = new UndoStep[size];
+		public readonly int Length => buffer?.Length ?? 0;
+		readonly UndoStep[] buffer = size == 0 ? null : new UndoStep[size];
 		int wrapIndex = 0;
 		int currentIndex = 0;
 		public void Push(UndoStep step) => buffer[IncrementCurrent()] = step;

@@ -307,9 +307,13 @@ namespace Origins {
 
 		[DefaultValue(false)]
 		public bool AnimatorMode = false;
-
-		[DefaultValue(10)]
-		public int HistoryLength = 10;
+#if DEBUG
+		const int history_default_length = 10;
+#else
+		const int history_default_length = 0;
+#endif
+		[DefaultValue(history_default_length)]
+		public int HistoryLength = history_default_length;
 
 		[DefaultValue(false)]
 #if DEBUG
