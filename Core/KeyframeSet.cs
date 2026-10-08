@@ -18,25 +18,13 @@ using static Origins.Core.KeyframeTypes;
 
 namespace Origins.Core;
 public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyframe> where T : IEquatable<T> {
+	#region Animating
 	public T start;
-	public T currentValue;
-	T resetValue;
-	//TODO: "child of" offset
-	public Vector2 gizmoOffset;
-	float lastProcessedTime = -1;
-	int updateKeyframeAnimIndex = -1;
-	float updateKeyframeAnim = 0;
 	public List<Keyframe> keyframes = [];
 	public float Duration => keyframes.Count == 0 ? 0 : keyframes[^1].Time;
-	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
 	public KeyframeSet(T startValue, Vector2 gizmoOffset = default) : this() {
 		start = startValue;
 		this.gizmoOffset = gizmoOffset;
-	}
-	private ref Keyframe this[int index] => ref CollectionsMarshal.AsSpan(keyframes)[index];
-	public T GetCurrentValue(float time) {
-		if (!lastProcessedTime.TrySet(time)) return currentValue;
-		return currentValue = CalculateValue(time);
 	}
 	public T CalculateValue(float time) {
 		float prevTime = 0;
@@ -51,6 +39,66 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		return prevValue;
 	}
 	public void Add(Keyframe keyframe) => keyframes.Add(keyframe);
+	public record struct Keyframe(float Time, T Target, InterpolationStack Interpolation) {
+		public T Target = Target;
+		public Keyframe(float time, T target, IInterpolation interpolation) : this(time, target, new InterpolationStack() { BaseInterpolation = interpolation }) { }
+		public readonly T GetValue(float time, float prevTime, T prevValue) => Interpolation.Interpolate(prevValue, Target, Utils.GetLerpValue(prevTime, Time, time));
+		public readonly string Export() {
+			StringBuilder builder = new("new(");
+			builder.Append(Time);
+			builder.Append(Time == (int)Time ? ", " : "f, ");
+			builder.Append(ExportValue(Target));
+			builder.Append(", ");
+			builder.Append(Interpolation.Export());
+			builder.Append(')');
+			return builder.ToString();
+		}
+	}
+	public class InterpolationStack : List<IInterpolationModifier> {
+		IInterpolation baseInterpolation = Interpolatable ? CreateLinear?.Invoke() : new StepInterpolation<T>();
+		public ref IInterpolation BaseInterpolation {
+			get {
+				baseInterpolation ??= Interpolatable ? CreateLinear?.Invoke() : new StepInterpolation<T>();
+				return ref baseInterpolation;
+			}
+		}
+		public InterpolationStack() : base() { }
+		InterpolationStack(IEnumerable<IInterpolationModifier> collection) : base(collection) { }
+		public float ModifyProgress(float progress) {
+			Span<IInterpolationModifier> modifiers = CollectionsMarshal.AsSpan(this);
+			for (int i = 0; i < modifiers.Length; i++) progress = modifiers[i].ModifyProgress(progress);
+			return progress;
+		}
+		public T Interpolate(T prevValue, T nextValue, float progress) =>
+			BaseInterpolation.Interpolate(prevValue, nextValue, ModifyProgress(progress));
+		public InterpolationStack Clone() => new(this) {
+			baseInterpolation = BaseInterpolation.Clone()
+		};
+		public override string ToString() => baseInterpolation is StepInterpolation<T> ?
+			$"new StepInterpolation<{typeof(T).Name}>()" :
+			$"[{string.Join(", ", this.Select(i => i.Export()))}]";
+		public string Export() => ToString();
+	}
+	public interface IInterpolation {
+		public bool IsModifiable => true;
+		public T Interpolate(T prevValue, T nextValue, float progress);
+		public IInterpolation Clone() => this;
+	}
+	#endregion
+	#region Editing
+	public T currentValue;
+	T resetValue;
+	//TODO: "child of" offset
+	public Vector2 gizmoOffset;
+	float lastProcessedTime = -1;
+	int updateKeyframeAnimIndex = -1;
+	float updateKeyframeAnim = 0;
+	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
+	private ref Keyframe this[int index] => ref CollectionsMarshal.AsSpan(keyframes)[index];
+	public T GetCurrentValue(float time) {
+		if (!lastProcessedTime.TrySet(time)) return currentValue;
+		return currentValue = CalculateValue(time);
+	}
 	public void Insert(int index, Keyframe keyframe) => Do(new CreateKeyframe(this, index, keyframe));
 	protected int InsertAtCurrentFrame(float currentFrame, InterpolationStack Interpolation = null) {
 		if (currentFrame == 0) {
@@ -476,52 +524,6 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			else if (hoveredStep != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = new StepInterpolation<T>() });
 		}
 	}
-
-	public record struct Keyframe(float Time, T Target, InterpolationStack Interpolation) {
-		public T Target = Target;
-		public Keyframe(float time, T target, IInterpolation interpolation) : this(time, target, new InterpolationStack() { BaseInterpolation = interpolation }) { }
-		public readonly T GetValue(float time, float prevTime, T prevValue) => Interpolation.Interpolate(prevValue, Target, Utils.GetLerpValue(prevTime, Time, time));
-		public readonly string Export() {
-			StringBuilder builder = new("new(");
-			builder.Append(Time);
-			builder.Append(Time == (int)Time ? ", " : "f, ");
-			builder.Append(ExportValue(Target));
-			builder.Append(", ");
-			builder.Append(Interpolation.Export());
-			builder.Append(')');
-			return builder.ToString();
-		}
-	}
-	public class InterpolationStack : List<IInterpolationModifier> {
-		IInterpolation baseInterpolation = Interpolatable ? CreateLinear?.Invoke() : new StepInterpolation<T>();
-		public ref IInterpolation BaseInterpolation {
-			get {
-				baseInterpolation ??= Interpolatable ? CreateLinear?.Invoke() : new StepInterpolation<T>();
-				return ref baseInterpolation;
-			}
-		}
-		public InterpolationStack() : base() { }
-		InterpolationStack(IEnumerable<IInterpolationModifier> collection) : base(collection) { }
-		public float ModifyProgress(float progress) {
-			Span<IInterpolationModifier> modifiers = CollectionsMarshal.AsSpan(this);
-			for (int i = 0; i < modifiers.Length; i++) progress = modifiers[i].ModifyProgress(progress);
-			return progress;
-		}
-		public T Interpolate(T prevValue, T nextValue, float progress) =>
-			BaseInterpolation.Interpolate(prevValue, nextValue, ModifyProgress(progress));
-		public InterpolationStack Clone() => new(this) {
-			baseInterpolation = BaseInterpolation.Clone()
-		};
-		public override string ToString() => baseInterpolation is StepInterpolation<T> ?
-			$"new StepInterpolation<{typeof(T).Name}>()" :
-			$"[{string.Join(", ", this.Select(i => i.Export()))}]";
-		public string Export() => ToString();
-	}
-	public interface IInterpolation {
-		public bool IsModifiable => true;
-		public T Interpolate(T prevValue, T nextValue, float progress);
-		public IInterpolation Clone() => this;
-	}
 	public void Do(UndoStep step, bool clearFuture = true) {
 		if (clearFuture) future.Clear();
 		step.Do();
@@ -619,6 +621,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			public static bool GetInterpolatable<THandler>() where THandler : ITypeHandler => THandler.Interpolatable;
 		}
 	}
+	#endregion
 }
 public interface IKeyframeSet {
 	public float Duration { get; }
