@@ -65,12 +65,10 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 						GetCurrentValue(currentFrame),
 						Interpolation ?? keyframes[i].Interpolation.Clone()
 					));
-					AnimateKeyframeUpdate(i);
 				}
 				return i;
 			}
 		}
-		AnimateKeyframeUpdate(keyframes.Count);
 		Insert(keyframes.Count, new(
 			currentFrame,
 			GetCurrentValue(currentFrame),
@@ -78,8 +76,11 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		));
 		return keyframes.Count - 1;
 	}
-	public void GetAtIndex(int index) => keyframes.RemoveAt(index);
-	public void RemoveAtIndex(int index) => keyframes.RemoveAt(index);
+	public void RemoveAtIndex(int index) {
+		keyframes.RemoveAt(index);
+		if (updateKeyframeAnimIndex == index) updateKeyframeAnimIndex = -1;
+	}
+
 	IEnumerator<Keyframe> IEnumerable<Keyframe>.GetEnumerator() => keyframes.GetEnumerator();
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)keyframes).GetEnumerator();
 	public float PrevKeyframeTime(float currentTime) {
@@ -115,9 +116,9 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		return builder.ToString();
 	}
 	public string ExportType() => $"KeyframeSet<{typeof(T).Name}>";
-	void AnimateKeyframeUpdate(int i) {
+	void AnimateKeyframeUpdate(int i, int dir = 1) {
 		updateKeyframeAnimIndex = i;
-		updateKeyframeAnim = 0;
+		updateKeyframeAnim = dir;
 	}
 	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime) {
 		if (isSelected) {
@@ -129,7 +130,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		if (history.Length != DebugConfig.Instance.HistoryLength) history = new(DebugConfig.Instance.HistoryLength);
 		if (future.Length != DebugConfig.Instance.HistoryLength) future = new(DebugConfig.Instance.HistoryLength);
 
-		if (updateKeyframeAnim != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 1, 1f / 20)) updateKeyframeAnim = -1;
+		if (updateKeyframeAnimIndex != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 0, 1f / 20)) updateKeyframeAnimIndex = -1;
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
 		bool showCreationSidebar = isSelected;
 		if (isSelected) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref animation.gizmoTracker, animation.gizmoBasePosition);
@@ -143,7 +144,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		);
 
 		for (int i = 0; i < keyframes.Length; i++) {
-			float rotation = i == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim) * MathHelper.PiOver2 : 0;
+			float rotation = i == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -MathHelper.PiOver2 * animDir : 0;
 			ref Keyframe keyframe = ref keyframes[i];
 			Vector2 pos = animation.timelinePos with { X = animation.TimelineToScreenPos(keyframe.Time) };
 			Color color = Color.Orange;
@@ -165,10 +166,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 					-rotation
 				);
 				DrawSidebar(spriteBatch, animation, keyframes, i, ref animation.gizmoTracker);
-				if (Keybindings.InsertKeyframe.JustPressed) {
-					keyframe.Target = currentValue;
-					AnimateKeyframeUpdate(i);
-				}
+				if (Keybindings.InsertKeyframe.JustPressed) Do(new SetKeyframeTarget(this, i, currentValue));
 				if (Keybindings.DeleteKeyframe.JustPressed) deleteIndex = i;
 			}
 			DrawDiamond(
@@ -233,8 +231,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				Main.mouseLeftRelease = false;
 				switch (hoveredAction) {
 					case 0:
-					keyframe.Target = currentValue;
-					AnimateKeyframeUpdate(keyframeIndex);
+					Do(new SetKeyframeTarget(this, keyframeIndex, currentValue));
 					break;
 					case 2:
 					currentValue = keyframe.Target;
@@ -549,13 +546,30 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	}
 	class CreateKeyframe(KeyframeSet<T> set, int index, Keyframe keyframe) : UndoStep {
 		public override string Text => $"Create Keyframe: {keyframe}";
-		public override void Do() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
-		public override void Undo() => set.keyframes.RemoveAt(index);
+		public override void Do() {
+			set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
+			set.AnimateKeyframeUpdate(index);
+		}
+
+		public override void Undo() => set.RemoveAtIndex(index);
+	}
+	class SetKeyframeTarget(KeyframeSet<T> set, int index, T value) : UndoStep {
+		readonly T oldValue = set[index].Target;
+		public override string Text => $"Set Keyframe Value: {value}";
+		public override void Do() {
+			set[index].Target = value;
+			set.AnimateKeyframeUpdate(index);
+		}
+
+		public override void Undo() {
+			set[index].Target = oldValue;
+			set.AnimateKeyframeUpdate(index, -1);
+		}
 	}
 	class DeleteKeyframe(KeyframeSet<T> set, int index) : UndoStep {
 		readonly Keyframe keyframe = set[index];
 		public override string Text => $"Delete Keyframe: {keyframe}";
-		public override void Do() => set.keyframes.RemoveAt(index);
+		public override void Do() => set.RemoveAtIndex(index);
 		public override void Undo() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
 	}
 	class ModifyStartValue(KeyframeSet<T> set, T newValue) : UndoStep {
