@@ -2209,10 +2209,10 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				if (DebugConfig.Instance.AnimatorMode && Keybindings.PlayPauseAnimation.JustPressed) animationControls.playing = !animationControls.playing;
 				if (animationControls.playing || !DebugConfig.Instance.AnimatorMode)
 #endif
+				fallingStarSoldier.fallAnimationTime++;
 				if (Main.rand.NextBool(15)) {
 					SoundEngine.PlaySound(Origins.Sounds.Alarm1.WithPitchRange(2.8f, 3.2f), player.Center);
 				}
-				fallingStarSoldier.fallAnimationTime++;
 			}
 #if EditAnimation
 			if (animationControls.forceLoop && fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) fallingStarSoldier.fallAnimationTime = 0;
