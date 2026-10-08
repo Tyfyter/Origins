@@ -24,12 +24,14 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	public T start;
 	public T currentValue;
 	T resetValue;
+	//TODO: "child of" offset
 	public Vector2 gizmoOffset;
 	float lastProcessedTime;
 	int updateKeyframeAnimIndex = -1;
 	float updateKeyframeAnim = 0;
 	public List<Keyframe> keyframes = [];
 	public float Duration => keyframes.Count == 0 ? 0 : keyframes[^1].Time;
+	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
 	public KeyframeSet(T startValue, Vector2 gizmoOffset = default) : this() {
 		start = startValue;
 		this.gizmoOffset = gizmoOffset;
@@ -53,40 +55,11 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	}
 	public void Add(Keyframe keyframe) => keyframes.Add(keyframe);
 	public void Insert(int index, Keyframe keyframe) => keyframes.Insert(index, keyframe);
-	public void InsertAtFrame(float time) {
-		for (int i = 0; i < keyframes.Count; i++) {
-			if (keyframes[i].Time >= time) {
-				if (keyframes[i].Time > time) {
-					Insert(i, new(
-						time,
-						CalculateValue(time),
-						keyframes[i].Interpolation.Clone()
-					));
-				}
-				return;
-			}
-		}
-	}
-	public void InsertAtFrame(float time, InterpolationStack Interpolation) {
-		for (int i = 0; i < keyframes.Count; i++) {
-			if (keyframes[i].Time >= time) {
-				if (keyframes[i].Time > time) {
-					Insert(i, new(
-						time,
-						CalculateValue(time),
-						Interpolation
-					));
-				}
-				return;
-			}
-		}
-		Insert(keyframes.Count, new(
-			time,
-			CalculateValue(time),
-			Interpolation
-		));
-	}
 	protected void InsertAtCurrentFrame(float currentFrame, InterpolationStack Interpolation = null) {
+		if (currentFrame == 0) {
+			start = GetCurrentValue(currentFrame);
+			return;
+		}
 		for (int i = 0; i < keyframes.Count; i++) {
 			if (keyframes[i].Time >= currentFrame) {
 				if (keyframes[i].Time > currentFrame) {
@@ -149,16 +122,19 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		updateKeyframeAnim = 0;
 	}
 	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime) {
-		if (isSelected && Main.mouseRight && Main.mouseRightRelease && animation.CurrentTimeline.Contains(Main.MouseScreen)) {
-			float time = animation.ScreenPosToTimeline(Main.MouseScreen.X);
-			if (!animation.usesSubframes) time = MathF.Round(time);
-			InsertAtFrame(time);
-		}
 		if (updateKeyframeAnim != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 1, 1f / 20)) updateKeyframeAnim = -1;
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
 		bool showCreationSidebar = isSelected;
 		if (isSelected) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref animation.gizmoTracker, animation.gizmoBasePosition);
 		int deleteIndex = -1;
+		if (lastProcessedTime != currentTime) GetCurrentValue(currentTime);
+
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			new Rectangle((int)animation.TimelineToScreenPos(0) - 1, (int)animation.timelinePos.Y - 6, 2, 12),
+			isSelected && currentTime == 0 && !start.Equals(currentValue) ? ModifiedKeyframeColor : Color.Orange
+		);
+
 		for (int i = 0; i < keyframes.Length; i++) {
 			float rotation = i == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim) * MathHelper.PiOver2 : 0;
 			ref Keyframe keyframe = ref keyframes[i];
@@ -166,7 +142,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			Color color = Color.Orange;
 			if (isSelected && keyframe.Time == currentTime) {
 				showCreationSidebar = false;
-				if (!currentValue.Equals(keyframe.Target)) color = new(120, 71, 222);
+				if (!currentValue.Equals(keyframe.Target)) color = ModifiedKeyframeColor;
 				DrawDiamond(
 					spriteBatch,
 					pos,
@@ -492,8 +468,8 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			out int hoveredStep
 		);
 		if (Main.mouseLeft && Main.mouseLeftRelease) {
-			if (hoveredBase != -1) InsertAtFrame(time, new() { BaseInterpolation = CreateLinear() });
-			else if (hoveredStep != -1) InsertAtFrame(time, new() { BaseInterpolation = new StepInterpolation<T>() });
+			if (hoveredBase != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = CreateLinear() });
+			else if (hoveredStep != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = new StepInterpolation<T>() });
 		}
 	}
 
