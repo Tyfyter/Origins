@@ -52,6 +52,8 @@ namespace Origins {
 		public static ModKeybind EditUndo { get; private set; }
 		[Keybind(null, "LeftControl+Y", DebugType.Animator)]
 		public static ModKeybind EditRedo { get; private set; }
+		[Keybind(null, "LeftControl+LeftShift+Delete", DebugType.Animator)]
+		public static ModKeybind DeleteAllKeyframes { get; private set; }
 		#endregion animation editor
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);

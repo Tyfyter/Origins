@@ -2746,6 +2746,7 @@ Keybinds: {
 	// CancelGizmo.DisplayName: Cancel Gizmo
 	// EditUndo.DisplayName: Undo
 	// EditRedo.DisplayName: Redo
+	// DeleteAllKeyframes.DisplayName: Delete All Keyframes
 }
 
 Configs: {

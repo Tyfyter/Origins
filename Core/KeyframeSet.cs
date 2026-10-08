@@ -123,6 +123,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		if (isSelected) {
 			if (Keybindings.EditUndo.JustPressed) Undo();
 			else if (Keybindings.EditRedo.JustPressed) Redo();
+			else if (Keybindings.DeleteAllKeyframes.JustPressed && this.keyframes.Count > 0) Do(new DeleteAllKeyframes(this));
 		}
 
 		if (history.Length != DebugConfig.Instance.HistoryLength) history = new(DebugConfig.Instance.HistoryLength);
@@ -562,6 +563,12 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public override string Text => $"Modify Start Value: {newValue}";
 		public override void Do() => set.start = newValue;
 		public override void Undo() => set.start = oldValue;
+	}
+	class DeleteAllKeyframes(KeyframeSet<T> set) : UndoStep {
+		readonly List<Keyframe> oldValue = set.keyframes;
+		public override string Text => $"Delete All Keyframes";
+		public override void Do() => set.keyframes = [];
+		public override void Undo() => set.keyframes = oldValue;
 	}
 	UndoStep.StepBuffer history = new(10);
 	UndoStep.StepBuffer future = new(10);
