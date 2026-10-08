@@ -2921,6 +2921,11 @@ Configs: {
 			Label: Prefer Selected Hook
 			Tooltip: Prefer your selected hook instead of another hook an item you're using is attempting to use.
 		}
+
+		DisableTileOverlays: {
+			Label: Disable Tile Overlays
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

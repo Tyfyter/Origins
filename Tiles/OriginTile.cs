@@ -225,6 +225,7 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (OriginClientConfig.Instance.DisableTileOverlays) return;
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;
 			TileMergeOverlay.ResetSkipMask();
@@ -670,6 +671,7 @@ namespace Origins.Tiles {
 			forcedTileOverlays[type] = overlays;
 		}
 		public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch) {
+			if (OriginClientConfig.Instance.DisableTileOverlays) return;
 			if (forcedTileOverlays[type] is not ComplexFrameTile.TileOverlay[] overlays) return;
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;

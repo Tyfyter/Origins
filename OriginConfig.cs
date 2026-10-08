@@ -227,6 +227,9 @@ namespace Origins {
 
 		[DefaultValue(false)]
 		public bool DisableCoolVisualEffects = false;
+
+		[DefaultValue(false)]
+		public bool DisableTileOverlays = false;
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
