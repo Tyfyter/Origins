@@ -308,6 +308,9 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool AnimatorMode = false;
 
+		[DefaultValue(10)]
+		public int HistoryLength = 10;
+
 		[DefaultValue(false)]
 #if DEBUG
 		[TooltipKey("$Mods.Origins.Configs.DebugConfig.ForceEnableDebugItems.DebugBuildTooltip")]

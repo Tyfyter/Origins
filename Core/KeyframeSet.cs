@@ -1,22 +1,19 @@
-﻿using Microsoft.Extensions.Primitives;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
-using PegasusLib.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
-using static Origins.Core.KeyframeAnimation;
 using static Origins.Core.KeyframeTypes;
 
 namespace Origins.Core;
@@ -26,7 +23,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	T resetValue;
 	//TODO: "child of" offset
 	public Vector2 gizmoOffset;
-	float lastProcessedTime;
+	float lastProcessedTime = -1;
 	int updateKeyframeAnimIndex = -1;
 	float updateKeyframeAnim = 0;
 	public List<Keyframe> keyframes = [];
@@ -36,7 +33,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		start = startValue;
 		this.gizmoOffset = gizmoOffset;
 	}
-
+	private ref Keyframe this[int index] => ref CollectionsMarshal.AsSpan(keyframes)[index];
 	public T GetCurrentValue(float time) {
 		if (!lastProcessedTime.TrySet(time)) return currentValue;
 		return currentValue = CalculateValue(time);
@@ -57,7 +54,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	public void Insert(int index, Keyframe keyframe) => Do(new CreateKeyframe(this, index, keyframe));
 	protected int InsertAtCurrentFrame(float currentFrame, InterpolationStack Interpolation = null) {
 		if (currentFrame == 0) {
-			start = GetCurrentValue(currentFrame);
+			Do(new ModifyStartValue(this, GetCurrentValue(currentFrame)));
 			return -1;
 		}
 		for (int i = 0; i < keyframes.Count; i++) {
@@ -123,8 +120,13 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		updateKeyframeAnim = 0;
 	}
 	public void DrawEditorUI(SpriteBatch spriteBatch, KeyframeAnimation animation, bool isSelected, float currentTime) {
-		if (Keybindings.EditUndo.JustPressed) Undo();
-		else if (Keybindings.EditRedo.JustPressed) Redo();
+		if (isSelected) {
+			if (Keybindings.EditUndo.JustPressed) Undo();
+			else if (Keybindings.EditRedo.JustPressed) Redo();
+		}
+
+		if (history.Length != DebugConfig.Instance.HistoryLength) history = new(DebugConfig.Instance.HistoryLength);
+		if (future.Length != DebugConfig.Instance.HistoryLength) future = new(DebugConfig.Instance.HistoryLength);
 
 		if (updateKeyframeAnim != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 1, 1f / 20)) updateKeyframeAnim = -1;
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
@@ -180,7 +182,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			DrawKeyframeCreationSidebar(spriteBatch, animation, currentTime);
 			if (Keybindings.InsertKeyframe.JustPressed) InsertAtCurrentFrame(currentTime);
 		}
-		if (deleteIndex != -1) RemoveAtIndex(deleteIndex);
+		if (deleteIndex != -1) Do(new DeleteKeyframe(this, deleteIndex));
 		if (animation.gizmoTracker.JustSelected) resetValue = currentValue;
 		else if (Keybindings.CancelGizmo.JustPressed && animation.gizmoTracker.Cancel()) currentValue = resetValue;
 		static void DrawDiamond(SpriteBatch spriteBatch, Vector2 position, int size, Color color, float rotation) {
@@ -526,23 +528,43 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		if (clearFuture) future.Clear();
 		step.Do();
 		history.Push(step);
+		lastProcessedTime = -1;
 	}
 	public void Undo() {
-		if (!history.TryPop(out UndoStep step)) return;
+		if (!history.TryPop(out UndoStep step)) {
+			Main.NewText("Nothing left to undo");
+			return;
+		}
 		step.Undo();
 		future.Push(step);
+		lastProcessedTime = -1;
 	}
 	public void Redo() {
-		if (!future.TryPop(out UndoStep step)) return;
+		if (!future.TryPop(out UndoStep step)) {
+			Main.NewText("Nothing left to redo");
+			return;
+		}
 		Do(step, false);
 	}
 	class CreateKeyframe(KeyframeSet<T> set, int index, Keyframe keyframe) : UndoStep {
-		public override string Text { get; }
+		public override string Text => $"Create Keyframe: {keyframe}";
 		public override void Do() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
 		public override void Undo() => set.keyframes.RemoveAt(index);
 	}
-	readonly Stack<UndoStep> history = [];
-	readonly Stack<UndoStep> future = [];
+	class DeleteKeyframe(KeyframeSet<T> set, int index) : UndoStep {
+		readonly Keyframe keyframe = set[index];
+		public override string Text => $"Delete Keyframe: {keyframe}";
+		public override void Do() => set.keyframes.RemoveAt(index);
+		public override void Undo() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
+	}
+	class ModifyStartValue(KeyframeSet<T> set, T newValue) : UndoStep {
+		readonly T oldValue = set.start;
+		public override string Text => $"Modify Start Value: {newValue}";
+		public override void Do() => set.start = newValue;
+		public override void Undo() => set.start = oldValue;
+	}
+	UndoStep.StepBuffer history = new(10);
+	UndoStep.StepBuffer future = new(10);
 	public delegate void GizmoDrawer(SpriteBatch spriteBatch, ref T value, ref GizmoTracker gizmoTracker, Vector2 offset);
 	public static GizmoDrawer DrawGizmo;
 	public static bool Interpolatable = true;
@@ -890,4 +912,34 @@ public abstract class UndoStep {
 	public abstract string Text { get; }
 	public abstract void Do();
 	public abstract void Undo();
+	public struct StepBuffer(int size) {
+		public readonly int Length => buffer.Length;
+		readonly UndoStep[] buffer = new UndoStep[size];
+		int wrapIndex = 0;
+		int currentIndex = 0;
+		public void Push(UndoStep step) => buffer[IncrementCurrent()] = step;
+		public bool TryPop([MaybeNullWhen(false)] out UndoStep step) {
+			if (currentIndex == wrapIndex) {
+				step = default;
+				return false;
+			}
+			step = buffer[currentIndex];
+			currentIndex--;
+			if (currentIndex < 0) currentIndex += buffer.Length;
+			return true;
+		}
+		public void Clear() {
+			currentIndex = wrapIndex;
+			Array.Clear(buffer);
+		}
+		int IncrementCurrent() {
+			currentIndex++;
+			currentIndex %= buffer.Length;
+			if (currentIndex == wrapIndex) {
+				wrapIndex++;
+				wrapIndex %= buffer.Length;
+			}
+			return currentIndex;
+		}
+	}
 }

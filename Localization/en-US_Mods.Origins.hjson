@@ -3186,6 +3186,11 @@ Configs: {
 			Label: Animator Mode
 			Tooltip: Mods must be reloaded in order to register/unregister keybinds
 		}
+
+		HistoryLength: {
+			Label: History Length
+			Tooltip: ""
+		}
 	}
 
 	Journal_Default_UI_Mode: {
