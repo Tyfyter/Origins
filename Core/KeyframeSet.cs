@@ -93,7 +93,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		if (!lastProcessedTime.TrySet(time)) return currentValue;
 		return currentValue = CalculateValue(time);
 	}
-	public void Insert(int index, Keyframe keyframe) => Do(new CreateKeyframe(this, index, keyframe));
+	void Insert(int index, Keyframe keyframe) => Do(new CreateKeyframe(this, index, keyframe));
 	protected int InsertAtCurrentFrame(float currentFrame, InterpolationStack Interpolation = null) {
 		if (currentFrame == 0) {
 			Do(new ModifyStartValue(this, GetCurrentValue(currentFrame)));
@@ -453,15 +453,6 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		if (Animation.gizmoTracker.JustSelected) resetValue = currentValue;
 		else if (Keybindings.CancelGizmo.JustPressed && Animation.gizmoTracker.Cancel()) currentValue = resetValue;
 	}
-	class CreateKeyframe(KeyframeSet<T> set, int index, Keyframe keyframe) : UndoStep {
-		public override string Text => $"Create Keyframe: {keyframe}";
-		public override void Do() {
-			set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
-			set.AnimateKeyframeUpdate(index);
-		}
-
-		public override void Undo() => set.RemoveAtIndex(index);
-	}
 	class SetKeyframeTarget(KeyframeSet<T> set, int index, T value) : KeyframeVariableStep<T>(set, index, value) {
 		public override string Text => $"Set Keyframe Value: {newValue}";
 		protected override ref T Variable => ref set[index].Target;
@@ -513,6 +504,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.Keyframe> {
 	public delegate void Event(in TParams parameter);
 	public record struct Keyframe(float Time, Event Event) : IKeyframe<Keyframe> {
+		public Event Event = Event;
 		public readonly string Export() {
 			StringBuilder builder = new("new(");
 			builder.Append(Time);
@@ -526,35 +518,28 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	public static Color KeyframeColor { get; } = new(43, 185, 255);
 	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
 	protected override int KeyframeUpdateAnimationFrames => 27;
-	int lastUpdatedKeyframe = -1;
-	public void Update(in TParams parameters, float currentTime) {
-		for (int i = lastUpdatedKeyframe + 1; i < keyframes.Count; i++) {
+	public void Update(in TParams parameters, float lastTime, float currentTime) {
+		for (int i = 0; i < keyframes.Count; i++) {
 			ref Keyframe keyframe = ref this[i];
+			if (keyframe.Time <= lastTime) continue;
 			if (keyframe.Time > currentTime) break;
-			lastUpdatedKeyframe = i;
 			keyframe.Event(in parameters);
 		}
 	}
-	DateTime lastUpdatedTime;
 	List<Event> options;
-	HashSet<MethodInfo> checkedMethods;
-	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, bool isSelected, float currentTime) {
-		if (lastUpdatedTime < DateTime.UtcNow.AddSeconds(-10)) UpdateOptions();
-		while (lastUpdatedKeyframe >= 0 && currentTime < this[lastUpdatedKeyframe].Time) lastUpdatedKeyframe--;
-	}
-	void UpdateOptions() {
-		options ??= [];
-		checkedMethods ??= [];
-		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
-			if (meth.ReturnType != typeof(void)) continue;
-			ParameterInfo[] parameters = meth.GetParameters();
-			if (parameters.Length != 1) continue;
-			if (!parameters[0].ParameterType.IsByRef) continue;
-			if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
-			if (!checkedMethods.Add(meth)) continue;
-			options.Add(meth.CreateDelegate<Event>());
+	float currentlyDrawingTime;
+	void Insert(float time, Event @event) {
+		for (int i = 0; i < keyframes.Count; i++) {
+			if (keyframes[i].Time < time) continue;
+			if (keyframes[i].Time > time) {
+				Do(new CreateKeyframe(this, i, new(time, @event)));
+				return;
+			}
 		}
-		lastUpdatedTime = DateTime.UtcNow;
+		Do(new CreateKeyframe(this, keyframes.Count, new(time, @event)));
+	}
+	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, bool isSelected, float currentTime) {
+		currentlyDrawingTime = currentTime;
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
 		ref Keyframe keyframe = ref this[keyframeIndex];
@@ -562,7 +547,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		Vector2 pos = Animation.timelinePos with { X = Animation.TimelineToScreenPos(keyframe.Time) };
 		keyframeTriangle.ResetPositions().Rotate(rotation).Translate(pos);
 		keyframeTriangle.FillColor(keyframeIndex == draggingKeyframeIndex ? Color.Lime : KeyframeColor);
-		if (keyframeIndex <= lastUpdatedKeyframe) keyframeTriangle.MultiplyColor(Color.Gray);
+		if (keyframe.Time <= currentlyDrawingTime) keyframeTriangle.MultiplyColor(Color.Gray);
 		if (isKeyframeSelected) {
 			using (keyframeTriangle.ModificationContext()) {
 				keyframeTriangle.Scale(2f, keyframeTriangle.TransformedOrigin).Draw(KeyframeAnimation.primitiveBatch);
@@ -575,16 +560,48 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	protected override void DrawKeyframeDragTarget(SpriteBatch spriteBatch, Vector2 position) =>
 		keyframeTriangle.TranslateTo(position).DrawOutline(KeyframeAnimation.primitiveBatch);
 	protected override void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker) {
-
+		DrawSidebar(spriteBatch, keyframeIndex, this[keyframeIndex].Time);
 	}
 	protected override void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, float time) {
-
+		DrawSidebar(spriteBatch, -1, time);
 	}
-	bool DrawSidebar(out Event @event) {
-		@event = default;
-		return false;
+	void DrawSidebar(SpriteBatch spriteBatch, int keyframeIndex, float time) {
+		bool addedEvent = false;
+		float width = -1;
+		Vector2 iPos = new((Main.screenWidth + KeyframeAnimation.TimelineWidth) * 0.5f + 8, 4);
+		TextSnippet[] snippets = [
+			new()
+		];
+		for (int i = options.Count - 1; i >= 0; i--) Max(ref width, FontAssets.ItemStack.Value.MeasureString(options[i].Method.Name).X);
+		width += 18;
+		spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			iPos - Vector2.One * 2,
+			new(0, 0, (int)width + 4, options.Count * 16 + 4),
+			new Color(90, 90, 105)
+		);
+		for (int i = 0; i < options.Count; i++) {
+			Event option = options[i];
+			snippets[0].Text = option.Method.Name;
+			snippets[0].Color = (keyframeIndex >= 0 && option == this[keyframeIndex].Event) ? Color.Goldenrod : Color.White;
+			ChatManager.DrawColorCodedStringWithShadow(
+				spriteBatch,
+				FontAssets.ItemStack.Value,
+				snippets,
+				iPos,
+				0,
+				Vector2.Zero,
+				Vector2.One,
+				out int hoveredModifier
+			);
+			if (Main.mouseLeft && Main.mouseLeftRelease && hoveredModifier != -1 && addedEvent.TrySet(true)) {
+				Main.mouseLeftRelease = false;
+				if (keyframeIndex == -1) Insert(time, option);
+				else Do(new SetKeyframeEvent(this, i, option));
+			}
+			iPos.Y += 16;
+		}
 	}
-	public override void Restart() => lastUpdatedKeyframe = -1;
 	public override string Export() {
 		StringBuilder builder = new("[");
 		for (int i = 0; i < keyframes.Count; i++) {
@@ -598,9 +615,19 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	}
 	public override string ExportType() => $"KeyframeSet<{typeof(TParams).Name}>";
 	protected override void OnBind() {
-#if DEBUG
-		UpdateOptions();
-#endif
+		options = [];
+		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+			if (meth.ReturnType != typeof(void)) continue;
+			ParameterInfo[] parameters = meth.GetParameters();
+			if (parameters.Length != 1) continue;
+			if (!parameters[0].ParameterType.IsByRef) continue;
+			if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
+			options.Add(meth.CreateDelegate<Event>());
+		}
+	}
+	class SetKeyframeEvent(EventKeyframeSet<TParams> set, int index, Event value) : KeyframeVariableStep<Event>(set, index, value) {
+		public override string Text => $"Set Keyframe Event: {newValue}";
+		protected override ref Event Variable => ref set[index].Event;
 	}
 	const float TwoThirdsPi = MathHelper.TwoPi / 3;
 	static readonly Polygon keyframeTriangle = new(
@@ -735,6 +762,14 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	}
 	UndoStep.StepBuffer history = new(10);
 	UndoStep.StepBuffer future = new(10);
+	protected class CreateKeyframe(AKeyframeSet<TKeyframe> set, int index, TKeyframe keyframe) : UndoStep {
+		public override string Text => $"Create Keyframe: {keyframe}";
+		public override void Do() {
+			set.keyframes.Insert(index, keyframe);
+			set.AnimateKeyframeUpdate(index);
+		}
+		public override void Undo() => set.RemoveAtIndex(index);
+	}
 	protected class MoveKeyframe(AKeyframeSet<TKeyframe> set, int fromIndex, float from, int toIndex, float to) : UndoStep {
 		public override string Text => $"Move Keyframe from {from} to {to}";
 		public override void Do() => Move(fromIndex, toIndex, to);
@@ -792,11 +827,9 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		OnBind();
 	}
 	protected virtual void OnBind() { }
-	public virtual void Restart() { }
 }
 public interface IKeyframeSet {
 	public float Duration { get; }
-	public void Restart() { }
 	public void DrawEditorUI(SpriteBatch spriteBatch, bool isSelected, float currentTime);
 	public float PrevKeyframeTime(float currentTime);
 	public float NextKeyframeTime(float currentTime);

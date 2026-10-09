@@ -191,9 +191,6 @@ public abstract class KeyframeAnimation {
 			Color.Gray * (isSelected ? 1 : 0.5f)
 		);
 	}
-	public void Restart() {
-		for (int i = 0; i < keyframeSets.Count; i++) keyframeSets[i].Restart();
-	}
 	public float TimelineToScreenPos(float time) => Main.screenWidth * 0.5f + TimelineWidth * (time / totalLength - 0.5f);
 	public float ScreenPosToTimeline(float x) => ((x - Main.screenWidth * 0.5f) / TimelineWidth + 0.5f) * totalLength;
 	public string Export() {

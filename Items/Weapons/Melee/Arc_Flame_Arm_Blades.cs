@@ -254,11 +254,12 @@ namespace Origins.Items.Weapons.Melee {
 		static KeyframeAnimation.PlayingState animationControls;
 		public static void DoUpdate(Dust dust) {
 			if (dust.customData is Entity { Top: Vector2 pos }) dust.position = pos;
+			float oldFadeIn = dust.fadeIn;
 			if (animationControls.playing) dust.fadeIn += 1;
+			//event keyframe updating would go here
 			if (dust.fadeIn > Animation.instance.totalLength) {
 				if (animationControls.forceLoop) {
 					dust.fadeIn = 0;
-					Animation.instance.Restart();
 				} else dust.active = false;
 			}
 		}
