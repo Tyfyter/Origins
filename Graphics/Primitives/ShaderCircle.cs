@@ -4,7 +4,8 @@ using Origins.Core.Shaders;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Origins.Graphics.Primitives; 
+namespace Origins.Graphics.Primitives;
+[ReinitializeDuringResizeArrays]
 public static class ShaderCircle {
 	static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4] {
 		new(default, default, Vector2.Zero),
