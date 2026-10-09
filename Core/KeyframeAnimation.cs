@@ -35,6 +35,7 @@ public abstract class KeyframeAnimation {
 			IKeyframeSet item = (IKeyframeSet)field.GetValue(this);
 			keyframeSets.Add(item);
 			keyframeSetNames.Add([new(field.Name)]);
+			item.Bind(this);
 			Max(ref totalLength, item.Duration);
 		}
 	}
