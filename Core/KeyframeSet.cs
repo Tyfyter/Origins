@@ -93,6 +93,9 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 	float lastProcessedTime = -1;
 	int updateKeyframeAnimIndex = -1;
 	float updateKeyframeAnim = 0;
+	float draggingKeyframeOffset;
+	int draggingKeyframeIndex = -1;
+	float draggingKeyframeTo = -1;
 	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
 	private ref Keyframe this[int index] => ref CollectionsMarshal.AsSpan(keyframes)[index];
 	public T GetCurrentValue(float time) {
@@ -190,40 +193,29 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			new Rectangle((int)animation.TimelineToScreenPos(0) - 1, (int)animation.timelinePos.Y - 6, 2, 12),
 			isSelected && currentTime == 0 && !start.Equals(currentValue) ? ModifiedKeyframeColor : Color.Orange
 		);
-
 		for (int i = 0; i < keyframes.Length; i++) {
 			float rotation = i == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -MathHelper.PiOver2 * animDir : 0;
 			ref Keyframe keyframe = ref keyframes[i];
 			Vector2 pos = animation.timelinePos with { X = animation.TimelineToScreenPos(keyframe.Time) };
-			Color color = Color.Orange;
+			keyframeDiamond.ResetPositions().Rotate(rotation).Translate(pos);
+			keyframeDiamond.FillColor(i == draggingKeyframeIndex ? Color.Lime : Color.Orange);
 			if (isSelected && keyframe.Time == currentTime) {
 				showCreationSidebar = false;
-				if (!currentValue.Equals(keyframe.Target)) color = ModifiedKeyframeColor;
-				DrawDiamond(
-					spriteBatch,
-					pos,
-					14,
-					color,
-					rotation
-				);
-				DrawDiamond(
-					spriteBatch,
-					pos,
-					12,
-					Color.Black,
-					-rotation
-				);
+				if (!currentValue.Equals(keyframe.Target)) keyframeDiamond.FillColor(ModifiedKeyframeColor);
+				using (keyframeDiamond.ModificationContext()) {
+					keyframeDiamond.Scale(1.75f, keyframeDiamond.TransformedOrigin).Draw(KeyframeAnimation.primitiveBatch);
+					keyframeDiamond.Scale(12f / 14f, keyframeDiamond.TransformedOrigin).FillColor(Color.Black).Rotate(rotation * -2, keyframeDiamond.TransformedOrigin).Draw(KeyframeAnimation.primitiveBatch);
+				}
 				DrawSidebar(spriteBatch, animation, keyframes, i, ref animation.gizmoTracker);
 				if (Keybindings.InsertKeyframe.JustPressed) Do(new SetKeyframeTarget(this, i, currentValue));
 				if (Keybindings.DeleteKeyframe.JustPressed) deleteIndex = i;
 			}
-			DrawDiamond(
-				spriteBatch,
-				pos,
-				8,
-				color,
-				rotation
-			);
+			keyframeDiamond.Draw(KeyframeAnimation.primitiveBatch);
+			if (isSelected && Main.mouseLeft && Main.mouseLeftRelease && keyframeDiamond.Contains(Main.MouseScreen)) {
+				draggingKeyframeIndex = i;
+				draggingKeyframeOffset = Main.mouseX - pos.X;
+			}
+			if (i == draggingKeyframeIndex) keyframeDiamond.TranslateTo(pos with { X = animation.TimelineToScreenPos(draggingKeyframeTo) }).DrawOutline(KeyframeAnimation.primitiveBatch);
 		}
 		if (showCreationSidebar) {
 			DrawKeyframeCreationSidebar(spriteBatch, animation, currentTime);
@@ -232,18 +224,20 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		if (deleteIndex != -1) Do(new DeleteKeyframe(this, deleteIndex));
 		if (animation.gizmoTracker.JustSelected) resetValue = currentValue;
 		else if (Keybindings.CancelGizmo.JustPressed && animation.gizmoTracker.Cancel()) currentValue = resetValue;
-		static void DrawDiamond(SpriteBatch spriteBatch, Vector2 position, int size, Color color, float rotation) {
-			Rectangle frame = new(0, 0, size, size);
-			spriteBatch.Draw(
-				TextureAssets.MagicPixel.Value,
-				position,
-				frame,
-				color,
-				MathHelper.PiOver4 + rotation,
-				frame.Size() * 0.5f,
-				1,
-				SpriteEffects.None,
-			0);
+		if (draggingKeyframeIndex != -1) {
+			draggingKeyframeTo = animation.ScreenPosToTimeline(Main.mouseX + draggingKeyframeOffset);
+			if (!animation.usesSubframes) draggingKeyframeTo = float.Round(draggingKeyframeTo);
+			if (!Main.mouseLeft) {
+				int newIndex = 0;
+				for (int i = 0; i < keyframes.Length; i++) {
+					if (i == draggingKeyframeIndex) continue;
+					if (draggingKeyframeTo < keyframes[i].Time) break;
+					if (draggingKeyframeTo == keyframes[i].Time) return;
+					newIndex++;
+				}
+				Do(new MoveKeyframe(this, draggingKeyframeIndex, keyframes[draggingKeyframeIndex].Time, newIndex, draggingKeyframeTo));
+				draggingKeyframeIndex = -1;
+			}
 		}
 	}
 
@@ -408,7 +402,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 				TextureAssets.MagicPixel.Value,
 				iPos + new Vector2(-2, -2),
 				new(0, 0, (int)width + 4, KeyframeModifiers.modifierTypes.Count * 16 + 4),
-				new Color(90, 90, 105)
+				new Color(90, 90, 115)
 			);
 			for (int i = KeyframeModifiers.modifierTypes.Count - 1; i >= 0; i--) {
 				snippets[0].Text = KeyframeModifiers.modifierTypes[i].name;
@@ -423,6 +417,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 					out int hoveredModifier
 				);
 				if (Main.mouseLeft && Main.mouseLeftRelease && hoveredModifier != -1) {
+					Main.mouseLeftRelease = false;
 					if (animation.modifyingInterpolation == -1) stack.Add(KeyframeModifiers.modifierTypes[i].Item2());
 					else stack[animation.modifyingInterpolation] = KeyframeModifiers.modifierTypes[i].Item2();
 				}
@@ -430,7 +425,7 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			}
 		}
 		if (animation.modifyingInterpolation >= stack.Count) animation.modifyingInterpolation = -1;
-		if (stack.BaseInterpolation is not StepInterpolation<T>) {
+		if (stack.BaseInterpolation.IsModifiable) {
 			iPos.Y += 8;
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
@@ -588,6 +583,30 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 		public override void Do() => set.RemoveAtIndex(index);
 		public override void Undo() => set.keyframes.Insert(index, keyframe with { Interpolation = keyframe.Interpolation.Clone() });
 	}
+	class MoveKeyframe(KeyframeSet<T> set, int fromIndex, float from, int toIndex, float to) : UndoStep {
+		public override string Text => $"Move Keyframe from {from} to {to}";
+		public override void Do() => Move(fromIndex, toIndex, to);
+		public override void Undo() => Move(toIndex, fromIndex, from);
+		void Move(int fromIndex, int toIndex, float to) {
+			if (fromIndex == toIndex) set[fromIndex].Time = to;
+			else {
+				Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(set.keyframes);
+				Keyframe keyframe = keyframes[fromIndex];
+				keyframe.Time = to;
+				int copyStart = fromIndex;
+				int copyEnd = toIndex;
+				MinMax(ref copyStart, ref copyEnd);
+				int copyLength = copyEnd - copyStart;
+				if (fromIndex < toIndex) {
+					keyframes.Slice(copyStart + 1, copyLength).CopyTo(keyframes.Slice(copyStart, copyLength));
+					keyframes[toIndex] = keyframe;
+				} else {
+					keyframes.Slice(copyStart, copyLength).CopyTo(keyframes.Slice(copyStart + 1, copyLength));
+					keyframes[toIndex] = keyframe;
+				}
+			}
+		}
+	}
 	class SetBaseInterpolation(KeyframeSet<T> set, int index, IInterpolation value) : KeyframeVariableStep<IInterpolation>(set, index, value) {
 		readonly InterpolationStack stack = set[index].Interpolation;
 		public override string Text => $"Set Keyframe Interpolation: {newValue}";
@@ -632,6 +651,12 @@ public class KeyframeSet<T>() : IKeyframeSet, IEnumerable<KeyframeSet<T>.Keyfram
 			public static bool GetInterpolatable<THandler>() where THandler : ITypeHandler => THandler.Interpolatable;
 		}
 	}
+	static readonly Polygon keyframeDiamond = new(
+		new(-4, 0),
+		new(0, -4),
+		new(4, 0),
+		new(0, 4)
+	);
 	#endregion
 }
 public interface IKeyframeSet {
@@ -749,7 +774,7 @@ public static class KeyframeTypes {
 
 		rotationHandle.ResetPositions().Scale(4 * scale).Rotate(value).Translate(end);
 		bool isHovering = rotationHandle.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
-		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+
 		rotationHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
@@ -804,22 +829,21 @@ public static class KeyframeModifiers {
 		static Vector2 handleOffset;
 		static float handleX = 0.5f;
 		static Vector2 lastMouse;
-		public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref int draggingGizmo, ref int gizmoIndex) {
+		void IInterpolationModifier.DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref GizmoTracker gizmoTracker) {
 			Vector2 mouse = (Main.MouseScreen - pos) / 150;
 			float handleY = 1 - float.Pow(handleX, Exponent);
 			handle.ResetPositions().Scale(6).Translate(pos + new Vector2(handleX, handleY) * 150);
-			bool isHovering = handle.Contains(Main.MouseScreen) || draggingGizmo == gizmoIndex;
+			bool isHovering = handle.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
 			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
-			if (draggingGizmo == gizmoIndex && lastMouse.TrySet(mouse)) {
+			if (gizmoTracker.IsCurrent && lastMouse.TrySet(mouse)) {
 				handleX = mouse.X + handleOffset.X;
 				Clamp(ref handleX, 0, 1);
 				Exponent = float.Log(1 - (mouse.Y - handleOffset.Y), handleX);
 			}
-			if (Main.mouseLeft && Main.mouseLeftRelease) {
+			if (Main.mouseLeft && Main.mouseLeftRelease && gizmoTracker.CheckSetCurrent(isHovering, null)) {
 				handleOffset = new Vector2(handleX, handleY) - mouse;
-				draggingGizmo = gizmoIndex;
 			}
-			gizmoIndex++;
+			gizmoTracker.Advance();
 		}
 	}
 	public record struct SinEaseIn : IInterpolationModifier {

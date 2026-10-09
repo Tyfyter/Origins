@@ -164,6 +164,7 @@ public abstract class KeyframeAnimation {
 		}
 		spriteBatch.Restart(spriteBatch.GetState());
 		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		primitiveBatch.Flush();
 		if (lastTime.TrySet(currentTime)) modifyingInterpolation = -1;
 		if (!Main.mouseLeft) draggingInterpolation = false;

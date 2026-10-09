@@ -334,6 +334,7 @@ public class Polygon : IMoveToPegFlag {
 
 		public void Flush() {
 			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+			Debugging.ChatOverhead($"_____\n{triIndices.Count / 3}\n{wireframeIndices.Count / 2}\n{outlineIndices.Count / 2}");
 			if (triVerts.Count > 0) {
 				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, triVerts.ToArray(), 0, triVerts.Count, triIndices.ToArray(), 0, triIndices.Count / 3);
 				triVerts.Clear();
@@ -365,9 +366,9 @@ public class Polygon : IMoveToPegFlag {
 			for (; i < wireframeVerts.Count; i++) wireframeIndices[i] += oldVerts;
 		}
 		public void AddOutline(Polygon polygon) {
-			short oldVerts = (short)triVerts.Count;
+			short oldVerts = (short)outlineVerts.Count;
 			outlineVerts.AddRange(polygon.vertices);
-			for (int i = 0; i < polygon.outlineIndices.Length; i++) {
+			for (int i = 0; i < polygon.outlineIndices.Length - 1; i++) {
 				outlineIndices.Add((short)(polygon.outlineIndices[i] + oldVerts));
 				outlineIndices.Add((short)(polygon.outlineIndices[(i + 1) % polygon.outlineIndices.Length] + oldVerts));
 			}
