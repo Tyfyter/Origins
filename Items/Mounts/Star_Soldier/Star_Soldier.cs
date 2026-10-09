@@ -2197,11 +2197,14 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		public void Update(Player player) {
 			if (leftClickSelection is null || rightClickSelection is null) return;
 			MathUtils.LinearSmoothing(ref fadeIconsOut, 0, 1f / 60);
-			fallingStarSoldier ??= new() {
-				chosenItem = new() { item = new(leftClickSelection.Type), Index = 0 },
-				altItem = new() { item = new(rightClickSelection.Type), Index = 1 },
-				fallAnimationTime = 0
-			};
+			if (fallingStarSoldier is null) {
+				fallingStarSoldier = new() {
+					chosenItem = new() { item = new(leftClickSelection.Type), Index = 0 },
+					altItem = new() { item = new(rightClickSelection.Type), Index = 1 },
+					fallAnimationTime = 0
+				};
+				Landing_Animation.instance.Restart();
+			}
 			fallPosition += 48;
 			if (fallPosition > player.Bottom.Y - GroundOffset) {
 				fallPosition = player.Bottom.Y - GroundOffset;
@@ -2214,8 +2217,12 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 					SoundEngine.PlaySound(Origins.Sounds.Alarm1.WithPitchRange(2.8f, 3.2f), player.Center);
 				}*/
 			}
+			Landing_Animation.instance.exampleEventTimeline.Update(new(player), fallingStarSoldier.fallAnimationTime);
 #if EditAnimation
-			if (animationControls.forceLoop && fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) fallingStarSoldier.fallAnimationTime = 0;
+			if (animationControls.forceLoop && fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
+				fallingStarSoldier.fallAnimationTime = 0;
+				Landing_Animation.instance.Restart();
+			}
 #endif
 			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
@@ -3447,7 +3454,13 @@ public class Landing_Animation : KeyframeAnimation {
 	};
 	public KeyframeSet<bool> exampleBoolAnimation = new(false) {
 	};
-
+	public EventKeyframeSet<EventParams> exampleEventTimeline = [
+		new(15, PlaySomeSound)
+	];
+	static void PlaySomeSound(in EventParams parameters) {
+		SoundEngine.PlaySound(SoundID.Duck, parameters.Player.Bottom);
+	}
+	public record struct EventParams(Player Player);
 	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
 		public Vector2 Position = Position;
 		public float Rotation = Rotation;

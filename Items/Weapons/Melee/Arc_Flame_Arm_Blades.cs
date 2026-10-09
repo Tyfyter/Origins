@@ -6,7 +6,6 @@ using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Graphics;
-using Origins.Items.Mounts.Star_Soldier;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
@@ -257,8 +256,10 @@ namespace Origins.Items.Weapons.Melee {
 			if (dust.customData is Entity { Top: Vector2 pos }) dust.position = pos;
 			if (animationControls.playing) dust.fadeIn += 1;
 			if (dust.fadeIn > Animation.instance.totalLength) {
-				if (animationControls.forceLoop) dust.fadeIn = 0;
-				else dust.active = false;
+				if (animationControls.forceLoop) {
+					dust.fadeIn = 0;
+					Animation.instance.Restart();
+				} else dust.active = false;
 			}
 		}
 		public override bool Update(Dust dust) {
