@@ -244,7 +244,6 @@ namespace Origins.Items.Weapons.Melee {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			this.SetIDProp();
-			EfficientDust.UpdateDustCallback[Type] = DoUpdate;
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.frame = new(0, 0, 12, 6);
@@ -252,19 +251,16 @@ namespace Origins.Items.Weapons.Melee {
 			dust.scale = 1;
 		}
 		static KeyframeAnimation.PlayingState animationControls;
-		public static void DoUpdate(Dust dust) {
+		public override bool Update(Dust dust) {
 			if (dust.customData is Entity { Top: Vector2 pos }) dust.position = pos;
 			float oldFadeIn = dust.fadeIn;
 			if (animationControls.playing) dust.fadeIn += 1;
-			//event keyframe updating would go here
+			Animation.instance.events.Update(new(), oldFadeIn, dust.fadeIn);
 			if (dust.fadeIn > Animation.instance.totalLength) {
 				if (animationControls.forceLoop) {
 					dust.fadeIn = 0;
 				} else dust.active = false;
 			}
-		}
-		public override bool Update(Dust dust) {
-			DoUpdate(dust);
 			return false;
 		}
 		public override bool PreDraw(Dust dust) {
@@ -299,6 +295,12 @@ namespace Origins.Items.Weapons.Melee {
 			static Animation() => Max(ref instance.totalLength, 30);
 			public KeyframeSet<PosRotScale> sword1 = new(new());
 			public KeyframeSet<PosRotScale> sword2 = new(new());
+			public EventKeyframeSet<EventParams> events = [
+			];
+			static void Clash(in EventParams parameters) {
+				// sound here
+			}
+			public record struct EventParams(Dust Dust);
 		}
 	}
 }
