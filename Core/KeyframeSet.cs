@@ -682,7 +682,14 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			if (isSelected && keyframe.Time == currentTime) {
 				showCreationSidebar = false;
 				DrawKeyframeEditor(spriteBatch, i, ref Animation.gizmoTracker);
-				if (Keybindings.DeleteKeyframe.JustPressed) deleteIndex = i;
+				if (Keybindings.Copy.JustPressed) { 
+					clipboardKeyframe = keyframe.CleanMutableRefs();
+				} else if (Keybindings.Cut.JustPressed) {
+					clipboardKeyframe = keyframe.CleanMutableRefs();
+					deleteIndex = i;
+				} else if (Keybindings.DeleteKeyframe.JustPressed) {
+					deleteIndex = i;
+				}
 			}
 			if (isSelected && Main.mouseLeft && Main.mouseLeftRelease && isKeyframeHovered) {
 				draggingKeyframeIndex = i;
@@ -690,7 +697,13 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			}
 			if (i == draggingKeyframeIndex) DrawKeyframeDragTarget(spriteBatch, pos with { X = Animation.TimelineToScreenPos(draggingKeyframeTo) });
 		}
-		if (showCreationSidebar) DrawKeyframeCreationSidebar(spriteBatch, currentTime);
+		if (showCreationSidebar) {
+			DrawKeyframeCreationSidebar(spriteBatch, currentTime);
+			if (Keybindings.Paste.JustPressed && GetInsertIndex(currentTime) is int insertIndex) {
+				clipboardKeyframe.Time = currentTime;
+				Do(new CreateKeyframe(this, insertIndex, clipboardKeyframe));
+			}
+		}
 		if (deleteIndex != -1) Do(new DeleteKeyframe(this, deleteIndex));
 		HandleGizmos();
 		if (draggingKeyframeIndex != -1) {
@@ -731,6 +744,17 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		}
 		return float.NaN;
 	}
+	public int? GetInsertIndex(float time) {
+		for (int i = 0; i < keyframes.Count; i++) {
+			switch (float.Sign(keyframes[i].Time - time)) {
+				case 0:
+				return null;
+				case 1:
+				return i;
+			}
+		}
+		return keyframes.Count;
+	}
 	public void Do(UndoStep step, bool clearFuture = true) {
 		if (clearFuture) future.Clear();
 		step.Do();
@@ -761,12 +785,13 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		}
 		Do(step, false);
 	}
+	static TKeyframe clipboardKeyframe;
 	UndoStep.StepBuffer history = new(10);
 	UndoStep.StepBuffer future = new(10);
 	protected class CreateKeyframe(AKeyframeSet<TKeyframe> set, int index, TKeyframe keyframe) : UndoStep {
 		public override string Text => $"Create Keyframe: {keyframe}";
 		public override void Do() {
-			set.keyframes.Insert(index, keyframe);
+			set.keyframes.Insert(index, keyframe.CleanMutableRefs());
 			set.AnimateKeyframeUpdate(index);
 		}
 		public override void Undo() => set.RemoveAtIndex(index);
@@ -867,7 +892,7 @@ public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolatio
 
 			return method.CreateDelegate<Func<IInterpolationModifier>>();
 		}
-		static Func<IInterpolationModifier> GetCustomDefault<T>() where T : IInterpolationModifier {
+		public static Func<IInterpolationModifier> GetCustomDefault<T>() where T : IInterpolationModifier {
 			if (((Delegate)T.CreateDefault).Method.DeclaringType == typeof(IInterpolationModifier)) return null;
 			return T.CreateDefault;
 		}

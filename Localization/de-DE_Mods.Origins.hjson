@@ -2747,6 +2747,9 @@ Keybinds: {
 	// EditUndo.DisplayName: Undo
 	// EditRedo.DisplayName: Redo
 	// DeleteAllKeyframes.DisplayName: Delete All Keyframes
+	// Copy.DisplayName: Copy
+	// Cut.DisplayName: Cut
+	// Paste.DisplayName: Paste
 }
 
 Configs: {

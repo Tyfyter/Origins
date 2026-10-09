@@ -34,7 +34,7 @@ namespace Origins {
 		public static ModKeybind DebugScreenShader { get; private set; }
 #endif
 		#region animation editor
-		[Keybind(null, Keys.MediaPlayPause, DebugType.Animator)]
+		[Keybind(null, "LeftControl+Space", DebugType.Animator)]
 		public static ModKeybind PlayPauseAnimation { get; private set; }
 		[Keybind(null, Keys.K, DebugType.Animator)]
 		public static ModKeybind InsertKeyframe { get; private set; }
@@ -52,6 +52,12 @@ namespace Origins {
 		public static ModKeybind EditUndo { get; private set; }
 		[Keybind(null, "LeftControl+Y", DebugType.Animator)]
 		public static ModKeybind EditRedo { get; private set; }
+		[Keybind(null, "LeftControl+C", DebugType.Animator)]
+		public static ModKeybind Copy { get; private set; }
+		[Keybind(null, "LeftControl+X", DebugType.Animator)]
+		public static ModKeybind Cut { get; private set; }
+		[Keybind(null, "LeftControl+V", DebugType.Animator)]
+		public static ModKeybind Paste { get; private set; }
 		[Keybind(null, "LeftControl+LeftShift+Delete", DebugType.Animator)]
 		public static ModKeybind DeleteAllKeyframes { get; private set; }
 		#endregion animation editor
