@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
+using Origins.UI;
 using PegasusLib.Graphics;
 using ReLogic.OS;
 using System;
@@ -181,6 +182,7 @@ public abstract class KeyframeAnimation {
 			if (!hovered) color = Color.LightGray;
 			else UICommon.TooltipMouseText(tooltip);
 			buttonRect.FillColor(color.MultiplyRGBA(baseColor)).Draw(primitiveBatch);
+			if (hovered) Main.LocalPlayer.mouseInterface = true;
 			return hovered && Main.mouseLeft && Main.mouseLeftRelease;
 		}
 	}
@@ -299,4 +301,25 @@ public abstract class KeyframeAnimation {
 		new(-button_scale * 0.25f, button_scale * 0.375f)
 	);
 	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
+}
+public class Animation_Editor_UI : SwitchableUIState {
+	static uint setTickCount;
+	public static Action<SpriteBatch> DrawEditorUI {
+		get {
+			unchecked {
+				if (setTickCount == OriginSystem.gameTickCount || setTickCount + 1 == OriginSystem.gameTickCount) return field;
+			}
+			return null;
+		}
+		set {
+			field = value;
+			setTickCount = OriginSystem.gameTickCount;
+		}
+	}
+	public override void AddToList() => OriginSystem.Instance.DevToolHUD.AddState(this);
+	public override bool IsActive() => DrawEditorUI is not null;
+	public Animation_Editor_UI() : base() {
+		OverrideSamplerState = SamplerState.PointClamp;
+	}
+	protected override void DrawSelf(SpriteBatch spriteBatch) => DrawEditorUI?.Invoke(spriteBatch);
 }

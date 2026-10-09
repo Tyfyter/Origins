@@ -43,6 +43,7 @@ namespace Origins {
 		struct MoveMountHUD : IMoveToPegFlag;
 		public StateSwitchingInterface MountHUD { get; } = new("Origins: Mount HUD");
 		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
+		public StateSwitchingInterface DevToolHUD { get; } = new("Origins: Dev Tool HUD", true);
 		public SpacePirateEyeInterface SpacePirateEyeUI { get; } = new();
 		public UserInterfaceWithDefaultState journalUI;
 		internal static List<SwitchableUIState> queuedUIStates = [];
@@ -175,6 +176,7 @@ namespace Origins {
 			SetBonusHUD.Update(gameTime);
 			MountHUD.Update(gameTime);
 			EventHUD.Update(gameTime);
+			DevToolHUD.Update(gameTime);
 		}
 		public static IReadOnlySet<string> hideInterfaceLayers = null;
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
@@ -194,6 +196,7 @@ namespace Origins {
 				SetBonusHUD.Insert(layers);
 				MountHUD.Insert(layers);
 				EventHUD.Insert(layers);
+				DevToolHUD.Insert(layers);
 				SpacePirateEyeUI.Insert(layers);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
 					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(

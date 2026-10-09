@@ -39,6 +39,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	public record struct Keyframe(float Time, T Target, InterpolationStack Interpolation) : IKeyframe<Keyframe> {
 		public T Target = Target;
 		public Keyframe(float time, T target, IInterpolation interpolation) : this(time, target, new InterpolationStack() { BaseInterpolation = interpolation }) { }
+		public Keyframe(float time, T target) : this(time, target, new InterpolationStack()) { }
 		public readonly T GetValue(float time, float prevTime, T prevValue) => Interpolation.Interpolate(prevValue, Target, Utils.GetLerpValue(prevTime, Time, time));
 		public readonly string Export() {
 			StringBuilder builder = new("new(");
@@ -845,9 +846,11 @@ public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolatio
 	public float ModifyProgress(float progress);
 	public string Export() => $"new {GetType().Name}()";
 	public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref GizmoTracker gizmoTracker) { }
+	public virtual static IInterpolationModifier CreateDefault() => null;
 	class Loader : IAutoloader {
+		static readonly MethodInfo getCustomDefault = typeof(Loader).GetMethod("GetCustomDefault");
 		static void IAutoloader.Autoload(Mod mod, Type type) {
-			Func<IInterpolationModifier> func = CreateDefault(type);
+			Func<IInterpolationModifier> func = (getCustomDefault.MakeGenericMethod(type).Invoke(null, []) as Func<IInterpolationModifier>) ?? CreateDefault(type);
 			KeyframeModifiers.modifierTypes.Add((func().ToString(), func));
 		}
 
@@ -863,6 +866,10 @@ public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolatio
 			gen.Emit(OpCodes.Ret);
 
 			return method.CreateDelegate<Func<IInterpolationModifier>>();
+		}
+		static Func<IInterpolationModifier> GetCustomDefault<T>() where T : IInterpolationModifier {
+			if (((Delegate)T.CreateDefault).Method.DeclaringType == typeof(IInterpolationModifier)) return null;
+			return T.CreateDefault;
 		}
 	}
 }
@@ -994,6 +1001,7 @@ public static class KeyframeModifiers {
 		public readonly float ModifyProgress(float progress) => float.Pow(progress, Exponent);
 		public readonly override string ToString() => Exponent == 0 ? "Exponent" : $"Exponent({Exponent})";
 		readonly string IInterpolationModifier.Export() => $"new {nameof(Exponential)}({Exponent}f)";
+		static IInterpolationModifier IInterpolationModifier.CreateDefault() => new Exponential(2);
 		static readonly Polygon handle = new(
 			new(-1, 0),
 			new(0, -1),
@@ -1136,7 +1144,7 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 		readonly PosRotScale KeyframeSet<PosRotScale>.IInterpolation.Interpolate(PosRotScale prevValue, PosRotScale nextValue, float progress) =>
 			new(
 				Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
-				float.Lerp(prevValue.Rotation, nextValue.Rotation, progress),
+				prevValue.Rotation + GeometryUtils.AngleDif(prevValue.Rotation, nextValue.Rotation, out int dir) * dir * progress,
 				float.Lerp(prevValue.Scale, nextValue.Scale, progress)
 			);
 		public readonly override string ToString() => "Interpolated";
@@ -1148,6 +1156,52 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 		KeyframeTypes.DrawScaleGizmo(spriteBatch, ref value.Scale, ref gizmoTracker, value.Position * GizmoZoom + offset, 20);
 	}
 	public static string Export(PosRotScale value) => value == new PosRotScale() ? "new()" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f, {value.Scale}f)";
+}
+public record struct Percentage(float Value) : KeyframeSet<Percentage>.ITypeHandler {
+	public Percentage() : this(1) { }
+	public float Value = Value;
+	public static KeyframeSet<Percentage>.IInterpolation Linear { get; } = new Interpolation();
+	public readonly struct Interpolation : KeyframeSet<Percentage>.IInterpolation {
+		readonly Percentage KeyframeSet<Percentage>.IInterpolation.Interpolate(Percentage prevValue, Percentage nextValue, float progress) =>
+			new(float.Lerp(prevValue.Value, nextValue.Value, progress));
+		public readonly override string ToString() => "Interpolated";
+	}
+	public static Percentage operator -(Percentage a, float b) => new(a.Value - b);
+	public static Percentage operator +(Percentage a, float b) => new(a.Value + b);
+	public static Percentage operator *(Percentage a, float b) => new(a.Value * b);
+	public static Percentage operator /(Percentage a, float b) => new(a.Value / b);
+	public static implicit operator Percentage(float value) => new(value);
+	public static implicit operator float(Percentage value) => value.Value;
+	public static Color operator *(Color a, Percentage b) => a * b.Value;
+	public static void DrawGizmo(SpriteBatch spriteBatch, ref Percentage value, ref GizmoTracker gizmoTracker, Vector2 offset) {
+		const int height = 48;
+		Vector2 scale = GizmoZoom;
+		if (gizmoTracker.IsCurrent && Main.mouseY != oldMousePos.Y) {
+			value = float.Clamp((Main.mouseY - offset.Y) / height - 0.5f, 0, 1);
+		}
+		Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(value * scale + offset);
+		bool isHovering = rect.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
+		Color color = Color.White;
+		if (!isHovering) color *= 0.5f;
+		Main.spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			offset,
+			new Rectangle(0, 0, 2, 2),
+			color,
+			0,
+			Vector2.One,
+			new Vector2(2, height),
+			0,
+		0);
+		Main.spriteBatch.Draw(
+			TextureAssets.MagicPixel.Value,
+			rect,
+			color
+		);
+		gizmoTracker.CheckSetCurrent(isHovering, Keybindings.GrabGizmo);
+		gizmoTracker.Advance();
+	}
+	public static string Export(Percentage value) => $"{value.Value}f";
 }
 public abstract class UndoStep {
 	public abstract string Text { get; }
