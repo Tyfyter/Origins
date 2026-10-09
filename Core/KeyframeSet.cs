@@ -130,7 +130,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		for (int i = 0; i < keyframes.Count; i++) {
 			builder.Append("\t\t");
 			builder.Append(keyframes[i].Export());
-			if (i + 1 < keyframes.Count) builder.Append(", \n");
+			if (i + 1 < keyframes.Count) builder.Append(",\n");
 			else builder.Append('\n');
 		}
 		builder.Append("\t}");
@@ -605,15 +605,15 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	public override string Export() {
 		StringBuilder builder = new("[");
 		for (int i = 0; i < keyframes.Count; i++) {
-			builder.Append("\t\t");
+			builder.Append("\n\t\t");
 			builder.Append(keyframes[i].Export());
-			if (i + 1 < keyframes.Count) builder.Append(", \n");
+			if (i + 1 < keyframes.Count) builder.Append(',');
 			else builder.Append('\n');
 		}
 		builder.Append("\t]");
 		return builder.ToString();
 	}
-	public override string ExportType() => $"KeyframeSet<{typeof(TParams).Name}>";
+	public override string ExportType() => $"EventKeyframeSet<{typeof(TParams).Name}>";
 	protected override void OnBind() {
 		options = [];
 		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {

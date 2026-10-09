@@ -3447,11 +3447,13 @@ public class Landing_Animation : KeyframeAnimation {
 	};
 	public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new(0) {
 	};
-	public KeyframeSet<bool> exampleBoolAnimation = new(false) {
+	public KeyframeSet<Boolean> exampleBoolAnimation = new(false) {
 	};
 	public EventKeyframeSet<EventParams> exampleEventTimeline = [
-		new(15, PlaySomeSound)
+		new(18, PlaySomeOtherSound),
+		new(23, PlaySomeSound)
 	];
+
 	static void PlaySomeSound(in EventParams parameters) {
 		SoundEngine.PlaySound(SoundID.Duck, parameters.Player.Bottom);
 	}
