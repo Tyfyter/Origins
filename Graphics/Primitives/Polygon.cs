@@ -334,7 +334,6 @@ public class Polygon : IMoveToPegFlag {
 
 		public void Flush() {
 			Main.instance.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-			Debugging.ChatOverhead($"_____\n{triIndices.Count / 3}\n{wireframeIndices.Count / 2}\n{outlineIndices.Count / 2}");
 			if (triVerts.Count > 0) {
 				Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, triVerts.ToArray(), 0, triVerts.Count, triIndices.ToArray(), 0, triIndices.Count / 3);
 				triVerts.Clear();
