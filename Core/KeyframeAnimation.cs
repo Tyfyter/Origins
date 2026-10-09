@@ -260,8 +260,8 @@ public abstract class KeyframeAnimation {
 	}
 
 	const float button_scale = 10;
-	const float half_bri_base = 0.8660254f;
-	const float icon_scale = button_scale / (half_bri_base * 2);
+	const float half_tri_base = 0.8660254f;
+	const float icon_scale = button_scale / (half_tri_base * 2);
 	static readonly Polygon buttonRect = new(
 		new(-button_scale, -button_scale),
 		new(button_scale, -button_scale),
