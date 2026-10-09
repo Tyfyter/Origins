@@ -597,7 +597,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 			if (Main.mouseLeft && Main.mouseLeftRelease && hoveredModifier != -1 && addedEvent.TrySet(true)) {
 				Main.mouseLeftRelease = false;
 				if (keyframeIndex == -1) Insert(time, option);
-				else Do(new SetKeyframeEvent(this, i, option));
+				else Do(new SetKeyframeEvent(this, keyframeIndex, option));
 			}
 			iPos.Y += 16;
 		}
