@@ -23,7 +23,8 @@ public abstract class KeyframeAnimation {
 	public Vector2 gizmoBasePosition;
 	public bool usesSubframes;
 	readonly List<IKeyframeSet> keyframeSets;
-	readonly List<TextSnippet[]> keyframeSetNames;
+	readonly List<string> keyframeSetNames;
+	static readonly TextSnippet[] snippet = [new()];
 	float lastTime;
 	public int modifyingInterpolation = -1;
 	public bool draggingInterpolation = false;
@@ -35,11 +36,13 @@ public abstract class KeyframeAnimation {
 			if (!field.FieldType.IsAssignableTo(typeof(IKeyframeSet))) continue;
 			IKeyframeSet item = (IKeyframeSet)field.GetValue(this);
 			keyframeSets.Add(item);
-			keyframeSetNames.Add([new(field.Name)]);
+			keyframeSetNames.Add(field.Name);
 			item.Bind(this);
 			Max(ref totalLength, item.Duration);
 		}
 	}
+	public string GetName(IKeyframeSet keyframeSet) => keyframeSetNames[keyframeSets.IndexOf(keyframeSet)];
+	public IKeyframeSet GetByName(string name) => keyframeSets[keyframeSetNames.IndexOf(name)];
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref PlayingState animationControls) {
@@ -111,10 +114,11 @@ public abstract class KeyframeAnimation {
 		timelinePos.Y += 20;
 		Point minTimelineY = CurrentTimeline.TopLeft().ToPoint();
 		for (int i = 0; i < keyframeSets.Count; i++) {
+			snippet[0].Text = keyframeSetNames[i];
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
-				keyframeSetNames[i],
+				snippet,
 				timelinePos - new Vector2(TimelineWidth * 0.5f + 4, 0) - ChatManager.GetStringSize(FontAssets.ItemStack.Value, keyframeSetNames[i], Vector2.One) * new Vector2(1, 0.5f),
 				0,
 				Vector2.Zero,
@@ -201,7 +205,7 @@ public abstract class KeyframeAnimation {
 			builder.Append("\tpublic ");
 			builder.Append(keyframeSets[i].ExportType());
 			builder.Append(' ');
-			builder.Append(keyframeSetNames[i][0].Text);
+			builder.Append(keyframeSetNames[i]);
 			builder.Append(" = ");
 			builder.Append(keyframeSets[i].Export());
 			builder.Append(';');

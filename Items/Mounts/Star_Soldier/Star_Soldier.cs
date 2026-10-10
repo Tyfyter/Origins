@@ -462,8 +462,9 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 					Projectile.NewProjectile(projectileSource, gunPos, velocity, projToShoot, Damage, Knockback);
 				}
 			}
-			public readonly void DrawArm(List<DrawData> playerDrawData, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler, Vector2 bodyCenter) {
+			public readonly void DrawArm(List<DrawData> playerDrawData, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler, Vector2 bodyCenter, Player player = null) {
 				if (item is null) return;
+				player ??= Arm.player;
 				if (player is null) return;
 				GetPositions(bodyCenter, rotation, Vector2.One.Apply(spriteEffects), out Vector2 shoulderPos, out Vector2 forearmPos, out Vector2 gunPos);
 				if (spriteEffects is SpriteEffects.FlipHorizontally or SpriteEffects.FlipVertically) rotation += MathHelper.Pi;
@@ -691,7 +692,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		return false;
 	}
 
-	public static void DrawStarSoldier(List<DrawData> playerDrawData, Vector2 bodyCenter, int cMount, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler) {
+	public static void DrawStarSoldier(List<DrawData> playerDrawData, Vector2 bodyCenter, int cMount, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale, MountHandler handler, Player player = null) {
 		Vector2 directions = spriteEffects.ApplyToOrigin(Vector2.One, default);
 		float rotFlip = directions.X * directions.Y;
 		AnimationOffsets backLegOffset = default, bodyOffset = default, frontLegOffset = default;
@@ -720,7 +721,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		Rectangle frame = backLegTexture.Frame(verticalFrames: LegTextureFrames, frameY: backLegFrame);
 		Vector2 hips = bodyCenter + new Vector2(directions.X * -16, 32).Transform(rotationMatrix);
 
-		(rotFlip < 0 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter);
+		(rotFlip < 0 ? handler.altItem : handler.chosenItem).DrawArm(playerDrawData, drawColor.MultiplyRGBA(Color.Gray), rotation, spriteEffects, drawScale, handler, bodyCenter, player);
 		playerDrawData.Add(new(
 			backLegTexture,
 			hips + backLegOffset.Position * directions,
@@ -765,7 +766,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 		) {
 			shader = cMount
 		});
-		(rotFlip < 0 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter);
+		(rotFlip < 0 ? handler.chosenItem : handler.altItem).DrawArm(playerDrawData, drawColor, rotation, spriteEffects, drawScale, handler, bodyCenter, player);
 		#endregion
 	}
 	#endregion
@@ -2274,7 +2275,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		public void DrawUI(SpriteBatch spriteBatch) {
 #if EditAnimation
 			if (DebugConfig.Instance.AnimatorMode && fallPosition >= Main.LocalPlayer.Bottom.Y - GroundOffset) {
-				Landing_Animation.instance.gizmoBasePosition = Main.LocalPlayer.MountedCenter.ToScreenPosition();
+				Landing_Animation.instance.gizmoBasePosition = new(Main.LocalPlayer.MountedCenter.X - Main.LocalPlayer.direction * 24, fallPosition - 28);
+				Landing_Animation.instance.gizmoBasePosition -= Main.screenPosition;
 				Landing_Animation.instance.DrawEditorUI(spriteBatch, ref fallingStarSoldier.fallAnimationTime, ref animationControls);
 			}
 #endif
@@ -2342,10 +2344,10 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		public void DrawFallingStar(List<DrawData> playerDrawData, Player drawPlayer, Vector2 drawPosition, Color drawColor, float rotation, SpriteEffects spriteEffects, float drawScale) {
 			if (fallingStarSoldier is Star_Soldier.MountHandler fallingHandler) {
 				drawPosition.X -= drawPlayer.direction * 24;
-				drawPosition.Y = fallPosition - Main.screenPosition.Y;
-				float shoulderRotation = 0;
-				float forearmRotation = 0;
-				float gunRotation = 0;
+				drawPosition.Y = fallPosition - 12 - Main.screenPosition.Y;
+				float shoulderRotation = Landing_Animation.instance.shoulderRotation.GetCurrentValue(fallingHandler.fallAnimationTime);
+				float forearmRotation = Landing_Animation.instance.forearmRotation.GetCurrentValue(fallingHandler.fallAnimationTime);
+				float gunRotation = Landing_Animation.instance.gunRotation.GetCurrentValue(fallingHandler.fallAnimationTime);
 				if (drawPlayer.direction < 0) {
 					shoulderRotation = MathHelper.Pi - shoulderRotation;
 					forearmRotation = MathHelper.Pi - forearmRotation;
@@ -2365,7 +2367,8 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 					rotation,
 					spriteEffects,
 					drawScale,
-					fallingHandler
+					fallingHandler,
+					drawPlayer
 				);
 			}
 		}
@@ -3428,26 +3431,30 @@ public class Surf_Music : ModSceneEffect {
 }
 public class Landing_Animation : KeyframeAnimation {
 	public static Landing_Animation instance = new();
-	public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(Vector2.Zero, 0.5f)) {
+	public KeyframeSet<AnimationOffsets> wholeOffsetAnimation = new(new(Vector2.Zero, 0f)) {
 		new(3, new(new(0f, 8f), 0.5f), [new SinEaseIn(), new Exponential(2f)]),
 		new(30, new(Vector2.Zero, 0.5f), [new Exponential(2f)]),
 		new(45, default, [new Exponential(0.5f)])
 	};
-	public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(default) {
+	public KeyframeSet<AnimationOffsets> bothLegsAnimation = new(default, new ChildOfOffset<AnimationOffsets>("wholeOffsetAnimation", new Vector2(-16, 32))) {
 		new(3, new(new(0f, -8f), -0.5f), []),
 		new(30, new(Vector2.Zero, -0.5f), [new Exponential(2f)]),
 		new(45, default, [new Exponential(0.5f)])
 	};
-	public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new(default) {
+	public KeyframeSet<AnimationOffsets> backLegOffsetAnimation = new(default, new ChildOfOffset<AnimationOffsets>("bothLegsAnimation")) {
 	};
-	public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new(default) {
+	public KeyframeSet<AnimationOffsets> frontLegOffsetAnimation = new(default, new ChildOfOffset<AnimationOffsets>("bothLegsAnimation")) {
 	};
 	public KeyframeSet<BackLegFrame> backLegFrameAnimation = new(0) {
 		new(8, 3, new StepInterpolation<BackLegFrame>())
 	};
 	public KeyframeSet<FrontLegFrame> frontLegFrameAnimation = new(0) {
 	};
-	public KeyframeSet<Boolean> exampleBoolAnimation = new(false) {
+	public KeyframeSet<Rotation> shoulderRotation = new(0, new ChildOfOffset<AnimationOffsets>("wholeOffsetAnimation", new(new(-4, -20), -2.3127437f))) {
+	};
+	public KeyframeSet<Rotation> forearmRotation = new(0, new ChildOfOffset<Rotation>("shoulderRotation", new(new(0, -32.6f), -1.6380026f))) {
+	};
+	public KeyframeSet<Rotation> gunRotation = new(0, new ChildOfOffset<Rotation>("forearmRotation", new(new(0, -25.6f), 0.7616427f))) {
 	};
 	public EventKeyframeSet<EventParams> exampleEventTimeline = [
 		new(18, PlaySomeOtherSound),
@@ -3461,7 +3468,7 @@ public class Landing_Animation : KeyframeAnimation {
 		SoundEngine.PlaySound(SoundID.DrumTomMid, parameters.Player.Bottom);
 	}
 	public record struct EventParams(Player Player);
-	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler {
+	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler, IKeyframeOffsetModifier {
 		public Vector2 Position = Position;
 		public float Rotation = Rotation;
 		public static KeyframeSet<AnimationOffsets>.IInterpolation Linear { get; } = new Interpolation();
@@ -3474,10 +3481,11 @@ public class Landing_Animation : KeyframeAnimation {
 			public readonly override string ToString() => "Interpolated";
 		}
 		public static AnimationOffsets operator +(AnimationOffsets a, AnimationOffsets b) => new(a.Position + b.Position, a.Rotation + b.Rotation);
-		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref GizmoTracker gizmoTracker, Vector2 offset) {
+		public static void DrawGizmo(SpriteBatch spriteBatch, ref AnimationOffsets value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
 			KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
-			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, value.Position * GizmoZoom + offset, 32);
+			KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);
 		}
+		public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(Position, Rotation);
 		public static string Export(AnimationOffsets value) => value == default ? "default" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f)";
 	}
 	public record struct BackLegFrame(int Frame) : IAnimatableSpriteFrame<BackLegFrame> {
