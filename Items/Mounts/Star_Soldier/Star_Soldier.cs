@@ -3454,7 +3454,7 @@ public class Landing_Animation : KeyframeAnimation {
 	};
 	public KeyframeSet<Rotation> forearmRotation = new(0, new ChildOfOffset<Rotation>("shoulderRotation", new(new(0, -32.6f), -1.6380026f))) {
 	};
-	public KeyframeSet<Rotation> gunRotation = new(0, new ChildOfOffset<Rotation>("forearmRotation", new(new(0, -25.6f), 0.7616427f))) {
+	public KeyframeSet<Rotation> gunRotation = new(0, new ChildOfOffset<Rotation>("forearmRotation", new(new(0, -25.6f), -0.8091537f))) {
 	};
 	public EventKeyframeSet<EventParams> exampleEventTimeline = [
 		new(18, PlaySomeOtherSound),
