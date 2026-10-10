@@ -161,6 +161,7 @@ WORLD GENERATION:
 (§, %2, #2) Ashen Factory !!!
 (§, %2, X) Ashen Outpost !!!
 (#2) Ashen Scrapyard !!!
+(X) Bloody Abyss
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
@@ -225,6 +226,7 @@ ENEMY NPCS:
 (^) Cleaver
 (^) Cloud Elemental
 (^) Conehead Zombie
+(X) Corpus Wolf
 (X) Corrupt Reaper
 (^) Cranivore
 (X) Crawbaby
@@ -282,7 +284,6 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
-(X) Spiteful Flesh
 (^) Springjumper
 (X) Synapod
 (X) Tubefish
@@ -297,8 +298,10 @@ ENEMY NPCS:
 (X) Beckonbug
 (^) Brine Latcher
 (^) Brine Serpent
+(X) Coagaladin
 (^) Carpalfish
 (X) Core Keeper
+(X) Crimson Evangelist
 (^) Defiled Asphyxiator
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -311,7 +314,9 @@ ENEMY NPCS:
 (X) Esophageel
 (X) False Geometry
 (X) Hive Mind
+(X) Immunophage
 (^) Leaf Snapper
+(X) Leukocyte
 (X) Madman
 (^) Malfunctioning Missile
 (X) Mist Avatar
@@ -401,9 +406,6 @@ STATUS EFFECTS:
 (X) Haloperidol
 (^) Morphine
 (X) Naloxone
-(X) Nausea
-(X) Psychosis
-(X) Short Breath
 (^) Solvent Tolerance
 (X) Symbiosis
 (^) Totally Safe
@@ -411,15 +413,21 @@ STATUS EFFECTS:
 (^) Vigil
 (^) Wrapped Up
 
+(X) Appetite Loss
 (^) Cavitation
 (^) Crazy!
 (^) Impeding Shrapnel
+(X) Infection
 (^) Mana Buffer
 (^) Miasma
+(X) Nausea
+(X) Organ Damage
 (X) Quantum Vitiation
 (^) Rasterized
+(X) Psychosis
 (^) Shadefire
 (^) Shimmering?
+(X) Short Breath
 (^) Static Shock
 (^) Torn
 (^) Toxic Shock
@@ -531,6 +539,7 @@ ARMOR:
 (^) Blast Armor
 (^) Chambersite Commander Armor
 (X) Mimic Armor
+(X) Mk. 3 CRISIS Armor
 (^) Necromancer Armor
 (^) Sapphire Mediator Armor
 (X) Scrapburner Armor
@@ -650,6 +659,7 @@ ACCESSORIES:
 (^) Missile Armcannon
 (^) Mithrafin
 (^) Molten Gun Magazine
+(X) Mother's Ward
 (X) Netlace
 (^) Nightsky Cloak
 (^) Nitro Crate
@@ -872,6 +882,7 @@ TOOLS:
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
 (^) Brine Bucket
+(X) Critter Lure
 (X) Handler's Guide to Synapods
 (^) Multi-Bucket
 (^) Oil Absorbant Sponge
@@ -1301,6 +1312,7 @@ TILES:
 (^) Baryte
 (^) Batholith
 (^) Bleeding Obsidian
+(X) Blistering Lesion
 (^) Bomb Trap
 (^) Brittle Quartz
 (^) Brown Ice
@@ -1313,6 +1325,10 @@ TILES:
 (^) Chambersite Gemspark
 (^) Chambersite Gemstone
 (X) Chromtain Ore
+(X) D:set_46/Tile/Encoded_Defiled_Grass
+(X) D:set_46/Tile/Encoded_Defiled_Jungle_Grass
+(X) D:set_46/Tile/Encoded_Defiled_Regolith
+(X) D:set_46/Tile/Encoded_Defiled_Stone
 (^) Defiled Cactus
 (^) Defiled Grass
 (^) Defiled Jungle Grass
@@ -1342,6 +1358,10 @@ TILES:
 (^) Peat Moss Block
 (^) Primordial Permafrost
 (^) Quartz Block
+(X) Rec0d# D3f71 Grass
+(X) Rec0d# D3f71 Jungle_Grass
+(X) Rec0d# D3f71 Regolith
+(X) Rec0d# D3f71 Stone
 (X) Residue Block
 (^) Riven Cactus
 (^) Riven Grass
@@ -1356,6 +1376,7 @@ TILES:
 (^) Sootgrass
 (^) Sootsand
 (X) Space Goo
+(X) Spiteful Flesh Block
 (^) Spug Flesh
 (X) Spug Flesh Brick
 (^) Super Sludge
@@ -1453,6 +1474,7 @@ TILES:
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
+(X) Calming Incense
 (^) Cargo Elevator Door
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
@@ -1530,6 +1552,8 @@ TILES:
 (^) Background Door
 (^) Beacon Light
 (^) Brineglow Vine
+(X) D:set_46/Tile/Encoded_Hardware_Bundle
+(X) D:set_46/Tile/Encoded_Server_Stack
 (^) Defiled Altar
 (^) Defiled Foliage
 (々) Defiled Heart
@@ -1560,6 +1584,8 @@ TILES:
 (X) Psymanti Banner
 (X) Psymanti Pottery
 (^) Radio Broadcaster
+(X) Rec0d# C0Rr#PT3 Tree
+(X) Rec0d# D3f71 Bundl?
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
@@ -1674,6 +1700,7 @@ MATERIALS:
 (^) Magic Hair Spray
 (^) NE-8
 (^) Ocotillo Flower
+(X) Opium Bottle
 (^) Parasitic Powder
 (^) Riven Carapace
 (^) Riven Seeds
@@ -1702,9 +1729,14 @@ MATERIALS:
 (^) Busted Servo
 (^) Geothermal Sludge
 (X) Memory Fragment
+(X) Mutagenic Flesh
 (^) Nova Fragment
 (^) Power Core
 (^) Rotor
+(X) Scrappy Exosuit Legging
+(X) Scrappy Headpiece
+(X) Scrappy Mechanical Arm
+(X) Scrappy Robot Core
 (X) Soul of Spite
 
 (X) Alien Conduit
@@ -1758,6 +1790,7 @@ CRITTERS AND FISH:
 (^) Bilemouth
 (^) Bobbit Worm
 (^) Bonehead Jellyfish
+(X) Fairy Koi
 (^) Fiberbass
 (^) Polyeel
 (^) Prikish
@@ -1790,6 +1823,7 @@ CONSUMABLES:
 (X) Mega Mojo Flask
 (^) Mojo Flask
 (^) Mojo Harvest
+(X) Panacea Potion
 (#, ^2) Potion of Projection
 (^) Protean Potion
 (^) Purification Potion
@@ -1823,16 +1857,25 @@ CONSUMABLES:
 (^5) Blood Pack
 (^5) Bottomless Multi-Med
 (^5) Brightsee
+(X) Broad-Spectrum Antibiotic
+(X) Estrogen
 (X) Fentanyl
 (^5) Fire Band
 (X) Haloperidol
+(X) Hyoscyamine
+(X) Ibuprofen
+(X) Imfinzi
+(X) Imuran
 (^5) Medicinal Acid
 (X) Modafinil
 (^5) Morphine
 (^5) Multi-Med
 (X) Naloxone
+(X) Painkiller
 (^5) Rasterwrap
 (^5) Sanguis Pack
+(X) Sublocade
+(X) Testosterone
 (^5) Unmarked Antidote
 
 (X) Aqueoua Ribeye
