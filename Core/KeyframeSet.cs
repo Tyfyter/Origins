@@ -927,7 +927,7 @@ public static class KeyframeTypes {
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref Vector2 value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
 			Vector2 scale = GizmoZoom;
 			if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) value += (Main.MouseScreen - oldMousePos) / scale;
-			Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(offset.Position);
+			Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(ApplyGizmoZoom(offset.Position));
 			bool isHovering = rect.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
 			Color color = Color.White;
 			if (!isHovering) color *= 0.5f;
@@ -963,11 +963,12 @@ public static class KeyframeTypes {
 			new(-1, 1)
 		);
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref bool value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
-			handle.ResetVertices().Scale(8).Rotate(MathHelper.PiOver4).Translate(offset.Position);
+			Vector2 zoomedPos = ApplyGizmoZoom(offset.Position);
+			handle.ResetVertices().Scale(8).Rotate(MathHelper.PiOver4).Translate(zoomedPos);
 			bool isHovering = handle.Contains(Main.MouseScreen);
 
 			handle.MultiplyColor(0.5f + isHovering.Mul(0.5f)).DrawOutline();
-			if (value) handle.Scale(6f / 8, offset.Position).Draw(KeyframeAnimation.primitiveBatch);
+			if (value) handle.Scale(6f / 8, zoomedPos).Draw(KeyframeAnimation.primitiveBatch);
 
 			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) value = !value;
 		}
@@ -981,7 +982,7 @@ public static class KeyframeTypes {
 	static float rotationHandleOffset;
 	public static void DrawRotationGizmo(SpriteBatch spriteBatch, ref float value, ref GizmoTracker gizmoTracker, GizmoOffset offset, float size) {
 		float scale = GizmoZoom.X;
-		Vector2 pos = offset.Position;
+		Vector2 pos = ApplyGizmoZoom(offset.Position);
 		pos = pos.Floor();
 		if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) value = (Main.MouseScreen - pos).ToRotation() + rotationHandleOffset;
 		float offsetValue = offset.Rotation;
@@ -1003,16 +1004,20 @@ public static class KeyframeTypes {
 	static float scaleHandleOffset;
 	public static void DrawScaleGizmo(SpriteBatch spriteBatch, ref float value, ref GizmoTracker gizmoTracker, GizmoOffset offset, float size) {
 		const float handle_thickness = 2;
-		Vector2 pos = offset.Position;
-		float distSQ = (Main.MouseScreen - pos).LengthSquared();
-		if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) value = scaleHandleStart * (float.Sqrt(distSQ) / scaleHandleOffset);
+		Vector2 pos = ApplyGizmoZoom(offset.Position);
+		float dist = (Main.MouseScreen - pos).Length();
+		float displayScale = 1;
+		if (gizmoTracker.IsCurrent) {
+			displayScale = dist / scaleHandleOffset;
+			if (Main.MouseScreen != oldMousePos) value = scaleHandleStart * displayScale;
+		}
 
-		bool isHovering = gizmoTracker.IsCurrent || (distSQ >= (size - handle_thickness).Square() && distSQ <= (size + handle_thickness).Square());
-		ShaderCircle.Draw(pos, size + handle_thickness, Color.White * (0.5f + isHovering.Mul(0.5f)), size - handle_thickness);
+		bool isHovering = gizmoTracker.IsCurrent || (dist >= size - handle_thickness && dist <= size + handle_thickness);
+		ShaderCircle.Draw(pos, size * displayScale + handle_thickness, Color.White * (0.5f + isHovering.Mul(0.5f)), size * displayScale - handle_thickness);
 
 		if (gizmoTracker.CheckSetCurrent(isHovering, Keybindings.ScaleGizmo)) {
 			scaleHandleStart = value;
-			scaleHandleOffset = float.Sqrt(distSQ);
+			scaleHandleOffset = dist;
 		}
 		gizmoTracker.Advance();
 	}
@@ -1029,6 +1034,7 @@ public static class KeyframeTypes {
 		0);
 	}
 	public static Vector2 GizmoZoom => new(Main.ForcedMinimumZoom * MathHelper.Clamp(Main.GameZoomTarget, 1f, 2f));
+	public static Vector2 ApplyGizmoZoom(Vector2 pos) => (pos - Main.ScreenSize.ToVector2() * 0.5f) * GizmoZoom + Main.ScreenSize.ToVector2() * 0.5f;
 	public static Vector2 oldMousePos;
 }
 public static class KeyframeModifiers {
