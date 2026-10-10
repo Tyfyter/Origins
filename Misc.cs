@@ -3295,7 +3295,7 @@ namespace Origins {
 		}
 		static class FlagsCache<T> where T : struct, Enum {
 			public static T[] possibleFlags = Enum.GetValues<T>().Where(f => !f.Equals(default(T))).ToArray();
-		} 
+		}
 		[Pure]
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
 			T[] possibleFlags = FlagsCache<T>.possibleFlags;
@@ -4959,7 +4959,7 @@ namespace Origins {
 		public static bool IsType<TItem>(this Item item) where TItem : ModItem => item.type == ModContent.ItemType<TItem>();
 		public static void MakeExplosive(this Item item, DamageClass? defaultOverride = null) {
 			if (item.DamageType == DamageClass.Default) item.DamageType = defaultOverride ?? DamageClasses.Explosive;
-			else item.DamageType = DamageClasses.ExplosiveVersion[item.DamageType];
+			else if (!item.DamageType.CountsAsClass(DamageClasses.Explosive)) item.DamageType = DamageClasses.ExplosiveVersion[item.DamageType];
 		}
 	}
 	public static class NPCExtensions {
@@ -6384,7 +6384,7 @@ namespace Origins {
 		public static bool IsType<TProj>(this Projectile proj) where TProj : ModProjectile => proj.type == ModContent.ProjectileType<TProj>();
 		public static void MakeExplosive(this Projectile proj, DamageClass? defaultOverride = null) {
 			if (proj.DamageType == DamageClass.Default) proj.DamageType = defaultOverride ?? DamageClasses.Explosive;
-			else proj.DamageType = DamageClasses.ExplosiveVersion[proj.DamageType];
+			else if (!proj.DamageType.CountsAsClass(DamageClasses.Explosive)) proj.DamageType = DamageClasses.ExplosiveVersion[proj.DamageType];
 		}
 	}
 	public static class ContentExtensions {
@@ -6834,7 +6834,7 @@ namespace Origins {
 				HostileEntityIterator<NPC>.IsHostile = NPCIsHostile;
 				HostileEntityIterator<Projectile>.IsHostile = ProjectileIsHostile;
 				static bool PlayerIsHostile(Player other, Player toPlayer) => other.InOpposingTeam(toPlayer) && other != toPlayer;
-				static bool NPCIsHostile(NPC npc, Player toPlayer) => !npc.friendly && !NPCID.Sets.CountsAsCritter[npc.type]&& !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type];
+				static bool NPCIsHostile(NPC npc, Player toPlayer) => !npc.friendly && !NPCID.Sets.CountsAsCritter[npc.type] && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type];
 				static bool ProjectileIsHostile(Projectile projectile, Player toPlayer) => projectile.hostile || (Main.player[projectile.owner].InOpposingTeam(toPlayer) && projectile.owner != toPlayer.whoAmI);
 			}
 		}
