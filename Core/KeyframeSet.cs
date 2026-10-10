@@ -1061,8 +1061,8 @@ public static class KeyframeModifiers {
 			handle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
 			if (gizmoTracker.IsCurrent && lastMouse.TrySet(mouse)) {
 				handleX = mouse.X + handleOffset.X;
-				Clamp(ref handleX, 0, 1);
-				Exponent = float.Log(1 - (mouse.Y - handleOffset.Y), handleX);
+				Clamp(ref handleX, float.Epsilon, float.BitDecrement(1));
+				Exponent = float.Max(float.Log(1 - float.Clamp(mouse.Y - handleOffset.Y, float.Epsilon, float.BitDecrement(1)), handleX), float.Epsilon);
 			}
 			if (Main.mouseLeft && Main.mouseLeftRelease && gizmoTracker.CheckSetCurrent(isHovering, null)) {
 				handleOffset = new Vector2(handleX, handleY) - mouse;
