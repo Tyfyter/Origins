@@ -2198,11 +2198,14 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		public void Update(Player player) {
 			if (leftClickSelection is null || rightClickSelection is null) return;
 			MathUtils.LinearSmoothing(ref fadeIconsOut, 0, 1f / 60);
-			fallingStarSoldier ??= new() {
-				chosenItem = new() { item = new(leftClickSelection.Type), Index = 0 },
-				altItem = new() { item = new(rightClickSelection.Type), Index = 1 },
-				fallAnimationTime = 0
-			};
+			if (fallingStarSoldier is null) {
+				//Sound here
+				fallingStarSoldier ??= new() {
+					chosenItem = new() { item = new(leftClickSelection.Type), Index = 0 },
+					altItem = new() { item = new(rightClickSelection.Type), Index = 1 },
+					fallAnimationTime = 0
+				};
+			}
 			fallPosition += 48;
 			int lastAnimationTime = fallingStarSoldier.fallAnimationTime;
 			if (fallPosition > player.Bottom.Y - GroundOffset) {
