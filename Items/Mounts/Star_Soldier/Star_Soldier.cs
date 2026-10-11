@@ -2199,7 +2199,9 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			if (leftClickSelection is null || rightClickSelection is null) return;
 			MathUtils.LinearSmoothing(ref fadeIconsOut, 0, 1f / 60);
 			if (fallingStarSoldier is null) {
-				//Sound here
+				//SoundEngine.PlaySound(Origins.Sounds.PackhunterDeath.WithPitch(-1.5f), player.Center);
+				SoundEngine.PlaySound(Origins.Sounds.SonarPing.WithPitch(-0.2f), player.Center);
+				SoundEngine.PlaySound(Origins.Sounds.StarLaunch.WithPitch(-0.9f), player.Center);
 				fallingStarSoldier ??= new() {
 					chosenItem = new() { item = new(leftClickSelection.Type), Index = 0 },
 					altItem = new() { item = new(rightClickSelection.Type), Index = 1 },
@@ -2215,9 +2217,6 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				if (animationControls.playing || !DebugConfig.Instance.AnimatorMode)
 #endif
 				fallingStarSoldier.fallAnimationTime++;
-				/*if (Main.rand.NextBool(15)) {
-					SoundEngine.PlaySound(Origins.Sounds.Alarm1.WithPitchRange(2.8f, 3.2f), player.Center);
-				}*/
 			}
 			Landing_Animation.instance.exampleEventTimeline.Update(new(player), lastAnimationTime, fallingStarSoldier.fallAnimationTime);
 #if EditAnimation
@@ -2458,12 +2457,9 @@ public class Star_Soldier_Wagon_Buff : ModBuff {
 	}
 }
 public class Star_Soldier_Cooldown : ModBuff {
-	struct DebugFlag : IBroken {
-		static string IBroken.BrokenReason => "Set back to intended values";
-	}
-	public static int IntactCooldown => /*6*/0 * 15;
-	public static int DamagedCooldown => /*6*/0 * 140;
-	public static int ForceDismountCooldown => /*6*/0 * 60 * 3;
+	public static int IntactCooldown => 60 * 15;
+	public static int DamagedCooldown => 60 * 140;
+	public static int ForceDismountCooldown => 60 * 60 * 3;
 	public override string Texture => "Origins/Buffs/Star_Soldier_Cooldown";
 	public override void SetStaticDefaults() {
 		Main.debuff[Type] = true;

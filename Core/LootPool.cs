@@ -435,6 +435,7 @@ public class Ashen_Lab : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Famine>()).OncePerWorld());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Classified_Blueprint>(), 3));
 		AddRule(ItemDropRule.Common(TileItem.ItemType<Solar_Battery>(), 5));
 		AddRule(ItemDropRule.Common(TileItem.ItemType<Gas_Generator>(), 5));
