@@ -88,6 +88,7 @@ namespace Origins {
 			public static SoundStyle ScannerPing = new("Origins/Sounds/Custom/ScannerPing");
 			public static SoundStyle DefileUp = new("Origins/Sounds/Custom/Defile_Up");
 			public static SoundStyle BuletCasingDrop = new("Origins/Sounds/Custom/BuletCasingDrop");
+			public static SoundStyle StarLand = new("Origins/Sounds/Custom/StarLanding");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;

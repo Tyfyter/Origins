@@ -170,7 +170,7 @@ namespace Origins.Tiles.Ashen {
 				});
 			}
 		}
-		int Repairboy.IReparableTile.RepairboyLimit => 7;
+		int Repairboy.IReparableTile.RepairboyLimit => 3;
 		bool Repairboy.IReparableTile.NeedsRepair(int i, int j, ref float cost, ref Rectangle hitbox) => true;
 		void Repairboy.IReparableTile.Repair(int i, int j) { }
 		bool Repairboy.IReparableTile.ShouldAlwaysHaveRepairboys => true;

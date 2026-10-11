@@ -1426,6 +1426,12 @@ TILES:
 (^) Type-II Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
+(X) Aether Chabudai
+(X) Aether Crystal Strand
+(X) Aether Furniture
+(X) Aether Massage Table
+(X) Aether Sculpture
+(X) Aether Vase
 (^) Air Vent
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
