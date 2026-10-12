@@ -72,7 +72,7 @@ public class Landing_Animation : KeyframeAnimation {
 	};
 	public EventKeyframeSet<EventParams> exampleEventTimeline = [
 		new(1, LandingSound),
-		new(5, HidePlayer),
+		new(3, HidePlayer),
 		new(37, PleaseNameThisSound)
 	];
 
