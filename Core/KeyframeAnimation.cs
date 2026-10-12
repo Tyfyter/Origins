@@ -47,6 +47,8 @@ public abstract class KeyframeAnimation {
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref PlayingState animationControls) {
 		gizmoTracker.ResetCurrent();
+		float hoveredTime = ScreenPosToTimeline(Main.mouseX);
+		float hoveredTimeQuantized = usesSubframes ? hoveredTime : float.Round(hoveredTime);
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 12;
 		{
@@ -143,6 +145,8 @@ public abstract class KeyframeAnimation {
 			hoverExtend || gizmoTracker.IsCurrent ? Color.Orange : Color.Orange * 0.5f
 		);
 		gizmoTracker.CheckSetCurrent(hoverExtend, null);
+		bool isTimelineHovered = CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen);
+		bool hoveringTimelineControl = hoverExtend;
 		if (gizmoTracker.IsCurrent) {
 			float diff = extendAnimationHandle.Contains(Main.MouseScreen) ? 0 : (Main.mouseX - extendAnimationHandle.Center().X);
 			if (diff != 0) {
@@ -153,11 +157,66 @@ public abstract class KeyframeAnimation {
 					Max(ref totalLength, minLength);
 				}
 			}
-		} else if (CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen)) {
-			Main.LocalPlayer.mouseInterface = true;
-			if (Main.mouseLeft) currentTime.Value = (int)float.Round(ScreenPosToTimeline(Main.mouseX));
 		}
 		gizmoTracker.Advance();
+
+		if (animationControls.loopStart.HasValue) {
+			extendAnimationHandle = new((int)TimelineToScreenPos(animationControls.loopStart.Value) - 2, minTimelineY.Y - 2, 4, (int)(timelinePos.Y - minTimelineY.Y - 2));
+			hoverExtend = gizmoTracker.IsCurrent || (!hoveringTimelineControl && extendAnimationHandle.Contains(Main.MouseScreen));
+			Color bluePortal = new(64, 160, 255);
+			if (!hoverExtend) bluePortal *= 0.5f;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				extendAnimationHandle,
+				bluePortal
+			);
+			gizmoTracker.CheckSetCurrent(hoverExtend, null);
+			hoveringTimelineControl |= hoverExtend;
+			if (gizmoTracker.IsCurrent) animationControls.loopStart = hoveredTimeQuantized;
+			else if (hoverExtend && Main.mouseRight && Main.mouseRightRelease) animationControls.loopStart = null;
+			gizmoTracker.Advance();
+		}
+		if (animationControls.loopEnd.HasValue) {
+			extendAnimationHandle = new((int)TimelineToScreenPos(animationControls.loopEnd.Value) - 2, minTimelineY.Y - 2, 4, (int)(timelinePos.Y - minTimelineY.Y - 2));
+			hoverExtend = gizmoTracker.IsCurrent || (!hoveringTimelineControl && extendAnimationHandle.Contains(Main.MouseScreen));
+			Color orangePortal = new(255, 160, 32);
+			if (!hoverExtend) orangePortal *= 0.5f;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				extendAnimationHandle,
+				orangePortal
+			);
+			gizmoTracker.CheckSetCurrent(hoverExtend, null);
+			hoveringTimelineControl |= hoverExtend;
+			if (gizmoTracker.IsCurrent) animationControls.loopEnd = hoveredTimeQuantized;
+			else if (hoverExtend && Main.mouseRight && Main.mouseRightRelease) {
+				if (!animationControls.loopStart.HasValue) animationControls.loopStart = animationControls.loopEnd;
+				animationControls.loopEnd = null;
+			}
+			gizmoTracker.Advance();
+		}
+		if (!hoveringTimelineControl && isTimelineHovered) {
+			Main.LocalPlayer.mouseInterface = true;
+			if (Main.mouseLeft) currentTime.Value = hoveredTime;
+		}
+		if (!hoveringTimelineControl && isTimelineHovered && Main.mouseRight && Main.mouseRightRelease) {
+			switch ((animationControls.loopStart, animationControls.loopEnd)) {
+				case (null, null):
+				animationControls.loopEnd = hoveredTimeQuantized;
+				break;
+				case (null, float):
+				animationControls.loopStart = hoveredTimeQuantized;
+				break;
+				case (float, null):
+				animationControls.loopEnd = hoveredTimeQuantized;
+				break;
+				case (float start, float):
+				if (hoveredTimeQuantized < start) animationControls.loopStart = hoveredTimeQuantized;
+				else animationControls.loopEnd = hoveredTimeQuantized;
+				break;
+			}
+			if (animationControls.loopEnd.HasValue && animationControls.loopStart.HasValue && animationControls.loopStart > animationControls.loopEnd) Utils.Swap(ref animationControls.loopStart, ref animationControls.loopEnd);
+		}
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
 			new Rectangle((int)TimelineToScreenPos(currentTime) - 1, minTimelineY.Y - 2, 2, (int)(timelinePos.Y - minTimelineY.Y - 2)),
@@ -263,6 +322,37 @@ public abstract class KeyframeAnimation {
 	public struct PlayingState {
 		public bool playing;
 		public bool forceLoop;
+		public bool? overrideAnimatorMode;
+		public float? loopStart;
+		public float? loopEnd;
+		public void Play(Time time, float duration, float speed) {
+			if (overrideAnimatorMode ?? DebugConfig.Instance.AnimatorMode) {
+				if (Keybindings.PlayPauseAnimation.JustPressed) playing = !playing;
+				if (playing) {
+					if (forceLoop) {
+						speed = speed.Abs(out int dir);
+						float start = loopStart ?? 0;
+						if (loopEnd.HasValue) duration = loopEnd.Value - start;
+						float t = time.Value - start;
+						switch (dir) {
+							case 1:
+							t.CycleUp(duration, speed);
+							break;
+							case -1:
+							t.CycleDown(duration, speed);
+							break;
+						}
+						time.Value = t + start;
+					} else {
+						time.Value += speed;
+					}
+				}
+			} else {
+				time.Value += speed;
+			}
+		}
+		public void Play(ref float time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
+		public void Play(ref int time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
 	}
 
 	const float button_scale = 10;

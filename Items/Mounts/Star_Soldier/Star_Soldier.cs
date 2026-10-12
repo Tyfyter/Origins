@@ -922,6 +922,7 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		Star_Soldier_Weapon rightClickSelection;
 		float fallPosition;
 		public Star_Soldier.MountHandler fallingStarSoldier;
+		public bool startedLanding;
 		public bool hidePlayer;
 		static KeyframeAnimation.PlayingState animationControls;
 		public void Update(Player player) {
@@ -939,19 +940,13 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 			}
 			fallPosition += 48;
 			int lastAnimationTime = fallingStarSoldier.fallAnimationTime;
-			if (fallPosition > player.Bottom.Y - GroundOffset) {
+			if (startedLanding || fallPosition > player.Bottom.Y - GroundOffset) {
+				startedLanding = true;
 				fallPosition = player.Bottom.Y - GroundOffset;
-#if EditAnimation
-				if (DebugConfig.Instance.AnimatorMode && Keybindings.PlayPauseAnimation.JustPressed) animationControls.playing = !animationControls.playing;
-				if (animationControls.playing || !DebugConfig.Instance.AnimatorMode)
-#endif
-				fallingStarSoldier.fallAnimationTime++;
+				animationControls.Play(ref fallingStarSoldier.fallAnimationTime, Landing_Animation.instance);
+				Landing_Animation.instance.exampleEventTimeline.Update(new(player, this), lastAnimationTime, fallingStarSoldier.fallAnimationTime);
 			}
 			if (hidePlayer) player.OriginPlayer().mountOnly = true;
-			Landing_Animation.instance.exampleEventTimeline.Update(new(player, this), lastAnimationTime, fallingStarSoldier.fallAnimationTime);
-#if EditAnimation
-			if (animationControls.forceLoop && fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) fallingStarSoldier.fallAnimationTime = 0;
-#endif
 			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
 				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
 				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
