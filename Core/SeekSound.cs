@@ -16,13 +16,29 @@ public static class SeekSound {
 	/// <param name="style"> The sound style that describes everything about the played sound. </param>
 	/// <param name="position"> An optional 2D position to play the sound at. When null, this sound will be heard everywhere. </param>
 	/// <param name="updateCallback"> A callback for customizing the behavior of the created sound instance, like tying its existence to a projectile using <see cref="T:Terraria.Audio.ProjectileAudioTracker" />. </param>
-	public static SlotId PlaySound(in SoundStyle style, uint seek, Vector2? position = null, SoundUpdateCallback updateCallback = null) {
+	public static SlotId PlaySound(in SoundStyle style, TimeSpan seek, Vector2? position = null, SoundUpdateCallback updateCallback = null) {
 		if (Main.dedServ || !SoundEngine.IsAudioSupported) {
 			return SlotId.Invalid;
 		}
+		SoundEffect soundEffect = style.GetSoundEffect();
+		TimeSpan duration = soundEffect.Duration;
+		if (seek >= duration) return SlotId.Invalid;
+		return PlaySound(style, (uint)(seek.Divide(duration) * soundEffect.GetHandle().PlayLength), position, updateCallback);
+	}
+	/// <summary>
+	/// Attempts to play a sound with the provided sound style, and returns a valid <see cref="T:ReLogic.Utilities.SlotId" /> handle to it on success.
+	/// </summary>
+	/// <param name="style"> The sound style that describes everything about the played sound. </param>
+	/// <param name="position"> An optional 2D position to play the sound at. When null, this sound will be heard everywhere. </param>
+	/// <param name="updateCallback"> A callback for customizing the behavior of the created sound instance, like tying its existence to a projectile using <see cref="T:Terraria.Audio.ProjectileAudioTracker" />. </param>
+	public static SlotId PlaySound(in SoundStyle style, uint seekSamples, Vector2? position = null, SoundUpdateCallback updateCallback = null) {
+		if (Main.dedServ || !SoundEngine.IsAudioSupported) {
+			return SlotId.Invalid;
+		}
+		if (seekSamples >= style.GetSoundEffect().GetHandle().PlayLength) return SlotId.Invalid;
 		uint? oldVal = Handler.overridePlayBegin;
 		try {
-			Handler.overridePlayBegin = seek;
+			Handler.overridePlayBegin = seekSamples;
 			return SoundPlayer_Play(in style, position, updateCallback);
 		} finally {
 			Handler.overridePlayBegin = oldVal;
@@ -89,7 +105,6 @@ public static class SeekSound {
 				return;
 			}
 			ref FAudio.FAudioBuffer audioBuffer = ref self.Style.GetSoundEffect().GetHandle();
-			if (audioBuffer.PlayBegin >= audioBuffer.PlayLength) return;
 			using (audioBuffer.PlayLength.ScopedOverride(audioBuffer.PlayLength - (overridePlayBegin - audioBuffer.PlayBegin))) {
 				using (audioBuffer.PlayBegin.ScopedOverride(overridePlayBegin)) {
 					orig(self);
@@ -107,7 +122,6 @@ public static class SeekSound {
 		public delegate bool _UsesMusicPitch(in SoundStyle style);
 		public static FastFieldInfo<SoundPlayer, SlotVector<ActiveSound>> _trackedSounds;
 		public override void OnLoad() {
-			var aaaaaaaaa = typeof(SoundStyle).GetMethod(nameof(WithSelectedVariant), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 			WithSelectedVariant = typeof(SoundStyle).GetMethod(nameof(WithSelectedVariant), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<_WithSelectedVariant>();
 			get_UsesMusicPitch = typeof(SoundStyle).GetProperty("UsesMusicPitch", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetMethod.CreateDelegate<_UsesMusicPitch>();
 		}
