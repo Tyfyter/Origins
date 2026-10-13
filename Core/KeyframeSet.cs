@@ -13,6 +13,7 @@ using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.Core.KeyframeTypes;
 
@@ -119,7 +120,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		));
 		return keyframes.Count - 1;
 	}
-	public override string Export() {
+	public override string Export(string indent) {
 		StringBuilder builder = new("new(");
 		builder.Append(ExportValue(start));
 		if (gizmoOffset is not null) {
@@ -129,12 +130,14 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		builder.Append(')');
 		builder.Append(" {\n");
 		for (int i = 0; i < keyframes.Count; i++) {
-			builder.Append("\t\t");
+			builder.Append('\t');
+			builder.Append(indent);
 			builder.Append(keyframes[i].Export());
 			if (i + 1 < keyframes.Count) builder.Append(",\n");
 			else builder.Append('\n');
 		}
-		builder.Append("\t}");
+		builder.Append(indent);
+		builder.Append('}');
 		return builder.ToString();
 	}
 	public override string ExportType() => $"KeyframeSet<{typeof(T).Name}>";
@@ -611,27 +614,31 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 			iPos.Y += 16;
 		}
 	}
-	public override string Export() {
+	public override string Export(string indent) {
 		StringBuilder builder = new("[");
 		for (int i = 0; i < keyframes.Count; i++) {
-			builder.Append("\n\t\t");
+			builder.Append("\n\t");
+			builder.Append(indent);
 			builder.Append(keyframes[i].Export());
 			if (i + 1 < keyframes.Count) builder.Append(',');
 			else builder.Append('\n');
 		}
-		builder.Append("\t]");
+		builder.Append(indent);
+		builder.Append(']');
 		return builder.ToString();
 	}
 	public override string ExportType() => $"EventKeyframeSet<{typeof(TParams).Name}>";
 	protected override void OnBind() {
 		options = [];
-		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
-			if (meth.ReturnType != typeof(void)) continue;
-			ParameterInfo[] parameters = meth.GetParameters();
-			if (parameters.Length != 1) continue;
-			if (!parameters[0].ParameterType.IsByRef) continue;
-			if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
-			options.Add(meth.CreateDelegate<Event>());
+		foreach (Type type in Animation.GetType().WalkWhile(t => t is not null, t => t.BaseType)) {
+			foreach (MethodInfo meth in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+				if (meth.ReturnType != typeof(void)) continue;
+				ParameterInfo[] parameters = meth.GetParameters();
+				if (parameters.Length != 1) continue;
+				if (!parameters[0].ParameterType.IsByRef) continue;
+				if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
+				options.Add(meth.CreateDelegate<Event>());
+			}
 		}
 	}
 	class SetKeyframeEvent(EventKeyframeSet<TParams> set, int index, Event value) : KeyframeVariableStep<Event>(set, index, value) {
@@ -736,7 +743,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	protected abstract void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker);
 	protected abstract void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, float time);
 	protected virtual void HandleGizmos() { }
-	public abstract string Export();
+	public abstract string Export(string indent);
 	public virtual string ExportType() => GetType().Name;
 	public float PrevKeyframeTime(float currentTime) {
 		for (int i = keyframes.Count - 1; i >= 0; i--) {
@@ -867,7 +874,7 @@ public interface IKeyframeSet {
 	public void DrawEditorUI(SpriteBatch spriteBatch, bool isSelected, float currentTime);
 	public float PrevKeyframeTime(float currentTime);
 	public float NextKeyframeTime(float currentTime);
-	public string Export();
+	public string Export(string indent);
 	public string ExportType();
 	public void Bind(KeyframeAnimation animation) { }
 }
@@ -1036,6 +1043,34 @@ public static class KeyframeTypes {
 	public static Vector2 GizmoZoom => new(Main.ForcedMinimumZoom * MathHelper.Clamp(Main.GameZoomTarget, 1f, 2f));
 	public static Vector2 ApplyGizmoZoom(Vector2 pos) => (pos - Main.ScreenSize.ToVector2() * 0.5f) * GizmoZoom + Main.ScreenSize.ToVector2() * 0.5f;
 	public static Vector2 oldMousePos;
+	public static BoneIterator<TBoneChain> Iterate<TBoneChain>(ref this TBoneChain self) where TBoneChain : struct, IBoneChain<TBoneChain>, IEquatable<TBoneChain> {
+		return new(ref self, default, default);
+	}
+	public ref struct BoneIterator<TBoneChain>(ref TBoneChain self, Vector2 startPosition, float startAngle) where TBoneChain : struct, IBoneChain<TBoneChain>, IEquatable<TBoneChain> {
+		readonly ref TBoneChain self = ref self;
+#pragma warning disable CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
+		Vector2 position = startPosition;
+		float angle = startAngle;
+#pragma warning restore CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
+		int i = 0;
+		public readonly (Vector2 position, float angle) Current => (position, angle);
+		public readonly void Dispose() { }
+		public bool MoveNext() {
+			if (i >= TBoneChain.Length) return false;
+			PolarVec2 bone = self[i];
+			bone.Theta += angle;
+			position += (Vector2)bone;
+			angle = bone.Theta;
+			i++;
+			return true;
+		}
+		public void Reset() {
+			position = startPosition;
+			angle = startAngle;
+			i = 0;
+		}
+		public readonly BoneIterator<TBoneChain> GetEnumerator() => this;
+	}
 }
 public static class KeyframeModifiers {
 	public static List<(string name, Func<IInterpolationModifier>)> modifierTypes = [];
@@ -1266,9 +1301,82 @@ public record struct Rotation(float Value) : KeyframeSet<Rotation>.ITypeHandler,
 	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(default, this);
 	public static string Export(Rotation value) => $"{value.Value}f";
 }
+public interface IBoneChain<TSelf> : KeyframeSet<TSelf>.ITypeHandler, IKeyframeOffsetModifier where TSelf : struct, IBoneChain<TSelf>, IEquatable<TSelf> {
+	public abstract static int Length { get; }
+	public virtual static bool Stretchable => false;
+	public abstract ref PolarVec2 this[int index] { [UnscopedRef] get; }
+	static KeyframeSet<TSelf>.IInterpolation KeyframeSet<TSelf>.ITypeHandler.Linear { get; } = new Interpolation();
+	public readonly struct Interpolation : KeyframeSet<TSelf>.IInterpolation {
+		readonly TSelf KeyframeSet<TSelf>.IInterpolation.Interpolate(TSelf prevValue, TSelf nextValue, float progress) {
+			for (int i = 0; i < TSelf.Length; i++) {
+				ref PolarVec2 output = ref prevValue[i];
+				PolarVec2 next = nextValue[i];
+				output.Theta = float.Lerp(output.Theta, next.Theta, progress);
+				output.R = float.Lerp(output.R, next.R, progress);
+			}
+			return prevValue;
+		}
+		public readonly override string ToString() => "Interpolated";
+	}
+	static readonly Polygon boneHandle = new(
+		new(-1, -1),
+		new(1, -1),
+		new(1, 1),
+		new(-1, 1)
+	);
+	static readonly Polygon boneShape = new(
+		new(-1, 0),
+		new(-0.8f, -1),
+		new(0, 0),
+		new(-0.8f, 1)
+	);
+	static PolarVec2 boneOriginal;
+	static float rotationOffset;
+	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
+		float scale = GizmoZoom.X;
+		for (int i = TSelf.Length - 1; i >= 0; i--) {
+			ref PolarVec2 bone = ref value[i];
+			Vector2 pos = ApplyGizmoZoom(offset.Position);
+			float offsetRotation = offset.Rotation;
+			offset -= new GizmoOffset(bone.Theta.ToRotationVector2() * bone.R, bone.Theta);
+			Vector2 basePos = ApplyGizmoZoom(offset.Position);
+			if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) {
+				if (ItemSlot.ShiftInUse) bone.Theta = boneOriginal.Theta;
+				else bone.Theta = (Main.MouseScreen - basePos).ToRotation() + rotationOffset;
+			}
+			boneShape.ResetVertices().Scale(new Vector2(bone.R, 2 + Math.Clamp(bone.R * 0.1f - 1, 0, 6)) * scale).Rotate(offsetRotation).Translate(pos).Draw(KeyframeAnimation.primitiveBatch);
+
+			boneHandle.ResetPositions().Scale(4 * scale).Rotate(offsetRotation).Translate(pos);
+			bool isHovering = boneHandle.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
+
+			boneHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+
+			if (gizmoTracker.CheckSetCurrent(isHovering, isHovering ? Keybindings.RotateGizmo : null)) {
+				boneOriginal = bone;
+				rotationOffset = bone.Theta - (Main.MouseScreen - basePos).ToRotation();
+			}
+			gizmoTracker.Advance();
+		}
+	}
+	void IKeyframeOffsetModifier.ModifyGizmoOffset(ref GizmoOffset gizmoOffset) {
+		for (int i = 0; i < TSelf.Length; i++) gizmoOffset += new GizmoOffset(this[i].Theta.ToRotationVector2() * this[i].R, this[i].Theta);
+	}
+	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) {
+		StringBuilder builder = new();
+		builder.Append("new(");
+		for (int i = 0; i < TSelf.Length; i++) {
+			if (i > 0) builder.Append(", ");
+			builder.Append($"new({value[i].R}f, {value[i].Theta}f)");
+		}
+		builder.Append(')');
+		return builder.ToString();
+	}
+}
 public record struct GizmoOffset(Vector2 Position, float Rotation) {
 	public static implicit operator GizmoOffset(Vector2 position) => new(position, 0);
 	public static GizmoOffset operator +(GizmoOffset a, GizmoOffset b) => new(a.Position + b.Position.RotatedBy(a.Rotation), a.Rotation + b.Rotation);
+	public static GizmoOffset operator -(GizmoOffset a, GizmoOffset b) => new(a.Position - b.Position.RotatedBy(a.Rotation - b.Rotation), a.Rotation - b.Rotation);
 	public static GizmoOffset operator +(Vector2 a, GizmoOffset b) => new(a + b.Position, b.Rotation);
 	public static Vector2 operator -(Vector2 a, GizmoOffset b) => (a - b.Position).RotatedBy(-b.Rotation);
 }

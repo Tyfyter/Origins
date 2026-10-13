@@ -8,6 +8,10 @@ using Origins.Items.Weapons.Melee;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -16,131 +20,259 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.NPCs.Ashen.VV13;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.Utilities.NPCUtils;
 
-namespace Origins.NPCs.Ashen {
-	public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargetingNPC {
-		public Rectangle DrawRect => new(0, 0, 34, 46);
-		public int AnimationFrames => 3;
-		public int FrameDuration => 3;
-		public Vector2 PlatformOffset => new(0, 0);
-		public float PlatformWidth => 128;
-		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
-		static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
-		public override void Load() => this.AddBanner();
-		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
-				Position = new Vector2(35, 0),
-				PortraitPositionXOverride = 0,
-				PortraitPositionYOverride = 0
-			};
-			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
+namespace Origins.NPCs.Ashen; 
+public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargetingNPC {
+	public Rectangle DrawRect => new(0, 0, 34, 46);
+	public int AnimationFrames => 3;
+	public int FrameDuration => 3;
+	public Vector2 PlatformOffset => new(0, 0);
+	public float PlatformWidth => 128;
+	Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
+	static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
+	public VV13Animation Animation {
+		get => VV13Animation.animations[NPC.aiAction];
+		set => NPC.aiAction = value.Type;
+	}
+	public override void Load() => this.AddBanner();
+	public override void SetStaticDefaults() {
+		NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+			Position = new Vector2(35, 0),
+			PortraitPositionXOverride = 0,
+			PortraitPositionYOverride = 0
+		};
+		GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
+	}
+	public override void SetDefaults() {
+		NPC.aiStyle = NPCAIStyleID.ActuallyNone;
+		NPC.lifeMax = 475;
+		NPC.defense = 24;
+		NPC.damage = 48;
+		NPC.width = 124;
+		NPC.height = 46;
+		NPC.value = 230;
+		NPC.knockBackResist = 0.5f;
+		NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+		NPC.DeathSound = SoundID.NPCDeath44;
+		NPC.noGravity = true;
+		SpawnModBiomes = [
+			GetInstance<Ashen_Biome>().Type,
+		];
+	}
+	public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
+		TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilter);
+		if (searchResults.FoundTarget) {
+			NPC.target = searchResults.NearestTargetIndex;
+			NPC.targetRect = searchResults.NearestTargetHitbox;
+			if (faceTarget && NPC.ShouldFaceTarget(ref searchResults)) NPC.FaceTarget();
 		}
-		public override void SetDefaults() {
-			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.lifeMax = 475;
-			NPC.defense = 24;
-			NPC.damage = 48;
-			NPC.width = 124;
-			NPC.height = 46;
-			NPC.value = 230;
-			NPC.knockBackResist = 0.5f;
-			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
-			NPC.DeathSound = SoundID.NPCDeath44;
-			NPC.noGravity = true;
-			SpawnModBiomes = [
-				GetInstance<Ashen_Biome>().Type,
-			];
+	}
+	bool SearchFilter(Player player) => player?.OriginPlayer()?.standingOnPlatformNPC != NPC;
+	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+		bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName"));
+		bestiaryEntry.AddTags(
+			this.GetBestiaryFlavorText()
+		);
+	}
+	public override void AI() {
+		if (Main.rand.NextBool(650)) {
+			SoundEngine.PlaySound(Origins.Sounds.VV13Idle, NPC.Center);
 		}
-		public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
-			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilter);
-			if (searchResults.FoundTarget) {
-				NPC.target = searchResults.NearestTargetIndex;
-				NPC.targetRect = searchResults.NearestTargetHitbox;
-				if (faceTarget && NPC.ShouldFaceTarget(ref searchResults)) NPC.FaceTarget();
-			}
-		}
-		bool SearchFilter(Player player) => player?.OriginPlayer()?.standingOnPlatformNPC != NPC;
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName"));
-			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText()
-			);
-		}
-		public override void AI() {
-			if (Main.rand.NextBool(650)) {
-				SoundEngine.PlaySound(Origins.Sounds.VV13Idle, NPC.Center);
-			}
-			NPC.TargetClosestUpgraded();
-			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
-				NPCAimedTarget target = NPC.GetTargetData();
-				float speed = 8f;
-				float inertia = 128f;
-				//NPC.rotation = NPC.velocity.X * 0.1f;
-				Vector2 vectorToTargetPosition = (target.Center - NPC.Center).Normalized(out float dist);
-				if (NPC.confused) vectorToTargetPosition *= -1;
-				const float hover_range = 16 * 13;
-				if (dist < hover_range - 32) {
-					speed *= -1;
-				} else if (dist < hover_range + 32) {
-					speed = 0;
-					if (NPC.velocity.LengthSquared() < 0.1f) {
-						// If there is a case where it's not moving at all, give it a little "poke"
-						NPC.velocity += Main.rand.NextVector2Circular(1, 1) * 0.05f;
-					}
+		NPC.TargetClosestUpgraded();
+		if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
+			NPCAimedTarget target = NPC.GetTargetData();
+			float speed = 8f;
+			float inertia = 128f;
+			//NPC.rotation = NPC.velocity.X * 0.1f;
+			Vector2 vectorToTargetPosition = (target.Center - NPC.Center).Normalized(out float dist);
+			if (NPC.confused) vectorToTargetPosition *= -1;
+			const float hover_range = 16 * 13;
+			if (dist < hover_range - 32) {
+				speed *= -1;
+			} else if (dist < hover_range + 32) {
+				speed = 0;
+				if (NPC.velocity.LengthSquared() < 0.1f) {
+					// If there is a case where it's not moving at all, give it a little "poke"
+					NPC.velocity += Main.rand.NextVector2Circular(1, 1) * 0.05f;
 				}
-				NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
-				vectorToTargetPosition *= speed;
-				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
 			}
-			Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
-			if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
-			if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+			NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
+			vectorToTargetPosition *= speed;
+			NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
 		}
-		public override bool? CanFallThroughPlatforms() => true;
-		public override void FindFrame(int frameHeight) {
-			NPC.spriteDirection = NPC.direction;
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
-			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 5, amountDroppedMaximum: 11));
-			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
-			npcLoot.Add(ItemDropRule.Common(ItemType<Phoenum>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ItemType<The_Muffler>(), 80));
-		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			base.HitEffect(hit);
-		}
-		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
-			npcHitbox.Height -= 22;
-			npcHitbox.Y += 22;
-			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
-		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Color glowColor = NPC.GetTintColor(Color.White);
-
-			spriteBatch.DrawGlowingNPCPart(
-				TextureAssets.Npc[Type].Value,
-				glowTexture,
-				NPC.Bottom + Vector2.UnitY * 2 - screenPos,
-				NPC.frame,
-				NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor)),
-				glowColor,
-				NPC.rotation,
-				NPC.frame.Size() * new Vector2(0.5f, 1),
-				NPC.scale,
-				NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
-			);
-			NPC.DrawConfused();
-			return false;
-		}
+		Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
+		if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
+		if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+	}
+	public override bool? CanFallThroughPlatforms() => true;
+	public override void FindFrame(int frameHeight) {
+		NPC.spriteDirection = NPC.direction;
+		VV13Animation animation = Animation;
+		float oldTime = NPC.ai[0];
+		animationControls.Play(ref NPC.ai[0], animation);
+		animation.events.Update(this, oldTime, NPC.ai[0]);
+	}
+	public override void ModifyNPCLoot(NPCLoot npcLoot) {
+		npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
+		npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 5, amountDroppedMaximum: 11));
+		npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
+		npcLoot.Add(ItemDropRule.Common(ItemType<Phoenum>(), 1, 1, 3));
+		npcLoot.Add(ItemDropRule.Common(ItemType<The_Muffler>(), 80));
+	}
+	public override void HitEffect(NPC.HitInfo hit) {
+		base.HitEffect(hit);
+	}
+	public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+		npcHitbox.Height -= 22;
+		npcHitbox.Y += 22;
+		return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
+	}
+	public override void SendExtraAI(BinaryWriter writer) {
+		writer.Write(NPC.aiAction);
+	}
+	public override void ReceiveExtraAI(BinaryReader reader) {
+		NPC.aiAction = reader.ReadInt32();
+	}
+	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+		Color glowColor = NPC.GetTintColor(Color.White);
+		VV13Animation animation = Animation;
+		drawColor = NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor));
+		Vector2 position = NPC.Bottom + Vector2.UnitY * 2 - screenPos;
+		Vector2 dirMult = new(NPC.direction, 1);
+		animation.tentacleMidFront.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosMidFront * dirMult, drawColor, 0, NPC.direction);
+		animation.tentacleMidBack.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosMidBack * dirMult, drawColor, 0, NPC.direction);
+		animation.tentacleBack.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosBack * dirMult, drawColor, 0, NPC.direction);
+		animation.tentacleFront.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosFront * dirMult, drawColor, 0, NPC.direction);
+		spriteBatch.DrawGlowingNPCPart(
+			TextureAssets.Npc[Type].Value,
+			glowTexture,
+			position,
+			NPC.frame,
+			drawColor,
+			glowColor,
+			NPC.rotation,
+			NPC.frame.Size() * new Vector2(0.5f, 1),
+			NPC.scale,
+			NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+		);
+		NPC.DrawConfused();
+		Editor.vv13 = this;
+		Animation_Editor_UI.DrawEditorUI = Editor.DrawUI;
+		return false;
+	}
 #if DRAWPLATFORM
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Vector2 platformStart = NPC.position + PlatformOffset - screenPos;
-			OriginExtensions.DrawDebugLineSprite(platformStart, platformStart + PlatformWidth * Vector2.UnitX, Color.Red);
-		}
-		struct DebugFlag : IDebugFlag;
+	public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+		Vector2 platformStart = NPC.position + PlatformOffset - screenPos;
+		OriginExtensions.DrawDebugLineSprite(platformStart, platformStart + PlatformWidth * Vector2.UnitX, Color.Red);
+	}
+	struct DebugFlag : IDebugFlag;
 #endif
+	public record struct Tentacle(PolarVec2 A, PolarVec2 B, PolarVec2 C, PolarVec2 D, PolarVec2 E, PolarVec2 F, PolarVec2 G, PolarVec2 H) : IBoneChain<Tentacle> {
+		static AutoLoadingTexture texture = typeof(VV13).GetDefaultTMLName("_Arm");
+		public static int Length => 8;
+		public PolarVec2 A = A, B = B, C = C, D = D, E = E, F = F, G = G, H = H;
+		public ref PolarVec2 this[int index] {
+			[UnscopedRef]
+			get {
+				if (index < 0 || index >= Length) throw new IndexOutOfRangeException();
+				return ref Unsafe.Add(ref A, index);
+			}
+		}
+		public readonly override string ToString() => $"{A}, {B}, {C}, {D}, {E}, {F}, {G}, {H}";
+		public readonly void Draw(SpriteBatch spriteBatch, Vector2 offset, Color drawColor, int xFrame, int direction) {
+			Rectangle frame = texture.Frame(3, 3, xFrame);
+			frame.Height = 14;
+			int i = 0;
+			Vector2 origin = frame.Size() * new Vector2(0.5f, 1);
+			Vector2 mult = new(direction, 1);
+			foreach ((Vector2 position, float angle) in Unsafe.AsRef(in this).Iterate()) {
+				switch (++i) {
+					default:
+					frame.Y = 0;
+					break;
+
+					case 4:
+					frame.Y = 14;
+					break;
+
+					case 8:
+					frame.Y = 28;
+					frame.Height = 24;
+					origin.Y = 26;
+					break;
+				}
+				spriteBatch.Draw(
+					texture,
+					offset + position * mult,
+					frame,
+					drawColor,
+					(angle - MathHelper.PiOver2) * direction,
+					origin,
+					1,
+					SpriteEffects.None,
+				0);
+			}
+		}
+	}
+	KeyframeAnimation.PlayingState animationControls;
+	static class Editor {
+		public static VV13 vv13;
+		public static void DrawUI(SpriteBatch spriteBatch) {
+			VV13Animation animation = vv13.Animation;
+			animation.gizmoBasePosition = vv13.NPC.Bottom - Main.screenPosition;
+			animation.DrawEditorUI(spriteBatch, ref vv13.NPC.ai[0], ref vv13.animationControls);
+		}
+	}
+}
+public abstract class VV13Animation : KeyframeAnimation, ILoadable {
+	public static List<VV13Animation> animations = [];
+	static Tentacle Default => new(new(12, MathHelper.PiOver2), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(24, 0));
+	public static readonly Vector2 tentaclePosFront = new(40, 0); 
+	public static readonly Vector2 tentaclePosMidFront = new(10, -2);
+	public static readonly Vector2 tentaclePosMidBack = new(-18, -4);
+	public static readonly Vector2 tentaclePosBack = new(-48, -8);
+	//front
+	public KeyframeSet<Tentacle> tentacleFront = new(Default, tentaclePosFront) {
+	};
+	// middle front
+	public KeyframeSet<Tentacle> tentacleMidFront = new(Default, tentaclePosMidFront) {
+	};
+	// middle back
+	public KeyframeSet<Tentacle> tentacleMidBack = new(Default, tentaclePosMidBack) {
+	};
+	//back
+	public KeyframeSet<Tentacle> tentacleBack = new(Default, tentaclePosBack) {
+	};
+	public EventKeyframeSet<VV13> events = [
+	];
+	public int Type { get; private set; }
+	public void Load(Mod mod) {
+		Type = animations.Count;
+		animations.Add(this);
+	}
+	public void Unload() { }
+}
+public class VV13_Idle : VV13Animation {
+	public VV13_Idle() {
+		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
+			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		};
+		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
+			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		};
+		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
+			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		};
+		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
+			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		};
+		events = [];
 	}
 }

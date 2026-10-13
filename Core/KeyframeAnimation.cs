@@ -6,6 +6,7 @@ using ReLogic.OS;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
@@ -22,8 +23,10 @@ public abstract class KeyframeAnimation {
 	public float totalLength;
 	public Vector2 gizmoBasePosition;
 	public bool usesSubframes;
+	Func<KeyframeAnimation, bool> needsReset;
 	readonly List<IKeyframeSet> keyframeSets;
 	readonly List<string> keyframeSetNames;
+	bool exportAsCtor = false;
 	static readonly TextSnippet[] snippet = [new()];
 	float lastTime;
 	public int modifyingInterpolation = -1;
@@ -32,22 +35,69 @@ public abstract class KeyframeAnimation {
 	protected KeyframeAnimation() {
 		keyframeSets = [];
 		keyframeSetNames = [];
+		Setup();
+	}
+
+	private void Setup() {
+		keyframeSets.Clear();
+		keyframeSetNames.Clear();
+		totalLength = 1;
+		DynamicMethod method = default;
+		ILGenerator gen = default;
+		Label fail = default;
+		if (needsReset is null) {
+			method = new(nameof(needsReset), typeof(bool), [typeof(KeyframeAnimation)], true);
+			gen = method.GetILGenerator();
+			gen.DeclareLocal(GetType());
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Castclass, GetType());
+			gen.Emit(OpCodes.Stloc_0);
+			gen.Emit(OpCodes.Ldc_I4_1);
+			fail = gen.DefineLabel();
+		}
 		foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)) {
 			if (!field.FieldType.IsAssignableTo(typeof(IKeyframeSet))) continue;
+			if (needsReset is null) {
+				gen.Emit(OpCodes.Ldloc_0);
+				gen.Emit(OpCodes.Ldfld, field);
+				gen.Emit(OpCodes.Ldloc_0);
+				gen.Emit(OpCodes.Ldfld, typeof(KeyframeAnimation).GetField(nameof(keyframeSets), BindingFlags.NonPublic | BindingFlags.Instance));
+				gen.Emit(OpCodes.Ldc_I4, keyframeSets.Count);
+				gen.Emit(OpCodes.Callvirt, typeof(List<IKeyframeSet>).GetMethod("get_Item"));
+				gen.Emit(OpCodes.Bne_Un, fail);
+			}
 			IKeyframeSet item = (IKeyframeSet)field.GetValue(this);
 			keyframeSets.Add(item);
 			keyframeSetNames.Add(field.Name);
 			item.Bind(this);
 			Max(ref totalLength, item.Duration);
+			exportAsCtor |= field.FieldType.DeclaringType != GetType();
+		}
+		if (needsReset is null) {
+			gen.Emit(OpCodes.Pop);
+			gen.Emit(OpCodes.Ldc_I4_0);
+			gen.MarkLabel(fail);
+			gen.Emit(OpCodes.Ret);
+			needsReset = method.CreateDelegate<Func<KeyframeAnimation, bool>>();
 		}
 	}
+
 	public string GetName(IKeyframeSet keyframeSet) => keyframeSetNames[keyframeSets.IndexOf(keyframeSet)];
 	public IKeyframeSet GetByName(string name) => keyframeSets[keyframeSetNames.IndexOf(name)];
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref PlayingState animationControls) {
+		if (needsReset is not null) {
+			if (needsReset(this)) Setup();
+			needsReset = null;
+		}
+
 		gizmoTracker.ResetCurrent();
 		float hoveredTime = ScreenPosToTimeline(Main.mouseX);
+		if (hoveredTime > totalLength) {
+			if (usesSubframes) hoveredTime = totalLength;
+			else hoveredTime = (int)totalLength;
+		}
 		float hoveredTimeQuantized = usesSubframes ? hoveredTime : float.Round(hoveredTime);
 		timelinePos.X = Main.screenWidth * 0.5f;
 		timelinePos.Y = 12;
@@ -144,6 +194,16 @@ public abstract class KeyframeAnimation {
 			extendAnimationHandle,
 			hoverExtend || gizmoTracker.IsCurrent ? Color.Orange : Color.Orange * 0.5f
 		);
+		ChatManager.DrawColorCodedStringWithShadow(
+			spriteBatch,
+			FontAssets.ItemStack.Value,
+			usesSubframes ? $"{totalLength:0.0}" : $"{(int)totalLength}",
+			new((Main.screenWidth + TimelineWidth) * 0.5f, timelinePos.Y),
+			Color.White,
+			0,
+			default,
+			Vector2.One
+		);
 		gizmoTracker.CheckSetCurrent(hoverExtend, null);
 		bool isTimelineHovered = CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen);
 		bool hoveringTimelineControl = hoverExtend;
@@ -197,7 +257,7 @@ public abstract class KeyframeAnimation {
 		}
 		if (!hoveringTimelineControl && isTimelineHovered) {
 			Main.LocalPlayer.mouseInterface = true;
-			if (Main.mouseLeft) currentTime.Value = hoveredTime;
+			if (Main.mouseLeft) currentTime.Value = hoveredTimeQuantized;
 		}
 		if (!hoveringTimelineControl && isTimelineHovered && Main.mouseRight && Main.mouseRightRelease) {
 			switch ((animationControls.loopStart, animationControls.loopEnd)) {
@@ -261,12 +321,14 @@ public abstract class KeyframeAnimation {
 	public string Export() {
 		StringBuilder builder = new();
 		for (int i = 0; i < keyframeSets.Count; i++) {
-			builder.Append("\tpublic ");
-			builder.Append(keyframeSets[i].ExportType());
-			builder.Append(' ');
+			if (!exportAsCtor) {
+				builder.Append("\tpublic ");
+				builder.Append(keyframeSets[i].ExportType());
+				builder.Append(' ');
+			}
 			builder.Append(keyframeSetNames[i]);
 			builder.Append(" = ");
-			builder.Append(keyframeSets[i].Export());
+			builder.Append(keyframeSets[i].Export(exportAsCtor ? "\t\t" : "\t"));
 			builder.Append(';');
 			builder.Append('\n');
 		}
