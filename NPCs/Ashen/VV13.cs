@@ -248,6 +248,9 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	};
 	public EventKeyframeSet<VV13> events = [
 	];
+	static void Drop(in VV13 vv13) {
+		//the code to drop the held object as its own entity will go here
+	}
 	public int Type { get; private set; }
 	public void Load(Mod mod) {
 		Type = animations.Count;
@@ -274,5 +277,20 @@ public class VV13_Idle : VV13Animation {
 			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
 		};
 		events = [];
+	}
+}
+public class VV13_Holding : VV13Animation {
+	public VV13_Holding() {
+		//timelines here
+	}
+}
+public class VV13_Drop : VV13Animation {
+	public VV13_Drop() {
+		//timelines here
+	}
+}
+public class VV13_Use_Tool : VV13Animation {
+	public VV13_Use_Tool() {
+		//timelines here
 	}
 }
