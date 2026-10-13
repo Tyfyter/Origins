@@ -1052,12 +1052,14 @@ public static class KeyframeTypes {
 		Vector2 position = startPosition;
 		float angle = startAngle;
 #pragma warning restore CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
+		float lastLength;
 		int i = 0;
-		public readonly (Vector2 position, float angle) Current => (position, angle);
+		public readonly (Vector2 position, float length, float angle) Current => (position, lastLength, angle);
 		public readonly void Dispose() { }
 		public bool MoveNext() {
 			if (i >= TBoneChain.Length) return false;
 			PolarVec2 bone = self[i];
+			lastLength = bone.R;
 			bone.Theta += angle;
 			position += (Vector2)bone;
 			angle = bone.Theta;
@@ -1331,6 +1333,7 @@ public interface IBoneChain<TSelf> : KeyframeSet<TSelf>.ITypeHandler, IKeyframeO
 		new(-0.8f, 1)
 	);
 	static PolarVec2 boneOriginal;
+	static float lengthOffset;
 	static float rotationOffset;
 	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
 		float scale = GizmoZoom.X;
@@ -1341,8 +1344,12 @@ public interface IBoneChain<TSelf> : KeyframeSet<TSelf>.ITypeHandler, IKeyframeO
 			offset -= new GizmoOffset(bone.Theta.ToRotationVector2() * bone.R, bone.Theta);
 			Vector2 basePos = ApplyGizmoZoom(offset.Position);
 			if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) {
-				if (ItemSlot.ShiftInUse) bone.Theta = boneOriginal.Theta;
+				if (Main.keyState.PressingShift()) bone.Theta = boneOriginal.Theta;
 				else bone.Theta = (Main.MouseScreen - basePos).ToRotation() + rotationOffset;
+				if (TSelf.Stretchable) {
+					if (Main.keyState.PressingControl()) bone.R = boneOriginal.R;
+					else bone.R = Vector2.Dot(Main.MouseScreen - basePos, (bone.Theta + MathHelper.PiOver2).ToRotationVector2()) + lengthOffset;
+				}
 			}
 			boneShape.ResetVertices().Scale(new Vector2(bone.R, 2 + Math.Clamp(bone.R * 0.1f - 1, 0, 6)) * scale).Rotate(offsetRotation).Translate(pos).Draw(KeyframeAnimation.primitiveBatch);
 
@@ -1352,9 +1359,10 @@ public interface IBoneChain<TSelf> : KeyframeSet<TSelf>.ITypeHandler, IKeyframeO
 			boneHandle.ResetColors().MultiplyColor(0.5f + isHovering.Mul(0.5f)).Draw(KeyframeAnimation.primitiveBatch);
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
-			if (gizmoTracker.CheckSetCurrent(isHovering, isHovering ? Keybindings.RotateGizmo : null)) {
+			if (gizmoTracker.CheckSetCurrent(isHovering, isHovering ? Keybindings.GrabGizmo : null)) {
 				boneOriginal = bone;
 				rotationOffset = bone.Theta - (Main.MouseScreen - basePos).ToRotation();
+				lengthOffset = bone.R - Vector2.Dot(Main.MouseScreen - basePos, (bone.Theta + MathHelper.PiOver2).ToRotationVector2());
 			}
 			gizmoTracker.Advance();
 		}

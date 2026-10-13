@@ -17,6 +17,7 @@ using Terraria.UI.Chat;
 namespace Origins.Core; 
 public abstract class KeyframeAnimation {
 	public static int TimelineWidth => 600;
+	static float leftBound;
 	public Rectangle CurrentTimeline => new Rectangle(0, 0, TimelineWidth, 12).Recentered(timelinePos);
 	public int selectedIndex = 0;
 	public Vector2 timelinePos;
@@ -91,7 +92,7 @@ public abstract class KeyframeAnimation {
 			if (needsReset(this)) Setup();
 			needsReset = null;
 		}
-
+		leftBound = float.PositiveInfinity;
 		gizmoTracker.ResetCurrent();
 		float hoveredTime = ScreenPosToTimeline(Main.mouseX);
 		if (hoveredTime > totalLength) {
@@ -167,16 +168,18 @@ public abstract class KeyframeAnimation {
 		Point minTimelineY = CurrentTimeline.TopLeft().ToPoint();
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			snippet[0].Text = keyframeSetNames[i];
+			Vector2 pos = timelinePos - new Vector2(TimelineWidth * 0.5f + 4, 0) - ChatManager.GetStringSize(FontAssets.ItemStack.Value, keyframeSetNames[i], Vector2.One) * new Vector2(1, 0.5f);
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
 				snippet,
-				timelinePos - new Vector2(TimelineWidth * 0.5f + 4, 0) - ChatManager.GetStringSize(FontAssets.ItemStack.Value, keyframeSetNames[i], Vector2.One) * new Vector2(1, 0.5f),
+				pos,
 				0,
 				Vector2.Zero,
 				Vector2.One,
 				out int hoveredSnippet
 			);
+			Min(ref leftBound, pos.X);
 			if (hoveredSnippet != -1) {
 				Main.LocalPlayer.mouseInterface = true;
 				if (Main.mouseLeft && Main.mouseLeftRelease) {
@@ -194,16 +197,7 @@ public abstract class KeyframeAnimation {
 			extendAnimationHandle,
 			hoverExtend || gizmoTracker.IsCurrent ? Color.Orange : Color.Orange * 0.5f
 		);
-		ChatManager.DrawColorCodedStringWithShadow(
-			spriteBatch,
-			FontAssets.ItemStack.Value,
-			usesSubframes ? $"{totalLength:0.0}" : $"{(int)totalLength}",
-			new((Main.screenWidth + TimelineWidth) * 0.5f, timelinePos.Y),
-			Color.White,
-			0,
-			default,
-			Vector2.One
-		);
+		DrawString(spriteBatch, usesSubframes ? $"{totalLength:0.0}" : $"{(int)totalLength}", new((Main.screenWidth + TimelineWidth) * 0.5f, timelinePos.Y));
 		gizmoTracker.CheckSetCurrent(hoverExtend, null);
 		bool isTimelineHovered = CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen);
 		bool hoveringTimelineControl = hoverExtend;
@@ -309,6 +303,7 @@ public abstract class KeyframeAnimation {
 			return hovered && Main.mouseLeft && Main.mouseLeftRelease;
 		}
 	}
+
 	public void DrawTimeline(SpriteBatch spriteBatch, bool isSelected) {
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
@@ -333,6 +328,47 @@ public abstract class KeyframeAnimation {
 			builder.Append('\n');
 		}
 		return builder.ToString();
+	}
+	public static bool DrawSwapper<TAnimation>(SpriteBatch spriteBatch, IEnumerable<TAnimation> animations, out TAnimation selected, TAnimation current = null) where TAnimation : KeyframeAnimation {
+		selected = null;
+		float maxWidth = 0f;
+		foreach (TAnimation animation in animations) Max(ref maxWidth, ChatManager.GetStringSize(FontAssets.ItemStack.Value, animation.ToString(), Vector2.One).X);
+		Vector2 pos = new(leftBound - maxWidth - 16, 70);
+		Min(ref leftBound, pos.X);
+		Color lowColor = Color.White;
+		Color lowShadowColor = Color.Black;
+		Color highColor = Color.White;
+		Color highShadowColor = Color.Black;
+		if (current is not null) {
+			lowColor *= 0.5f;
+			lowShadowColor *= 0.5f;
+		}
+		foreach (TAnimation animation in animations) {
+			if (DrawString(spriteBatch, animation.ToString(), pos, animation == current ? highColor : lowColor, animation == current ? highShadowColor : lowShadowColor)) {
+				Main.LocalPlayer.mouseInterface = true;
+				selected = animation;
+			}
+			pos.Y += 16;
+		}
+		if (Main.mouseLeft && Main.mouseLeftRelease && selected is not null) return true;
+		selected = null;
+		return false;
+	}
+	static bool DrawString(SpriteBatch spriteBatch, string text, Vector2 position, Color? color = null, Color? shadowColor = null) {
+		snippet[0].Text = text;
+		ChatManager.DrawColorCodedStringWithShadow(
+			spriteBatch,
+			FontAssets.ItemStack.Value,
+			snippet,
+			position,
+			0,
+			color ?? Color.White,
+			shadowColor ?? Color.Black,
+			default,
+			Vector2.One,
+			out int h
+		);
+		return h != -1;
 	}
 	[StructLayout(LayoutKind.Explicit, Pack = 0)]
 	public readonly ref struct Time {

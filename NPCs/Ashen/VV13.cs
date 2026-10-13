@@ -184,11 +184,11 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		public readonly override string ToString() => $"{A}, {B}, {C}, {D}, {E}, {F}, {G}, {H}";
 		public readonly void Draw(SpriteBatch spriteBatch, Vector2 offset, Color drawColor, int xFrame, int direction) {
 			Rectangle frame = texture.Frame(3, 3, xFrame);
-			frame.Height = 14;
+			frame.Height = 12;
 			int i = 0;
 			Vector2 origin = frame.Size() * new Vector2(0.5f, 1);
 			Vector2 mult = new(direction, 1);
-			foreach ((Vector2 position, float angle) in Unsafe.AsRef(in this).Iterate()) {
+			foreach ((Vector2 position, float length, float angle) in Unsafe.AsRef(in this).Iterate()) {
 				switch (++i) {
 					default:
 					frame.Y = 0;
@@ -201,7 +201,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 					case 8:
 					frame.Y = 28;
 					frame.Height = 24;
-					origin.Y = 26;
+					origin.Y = 24;
 					break;
 				}
 				spriteBatch.Draw(
@@ -211,7 +211,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 					drawColor,
 					(angle - MathHelper.PiOver2) * direction,
 					origin,
-					1,
+					new Vector2(1, length / frame.Height),
 					SpriteEffects.None,
 				0);
 			}
@@ -224,6 +224,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 			VV13Animation animation = vv13.Animation;
 			animation.gizmoBasePosition = vv13.NPC.Bottom - Main.screenPosition;
 			animation.DrawEditorUI(spriteBatch, ref vv13.NPC.ai[0], ref vv13.animationControls);
+			if (KeyframeAnimation.DrawSwapper(spriteBatch, VV13Animation.animations, out VV13Animation selected, vv13.Animation)) vv13.Animation = selected;
 		}
 	}
 }
@@ -261,20 +262,20 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 public class VV13_Idle : VV13Animation {
 	public VV13_Idle() {
 		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
-			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
 		};
 		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
-			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
 		};
 		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
-			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
 		};
 		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
-			new(7, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(13, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
+			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
 		};
 		events = [];
 	}
