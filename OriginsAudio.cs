@@ -137,6 +137,7 @@ namespace Origins {
 			public static SoundStyle ArabelTrinkle = new("Origins/Sounds/Custom/ArabelMagic5");
 			public static SoundStyle ArabelTwinkle = new("Origins/Sounds/Custom/ArabelMagic6");
 			public static SoundStyle Arabel80sDowntone = new("Origins/Sounds/Custom/ArabelMagic7");
+			public static SoundStyle ArabelScream = new("Origins/Sounds/Custom/Arabel_Scream");
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",

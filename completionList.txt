@@ -75,7 +75,7 @@ BOSSES AND MINI-BOSSES:
 (X) Crimson King
 (X) Fibulum Kraken
 (X) Mechamalgamation
-(X) Miscreant
+(X) Prometheus
 (X) Seer
 (X) SR-48 'The Phoenix'
 
@@ -177,6 +177,7 @@ WORLD GENERATION:
 
 (X) Cubekon Temple
 (X) Ice Biome Heart Crystal Chamber
+(X) Prometheus' Camp
 (X) Psymanti Camp
 (X) Underglade Crypt
 
@@ -454,6 +455,8 @@ NPC DIALOGUE:
 (X) Necromancer
 (X) Psymanti Shaman
 (X) The Author
+
+(X) Prometheus
 ---
 
 
@@ -543,6 +546,8 @@ ARMOR:
 (^) Necromancer Armor
 (^) Sapphire Mediator Armor
 (X) Scrapburner Armor
+(X) True Aether Armor
+(X) Umbramere Armor
 (X) Warlord Armor
 
 (X) Ancient Chromtain Armor
@@ -635,6 +640,7 @@ ACCESSORIES:
 (^) Hazard Charm
 (^) Headphones
 (^) Helium Tank
+(X) Helpful Cloak
 (^) I-WTPA Standard
 (^) Keepsake Remains
 (X) Laden Crown
@@ -645,6 +651,7 @@ ACCESSORIES:
 (^) Liar's Tongue
 (^) Lightning Ring
 (^) Locket Necklace
+(X) Looking Glass
 (^) Lousy Liver
 (^) Lover's Leap
 (^) Magic Glove
@@ -692,6 +699,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)
 (^) Scrap Barrier (Uncursed)
 (^) Shield of Retribution
+(X) Shield of Shimmering
 (^) Shock Collar
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)
@@ -717,6 +725,7 @@ ACCESSORIES:
 (X) Timbre of Hell
 (^) Trap Charm
 (^) Tripod Nip
+(X) True Resizing Glove
 (^) Turbo Reel
 (^) Unsought Organ
 (^) Venom Fang
@@ -830,6 +839,8 @@ WINGS:
 (X) Marrowick Mantle
 (X) Phantom Thrusters
 
+(X) Hoverbike
+
 (X) Ascendant Wings
 (X) EVA Thruster Array
 (X) Nova Backblaster
@@ -870,6 +881,7 @@ TOOLS:
 (X) Bleeding Obsidian Pickaxe
 
 (^) Impactaxe
+(X) Umbramere Terrain Ripper
 
 (X) Nova Bomb
 (X) Perihelion Chainsaw
@@ -951,6 +963,7 @@ MELEE WEAPONS:
 (X) Mise of the King
 (^) Personal Laser Blade
 (X) Pile Bunker
+(X) Promethean Claymore
 (X) Rocket Lance
 (^) Telephone Pole
 (^) Terrarang
@@ -1033,8 +1046,10 @@ RANGED WEAPONS:
 (^) Titanium Harpoon Gun
 (^) 3-in-1 Shotty
 
+(X) Assassin's Blade
 (^) Astoxo
 (^) Chambersite Minigun
+(X) Cthar's Thread
 (X) Disciple Maker
 (^) Dreikan
 (X) EAC Thunder
@@ -1175,8 +1190,10 @@ SUMMONER WEAPONS:
 (#2, ^2) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
+(X) Skipping Stone
 (^) SMART Wrench
 (#2, ^2) Star Harvest !!! (please see pre-existing feedback)
+(X) Star Streak
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
@@ -1260,8 +1277,10 @@ EXPLOSIVE WEAPONS:
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
+(X) Da-Caponator
 (#, ^2) Firework Cannon
 (X) Flarefury
+(X) High-Five
 (^) Holy Hand Grenade
 (^) Mine Flayer
 (^) Nova Cascade
@@ -1462,6 +1481,7 @@ TILES:
 (X) Nova Furniture
 (^) Peppered Moth Lamp
 (^) Phoenum Torch
+(X) Promethean Campfire
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
@@ -1490,6 +1510,7 @@ TILES:
 (^) Defiled Campfire
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
+(X) Defiled Proto-Heart
 (X) Defiled Pylon
 (^) Delay Component
 (^) Diode Component
@@ -1662,8 +1683,8 @@ TILES:
 (^) Lost Diver Trophy
 (X) Mechamalgamation Relic
 (X) Mechamalgamation Trophy
-(々) Miscreant Relic
-(々) Miscreant Trophy
+(X) Prometheus Relic
+(X) Prometheus Trophy
 (X) Quantux Relic
 (X) Quantux Trophy
 (X) Seer Relic
@@ -1733,6 +1754,7 @@ MATERIALS:
 (#, ^2) Umbramere Bar
 
 (^) Busted Servo
+(X) Flesh Core Fragment
 (^) Geothermal Sludge
 (X) Memory Fragment
 (X) Mutagenic Flesh
@@ -1813,10 +1835,11 @@ CONSUMABLES:
 (X) Evil DNA
 (^) Mojo Injection
 (X) Mother's Ward
+(X) Mutagenic Core
+(%2) Proto-Heart
 (^) Quantum Injector
 (^) Screwdriver Upgrade: Logic Component
 (^) Screwdriver Upgrade: White Wire
-(%2) The Defiled Will
 
 (^) Absorption Potion
 (^) Ambition Potion
@@ -1926,6 +1949,7 @@ CONSUMABLES:
 
 (X) Catalyst Cell
 (^) Distress Beacon
+(X) Flesh Core
 (^) Nerve Impulse Manipulator
 (^) Lost Picture Frame
 (X) Quantum Cell
@@ -1981,6 +2005,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Jawbreaker (Stellar Spark)
 (^) Robot Toy Controller (Toy Trenchmaker)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
+(X) The Stick (Arabel But Fox)
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
@@ -2052,15 +2077,17 @@ AMMO:
 (^) Resizable Mine V
 (^) Scrap Dart
 
-(^) Resizable Mine VI
-
 (^) Brine Rocket
+(^) Oil Rocket
+(^) Resizable Mine VI
+(X) True Aether Bullet
+(X) True Aether Canister
+(^) Valkyrum Bullet
+
 (^) Homing Rocket I
 (^) Homing Rocket II
-(^) Oil Rocket
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
-(^) Valkyrum Bullet
 
 (^) Gray Solution
 (^) Orange Solution
