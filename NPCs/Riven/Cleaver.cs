@@ -85,10 +85,6 @@ namespace Origins.NPCs.Riven {
 
 	internal class Cleaver_Body : WormBody, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.04f;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 12;
@@ -120,10 +116,6 @@ namespace Origins.NPCs.Riven {
 
 	internal class Cleaver_Tail : WormTail, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.04f;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 12;

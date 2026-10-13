@@ -144,10 +144,6 @@ namespace Origins.NPCs.MiscE {
 	}
 	public class Slime_Worm_Body : WormBody {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayName");
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
@@ -181,10 +177,6 @@ namespace Origins.NPCs.MiscE {
 
 	internal class Slime_Worm_Tail : WormTail {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayName");
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
