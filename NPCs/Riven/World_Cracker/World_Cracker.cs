@@ -4,6 +4,7 @@ using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
+using Origins.Gores;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
@@ -616,11 +617,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					}
 				}
 				DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);
-				if (!Main.dedServ) for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(
+				if (!Main.dedServ) for (int i = 0; i < 10; i++) OriginExtensions.SpawnGoreByType(
 					current.GetSource_Death(),
 					Main.rand.NextVector2FromRectangle(current.Hitbox),
 					current.oldVelocity,
-					"Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
+					GoreCache.Riven_Blood
 				);
 				current = (current.type == bodyType || current.type == Type) ? Main.npc[(int)current.ai[0]] : null;
 			}
@@ -997,11 +998,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0 && OriginClientConfig.Instance.ExtraGooeyRivenGores) {
-				Origins.instance.SpawnGoreByName(
+				OriginExtensions.SpawnGoreByType(
 					 Projectile.GetSource_Death(),
 					 Projectile.Center,
 					 Projectile.oldVelocity,
-					 "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
+					 GoreCache.Riven_Blood
 				 );
 			}
 		}

@@ -7,6 +7,7 @@ namespace Origins.Gores;
 public sealed class GoreCache {
 	public static GoreCache Ashen_Generic = new("NPCs/Ashen_Gore", 4);
 	public static GoreCache Fiberglass_Generic = new("NPCs/FG_Gore", 3);
+	public static GoreCache Riven_Blood = new("NPCs/R_Effect_Blood", 3);
 	#region impl
 	readonly string name;
 	readonly int[] variants;
