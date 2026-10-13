@@ -1,9 +1,11 @@
+using Avalon.Items.Weapons.Melee.Swords;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -63,34 +65,17 @@ namespace Origins.NPCs.Riven {
 			MoveSpeed = 5.5f;
 			Acceleration = 0.045f;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			TryDeathEffect();
-		}
-		public void TryDeathEffect() {
-			if (NPC.life > 0 || NPC.aiAction == 1) return;
-			NPC.aiAction = 1;
-			NPC current = NPC;
-			Vector2 velocity = NPC.velocity * 1.25f;
-			float speed = velocity.Length();
-			HashSet<int> indecies = [];
-			int tailType = TailType;
-			while (current.ai[0] != 0) {
-				if (!indecies.Add(current.whoAmI)) break;
-				OriginExtensions.LerpEquals(
-					ref Gore.NewGoreDirect(
-						current.GetSource_Death(),
-						current.position,
-						velocity,
-						Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
-					).velocity,
-					current.velocity,
-					0.5f
-				);
-				if (current.type == tailType) break;
-				if (Main.npc.GetIfInRange((int)current.ai[0]) is not NPC next) break;
-				velocity = next.DirectionTo(current.Center) * speed;
-				current = next;
-			}
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			OriginExtensions.LerpEquals(
+				ref Gore.NewGoreDirect(
+					source,
+					NPC.position,
+					velocity,
+					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				).velocity,
+				NPC.velocity,
+				0.5f
+			);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
@@ -111,8 +96,17 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Cleaver_Head)?.TryDeathEffect();
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			OriginExtensions.LerpEquals(
+				ref Gore.NewGoreDirect(
+					source,
+					NPC.position,
+					velocity,
+					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				).velocity,
+				NPC.velocity,
+				0.5f
+			);
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -137,8 +131,17 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Cleaver_Head)?.TryDeathEffect();
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			OriginExtensions.LerpEquals(
+				ref Gore.NewGoreDirect(
+					source,
+					NPC.position,
+					velocity,
+					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				).velocity,
+				NPC.velocity,
+				0.5f
+			);
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;

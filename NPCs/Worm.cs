@@ -1,11 +1,16 @@
+using Avalon.Items.Weapons.Melee.Swords;
 using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
+using Origins.Gores;
 using Origins.NPCs.Riven.World_Cracker;
+using Origins.Reflection;
 using Origins.Tiles.Banners;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -65,7 +70,7 @@ namespace Origins.NPCs {
 		/// <summary>
 		/// The NPC instance of the head segment for this worm.
 		/// </summary>
-		public NPC HeadSegment => Main.npc.IndexInRange(NPC.realLife) ? Main.npc[NPC.realLife] : null;
+		public NPC HeadSegment => Main.npc.IndexInRange(NPC.realLife) ? Main.npc[NPC.realLife] : NPC;
 
 		/// <summary>
 		/// The NPC instance of the segment that this segment is following (ai[1]).  For head segments, this property always returns <see langword="null"/>.
@@ -132,6 +137,53 @@ namespace Origins.NPCs {
 		protected internal virtual void BodyTailAI() { }
 
 		public abstract void Init();
+		bool triggeredDeathEffect;
+		public sealed override void HitEffect(NPC.HitInfo hit) {
+			HitEffect(in hit);
+			NPC headSegment = HeadSegment;
+			if (headSegment.life <= 0 && ((headSegment.ModNPC as Worm)?.triggeredDeathEffect.TrySet(true) ?? false)) {
+				Vector2 velocity = headSegment.velocity;
+				float speed = velocity.Length();
+				IEntitySource source = headSegment.GetSource_Death();
+				int i = 0;
+				foreach (Worm segment in new WormIterator(this)) {
+					if (segment.SegmentType != WormSegmentType.Head) velocity = segment.NPC.DirectionTo(segment.FollowingNPC.Center) * speed;
+					NPCMethods.VanillaHitEffect(NPC, hit.HitDirection, hit.Damage, hit.InstantKill);
+					segment.DeathEffect(in hit, source, velocity, i++);
+				}
+			}
+		}
+		public virtual void HitEffect(in NPC.HitInfo hit) { }
+		public virtual void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) { }
+		public struct WormIterator(Worm segment) {
+			bool started = false;
+			readonly HashSet<Worm> indecies = [];
+			public Worm Current { get; private set; } = segment.HeadSegment?.ModNPC as Worm;
+			public bool MoveNext() {
+				if (started.TrySet(true)) return true;
+				if (Current.SegmentType == WormSegmentType.Tail) return false;
+				Current = Current.FollowerNPC?.ModNPC as Worm;
+				if (!indecies.Add(Current)) throw new OroborosException(Current);
+				return Current is not null;
+			}
+			public void Reset() {
+				started = false;
+				indecies.Clear();
+				Current = segment.HeadSegment?.ModNPC as Worm;
+			}
+			public readonly WormIterator GetEnumerator() => this;
+			static string PrintLoop(Worm worm) {
+				StringBuilder builder = new();
+				Worm current = worm;
+				do {
+					builder.Append($"{current.NPC}({current.Name}) » ");
+				} while (current != worm);
+				builder.Append($"{current.NPC}({current.Name})");
+				return builder.ToString();
+			}
+			[Serializable]
+			public class OroborosException(Worm segment) : Exception($"Infinitely looping worm: {PrintLoop(segment)}") { }
+		}
 		public sealed override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.realLife);
 			writer.Write(isHighestIndex);

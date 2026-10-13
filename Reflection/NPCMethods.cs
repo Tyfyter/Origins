@@ -15,6 +15,8 @@ namespace Origins.Reflection {
 		private delegate void AI_007_TownEntities_GetWalkPrediction_Del(int myTileX, int homeFloorX, bool canBreathUnderWater, bool currentlyDrowning, int tileX, int tileY, out bool keepwalking, out bool avoidFalling);
 		[ReflectionParentType(typeof(NPC)), ReflectionMemberName("AI_007_TownEntities_GetWalkPrediction")]
 		private static AI_007_TownEntities_GetWalkPrediction_Del _AI_007_TownEntities_GetWalkPrediction;
+		[ReflectionParentType(typeof(NPC)), ReflectionMemberName("VanillaHitEffect")]
+		private static Action<int, double, bool> _VanillaHitEffect;
 		public static void GetShimmered(NPC self) {
 			DelegateMethods._target.SetValue(_GetShimmered, self);
 			_GetShimmered();
@@ -26,6 +28,10 @@ namespace Origins.Reflection {
 		public static void AI_007_TownEntities_GetWalkPrediction(NPC self, int myTileX, int homeFloorX, bool canBreathUnderWater, bool currentlyDrowning, int tileX, int tileY, out bool keepwalking, out bool avoidFalling) {
 			DelegateMethods._target.SetValue(_AI_007_TownEntities_GetWalkPrediction, self);
 			_AI_007_TownEntities_GetWalkPrediction(myTileX, homeFloorX, canBreathUnderWater, currentlyDrowning, tileX, tileY, out keepwalking, out avoidFalling);
+		}
+		public static void VanillaHitEffect(NPC self, int hitDirection, double dmg, bool instantKill) {
+			DelegateMethods._target.SetValue(_VanillaHitEffect, self);
+			_VanillaHitEffect(hitDirection, dmg, instantKill);
 		}
 	}
 }

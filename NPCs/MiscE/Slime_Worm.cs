@@ -1,3 +1,4 @@
+using Avalon.Items.Weapons.Melee.Swords;
 using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -8,6 +9,7 @@ using Origins.NPCs.Riven;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -127,34 +129,17 @@ namespace Origins.NPCs.MiscE {
 			MoveSpeed = 5.5f;
 			Acceleration = 0.045f;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			TryDeathEffect();
-		}
-		public void TryDeathEffect() {
-			if (NPC.life > 0 || NPC.aiAction == 1) return;
-			NPC.aiAction = 1;
-			NPC current = NPC;
-			Vector2 velocity = NPC.velocity * 1.25f;
-			float speed = velocity.Length();
-			HashSet<int> indecies = [];
-			int tailType = TailType;
-			while (current.ai[0] != 0) {
-				if (!indecies.Add(current.whoAmI)) break;
-				OriginExtensions.LerpEquals(
-					ref Dust.NewDustPerfect(
-						current.position,
-						DustID.t_Slime,
-						velocity + Main.rand.NextVector2Circular(4, 4),
-						newColor: NPC.color
-					).velocity,
-					current.velocity,
-					0.5f
-				);
-				if (current.type == tailType) break;
-				NPC next = Main.npc[(int)current.ai[0]];
-				velocity = next.DirectionTo(current.Center) * speed;
-				current = next;
-			}
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			OriginExtensions.LerpEquals(
+				ref Dust.NewDustPerfect(
+					NPC.position,
+					DustID.t_Slime,
+					velocity + Main.rand.NextVector2Circular(4, 4),
+					newColor: NPC.color
+				).velocity,
+				NPC.velocity,
+				0.5f
+			);
 		}
 	}
 	public class Slime_Worm_Body : WormBody {
@@ -176,8 +161,17 @@ namespace Origins.NPCs.MiscE {
 			NPC.alpha = HeadSegment.alpha;
 			NPC.GivenName = HeadSegment.GivenName;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Slime_Worm_Head)?.TryDeathEffect();
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			OriginExtensions.LerpEquals(
+				ref Dust.NewDustPerfect(
+					NPC.position,
+					DustID.t_Slime,
+					velocity + Main.rand.NextVector2Circular(4, 4),
+					newColor: NPC.color
+				).velocity,
+				NPC.velocity,
+				0.5f
+			);
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -204,8 +198,17 @@ namespace Origins.NPCs.MiscE {
 			NPC.alpha = HeadSegment.alpha;
 			NPC.GivenName = HeadSegment.GivenName;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Slime_Worm_Head)?.TryDeathEffect();
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			OriginExtensions.LerpEquals(
+				ref Dust.NewDustPerfect(
+					NPC.position,
+					DustID.t_Slime,
+					velocity + Main.rand.NextVector2Circular(4, 4),
+					newColor: NPC.color
+				).velocity,
+				NPC.velocity,
+				0.5f
+			);
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;

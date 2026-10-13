@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Avalon.Items.Weapons.Melee.Swords;
+using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
 using ModLiquidLib.Utils;
 using Origins.Buffs;
@@ -234,43 +235,13 @@ namespace Origins.NPCs.Brine {
 			NPCLoader.DrawEffects(NPC, ref npcColor);
 			return NPC.GetNPCColorTintedByBuffs(npcColor);
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life <= 0 && NPC.aiAction != -1) {
-				NPC.aiAction = -1;
-				NPC current = NPC;
-				HashSet<int> indecies = [];
-				int tailType = TailType;
-				int i = 0;
-				while (current.ai[0] != 0) {
-					if (!indecies.Add(current.whoAmI) || (current.realLife != -1 && current.realLife != NPC.whoAmI)) break;
-					if (current.type == Type) {
-						Gore.NewGore(
-							NPC.GetSource_Death(),
-							current.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
-							current.velocity,
-							Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent3_Gore")
-						);
-					} else if (current.type == tailType) {
-						Gore.NewGore(
-							NPC.GetSource_Death(),
-							current.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
-							current.velocity,
-							Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent3_Gore")
-						);
-						break;
-					}
-					if (++i % 2 == 0) {
-						Gore.NewGore(
-							NPC.GetSource_Death(),
-							current.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
-							current.velocity,
-							Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent1_Gore")
-						);
-					}
-					NPC next = Main.npc[(int)current.ai[0]];
-					current = next;
-				}
-			}
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			Gore.NewGore(
+				NPC.GetSource_Death(),
+				NPC.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
+				NPC.velocity,
+				Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent3_Gore")
+			);
 		}
 	}
 	public class Brine_Serpent_Body : WormBody, IBrineSerpentPart, IPostHitPlayer {
@@ -309,8 +280,15 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CanHitNPC(NPC target) => Brine_Serpent_Head.TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !Brine_Serpent_Head.SegmentTypes.Contains(target.type));
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
-		public override void HitEffect(NPC.HitInfo hit) {
-			HeadSegment?.HitEffect(hit);
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			if (index % 2 == 1) {
+				Gore.NewGore(
+					source,
+					NPC.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent1_Gore")
+				);
+			}
 		}
 	}
 	public class Brine_Serpent_Body2 : WormBody, IBrineSerpentPart, IPostHitPlayer {
@@ -350,8 +328,15 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CanHitNPC(NPC target) => Brine_Serpent_Head.TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !Brine_Serpent_Head.SegmentTypes.Contains(target.type));
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
-		public override void HitEffect(NPC.HitInfo hit) {
-			HeadSegment?.HitEffect(hit);
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			if (index % 2 == 1) {
+				Gore.NewGore(
+					source,
+					NPC.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent1_Gore")
+				);
+			}
 		}
 	}
 	public class Brine_Serpent_Tail : WormTail, IBrineSerpentPart, IPostHitPlayer {
@@ -390,6 +375,14 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CanHitNPC(NPC target) => Brine_Serpent_Head.TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !Brine_Serpent_Head.SegmentTypes.Contains(target.type));
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			Gore.NewGore(
+				source,
+				NPC.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
+				NPC.velocity,
+				Mod.GetGoreSlot("Gores/NPCs/Brine_Serpent3_Gore")
+			);
+		}
 	}
 	public interface IBrineSerpentPart : IBrinePoolNPC {
 		int IBrinePoolNPC.PathfindingTime { get => default; set { } }

@@ -3390,6 +3390,12 @@ namespace Origins {
 
 			return getterMethod.CreateDelegate<Func<IEntitySource, string, IEntitySource>>();
 		}
+		public static Func<IEntitySource, IDisposable> PushEntitySourceFallback { get; } = PegasusLib.PegasusLib.Compile<Func<IEntitySource, IDisposable>>("IEntitySource.PushFallback",
+			(OpCodes.Ldarg_0, null),
+			(OpCodes.Call, typeof(IEntitySource).GetMethod("PushFallback", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)),
+			(OpCodes.Box, typeof(IEntitySource).GetMethod("PushFallback", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).ReturnType),
+			(OpCodes.Ret, null)
+		);
 		[Pure]
 		public static bool Matches(this Recipe recipe, (int id, int? count)? result, int[] tiles, params (int id, int? count)[] ingredients) {
 			static bool ItemMatches(Item item, (int id, int? count) pattern) {
