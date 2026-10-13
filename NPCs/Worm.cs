@@ -92,6 +92,7 @@ namespace Origins.NPCs {
 			if (SegmentType != WormSegmentType.Head) {
 				NPCID.Sets.CantTakeLunchMoney[Type] = true;
 				NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+				OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
 			}
 		}
 		public sealed override bool PreAI() {
@@ -142,7 +143,7 @@ namespace Origins.NPCs {
 			HitEffect(in hit);
 			NPC headSegment = HeadSegment;
 			if (headSegment.life <= 0 && ((headSegment.ModNPC as Worm)?.triggeredDeathEffect.TrySet(true) ?? false)) {
-				Vector2 velocity = headSegment.velocity;
+				Vector2 velocity = headSegment.velocity * 1.25f;
 				float speed = velocity.Length();
 				IEntitySource source = headSegment.GetSource_Death();
 				int i = 0;

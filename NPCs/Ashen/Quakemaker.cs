@@ -7,7 +7,6 @@ using Origins.Items.Materials;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -152,31 +151,35 @@ namespace Origins.NPCs.Ashen {
 			skipAttack:
 			base.HeadAI();
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			TryDeathEffect();
-		}
-		public void TryDeathEffect() {
-			if (NPC.life > 0 || NPC.aiAction == 1) return;
-			NPC.aiAction = 1;
-			NPC current = NPC;
-			Vector2 velocity = NPC.velocity * 1.25f;
-			float speed = velocity.Length();
-			HashSet<int> indecies = [];
-			int tailType = TailType;
-			while (current.ai[0] != 0) {
-				if (!indecies.Add(current.whoAmI)) break;
-				for (int i = 0; i < 4; i++) {
-					Gore.NewGorePerfect(
-						current.GetSource_Death(),
-						current.position,
-						(velocity + current.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
-						GoreCache.Ashen_Generic
-					);
-				}
-				if (current.type == tailType) break;
-				NPC next = Main.npc[(int)current.ai[0]];
-				velocity = next.DirectionTo(current.Center) * speed;
-				current = next;
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			for (int i = 0; i < 4; i++) {
+				Gore.NewGorePerfect(
+					source,
+					NPC.Center,
+					(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+					GoreCache.Ashen_Generic
+				);
+			}
+			Gore.NewGore(
+				NPC.GetSource_Death(),
+				NPC.Center + new Vector2(0 * NPC.direction, -2).RotatedBy(NPC.rotation),
+				(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+				Mod.GetGoreSlot("Gores/NPCs/Quakemaker_Gore5")
+			);
+			if (UseAltHead) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(0 * NPC.direction, 9).RotatedBy(NPC.rotation),
+					(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+					Mod.GetGoreSlot("Gores/NPCs/Quakemaker_Gore4")
+				);
+			} else {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(0 * NPC.direction, -4).RotatedBy(NPC.rotation),
+					(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+					Mod.GetGoreSlot("Gores/NPCs/Quakemaker_Gore6")
+				);
 			}
 		}
 		public override void OnSpawn(IEntitySource source) {
@@ -192,6 +195,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.DoFrames(4);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			UseAltHead = false;
 			if (UseAltHead) {
 				Main.EntitySpriteDraw(
 					altHeadTexture.Value,
@@ -210,11 +214,6 @@ namespace Origins.NPCs.Ashen {
 		public static AutoLoadingTexture GlowTexture = typeof(Quakemaker_Body).GetDefaultTMLName() + "_Glow";
 		public override bool SharesImmunityFrames => true;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
-			OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 40;
@@ -257,8 +256,27 @@ namespace Origins.NPCs.Ashen {
 			}
 			if (NPC.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal)) blindGlobal.blindable = true;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Quakemaker_Head)?.TryDeathEffect();
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			for (int i = 0; i < 4; i++) {
+				Gore.NewGorePerfect(
+					source,
+					NPC.Center,
+					(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+					GoreCache.Ashen_Generic
+				);
+			}
+			Gore.NewGore(
+				NPC.GetSource_Death(),
+				NPC.Center + new Vector2(-3 * NPC.direction, 2).RotatedBy(NPC.rotation),
+				(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+				Mod.GetGoreSlot("Gores/NPCs/Quakemaker_Gore3")
+			);
+			Gore.NewGore(
+				NPC.GetSource_Death(),
+				NPC.Center + new Vector2(18 * NPC.direction, 6).RotatedBy(NPC.rotation),
+				(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+				Mod.GetGoreSlot("Gores/NPCs/Quakemaker_Gore2")
+			);
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -273,14 +291,9 @@ namespace Origins.NPCs.Ashen {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, NPC.GetTintColor(Color.White));
 		}
 	}
-	internal class Quakemaker_Tail : WormTail {
+	public class Quakemaker_Tail : WormTail {
 		public override bool SharesImmunityFrames => true;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Quakemaker.DisplayName");
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
-			OriginsSets.NPCs.HideDebuffIndicators[Type] = true;
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 48;
@@ -297,8 +310,21 @@ namespace Origins.NPCs.Ashen {
 			NPC.localAI[3] = 0;
 			if (NPC.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal)) blindGlobal.blindable = true;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Quakemaker_Head)?.TryDeathEffect();
+		public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
+			for (int i = 0; i < 4; i++) {
+				Gore.NewGorePerfect(
+					source,
+					NPC.Center,
+					(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+					GoreCache.Ashen_Generic
+				);
+			}
+			Gore.NewGore(
+				NPC.GetSource_Death(),
+				NPC.Center + new Vector2(3 * NPC.direction, 3).RotatedBy(NPC.rotation),
+				(velocity + NPC.velocity) * 0.5f + Main.rand.NextVector2Circular(2, 2),
+				Mod.GetGoreSlot("Gores/NPCs/Quakemaker_Gore1")
+			);
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
