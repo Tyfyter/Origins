@@ -706,8 +706,10 @@ namespace Origins {
 				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
 				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
 					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
-				FancyLightingUseEnhancedGlowMaskSupport = LightingConfig.GetMethod("get_UseEnhancedGlowMaskSupport", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
+
+				Type CompatibilityConfig = fancyLighting.GetConfig("CompatibilityConfig").GetType();
+				FancyLightingUseEnhancedGlowMaskSupport = CompatibilityConfig.GetMethod("get_UseAccurateGlowRendering", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+					.CreateDelegate<Func<bool>>(CompatibilityConfig.GetField("Instance").GetValue(null));
 
 				Type ambientOcclusionType = flAssembly.GetType("FancyLighting.AmbientOcclusion") ?? flAssembly.GetType("FancyLighting.Core.AmbientOcclusion");
 				if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {
@@ -741,12 +743,14 @@ namespace Origins {
 						})
 					);
 				}
-				if (fancyLighting.GetType().GetMethod("_Main_RenderWalls", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance) is MethodInfo _Main_RenderWalls) {
-					MonoModHooks.Modify(_Main_RenderWalls, il => {
+				if (fancyLighting.GetType().GetMethod("DoSmoothLighting", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance) is MethodInfo DoSmoothLighting) {
+					MonoModHooks.Modify(DoSmoothLighting, il => {
 						ILCursor c = new(il);
 						int useEnhancedGlowMaskSupport = -1;
 						c.GotoNext(MoveType.After,
-							i => i.MatchCallOrCallvirt(LightingConfig, "get_UseEnhancedGlowMaskSupport"),
+							i => i.MatchCallOrCallvirt(CompatibilityConfig, "get_UseAccurateGlowRendering")
+						);
+						c.GotoNext(MoveType.After,
 							i => i.MatchStloc(out useEnhancedGlowMaskSupport)
 						);
 						ILLabel end = default;
