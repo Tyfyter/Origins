@@ -227,6 +227,10 @@ namespace Origins.NPCs.Ashen {
 			NPC.color = HeadSegment.color;
 			NPC.alpha = HeadSegment.alpha;
 			NPC.GivenName = HeadSegment.GivenName;
+			foreach (Point pos in NPC.Hitbox.IterateTilesIn()) {
+				Tile tile = Main.tile[pos];
+				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) Lighting.AddLight(pos.X, pos.Y, 0.03f, 0.0183f, 0.003f);
+			}
 			if (NPC.ai[2] != 0 || NPC.localAI[3] != 0) {
 				Vector2 pos = new(NPC.ai[2], NPC.localAI[3]);
 				if (NPC.Hitbox.Contains(pos)) {
