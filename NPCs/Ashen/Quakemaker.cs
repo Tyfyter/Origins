@@ -6,6 +6,7 @@ using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
+using ReLogic.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -90,15 +91,33 @@ namespace Origins.NPCs.Ashen {
 				NPC.soundDelay = (int)delay;
 
 				SoundEngine.PlaySound(DigSound, NPC.Center);
-				Rectangle hitbox = NPC.Hitbox.Add((NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * 16);
-				hitbox.Inflate(-12, -12);
-				if (hitbox.OverlapsAnyTiles()) {
+				if (IsDrilling()) {
 					Main.instance.CameraModifiers.Add(new CameraShakeModifier(
 						NPC.Center, 2f, 1f, 10, 750f, -1f, "Quakemaker"
 					));
+					drillSound.PlaySoundIfInactive(
+						Origins.Sounds.Saw,
+						NPC.Center,
+						_IsDrilling ??= IsDrilling
+					);
 				}
 			}
 		}
+		SoundUpdateCallback _IsDrilling;
+		float soundVolume;
+		bool IsDrilling(ActiveSound sound = default) {
+			Rectangle hitbox = NPC.Hitbox.Add((NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * 16);
+			hitbox.Inflate(-12, -12);
+			if (sound is not null) {
+				const float volume = 0.5f;
+				sound.Position = hitbox.Center();
+				MathUtils.LinearSmoothing(ref soundVolume, (NPC.active && hitbox.OverlapsAnyTiles()).Mul(volume), volume / 10);
+				sound.Volume = soundVolume;
+				return soundVolume > 0;
+			}
+			return hitbox.OverlapsAnyTiles();
+		}
+		SlotId drillSound;
 		protected internal override void HeadAI() {
 			bool isAlreadyAttacking = false;
 			float totalSegs = 0;
