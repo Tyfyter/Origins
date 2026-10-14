@@ -504,6 +504,7 @@ public class Animation_Editor_UI : SwitchableUIState {
 			return null;
 		}
 		set {
+			if (!DebugConfig.Instance.AnimatorMode) return;
 			field = value;
 			setTickCount = OriginSystem.gameTickCount;
 		}
