@@ -285,9 +285,10 @@ namespace Origins.Items.Weapons.Melee {
 			Lighting.AddLight(player.Center, color.ToVector3());
 		}
 	}
+}
+namespace Origins.Buffs {
 	public class Blade_Dance_Buff : ModBuff {
 		public static int ID { get; private set; }
-		public override string Texture => "Origins/Buffs/Blade_Dance_Buff";
 		public override void SetStaticDefaults() {
 			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
 			ID = Type;
