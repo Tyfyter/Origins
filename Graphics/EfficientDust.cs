@@ -277,29 +277,7 @@ namespace Origins.Graphics {
 			}
 			if (!dust.noLightEmittence) Lighting.AddLight(dust.position, dust.color.ToVector3() * dust.scale);
 		}
-		static Action<Dust> Torch(int torchType) => dust => {
-			dust.position += dust.velocity;
-			if (!dust.noGravity) dust.velocity.Y += 0.05f;
-			if (!dust.noLight && !dust.noLightEmittence) {
-				float scale = dust.scale * 1.4f;
-				Min(ref scale, 1);
-				if (dust.customData is not float multiplier) multiplier = 1;
-				Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), torchType, scale * multiplier);
-			}
-			dust.rotation += dust.velocity.X * 0.5f;
-			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
-				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
-			} else {
-				dust.scale -= 0.01f;
-			}
-			if (dust.noGravity) {
-				dust.velocity *= 0.92f;
-				if (dust.fadeIn == 0f) {
-					dust.scale -= 0.04f;
-				}
-			}
-		};
-		public static Action<Dust> Torch(Vector3 color) => dust => {
+		public static void Torch(Dust dust, Vector3 color) {
 			dust.position += dust.velocity;
 			if (!dust.noGravity) dust.velocity.Y += 0.05f;
 			if (!dust.noLight && !dust.noLightEmittence) {
@@ -313,28 +291,7 @@ namespace Origins.Graphics {
 				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
 			} else {
 				dust.scale -= 0.01f;
-			}
-			if (dust.noGravity) {
-				dust.velocity *= 0.92f;
-				if (dust.fadeIn == 0f) {
-					dust.scale -= 0.04f;
-				}
-			}
-		};
-		public static void TintableTorch(Dust dust) {
-			dust.position += dust.velocity;
-			if (!dust.noGravity) dust.velocity.Y += 0.05f;
-			if (!dust.noLight && !dust.noLightEmittence) {
-				float scale = dust.scale * 1.4f;
-				Min(ref scale, 1);
-				if (dust.customData is not float multiplier) multiplier = 1;
-				Lighting.AddLight(dust.position, dust.color.ToVector3() * scale * multiplier);
-			}
-			dust.rotation += dust.velocity.X * 0.5f;
-			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
-				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
-			} else {
-				dust.scale -= 0.01f;
+				if (dust.scale < 0) dust.active = false;
 			}
 			if (dust.noGravity) {
 				dust.velocity *= 0.92f;
@@ -343,6 +300,13 @@ namespace Origins.Graphics {
 				}
 			}
 		}
+		static Action<Dust> Torch(int torchType) => dust => {
+			Vector3 color;
+			TorchID.TorchColor(torchType, out color.X, out color.Y, out color.Z);
+			Torch(dust, color);
+		};
+		public static Action<Dust> Torch(Vector3 color) => dust => Torch(dust, color);
+		public static void TintableTorch(Dust dust) => Torch(dust, dust.color.ToVector3());
 		static void Moss(Dust dust) {
 			dust.scale *= 0.96f;
 			dust.velocity.Y -= 0.01f;

@@ -18,17 +18,9 @@ namespace Origins.Dusts {
 			dust.velocity.X *= 0.3f;
 			dust.scale *= 0.7f;
 		}
-		public override bool MidUpdate(Dust dust) {
-			if (!dust.noGravity) {
-				dust.velocity.Y += 0.05f;
-			}
-			if (!dust.noLight && !dust.noLightEmittence) {
-				float lightScale = dust.scale * 1.4f;
-				if (lightScale > 0.6f) lightScale = 0.6f;
-				lightScale /= 255f;
-				Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), lightScale * dust.color.R, lightScale * dust.color.G, lightScale * dust.color.B);
-			}
-			return true;
+		public override bool Update(Dust dust) {
+			EfficientDust.Torch(dust, dust.color.ToVector3());
+			return false;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) => dust.color;
 	}
