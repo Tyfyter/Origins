@@ -285,7 +285,7 @@ namespace Origins.Graphics {
 				float scale = dust.scale * 1.4f;
 				Min(ref scale, 1);
 				if (dust.customData is not float multiplier) multiplier = 1;
-				Lighting.AddLight(dust.position, color * scale * multiplier);
+				Lighting.AddLight(dust.position, color * float.Max(scale * multiplier, 0));
 			}
 			dust.rotation += dust.velocity.X * 0.5f;
 			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
