@@ -2752,6 +2752,9 @@ Keybinds: {
 	Copy.DisplayName: Copy
 	Cut.DisplayName: Cut
 	Paste.DisplayName: Paste
+	LoopAnimation.DisplayName: Loop Animation
+	NextKeyframeAnimation.DisplayName: Goto Next Keyframe
+	PreviousKeyframeAnimation.DisplayName: Goto Previous Keyframe
 }
 
 Configs: {
