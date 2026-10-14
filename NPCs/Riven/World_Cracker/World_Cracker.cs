@@ -449,12 +449,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					}
 				}
 				if (succeeded) npc.ai[2] = -otherShotDelay;
-				NPC current = headNPC;
-				int tailType = ModContent.NPCType<World_Cracker_Tail>();
-				while (current is not null) {
+				foreach (Worm segment in IterateWorm(headNPC)) {
+					NPC current = segment.NPC;
 					if (current != headNPC) current.ai[2] -= otherShotDelay;
-					if (!Main.npc.IndexInRange((int)current.ai[0])) break;
-					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
 			}
 		}
@@ -594,13 +591,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override bool SpecialOnKill() {
 			ProgressFlags.DownedWorldCracker.Set();
 			Mod.Logger.Info($"SpecialOnKill on {Main.netMode}, life: {NPC.life}");
-			int bodyType = BodyType;
 			float dist = float.PositiveInfinity;
 			int closest = NPC.whoAmI;
-			NPC current = NPC;
-			bool[] visited = new bool[Main.maxNPCs];
-			while (current is not null) {
-				if (!visited[current.whoAmI].TrySet(true)) break;
+			for (int j = 0; j < Main.maxPlayers; j++) {
+				if (NPC.playerInteraction[j]) {
+					OriginPlayer oP = Main.player[j].OriginPlayer();
+					oP.tornRCEnd = oP.tornCurrentSeverity;
+					if (oP.tornRCStart >= 0.8f && oP.tornRCValid >= 0.8f && oP.tornRCEnd >= 0.8f) ModContent.GetInstance<Cracked>().Condition.Complete();
+				}
+			}
+			foreach (Worm segment in IterateWorm()) {
+				NPC current = segment.NPC;
 				for (int j = 0; j < Main.maxPlayers; j++) {
 					Player player = Main.player[j];
 					if (player.active && !player.dead) {
@@ -610,11 +611,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 							closest = current.whoAmI;
 						}
 					}
-					if (NPC.playerInteraction[j]) {
-						OriginPlayer oP = player.OriginPlayer();
-						oP.tornRCEnd = oP.tornCurrentSeverity;
-						if (oP.tornRCStart >= 0.8f && oP.tornRCValid >= 0.8f && oP.tornRCEnd >= 0.8f) ModContent.GetInstance<Cracked>().Condition.Complete();
-					}
 				}
 				DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);
 				if (!Main.dedServ) for (int i = 0; i < 10; i++) OriginExtensions.SpawnGoreByType(
@@ -623,19 +619,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					current.oldVelocity,
 					GoreCache.Riven_Blood
 				);
-				current = (current.type == bodyType || current.type == Type) ? Main.npc[(int)current.ai[0]] : null;
 			}
 			NPC.Center = Main.npc[closest].Center;
 			return false;
 		}
 		public static void DrawAllArmor(NPC head, SpriteBatch spriteBatch, Vector2 screenPos) {
-			int tailType = ModContent.NPCType<World_Cracker_Tail>();
-			NPC current = head;
-			while (current is not null) {
-				if (current.ModNPC is IDrawWCArmor armorDrawer) {
-					armorDrawer.DrawSegmentArmor(spriteBatch, screenPos, Lighting.GetColor(current.Center.ToTileCoordinates()));
+			foreach (Worm segment in ((Worm)head.ModNPC).IterateWorm()) {
+				if (segment is IDrawWCArmor armorDrawer) {
+					armorDrawer.DrawSegmentArmor(spriteBatch, screenPos, Lighting.GetColor(segment.NPC.Center.ToTileCoordinates()));
 				}
-				current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 			}
 		}
 		public void ModifyWikiStats(JObject data) {
@@ -649,6 +641,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public override bool SharesImmunityFrames => true;
+		public override float RotationOffset => MathHelper.Pi;
 		public int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public int OriginalMaxArmorHealth { get; set; }
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
@@ -753,6 +746,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Tail : WormTail, IRivenEnemy, IDrawWCArmor {
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override bool SharesImmunityFrames => true;
+		public override float RotationOffset => MathHelper.Pi;
 		public int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public int OriginalMaxArmorHealth { get; set; }
 		public override float SegmentSeparation => 96;
@@ -839,15 +833,21 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				frames.Add(frame);
 			}
 
-			AddFrame(npc, npc.whoAmI % head_frames);
 			totalWidth -= 48;
-			NPC current = Main.npc[(int)npc.ai[0]];
-			int bodyType = ModContent.NPCType<World_Cracker_Body>();
-			while (current.type == bodyType) {
-				AddFrame(current, current.whoAmI % body_frames + head_frames);
-				current = Main.npc[(int)current.ai[0]];
+			foreach (Worm segment in ((Worm)npc.ModNPC).IterateWorm()) {
+				NPC current = segment.NPC;
+				switch (segment.SegmentType) {
+					case WormSegmentType.Head:
+					AddFrame(current, current.whoAmI % head_frames);
+					break;
+					case WormSegmentType.Body:
+					AddFrame(current, current.whoAmI % body_frames + head_frames);
+					break;
+					case WormSegmentType.Tail:
+					AddFrame(current, current.whoAmI % tail_frames + head_frames + body_frames);
+					break;
+				}
 			}
-			AddFrame(npc, current.whoAmI % tail_frames + head_frames + body_frames);
 			Vector2 pos = drawParams.BarCenter;
 			float scale = 1f;
 			float barWidth = drawParams.BarTexture.Width - 48;

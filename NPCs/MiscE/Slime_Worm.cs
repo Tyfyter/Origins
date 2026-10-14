@@ -79,8 +79,6 @@ namespace Origins.NPCs.MiscE {
 			NPC.GivenName = Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayNameFormattable").Format(Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm." + colorName));
 		}
 		public override bool SpecialOnKill() {
-			int bodyType = BodyType;
-			NPC current = NPC;
 			int slimeType = NPCID.BlueSlime;
 			switch (SegmentCount) {
 				case 3:
@@ -102,10 +100,7 @@ namespace Origins.NPCs.MiscE {
 				slimeType = NPCID.BlackSlime;
 				break;
 			}
-			while (current is not null) {
-				NPC.NewNPC(NPC.GetSource_Death(), (int)current.Center.X, (int)current.Center.Y, slimeType);
-				current = (current.type == bodyType || current == NPC) ? Main.npc[(int)current.ai[0]] : null;
-			}
+			foreach (Worm segment in IterateWorm()) NPC.NewNPC(NPC.GetSource_Death(), (int)segment.NPC.Center.X, (int)segment.NPC.Center.Y, slimeType);
 			return false;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

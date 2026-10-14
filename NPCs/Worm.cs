@@ -1,23 +1,17 @@
-using Avalon.Items.Weapons.Melee.Swords;
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
-using Origins.Gores;
-using Origins.NPCs.Riven.World_Cracker;
 using Origins.Reflection;
-using Origins.Tiles.Banners;
+using PegasusLib.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
-using static Origins.Misc.Physics;
+using Terraria.ModLoader.Core;
 
 //from ExampleMod, meant to be copied into other mods
 namespace Origins.NPCs {
@@ -44,9 +38,10 @@ namespace Origins.NPCs {
 	{
 		/*  ai[] usage:
 		 *  
+		 *  NPC.ai: used by vanilla worm AI, not this, descriptions kept for reference
 		 *  ai[0] = "follower" segment, the segment that's following this segment
 		 *  ai[1] = "following" segment, the segment that this segment is following
-		 *  ai[3] = duplicate of NPC.realLife, used by vanilla worm AI, not this
+		 *  ai[3] = duplicate of NPC.realLife
 		 *  
 		 *  localAI[0] = used when syncing changes to collision detection
 		 *  localAI[1] = checking if Init() was called
@@ -66,21 +61,25 @@ namespace Origins.NPCs {
 		/// The rate at which the NPC gains velocity
 		/// </summary>
 		public float Acceleration { get; set; }
+		public virtual float RotationOffset => MathHelper.PiOver2;
 
 		/// <summary>
 		/// The NPC instance of the head segment for this worm.
 		/// </summary>
 		public NPC HeadSegment => Main.npc.IndexInRange(NPC.realLife) ? Main.npc[NPC.realLife] : NPC;
+		public Worm Head => (Worm)HeadSegment.ModNPC;
 
 		/// <summary>
-		/// The NPC instance of the segment that this segment is following (ai[1]).  For head segments, this property always returns <see langword="null"/>.
+		/// The NPC instance of the segment that this segment is following. For head segments, this property always returns <see langword="null"/>.
 		/// </summary>
-		public NPC FollowingNPC => SegmentType == WormSegmentType.Head ? null : Main.npc[(int)NPC.ai[1]];
+		public NPC FollowingNPC { get => Following?.NPC; private set => Following = (Worm)value.ModNPC; }
+		public Worm Following { get; internal set; }
 
 		/// <summary>
-		/// The NPC instance of the segment that is following this segment (ai[0]).  For tail segment, this property always returns <see langword="null"/>.
+		/// The NPC instance of the segment that is following this segment. For tail segment, this property always returns <see langword="null"/>.
 		/// </summary>
-		public NPC FollowerNPC => SegmentType == WormSegmentType.Tail ? null : Main.npc[(int)NPC.ai[0]];
+		public NPC FollowerNPC { get => Follower?.NPC; private set => Follower = (Worm)value.ModNPC; }
+		public Worm Follower { get; internal set; }
 
 		public virtual float SegmentSeparation => NPC.width;
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
@@ -96,13 +95,16 @@ namespace Origins.NPCs {
 			}
 		}
 		public sealed override bool PreAI() {
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			if (NPC.localAI[1] == 0) {
 				NPC.localAI[1] = 1f;
 				Init();
 			}
 
 			if (SegmentType == WormSegmentType.Head) {
+				HeadAI_SpawnSegments();
 				HeadAI();
+				HeadAI_ShareDebuffs();
 
 				if (!NPC.HasValidTarget) {
 					NPC.target = Main.maxPlayers;
@@ -131,12 +133,34 @@ namespace Origins.NPCs {
 
 			return true;
 		}
-
+		protected virtual void HeadAI_SpawnSegments() { }
+		private protected virtual void HeadAI_ShareDebuffs() { }
 		// Not visible to public API, but is used to indicate what AI to run
 		protected internal virtual void HeadAI() { }
 
 		protected internal virtual void BodyTailAI() { }
-
+		struct WormAIHandler : ILoadable {
+			static GlobalHookList<GlobalNPC> HookAI;
+			readonly void ILoadable.Load(Mod mod) {
+				HookAI = (GlobalHookList<GlobalNPC>)typeof(NPCLoader).GetField(nameof(HookAI), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+				MonoModHooks.Add(((Delegate)NPCLoader.AI).Method, AI);
+			}
+			readonly void ILoadable.Unload() { }
+			static void AI(Action<NPC> orig, NPC npc) {
+				if (npc.ModNPC is Worm worm) {
+					npc.ModNPC.AI();
+					npc.aiStyle = Terraria.ID.NPCAIStyleID.Worm;
+					using (npc.ai[0].ScopedOverride(worm.FollowerNPC?.whoAmI ?? -1)) {
+						using (npc.ai[1].ScopedOverride(worm.FollowingNPC?.whoAmI ?? -1)) {
+							EntityGlobalsEnumerator<GlobalNPC> enumerator = HookAI.Enumerate(npc).GetEnumerator();
+							while (enumerator.MoveNext()) {
+								enumerator.Current.AI(npc);
+							}
+						}
+					}
+				} else orig(npc);
+			}
+		}
 		public abstract void Init();
 		bool triggeredDeathEffect;
 		public sealed override void HitEffect(NPC.HitInfo hit) {
@@ -147,7 +171,7 @@ namespace Origins.NPCs {
 				float speed = velocity.Length();
 				IEntitySource source = headSegment.GetSource_Death();
 				int i = 0;
-				foreach (Worm segment in new WormIterator(this)) {
+				foreach (Worm segment in new WormIterator((Worm)headSegment.ModNPC)) {
 					if (segment.SegmentType != WormSegmentType.Head) velocity = segment.NPC.DirectionTo(segment.FollowingNPC.Center) * speed;
 					NPCMethods.VanillaHitEffect(NPC, hit.HitDirection, hit.Damage, hit.InstantKill);
 					segment.DeathEffect(in hit, source, velocity, i++);
@@ -156,10 +180,13 @@ namespace Origins.NPCs {
 		}
 		public virtual void HitEffect(in NPC.HitInfo hit) { }
 		public virtual void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) { }
-		public struct WormIterator(Worm segment) {
+		public struct WormIterator(Worm startSegment) : IEnumerable<Worm>, IEnumerator<Worm> {
 			bool started = false;
 			readonly HashSet<Worm> indecies = [];
-			public Worm Current { get; private set; } = segment.HeadSegment?.ModNPC as Worm;
+#pragma warning disable CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
+			public Worm Current { get; private set; } = startSegment;
+			readonly object IEnumerator.Current => Current;
+#pragma warning restore CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
 			public bool MoveNext() {
 				if (started.TrySet(true)) return true;
 				if (Current.SegmentType == WormSegmentType.Tail) return false;
@@ -170,7 +197,7 @@ namespace Origins.NPCs {
 			public void Reset() {
 				started = false;
 				indecies.Clear();
-				Current = segment.HeadSegment?.ModNPC as Worm;
+				Current = startSegment;
 			}
 			public readonly WormIterator GetEnumerator() => this;
 			static string PrintLoop(Worm worm) {
@@ -182,18 +209,27 @@ namespace Origins.NPCs {
 				builder.Append($"{current.NPC}({current.Name})");
 				return builder.ToString();
 			}
+
+			readonly void IDisposable.Dispose() { }
+			readonly IEnumerator<Worm> IEnumerable<Worm>.GetEnumerator() => this;
+			readonly IEnumerator IEnumerable.GetEnumerator() => this;
+
 			[Serializable]
 			public class OroborosException(Worm segment) : Exception($"Infinitely looping worm: {PrintLoop(segment)}") { }
 		}
 		public sealed override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.realLife);
 			writer.Write(isHighestIndex);
+			SyncedAction.WriteNPC(writer, FollowingNPC);
+			SyncedAction.WriteNPC(writer, FollowerNPC);
 			if (this is WormHead head) head.SendHeadAI(writer);
 			SendWormAI(writer);
 		}
 		public sealed override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.realLife = reader.ReadInt32();
 			isHighestIndex = reader.ReadBoolean();
+			FollowingNPC = SyncedAction.ReadNPC(reader);
+			FollowerNPC = SyncedAction.ReadNPC(reader);
 			if (this is WormHead head) head.ReceiveHeadAI(reader);
 			ReceiveWormAI(reader);
 		}
@@ -203,22 +239,21 @@ namespace Origins.NPCs {
 		protected static void SetHighestSegment(int highestSegment) {
 			if (Main.npc[highestSegment].ModNPC is Worm highestWorm) highestWorm.isHighestIndex = true;
 		}
-		public IEnumerable<NPC> IterateWorm() {
-			NPC current = Main.npc.GetIfInRange(NPC.realLife, NPC);
-			int index = current.whoAmI;
-			do {
-				yield return current;
-				current = Main.npc.GetIfInRange((int)current.ai[0]);
-			} while (current?.realLife == index);
+		public WormIterator IterateWorm() => IterateWorm(Head);
+		public List<NPC> ListSegments() {
+			List<NPC> segments = [];
+			foreach (Worm segment in IterateWorm(Head)) segments.Add(segment.NPC);
+			return segments;
 		}
-		public static IEnumerable<NPC> IterateWorm(NPC start) {
-			NPC current = Main.npc.GetIfInRange(start.realLife, start);
-			int index = current.whoAmI;
-			current = start;
-			do {
-				yield return current;
-				current = Main.npc.GetIfInRange((int)current.ai[0]);
-			} while (current?.realLife == index);
+		public static WormIterator IterateWorm(Worm start) => new(start);
+		public static WormIterator IterateWorm(NPC start) => new((Worm)start.ModNPC);
+		protected class EntitySource_Worm(NPC head, Worm lastSegment, string context = null) : EntitySource_Parent(head, context) {
+			public Worm LastSegment { get; } = lastSegment;
+			public void Apply(Worm applyTo) {
+				applyTo.NPC.realLife = head.realLife;
+				LastSegment.Follower = applyTo;
+				applyTo.Following = LastSegment;
+			}
 		}
 	}
 
@@ -280,7 +315,6 @@ namespace Origins.NPCs {
 		/// Whether the NPC shares its debuffs across segments
 		/// </summary>
 		public virtual bool SharesDebuffs => false;
-		public virtual float RotationOffset => MathHelper.PiOver2;
 
 		/// <summary>
 		/// Override this method to use custom body-spawning code.<br/>
@@ -288,9 +322,9 @@ namespace Origins.NPCs {
 		/// </summary>
 		/// <param name="segmentCount">How many body segements are expected to be spawned</param>
 		/// <returns>The whoAmI of the most-recently spawned NPC, which is the result of calling <see cref="NPC.NewNPC(Terraria.DataStructures.IEntitySource, int, int, int, int, float, float, float, float, int)"/></returns>
-		public virtual int SpawnBodySegments(int segmentCount) {
-			// Defaults to just returning this NPC's whoAmI, since the tail segment uses the return value as its "following" NPC index
-			return NPC.whoAmI;
+		public virtual Worm SpawnBodySegments(int segmentCount, ref int highestSegment) {
+			// Defaults to just returning this NPC, since the tail segment uses the return value as its "following" NPC index
+			return this;
 		}
 
 		/// <summary>
@@ -300,47 +334,28 @@ namespace Origins.NPCs {
 		/// <param name="type">The ID of the segment NPC to spawn</param>
 		/// <param name="latestNPC">The whoAmI of the most-recently spawned segment NPC in the worm, including the head</param>
 		/// <returns></returns>
-		protected int SpawnSegment(IEntitySource source, int type, int latestNPC) {
-			// We spawn a new NPC, setting latestNPC to the newer NPC, whilst also using that same variable
-			// to set the parent of this new NPC. The parent of the new NPC (may it be a tail or body part)
-			// will determine the movement of this new NPC.
-			// Under there, we also set the realLife value of the new NPC, because of what is explained above.
-			int oldLatest = latestNPC;
-			latestNPC = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI, 0, latestNPC);
-
-			Main.npc[oldLatest].ai[0] = latestNPC;
-
-			NPC latest = Main.npc[latestNPC];
-			// NPC.realLife is the whoAmI of the NPC that the spawned NPC will share its health with
-			latest.realLife = NPC.whoAmI;
-
-			return latestNPC;
+		protected Worm SpawnSegment(IEntitySource source, int type, Worm latestNPC, ref int highestSegment) {
+			NPC newNPC = NPC.NewNPCDirect(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+			Min(ref highestSegment, newNPC.whoAmI);
+			return (Worm)newNPC.ModNPC;
 		}
 
 		protected internal override void HeadAI() {
-			HeadAI_SpawnSegments();
-
 			bool collision = HeadAI_CheckCollisionForDustSpawns();
 
 			HeadAI_CheckTargetDistance(ref collision);
 
 			HeadAI_Movement(collision);
+		}
+
+		private protected sealed override void HeadAI_ShareDebuffs() {
 			if (SharesDebuffs) {
-				NPC current = NPC;
-				List<NPC> parts = new(SegmentCount);
 				int[] buffType = new int[NPC.buffType.Length];
 				int[] buffTime = new int[NPC.buffType.Length];
 				int buffIndex = 0;
-				int tailType = TailType;
-				while (current is not null) {
-					if (current.realLife != NPC.whoAmI) break;
-					if (parts.Contains(current)) {
-						for (int i = 0; i < parts.Count; i++) {
-							parts[i].active = false;
-						}
-						return;
-					}
-					parts.Add(current);
+				foreach (Worm segment in IterateWorm()) {
+					if (segment.SegmentType == WormSegmentType.Head) continue;
+					NPC current = segment.NPC;
 					for (int i = 0; i < current.buffTime.Length && buffIndex < buffTime.Length; i++) {
 						int time = current.buffTime[i];
 						if (time > 0) {
@@ -349,10 +364,7 @@ namespace Origins.NPCs {
 							for (int j = 0; j < buffType.Length && !found; j++) {
 								if (buffType[j] == type) {
 									found = true;
-									if (time > buffTime[j]) {
-										buffType[j] = type;
-										buffTime[j] = time;
-									}
+									if (time > buffTime[j]) buffTime[j] = time;
 								}
 							}
 							if (!found) {
@@ -362,10 +374,10 @@ namespace Origins.NPCs {
 							}
 						}
 					}
-					current = current.type == tailType || !Main.npc.IndexInRange((int)current.ai[0]) ? null : Main.npc[(int)current.ai[0]];
 				}
-				for (int i = 0; i < parts.Count; i++) {
-					current = parts[i];
+				foreach (Worm segment in IterateWorm()) {
+					if (segment.SegmentType == WormSegmentType.Head) continue;
+					NPC current = segment.NPC;
 					for (int j = 0; j < buffTime.Length; j++) {
 						current.buffTime[j] = buffTime[j];
 						current.buffType[j] = buffType[j];
@@ -374,41 +386,39 @@ namespace Origins.NPCs {
 			}
 		}
 
-		protected void HeadAI_SpawnSegments() {
+		protected sealed override void HeadAI_SpawnSegments() {
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				// So, we start the AI off by checking if NPC.ai[0] (the following NPC's whoAmI) is 0.
+				// So, we start the AI off by checking if the following NPC is null.
 				// This is practically ALWAYS the case with a freshly spawned NPC, so this means this is the first update.
 				// Since this is the first update, we can safely assume we need to spawn the rest of the worm (bodies + tail).
-				bool hasFollower = NPC.ai[0] > 0;
+				bool hasFollower = Follower is not null;
 				if (!hasFollower) {
 					// So, here we assign the NPC.realLife value.
 					// The NPC.realLife value is mainly used to determine which NPC loses life when we hit this NPC.
 					// We don't want every single piece of the worm to have its own HP pool, so this is a neat way to fix that.
 					NPC.realLife = NPC.whoAmI;
 					// latestNPC is going to be used in SpawnSegment() and I'll explain it there.
-					int latestNPC = NPC.whoAmI;
+					Worm latestNPC = this;
 
 					// Here we determine the length of the worm.
 					int randomWormLength = Main.rand.Next(MinSegmentLength, MaxSegmentLength + 1);
 
 					int distance = randomWormLength - 2;
 
-					IEntitySource source = NPC.GetSource_FromAI();
-
+					int highestSegment = NPC.whoAmI;
 					if (HasCustomBodySegments) {
 						// Call the method that'll handle spawning the body segments
-						latestNPC = SpawnBodySegments(distance);
+						latestNPC = SpawnBodySegments(distance, ref highestSegment);
 					} else {
 						// Spawn the body segments like usual
 						while (distance > 0) {
-							latestNPC = SpawnSegment(source, BodyType, latestNPC);
+							latestNPC = SpawnSegment(new EntitySource_Worm(NPC, latestNPC), BodyType, latestNPC, ref highestSegment);
 							distance--;
 						}
 					}
 
 					// Spawn the tail segment
-					latestNPC = SpawnSegment(source, TailType, latestNPC);
-					int highestSegment = int.Min(NPC.whoAmI, latestNPC);
+					SpawnSegment(new EntitySource_Worm(NPC, latestNPC), TailType, latestNPC, ref highestSegment);
 
 					NPC.netUpdate = true;
 
@@ -678,11 +688,10 @@ namespace Origins.NPCs {
 		}
 		public override bool SpecialOnKill() {
 			if (NPC.boss) {
-				int tailType = TailType;
 				float dist = float.PositiveInfinity;
 				int closest = NPC.whoAmI;
-				NPC current = NPC;
-				while (current is not null) {
+				foreach (Worm segment in IterateWorm()) {
+					NPC current = segment.NPC;
 					for (int j = 0; j < Main.maxPlayers; j++) {
 						if (Main.player[j].active && !Main.player[j].dead) {
 							float currentDist = Main.player[j].DistanceSQ(current.Center);
@@ -692,7 +701,6 @@ namespace Origins.NPCs {
 							}
 						}
 					}
-					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
 				NPC.Center = Main.npc[closest].Center;
 			}
@@ -705,7 +713,7 @@ namespace Origins.NPCs {
 			SegmentCount = reader.ReadInt32();
 		}
 		public override void SetDefaults() {
-			//NPC.aiStyle = 6;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.Worm;
 			NPC.netAlways = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -728,7 +736,7 @@ namespace Origins.NPCs {
 			if (Main.player[worm.NPC.target].dead && worm.NPC.timeLeft > 30000)
 				worm.NPC.timeLeft = 10;
 
-			NPC following = worm.NPC.ai[1] >= Main.maxNPCs ? null : worm.FollowingNPC;
+			NPC following = worm.Following?.NPC;
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
 				// Some of these conditions are possble if the body/tail segment was spawned individually
 				// Kill the segment if the segment NPC it's following is no longer valid
@@ -746,7 +754,7 @@ namespace Origins.NPCs {
 				float dirY = following.Center.Y - worm.NPC.Center.Y;
 				// We then use Atan2 to get a correct rotation towards that parent NPC.
 				// Assumes the sprite for the NPC points upward.  You might have to modify this line to properly account for your NPC's orientation
-				worm.NPC.rotation = (float)Math.Atan2(dirY, dirX) + MathHelper.Pi;
+				worm.NPC.rotation = (float)Math.Atan2(dirY, dirX) + worm.RotationOffset;
 				// We also get the length of the direction vector.
 				float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
 				// We calculate a new, correct distance.
@@ -819,6 +827,13 @@ namespace Origins.NPCs {
 			NPC.dontCountMe = true;
 			NPC.lifeMax = 200;
 		}
+		public sealed override void OnSpawn(IEntitySource source) {
+			(source as EntitySource_Worm)?.Apply(this);
+			OnSpawnSegment(source);
+		}
+		public virtual void OnSpawnSegment(IEntitySource source) { }
+		protected sealed override void HeadAI_SpawnSegments() { }
+		private protected sealed override void HeadAI_ShareDebuffs() { }
 	}
 
 	// Since the body and tail segments share the same AI
@@ -882,5 +897,12 @@ namespace Origins.NPCs {
 			NPC.dontCountMe = true;
 			NPC.lifeMax = 200;
 		}
+		public sealed override void OnSpawn(IEntitySource source) {
+			(source as EntitySource_Worm)?.Apply(this);
+			OnSpawnSegment(source);
+		}
+		public virtual void OnSpawnSegment(IEntitySource source) { }
+		protected sealed override void HeadAI_SpawnSegments() { }
+		private protected sealed override void HeadAI_ShareDebuffs() { }
 	}
 }

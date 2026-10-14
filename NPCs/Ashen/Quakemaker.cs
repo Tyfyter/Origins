@@ -121,8 +121,9 @@ namespace Origins.NPCs.Ashen {
 			bool isAlreadyAttacking = false;
 			float totalSegs = 0;
 			float groundedSegs = 0;
-			foreach (NPC segment in IterateWorm()) {
-				if (segment != NPC && (segment.ai[2] != 0 || segment.localAI[3] != 0)) isAlreadyAttacking = true;
+			foreach (Worm seg in IterateWorm()) {
+				NPC segment = seg.NPC;
+				if (seg != this && (segment.ai[2] != 0 || segment.localAI[3] != 0)) isAlreadyAttacking = true;
 				totalSegs++;
 				if (segment.Hitbox.OverlapsAnyTiles(false)) groundedSegs++;
 			}

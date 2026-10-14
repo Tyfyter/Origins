@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
 using ModLiquidLib.Utils;
+using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Dev;
@@ -10,6 +11,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -112,14 +114,13 @@ namespace Origins.NPCs.Brine {
 				}
 			}
 		}
-		public override int SpawnBodySegments(int segmentCount) {
-			int latestNPC = NPC.whoAmI;
-			IEntitySource source = NPC.GetSource_FromAI();
+		public override Worm SpawnBodySegments(int segmentCount, ref int highestSegment) {
+			Worm latestNPC = this;
 			while (segmentCount > 0) {
-				latestNPC = SpawnSegment(source, BodyType, latestNPC);
+				latestNPC = SpawnSegment(new EntitySource_Worm(NPC, latestNPC), BodyType, latestNPC, ref highestSegment);
 				segmentCount--;
 			}
-			latestNPC = SpawnSegment(source, ModContent.NPCType<Brine_Serpent_Body2>(), latestNPC);
+			latestNPC = SpawnSegment(new EntitySource_Worm(NPC, latestNPC), ModContent.NPCType<Brine_Serpent_Body2>(), latestNPC, ref highestSegment);
 			return latestNPC;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -178,17 +179,7 @@ namespace Origins.NPCs.Brine {
 				}
 				drawColor = Color.White;
 			} else {
-				NPC current = NPC;
-				HashSet<int> indecies = [];
-				int tailType = TailType;
-				List<NPC> NPCs = [];
-				while (current.ai[0] != 0) {
-					if (!indecies.Add(current.whoAmI) || (current.realLife != -1 && current.realLife != NPC.whoAmI)) break;
-					NPCs.Add(current);
-					if (current.type == tailType) break;
-					NPC next = Main.npc[(int)current.ai[0]];
-					current = next;
-				}
+				List<NPC> NPCs = ListSegments();
 				oldRot = new float[NPCs.Count];
 				oldPos = new Vector2[NPCs.Count];
 				for (int i = 0; i < NPCs.Count - 1; i++) {
