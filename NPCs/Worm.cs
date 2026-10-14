@@ -218,18 +218,18 @@ namespace Origins.NPCs {
 			public class OroborosException(Worm segment) : Exception($"Infinitely looping worm: {PrintLoop(segment)}") { }
 		}
 		public sealed override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(NPC.realLife);
+			writer.Write((byte)(NPC.realLife == -1 ? byte.MaxValue : NPC.realLife));
 			writer.Write(isHighestIndex);
-			SyncedAction.WriteNPC(writer, FollowingNPC);
-			SyncedAction.WriteNPC(writer, FollowerNPC);
+			if (SegmentType != WormSegmentType.Head) SyncedAction.WriteNPC(writer, FollowingNPC);
+			if (SegmentType != WormSegmentType.Tail) SyncedAction.WriteNPC(writer, FollowerNPC);
 			if (this is WormHead head) head.SendHeadAI(writer);
 			SendWormAI(writer);
 		}
 		public sealed override void ReceiveExtraAI(BinaryReader reader) {
-			NPC.realLife = reader.ReadInt32();
+			NPC.realLife = ((int)reader.ReadByte()).OrXIf(byte.MaxValue, -1);
 			isHighestIndex = reader.ReadBoolean();
-			FollowingNPC = SyncedAction.ReadNPC(reader);
-			FollowerNPC = SyncedAction.ReadNPC(reader);
+			if (SegmentType != WormSegmentType.Head) FollowingNPC = SyncedAction.ReadNPC(reader);
+			if (SegmentType != WormSegmentType.Tail) FollowerNPC = SyncedAction.ReadNPC(reader);
 			if (this is WormHead head) head.ReceiveHeadAI(reader);
 			ReceiveWormAI(reader);
 		}
