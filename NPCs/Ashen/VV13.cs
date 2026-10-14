@@ -26,17 +26,27 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen; 
 public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargetingNPC {
+	static AutoLoadingTexture[] tools = [//todo: actual implementation
+		typeof(VV13).GetDefaultTMLName("_Drill"),
+		typeof(VV13).GetDefaultTMLName("_Saw")
+	];
+	public override void OnSpawn(IEntitySource source) {
+		AnimationVar = 1;
+	}
 	public Rectangle DrawRect => new(0, 0, 34, 46);
 	public int AnimationFrames => 3;
 	public int FrameDuration => 3;
 	public Vector2 PlatformOffset => new(0, 0);
 	public float PlatformWidth => 128;
 	Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
-	static AutoLoadingTexture glowTexture = typeof(Scrapyard_Stryder).GetDefaultTMLName("_Glow");
+	static AutoLoadingTexture glowTexture = typeof(VV13).GetDefaultTMLName("_Glow");
 	public VV13Animation Animation {
 		get => VV13Animation.animations[NPC.aiAction];
 		set => NPC.aiAction = value.Type;
 	}
+	public ref float AnimationTime => ref NPC.ai[0];
+	public ref float CurrentTool => ref NPC.ai[1];
+	public ref float AnimationVar => ref NPC.ai[3];
 	public override void Load() => this.AddBanner();
 	public override void SetStaticDefaults() {
 		NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
@@ -111,9 +121,9 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 	public override void FindFrame(int frameHeight) {
 		NPC.spriteDirection = NPC.direction;
 		VV13Animation animation = Animation;
-		float oldTime = NPC.ai[0];
-		animationControls.Play(ref NPC.ai[0], animation);
-		animation.events.Update(this, oldTime, NPC.ai[0]);
+		float oldTime = AnimationTime;
+		animationControls.Play(ref AnimationTime, animation);
+		animation.events.Update(this, oldTime, AnimationTime);
 	}
 	public override void ModifyNPCLoot(NPCLoot npcLoot) {
 		npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
@@ -142,10 +152,12 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		drawColor = NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor));
 		Vector2 position = NPC.Bottom + Vector2.UnitY * 2 - screenPos;
 		Vector2 dirMult = new(NPC.direction, 1);
-		animation.tentacleMidFront.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosMidFront * dirMult, drawColor, 0, NPC.direction);
-		animation.tentacleMidBack.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosMidBack * dirMult, drawColor, 0, NPC.direction);
-		animation.tentacleBack.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosBack * dirMult, drawColor, 0, NPC.direction);
-		animation.tentacleFront.GetCurrentValue(NPC.ai[0]).Draw(spriteBatch, position + VV13Animation.tentaclePosFront * dirMult, drawColor, 0, NPC.direction);
+		DrawTool(spriteBatch, (int)CurrentTool, position, animation.tool.GetCurrentValue(AnimationTime), drawColor);
+		animation.DrawExtras(spriteBatch, this, position, drawColor);
+		animation.tentacleMidFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosMidFront * dirMult, drawColor, 0, NPC.direction);
+		animation.tentacleMidBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosMidBack * dirMult, drawColor, 0, NPC.direction);
+		animation.tentacleBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosBack * dirMult, drawColor, 0, NPC.direction);
+		animation.tentacleFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosFront * dirMult, drawColor, 0, NPC.direction);
 		spriteBatch.DrawGlowingNPCPart(
 			TextureAssets.Npc[Type].Value,
 			glowTexture,
@@ -162,6 +174,19 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		Editor.vv13 = this;
 		Animation_Editor_UI.DrawEditorUI = Editor.DrawUI;
 		return false;
+	}
+	public void DrawTool(SpriteBatch spriteBatch, int tool, Vector2 position, PosRotScale transform, Color drawColor) {
+		Rectangle frame = tools[tool].Frame(verticalFrames: tool == 0 ? 3 : 5);
+		spriteBatch.Draw(
+			tools[tool],
+			position + transform.Position,
+			frame,
+			drawColor,
+			transform.Rotation,
+			frame.Size() * new Vector2(0.5f, 0.5f),
+			transform.Scale,
+			NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+		0);
 	}
 #if DRAWPLATFORM
 	public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -223,7 +248,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		public static void DrawUI(SpriteBatch spriteBatch) {
 			VV13Animation animation = vv13.Animation;
 			animation.gizmoBasePosition = vv13.NPC.Bottom - Main.screenPosition;
-			animation.DrawEditorUI(spriteBatch, ref vv13.NPC.ai[0], ref vv13.animationControls);
+			animation.DrawEditorUI(spriteBatch, ref vv13.AnimationTime, ref vv13.animationControls);
 			if (KeyframeAnimation.DrawSwapper(spriteBatch, VV13Animation.animations, out VV13Animation selected, vv13.Animation)) vv13.Animation = selected;
 		}
 	}
@@ -247,6 +272,8 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	//back
 	public KeyframeSet<Tentacle> tentacleBack = new(Default, tentaclePosBack) {
 	};
+	public KeyframeSet<PosRotScale> tool = new(new()) {
+	};
 	public EventKeyframeSet<VV13> events = [
 	];
 	static void Drop(in VV13 vv13) {
@@ -258,6 +285,7 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 		animations.Add(this);
 	}
 	public void Unload() { }
+	public virtual void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) { }
 }
 public class VV13_Idle : VV13Animation {
 	public VV13_Idle() {
@@ -293,5 +321,16 @@ public class VV13_Drop : VV13Animation {
 public class VV13_Use_Tool : VV13Animation {
 	public VV13_Use_Tool() {
 		//timelines here
+	}
+}
+public class VV13_Swap_Tool : VV13Animation {
+	public KeyframeSet<PosRotScale> swappingInTool = new(new()) {
+	};
+	public VV13_Swap_Tool() {
+		//timelines here
+	}
+	static void SwitchTool(in VV13 vv13) => Utils.Swap(ref vv13.CurrentTool, ref vv13.AnimationVar);
+	public override void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) {
+		vv13.DrawTool(spriteBatch, (int)vv13.AnimationVar, position, swappingInTool.GetCurrentValue(vv13.AnimationTime), drawColor);
 	}
 }
