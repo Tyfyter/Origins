@@ -38,6 +38,8 @@ namespace Origins {
 		public static ModKeybind PlayPauseAnimation { get; private set; }
 		[Keybind(null, Keys.L, DebugType.Animator)]
 		public static ModKeybind LoopAnimation { get; private set; }
+		[Keybind(null, "LeftControl+R", DebugType.Animator)]
+		public static ModKeybind RestartAnimation { get; private set; }
 		[Keybind(null, Keys.K, DebugType.Animator)]
 		public static ModKeybind InsertKeyframe { get; private set; }
 		[Keybind(null, Keys.Delete, DebugType.Animator)]

@@ -151,7 +151,7 @@ public abstract class KeyframeAnimation {
 
 			// go to start
 			buttonPos = timelinePos - buttonOffset * 2;
-			if (DrawButton(buttonPos, "Restart", out buttonColor)) {
+			if (DrawButton(buttonPos, "Restart", out buttonColor) || Keybindings.RestartAnimation.JustPressed) {
 				currentTime.Value = 0;
 			}
 			playTriangle.Translate(-buttonOffset - new Vector2(icon_size * 0.1f, 0)).FillColor(buttonColor).Draw(primitiveBatch);

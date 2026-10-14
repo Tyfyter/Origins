@@ -2753,6 +2753,7 @@ Keybinds: {
 	Cut.DisplayName: Cut
 	Paste.DisplayName: Paste
 	LoopAnimation.DisplayName: Loop Animation
+	RestartAnimation.DisplayName: Restart Animation
 	NextKeyframeAnimation.DisplayName: Goto Next Keyframe
 	PreviousKeyframeAnimation.DisplayName: Goto Previous Keyframe
 }
