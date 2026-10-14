@@ -933,7 +933,12 @@ public static class KeyframeTypes {
 		public readonly Vector2 Interpolate(Vector2 prevValue, Vector2 nextValue, float progress) => Vector2.Lerp(prevValue, nextValue, progress);
 		public static void DrawGizmo(SpriteBatch spriteBatch, ref Vector2 value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
 			Vector2 scale = GizmoZoom;
-			if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) value += (Main.MouseScreen - oldMousePos) / scale;
+			if (gizmoTracker.IsCurrent && Main.MouseScreen != oldMousePos) {
+				Vector2 mult = Vector2.One;
+				if (Main.keyState.PressingControl()) mult.X = 0;
+				else if (Main.keyState.PressingShift()) mult.Y = 0;
+				value += ((Main.MouseScreen - oldMousePos) / scale) * mult;
+			}
 			Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(ApplyGizmoZoom(offset.Position));
 			bool isHovering = rect.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
 			Color color = Color.White;
