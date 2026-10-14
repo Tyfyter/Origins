@@ -2361,6 +2361,8 @@ Projectiles: {
 	// Sprockey.DisplayName: Sprockey
 	// Star_Soldier_Drone.DisplayName: Star Soldier Drone
 	// CM_17_Laser.DisplayName: CM-17 Laser
+	// Quakemaker_Fire.DisplayName: Quakemaker Fire
+	// Quakemaker_Lava.DisplayName: Quakemaker Lava
 }
 
 Prefixes: {
