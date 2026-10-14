@@ -292,6 +292,12 @@ namespace Origins.Graphics {
 			} else {
 				dust.scale -= 0.01f;
 			}
+			if (dust.noGravity) {
+				dust.velocity *= 0.92f;
+				if (dust.fadeIn == 0f) {
+					dust.scale -= 0.04f;
+				}
+			}
 		};
 		public static Action<Dust> Torch(Vector3 color) => dust => {
 			dust.position += dust.velocity;
@@ -308,6 +314,12 @@ namespace Origins.Graphics {
 			} else {
 				dust.scale -= 0.01f;
 			}
+			if (dust.noGravity) {
+				dust.velocity *= 0.92f;
+				if (dust.fadeIn == 0f) {
+					dust.scale -= 0.04f;
+				}
+			}
 		};
 		public static void TintableTorch(Dust dust) {
 			dust.position += dust.velocity;
@@ -323,6 +335,12 @@ namespace Origins.Graphics {
 				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
 			} else {
 				dust.scale -= 0.01f;
+			}
+			if (dust.noGravity) {
+				dust.velocity *= 0.92f;
+				if (dust.fadeIn == 0f) {
+					dust.scale -= 0.04f;
+				}
 			}
 		}
 		static void Moss(Dust dust) {
@@ -367,13 +385,16 @@ namespace Origins.Graphics {
 			}
 			if (startNew) Main.spriteBatch.End();
 		}
+		static bool isUpdatingDusts;
 		static void UpdateDust() {
 			if (NetmodeActive.Server) return;
 			reachedFakeDust = false;
-			if (DebugMode) {
-				UpdateDusts(0, Main.maxDust * dust_layer_slots, null);
-			} else {
-				FastParallel.For(0, Main.maxDust * dust_layer_slots, UpdateDusts);
+			using (isUpdatingDusts.ScopedOverride(true)) {
+				if (DebugMode) {
+					UpdateDusts(0, Main.maxDust * dust_layer_slots, null);
+				} else {
+					FastParallel.For(0, Main.maxDust * dust_layer_slots, UpdateDusts);
+				}
 			}
 			Purge();
 			static void UpdateDusts(int fromInclusive, int toExclusive, object _) {
@@ -478,7 +499,13 @@ namespace Origins.Graphics {
 				TorchID.TorchColor(torchID, out float R, out float G, out float B);
 				AddLight((int)position.X / 16, (int)position.Y / 16, R, G, B);
 			}
-			public static void AddLight(int i, int j, float r, float g, float b) => lights.Add((i, j, r, g, b));
+			public static void AddLight(int i, int j, float r, float g, float b) {
+				if (isUpdatingDusts) {
+					lights.Add((i, j, r, g, b));
+				} else {
+					Terraria.Lighting.AddLight(i, j, r, g, b);
+				}
+			}
 		}
 
 		static readonly ConcurrentBag<(int i, int j, float r, float g, float b)> lights = [];
