@@ -359,6 +359,7 @@ ENEMY NPCS:
 (X) L2/S 'Legate'
 (X) Lamp Oil Tender
 (X) Meteor Crawler
+(X) MP3 'Envoy'
 (X) OO-13/F 'Ootheca'
 (X) OO-13/M 'Ootheca'
 (X) Tiny Skeleton Sniper
@@ -534,7 +535,6 @@ ARMOR:
 
 (^) Blast Armor
 (^) Chambersite Commander Armor
-(X) Mimic Armor
 (X) Mk. 3 CRISIS Armor
 (^) Necromancer Armor
 (^) Sapphire Mediator Armor
@@ -2245,13 +2245,8 @@ VOLUME I MUSIC:
 (#, ^4) Trenchmaker !!!
 (^) World Cracker
 
-(X) Ashen Invasion
 (X) Coronal Storm
-(X) Corruption Invasion
-(X) Crimson Invasion
-(X) Defiled Invasion
 (X) Laser Tag Event
-(X) Riven Invasion
 (^) Smog Storm
 (X) Test of Ancients
 
@@ -2301,13 +2296,8 @@ VOLUME III MUSIC:
 (X) Trenchmaker
 (X) World Cracker
 
-(X) Ashen Invasion
 (X) Coronal Storm
-(X) Corruption Invasion
-(X) Crimson Invasion
-(X) Defiled Invasion
 (X) Laser Tag Event
-(X) Riven Invasion
 (X) Smog Storm
 (X) Test of Ancients
 
