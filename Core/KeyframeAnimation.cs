@@ -430,7 +430,7 @@ public abstract class KeyframeAnimation {
 					if (forceLoop) {
 						speed = speed.Abs(out int dir);
 						float start = loopStart ?? 0;
-						if (loopEnd.HasValue) duration = loopEnd.Value - start;
+						duration = (loopEnd ?? duration) - start;
 						float t = time.Value - start;
 						switch (dir) {
 							case 1:
