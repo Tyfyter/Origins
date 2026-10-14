@@ -127,6 +127,7 @@ public abstract class KeyframeAnimation {
 			if (DrawButton(buttonPos, "Next Keyframe", out buttonColor) || Keybindings.NextKeyframeAnimation.JustPressed) {
 				float nextKeyframe = keyframeSets[selectedIndex].NextKeyframeTime(currentTime);
 				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
+				else currentTime.Value = totalLength;
 			}
 			playTriangle.Scale(0.95f, playTriangle.TransformedOrigin).TranslateTo(buttonPos - new Vector2(icon_scale * 0.85f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
 			keyframeDiamond.Scale(0.75f).FillColor(buttonColor).TranslateTo(buttonPos + new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
@@ -143,6 +144,7 @@ public abstract class KeyframeAnimation {
 			if (DrawButton(buttonPos, "Previous Keyframe", out buttonColor) || Keybindings.PreviousKeyframeAnimation.JustPressed) {
 				float nextKeyframe = keyframeSets[selectedIndex].PrevKeyframeTime(currentTime);
 				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
+				else currentTime.Value = 0;
 			}
 			playTriangle.Scale(new Vector2(-1, 1), playTriangle.TransformedOrigin).TranslateTo(buttonPos + new Vector2(icon_scale * 0.85f, 0)).FillColor(buttonColor).Draw(primitiveBatch);
 			keyframeDiamond.FillColor(buttonColor).TranslateTo(buttonPos - new Vector2(icon_size * 0.4f, 0)).Draw(primitiveBatch);
