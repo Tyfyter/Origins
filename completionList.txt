@@ -965,7 +965,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (X) Xeyah Laeta
 
-(#2, ^2) Arc-Flame Arm Blades !!!
+(@, ^3) Arc-Flame Arm Blades !!! (needs Blade_Dance_Cooldown_Debuff sprite)
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
