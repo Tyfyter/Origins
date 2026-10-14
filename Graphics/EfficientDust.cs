@@ -293,7 +293,7 @@ namespace Origins.Graphics {
 				dust.scale -= 0.01f;
 			}
 		};
-		static Action<Dust> Torch(Vector3 color) => dust => {
+		public static Action<Dust> Torch(Vector3 color) => dust => {
 			dust.position += dust.velocity;
 			if (!dust.noGravity) dust.velocity.Y += 0.05f;
 			if (!dust.noLight && !dust.noLightEmittence) {
@@ -309,6 +309,22 @@ namespace Origins.Graphics {
 				dust.scale -= 0.01f;
 			}
 		};
+		public static void TintableTorch(Dust dust) {
+			dust.position += dust.velocity;
+			if (!dust.noGravity) dust.velocity.Y += 0.05f;
+			if (!dust.noLight && !dust.noLightEmittence) {
+				float scale = dust.scale * 1.4f;
+				Min(ref scale, 1);
+				if (dust.customData is not float multiplier) multiplier = 1;
+				Lighting.AddLight(dust.position, dust.color.ToVector3() * scale * multiplier);
+			}
+			dust.rotation += dust.velocity.X * 0.5f;
+			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
+				if (dust.scale > dust.fadeIn) dust.fadeIn = 0f;
+			} else {
+				dust.scale -= 0.01f;
+			}
+		}
 		static void Moss(Dust dust) {
 			dust.scale *= 0.96f;
 			dust.velocity.Y -= 0.01f;

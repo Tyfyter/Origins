@@ -1,3 +1,4 @@
+using Origins.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,6 +9,7 @@ namespace Origins.Dusts {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
+			EfficientDust.UpdateDustCallback[Type] = EfficientDust.TintableTorch;
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.frame.X = 10 * DustID.WhiteTorch;
