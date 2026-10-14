@@ -298,7 +298,6 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Blade_Dance_Cooldown_Debuff : ModBuff {
-		public override string Texture => Origins.TempBuffSprite;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
