@@ -149,20 +149,6 @@ namespace Origins {
 						}
 						return false;
 					}
-					if (talkNPC.type == MC.NPCType<Defiled_Effigy>()) {
-						List<IShoppingBiome> dangerousBiomes = ShopHelper_EvilBiomes.DangerousBiomes;
-						for (int i = 0; i < dangerousBiomes.Count; i++) {
-							IShoppingBiome aShoppingBiome = dangerousBiomes[i];
-							if (aShoppingBiome == MC.GetInstance<Defiled_Wastelands>()) continue;
-							if (aShoppingBiome.IsInBiome(player)) {
-								ShopMethods.AddHappinessReportText(self, "HateBiome", new {
-									BiomeName = ShopHelper.BiomeNameByKey(aShoppingBiome.NameKey)
-								});
-								return true;
-							}
-						}
-						return false;
-					}
 				}
 				return orig(self, player);
 			};

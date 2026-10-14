@@ -678,7 +678,6 @@ namespace Origins {
 
 			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) {
 				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Name);
-				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
 				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), Name); // for future
 			}
 			AltLibrary.AltLibrary.Instance.Call("AddInvalidRangeHandler", "Origins:BrinePool", Brine_Pool.Gen.JungleAvoider, 6);

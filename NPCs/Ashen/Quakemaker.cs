@@ -363,6 +363,8 @@ public class Quakemaker_Fire : ModProjectile {
 	public override void AI() {
 		if (Projectile.soundDelay.TrySet(-1)) ;
 		if (Projectile.tileCollide) {
+			SoundEngine.PlaySound(Origins.Sounds.Bonk.WithVolume(0.5f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item45.WithVolume(0.8f), Projectile.Center);
 			Projectile.velocity.Y += 0.08f;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		} else {

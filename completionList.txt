@@ -77,6 +77,7 @@ BOSSES AND MINI-BOSSES:
 (X) Mechamalgamation
 (X) Prometheus
 (X) Seer
+(X) SR-32
 (X) SR-48 'The Phoenix'
 
 (%2) Origins final boss
@@ -91,7 +92,6 @@ TOWN NPCs:
 (X) Psymanti Shaman
 
 (^) Brine Fiend
-(ᗢ) Defiled Effigy
 
 (X) Arabel
 (ᗢ) Mother Unit
@@ -112,7 +112,6 @@ TOWN NPC Quests:
 (^) Brine Fiend - Basic Brewery
 (^) Brine Fiend - Get Freaky
 (^) Cyborg - Sensor Upgrade
-(X) Defiled Effigy - Outdated Proxy
 (^) Demolitionist - Re-peat Customer
 (^) Dryad - I’ll Give You a Deal
 (^) Dryad - Clearing the Way
@@ -270,7 +269,7 @@ ENEMY NPCS:
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
-(#2, ^2) QM-76 'Quakemaker' !!!
+(^) QM-76 'Quakemaker'
 (^) Reject
 (^) Repairboy
 (^) Riven Penguin
@@ -380,12 +379,6 @@ EVENTS:
 |---
 (X) Mist Haze
 (^) Smog Storm
-
-(X) Ashen Invasion
-(#, %2) Corruption Invasion
-(#, %2) Crimson Invasion
-(#, %2) Defiled Invasion
-(#, %2) Riven Invasion
 
 (X) Coronal Storm
 (X) Test of the Ancients
