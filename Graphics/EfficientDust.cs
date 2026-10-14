@@ -107,6 +107,7 @@ namespace Origins.Graphics {
 			SpawnDustCallback[DustID.Water_Space] = SpawnWater;
 			SpawnDustCallback[DustID.Water_Cavern] = SpawnWater;
 			SpawnDustCallback[DustID.Water_BloodMoon] = SpawnWater;
+			SpawnDustCallback[DustID.Torch] = Torch(TorchID.Torch);
 			SpawnDustCallback[DustID.CursedTorch] = Torch(TorchID.Cursed);
 		}
 		public static void DefaultDrawVanillaDust(Dust dust) {
