@@ -124,7 +124,7 @@ public abstract class KeyframeAnimation {
 
 			// go to next keyframe
 			buttonPos = timelinePos + buttonOffset;
-			if (DrawButton(buttonPos, "Next Keyframe", out buttonColor)) {
+			if (DrawButton(buttonPos, "Next Keyframe", out buttonColor) || Keybindings.NextKeyframeAnimation.JustPressed) {
 				float nextKeyframe = keyframeSets[selectedIndex].NextKeyframeTime(currentTime);
 				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
 			}
@@ -140,7 +140,7 @@ public abstract class KeyframeAnimation {
 
 			// go to last keyframe
 			buttonPos = timelinePos - buttonOffset;
-			if (DrawButton(buttonPos, "Previous Keyframe", out buttonColor)) {
+			if (DrawButton(buttonPos, "Previous Keyframe", out buttonColor) || Keybindings.PreviousKeyframeAnimation.JustPressed) {
 				float nextKeyframe = keyframeSets[selectedIndex].PrevKeyframeTime(currentTime);
 				if (!float.IsNaN(nextKeyframe)) currentTime.Value = nextKeyframe;
 			}
@@ -426,6 +426,7 @@ public abstract class KeyframeAnimation {
 		public void Play(Time time, float duration, float speed) {
 			if (overrideAnimatorMode ?? DebugConfig.Instance.AnimatorMode) {
 				if (Keybindings.PlayPauseAnimation.JustPressed) playing = !playing;
+				if (Keybindings.LoopAnimation.JustPressed) forceLoop = !forceLoop;
 				if (playing) {
 					if (forceLoop) {
 						speed = speed.Abs(out int dir);

@@ -36,10 +36,16 @@ namespace Origins {
 		#region animation editor
 		[Keybind(null, "LeftControl+Space", DebugType.Animator)]
 		public static ModKeybind PlayPauseAnimation { get; private set; }
+		[Keybind(null, Keys.L, DebugType.Animator)]
+		public static ModKeybind LoopAnimation { get; private set; }
 		[Keybind(null, Keys.K, DebugType.Animator)]
 		public static ModKeybind InsertKeyframe { get; private set; }
 		[Keybind(null, Keys.Delete, DebugType.Animator)]
 		public static ModKeybind DeleteKeyframe { get; private set; }
+		[Keybind(null, "LeftControl+Right", DebugType.Animator)]
+		public static ModKeybind NextKeyframeAnimation { get; private set; }
+		[Keybind(null, "LeftControl+Left", DebugType.Animator)]
+		public static ModKeybind PreviousKeyframeAnimation { get; private set; }
 		[Keybind(null, Keys.G, DebugType.Animator)]
 		public static ModKeybind GrabGizmo { get; private set; }
 		[Keybind(null, Keys.R, DebugType.Animator)]
