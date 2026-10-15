@@ -23,7 +23,7 @@ public abstract class KeyframeAnimation {
 	public Rectangle CurrentTimeline => new Rectangle(0, 0, TimelineWidth, 12).Recentered(timelinePos);
 	public int selectedIndex = 0;
 	public Vector2 timelinePos;
-	public float minimumLength;
+	public float MinimumLength { get => totalLength; set => Max(ref totalLength, value); }
 	public float totalLength;
 	public Vector2 gizmoBasePosition;
 	public bool usesSubframes;
@@ -329,7 +329,7 @@ public abstract class KeyframeAnimation {
 		StringBuilder builder = new();
 		bool exportAsCtor = this.exportAsCtor;
 		if (keyframeSets.Any(s => s.IsLooped)) {
-			builder.Append(nameof(minimumLength));
+			builder.Append(nameof(MinimumLength));
 			builder.Append(" = ");
 			builder.Append(usesSubframes ? totalLength : float.Round(totalLength));
 			builder.Append("f;");
@@ -392,7 +392,7 @@ public abstract class KeyframeAnimation {
 	}
 	public SelectionType GetSelectionType(int index) {
 		if (index == selectedIndex) {
-			if (selected.Count(true) == 1) return SelectionType.Alone;
+			if (selected.Count(true) <= 1) return SelectionType.Alone;
 			return SelectionType.Primary;
 		}
 		if (selected[index]) return SelectionType.Secondary;
