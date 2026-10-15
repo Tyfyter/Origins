@@ -428,13 +428,13 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		}
 		if (Keybindings.InsertKeyframe.JustPressed) InsertAtCurrentFrame(time);
 	}
-	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, bool isSelected, float currentTime) {
-		if (isSelected) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref Animation.gizmoTracker, Animation.gizmoBasePosition + GizmoOffset(currentTime));
+	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime) {
+		if (isSelected.ShowGizmos()) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref Animation.gizmoTracker, Animation.gizmoBasePosition + GizmoOffset(currentTime));
 		if (lastProcessedTime != currentTime) GetCurrentValue(currentTime);
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
 			new Rectangle((int)Animation.TimelineToScreenPos(0) - 1, (int)Animation.timelinePos.Y - 6, 2, 12),
-			isSelected && currentTime == 0 && !start.Equals(currentValue) ? ModifiedKeyframeColor : Color.Orange
+			isSelected.IsSelected() && currentTime == 0 && !start.Equals(currentValue) ? ModifiedKeyframeColor : Color.Orange
 		);
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
@@ -551,7 +551,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		}
 		Do(new CreateKeyframe(this, keyframes.Count, new(time, @event)));
 	}
-	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, bool isSelected, float currentTime) {
+	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime) {
 		currentlyDrawingTime = currentTime;
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
@@ -674,8 +674,8 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		updateKeyframeAnim = dir;
 	}
 	protected virtual int KeyframeUpdateAnimationFrames => 20;
-	public void DrawEditorUI(SpriteBatch spriteBatch, bool isSelected, float currentTime) {
-		if (isSelected) {
+	public void DrawEditorUI(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime) {
+		if (isSelected.IsSelected()) {
 			if (Keybindings.EditUndo.JustPressed) Undo();
 			else if (Keybindings.EditRedo.JustPressed) Redo();
 			else if (Keybindings.DeleteAllKeyframes.JustPressed && this.keyframes.Count > 0) Do(new DeleteAllKeyframes(this));
@@ -686,18 +686,18 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 
 		if (updateKeyframeAnimIndex != -1 && MathUtils.LinearSmoothing(ref updateKeyframeAnim, 0, 1f / KeyframeUpdateAnimationFrames)) updateKeyframeAnimIndex = -1;
 		Span<TKeyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
-		bool showCreationSidebar = isSelected;
+		bool showCreationSidebar = isSelected.IsSelected();
 
 		int deleteIndex = -1;
 		PreDrawKeyframes(spriteBatch, isSelected, currentTime);
 		for (int i = 0; i < keyframes.Length; i++) {
 			ref TKeyframe keyframe = ref keyframes[i];
 			Vector2 pos = Animation.timelinePos with { X = Animation.TimelineToScreenPos(keyframe.Time) };
-			bool isKeyframeSelected = isSelected && keyframe.Time == currentTime;
-			bool isKeyframeHovered = DrawKeyframe(spriteBatch, i, pos, isKeyframeSelected, isSelected);
-			if (isSelected && keyframe.Time == currentTime) {
+			bool isKeyframeSelected = isSelected.IsSelected() && keyframe.Time == currentTime;
+			bool isKeyframeHovered = DrawKeyframe(spriteBatch, i, pos, isKeyframeSelected, isSelected.IsSelected());
+			if (isSelected.IsSelected() && keyframe.Time == currentTime) {
 				showCreationSidebar = false;
-				DrawKeyframeEditor(spriteBatch, i, ref Animation.gizmoTracker);
+				if (isSelected.ShowSidebars()) DrawKeyframeEditor(spriteBatch, i, ref Animation.gizmoTracker);
 				if (Keybindings.Copy.JustPressed) {
 					clipboardKeyframe = keyframe.CleanMutableRefs();
 				} else if (Keybindings.Cut.JustPressed) {
@@ -707,14 +707,14 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 					deleteIndex = i;
 				}
 			}
-			if (isSelected && Main.mouseLeft && Main.mouseLeftRelease && isKeyframeHovered) {
+			if (isSelected.IsSelected() && Main.mouseLeft && Main.mouseLeftRelease && isKeyframeHovered) {
 				draggingKeyframeIndex = i;
 				draggingKeyframeOffset = Main.mouseX - pos.X;
 			}
 			if (i == draggingKeyframeIndex) DrawKeyframeDragTarget(spriteBatch, pos with { X = Animation.TimelineToScreenPos(draggingKeyframeTo) });
 		}
 		if (showCreationSidebar) {
-			DrawKeyframeCreationSidebar(spriteBatch, currentTime);
+			if (isSelected.ShowSidebars()) DrawKeyframeCreationSidebar(spriteBatch, currentTime);
 			if (Keybindings.Paste.JustPressed && GetInsertIndex(currentTime) is int insertIndex) {
 				clipboardKeyframe.Time = currentTime;
 				Do(new CreateKeyframe(this, insertIndex, clipboardKeyframe));
@@ -738,7 +738,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			}
 		}
 	}
-	protected abstract void PreDrawKeyframes(SpriteBatch spriteBatch, bool isSelected, float currentTime);
+	protected abstract void PreDrawKeyframes(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime);
 	protected abstract bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected);
 	protected abstract void DrawKeyframeDragTarget(SpriteBatch spriteBatch, Vector2 position);
 	protected abstract void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker);
@@ -872,7 +872,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 }
 public interface IKeyframeSet {
 	public float Duration { get; }
-	public void DrawEditorUI(SpriteBatch spriteBatch, bool isSelected, float currentTime);
+	public void DrawEditorUI(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime);
 	public float PrevKeyframeTime(float currentTime);
 	public float NextKeyframeTime(float currentTime);
 	public string Export(string indent);

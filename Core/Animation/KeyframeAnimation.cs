@@ -188,11 +188,13 @@ public abstract class KeyframeAnimation {
 			if (hoveredSnippet != -1) {
 				Main.LocalPlayer.mouseInterface = true;
 				if (Main.mouseLeft && Main.mouseLeftRelease) {
+					if (keyframeSets[i].GetType() != keyframeSets.GetIfInRange(selectedIndex)?.GetType() || !Main.keyState.PressingShift()) Array.Clear(selected);
 					selectedIndex = i;
+					selected[i] = true;
 					modifyingInterpolation = -1;
 				}
 			}
-			DrawTimeline(spriteBatch, i == selectedIndex);
+			DrawTimeline(spriteBatch, GetSelectionType(i));
 			timelinePos.Y += 16;
 		}
 		Rectangle extendAnimationHandle = new((int)((Main.screenWidth + TimelineWidth) * 0.5f), minTimelineY.Y - 2, 2, (int)(timelinePos.Y - minTimelineY.Y - 2));
@@ -283,7 +285,7 @@ public abstract class KeyframeAnimation {
 		);
 		timelinePos.Y = 32;
 		for (int i = 0; i < keyframeSets.Count; i++) {
-			keyframeSets[i].DrawEditorUI(spriteBatch, i == selectedIndex, currentTime);
+			keyframeSets[i].DrawEditorUI(spriteBatch, GetSelectionType(i), currentTime);
 			timelinePos.Y += 16;
 		}
 		spriteBatch.Restart(spriteBatch.GetState());
@@ -309,11 +311,11 @@ public abstract class KeyframeAnimation {
 		}
 	}
 
-	public void DrawTimeline(SpriteBatch spriteBatch, bool isSelected) {
+	public void DrawTimeline(SpriteBatch spriteBatch, SelectionType isSelected) {
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
 			CurrentTimeline,
-			Color.Gray * (isSelected ? 1 : 0.5f)
+			Color.Gray * (isSelected.IsSelected() ? 1 : 0.5f)
 		);
 	}
 	public float TimelineToScreenPos(float time) => Main.screenWidth * 0.5f + TimelineWidth * (time / totalLength - 0.5f);
@@ -374,6 +376,14 @@ public abstract class KeyframeAnimation {
 			out int h
 		);
 		return h != -1;
+	}
+	public SelectionType GetSelectionType(int index) {
+		if (index == selectedIndex) {
+			if (selected.Count(true) == 1) return SelectionType.Alone;
+			return SelectionType.Primary;
+		}
+		if (selected[index]) return SelectionType.Secondary;
+		return SelectionType.None;
 	}
 	[StructLayout(LayoutKind.Explicit, Pack = 0)]
 	public readonly ref struct Time {
@@ -458,11 +468,6 @@ public abstract class KeyframeAnimation {
 		public void Play(ref float time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
 		public void Play(ref int time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
 	}
-	public enum SelectionType {
-		None,
-		Primary,
-		Secondary
-	}
 	const float button_scale = 10;
 	const float half_tri_base = 0.8660254f;
 	const float icon_scale = button_scale / (half_tri_base * 2);
@@ -525,4 +530,15 @@ public class Animation_Editor_UI : SwitchableUIState {
 		OverrideSamplerState = SamplerState.PointClamp;
 	}
 	protected override void DrawSelf(SpriteBatch spriteBatch) => DrawEditorUI?.Invoke(spriteBatch);
+}
+public enum SelectionType {
+	None,
+	Alone,
+	Primary,
+	Secondary
+}
+public static class SelectionExt {
+	public static bool IsSelected(this SelectionType selectionType) => selectionType is not SelectionType.None;
+	public static bool ShowGizmos(this SelectionType selectionType) => selectionType is SelectionType.Alone or SelectionType.Primary;
+	public static bool ShowSidebars(this SelectionType selectionType) => selectionType is SelectionType.Alone;
 }
