@@ -23,7 +23,7 @@ public abstract class KeyframeAnimation {
 	public Rectangle CurrentTimeline => new Rectangle(0, 0, TimelineWidth, 12).Recentered(timelinePos);
 	public int selectedIndex = 0;
 	public Vector2 timelinePos;
-	public float MinimumLength { get => totalLength; set => Max(ref totalLength, value); }
+	public float MinimumLength { get => field; set => Max(ref totalLength, field = value); } = 1;
 	public float totalLength;
 	public Vector2 gizmoBasePosition;
 	public bool usesSubframes;
@@ -47,7 +47,7 @@ public abstract class KeyframeAnimation {
 	private void Setup() {
 		keyframeSets.Clear();
 		keyframeSetNames.Clear();
-		totalLength = 1;
+		totalLength = MinimumLength;
 		DynamicMethod method = default;
 		ILGenerator gen = default;
 		Label fail = default;
