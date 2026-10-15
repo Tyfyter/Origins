@@ -68,6 +68,8 @@ namespace Origins {
 		public static ModKeybind Paste { get; private set; }
 		[Keybind(null, "LeftControl+LeftShift+Delete", DebugType.Animator)]
 		public static ModKeybind DeleteAllKeyframes { get; private set; }
+		[Keybind(null, "LeftControl+LeftShift+L", DebugType.Animator)]
+		public static ModKeybind LoopTimeline { get; private set; }
 		#endregion animation editor
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);

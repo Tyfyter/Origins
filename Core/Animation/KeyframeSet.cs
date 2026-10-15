@@ -21,10 +21,14 @@ using static Origins.Core.Animation.KeyframeTypes;
 
 namespace Origins.Core.Animation;
 public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : IEquatable<T> {
+	public override bool CanLoop => true;
 	#region Animating
 	public T start;
-	public KeyframeSet(T startValue, AGizmoOffset gizmoOffset = null) : this() {
+	public InterpolationStack loopInterpolation;
+	public KeyframeSet(T startValue, AGizmoOffset gizmoOffset = null) : this(startValue, (false, null), gizmoOffset) { }
+	public KeyframeSet(T startValue, (bool looped, InterpolationStack interpolation) loopData, AGizmoOffset gizmoOffset = null) : this() {
 		start = startValue;
+		(looped, loopInterpolation) = loopData;
 		this.gizmoOffset = gizmoOffset;
 	}
 	public T CalculateValue(float time) {
@@ -37,6 +41,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			prevTime = keyframe.Time;
 			prevValue = keyframe.Target;
 		}
+		if (looped) return (loopInterpolation ??= []).Interpolate(prevValue, start, Utils.GetLerpValue(prevTime, Animation.totalLength + 1, time));
 		return prevValue;
 	}
 	public record struct Keyframe(float Time, T Target, InterpolationStack Interpolation) : IKeyframe<Keyframe> {
@@ -125,6 +130,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	public override string Export(string indent) {
 		StringBuilder builder = new("new(");
 		builder.Append(ExportValue(start));
+		if (looped) builder.Append($", (true, {(loopInterpolation ?? []).Export()})");
 		if (gizmoOffset is not null) {
 			builder.Append(", ");
 			builder.Append(gizmoOffset.Export());
@@ -436,6 +442,20 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			new Rectangle((int)Animation.TimelineToScreenPos(0) - 1, (int)Animation.timelinePos.Y - 6, 2, 12),
 			isSelected.IsSelected() && currentTime == 0 && !start.Equals(currentValue) ? ModifiedKeyframeColor : Color.Orange
 		);
+		if (looped) {
+			Rectangle loopIndicator = new((int)Animation.TimelineToScreenPos(Animation.totalLength) - 4, (int)Animation.timelinePos.Y - 4, 3, 2);
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				loopIndicator,
+				Color.Orange
+			);
+			loopIndicator.Y += 6;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				loopIndicator,
+				Color.Orange
+			);
+		}
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
 		ref Keyframe keyframe = ref this[keyframeIndex];
@@ -461,6 +481,10 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	}
 	protected override void TryInsertKeyframe(float time) {
 		InsertAtCurrentFrame(time);
+	}
+	protected override bool CopyStart(out Keyframe keyframe) {
+		keyframe = new(0, start);
+		return true;
 	}
 	protected override void DrawKeyframeDragTarget(SpriteBatch spriteBatch, Vector2 position) =>
 		keyframeDiamond.TranslateTo(position).DrawOutline(KeyframeAnimation.primitiveBatch);
@@ -668,6 +692,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	float draggingKeyframeOffset;
 	protected int draggingKeyframeIndex = -1;
 	float draggingKeyframeTo = -1;
+	public bool looped;
 	public List<TKeyframe> keyframes = [];
 	public ref TKeyframe this[int index] => ref CollectionsMarshal.AsSpan(keyframes)[index];
 	public float Duration => keyframes.Count == 0 ? 0 : keyframes[^1].Time;
@@ -686,6 +711,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		if (isSelected.IsSelected()) {
 			if (Keybindings.EditUndo.JustPressed) Undo();
 			else if (Keybindings.EditRedo.JustPressed) Redo();
+			else if (CanLoop && Keybindings.LoopTimeline.JustPressed) Do(new SetLooped(this, !looped));
 			else if (Keybindings.DeleteAllKeyframes.JustPressed && this.keyframes.Count > 0) Do(new DeleteAllKeyframes(this));
 		}
 
@@ -707,9 +733,9 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 				showCreationSidebar = false;
 				if (isSelected.ShowSidebars()) DrawKeyframeEditor(spriteBatch, i, ref Animation.gizmoTracker);
 				if (Keybindings.InsertKeyframe.JustPressed) TryUpdateKeyframe(i);
-				if (Keybindings.Copy.JustPressed) {
+				if (isSelected.CanCopy() && Keybindings.Copy.JustPressed) {
 					clipboardKeyframe = keyframe.CleanMutableRefs();
-				} else if (Keybindings.Cut.JustPressed) {
+				} else if (isSelected.CanCopy() && Keybindings.Cut.JustPressed) {
 					clipboardKeyframe = keyframe.CleanMutableRefs();
 					deleteIndex = i;
 				} else if (Keybindings.DeleteKeyframe.JustPressed) {
@@ -721,6 +747,10 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 				draggingKeyframeOffset = Main.mouseX - pos.X;
 			}
 			if (i == draggingKeyframeIndex) DrawKeyframeDragTarget(spriteBatch, pos with { X = Animation.TimelineToScreenPos(draggingKeyframeTo) });
+		}
+
+		if (currentTime == 0 && isSelected.CanCopy() && Keybindings.Copy.JustPressed && CopyStart(out TKeyframe startKeyframe)) {
+			clipboardKeyframe = startKeyframe.CleanMutableRefs();
 		}
 		if (showCreationSidebar) {
 			if (isSelected.ShowSidebars()) DrawKeyframeCreationSidebar(spriteBatch, currentTime);
@@ -752,6 +782,10 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	protected abstract bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected);
 	protected abstract void DrawKeyframeDragTarget(SpriteBatch spriteBatch, Vector2 position);
 	protected abstract void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker);
+	protected virtual bool CopyStart(out TKeyframe keyframe) {
+		keyframe = default;
+		return false;
+	}
 	protected virtual void TryUpdateKeyframe(int keyframeIndex) { }
 	protected virtual void TryInsertKeyframe(float time) { }
 	protected abstract void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, float time);
@@ -874,6 +908,12 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			set.AnimateKeyframeUpdate(index, -1);
 		}
 	}
+	protected class SetLooped(AKeyframeSet<TKeyframe> set, bool loop) : UndoStep {
+		readonly bool oldValue = set.looped;
+		public override string Text => $"Set Timeline Loop: {loop}";
+		public override void Do() => set.looped = loop;
+		public override void Undo() => set.looped = oldValue;
+	}
 
 	IEnumerator<TKeyframe> IEnumerable<TKeyframe>.GetEnumerator() => keyframes.GetEnumerator();
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)keyframes).GetEnumerator();
@@ -882,6 +922,8 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		OnBind();
 	}
 	protected virtual void OnBind() { }
+	public virtual bool CanLoop => false;
+	public bool IsLooped => looped;
 }
 public interface IKeyframeSet {
 	public float Duration { get; }
@@ -892,6 +934,8 @@ public interface IKeyframeSet {
 	public string Export(string indent);
 	public string ExportType();
 	public void Bind(KeyframeAnimation animation) { }
+	public bool CanLoop { get; }
+	public bool IsLooped { get; }
 }
 public interface IKeyframe<TSelf> where TSelf : IKeyframe<TSelf> {
 	public float Time { get; set; }

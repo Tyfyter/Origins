@@ -6,6 +6,7 @@ using PegasusLib.Graphics;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
@@ -22,6 +23,7 @@ public abstract class KeyframeAnimation {
 	public Rectangle CurrentTimeline => new Rectangle(0, 0, TimelineWidth, 12).Recentered(timelinePos);
 	public int selectedIndex = 0;
 	public Vector2 timelinePos;
+	public float minimumLength;
 	public float totalLength;
 	public Vector2 gizmoBasePosition;
 	public bool usesSubframes;
@@ -325,6 +327,14 @@ public abstract class KeyframeAnimation {
 	public float ScreenPosToTimeline(float x) => ((x - Main.screenWidth * 0.5f) / TimelineWidth + 0.5f) * totalLength;
 	public string Export() {
 		StringBuilder builder = new();
+		bool exportAsCtor = this.exportAsCtor;
+		if (keyframeSets.Any(s => s.IsLooped)) {
+			builder.Append(nameof(minimumLength));
+			builder.Append(" = ");
+			builder.Append(usesSubframes ? totalLength : float.Round(totalLength));
+			builder.Append("f;");
+			exportAsCtor = true;
+		}
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			if (!exportAsCtor) {
 				builder.Append("\tpublic ");
@@ -543,5 +553,6 @@ public enum SelectionType {
 public static class SelectionExt {
 	public static bool IsSelected(this SelectionType selectionType) => selectionType is not SelectionType.None;
 	public static bool ShowGizmos(this SelectionType selectionType) => selectionType is SelectionType.Alone or SelectionType.Primary;
+	public static bool CanCopy(this SelectionType selectionType) => selectionType is SelectionType.Alone or SelectionType.Primary;
 	public static bool ShowSidebars(this SelectionType selectionType) => selectionType is SelectionType.Alone;
 }

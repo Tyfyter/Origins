@@ -2756,6 +2756,8 @@ Keybinds: {
 	// RestartAnimation.DisplayName: Restart Animation
 	// NextKeyframeAnimation.DisplayName: Goto Next Keyframe
 	// PreviousKeyframeAnimation.DisplayName: Goto Previous Keyframe
+	// CreateLoopKeyframe.DisplayName: Create Loop Keyframe
+	// LoopTimeline.DisplayName: Loop Timeline
 }
 
 Configs: {
