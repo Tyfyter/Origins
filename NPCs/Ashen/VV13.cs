@@ -21,11 +21,12 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Core.Animation.KeyframeModifiers;
 using static Origins.NPCs.Ashen.VV13;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.Utilities.NPCUtils;
 
-namespace Origins.NPCs.Ashen; 
+namespace Origins.NPCs.Ashen;
 public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargetingNPC {
 	static AutoLoadingTexture[] tools = [//todo: actual implementation
 		typeof(VV13).GetDefaultTMLName("_Drill"),
@@ -257,7 +258,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	public static List<VV13Animation> animations = [];
 	static Tentacle Default => new(new(12, MathHelper.PiOver2), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(24, 0));
-	public static readonly Vector2 tentaclePosFront = new(40, 0); 
+	public static readonly Vector2 tentaclePosFront = new(40, 0);
 	public static readonly Vector2 tentaclePosMidFront = new(10, -2);
 	public static readonly Vector2 tentaclePosMidBack = new(-18, -4);
 	public static readonly Vector2 tentaclePosBack = new(-48, -8);
@@ -290,23 +291,22 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 }
 public class VV13_Idle : VV13Animation {
 	public VV13_Idle() {
-		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
-			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(40f, 0f)) {
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), [])
 		};
-		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
-			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(10f, -2f)) {
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), [])
 		};
-		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
-			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(-18f, -4f)) {
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), [])
 		};
-		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
-			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), []),
-			new(40, new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), [])
+		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(-48f, -8f)) {
+			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), [])
+		};
+		tool = new(new()) {
 		};
 		events = [];
+		MinimumLength = 40f;
 	}
 }
 public class VV13_Holding : VV13Animation {

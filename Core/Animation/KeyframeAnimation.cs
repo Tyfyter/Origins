@@ -327,14 +327,8 @@ public abstract class KeyframeAnimation {
 	public float ScreenPosToTimeline(float x) => ((x - Main.screenWidth * 0.5f) / TimelineWidth + 0.5f) * totalLength;
 	public string Export() {
 		StringBuilder builder = new();
-		bool exportAsCtor = this.exportAsCtor;
-		if (keyframeSets.Any(s => s.IsLooped)) {
-			builder.Append(nameof(MinimumLength));
-			builder.Append(" = ");
-			builder.Append(usesSubframes ? totalLength : float.Round(totalLength));
-			builder.Append("f;");
-			exportAsCtor = true;
-		}
+		bool isLooped = keyframeSets.Any(s => s.IsLooped);
+		bool exportAsCtor = this.exportAsCtor || isLooped;
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			if (!exportAsCtor) {
 				builder.Append("\tpublic ");
@@ -345,7 +339,14 @@ public abstract class KeyframeAnimation {
 			builder.Append(" = ");
 			builder.Append(keyframeSets[i].Export(exportAsCtor ? "\t\t" : "\t"));
 			builder.Append(';');
+			if (i < keyframeSets.Count - 1) builder.Append('\n');
+		}
+		if (isLooped) {
 			builder.Append('\n');
+			builder.Append(nameof(MinimumLength));
+			builder.Append(" = ");
+			builder.Append(usesSubframes ? totalLength : float.Round(totalLength));
+			builder.Append("f;");
 		}
 		return builder.ToString();
 	}
