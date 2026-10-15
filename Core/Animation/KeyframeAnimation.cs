@@ -288,6 +288,9 @@ public abstract class KeyframeAnimation {
 			keyframeSets[i].DrawEditorUI(spriteBatch, GetSelectionType(i), currentTime);
 			timelinePos.Y += 16;
 		}
+		for (int i = 0; i < keyframeSets.Count; i++) {
+			if (GetSelectionType(i) == SelectionType.Secondary) keyframeSets[i].HandleMultiSelect(keyframeSets[selectedIndex]);
+		}
 		spriteBatch.Restart(spriteBatch.GetState());
 		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();

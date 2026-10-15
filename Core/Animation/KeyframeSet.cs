@@ -16,6 +16,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static Origins.Core.Animation.KeyframeAnimation;
 using static Origins.Core.Animation.KeyframeTypes;
 
 namespace Origins.Core.Animation;
@@ -426,7 +427,6 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			if (hoveredBase != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = CreateLinear() });
 			else if (hoveredStep != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = new StepInterpolation<T>() });
 		}
-		if (Keybindings.InsertKeyframe.JustPressed) InsertAtCurrentFrame(time);
 	}
 	protected override void PreDrawKeyframes(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime) {
 		if (isSelected.ShowGizmos()) DrawGizmo?.Invoke(spriteBatch, ref currentValue, ref Animation.gizmoTracker, Animation.gizmoBasePosition + GizmoOffset(currentTime));
@@ -455,13 +455,21 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	}
 	protected override void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker) {
 		DrawSidebar(spriteBatch, Animation, keyframeIndex, ref Animation.gizmoTracker);
-		if (Keybindings.InsertKeyframe.JustPressed) Do(new SetKeyframeTarget(this, keyframeIndex, currentValue));
+	}
+	protected override void TryUpdateKeyframe(int keyframeIndex) {
+		Do(new SetKeyframeTarget(this, keyframeIndex, currentValue));
+	}
+	protected override void TryInsertKeyframe(float time) {
+		InsertAtCurrentFrame(time);
 	}
 	protected override void DrawKeyframeDragTarget(SpriteBatch spriteBatch, Vector2 position) =>
 		keyframeDiamond.TranslateTo(position).DrawOutline(KeyframeAnimation.primitiveBatch);
 	protected override void HandleGizmos() {
 		if (Animation.gizmoTracker.JustSelected) resetValue = currentValue;
 		else if (Keybindings.CancelGizmo.JustPressed && Animation.gizmoTracker.Cancel()) currentValue = resetValue;
+	}
+	public override void HandleMultiSelect(IKeyframeSet primary) {
+		if (primary is KeyframeSet<T> _primary) currentValue = _primary.currentValue;
 	}
 	class SetKeyframeTarget(KeyframeSet<T> set, int index, T value) : KeyframeVariableStep<T>(set, index, value) {
 		public override string Text => $"Set Keyframe Value: {newValue}";
@@ -698,6 +706,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			if (isSelected.IsSelected() && keyframe.Time == currentTime) {
 				showCreationSidebar = false;
 				if (isSelected.ShowSidebars()) DrawKeyframeEditor(spriteBatch, i, ref Animation.gizmoTracker);
+				if (Keybindings.InsertKeyframe.JustPressed) TryUpdateKeyframe(i);
 				if (Keybindings.Copy.JustPressed) {
 					clipboardKeyframe = keyframe.CleanMutableRefs();
 				} else if (Keybindings.Cut.JustPressed) {
@@ -715,6 +724,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		}
 		if (showCreationSidebar) {
 			if (isSelected.ShowSidebars()) DrawKeyframeCreationSidebar(spriteBatch, currentTime);
+			if (Keybindings.InsertKeyframe.JustPressed) TryInsertKeyframe(currentTime);
 			if (Keybindings.Paste.JustPressed && GetInsertIndex(currentTime) is int insertIndex) {
 				clipboardKeyframe.Time = currentTime;
 				Do(new CreateKeyframe(this, insertIndex, clipboardKeyframe));
@@ -742,8 +752,11 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	protected abstract bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected);
 	protected abstract void DrawKeyframeDragTarget(SpriteBatch spriteBatch, Vector2 position);
 	protected abstract void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker);
+	protected virtual void TryUpdateKeyframe(int keyframeIndex) { }
+	protected virtual void TryInsertKeyframe(float time) { }
 	protected abstract void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, float time);
 	protected virtual void HandleGizmos() { }
+	public virtual void HandleMultiSelect(IKeyframeSet primary) { }
 	public abstract string Export(string indent);
 	public virtual string ExportType() => GetType().Name;
 	public float PrevKeyframeTime(float currentTime) {
@@ -875,6 +888,7 @@ public interface IKeyframeSet {
 	public void DrawEditorUI(SpriteBatch spriteBatch, SelectionType isSelected, float currentTime);
 	public float PrevKeyframeTime(float currentTime);
 	public float NextKeyframeTime(float currentTime);
+	public void HandleMultiSelect(IKeyframeSet primary) { }
 	public string Export(string indent);
 	public string ExportType();
 	public void Bind(KeyframeAnimation animation) { }
