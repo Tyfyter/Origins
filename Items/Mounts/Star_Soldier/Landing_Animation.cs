@@ -1,11 +1,11 @@
 ﻿#define EditAnimation
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
+using Origins.Core.Animation;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using static Origins.Core.KeyframeModifiers;
-using static Origins.Core.KeyframeTypes;
+using static Origins.Core.Animation.KeyframeModifiers;
+using static Origins.Core.Animation.KeyframeTypes;
 
 namespace Origins.Items.Mounts.Star_Soldier;
 

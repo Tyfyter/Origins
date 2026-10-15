@@ -1,6 +1,7 @@
 ﻿#define EditAnimation
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using Origins.Core.Animation;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Origins.Journal;

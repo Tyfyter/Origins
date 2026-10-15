@@ -1,7 +1,7 @@
 using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Core;
+using Origins.Core.Animation;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Dusts;
@@ -20,7 +20,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod.Projectiles;
-using static Origins.Core.KeyframeModifiers;
+using static Origins.Core.Animation.KeyframeModifiers;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Rei_Set : DevSet<Arc_Flame_Arm_Blades> {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins;
 using Origins.Graphics.Primitives;
 using Origins.UI;
 using PegasusLib.Graphics;
@@ -14,7 +15,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader.UI;
 using Terraria.UI.Chat;
 
-namespace Origins.Core; 
+namespace Origins.Core.Animation; 
 public abstract class KeyframeAnimation {
 	public static int TimelineWidth => 600;
 	static float leftBound;
@@ -27,6 +28,7 @@ public abstract class KeyframeAnimation {
 	Func<KeyframeAnimation, bool> needsReset;
 	readonly List<IKeyframeSet> keyframeSets;
 	readonly List<string> keyframeSetNames;
+	readonly bool[] selected;
 	bool exportAsCtor = false;
 	static readonly TextSnippet[] snippet = [new()];
 	float lastTime;
@@ -37,6 +39,7 @@ public abstract class KeyframeAnimation {
 		keyframeSets = [];
 		keyframeSetNames = [];
 		Setup();
+		selected = new bool[keyframeSets.Count];
 	}
 
 	private void Setup() {
@@ -204,7 +207,7 @@ public abstract class KeyframeAnimation {
 		bool isTimelineHovered = CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen);
 		bool hoveringTimelineControl = hoverExtend;
 		if (gizmoTracker.IsCurrent) {
-			float diff = extendAnimationHandle.Contains(Main.MouseScreen) ? 0 : (Main.mouseX - extendAnimationHandle.Center().X);
+			float diff = extendAnimationHandle.Contains(Main.MouseScreen) ? 0 : Main.mouseX - extendAnimationHandle.Center().X;
 			if (diff != 0) {
 				totalLength += diff * (totalLength / TimelineWidth) / 30f;
 				if (diff < 0) {
@@ -218,7 +221,7 @@ public abstract class KeyframeAnimation {
 
 		if (animationControls.loopStart.HasValue) {
 			extendAnimationHandle = new((int)TimelineToScreenPos(animationControls.loopStart.Value) - 2, minTimelineY.Y - 2, 4, (int)(timelinePos.Y - minTimelineY.Y - 2));
-			hoverExtend = gizmoTracker.IsCurrent || (!hoveringTimelineControl && extendAnimationHandle.Contains(Main.MouseScreen));
+			hoverExtend = gizmoTracker.IsCurrent || !hoveringTimelineControl && extendAnimationHandle.Contains(Main.MouseScreen);
 			Color bluePortal = new(64, 160, 255);
 			if (!hoverExtend) bluePortal *= 0.5f;
 			spriteBatch.Draw(
@@ -234,7 +237,7 @@ public abstract class KeyframeAnimation {
 		}
 		if (animationControls.loopEnd.HasValue) {
 			extendAnimationHandle = new((int)TimelineToScreenPos(animationControls.loopEnd.Value) - 2, minTimelineY.Y - 2, 4, (int)(timelinePos.Y - minTimelineY.Y - 2));
-			hoverExtend = gizmoTracker.IsCurrent || (!hoveringTimelineControl && extendAnimationHandle.Contains(Main.MouseScreen));
+			hoverExtend = gizmoTracker.IsCurrent || !hoveringTimelineControl && extendAnimationHandle.Contains(Main.MouseScreen);
 			Color orangePortal = new(255, 160, 32);
 			if (!hoverExtend) orangePortal *= 0.5f;
 			spriteBatch.Draw(
@@ -455,7 +458,11 @@ public abstract class KeyframeAnimation {
 		public void Play(ref float time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
 		public void Play(ref int time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
 	}
-
+	public enum SelectionType {
+		None,
+		Primary,
+		Secondary
+	}
 	const float button_scale = 10;
 	const float half_tri_base = 0.8660254f;
 	const float icon_scale = button_scale / (half_tri_base * 2);

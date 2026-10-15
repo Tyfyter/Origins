@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins;
 using Origins.Graphics.Primitives;
 using System;
 using System.Collections;
@@ -15,9 +16,9 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using static Origins.Core.KeyframeTypes;
+using static Origins.Core.Animation.KeyframeTypes;
 
-namespace Origins.Core;
+namespace Origins.Core.Animation;
 public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : IEquatable<T> {
 	#region Animating
 	public T start;
@@ -212,7 +213,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		);
 		for (int i = stack.Count - 1; i >= 0; i--) {
 			snippets[0].Text = stack[i].ToString();
-			snippets[0].Color = (animation.modifyingInterpolation == i) ? Color.Goldenrod : Color.White;
+			snippets[0].Color = animation.modifyingInterpolation == i ? Color.Goldenrod : Color.White;
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
@@ -242,7 +243,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		skipModifiers:
 		Array.Resize(ref snippets, 1);
 		snippets[0].Text = stack.BaseInterpolation.ToString();
-		snippets[0].Color = (animation.modifyingInterpolation == -2) ? Color.Goldenrod : Color.White;
+		snippets[0].Color = animation.modifyingInterpolation == -2 ? Color.Goldenrod : Color.White;
 		ChatManager.DrawColorCodedStringWithShadow(
 			spriteBatch,
 			FontAssets.ItemStack.Value,
@@ -376,7 +377,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		Vector2 iPos = new((Main.screenWidth + KeyframeAnimation.TimelineWidth) * 0.5f + 8, 4);
 		TextSnippet[] snippets = [new()];
 		snippets[0].Color = Color.White;
-		float width = FontAssets.ItemStack.Value.MeasureString((CreateLinear is not null ? "Interpolated" : "Stepped")).X;
+		float width = FontAssets.ItemStack.Value.MeasureString(CreateLinear is not null ? "Interpolated" : "Stepped").X;
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
 			iPos + new Vector2(-2, -2),
@@ -595,7 +596,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		for (int i = 0; i < options.Count; i++) {
 			Event option = options[i];
 			snippets[0].Text = option.Method.Name;
-			snippets[0].Color = (keyframeIndex >= 0 && option == this[keyframeIndex].Event) ? Color.Goldenrod : Color.White;
+			snippets[0].Color = keyframeIndex >= 0 && option == this[keyframeIndex].Event ? Color.Goldenrod : Color.White;
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
@@ -697,7 +698,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			if (isSelected && keyframe.Time == currentTime) {
 				showCreationSidebar = false;
 				DrawKeyframeEditor(spriteBatch, i, ref Animation.gizmoTracker);
-				if (Keybindings.Copy.JustPressed) { 
+				if (Keybindings.Copy.JustPressed) {
 					clipboardKeyframe = keyframe.CleanMutableRefs();
 				} else if (Keybindings.Cut.JustPressed) {
 					clipboardKeyframe = keyframe.CleanMutableRefs();
@@ -890,7 +891,7 @@ public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolatio
 	class Loader : IAutoloader {
 		static readonly MethodInfo getCustomDefault = typeof(Loader).GetMethod("GetCustomDefault");
 		static void IAutoloader.Autoload(Mod mod, Type type) {
-			Func<IInterpolationModifier> func = (getCustomDefault.MakeGenericMethod(type).Invoke(null, []) as Func<IInterpolationModifier>) ?? CreateDefault(type);
+			Func<IInterpolationModifier> func = getCustomDefault.MakeGenericMethod(type).Invoke(null, []) as Func<IInterpolationModifier> ?? CreateDefault(type);
 			KeyframeModifiers.modifierTypes.Add((func().ToString(), func));
 		}
 
@@ -937,7 +938,7 @@ public static class KeyframeTypes {
 				Vector2 mult = Vector2.One;
 				if (Main.keyState.PressingControl()) mult.X = 0;
 				else if (Main.keyState.PressingShift()) mult.Y = 0;
-				value += ((Main.MouseScreen - oldMousePos) / scale) * mult;
+				value += (Main.MouseScreen - oldMousePos) / scale * mult;
 			}
 			Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(ApplyGizmoZoom(offset.Position));
 			bool isHovering = rect.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
@@ -1024,7 +1025,7 @@ public static class KeyframeTypes {
 			if (Main.MouseScreen != oldMousePos) value = scaleHandleStart * displayScale;
 		}
 
-		bool isHovering = gizmoTracker.IsCurrent || (dist >= size - handle_thickness && dist <= size + handle_thickness);
+		bool isHovering = gizmoTracker.IsCurrent || dist >= size - handle_thickness && dist <= size + handle_thickness;
 		ShaderCircle.Draw(pos, size * displayScale + handle_thickness, Color.White * (0.5f + isHovering.Mul(0.5f)), size * displayScale - handle_thickness);
 
 		if (gizmoTracker.CheckSetCurrent(isHovering, Keybindings.ScaleGizmo)) {
@@ -1164,7 +1165,7 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 	public static abstract Texture2D Texture { get; }
 	public static abstract int FrameCount { get; }
 	public int Frame { get; set; }
-	bool IEquatable<TSelf>.Equals(TSelf other) => ((TSelf)this) == other;
+	bool IEquatable<TSelf>.Equals(TSelf other) => (TSelf)this == other;
 	static KeyframeSet<TSelf>.IInterpolation KeyframeSet<TSelf>.ITypeHandler.Linear { get; } = new Interpolation();
 	public readonly struct Interpolation : KeyframeSet<TSelf>.IInterpolation {
 		readonly TSelf KeyframeSet<TSelf>.IInterpolation.Interpolate(TSelf prevValue, TSelf nextValue, float progress) =>
@@ -1235,12 +1236,12 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 	}
 	public static PosRotScale operator +(PosRotScale a, PosRotScale b) => new(a.Position + b.Position.RotatedBy(a.Rotation), a.Rotation + b.Rotation, a.Scale * b.Scale);
 	public static void DrawGizmo(SpriteBatch spriteBatch, ref PosRotScale value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
-		KeyframeTypes.Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
-		KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);
-		KeyframeTypes.DrawScaleGizmo(spriteBatch, ref value.Scale, ref gizmoTracker, offset, 20);
+		Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
+		DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);
+		DrawScaleGizmo(spriteBatch, ref value.Scale, ref gizmoTracker, offset, 20);
 	}
 	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(Position, Rotation);
-	public static string Export(PosRotScale value) => value == new PosRotScale() ? "new()" : $"new({KeyframeTypes.Vec2Interpolation.Export(value.Position)}, {value.Rotation}f, {value.Scale}f)";
+	public static string Export(PosRotScale value) => value == new PosRotScale() ? "new()" : $"new({Vec2Interpolation.Export(value.Position)}, {value.Rotation}f, {value.Scale}f)";
 }
 public record struct Percentage(float Value) : KeyframeSet<Percentage>.ITypeHandler {
 	public Percentage() : this(1) { }
@@ -1303,7 +1304,7 @@ public record struct Rotation(float Value) : KeyframeSet<Rotation>.ITypeHandler,
 	public static implicit operator Rotation(float value) => new(value);
 	public static implicit operator float(Rotation value) => value.Value;
 	public static void DrawGizmo(SpriteBatch spriteBatch, ref Rotation value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
-		KeyframeTypes.DrawRotationGizmo(spriteBatch, ref value.Value, ref gizmoTracker, offset, 32);
+		DrawRotationGizmo(spriteBatch, ref value.Value, ref gizmoTracker, offset, 32);
 	}
 	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(default, this);
 	public static string Export(Rotation value) => $"{value.Value}f";
