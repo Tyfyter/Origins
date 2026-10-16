@@ -63,6 +63,7 @@ public abstract class KeyframeAnimation {
 		}
 		foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)) {
 			if (!field.FieldType.IsAssignableTo(typeof(IKeyframeSet))) continue;
+			if (field.GetCustomAttribute<ShowIfTrueAttribute>()?.ShouldShow(this) == false) continue;
 			if (needsReset is null) {
 				gen.Emit(OpCodes.Ldloc_0);
 				gen.Emit(OpCodes.Ldfld, field);
@@ -464,10 +465,10 @@ public abstract class KeyframeAnimation {
 						float t = time.Value - start;
 						switch (dir) {
 							case 1:
-							t.CycleUp(duration, speed);
+							t.CycleUp(duration + 1, speed);
 							break;
 							case -1:
-							t.CycleDown(duration, speed);
+							t.CycleDownWithZero(duration, speed);
 							break;
 						}
 						time.Value = t + start;
@@ -522,6 +523,10 @@ public abstract class KeyframeAnimation {
 		new(-button_scale * 0.25f, button_scale * 0.375f)
 	);
 	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
+	[AttributeUsage(AttributeTargets.Field, Inherited = false)]
+	protected sealed class ShowIfTrueAttribute(string propertyName) : Attribute {
+		public bool ShouldShow(object instance) => (bool)instance.GetType().GetProperty(propertyName).GetValue(instance);
+	}
 }
 public class Animation_Editor_UI : SwitchableUIState {
 	static uint setTickCount;

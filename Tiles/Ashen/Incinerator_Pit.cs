@@ -32,8 +32,10 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 	static Color poweredColor = new Color(255, 113, 0);
 	public static int MaxFuel => 60 * 60 * 1;
 	public static int PlayerPowerTime => 60 * 30;
-	public static int ItemPowerTime(Item item) => (30 + (int)MathF.Pow(8, MathF.Log(item.value, 10)) + item.rare * 180 + ItemBonusPowerTime[item.type]) * item.stack;
-	public static int NPCPowerTime(NPC npc) => 60 * 10 + (int)MathF.Pow(8, MathF.Log(npc.value, 10)) * 2 + npc.lifeMax / 60;
+	public static int ItemPowerTime(Item item) => (item.ModItem as IIncineratorPitValue)?.PowerTime ??
+		(30 + (int)MathF.Pow(8, MathF.Log(item.value, 10)) + item.rare * 180 + ItemBonusPowerTime[item.type]) * item.stack;
+	public static int NPCPowerTime(NPC npc) => (npc.ModNPC as IIncineratorPitValue)?.PowerTime ??
+		(60 * 10 + (int)MathF.Pow(8, MathF.Log(npc.value, 10)) * 2 + npc.lifeMax / 60);
 
 	public static int[] ItemBonusPowerTime = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Incinerator_Pit)}_{nameof(ItemBonusPowerTime)}").RegisterIntSet();
 	public static bool?[] ItemCanBeDestroyedOveride = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Incinerator_Pit)}_{nameof(ItemCanBeDestroyedOveride)}").RegisterCustomSet<bool?>(null);
@@ -488,4 +490,7 @@ public class Incinerator_Pit_Pit : Incinerator_Pit, IGlowingModTile {
 	CustomTilePaintLoader.CustomTileVariationKey IGlowingModTile.GlowPaintKey { get; set; }
 	AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture { get; }
 	Color IGlowingModTile.GlowColor => new(0.912f, 0.579f, 0f);
+}
+public interface IIncineratorPitValue {
+	public int PowerTime { get; }
 }

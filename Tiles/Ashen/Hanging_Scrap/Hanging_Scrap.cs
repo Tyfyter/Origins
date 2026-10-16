@@ -26,42 +26,52 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public override string Texture => "Terraria/Images/NPC_0";
 		public override ScrapAmount ScrapValue => 0;
 		public override Vector2 Origin => default;
+		public override int Size => 0;
 	}
 	public class Large_Scrap1 : HangingScrap {
 		public override ScrapAmount ScrapValue => 1..21;
 		public override Vector2 Origin => new(35, 57);
+		public override int Size => 84;
 	}
 	public class Large_Scrap2 : HangingScrap {
 		public override ScrapAmount ScrapValue => 9;
 		public override Vector2 Origin => new(35, 57);
+		public override int Size => 73;
 	}
 	public class Large_Scrap3 : HangingScrap {
 		public override ScrapAmount ScrapValue => 8..9;
 		public override Vector2 Origin => new(35, 57);
+		public override int Size => 72;
 	}
 	public class Large_Scrap4 : HangingScrap {
 		public override ScrapAmount ScrapValue => 5..16;
 		public override Vector2 Origin => new(35, 57);
+		public override int Size => 88;
 	}
 	public class Large_Scrap5 : HangingScrap {
 		public override ScrapAmount ScrapValue => 7..10;
 		public override Vector2 Origin => new(35, 57);
+		public override int Size => 57;
 	}
 	public class Large_Scrap6 : HangingScrap {
 		public override ScrapAmount ScrapValue => 5..13;
 		public override Vector2 Origin => new(35, 57);
+		public override int Size => 58;
 	}
 	public class Small_Scrap1 : HangingScrap {
 		public override ScrapAmount ScrapValue => 3..6;
 		public override Vector2 Origin => new(16, 16);
+		public override int Size => 23;
 	}
 	public class Small_Scrap2 : HangingScrap {
 		public override ScrapAmount ScrapValue => 1..8;
 		public override Vector2 Origin => new(16, 16);
+		public override int Size => 29;
 	}
 	public class Small_Scrap3 : HangingScrap {
 		public override ScrapAmount ScrapValue => 5;
 		public override Vector2 Origin => new(16, 16);
+		public override int Size => 28;
 	}
 	[Autoload(false)]
 	public class Hanging_Scrap_Item(HangingScrap scrap) : ModItem, ICustomPlaceTileItem {
@@ -128,6 +138,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public static byte GetRandom(UnifiedRandom rand) => (byte)(rand.Next(Count) + 1);
 		public abstract ScrapAmount ScrapValue { get; }
 		public abstract Vector2 Origin { get; }
+		public abstract int Size { get; }
 		public virtual bool CanBeCarried => true;
 	}
 	[StructLayout(LayoutKind.Explicit, Size = 4)]

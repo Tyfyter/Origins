@@ -9,3 +9,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Origins.Items.Weapons.Summoner.Minions")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Origins.World.BiomeData")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Origins.LootConditions")]
+[assembly: SuppressMessage("Usage", "CA2245:Do not assign a property to itself", Justification = "<Pending>", Scope = "member", Target = "~M:Origins.NPCs.Ashen.VV13_Dropped_Tool.OnSpawn(Terraria.DataStructures.IEntitySource)")]

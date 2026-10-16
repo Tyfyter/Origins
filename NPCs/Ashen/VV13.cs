@@ -7,6 +7,7 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Melee;
 using Origins.LootConditions;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Ashen.Hanging_Scrap;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -24,7 +25,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Core.Animation.KeyframeModifiers;
 using static Origins.NPCs.Ashen.VV13;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.Utilities.NPCUtils;
@@ -158,7 +158,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		VV13Animation animation = Animation;
 		Vector2 position = NPC.Bottom + Vector2.UnitY * 2 - screenPos;
 		Vector2 dirMult = new(NPC.direction, 1);
-		CurrentTool.Draw(spriteBatch, this, position, animation.tool.GetCurrentValue(AnimationTime), drawColor);
+		if (animation.HasTool) CurrentTool.Draw(spriteBatch, this, position, animation.tool.GetCurrentValue(AnimationTime), drawColor, animation.toolOpacity.GetCurrentValue(AnimationTime));
 		animation.DrawExtras(spriteBatch, this, position, drawColor);
 		animation.tentacleMidFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosMidFront * dirMult, drawColor, 0, NPC.direction);
 		animation.tentacleMidBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosMidBack * dirMult, drawColor, 0, NPC.direction);
@@ -266,12 +266,29 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	//back
 	public KeyframeSet<Tentacle> tentacleBack = new(Default, tentaclePosBack) {
 	};
+	[ShowIfTrue(nameof(HasTool))]
 	public KeyframeSet<PosRotScale> tool = new(new()) {
+	};
+	[ShowIfTrue(nameof(HasTool))]
+	public KeyframeSet<Percentage> toolOpacity = new(1f) {
 	};
 	public EventKeyframeSet<VV13> events = [
 	];
+	public virtual bool HasTool => true;
 	public static void Drop(in VV13 vv13) {
-		//the code to drop the held object as its own entity will go here
+		if (NetmodeActive.MultiplayerClient) return;
+		if (vv13.CurrentTool is VV13_No_Tool) return;
+		PosRotScale transform = vv13.Animation.tool.GetCurrentValue(vv13.AnimationTime);
+		Vector2 pos = vv13.NPC.Bottom + Vector2.UnitY * 2 + transform.Position;
+		NPC.NewNPC(
+			vv13.NPC.GetSource_FromAI(),
+			(int)pos.X,
+			(int)pos.Y,
+			NPCType<VV13_Dropped_Tool>(),
+			ai0: vv13.CurrentToolIndex,
+			ai1: transform.Rotation
+		);
+		vv13.CurrentTool = GetInstance<VV13_No_Tool>();
 	}
 	public static void Dev_CycleTool(in VV13 vv13) =>
 		vv13.CurrentToolIndex = (vv13.CurrentToolIndex + 1) % VV13Tool.tools.Count;
@@ -284,6 +301,7 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	public virtual void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) { }
 }
 public class VV13_Idle : VV13Animation {
+	public override bool HasTool => false;
 	public VV13_Idle() {
 		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(40f, 0f)) {
 			new(20, new(new(12f, 1.5707964f), new(12f, 0.05255139f), new(12f, -0.15629911f), new(12f, 0.20958805f), new(12f, -0.17692292f), new(12f, 0.31335962f), new(12f, -0.38604045f), new(24f, 0.29743743f)), [])
@@ -310,7 +328,19 @@ public class VV13_Holding : VV13Animation {
 }
 public class VV13_Drop : VV13Animation {
 	public VV13_Drop() {
-		//timelines here
+		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
+		};
+		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
+		};
+		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
+		};
+		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
+		};
+		tool = new(new()) {
+		};
+		events = [
+			new(120, Drop)
+		];
 	}
 }
 public class VV13_Use_Tool : VV13Animation {
@@ -321,12 +351,21 @@ public class VV13_Use_Tool : VV13Animation {
 public class VV13_Swap_Tool : VV13Animation {
 	public KeyframeSet<PosRotScale> swappingInTool = new(new()) {
 	};
+	public KeyframeSet<Percentage> swappingInToolOpacity = new(new()) {
+	};
 	public VV13_Swap_Tool() {
 		//timelines here
 	}
 	static void SwitchTool(in VV13 vv13) => Utils.Swap(ref vv13.CurrentToolIndex, ref vv13.AnimationVar);
 	public override void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) {
-		VV13Tool.tools[(int)vv13.AnimationVar].Draw(spriteBatch, vv13, position, swappingInTool.GetCurrentValue(vv13.AnimationTime), drawColor);
+		VV13Tool.tools[(int)vv13.AnimationVar].Draw(
+			spriteBatch,
+			vv13,
+			position,
+			swappingInTool.GetCurrentValue(vv13.AnimationTime),
+			drawColor,
+			swappingInToolOpacity.GetCurrentValue(vv13.AnimationTime)
+		);
 	}
 }
 #endregion animations
@@ -337,6 +376,9 @@ public abstract class VV13Tool : ModTexturedType {
 	public abstract VV13Animation UseAnimation { get; }
 	public abstract Vector2 Origin { get; }
 	public abstract int FrameCount { get; }
+	public abstract int DroppedSize { get; }
+	public virtual int DroppedHealth => 200;
+	public virtual int IncineratorPowerTime => 900;
 	public int Type { get; private set; }
 	protected sealed override void Register() {
 		ModTypeLookup<VV13Tool>.Register(this);
@@ -351,9 +393,9 @@ public abstract class VV13Tool : ModTexturedType {
 		AutoStaticDefaults();
 		SetStaticDefaults();
 	}
-	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, PosRotScale transform, Color drawColor) {
+	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, PosRotScale transform, Color drawColor, float opacity) {
 		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount);
-		SpriteEffects spriteEffects = vv13.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+		SpriteEffects spriteEffects = vv13?.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		DrawData data = new(
 			Sets.Texture[Type].Value,
 			position + transform.Position,
@@ -366,7 +408,7 @@ public abstract class VV13Tool : ModTexturedType {
 		);
 		data.Draw(spriteBatch);
 		if (Sets.GlowTexture[Type] is not null) {
-			using ScopedOverride<bool> o = vv13.NPC.oiled.ScopedOverride(false);
+			using ScopedOverride<bool> o = vv13 is null ? default : vv13.NPC.oiled.ScopedOverride(false);
 			data.texture = Sets.GlowTexture[Type].Value;
 			data.color = vv13.NPC.GetTintColor(Color.White);
 			data.Draw(spriteBatch);
@@ -382,25 +424,38 @@ public abstract class VV13Tool : ModTexturedType {
 		public static readonly IdDictionary Search = IdDictionary.Create<ToolID, int>();
 	}
 }
+public class VV13_No_Tool : VV13Tool {
+	public override string Texture => "Terraria/Images/NPC_0";
+	public override VV13Animation HoldAnimation => GetInstance<VV13_Idle>();
+	public override VV13Animation UseAnimation => GetInstance<VV13_Idle>();
+	public override Vector2 Origin => default;
+	public override int FrameCount => default;
+	public override int DroppedSize => default;
+	public override void Draw(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, PosRotScale transform, Color drawColor, float opacity) { }
+}
 public class VV13_Drill : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 3;
 	public override Vector2 Origin => new(80, 8);
+	public override int DroppedSize => 1;
 }
 public class VV13_Saw : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 5;
 	public override Vector2 Origin => new(72, 10);
+	public override int DroppedSize => 1;
 }
 public class VV13_Puncher : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 5;
 	public override Vector2 Origin => new(56, 40);
+	public override int DroppedSize => 1;
 }
 public class VV13_Torch : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 1;
 	public override Vector2 Origin => new(10, 18);
+	public override int DroppedSize => 1;
 }
 [Autoload(false)]
 public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
@@ -409,5 +464,53 @@ public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Drop>();
 	public override Vector2 Origin => scrap.Texture2D.Size() * 0.5f;
 	public override int FrameCount => 1;
+	public override int DroppedSize => scrap.Size;
+	public override int DroppedHealth => scrap.ScrapValue.Max * 40;
+	public override int IncineratorPowerTime => scrap.ScrapValue.GetValue() * 180;
 }
 #endregion tool
+public class VV13_Dropped_Tool : ModNPC, IIncineratorPitValue {
+	public override string Texture => "Terraria/Images/NPC_0";
+	int IncineratorPowerTime { get; set; }
+	int IIncineratorPitValue.PowerTime => IncineratorPowerTime;
+	public VV13Tool Tool {
+		get => VV13Tool.tools[(int)NPC.ai[0]];
+		set {
+			NPC.ai[0] = value.Type;
+			IncineratorPowerTime = value.IncineratorPowerTime;
+			Vector2 center = NPC.Center;
+			NPC.width = NPC.height = value.DroppedSize;
+			NPC.Center = center;
+			NPC.life = NPC.lifeMax = value.DroppedHealth;
+		}
+	}
+	public override void SetStaticDefaults() {
+		NPC.aiStyle = NPCAIStyleID.ActuallyNone;
+		NPC.lifeMax = 475;
+		NPC.defense = 24;
+		NPC.damage = 48;
+		NPC.width = 0;
+		NPC.height = 0;
+		NPC.value = 0;
+		NPC.knockBackResist = 0.5f;
+		NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+		NPC.DeathSound = SoundID.NPCDeath44;
+	}
+	public override void OnSpawn(IEntitySource source) => Tool = Tool;
+	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+		drawColor = NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor));
+		Texture2D texture = VV13Tool.Sets.Texture[Tool.Type].Value;
+		Rectangle frame = texture.Frame(verticalFrames: Tool.FrameCount);
+		spriteBatch.Draw(
+			texture,
+			NPC.Center - screenPos,
+			frame,
+			drawColor,
+			NPC.ai[1],
+			frame.Size() * 0.5f,
+			1,
+			SpriteEffects.None,
+		0);
+		return false;
+	}
+}
