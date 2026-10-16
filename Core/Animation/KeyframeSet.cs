@@ -1426,9 +1426,9 @@ public record struct Percentage(float Value) : KeyframeSet<Percentage>.ITypeHand
 		const int height = 48;
 		Vector2 scale = GizmoZoom;
 		if (gizmoTracker.IsCurrent && Main.mouseY != oldMousePos.Y) {
-			value = float.Clamp((Main.mouseY - offset.Position.Y) / height - 0.5f, 0, 1);
+			value = float.Clamp((offset.Position.Y - Main.mouseY) * 0.5f / height + 0.5f, 0, 1);
 		}
-		Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(16 * scale.Y)).Recentered(value * scale + offset.Position);
+		Rectangle rect = new Rectangle(0, 0, (int)(16 * scale.X), (int)(8 * scale.Y)).Recentered(((1 - value) * 2 - 1) * scale * Vector2.UnitY * height + offset.Position);
 		bool isHovering = rect.Contains(Main.MouseScreen) || gizmoTracker.IsCurrent;
 		Color color = Color.White;
 		if (!isHovering) color *= 0.5f;
