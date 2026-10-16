@@ -152,9 +152,10 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		NPC.aiAction = reader.ReadInt32();
 	}
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+		drawColor = NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor));
+		using ScopedOverride<bool> o = NPC.oiled.ScopedOverride(false);
 		Color glowColor = NPC.GetTintColor(Color.White);
 		VV13Animation animation = Animation;
-		drawColor = NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor));
 		Vector2 position = NPC.Bottom + Vector2.UnitY * 2 - screenPos;
 		Vector2 dirMult = new(NPC.direction, 1);
 		CurrentTool.Draw(spriteBatch, this, position, animation.tool.GetCurrentValue(AnimationTime), drawColor);
@@ -343,29 +344,38 @@ public abstract class VV13Tool : ModTexturedType {
 		tools.Add(this);
 	}
 	public virtual void AutoStaticDefaults() {
-		Sets.Textures[Type] = Request<Texture2D>(Texture);
+		Sets.Texture[Type] = Request<Texture2D>(Texture);
+		RequestIfExists(Texture + "_Glow", out Sets.GlowTexture[Type]);
 	}
 	public sealed override void SetupContent() {
 		AutoStaticDefaults();
 		SetStaticDefaults();
 	}
 	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, PosRotScale transform, Color drawColor) {
-		Rectangle frame = Sets.Textures[Type].Frame(verticalFrames: FrameCount);
+		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount);
 		SpriteEffects spriteEffects = vv13.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-		spriteBatch.Draw(
-			Sets.Textures[Type].Value,
+		DrawData data = new(
+			Sets.Texture[Type].Value,
 			position + transform.Position,
 			frame,
 			drawColor,
 			transform.Rotation,
 			Origin.Apply(spriteEffects, frame.Size()),
 			transform.Scale,
-			spriteEffects,
-		0);
+			spriteEffects
+		);
+		data.Draw(spriteBatch);
+		if (Sets.GlowTexture[Type] is not null) {
+			using ScopedOverride<bool> o = vv13.NPC.oiled.ScopedOverride(false);
+			data.texture = Sets.GlowTexture[Type].Value;
+			data.color = vv13.NPC.GetTintColor(Color.White);
+			data.Draw(spriteBatch);
+		}
 	}
 	public static class Sets {
 		public static SetFactory Factory { get; } = new(tools.Count, nameof(ToolID), ToolID.Search);
-		public static Asset<Texture2D>[] Textures = Factory.CreateCustomSet(Asset<Texture2D>.Empty);
+		public static Asset<Texture2D>[] Texture = Factory.CreateCustomSet(Asset<Texture2D>.Empty);
+		public static Asset<Texture2D>[] GlowTexture = Factory.CreateCustomSet<Asset<Texture2D>>(null);
 	}
 	private class ToolID {
 		/// <inheritdoc cref="IdDictionary"/>
@@ -379,7 +389,7 @@ public class VV13_Drill : VV13Tool {
 }
 public class VV13_Saw : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
-	public override int FrameCount => 4;
+	public override int FrameCount => 5;
 	public override Vector2 Origin => new(72, 10);
 }
 public class VV13_Puncher : VV13Tool {
