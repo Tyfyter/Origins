@@ -762,15 +762,13 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	public override string ExportType() => $"EventKeyframeSet<{typeof(TParams).Name}>";
 	protected override void OnBind() {
 		options = [];
-		foreach (Type type in Animation.GetType().WalkWhile(t => t is not null, t => t.BaseType)) {
-			foreach (MethodInfo meth in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
-				if (meth.ReturnType != typeof(void)) continue;
-				ParameterInfo[] parameters = meth.GetParameters();
-				if (parameters.Length != 1) continue;
-				if (!parameters[0].ParameterType.IsByRef) continue;
-				if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
-				options.Add(meth.CreateDelegate<Event>());
-			}
+		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static)) {
+			if (meth.ReturnType != typeof(void)) continue;
+			ParameterInfo[] parameters = meth.GetParameters();
+			if (parameters.Length != 1) continue;
+			if (!parameters[0].ParameterType.IsByRef) continue;
+			if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
+			options.Add(meth.CreateDelegate<Event>());
 		}
 	}
 	class SetKeyframeEvent(EventKeyframeSet<TParams> set, int index, Event value) : KeyframeVariableStep<Event>(set, index, value) {

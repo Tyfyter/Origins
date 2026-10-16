@@ -2,6 +2,7 @@
 using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
+using Origins.NPCs.Ashen;
 using Origins.Reflection;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
@@ -117,6 +118,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 			Type = (byte)type;
 			scrap.Add(this);
 			Mod.AddContent(new Hanging_Scrap_Item(this));
+			if (CanBeCarried) Mod.AddContent(new VV13_Scrap(this));
 		}
 		public sealed override void SetupContent() {
 			Texture2D = ModContent.Request<Texture2D>(Texture);
@@ -127,6 +129,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public static byte GetRandom(UnifiedRandom rand) => (byte)(rand.Next(Count) + 1);
 		public abstract int ScrapValue { get; }
 		public abstract Vector2 Origin { get; }
+		public virtual bool CanBeCarried => true;
 	}
 	[StructLayout(LayoutKind.Explicit, Size = 4)]
 	public record struct Hanging_Scrap_Data([field: FieldOffset(0)] byte ScrapType, [field: FieldOffset(2)] Half Rotation) : ITileData {
