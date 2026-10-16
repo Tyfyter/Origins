@@ -206,7 +206,7 @@ public abstract class KeyframeAnimation {
 			extendAnimationHandle,
 			hoverExtend || gizmoTracker.IsCurrent ? Color.Orange : Color.Orange * 0.5f
 		);
-		DrawString(spriteBatch, usesSubframes ? $"{totalLength:0.0}" : $"{(int)totalLength}", new((Main.screenWidth + TimelineWidth) * 0.5f, timelinePos.Y));
+		DrawString(spriteBatch, usesSubframes ? $"{totalLength:0.0}" : $"{(int)totalLength}", new((Main.screenWidth + TimelineWidth) * 0.5f, timelinePos.Y), origin: Vector2.UnitX);
 		gizmoTracker.CheckSetCurrent(hoverExtend, null);
 		bool isTimelineHovered = CurrentTimeline.Including(minTimelineY).Contains(Main.MouseScreen);
 		bool hoveringTimelineControl = hoverExtend;
@@ -375,13 +375,13 @@ public abstract class KeyframeAnimation {
 		selected = null;
 		return false;
 	}
-	static bool DrawString(SpriteBatch spriteBatch, string text, Vector2 position, Color? color = null, Color? shadowColor = null) {
+	static bool DrawString(SpriteBatch spriteBatch, string text, Vector2 position, Color? color = null, Color? shadowColor = null, Vector2 origin = default) {
 		snippet[0].Text = text;
 		ChatManager.DrawColorCodedStringWithShadow(
 			spriteBatch,
 			FontAssets.ItemStack.Value,
 			snippet,
-			position,
+			position - origin * ChatManager.GetStringSize(FontAssets.ItemStack.Value, snippet, Vector2.One),
 			0,
 			color ?? Color.White,
 			shadowColor ?? Color.Black,
