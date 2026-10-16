@@ -154,19 +154,23 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		(GetCurrentValue(time) as IKeyframeOffsetModifier)?.ModifyGizmoOffset(ref offset);
 		return offset;
 	}
-	void DrawSidebar(SpriteBatch spriteBatch, KeyframeAnimation animation, int keyframeIndex, ref GizmoTracker gizmoTracker) {
+	static readonly TextSnippet[] threeSnippets = [
+		new(),
+		new(" "),
+		new("", Color.Red)
+	];
+	static readonly TextSnippet[] oneSnippet = [
+		new()
+	];
+	void DrawSidebar(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker) {
 		Span<Keyframe> keyframes = CollectionsMarshal.AsSpan(this.keyframes);
 		ref Keyframe keyframe = ref keyframes[keyframeIndex];
-		float width = -1;
-		InterpolationStack stack = keyframe.Interpolation;
 		Vector2 iPos = new((Main.screenWidth + KeyframeAnimation.TimelineWidth) * 0.5f + 8, 4);
-		TextSnippet[] snippets = [
-			new("Update", new(107, 53, 219)),
-			new(" "),
-			new("Reset", Color.Red)
-		];
+		threeSnippets[0].Text = "Update";
+		threeSnippets[0].Color = new(107, 53, 219);
+		threeSnippets[2].Text = "Reset";
 		if (!currentValue.Equals(keyframe.Target)) {
-			width = ChatManager.GetStringSize(FontAssets.ItemStack.Value, snippets, Vector2.One).X;
+			float width = ChatManager.GetStringSize(FontAssets.ItemStack.Value, threeSnippets, Vector2.One).X;
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
 				iPos - Vector2.One * 2,
@@ -176,7 +180,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
-				snippets,
+				threeSnippets,
 				iPos,
 				0,
 				Vector2.Zero,
@@ -195,11 +199,14 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				}
 			}
 			iPos.Y += 16 + 8;
-			width = -1;
 		}
-		snippets[0].Color = Color.White;
-		snippets[^1].Text = "X";
+		DrawInterpolationModifierEditor(spriteBatch, keyframe.Interpolation, iPos, ref gizmoTracker, keyframeIndex);
+	}
+	void DrawInterpolationModifierEditor(SpriteBatch spriteBatch, InterpolationStack stack, Vector2 iPos, ref GizmoTracker gizmoTracker, int keyframeIndex = -1) {
+		threeSnippets[0].Color = Color.White;
+		threeSnippets[2].Text = "X";
 		int moveSelectedTo = -1;
+		float width = -1;
 		Max(ref width, FontAssets.ItemStack.Value.MeasureString(stack.BaseInterpolation.ToString()).X);
 		if (!stack.BaseInterpolation.IsModifiable) {
 			spriteBatch.Draw(
@@ -219,59 +226,63 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			new Color(90, 90, 105)
 		);
 		for (int i = stack.Count - 1; i >= 0; i--) {
-			snippets[0].Text = stack[i].ToString();
-			snippets[0].Color = animation.modifyingInterpolation == i ? Color.Goldenrod : Color.White;
+			threeSnippets[0].Text = stack[i].ToString();
+			threeSnippets[0].Color = Animation.modifyingInterpolation == i ? Color.Goldenrod : Color.White;
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
-				snippets,
+				threeSnippets,
 				iPos,
 				0,
 				Vector2.Zero,
 				Vector2.One,
 				out int hoveredModifier
 			);
-			ShowSwap(spriteBatch, animation, i + 1, iPos, ref moveSelectedTo, (int)width);
+			ShowSwap(spriteBatch, Animation, i + 1, iPos, ref moveSelectedTo, (int)width);
 			if (Main.mouseLeft && Main.mouseLeftRelease && hoveredModifier != -1) {
 				Main.mouseLeftRelease = false;
 				switch (hoveredModifier) {
 					case 0:
-					animation.modifyingInterpolation = i.OrXIf(animation.modifyingInterpolation, -1);
-					animation.draggingInterpolation = true;
+					Animation.modifyingInterpolation = i.OrXIf(Animation.modifyingInterpolation, -1);
+					Animation.draggingInterpolation = true;
 					break;
 					case 2:
-					stack.RemoveAt(i);
+					Do(new RemoveInterpolationModifier(stack, i, this, keyframeIndex));
 					break;
 				}
 			}
 			iPos.Y += 16;
 		}
-		ShowSwap(spriteBatch, animation, 0, iPos, ref moveSelectedTo, (int)width);
+		ShowSwap(spriteBatch, Animation, 0, iPos, ref moveSelectedTo, (int)width);
 		skipModifiers:
-		Array.Resize(ref snippets, 1);
-		snippets[0].Text = stack.BaseInterpolation.ToString();
-		snippets[0].Color = animation.modifyingInterpolation == -2 ? Color.Goldenrod : Color.White;
+		oneSnippet[0].Text = stack.BaseInterpolation.ToString();
+		oneSnippet[0].Color = Animation.modifyingInterpolation == -2 ? Color.Goldenrod : Color.White;
 		ChatManager.DrawColorCodedStringWithShadow(
 			spriteBatch,
 			FontAssets.ItemStack.Value,
-			snippets,
+			oneSnippet,
 			iPos,
 			0,
 			Vector2.Zero,
 			Vector2.One,
 			out int hoveredBase
 		);
-		if (moveSelectedTo != -1 && animation.modifyingInterpolation != -1) {
-			IInterpolationModifier toMove = stack[animation.modifyingInterpolation];
-			stack.RemoveAt(animation.modifyingInterpolation);
-			stack.Insert(moveSelectedTo, toMove);
-			animation.modifyingInterpolation = moveSelectedTo;
+		if (moveSelectedTo != -1 && Animation.modifyingInterpolation != -1) {
+			Do(new MoveInterpolationModifier(
+				stack,
+				Animation.modifyingInterpolation,
+				moveSelectedTo,
+				this,
+				keyframeIndex
+			));
+			Animation.modifyingInterpolation = moveSelectedTo;
 		}
-		if (Main.mouseLeft && Main.mouseLeftRelease && hoveredBase != -1) animation.modifyingInterpolation = -2;
+		if (hoveredBase != -1) Main.LocalPlayer.mouseInterface = true;
+		if (Main.mouseLeft && Main.mouseLeftRelease && hoveredBase != -1) Animation.modifyingInterpolation = -2;
 		width = -1;
 		iPos.Y += 16 + 8;
-		snippets[0].Color = Color.White;
-		if (animation.modifyingInterpolation == -2) {
+		oneSnippet[0].Color = Color.White;
+		if (Animation.modifyingInterpolation == -2) {
 			width = FontAssets.ItemStack.Value.MeasureString(CreateLinear is not null ? "Interpolated" : "Stepped").X;
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
@@ -281,11 +292,11 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			);
 			hoveredBase = -1;
 			if (CreateLinear is not null) {
-				snippets[0].Text = "Interpolated";
+				oneSnippet[0].Text = "Interpolated";
 				ChatManager.DrawColorCodedStringWithShadow(
 					spriteBatch,
 					FontAssets.ItemStack.Value,
-					snippets,
+					oneSnippet,
 					iPos,
 					0,
 					Vector2.Zero,
@@ -294,11 +305,11 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				);
 				iPos.Y += 16;
 			}
-			snippets[0].Text = "Stepped";
+			oneSnippet[0].Text = "Stepped";
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
-				snippets,
+				oneSnippet,
 				iPos,
 				0,
 				Vector2.Zero,
@@ -306,9 +317,16 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				out int hoveredStep
 			);
 			iPos.Y += 16;
+			if (hoveredBase != -1) Main.LocalPlayer.mouseInterface = true;
+			else if (hoveredStep != -1) Main.LocalPlayer.mouseInterface = true;
 			if (Main.mouseLeft && Main.mouseLeftRelease) {
-				if (hoveredBase != -1) Do(new SetBaseInterpolation(this, keyframeIndex, CreateLinear()));
-				else if (hoveredStep != -1) Do(new SetBaseInterpolation(this, keyframeIndex, new StepInterpolation<T>()));
+				IInterpolation interpolation = null;
+				if (hoveredBase != -1) interpolation = CreateLinear();
+				else if (hoveredStep != -1) interpolation = new StepInterpolation<T>();
+				if (interpolation is not null) {
+					Do(keyframeIndex == -1 ? new SetAnyBaseInterpolation(stack, interpolation) : new SetKeyframeBaseInterpolation(this, keyframeIndex, interpolation));
+					Animation.modifyingInterpolation = -1;
+				}
 			}
 		} else if (stack.BaseInterpolation.IsModifiable) {
 			for (int i = KeyframeModifiers.modifierTypes.Count - 1; i >= 0; i--) Max(ref width, FontAssets.ItemStack.Value.MeasureString(KeyframeModifiers.modifierTypes[i].name).X);
@@ -319,11 +337,11 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				new Color(90, 90, 115)
 			);
 			for (int i = KeyframeModifiers.modifierTypes.Count - 1; i >= 0; i--) {
-				snippets[0].Text = KeyframeModifiers.modifierTypes[i].name;
+				oneSnippet[0].Text = KeyframeModifiers.modifierTypes[i].name;
 				ChatManager.DrawColorCodedStringWithShadow(
 					spriteBatch,
 					FontAssets.ItemStack.Value,
-					snippets,
+					oneSnippet,
 					iPos,
 					0,
 					Vector2.Zero,
@@ -332,13 +350,14 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				);
 				if (Main.mouseLeft && Main.mouseLeftRelease && hoveredModifier != -1) {
 					Main.mouseLeftRelease = false;
-					if (animation.modifyingInterpolation == -1) stack.Add(KeyframeModifiers.modifierTypes[i].Item2());
-					else stack[animation.modifyingInterpolation] = KeyframeModifiers.modifierTypes[i].Item2();
+					IInterpolationModifier modifier = KeyframeModifiers.modifierTypes[i].Item2();
+					if (Animation.modifyingInterpolation == -1) Do(new AddInterpolationModifier(stack, stack.Count, modifier, this, keyframeIndex));
+					else Do(new SetInterpolationModifier(stack, Animation.modifyingInterpolation, modifier, this, keyframeIndex));
 				}
 				iPos.Y += 16;
 			}
 		}
-		if (animation.modifyingInterpolation >= stack.Count) animation.modifyingInterpolation = -1;
+		if (Animation.modifyingInterpolation >= stack.Count) Animation.modifyingInterpolation = -1;
 		if (stack.BaseInterpolation.IsModifiable) {
 			iPos.Y += 8;
 			spriteBatch.Draw(
@@ -348,7 +367,9 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				Color.Black
 			);
 			Rectangle fram = new(0, 0, 1, 150);
-			Func<float, float> modifyProgress = animation.modifyingInterpolation >= 0 ? stack[animation.modifyingInterpolation].ModifyProgress : stack.ModifyProgress;
+			if (oldModifyingInterpolation.TrySet(Animation.modifyingInterpolation)) currentModifier = null;
+			if (Animation.modifyingInterpolation >= 0) currentModifier ??= stack[Animation.modifyingInterpolation].Clone();
+			Func<float, float> modifyProgress = currentModifier is null ? stack.ModifyProgress : currentModifier.ModifyProgress;
 			for (int i = 0; i < 150; i++) {
 				fram.Height = (int)(150 - modifyProgress(i / 150f) * 150);
 				spriteBatch.Draw(
@@ -358,9 +379,14 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 					new Color(90, 90, 105)
 				);
 			}
-			if (animation.modifyingInterpolation >= 0) {
-				Span<IInterpolationModifier> modifiers = CollectionsMarshal.AsSpan(keyframe.Interpolation);
-				modifiers[animation.modifyingInterpolation].DrawGizmo(spriteBatch, iPos, ref animation.gizmoTracker);
+			if (Animation.modifyingInterpolation >= 0) {
+				currentModifier.DrawGizmo(spriteBatch, iPos, ref gizmoTracker);
+				if (wasDraggingInterpolation.TrySet(gizmoTracker.IsPrevious) && !gizmoTracker.IsPrevious) {
+					if (!currentModifier.Equals(stack[Animation.modifyingInterpolation])) {
+						Do(new SetInterpolationModifier(stack, Animation.modifyingInterpolation, currentModifier, this, keyframeIndex));
+					}
+					currentModifier = null;
+				}
 			}
 			iPos.Y += 150 + 4;
 		}
@@ -380,10 +406,16 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			}
 		}
 	}
+	bool wasDraggingInterpolation;
+	IInterpolationModifier currentModifier;
+	int oldModifyingInterpolation = -1;
 	protected override void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, float time) {
 		Vector2 iPos = new((Main.screenWidth + KeyframeAnimation.TimelineWidth) * 0.5f + 8, 4);
-		TextSnippet[] snippets = [new()];
-		snippets[0].Color = Color.White;
+		if (time == 0) {
+			if (looped) DrawInterpolationModifierEditor(spriteBatch, loopInterpolation ??= [], iPos, ref Animation.gizmoTracker);
+			return;
+		}
+		oneSnippet[0].Color = Color.White;
 		float width = FontAssets.ItemStack.Value.MeasureString(CreateLinear is not null ? "Interpolated" : "Stepped").X;
 		spriteBatch.Draw(
 			TextureAssets.MagicPixel.Value,
@@ -391,11 +423,11 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			new(0, 0, (int)width + 4, (2 + (CreateLinear is not null).ToInt()) * 16 + 4),
 			new Color(90, 90, 105)
 		);
-		snippets[0].Text = "Insert:";
+		oneSnippet[0].Text = "Insert:";
 		ChatManager.DrawColorCodedStringWithShadow(
 			spriteBatch,
 			FontAssets.ItemStack.Value,
-			snippets,
+			oneSnippet,
 			iPos,
 			0,
 			Vector2.Zero,
@@ -405,11 +437,11 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		iPos.Y += 16;
 		int hoveredBase = -1;
 		if (CreateLinear is not null) {
-			snippets[0].Text = "Interpolated";
+			oneSnippet[0].Text = "Interpolated";
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
-				snippets,
+				oneSnippet,
 				iPos,
 				0,
 				Vector2.Zero,
@@ -418,17 +450,19 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			);
 			iPos.Y += 16;
 		}
-		snippets[0].Text = "Stepped";
+		oneSnippet[0].Text = "Stepped";
 		ChatManager.DrawColorCodedStringWithShadow(
 			spriteBatch,
 			FontAssets.ItemStack.Value,
-			snippets,
+			oneSnippet,
 			iPos,
 			0,
 			Vector2.Zero,
 			Vector2.One,
 			out int hoveredStep
 		);
+		if (hoveredBase != -1) Main.LocalPlayer.mouseInterface = true;
+		else if (hoveredStep != -1) Main.LocalPlayer.mouseInterface = true;
 		if (Main.mouseLeft && Main.mouseLeftRelease) {
 			if (hoveredBase != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = CreateLinear() });
 			else if (hoveredStep != -1) InsertAtCurrentFrame(time, new() { BaseInterpolation = new StepInterpolation<T>() });
@@ -455,6 +489,18 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				loopIndicator,
 				Color.Orange
 			);
+			loopIndicator.X = (int)Animation.TimelineToScreenPos(0) + 2;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				loopIndicator,
+				Color.Orange
+			);
+			loopIndicator.Y -= 6;
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				loopIndicator,
+				Color.Orange
+			);
 		}
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
@@ -474,7 +520,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		return isTimelineSelected && keyframeDiamond.Contains(Main.MouseScreen);
 	}
 	protected override void DrawKeyframeEditor(SpriteBatch spriteBatch, int keyframeIndex, ref GizmoTracker gizmoTracker) {
-		DrawSidebar(spriteBatch, Animation, keyframeIndex, ref Animation.gizmoTracker);
+		DrawSidebar(spriteBatch, keyframeIndex, ref gizmoTracker);
 	}
 	protected override void TryUpdateKeyframe(int keyframeIndex) {
 		Do(new SetKeyframeTarget(this, keyframeIndex, currentValue));
@@ -499,11 +545,64 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		public override string Text => $"Set Keyframe Value: {newValue}";
 		protected override ref T Variable => ref set[index].Target;
 	}
-	class SetBaseInterpolation(KeyframeSet<T> set, int index, IInterpolation value) : KeyframeVariableStep<IInterpolation>(set, index, value) {
+	class SetKeyframeBaseInterpolation(KeyframeSet<T> set, int index, IInterpolation value) : KeyframeVariableStep<IInterpolation>(set, index, value) {
 		readonly InterpolationStack stack = set[index].Interpolation;
 		public override string Text => $"Set Keyframe Interpolation: {newValue}";
 		protected override ref IInterpolation Variable => ref stack.BaseInterpolation;
 	}
+	class SetAnyBaseInterpolation(InterpolationStack stack, IInterpolation value) : VariableUndoStep<IInterpolation>(value) {
+		public override string Text => $"Set Interpolation: {newValue}";
+		protected override ref IInterpolation Variable => ref stack.BaseInterpolation;
+	}
+	class AddInterpolationModifier(InterpolationStack stack, int index, IInterpolationModifier modifier, KeyframeSet<T> set = null, int keyframeIndex = -1) : UndoStep {
+		readonly KeyframeSet<T> set = keyframeIndex == -1 ? null : set;
+		public override string Text => $"Add Interpolation Modifier: {modifier}";
+		public override void Do() {
+			stack.Insert(index, modifier);
+			AnimateKeyframeUpdate();
+		}
+		public override void Undo() {
+			stack.RemoveAt(index);
+			AnimateKeyframeUpdate(-1);
+		}
+		void AnimateKeyframeUpdate(int dir = 1) => set?.AnimateKeyframeUpdate(keyframeIndex, dir);
+	}
+	class RemoveInterpolationModifier(InterpolationStack stack, int index, KeyframeSet<T> set = null, int keyframeIndex = -1) : UndoStep {
+		readonly KeyframeSet<T> set = keyframeIndex == -1 ? null : set;
+		readonly IInterpolationModifier modifier = stack[index];
+		public override string Text => $"Remove Interpolation Modifier: {modifier}";
+		public override void Do() {
+			stack.RemoveAt(index);
+			AnimateKeyframeUpdate();
+		}
+		public override void Undo() {
+			stack.Insert(index, modifier);
+			AnimateKeyframeUpdate(-1);
+		}
+		void AnimateKeyframeUpdate(int dir = 1) => set?.AnimateKeyframeUpdate(keyframeIndex, dir);
+	}
+	class SetInterpolationModifier(InterpolationStack stack, int index, IInterpolationModifier modifier, KeyframeSet<T> set, int keyframeIndex = -1) : UndoStep {
+		readonly IInterpolationModifier oldValue = stack[index];
+		public override string Text => $"Replace Interpolation Modifier: {modifier}";
+		public override void Do() {
+			stack[index] = modifier;
+			set.currentModifier = null;
+			AnimateKeyframeUpdate();
+		}
+		public override void Undo() {
+			stack[index] = oldValue;
+			set.currentModifier = null;
+			AnimateKeyframeUpdate(-1);
+		}
+		void AnimateKeyframeUpdate(int dir = 1) {
+			if (keyframeIndex != -1) set.AnimateKeyframeUpdate(keyframeIndex, dir);
+		}
+	}
+	class MoveInterpolationModifier(InterpolationStack stack, int fromIndex, int toIndex, KeyframeSet<T> set = null, int keyframeIndex = -1) : CombinedUndoStep(
+		$"Move Interpolation Modifier {stack[fromIndex]}: {fromIndex} --> {toIndex}",
+		new RemoveInterpolationModifier(stack, fromIndex, set, keyframeIndex),
+		new AddInterpolationModifier(stack, toIndex, stack[fromIndex], set, keyframeIndex)
+	) {}
 	class ModifyStartValue(KeyframeSet<T> set, T newValue) : UndoStep {
 		readonly T oldValue = set.start;
 		public override string Text => $"Modify Start Value: {newValue}";
@@ -941,11 +1040,13 @@ public interface IKeyframe<TSelf> where TSelf : IKeyframe<TSelf> {
 	public float Time { get; set; }
 	public TSelf CleanMutableRefs();
 }
-public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolationModifier.Loader> {
+public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolationModifier.Loader>, IEquatable<IInterpolationModifier> {
 	public float ModifyProgress(float progress);
 	public string Export() => $"new {GetType().Name}()";
 	public void DrawGizmo(SpriteBatch spriteBatch, Vector2 pos, ref GizmoTracker gizmoTracker) { }
+	public IInterpolationModifier Clone() => this;
 	public virtual static IInterpolationModifier CreateDefault() => null;
+	bool IEquatable<IInterpolationModifier>.Equals(IInterpolationModifier other) => GetType() == other.GetType();
 	class Loader : IAutoloader {
 		static readonly MethodInfo getCustomDefault = typeof(Loader).GetMethod("GetCustomDefault");
 		static void IAutoloader.Autoload(Mod mod, Type type) {
@@ -971,6 +1072,10 @@ public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolatio
 			return T.CreateDefault;
 		}
 	}
+}
+public interface IInterpolationModifier<TSelf> : IInterpolationModifier where TSelf : struct, IInterpolationModifier<TSelf>, IEquatable<TSelf> {
+	bool IEquatable<IInterpolationModifier>.Equals(IInterpolationModifier other) => other is TSelf o && ((IEquatable<TSelf>)this).Equals(o);
+	IInterpolationModifier IInterpolationModifier.Clone() => (TSelf)this;
 }
 public static class KeyframeTypes {
 	public static KeyframeSet<T>.Keyframe Step<T>(int onFrame, T value) where T : IEquatable<T> => new(onFrame, value, new StepInterpolation<T>());
@@ -1140,7 +1245,7 @@ public static class KeyframeTypes {
 }
 public static class KeyframeModifiers {
 	public static List<(string name, Func<IInterpolationModifier>)> modifierTypes = [];
-	public record struct Exponential(float Exponent = 2) : IInterpolationModifier {
+	public record struct Exponential(float Exponent = 2) : IInterpolationModifier<Exponential> {
 		public readonly float ModifyProgress(float progress) => float.Pow(progress, Exponent);
 		public readonly override string ToString() => Exponent == 0 ? "Exponent" : $"Exponent({Exponent})";
 		readonly string IInterpolationModifier.Export() => $"new {nameof(Exponential)}({Exponent}f)";
@@ -1190,6 +1295,8 @@ public struct GizmoTracker() {
 	bool usingMouseDown;
 	public bool JustSelected { readonly get; private set; }
 	public readonly bool IsCurrent => usingGizmo == currentIndex;
+	public readonly bool IsPrevious => usingGizmo == currentIndex - 1;
+	public readonly bool IsInRange(int minInclusive, int maxExclusive) => usingGizmo >= minInclusive && usingGizmo < maxExclusive;
 	void SetCurrent() {
 		usingGizmo = currentIndex;
 		usingMouseDown = Main.mouseLeft;
@@ -1519,6 +1626,15 @@ public abstract class UndoStep {
 			}
 			return currentIndex;
 		}
+	}
+}
+public class CombinedUndoStep(string text, params UndoStep[] steps) : UndoStep {
+	public override string Text => text;
+	public override void Do() {
+		for (int i = 0; i < steps.Length; i++) steps[i].Do();
+	}
+	public override void Undo() {
+		for (int i = steps.Length - 1; i >= 0; i--) steps[i].Undo();
 	}
 }
 public abstract class VariableUndoStep<T> : UndoStep {
