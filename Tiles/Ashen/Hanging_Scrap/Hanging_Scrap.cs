@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
-using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.NPCs.Ashen;
 using Origins.Reflection;
@@ -25,43 +24,43 @@ using Terraria.Utilities;
 namespace Origins.Tiles.Ashen.Hanging_Scrap {
 	public class No_Hanging_Scrap : HangingScrap {
 		public override string Texture => "Terraria/Images/NPC_0";
-		public override int ScrapValue => 0;
+		public override ScrapAmount ScrapValue => 0;
 		public override Vector2 Origin => default;
 	}
 	public class Large_Scrap1 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(1, 22);
+		public override ScrapAmount ScrapValue => 1..21;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap2 : HangingScrap {
-		public override int ScrapValue => 9;
+		public override ScrapAmount ScrapValue => 9;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap3 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(8, 10);
+		public override ScrapAmount ScrapValue => 8..9;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap4 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(5, 17);
+		public override ScrapAmount ScrapValue => 5..16;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap5 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(7, 11);
+		public override ScrapAmount ScrapValue => 7..10;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap6 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(5, 14);
+		public override ScrapAmount ScrapValue => 5..13;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Small_Scrap1 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 7);
+		public override ScrapAmount ScrapValue => 3..6;
 		public override Vector2 Origin => new(16, 16);
 	}
 	public class Small_Scrap2 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(1, 9);
+		public override ScrapAmount ScrapValue => 1..8;
 		public override Vector2 Origin => new(16, 16);
 	}
 	public class Small_Scrap3 : HangingScrap {
-		public override int ScrapValue => 5;
+		public override ScrapAmount ScrapValue => 5;
 		public override Vector2 Origin => new(16, 16);
 	}
 	[Autoload(false)]
@@ -127,7 +126,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public static HangingScrap Get(int type) => scrap[type];
 		public static HangingScrap Get(byte type) => scrap[type];
 		public static byte GetRandom(UnifiedRandom rand) => (byte)(rand.Next(Count) + 1);
-		public abstract int ScrapValue { get; }
+		public abstract ScrapAmount ScrapValue { get; }
 		public abstract Vector2 Origin { get; }
 		public virtual bool CanBeCarried => true;
 	}
@@ -140,6 +139,20 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 			writer.Write(Rotation);
 		}
 		public static Hanging_Scrap_Data Read(BinaryReader reader) => new(reader.ReadByte(), reader.ReadHalf());
+	}
+	public struct ScrapAmount {
+		public int Min { get; set; }
+		public int Max { get; set; }
+		public ScrapAmount(int min, int max) {
+			Min = min;
+			Max = max;
+			if (min < 0) throw new ArgumentException("min must be greater than or equal to 0");
+			if (max < min) throw new ArgumentException("max must be greater than or equal to min");
+		}
+		public ScrapAmount(int amount) : this(amount, amount) { }
+		public readonly int GetValue() => Main.rand.Next(Min, Max + 1);
+		public static implicit operator ScrapAmount(int value) => new(value);
+		public static implicit operator ScrapAmount(Range value) => new(value.Start.Value, value.End.Value);
 	}
 	public class Hanging_Scrap_Global_Tile : GlobalTile {
 		public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
@@ -308,7 +321,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		}
 		protected override void Perform() {
 			ref Hanging_Scrap_Data data = ref Main.tile[Pos].Get<Hanging_Scrap_Data>();
-			int valueChange = data.Scrap.ScrapValue - ScrapData.Scrap.ScrapValue;
+			int valueChange = data.Scrap.ScrapValue.GetValue() - ScrapData.Scrap.ScrapValue.GetValue();
 			data = ScrapData;
 			if (valueChange > 0 && !NetmodeActive.MultiplayerClient) {
 				int item = Item.NewItem(
