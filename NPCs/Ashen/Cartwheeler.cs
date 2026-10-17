@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Avalon.Items.Placeable.MusicBoxes;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Events;
 using Origins.Gores;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
+using Origins.Tiles.MusicBoxes;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -39,6 +41,7 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(Music_Box.ItemType<Music_Box_SS>(), 50));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 9, amountDroppedMaximum: 17));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));

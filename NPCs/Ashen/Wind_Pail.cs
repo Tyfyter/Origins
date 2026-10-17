@@ -4,6 +4,7 @@ using Origins.Events;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
+using Origins.Tiles.MusicBoxes;
 using ReLogic.Utilities;
 using System.Numerics;
 using Terraria;
@@ -47,11 +48,12 @@ namespace Origins.NPCs.Ashen {
 			NPC.setFrameSize = true;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(Music_Box.ItemType<Music_Box_SS>(), 50));
+			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 26, amountDroppedMaximum: 52));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 		}
 		SlotId attackSound;
 		public override void AI() {
@@ -117,7 +119,7 @@ namespace Origins.NPCs.Ashen {
 					if (attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) {
 						NPC.ai[2] = 0;
 						attackSound = SoundEngine.PlaySound(SoundID.Zombie4.WithPitch(-1.5f).WithPitchVarience(1).WithVolume(5f), NPC.Center);
-						SoundEngine.PlaySound(Origins.Sounds.WindPail, NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.WindPail.WithVolume(0.6f), NPC.Center);
 						NPC.aiAction = 1;
 					}
 					break;

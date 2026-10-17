@@ -1526,8 +1526,8 @@ Buffs: {
 	}
 
 	Star_Soldier_Cooldown: {
-		DisplayName: Star Soldier Cooldown
-		Description: <PH>Mods.Origins.Buffs.Star_Soldier_Cooldown.Description
+		DisplayName: Star Soldier
+		Description: Status: NEW UNIT UNDER CONSTRUCTION
 	}
 }
 

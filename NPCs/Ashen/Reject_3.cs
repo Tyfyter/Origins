@@ -5,6 +5,7 @@ using Origins.Gores;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
+using Origins.Tiles.MusicBoxes;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -82,11 +83,12 @@ namespace Origins.NPCs.Ashen {
 			NPC.DoFrames(4, 3.., NPC.velocity.X * NPC.direction);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(Music_Box.ItemType<Music_Box_SS>(), 50));
+			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 5, amountDroppedMaximum: 11));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

@@ -94,6 +94,7 @@ TOWN NPCs:
 (^) Brine Fiend
 
 (X) Arabel
+(X) Meliae
 (ᗢ) Mother Unit
 (%2, X) The Author
 
@@ -126,6 +127,7 @@ TOWN NPC Quests:
 (^) Painter - Painter Apprentice
 (^) Party Girl - Confetti Fun
 (^) Party Girl - Livin' Up the Party
+(#2) Steampunker - Any Eyedeas? !!!
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
 (^) Stylist - To Be Crystal Clear…
@@ -157,11 +159,12 @@ VANILLA MODIFICATIONS:
 
 WORLD GENERATION:
 |---
-(§, %2, #2) Ashen Factory !!!
-(§, %2, X) Ashen Outpost !!!
+(#2) Ashen Factory !!!
+(#) Ashen Outpost !!!
 (#2) Ashen Scrapyard !!!
 (X) Bloody Abyss
 (^) Brine Pool
+(X) Catharsis
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
@@ -346,13 +349,25 @@ ENEMY NPCS:
 (^) Torn Ghoul
 (^) Trash Compactor Mimic
 (^) Trijaw Shark
-(#, ^2) VV-13 !!!
+(#2, ^2) VV-13 !!!
 
+(X) Angel
+(X) Baptizer
+(X) Blessed Ring
+(X) Cathartic Ghoul
+(X) Cathartic Slime
+(X) Cathartic Mimic
+(X) Cathartic Mummy
+(X) Cathartic Pigron
 (X) Clockwork
+(X) Colossal Squid
 (X) Crystal Prison
 (X) Cursed Dwarf
+(X) Dreamcatcher
 (@2/3, #) Electromancer
 (^, 赏) Etherealizer
+(X) Exaltor
+(X) Halospinner
 (@2, #) Illusionary
 (X) L2/A 'Legate'
 (X) L2/R 'Legate'
@@ -362,6 +377,7 @@ ENEMY NPCS:
 (X) MP3 'Envoy'
 (X) OO-13/F 'Ootheca'
 (X) OO-13/M 'Ootheca'
+(X) Slimey
 (X) Tiny Skeleton Sniper
 (X) Void Apparition
 
@@ -411,6 +427,7 @@ STATUS EFFECTS:
 (X) Appetite Loss
 (^) Cavitation
 (^) Crazy!
+(X) Divination
 (^) Impeding Shrapnel
 (X) Infection
 (^) Mana Buffer
@@ -442,9 +459,11 @@ NPC DIALOGUE:
 (^) Dryad
 (ᗢ) Witch Doctor
 
+(X) Arabel
 (ᗢ) Brine Fiend
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
+(X) Meliae
 (ᗢ) Mother Unit
 (X) Necromancer
 (X) Psymanti Shaman
@@ -731,6 +750,7 @@ ACCESSORIES:
 (ᗢ) Refactoring Pieces
 (^) Retaliatory Tendril
 (^) Shield of Shimmer
+(X) Tattered Quilt
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
@@ -742,12 +762,13 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
 (^) Glitter Glue
+(X) Hina Doll
 (^) Lunatic's Rune
 (^) Mysterious Spray
 (^) Retool Arm
 (^) Robo-tail
 (#3, ^2) Scribe of the Meat God
-(#2, ^2) Space Pirate's Eye !!!
+(#2, ^2) Space Pirate's Eye
 (^) Stack of Shraps
 (^) Strange Tooth
 (^) Terrarian Voodoo Doll
@@ -766,18 +787,23 @@ ACCESSORIES:
 
 VANITY:
 |---
+(X) Arabel Mask
 (X) Blue Lobster Hat
 (X) Crimson King Mask
 (^) Defiled Amalgamation Mask
 (^) Fiberglass Weaver Head
+(X) Fibulum Kraken Hat
 (X) I.C.A.R.U.S. Mask
 (^) Lost Diver set
 (X) Mechamalgamation Mask
 (X) Miscreant Mask
+(X) Prometheus Mask
 (X) Quantux Mask
 (X) Seer Mask
 (^) Shimmer Construct Mask
 (X) Snowdrop Mask
+(X) SR-32 Mask
+(X) SR-48 Mask
 (^) Trenchmaker Mask
 (^) World Cracker Mask
 
@@ -965,7 +991,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (X) Xeyah Laeta
 
-(†) Arc-Flame Arm Blades !!!
+(^) Arc-Flame Arm Blades
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
@@ -1319,6 +1345,8 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
+(X) Angel Dust
+(X) Angel Duststone
 (^) Artifiber
 (^) Ashen Cactus
 (^) Baryte
@@ -1332,6 +1360,9 @@ TILES:
 (^) Calcified Spug Flesh
 (X) Cancer Block
 (@4, ^3) Carburite
+(X) Cathartic Cactus
+(X) Cathartic Grass
+(X) Cathartic Jungle Grass
 (^) Catwalk
 (^) Chambersite
 (^) Chambersite Gemspark
@@ -1341,6 +1372,7 @@ TILES:
 (X) D:set_46/Tile/Encoded_Defiled_Jungle_Grass
 (X) D:set_46/Tile/Encoded_Defiled_Regolith
 (X) D:set_46/Tile/Encoded_Defiled_Stone
+(X) Dawnslate
 (^) Defiled Cactus
 (^) Defiled Grass
 (^) Defiled Jungle Grass
@@ -1349,13 +1381,17 @@ TILES:
 (^) Defiled Sandstone
 (^) Defiled Stone
 (X) Defiled Stone Brick
+(X) Edenwood
+(X) Edon Ore
 (^) Eitrite Ore
 (@4) Encrusted Brick
 (^) Encrusted Ore
 (^) Endowood
 (^) Felnum Ore
 (^) Fiberglass Block
+(X) Gilded Ice Block
 (^) Gray Ice Block
+(X) Hardened Angel Dust
 (^) Hardened Defiled Sand
 (^) Hardened Sootsand
 (X) Lihzarhd Bomb Trap
@@ -1456,6 +1492,7 @@ TILES:
 (X) Busted Furniture
 (X) Cable Holder
 (X) Cancer Furniture
+(X) Cathartic Torch
 (^) Chambersite Bunny Cage
 (^) Chambersite Squirrel Cage
 (^) Cicada 3301 Cage
@@ -1464,6 +1501,8 @@ TILES:
 (X) Decaying Hand Snail Cage
 (^) Defiled Torch
 (^) Defiled Water Fountain
+(X) Destroyed Fountain
+(X) Edenwood Furniture
 (^) Endowood Furniture
 (^) Hyrax Cage
 (^) Limestone Furniture
@@ -1478,7 +1517,6 @@ TILES:
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
-(X) Ruined Portal
 (^) Scrap Railing
 (^) Shadow Torch
 (^) Strange Plant (Stardust)
@@ -1512,6 +1550,7 @@ TILES:
 (^) Edge Detector
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
+(X) Fountain of Youth
 (^) Gas Generator
 (^) Incinerator Pit
 (^) Industrial Door
@@ -1571,7 +1610,12 @@ TILES:
 (^) Ashen Sootgrass Foliage
 (^) Background Door
 (^) Beacon Light
+(X) Blissem
 (^) Brineglow Vine
+(X) Catharsis Flower Foliage
+(X) Catharsis Foliage
+(X) Cathartic Pot
+(X) Cathartic Vine
 (X) D:set_46/Tile/Encoded_Hardware_Bundle
 (X) D:set_46/Tile/Encoded_Server_Stack
 (^) Defiled Altar
@@ -1579,6 +1623,8 @@ TILES:
 (々) Defiled Heart
 (^) Defiled Relay
 (^) Defiled Pot
+(X) Eden Baobab Tree
+(X) Eden Tree
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
 (^) Floodlight
@@ -1624,18 +1670,18 @@ TILES:
 (^) Wilting Rose
 (^) Wrycoral
 
-(^) A Perfect World
+(#2, ^2) A Perfect World (painter sell condition)
 (^) Deceptive Beauty
 (^) The Jungle's Window
-(^) There's Five of Them Now
+(#2, ^2) There's Five of Them Now (painter sell condition)
 
 (^) Ancient Music Box (Brine Pool)
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-($2, ^2/3) Music Box (Ashen Factory) !!!
-($, ^2/3) Music Box (Ashen Mines) !!!
-($2, ^2/3) Music Box (Ashen Scrapyard) !!!
+(^) Music Box (Ashen Factory)
+($2, ^2/3) Music Box (Ashen Mines) !!!
+(^) Music Box (Ashen Scrapyard)
 (#, @, $2) Music Box (Beep Boop Bop)
 (X) Music Box (Ashen Mini-boss)
 (^) Music Box (Brine Pool)
@@ -1655,7 +1701,7 @@ TILES:
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
 (X) Music Box (Shimmer Construct)
-($2, ^2/3) Music Box (Smog Storm) !!!
+(^) Music Box (Smog Storm)
 (^) Music Box (The Dive)
 (X) Music Box (Trenchmaker)
 (X) Music Box (World Cracker)
@@ -1697,6 +1743,8 @@ LIQUIDS:
 |---
 (^) Amebic Gel
 (^) Brine
+(#2, ^2) Burning Oil !!! (needs cool fire effects)
+(X) Nexalune
 (^) Oil
 ---
 
@@ -1747,6 +1795,8 @@ MATERIALS:
 (#, ^2) Umbramere Bar
 
 (^) Busted Servo
+(X) Dream Essence
+(X) Empathy Node
 (X) Flesh Core Fragment
 (^) Geothermal Sludge
 (X) Memory Fragment
@@ -1994,6 +2044,7 @@ CONSUMABLES:
 MOUNTS, PETS AND TRANSFORMATIONS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)
+(X) Crabby Toy (Friendly Crabby)
 (^) Fleshy Globe (Self-Contained Universe)
 (^) Jawbreaker (Stellar Spark)
 (^) Robot Toy Controller (Toy Trenchmaker)
@@ -2093,7 +2144,7 @@ CROSS-MOD CONTENT:
 |---
 (^) AlchemistNPC Lite sell TO stuff
 (^) Avalon biome lock box support
-(^3, ⚿) Cinematic Boss Intros support
+(^) Cinematic Boss Intros support
 (^) Fargo's Altar Exterminator effect evils
 (@, #2) Fargo's alternate boss summons
 (ᗢ) Fargo's caught npcs
@@ -2104,15 +2155,15 @@ CROSS-MOD CONTENT:
 (^) Fargo's sell evil woods
 (^) Fargo's stat sheet has explosive stats
 (^) Fargo's stat sheet has perm upgrades
-(ᗢ) Luiafk Skeleton Merchant update
 (ᗢ) Luiafk Mobile Merchant sells Merchant stuff
+(ᗢ) Luiafk Skeleton Merchant update
 (^) Thorium Bird feeder support
-(^) Thorium enemy repellant support
-(^) Thorium terrarium armor explosive focus
-(^) Thorium gem support
-(^) Thorium flail accessories support
 (^) Thorium buff support
-(†) Thorium explosive weapon change !!!
+(^) Thorium enemy repellant support
+(^) Thorium explosive weapon change
+(^) Thorium flail accessories support
+(^) Thorium gem support
+(^) Thorium terrarium armor explosive focus
 
 (#, ^2) Confection Assimilation
 (#, ^2) Contagion Assimilation
@@ -2207,9 +2258,9 @@ UI:
 VOLUME I MUSIC:
 |---
 
-(#, ^4) Ashen Factory !!!
-(#, ^4) Ashen Mines !!!
-(#, ^4) Ashen Scrapyard !!!
+(#2, ^4) Ashen Factory !!!
+(#2, ^4) Ashen Mines !!!
+(^) Ashen Scrapyard
 (^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
@@ -2242,7 +2293,7 @@ VOLUME I MUSIC:
 (X) Seer
 (^) Shimmer Construct
 (X) Snowdrop
-(#, ^4) Trenchmaker !!!
+(#2, ^4) Trenchmaker !!! (proper loop)
 (^) World Cracker
 
 (X) Coronal Storm
@@ -2251,7 +2302,6 @@ VOLUME I MUSIC:
 (X) Test of Ancients
 
 (^) Ashen Warhead Music
-(X) Hawken Surfing Music !!!
 (X) Star Soldier Juggernaut Music
 ---
 
@@ -2260,12 +2310,12 @@ VOLUME III MUSIC:
 
 (X) Ashen Factory
 (X) Ashen Mines
-(X) Ashen Scrapyard
+(^) Ashen Scrapyard
 (^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
 (X) Defiled Caverns
-(X) Defiled Wastelands
+(^) Defiled Wastelands
 (X) Defiled Wastelands - Egregocide Route
 (X) Defiled Wastelands - Egregore
 (X) Defiled Wastelands - Mimic Route
@@ -2302,6 +2352,6 @@ VOLUME III MUSIC:
 (X) Test of Ancients
 
 (X) Ashen Warhead Music
-(X) Hawken Surfing Music
+(X) Hawken Surfing Music !!!
 ($2) Star Soldier Juggernaut Music
 ---
