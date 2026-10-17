@@ -8556,6 +8556,11 @@ Star_Soldier_Summon_Item: {
 		Summons a rideable wagon mount
 		'Seriously? That's it?'
 		''' */
+	/* UsedTooltip:
+		'''
+		New tooltip goes here
+		'Summons a mech to totally zerk your foes'
+		''' */
 }
 
 Star_Soldier_Gun: {

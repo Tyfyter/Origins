@@ -14,6 +14,7 @@ using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
@@ -26,8 +27,7 @@ using Terraria.ModLoader;
 using AnimationOffsets = Origins.Items.Mounts.Star_Soldier.Landing_Animation.AnimationOffsets;
 
 namespace Origins.Items.Mounts.Star_Soldier;
-public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat, IJournalEntrySource {
-	public string EntryName => "Origins/" + typeof(Scrap_Wagon_Entry).Name;
+public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 	public class Scrap_Wagon_Entry : JournalEntry {
 		public override string TextKey => "Scrap_Wagon";
 		public override JournalSortIndex SortIndex => new("The_Ashen", 5);
@@ -44,6 +44,20 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat, IJournalEntryS
 		Item.noMelee = true;
 		Item.rare = ItemRarityID.Yellow;
 		Item.value = Item.sellPrice(gold: 20);
+	}
+	static readonly Regex tooltipRegex = new("^Tooltip(\\d+)$", RegexOptions.Compiled);
+	public override void ModifyTooltips(List<TooltipLine> tooltips) {
+		if (Main.LocalPlayer.JournalEntryUnlocked<Scrap_Wagon_Entry>()) {
+			for (int i = tooltips.Count - 1; i >= 0; i--) {
+				Match match = tooltipRegex.Match(tooltips[i].Name);
+				if (!match.Success) continue;
+				tooltips.RemoveAt(i);
+				if (match.Groups[1].Value == "0") {
+					tooltips.Insert(i, new(Mod, "UsedTooltip", this.GetLocalization("UsedTooltip").Value));
+					break;
+				}
+			}
+		}
 	}
 }
 public class Star_Soldier : ModMount, IModifyTriggers {
@@ -622,6 +636,7 @@ public class Star_Soldier : ModMount, IModifyTriggers {
 	}
 	public override void SetMount(Player player, ref bool skipDust) {
 		player.mount._mountSpecificData = new MountHandler();
+		player.UnlockJournalEntry<Star_Soldier_Summon_Item.Scrap_Wagon_Entry>();
 	}
 	struct HideItemHUD : IBroken {
 		static string IBroken.BrokenReason => "Hide item HUD";
