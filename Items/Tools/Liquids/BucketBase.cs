@@ -116,7 +116,7 @@ namespace Origins.Items.Tools.Liquids {
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			if (LargePour && OriginsModIntegrations.Avalon is not null) {
-				tooltips.Insert("Tooltip0", Language.GetTextValue("Mods.Avalon.TooltipEdits.BottomlessBuckets"));
+				tooltips.Insert("Tooltip0", Language.GetText("Mods.Avalon.TooltipEdits.BottomlessBuckets"));
 			}
 		}
 	}

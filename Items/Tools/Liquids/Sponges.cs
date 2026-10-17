@@ -81,7 +81,7 @@ namespace Origins.Items.Tools.Liquids {
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			if (LargeSuck && OriginsModIntegrations.Avalon is not null) {
-				tooltips.Insert("Tooltip0", Language.GetTextValue("Mods.Avalon.TooltipEdits.Sponges"));
+				tooltips.Insert("Tooltip0", Language.GetText("Mods.Avalon.TooltipEdits.Sponges"));
 			}
 		}
 	}

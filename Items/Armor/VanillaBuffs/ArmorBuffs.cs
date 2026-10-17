@@ -51,9 +51,9 @@ namespace Origins.Items.Armor.VanillaBuffs {
 				for (int i = 0; i < lines.Length; i++) {
 					Match match = afterPrefix.Match(lines[i]);
 					if (match.Success) {
-						tooltips.Insert(match.Groups[1].Value, lines[i][match.Value.Length..], "OriginsBuff" + i);
+						tooltips.InsertUnlocalized(match.Groups[1].Value, lines[i][match.Value.Length..], "OriginsBuff" + i);
 					} else {
-						tooltips.Add("OriginsBuff" + i, lines[i]);
+						tooltips.AddUnlocalized("OriginsBuff" + i, lines[i]);
 					}
 				}
 			}

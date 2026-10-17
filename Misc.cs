@@ -8,6 +8,7 @@ using Origins.CrossMod.Fargos.NPCs;
 using Origins.Gores;
 using Origins.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Journal;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using Origins.Reflection;
@@ -3815,6 +3816,13 @@ namespace Origins {
 		public static ref int BuilderToggleState<TToggle>(this Player player) where TToggle : BuilderToggle {
 			return ref player.builderAccStatus[ModContent.GetInstance<TToggle>().Type];
 		}
+		public static bool JournalEntryUnlocked<TEntry>(this Player player) where TEntry : JournalEntry =>
+			player.JournalEntryUnlocked(ModContent.GetInstance<TEntry>());
+		public static bool JournalEntryUnlocked(this Player player, JournalEntry journalEntry) {
+			return player.OriginPlayer().unlockedJournalEntries.Contains(journalEntry.FullName);
+		}
+		public static void UnlockJournalEntry<TEntry>(this Player player) where TEntry : JournalEntry =>
+			player.OriginPlayer().UnlockJournalEntry(ModContent.GetInstance<TEntry>().FullName);
 		public static Vector2 ApplyToOrigin(this SpriteEffects spriteEffects, Vector2 origin, Rectangle frame) {
 			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) {
 				origin.X = frame.Width - origin.X;
@@ -4929,27 +4937,39 @@ namespace Origins {
 			self.maxStack = Item.CommonMaxStack;
 			self.consumable = true;
 		}
-		public static void Insert(this List<TooltipLine> tooltips, string target, string textKey, string name = null, bool after = true) {
-			tooltips.Insert(target, Language.GetOrRegister(textKey), name, after);
+		public static void Replace(this List<TooltipLine> tooltips, string target, string textKey, string name = null) {
+			tooltips.Replace(target, Language.GetOrRegister(textKey), name);
 		}
-		public static void Insert(this List<TooltipLine> tooltips, string target, LocalizedText text, string name = null, bool after = true) {
-			if (string.IsNullOrWhiteSpace(text.Value)) return;
+		public static void Replace(this List<TooltipLine> tooltips, string target, LocalizedText text, string name = null) =>
+			tooltips.Insert(target, text.Value, name);
+		public static void ReplaceUnlocalized(this List<TooltipLine> tooltips, string target, string text, string name = null) {
+			if (string.IsNullOrWhiteSpace(text)) return;
+			if (string.IsNullOrEmpty(name)) name = target;
+			tooltips[tooltips.FindIndex(line => line.Name == target)] = new(Origins.instance, name, text);
+		}
+		public static void Insert(this List<TooltipLine> tooltips, string target, string textKey, string name = null, bool after = true) =>
+			tooltips.Insert(target, Language.GetOrRegister(textKey), name, after);
+		public static void Insert(this List<TooltipLine> tooltips, string target, LocalizedText text, string name = null, bool after = true) =>
+			tooltips.InsertUnlocalized(target, text.Value, name, after);
+		public static void InsertUnlocalized(this List<TooltipLine> tooltips, string target, string text, string name = null, bool after = true) {
+			if (string.IsNullOrWhiteSpace(text)) return;
 			if (string.IsNullOrEmpty(name)) name = target;
 			int index = tooltips.FindIndex(line => line.Name == target);
-			TooltipLine line = new(Origins.instance, name, text.Value);
+			TooltipLine line = new(Origins.instance, name, text);
 			if (index == -1) {
 				tooltips.Add(line);
 				return;
 			}
 			tooltips.Insert(index + after.ToInt(), line);
 		}
-		public static void Add(this List<TooltipLine> tooltips, string name, string textKey) {
+		public static void Add(this List<TooltipLine> tooltips, string name, string textKey) =>
 			tooltips.Add(name, Language.GetOrRegister(textKey));
-		}
-		public static void Add(this List<TooltipLine> tooltips, string name, LocalizedText text) {
-			if (string.IsNullOrWhiteSpace(text.Value)) return;
+		public static void Add(this List<TooltipLine> tooltips, string name, LocalizedText text) =>
+			tooltips.AddUnlocalized(name, text.Value);
+		public static void AddUnlocalized(this List<TooltipLine> tooltips, string name, string text) {
+			if (string.IsNullOrWhiteSpace(text)) return;
 			int index = tooltips.FindLastIndex(line => line.Name.StartsWith("Tooltip"));
-			TooltipLine line = new(Origins.instance, name, text.Value);
+			TooltipLine line = new(Origins.instance, name, text);
 			if (index == -1) {
 				tooltips.Add(line);
 				return;
