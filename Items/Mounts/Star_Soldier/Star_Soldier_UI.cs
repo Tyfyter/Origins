@@ -25,7 +25,6 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Origins.Items.Mounts.Star_Soldier;
-
 public class Star_Soldier_UI : SwitchableUIState {
 	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
 	[ReinitializeDuringResizeArrays]
