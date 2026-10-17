@@ -1194,6 +1194,14 @@ public class Star_Soldier_Cooldown : ModBuff {
 		Star_Soldier_UI.Sets.CustomBuffIndicator[Type] = (_, _) => false;
 	}
 }
+public class Star_Soldier_Music : ModSceneEffect {
+	public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+	public override int Music => Origins.Music.StarSoldier;
+	public override bool IsSceneEffectActive(Player player) {
+		if (Music == -1) return false;
+		return player.mount.IsMount<Star_Soldier>() && player.OriginPlayer().standingOnPlatformNPC?.ModNPC is not HA_24_Flying;
+	}
+}
 public class Surf_Music : ModSceneEffect {
 	public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
 	// Just have to put the track in a wrapper that ignores requests to stop early

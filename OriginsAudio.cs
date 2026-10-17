@@ -41,6 +41,7 @@ namespace Origins {
 
 			public static int TheDive;
 			public static int OhFuckTheBombsAreDroppingThisIsTheEndWeAreAllGoingToDie = -1;
+			public static int StarSoldier = -1;
 			public static int SurfsUp = -1;
 		}
 		public static class Sounds {
