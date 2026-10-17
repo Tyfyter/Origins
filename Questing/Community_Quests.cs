@@ -7,6 +7,9 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing; 
 public class SPE_Suggestions : Quest {
+	struct Unfinished : IBroken {
+		static string IBroken.BrokenReason => "It just ain't finished";
+	}
 	const string base_key = "Mods.Origins.Quests.Community.SPE_Suggestions.";
 	public override bool SaveToWorld => false;
 	public override int Stage {
