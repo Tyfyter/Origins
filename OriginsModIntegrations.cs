@@ -354,13 +354,13 @@ namespace Origins {
 				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/PillarsPreset", DamageClasses.Explosive.FullName, new Color(234, 56, 103), new Color(235, 0, 59));
 			}
 			if (instance.thorium is not null) {
-				int ExplosivePierce = 28;
+				const int explosive_pierce = 28;
 				instance.thorium.Call("TerrariumArmorAddClassFocus",
 					DamageClasses.Explosive,
-					new Action<Player>((plr) => plr.GetArmorPenetration<Explosive>() += ExplosivePierce),
+					new Action<Player>((plr) => plr.GetArmorPenetration<Explosive>() += explosive_pierce),
 					new Color(235, 0, 59),
 					"",
-					DamageClasses.Explosive.GetLocalization("ThoriumMod_TerrariumArmorAddClassFocus.Description").WithFormatArgs(ExplosivePierce)
+					DamageClasses.Explosive.GetLocalization("ThoriumMod_TerrariumArmorAddClassFocus.Description").WithFormatArgs(explosive_pierce)
 				);
 
 				instance.thorium.Call("BirdFeederAddFruitsToBiome", "Evil", (int[])[ItemType<Bileberry>(), ItemType<Prickly_Pear>(), ItemType<Petrified_Prickly_Pear>(), ItemType<Pawpaw>(), ItemType<Periven>(), ItemType<Blastberry>(), ItemType<Tangerine>()]);
