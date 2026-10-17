@@ -1237,7 +1237,8 @@ namespace Origins {
 		public ItemSpecificConfigs ItemSpecificConfigOptions { get; set; } = new();
 		public record ItemSpecificConfigs(
 			bool TheClaw_SwapInputs = false,
-			bool StarSoldier_HUDOutlines = true
+			bool StarSoldier_HUDOutlines = true,
+			bool StarSoldier_LifeText = true
 		) {
 			public ItemSpecificConfigs() : this(false) { }
 			public override string ToString() => "";

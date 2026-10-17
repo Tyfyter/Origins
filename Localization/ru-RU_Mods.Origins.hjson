@@ -1527,7 +1527,7 @@ Buffs: {
 
 	Star_Soldier_Cooldown: {
 		// DisplayName: Star Soldier Cooldown
-		// Description: Mods.Origins.Buffs.Star_Soldier_Cooldown.Description
+		// Description: <PH>Mods.Origins.Buffs.Star_Soldier_Cooldown.Description
 	}
 }
 
@@ -3435,6 +3435,11 @@ Configs: {
 
 		StarSoldier_HUDOutlines: {
 			// Label: Star Soldier: HUD Outlines
+			// Tooltip: ""
+		}
+
+		StarSoldier_LifeText: {
+			// Label: Star Soldier: Life Text
 			// Tooltip: ""
 		}
 	}

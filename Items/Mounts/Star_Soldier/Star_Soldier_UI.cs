@@ -223,11 +223,23 @@ public class Star_Soldier_UI : SwitchableUIState {
 					uSaturation with { Value = handler.life / (float)Star_Soldier.MountHandler.MaxLife }
 				);
 				healthBarPoly.Draw();
+				string lifeText = handler.life + "/" + Star_Soldier.MountHandler.MaxLife;
 				if (!Main.mouseText && healthBarPoly.Contains(Main.MouseScreen)) {
 					player.cursorItemIconEnabled = false;
-					string text = handler.life + "/" + Star_Soldier.MountHandler.MaxLife;
-					Main.instance.MouseTextHackZoom(text);
+					Main.instance.MouseTextHackZoom(lifeText);
 					Main.mouseText = true;
+				}
+				if (OriginAccessibilityConfig.ItemSpecificOptions.StarSoldier_LifeText) {
+					ChatManager.DrawColorCodedString(
+						spriteBatch,
+						Star_Soldier.Font,
+						lifeText,
+						new Vector2((Main.screenWidth - Star_Soldier.Font.MeasureString(lifeText).X) * 0.5f, 9),
+						new(100, 27, 0),
+						0,
+						default,
+						Vector2.One
+					);
 				}
 			}
 			{ //buff icons
