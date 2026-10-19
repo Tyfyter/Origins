@@ -764,6 +764,7 @@ ACCESSORIES:
 (^) Entangled Energy
 (X) Fiber Patch
 (^) Mana Drive
+(X) Promethean Grail
 (^) Protozoa Food
 (ᗢ) Refactoring Pieces
 (^) Retaliatory Tendril
