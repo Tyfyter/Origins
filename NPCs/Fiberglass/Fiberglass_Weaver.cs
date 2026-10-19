@@ -34,7 +34,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using static Tyfyter.Utils.KinematicUtils;
+using static PegasusLib.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
 	[AutoloadBossHead]
@@ -342,7 +342,7 @@ namespace Origins.NPCs.Fiberglass {
 				rotation = 0;
 				effect = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			} else {
-				Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
+				Main.CurrentDrawnEntityShader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
 				if (legs is null) return false;
 				for (int i = 0; i < 8; i++) {
 					bool flip = (i % 2 != 0) == i < 4;
