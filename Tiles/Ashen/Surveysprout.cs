@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
+using Terraria.DataStructures;
 
 namespace Origins.Tiles.Ashen {
 	public class Surveysprout : OriginTile, IGlowingModTile {
@@ -94,6 +95,9 @@ namespace Origins.Tiles.Ashen {
 
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = -2; // This is -1 for tiles using StyleAlch, but vanilla sets to -2 for herbs, which causes a slight visual offset between the placement preview and the placed tile. 
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			this.ApplyTileGlow(i, j, ref drawData);
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			int stage = GetStage(i, j);
