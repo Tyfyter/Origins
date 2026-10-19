@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Tyfyter.Utils.KinematicUtils;
+using static PegasusLib.KinematicUtils;
 
 namespace Origins.Items.Other.Testing {
 	public class Chocolate_Bar : TestingItem {

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using PegasusLib;
 
 namespace Tyfyter.Utils {
+	[Obsolete("Superseded by PegasusLib.KinematicUtils", true)]
 	public static class KinematicUtils {
 		public class Arm {
 			public Vector2 start;

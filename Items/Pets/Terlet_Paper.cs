@@ -11,7 +11,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using static Tyfyter.Utils.KinematicUtils;
+using static PegasusLib.KinematicUtils;
 
 namespace Origins.Items.Pets {
 	public class Terlet_Paper : ModItem, ICustomWikiStat {
