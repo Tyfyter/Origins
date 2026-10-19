@@ -322,7 +322,7 @@ namespace Origins.World.BiomeData {
 					int top = 0;
 					bool setTop = false;
 					int sludgeDepth = genRand.Next(7, 16);
-					int stoneDepth = genRand.Next(4, 9);
+					int stoneDepth = genRand.Next(29, 32);
 					for (int j = (int)GenVars.worldSurfaceLow; j < GenVars.worldSurfaceHigh + 32; j++) {
 						Tile tile = Main.tile[i, j];
 						if (tile.HasTile && !(TileID.Sets.BreakableWhenPlacing[tile.TileType] || Main.tileCut[tile.TileType])) {

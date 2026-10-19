@@ -88,6 +88,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 |---
+(X) Bandit Leader
 (X) Necromancer
 (X) Psymanti Shaman
 
@@ -110,6 +111,14 @@ TOWN NPC Quests:
 (X) Arabel - My Love, My Life
 (^) Arms Dealer - Live Fire
 (^) Arms Dealer - Three Times the Charm
+(X) Bandit Leader - A Giant Killing
+(X) Bandit Leader - A Hacking Job
+(X) Bandit Leader - A Killing
+(X) Bandit Leader - Collecting Intel
+(X) Bandit Leader - Down With the Ashen
+(X) Bandit Leader - Operation CINDERSPARK
+(X) Bandit Leader - The Belly of the Beast
+(X) Bandit Leader - Trench a Trenchie
 (^) Brine Fiend - Basic Brewery
 (^) Brine Fiend - Get Freaky
 (^) Cyborg - Sensor Upgrade
@@ -201,6 +210,7 @@ OTHER:
 (^) Journal
 (^) Quest System General
 (#2) Quirky World Evil Spread mechanics !!!
+(X) Non-Ashen World Progression
 (X) NPC Portraits
 (#, $2, ^2) Sprockey Power Wiring Assistant !!!
 (^) Summoner Plus Modifiers
@@ -460,6 +470,7 @@ NPC DIALOGUE:
 (ᗢ) Witch Doctor
 
 (X) Arabel
+(X) Bandit Leader
 (ᗢ) Brine Fiend
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
@@ -554,8 +565,12 @@ ARMOR:
 
 (^) Blast Armor
 (^) Chambersite Commander Armor
+(X) Conduit Armor
+(X) Doombringer's Armor
+(X) Mitotic Armor
 (X) Mk. 3 CRISIS Armor
 (^) Necromancer Armor
+(X) Promethean Armor
 (^) Sapphire Mediator Armor
 (X) Scrapburner Armor
 (X) True Aether Armor
@@ -743,17 +758,22 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
+(X) Amorphous Flesh
+(X) Bad Gateway
 (^) Bomb Rack
 (^) Entangled Energy
+(X) Fiber Patch
 (^) Mana Drive
 (^) Protozoa Food
 (ᗢ) Refactoring Pieces
 (^) Retaliatory Tendril
 (^) Shield of Shimmer
+(X) Smoldering Fuel Cell
 (X) Tattered Quilt
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
+(X) Boolean Brain
 (^) Crystal Heart
 (^) Cursed Crown
 (^) Emergency Bee Canister
@@ -765,14 +785,18 @@ ACCESSORIES:
 (X) Hina Doll
 (^) Lunatic's Rune
 (^) Mysterious Spray
+(X) Overloading Core
 (^) Retool Arm
 (^) Robo-tail
 (#3, ^2) Scribe of the Meat God
 (#2, ^2) Space Pirate's Eye
 (^) Stack of Shraps
 (^) Strange Tooth
+(X) Swordsman's Gauntlet
+(X) Tentacle Scarf
 (^) Terrarian Voodoo Doll
 (^) Third Eye
+(X) Vestigial Organs
 (^) Weakpoint Analyzer
 (^) Wishing Glass
 
@@ -979,11 +1003,11 @@ MELEE WEAPONS:
 (X) Chiton Kursarigama
 (X) Executioner
 (X) Laser Tag Sabre
-(X) Mise of the King
 (^) Personal Laser Blade
 (X) Pile Bunker
 (X) Promethean Claymore
 (X) Rocket Lance
+(X) Solitaire's Warhammer
 (^) Telephone Pole
 (^) Terrarang
 (^) True Light Disc
@@ -1055,11 +1079,11 @@ RANGED WEAPONS:
 (^) Incision
 (#, ^2) Lag Spike
 (^) Laser Line Bow
+(#, ^2) Mise of the King
 (^) Mythril Harpoon Gun
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun
 (^) Palladium Harpoon Gun
-(#, ^2) Ritualmaker
 (^) Spray 'N Pray
 (^) Tiny Sniper
 (^) Titanium Harpoon Gun
@@ -1122,6 +1146,8 @@ MAGIC WEAPONS:
 (X) True Nerve Flan
 
 (^) Amber of Embers
+(X) Bandwidth Sapper
+(X) Bitcrusher
 (^) Breach
 (^) Hævateinn
 (^) Haunted Vase
@@ -1211,9 +1237,12 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) Skipping Stone
 (^) SMART Wrench
+(X) Squid Staff
 (#2, ^2) Star Harvest !!! (please see pre-existing feedback)
 (X) Star Streak
 (X) Technomancer 4000
+(X) Tentacle Snare Incantation
+(X) Tentacle Whip
 (^) Terratotem
 (X) Tonal Resonator
 (^) Vampire Fireflower in a Pot
@@ -1291,6 +1320,7 @@ EXPLOSIVE WEAPONS:
 (^) Thermite Launcher
 (^) Torpedo Tube
 
+(X) Agitated Fuel Rod
 (^) Autohandcannon
 (^) Big Bang
 (^) Bomboomstick
@@ -1299,8 +1329,10 @@ EXPLOSIVE WEAPONS:
 (X) Da-Caponator
 (#, ^2) Firework Cannon
 (X) Flarefury
+(X) Heatsink Tester
 (X) High-Five
 (^) Holy Hand Grenade
+(X) LINGre
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm
@@ -1575,6 +1607,7 @@ TILES:
 (X) Ocean Dungeon Chest
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
+(X) Psymanti Pennon
 (X) Quakerock
 (X) Qube Generator
 (^) Radio Component
@@ -1758,6 +1791,7 @@ MATERIALS:
 (^) Ashen Seeds
 (^) Bark
 (^) Bat Hide
+(X) Battered Transponder
 (^) Bud Barnacle
 (^) Carburite
 (^) Defiled Bar
@@ -1803,6 +1837,7 @@ MATERIALS:
 (X) Mutagenic Flesh
 (^) Nova Fragment
 (^) Power Core
+(X) Promethean Metal
 (^) Rotor
 (X) Scrappy Exosuit Legging
 (X) Scrappy Headpiece
@@ -2003,9 +2038,14 @@ CONSUMABLES:
 
 (^) Basic Crate
 (^) Bilious Crate
+(X) Busted Mechanical Lock Box
 (^) Crusty Crate
 (^) Festering Crate
 (^) Hazardous Waste Crate
+(X) Mechanical Lock Box (Purple)
+(X) Mechanical Lock Box (Blue)
+(X) Mechanical Lock Box (Green)
+(X) Mechanical Lock Box (Yellow)
 (^) Pointy Crate
 (^) Residual Crate
 (^) Waste Crate
@@ -2019,6 +2059,7 @@ CONSUMABLES:
 (^) Magic Brine Dropper
 (^) Magic Oil Dropper
 (^) Polluted Water
+(X) Rigged Repairboy Controller
 (^) Spyglass
 (^) Void Lock
 (^) White Water
@@ -2122,8 +2163,12 @@ AMMO:
 (^) Scrap Dart
 
 (^) Brine Rocket
+(X) Cannibullet
+(X) Harmony Bullet
+(X) Metabullet
 (^) Oil Rocket
 (^) Resizable Mine VI
+(X) Spread Missile
 (X) True Aether Bullet
 (X) True Aether Canister
 (^) Valkyrum Bullet
@@ -2133,6 +2178,7 @@ AMMO:
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 
+(X) Cursed Blade Polish
 (^) Gray Solution
 (^) Orange Solution
 (^) Teal Solution
