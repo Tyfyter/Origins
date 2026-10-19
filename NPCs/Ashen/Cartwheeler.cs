@@ -1,9 +1,7 @@
-﻿using Avalon.Items.Placeable.MusicBoxes;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Events;
 using Origins.Gores;
 using Origins.Items.Armor.Ashen;
-using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
 using Origins.Tiles.MusicBoxes;
