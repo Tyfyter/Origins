@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Ranged;
+﻿using MonoMod.Cil;
+using Origins.Items.Weapons.Ranged;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Medicine {
 	[ReinitializeDuringResizeArrays]
-	public abstract class MedicineBase : ModItem {
+	public abstract class MedicineBase : ModItem, IUsableWithPotionSickness {
 		protected sealed override bool CloneNewInstances => true;
 		public abstract int HealAmount { get; }
 		[field: CloneByReference]
@@ -48,9 +49,13 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			Item.buffTime = ImmunityDuration;
 			Item.value = Value;
 		}
+		public override void GetHealLife(Player player, bool quickHeal, ref int healValue) {
+			if (player.potionDelay > 0) healValue = 0;
+		}
 		public override void ModifyPotionDelay(Player player, ref int baseDelay) {
 			baseDelay += CooldownIncrease;
 		}
+		public override bool ApplyPotionDelay(Player player, int potionDelay) => player.potionDelay <= 0;
 		public sealed override bool? UseItem(Player player) {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (ImmunitySet[player.buffType[i]]) player.DelBuff(i--);
@@ -107,6 +112,13 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			ImmunitySet[BuffID.PotionSickness] = false;
 			ImmunitySet[BuffID.MonsterBanner] = false;
 		}
+		public virtual bool CanUseWithPotionSickness(Player player) {
+			for (int i = 0; i < player.buffType.Length; i++) {
+				if (player.buffType[i] == 0) break;
+				if (ImmunitySet[player.buffType[i]]) return true;
+			}
+			return false;
+		}
 		static MedicineBase() {
 			foreach (MedicineBase medicine in ModContent.GetContent<MedicineBase>()) medicine.SetupImmunitySet();
 		}
@@ -139,7 +151,26 @@ namespace Origins.Items.Other.Consumables.Medicine {
 				if (medicine is not Multimed) RecipeGroup.ValidItems.Add(medicine.Type);
 			}
 			RecipeGroup.ValidItems.Remove(ItemID.HealingPotion);
+			try {
+				IL_Player.ItemCheck_CheckCanUse += AllowMedicineWhileSick;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(AllowMedicineWhileSick), e)) throw;
+			}
 		}
+
+		static void AllowMedicineWhileSick(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<Item>(nameof(Item.potion)));
+			c.EmitLdarg0();
+			c.EmitLdarg1();
+			c.EmitDelegate(ForceCanUsePotion);
+		}
+		static bool ForceCanUsePotion(bool isPotion, Player player, Item item) {
+			if (!isPotion) return false;
+			if ((item?.ModItem as IUsableWithPotionSickness)?.CanUseWithPotionSickness(player) ?? false) return false;
+			return isPotion;
+		}
+
 		public override void AddRecipes() => new FakeRecipeGroupRemover().Register();
 		public static RecipeGroup RecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.AnyDifferentMedicine").Value, ItemID.HealingPotion);
 	}
@@ -154,5 +185,8 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			}*/
 			AMRSL_Skewer.SetupAmmoCounts();
 		}
+	}
+	public interface IUsableWithPotionSickness {
+		bool CanUseWithPotionSickness(Player player);
 	}
 }
