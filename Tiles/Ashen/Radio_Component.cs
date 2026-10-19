@@ -7,6 +7,7 @@ using PegasusLib.Networking;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Channels;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -33,7 +34,9 @@ namespace Origins.Tiles.Ashen {
 				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
-			foreach (Mode mode in Enum.GetValues<Mode>()) Language.GetOrRegister("Mods.Origins.Items.Radio_Component_Item.ModeTooltip." + mode);
+			foreach (Mode mode in Enum.GetValues<Mode>()) {
+				if (mode != Mode.Count) Language.GetOrRegister("Mods.Origins.Items.Radio_Component_Item.ModeTooltip." + mode);
+			}
 		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -192,6 +195,7 @@ namespace Origins.Tiles.Ashen {
 						() => tileEntity.Channel <= 0,
 						() => {
 							new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel - Radio_Component_TE.CurrentIncrement).Perform();
+							Radio_Component_TE.PlaySwitchToSound(tileEntity.Mode, tileEntity.Channel);
 							SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
 							SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 						},
@@ -202,6 +206,7 @@ namespace Origins.Tiles.Ashen {
 						() => tileEntity.Channel >= Radio_Component_TE.Max,
 						() => {
 							new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel + Radio_Component_TE.CurrentIncrement).Perform();
+							Radio_Component_TE.PlaySwitchToSound(tileEntity.Mode, tileEntity.Channel);
 							SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
 							SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 						},
@@ -216,6 +221,7 @@ namespace Origins.Tiles.Ashen {
 							() => tileEntity.Mode == mode,
 							() => {
 								new Radio_Component_TE.Set_Mode_Action(position.X, position.Y, mode).Perform();
+								Radio_Component_TE.PlaySwitchToSound(mode, tileEntity.Channel);
 								parentUI.InitializeHooks();
 								SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
 								SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
@@ -244,7 +250,9 @@ namespace Origins.Tiles.Ashen {
 		public enum Mode : byte {
 			Send,
 			Receive,
-			Signal
+			Signal,
+
+			Count
 		}
 	}
 	public class Radio_Component_TE : ModTileEntity {
@@ -263,6 +271,7 @@ namespace Origins.Tiles.Ashen {
 		static readonly bool[] powered = new bool[Count];
 		static readonly bool[] triggered = new bool[Count];
 		static readonly bool[] nextTriggered = new bool[Count];
+		static readonly byte[,] used = new byte[(int)Radio_Component.Mode.Count, Count];
 		public int Channel { get; private set; } = 0;
 		public byte Wires { get; private set; } = 0;
 		public Radio_Component.Mode Mode { get; private set; }
@@ -285,6 +294,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void PreGlobalUpdate() {
 			Array.Clear(powered);
+			Array.Clear(used);
 			foreach ((Point16 position, TileEntity te) in ByPosition) {
 				if (te is not Radio_Component_TE component || component.Mode != Radio_Component.Mode.Send || powered[component.Channel]) continue;
 				Ashen_Wire_Data data = Main.tile[position].Get<Ashen_Wire_Data>();
@@ -300,6 +310,7 @@ namespace Origins.Tiles.Ashen {
 				Kill(Position.X, Position.Y);
 				return;
 			}
+			used[(int)Mode, Channel]++;
 			switch (Mode) {
 				case Radio_Component.Mode.Receive:
 				Ashen_Wire_Data.SetTilePowered(Position.X, Position.Y, powered[Channel]);
@@ -330,10 +341,27 @@ namespace Origins.Tiles.Ashen {
 			Wires = tag.SafeGet(nameof(Wires), Wires);
 			Mode = Enum.TryParse(tag.SafeGet(nameof(Mode), Mode.ToString()), out Radio_Component.Mode mode) ? mode : Mode;
 		}
+
+		public static void PlaySwitchToSound(Radio_Component.Mode mode, int channel) {
+			switch (mode) {
+				case Radio_Component.Mode.Send:
+				mode = Radio_Component.Mode.Receive;
+				break;
+				case Radio_Component.Mode.Receive:
+				mode = Radio_Component.Mode.Send;
+				break;
+			}
+			if (used[(int)mode, channel] > 0) {
+				SoundEngine.PlaySound(Origins.Sounds.Radio);
+			}
+		}
+
 		public record class Set_Channel_Action(int I, int J, int Channel) : AutoSyncedAction {
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
+				used[(int)te.Mode, te.Channel]--;
+				used[(int)te.Mode, Channel]++;
 				te.Channel = int.Clamp(Channel, 0, Max);
 			}
 		}
@@ -342,6 +370,8 @@ namespace Origins.Tiles.Ashen {
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
+				used[(int)te.Mode, te.Channel]--;
+				used[(int)Mode, te.Channel]++;
 				te.Mode = Mode;
 			}
 			[AutoSyncSend<Radio_Component.Mode>]
