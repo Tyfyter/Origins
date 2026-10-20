@@ -13,43 +13,15 @@ using Terraria.ModLoader;
 using DelegateMethods = PegasusLib.Reflection.DelegateMethods;
 
 namespace Origins.Gores {
+	[Obsolete("Removed", true)]
 	public class DustsBehindTiles : ILoadable {
-		readonly HashSet<int> isBehindTiles = [];
-		bool isDrawingBehindTiles = false;
-		public void Load(Mod mod) {
-			IL_Main.DrawDust += IL_Main_DrawDust;
-			On_Main.DoDraw_Tiles_Solid += On_Main_DoDraw_Tiles_Solid;
-		}
-
-		private void On_Main_DoDraw_Tiles_Solid(On_Main.orig_DoDraw_Tiles_Solid orig, Main self) {
-			try {
-				isDrawingBehindTiles = true;
-				DelegateMethods._target.SetValue(MainReflection.DrawDust, self);
-				MainReflection.DrawDust();
-			} finally {
-				isDrawingBehindTiles = false;
-			}
-			orig(self);
-		}
-		private void IL_Main_DrawDust(ILContext il) {
-			ILCursor c = new(il);
-			int dust = -1;
-			c.GotoNext(MoveType.After,
-				i => i.MatchLdloc(out dust),
-				i => i.MatchLdfld<Dust>(nameof(Dust.active)),
-				i => i.MatchBrfalse(out _)
-			);
-			c.Index--;
-			c.EmitLdloc(dust);
-			c.EmitDelegate((bool active, Dust dust) => active && (isBehindTiles.Contains(dust.type) == isDrawingBehindTiles));
-		}
-		public void Unload() {}
-		public static void Add(int type) => ModContent.GetInstance<DustsBehindTiles>().isBehindTiles.Add(type);
+		public void Load(Mod mod) { }
+		public void Unload() { }
+		public static void Add(int type) { }
 	}
 	public abstract class GoreDust : ModDust {
 		protected abstract Rectangle Frame { get; }
 		public override void SetStaticDefaults() {
-			DustsBehindTiles.Add(Type);
 			ChildSafety.SafeDust[Type] = false;
 		}
 		public override void OnSpawn(Dust dust) {
