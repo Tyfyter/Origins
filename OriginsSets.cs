@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ID;
+using ModLiquidLib.ModLoader;
 using MonoMod.Cil;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
@@ -555,7 +557,7 @@ namespace Origins {
 						orig(self);
 						Tile tile = Framing.GetTileSafely(self.x, self.y);
 						int generateType = GeneratesLiquid[tile.WallType];
-						if (generateType != -1) {
+						if (generateType != -1 && !(tile.LiquidAmount > 0 && Liquids.OverrideGeneration[tile.LiquidType])) {
 							tile.LiquidType = generateType;
 							tile.LiquidAmount = 255;
 						}
@@ -650,6 +652,11 @@ namespace Origins {
 				public static bool[] DrawsInNeckLayer { get; } = ArmorIDs.Front.Sets.Factory.CreateNamedSet(nameof(DrawsInNeckLayer))
 				.RegisterBoolSet(false);
 			}
+		}
+		[ReinitializeDuringResizeArrays]
+		public static class Liquids {
+			public static bool[] OverrideGeneration { get; } = LiquidID_TLmod.Sets.Factory.CreateNamedSet(nameof(OverrideGeneration))
+			.RegisterBoolSet(false);
 		}
 		public static class Misc {
 			public static HashSet<(Effect effect, string pass)> BasicColorDyeShaderPasses = [];

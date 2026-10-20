@@ -42,6 +42,7 @@ namespace Origins.Liquids {
 			NPCMovementMultiplierDefault = PlayerMovementMultiplier;
 			ProjectileMovementMultiplier = PlayerMovementMultiplier;
 			AddMapEntry(FromHexRGB(0x00C4A7));
+			OriginsSets.Liquids.OverrideGeneration[Type] = true;
 			ID = Type;
 		}
 		public override int ChooseWaterfallStyle(int i, int j) {
