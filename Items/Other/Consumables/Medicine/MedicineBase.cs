@@ -50,7 +50,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			Item.value = Value;
 		}
 		public override void GetHealLife(Player player, bool quickHeal, ref int healValue) {
-			if (player.potionDelay > 0) healValue = 0;
+			if (player.OriginPlayer().hasPotionSickness) healValue = 0;
 		}
 		public override void ModifyPotionDelay(Player player, ref int baseDelay) {
 			baseDelay += CooldownIncrease;

@@ -591,6 +591,7 @@ namespace Origins {
 		[AutoReset] public StatModifier keepNaturalRegenMult = new(0, 1);
 		[DecrementReset] public int hookCooldown;
 		[AutoReset] public bool starCellArtifact;
+		public bool hasPotionSickness;
 		#endregion
 
 		#region visuals
@@ -711,6 +712,7 @@ namespace Origins {
 		public int[] itemCounts = ItemID.Sets.Factory.CreateIntSet();
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
+			hasPotionSickness = Player.potionDelay > 0;
 			iFramesFromHurt.Cooldown();
 			if (vanityTail is null) vanityTailSegments.Clear();
 			if (flakDashJacketItem is null) flakDashJacketHit = null;
