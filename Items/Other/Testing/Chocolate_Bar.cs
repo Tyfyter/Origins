@@ -95,7 +95,6 @@ public class Chocolate_Bar : TestingItem {
 		}
 	}
 	public void DrawAnimations(ref PlayerDrawSet drawInfo) {
-		AutoCastingAsset<Texture2D> pixelTexture = Mod.Assets.Request<Texture2D>("Projectiles/Pixel");
 		switch (mode) {
 			case 0: {
 				Player player = Main.LocalPlayer;
@@ -127,7 +126,7 @@ public class Chocolate_Bar : TestingItem {
 					0
 				));
 				break;
-				arm ??= new Arm() {
+				/*arm ??= new Arm() {
 					bone0 = new PolarVec2(upperLegLength, upperLegAngle),
 					bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
 				};
@@ -137,7 +136,6 @@ public class Chocolate_Bar : TestingItem {
 				};
 				//drawInfo.DrawDataCache.Add(new DrawData(upperLegTexture, screenStart, null, Color.White, arm.bone0.Theta, new Vector2(3, 9), 1f, SpriteEffects.None, 0));
 				//drawInfo.DrawDataCache.Add(new DrawData(lowerLegTexture, screenStart + (Vector2)arm.bone0, null, Color.White, arm.bone0.Theta + arm.bone1.Theta, new Vector2(4, 8), 1f, SpriteEffects.None, 0));
-				break;
 				Vector2 start2 = player.Left;
 
 				arm2.start = start2;
@@ -149,7 +147,7 @@ public class Chocolate_Bar : TestingItem {
 				drawInfo.DrawDataCache.Add(new DrawData(upperLegTexture, screenStart2, null, Color.White, arm2.bone0.Theta, new Vector2(3, 3), 1f, SpriteEffects.FlipVertically, 0));
 				drawInfo.DrawDataCache.Add(new DrawData(lowerLegTexture, screenStart2 + (Vector2)arm2.bone0, null, Color.White, arm2.bone0.Theta + arm2.bone1.Theta, new Vector2(4, 0), 1f, SpriteEffects.FlipVertically, 0));
 
-				/**Vector2 diff = (target - start);
+				Vector2 diff = (target - start);
 				float dist = diff.Length() / (upperLegLength + lowerLegLength);
 				float minLength = 0.7f;
 				float maxLength = 0.9f;
