@@ -5,6 +5,7 @@ using Origins.Dusts;
 using Origins.Gores;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
@@ -200,6 +201,11 @@ namespace Origins.NPCs.Ashen {
 						}
 						switch (NPC.ai[2] % 5) {
 							case 0: {
+								int extinguished = NPC.FindBuffIndex<Extinguished_Debuff>();
+								if (extinguished != -1) {
+									NPC.buffTime[extinguished]--;
+									break;
+								}
 								NPC.SpawnProjectile(
 									null,
 									WeldingTorchPos,
@@ -435,6 +441,11 @@ namespace Origins.NPCs.Ashen {
 						continue;
 					}
 					if (other.ModNPC is IAshenEnemy { CanBeRepaired: true }) {
+						int extinguished = other.FindBuffIndex<Extinguished_Debuff>();
+						if (extinguished != -1) {
+							other.buffTime[extinguished]--;
+							continue;
+						}
 						float oldHealth = other.life;
 						other.life += Main.rand.RandomRound(Projectile.damage * 0.15f);
 						if (other.life > other.lifeMax) other.life = other.lifeMax;

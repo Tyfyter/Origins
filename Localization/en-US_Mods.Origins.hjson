@@ -1529,6 +1529,11 @@ Buffs: {
 		DisplayName: Star Soldier
 		Description: Status: NEW UNIT UNDER CONSTRUCTION
 	}
+
+	Extinguished_Debuff: {
+		DisplayName: Extinguished Debuff
+		Description: Mods.Origins.Buffs.Extinguished_Debuff.Description
+	}
 }
 
 DamageClassName: {
