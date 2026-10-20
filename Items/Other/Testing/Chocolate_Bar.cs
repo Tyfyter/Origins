@@ -42,7 +42,7 @@ public class Chocolate_Bar : TestingItem {
 	public override bool? UseItem(Player player)/* Suggestion: Return null instead of false */ {
 		if (Main.myPlayer == player.whoAmI) {
 			if (player.altFunctionUse == 2) {
-				if (player.controlSmart) {
+				if (player.controlTorch) {
 					mode = (mode + modeCount - 1) % modeCount;
 				} else {
 					mode = (mode + 1) % modeCount;
@@ -64,7 +64,7 @@ public class Chocolate_Bar : TestingItem {
 				switch (mode) {
 					case 1:
 					case 0:
-					if (player.controlSmart) {
+					if (player.controlTorch) {
 						target2 = Main.MouseWorld;
 					} else {
 						target = Main.MouseWorld;
@@ -95,8 +95,6 @@ public class Chocolate_Bar : TestingItem {
 		}
 	}
 	public void DrawAnimations(ref PlayerDrawSet drawInfo) {
-		AutoCastingAsset<Texture2D> upperLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
-		AutoCastingAsset<Texture2D> lowerLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
 		AutoCastingAsset<Texture2D> pixelTexture = Mod.Assets.Request<Texture2D>("Projectiles/Pixel");
 		switch (mode) {
 			case 0: {
@@ -183,7 +181,7 @@ public class Chocolate_Bar : TestingItem {
 			case 1: {
 				//0.65-1 rgb, 0.325-0.5 a
 				float hp = 0.65f;//Main.LocalPlayer.statLife / (float)Main.LocalPlayer.statLifeMax2;
-				drawInfo.DrawDataCache.Add(new DrawData(Mod.Assets.Request<Texture2D>("NPCs/ICARUS/ICARUS_Shield").Value, Main.MouseScreen, null, new Color(hp, hp, hp, hp / 2), 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0));
+				//drawInfo.DrawDataCache.Add(new DrawData(Mod.Assets.Request<Texture2D>("NPCs/ICARUS/ICARUS_Shield").Value, Main.MouseScreen, null, new Color(hp, hp, hp, hp / 2), 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0));
 			}
 			break;
 		}
