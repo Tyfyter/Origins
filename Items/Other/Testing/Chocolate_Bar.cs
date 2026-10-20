@@ -26,7 +26,6 @@ public class Chocolate_Bar : TestingItem {
 		Item.ResearchUnlockCount = 0;
 	}
 	public override void SetDefaults() {
-		//item.name = "jfdjfrbh";
 		Item.width = 16;
 		Item.height = 26;
 		Item.value = Item.sellPrice(platinum: 9001);
