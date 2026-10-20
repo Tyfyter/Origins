@@ -269,9 +269,11 @@ namespace Origins {
 			int jumpsuit = ModContent.ItemType<Jumpsuit>();
 			if ((Player.armor[12]?.IsAir ?? true) && (Player.armor[11]?.type == jumpsuit || (Player.armor[1]?.type == jumpsuit && (Player.armor[2]?.IsAir ?? true)))) {
 				Player.legs = ModContent.GetInstance<Jumpsuit>().Item.legSlot;
+				Player.cLegs = Player.cBody;
 			}
 			if ((Player.armor[11]?.IsAir ?? true) && (Player.armor[12]?.type == jumpsuit || (Player.armor[2]?.type == jumpsuit && (Player.armor[1]?.IsAir ?? true)))) {
 				Player.body = ModContent.GetInstance<Jumpsuit>().Item.bodySlot;
+				Player.cBody = Player.cLegs;
 			}
 		}
 		internal void UpdateMurkySludgeSounds() {
