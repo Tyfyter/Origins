@@ -7,7 +7,6 @@ using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
-using Origins.NPCs.Ashen.Boss;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -22,11 +21,13 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 using static Origins.NPCs.Ashen.Boss.Fire_Lasers_State;
+using static PegasusLib.KinematicUtils;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
-	public class CM_17 : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IBroken {
+	public class CM_17 : Glowing_Mod_NPC, IWikiNPC, IMeleeCollisionDataNPC, IAshenEnemy, IBroken {
 		public Rectangle DrawRect => new(0, 0, 142, 90);
 		public int AnimationFrames => 6;
 		public int FrameDuration => 8;
@@ -35,6 +36,8 @@ namespace Origins.NPCs.Ashen {
 		public AutoLoadingTexture upperArm = typeof(CM_17).GetDefaultTMLName() + "_Upper";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		public Vector2 HeadPos => NPC.Center + new Vector2(-59, -5).Apply(SpriteEffects, default);
+		public Arm Arm;
+		public Vector2 ArmTarget;
 
 		public static string BrokenReason => "remove debug info after balance testing";
 
@@ -66,11 +69,13 @@ namespace Origins.NPCs.Ashen {
 		public static int TimeToSpawnWatchlings => (int)(1.5f * 60);
 		public static int LaserDamage => (int)(16 * ContentExtensions.DifficultyDamageMultiplier);
 		public override void AI() {
+			if (Arm is null) return;
 			const int MaxWatchlings = 10; // desired max subtracted by 2
 			float accel = 0.15f;
 			NPCAimedTarget target = NPC.GetTargetData();
 			bool targetInvalid = target.Invalid;
 			int currentMoveDirection = float.Sign(NPC.velocity.X);
+			return;
 			if (!NPC.collideY && NPC.velocity.Y == 0) {
 				NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
 			}
@@ -81,8 +86,6 @@ namespace Origins.NPCs.Ashen {
 			Rectangle noLaserRange = NPC.Hitbox;
 			detectRange.Inflate(20 * 16, 15 * 16);
 			noLaserRange.Inflate(8 * 16, 5 * 16);
-			detectRange.DrawDebugOutline(); // for debugging
-			noLaserRange.DrawDebugOutline(); // for debugging
 			void AttemptRetarget() {
 				if (NPC.localAI[3] == 0) accel = 0;
 				NPC.ai[0] = 0;
@@ -91,9 +94,7 @@ namespace Origins.NPCs.Ashen {
 			bool HasMaxWatchings() {
 				int count = 0;
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc?.ModNPC is Watchling { OwnerID: int OwnerID } && OwnerID == NPC.whoAmI) {
-						count++;
-					}
+					if (npc?.ModNPC is Watchling { OwnerID: int OwnerID } && OwnerID == NPC.whoAmI) count++;
 					if (count >= MaxWatchlings) break;
 				}
 				return count >= MaxWatchlings;
@@ -121,7 +122,6 @@ namespace Origins.NPCs.Ashen {
 					case 1:
 					accel = 0;
 					Vector2 pos = NPC.Center + new Vector2(55, -4).Apply(SpriteEffects, default);
-					Dust.QuickDust(pos, Color.White); // for debugging
 					if (NPC.ai[0]++ == TimeToSpawnWatchlings * 0.5f) {
 						for (int i = 0; i < 3; i++) {
 							NPC watchling = NPC.SpawnNPC(null, (int)pos.X, (int)pos.Y, NPCType<Watchling>());
@@ -178,7 +178,6 @@ namespace Origins.NPCs.Ashen {
 					}
 				}
 			} else AttemptRetarget();
-			HasMaxWatchings(); // for debugging
 
 			if (currentMoveDirection != targetMoveDirection) accel *= 0.25f;
 			if (NPC.direction == 0) NPC.direction = -1;
@@ -212,6 +211,27 @@ namespace Origins.NPCs.Ashen {
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			if (!projectile.npcProj) NPC.localAI[3] = 1;
 		}
+		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
+			if (Arm is null) return;
+			Rectangle hitbox = ArmHitbox();
+			//hitbox.DrawDebugOutline();
+			//Debugging.ChatOverhead(hitbox);
+			if (hitbox.Intersects(victimHitbox)) {
+				npcRect = hitbox;
+				damageMultiplier = 1.5f;
+				return;
+			}
+		}
+
+		private Rectangle ArmHitbox() {
+			Rectangle hitbox = new(-4, -4, 30, 38);
+			Vector2 legStart = Arm.start;
+			PolarVec2 bone1 = Arm.bone1 with { R = 115 };
+			bone1.Theta += Arm.bone0.Theta - MathHelper.ToRadians(1.5f);
+			Vector2 offset = legStart + (Vector2)Arm.bone0 + (Vector2)bone1;
+			return hitbox.Recentered(offset);
+		}
+
 		public static float BiomeSpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerInTown) return 0;
 			if (spawnInfo.SpawnTileY < Main.rockLayer) return 0;
@@ -226,8 +246,8 @@ namespace Origins.NPCs.Ashen {
 		public override void FindFrame(int frameHeight) {
 			NPC.localAI[0] = (NPC.localAI[0] + 0.15f) % 2f;
 			if (NPC.aiAction == 1 && NPC.ai[0] > 0) {
-				int tmp = (int)(NPC.ai[0] / TimeToSpawnWatchlings * 2) + 6;
-				NPC.frame.Y = Math.Min(tmp, 8) * frameHeight;
+				int spawnTimer = (int)(NPC.ai[0] / TimeToSpawnWatchlings * 2) + 6;
+				NPC.frame.Y = Math.Min(spawnTimer, 8) * frameHeight;
 				return;
 			}
 			NPC.DoFrames(10, 0..6, Math.Abs(NPC.velocity.X));
@@ -240,6 +260,7 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.ByCondition(new Journal_Entry_Condition(Journal_Registry.GetJournalEntryByTextKey(GetInstance<Worn_Paper_Smog_Test>().PaperName)), ItemType<Worn_Paper_Smog_Test>(), 40));
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			NPC.spriteDirection = NPC.direction = 1;
 			Vector2[] offsets = new Vector2[Main.npcFrameCount[Type]];
 			offsets[1] = new(0, 2);
 			offsets[3] = new(0, 2);
@@ -250,6 +271,16 @@ namespace Origins.NPCs.Ashen {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			base.PostDraw(spriteBatch, screenPos, drawColor);
 
+			float UpperRot = MathHelper.ToRadians(11.53f);
+			if (Arm is null) {
+				Arm = new() {
+					start = offsets[0],
+					bone0 = new(47, 0),
+					bone1 = new(134, 0),
+				};
+				ArmTarget = new Vector2(80.9f, -27.6f) + NPC.Center;
+			}
+
 			void SetDrawData(Texture2D texture, Vector2 offset, float rotation = 0f, Rectangle? frame = null) {
 				DrawData data = new(texture, default, frame, drawColor, rotation, texture.Size() * 0.5f, NPC.scale, effects);
 				if (frame is not null) {
@@ -259,24 +290,59 @@ namespace Origins.NPCs.Ashen {
 				data.Draw(spriteBatch);
 			}
 
-			SetDrawData(upperArm.Value, new Vector2(13, -15) + offsets[NPC.frame.Y / 90], NPC.rotation);
+			ArmTarget = Main.LocalPlayer.Center;
+			Arm.start = NPC.Center + (offsets[NPC.frame.Y / 90] + new Vector2(14, NPC.gfxOffY)).Apply(effects, default).RotatedBy(NPC.rotation) * NPC.scale;
+			float[] targets = Arm.GetTargetAngles(ArmTarget);
+			float diff = GeometryUtils.AngleDif(targets[0], -MathHelper.PiOver2, out int dir);
+			if (diff > MathHelper.PiOver4 && Main.LocalPlayer.controlThrow) {
+				targets[0] = -MathHelper.PiOver2 - MathHelper.PiOver4 * dir;
+				PolarVec2 vec2 = new(Arm.bone0.R, targets[0]);
+				targets[1] = (ArmTarget - (Arm.start + (Vector2)vec2)).ToRotation() - targets[0];
+			}
+			diff = GeometryUtils.AngleDif(MathHelper.PiOver4, targets[1], out dir);
+			if (diff > MathHelper.PiOver2 && Main.LocalPlayer.controlThrow) {
+				targets[1] = MathHelper.PiOver4 + MathHelper.PiOver2 * dir;
+			}
+			AngularSmoothing(ref Arm.bone0.Theta, targets[0], 0.3f);
+			AngularSmoothing(ref Arm.bone1.Theta, targets[1], 1);
+			PolarVec2 bone1 = Arm.bone1 with { R = 97 };
+			bone1.Theta += Arm.bone0.Theta;
+			//Arm.bone0.Theta = -MathHelper.PiOver2;
+			Vector2 screenStart = Arm.start - screenPos;
 
 			Rectangle lowerFrame = lowerArm.Frame(1, 5, 0, NPC.frame.Y / 90);
+			Rectangle drillFrame = drillBit.Frame(1, 2, 0, (int)NPC.localAI[0]);
+			Vector2 arm0 = (Vector2)Arm.bone0;
+			float arm0Rot = Arm.bone0.Theta + MathHelper.PiOver2;
 			if (NPC.frame.Y / 90 > 4) lowerFrame.Y = 0;
-
-			SetDrawData(lowerArm.Value, new Vector2(-28, -38) + offsets[NPC.frame.Y / 90], NPC.rotation, lowerFrame);
-
-			SetDrawData(drillBit.Value, new Vector2(-98, -26), NPC.rotation, drillBit.Frame(1, 2, 0, (int)NPC.localAI[0]));
-
-			// for debugging
-			NPCAimedTarget target = NPC.GetTargetData();
-			bool targetInvalid = target.Invalid || NPC.localAI[3] != 1;
-			spriteBatch.DrawDebugTextAbove(
-				$"{NPC.direction} {NPC.spriteDirection}, {NPC.aiAction}, {TimeToSpawnWatchlings}, {TimeToSpawnWatchlings * 0.5f}\n" +
-				$"{NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}\n" +
-				$"{NPC.localAI[0]}, {NPC.localAI[1]}, {NPC.localAI[2]}, {NPC.localAI[3]}\n" +
-				$"{target.Type}, {targetInvalid}",
-				NPC.Top - screenPos);
+			if (Main.LocalPlayer.controlTorch) {
+				SetDrawData(upperArm.Value, new Vector2(13, -15) + offsets[NPC.frame.Y / 90], NPC.rotation);
+				SetDrawData(lowerArm.Value, new Vector2(-28, -38) + offsets[NPC.frame.Y / 90], NPC.rotation, lowerFrame);
+				SetDrawData(drillBit.Value, new Vector2(-98, -26), NPC.rotation, drillFrame);
+			} else {
+				Main.EntitySpriteDraw(upperArm, screenStart, null, drawColor, arm0Rot, new Vector2(11, 40), NPC.scale, effects);
+				Main.EntitySpriteDraw(
+					lowerArm,
+					screenStart + arm0,
+					lowerFrame,
+					drawColor,
+					bone1.Theta - UpperRot,
+					new Vector2(103, 17).Apply(effects, lowerFrame.Size()),
+					NPC.scale,
+					effects);
+				Main.EntitySpriteDraw(drillBit,
+					screenStart + arm0 + (Vector2)bone1,
+					drillFrame,
+					drawColor,
+					bone1.Theta - UpperRot,
+					new Vector2(-1.9f, 18.2f),
+					NPC.scale,
+					effects);
+			}
+			DrawDebugLineSprite(screenStart, screenStart + (ArmTarget - Arm.start).Normalized(out _) * (47 + 97), Color.Blue);
+			DrawDebugLineSprite(screenStart, screenStart + (Vector2)Arm.bone0, Color.Red);
+			DrawDebugLineSprite(screenStart + (Vector2)Arm.bone0, screenStart + (Vector2)Arm.bone0 + (Vector2)bone1, Color.Green);
+			ArmHitbox().DrawDebugOutlineSprite(Color.Red);
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.aiAction);
