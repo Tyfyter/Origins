@@ -5,6 +5,7 @@ using Terraria;
 namespace Origins.Tiles.Other {
 	public class Riven_Fountain : WaterFountainBase<Riven_Hive>, IGlowingModTile {
 		public override void SetBiomeActive() => Riven_Hive.forcedBiomeActive = true;
+		public override int Height => 3;
 		readonly AutoLoadingAsset<Texture2D> glowTexture;
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new Color(196, 196, 196, 100);
