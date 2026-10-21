@@ -412,6 +412,8 @@ EVENTS:
 
 (X) Evvillll
 (^) Laser Tag
+
+(X) End of Sanctity
 ---
 
 
@@ -564,9 +566,11 @@ ARMOR:
 (X) Ruby Ranger Armor
 
 (^) Blast Armor
+(X) Blissem Armor
 (^) Chambersite Commander Armor
 (X) Conduit Armor
 (X) Doombringer's Armor
+(X) Edenwood Armor
 (X) Mitotic Armor
 (X) Mk. 3 CRISIS Armor
 (^) Necromancer Armor
@@ -694,6 +698,7 @@ ACCESSORIES:
 (^) Mithrafin
 (^) Molten Gun Magazine
 (X) Mother's Ward
+(X) Munitions Orderer
 (X) Netlace
 (^) Nightsky Cloak
 (^) Nitro Crate
@@ -865,6 +870,7 @@ UTILITIES:
 (^) Adjust-o-Hook
 (^) Amoeba Hook
 (^) Chambersite Hook
+(X) Divine Hook
 (^) Tangela Tether
 
 (X) Strange Backpack
@@ -883,6 +889,7 @@ WINGS:
 (X) Marrowick Mantle
 (X) Phantom Thrusters
 
+(X) Dreamer's Wings
 (X) Hoverbike
 
 (X) Ascendant Wings
@@ -927,6 +934,7 @@ TOOLS:
 (^) Impactaxe
 (X) Umbramere Terrain Ripper
 
+(X) Edenwood Hammer
 (X) Nova Bomb
 (X) Perihelion Chainsaw
 (X) Perihelion Drill
@@ -1002,6 +1010,8 @@ MELEE WEAPONS:
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
+(X) Edenwood Sword
+(X) Edge of Aether
 (X) Executioner
 (X) Laser Tag Sabre
 (^) Personal Laser Blade
@@ -1034,6 +1044,7 @@ RANGED WEAPONS:
 (^) Chipper Knife
 (^) Constellation
 (^) DMR
+(X) Edenwood Bow
 (^) Endowood Bow
 (^) Felnum Longbow
 (^) Fiberglass Bow
@@ -1119,6 +1130,7 @@ MAGIC WEAPONS:
 (^) Hot Potato
 (^) Infusion
 (^) Low Signal
+(X) M-25 Terminator
 (^) Magnus
 (^) Manasynk
 (^) Nerve Flan
@@ -1152,9 +1164,10 @@ MAGIC WEAPONS:
 (^) Breach
 (^) Hævateinn
 (^) Haunted Vase
-(^) Missing File
 (^) Laser Tag Gun
 (X) Laser Tag Shotgun
+(^) Missing File
+(X) Nova Magnetar
 (^) Pike of Deepneus
 (^) Plasma Cutter
 (X) Sapphire Shunter
@@ -1230,6 +1243,7 @@ SUMMONER WEAPONS:
 (X) Core of Cogs
 (X) Culltivator
 (X) Cursor Brick
+(X) Diviner Staff
 (X) Fiber Optic Whips
 (^) Matryoshka Doll
 (X) Mojo Mask Staff
@@ -1247,6 +1261,7 @@ SUMMONER WEAPONS:
 (^) Terratotem
 (X) Tonal Resonator
 (^) Vampire Fireflower in a Pot
+(X) Wind Gong Whip
 
 NO POST-ML CONTENT YET.
 ---
@@ -1350,6 +1365,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
+(X) Truth Nuke
 (^) Vampire Grenade
 
 (@4, ^3) Black Hole Bomb
@@ -1372,6 +1388,16 @@ GENERIC WEAPONS:
 
 (X) Mega Generic Weapon
 ---
+
+STAR SOLDIER PARTS:
+|---
+(X) ASU-9u Laser Blade
+(X) DCU-4 Drone Pod
+(X) HEVL12 Rocket Pod
+(X) HiPCL-6 Combat Laser
+(X) Overed Grind Blade
+(X) PACT42 Chaingun
+|---
 
 
 TILES:
@@ -1474,6 +1500,7 @@ TILES:
 (^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
+(X) Blissem Wall
 (^) Brittle Quartz Wall
 (X) Busted Block Wall
 (^) Calcified Spug Flesh Wall
@@ -1487,6 +1514,8 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (X) Defiled Stone Brick Wall
+(X) Edenwood Fence
+(X) Edenwood Wall
 (@, ^3) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
@@ -1520,6 +1549,7 @@ TILES:
 (^) Ashen Torch
 (^) Ashen Water Fountain
 (^) Bile Torch
+(X) Blissem Furniture
 (^) Brine Water Fountain
 (@, ^3) Bug Cage
 (X) Busted Furniture
@@ -1594,6 +1624,7 @@ TILES:
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)
 (^) Liquid Sensor (Brine)
+(X) Liquid Sensor (Nexalune)
 (^) Liquid Sensor (Oil)
 (^) Logic Component (AND)
 (^) Logic Component (OR)
@@ -1844,6 +1875,7 @@ MATERIALS:
 (X) Scrappy Headpiece
 (X) Scrappy Mechanical Arm
 (X) Scrappy Robot Core
+(X) Seed of Change
 (X) Soul of Spite
 
 (X) Alien Conduit
@@ -1986,6 +2018,9 @@ CONSUMABLES:
 (X) Testosterone
 (^5) Unmarked Antidote
 
+(X) Abiu
+(X) Acerola
+)X_ Angel Fruit
 (X) Aqueoua Ribeye
 (^) Bad Juju Stone
 (X) Barnacle Stir Fry
@@ -2002,13 +2037,17 @@ CONSUMABLES:
 (^) Contaminated Infusion
 (X) Crabby Legs
 (^) Crockin' Sprocks
+(X) Divine Wine
+(X) Dundee Cake
 (^) Edible Hair Gel
+(X) Feijoa
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
 (^) Jelly Schnapps
 (^) Krunch Mix
 (ᗢ) Malware Bytes Candy Bar (formerly Pen Ink, this comment can be removed once it has been changed)
+(X) Miracle Fruit
 (^) Nerve Flan
 (^) Pawpaw
 (^) Periven
@@ -2021,6 +2060,7 @@ CONSUMABLES:
 (^) Soul Spaghetti
 (^) Sour Apple
 (^) Spearmint Tea
+(X) Sunshine
 (々) Sweet Tooth Shake
 (^) Tangerine
 (々) Tasty Booger
@@ -2051,13 +2091,15 @@ CONSUMABLES:
 (^) Residual Crate
 (^) Waste Crate
 
+(X) Divine Water
 (^) Fire Extinguisher
 (^) Gooey Water
 (^) Holiday Hair Dye
 (ᗢ) Latchkey
 (^) Lottery Ticket
-(^) Magic Gel Dropper
 (^) Magic Brine Dropper
+(^) Magic Gel Dropper
+(X) Magic Nexalune Dropper
 (^) Magic Oil Dropper
 (^) Polluted Water
 (X) Rigged Repairboy Controller
@@ -2165,6 +2207,7 @@ AMMO:
 
 (^) Brine Rocket
 (X) Cannibullet
+(X) Divine Arrow
 (X) Harmony Bullet
 (X) Metabullet
 (^) Oil Rocket

@@ -8219,7 +8219,11 @@ DMR: {
 
 Tactical_SMG: {
 	DisplayName: Tactical SMG
-	Tooltip: 25% chance to save ammo
+	Tooltip: 
+		'''
+		25% chance to save ammo
+		'Becasue D sasid'
+		'''
 }
 
 Oil_Derrick_Item: {
@@ -8702,7 +8706,7 @@ Dysfunctional_Table_Saw: {
 
 Jumpsuit: {
 	DisplayName: Jumpsuit
-	Tooltip: ""
+	Tooltip: "'In the back of my mind, it's always there.'"
 }
 
 Door_Stopper_Item: {

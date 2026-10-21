@@ -352,7 +352,7 @@ namespace Origins.Tiles.Ashen {
 				break;
 			}
 			if (used[(int)mode, channel] > 0) {
-				SoundEngine.PlaySound(Origins.Sounds.Radio);
+				SoundEngine.PlaySound(Origins.Sounds.Radio.WithVolume(0.4f));
 			}
 		}
 

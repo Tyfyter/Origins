@@ -266,6 +266,13 @@ namespace Origins.NPCs.Ashen {
 			});
 			weldingTorchSoundTime = duration;
 		}
+		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+			target.AddBuff(BuffID.OnFire, 180);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit) {
+			target.AddBuff(BuffID.OnFire, 180);
+			target.immune[Main.maxPlayers] /= 2;
+		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = NPC.direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
