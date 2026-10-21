@@ -1371,6 +1371,7 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 		DrawAALine(selectedFrame.BottomRight(), Vector2.One, selectedFrame.Width, 2);
 		DrawAALine(selectedFrame.BottomRight(), Vector2.One, 2, selectedFrame.Height);
 		if (hoveredIndex != -1) {
+			Main.LocalPlayer.mouseInterface = true;
 			DrawAALine(hoveredFrame.TopLeft(), default, hoveredFrame.Width, 2);
 			DrawAALine(hoveredFrame.TopLeft(), default, 2, hoveredFrame.Height);
 			DrawAALine(hoveredFrame.BottomRight(), Vector2.One, hoveredFrame.Width, 2);
@@ -1397,7 +1398,8 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 			);
 		public readonly override string ToString() => "Interpolated";
 	}
-	public static PosRotScale operator +(PosRotScale a, PosRotScale b) => new(a.Position + b.Position.RotatedBy(a.Rotation), a.Rotation + b.Rotation, a.Scale * b.Scale);
+	public static PosRotScale operator +(PosRotScale a, PosRotScale b) => new(a.Position + b.Position.RotatedBy(a.Rotation) * a.Scale, a.Rotation + b.Rotation, a.Scale * b.Scale);
+	public static PosRotScale operator +(PosRotScale a, Vector2 b) => new(a.Position + b.RotatedBy(a.Rotation) * a.Scale, a.Rotation, a.Scale);
 	public static void DrawGizmo(SpriteBatch spriteBatch, ref PosRotScale value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
 		Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
 		DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);

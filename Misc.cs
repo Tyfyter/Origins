@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
 using Origins.Core;
+using Origins.Core.Animation;
 using Origins.CrossMod;
 using Origins.CrossMod.Fargos.NPCs;
 using Origins.Gores;
@@ -5697,6 +5698,22 @@ namespace Origins {
 		public static void DrawGlowingNPCPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
+		}
+		public static void DrawGlowingRiggedPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, PosRotScale transform, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
+			spriteBatch.DrawRiggedPart(texture, position, transform, sourceRectangle, color, rotation, origin, scale, effects);
+			spriteBatch.DrawRiggedPart(glowTexture, position, transform, sourceRectangle, glowColor, rotation, origin, scale, effects);
+		}
+		public static void DrawRiggedPart(this SpriteBatch spriteBatch, Texture2D texture, Vector2 position, PosRotScale transform, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
+			spriteBatch.Draw(
+				texture,
+				position + transform.Position,
+				sourceRectangle,
+				color,
+				rotation + transform.Rotation,
+				origin.Apply(effects, sourceRectangle?.Size() ?? texture.Size()),
+				scale * transform.Scale,
+				effects,
+			0);
 		}
 		public static Color GetTintColor(this NPC npc, Color baseColor) {
 			if (npc.IsABestiaryIconDummy) return baseColor;

@@ -13,7 +13,7 @@ file class FixAiActionInLoading : ILoadable {
 		MethodReference _SetDefaults = default;
 		c.GotoNext(i => i.MatchLdftn(out _SetDefaults));
 		MethodBase SetDefaults = _SetDefaults.ResolveReflection();
-		MonoModHooks.Modify(SetDefaults, 
+		MonoModHooks.Modify(SetDefaults,
 			il => new ILCursor(il).EmitLdarg0().EmitLdfld(SetDefaults.DeclaringType.GetFields()[0]).EmitLdcI4(0).EmitStfld(typeof(NPC).GetField(nameof(NPC.aiAction)))
 		);
 	}
