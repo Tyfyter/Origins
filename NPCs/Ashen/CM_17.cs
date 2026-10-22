@@ -78,7 +78,6 @@ namespace Origins.NPCs.Ashen {
 		Vector2 ArmRestPos => new Vector2(117.3f, -20.21f) * new Vector2(NPC.spriteDirection, 1);
 		Vector2 GetArmStartPos() => NPC.Center + (offsets[NPC.frame.Y / 90] + new Vector2(14, NPC.gfxOffY)).Apply(SpriteEffects, default).RotatedBy(NPC.rotation) * NPC.scale;
 		public override void AI() {
-			NPC.direction = -Math.Sign(NPC.Center.X - Main.LocalPlayer.Center.X);
 			if (Arm is null) {
 				Arm = new() {
 					start = GetArmStartPos(),

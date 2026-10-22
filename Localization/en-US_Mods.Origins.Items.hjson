@@ -8219,7 +8219,7 @@ DMR: {
 
 Tactical_SMG: {
 	DisplayName: Tactical SMG
-	Tooltip: 
+	Tooltip:
 		'''
 		25% chance to save ammo
 		'Becasue D sasid'
