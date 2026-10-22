@@ -241,6 +241,7 @@ namespace Origins {
 				};
 			}
 		}
+		static Regex afRegex = new("^Mods\\.Origins(?:Music)?\\.AprilFools\\.", RegexOptions.Compiled);
 		public override void OnLocalizationsLoaded() {
 			Dictionary<string, LocalizedText> texts = LocalizationMethods._localizedTexts.GetValue(LanguageManager.Instance);
 			/*texts["Riven"] = texts["Mods.Origins.Generic.Riven"];
@@ -252,7 +253,7 @@ namespace Origins {
 			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];*/
 			bool isAprilFools = OriginsModIntegrations.CheckAprilFools();
 			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
-				if (isAprilFools && text.Key.StartsWith("Mods.Origins.AprilFools")) {
+				if (isAprilFools && afRegex.IsMatch(text.Key)) {
 					string key = text.Key.Replace("AprilFools.", "");
 					if (texts.TryGetValue(key, out LocalizedText targetText)) {
 						LocalizationMethods._value.SetValue(targetText, text.Value.Value);
