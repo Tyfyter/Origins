@@ -13,8 +13,8 @@ using Terraria.UI;
 using ThoriumMod.NPCs;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	class StackableAccessory : GlobalItem {
+		struct Moved : IMovedToPegFlag;
 		static LocalizedText Tooltip; 
 		public override void Load() {
 			On_ItemSlot.PickItemMovementAction += On_ItemSlot_PickItemMovementAction;

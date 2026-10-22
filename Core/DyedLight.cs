@@ -11,8 +11,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	public class DyedLight {
+		struct Moved : IMovedToPegFlag;
 		readonly Vector3 color;
 		readonly Rectangle dest = new(0, 0, 1, 1);
 		readonly Color tint = Color.White;

@@ -10,8 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles;
-//TODO: remove, moved to PegasusLib
 public abstract class StyleSelectingTileItem : ModItem {
+	struct Moved : IMovedToPegFlag;
 	protected override bool CloneNewInstances => true;
 	[CloneByReference]
 	protected StyleSelectingTile[] tiles;

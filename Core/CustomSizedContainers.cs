@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	internal class CustomSizedContainers : ILoadable {
+		struct Moved : IMovedToPegFlag;
 		public void Load(Mod mod) {
 			try {
 				IL_Player.IsInInteractionRangeToMultiTileHitbox += il => {

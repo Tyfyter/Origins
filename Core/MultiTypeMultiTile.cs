@@ -11,7 +11,6 @@ using Terraria.ModLoader.Core;
 using Terraria.ObjectData;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
 	public interface IMultiTypeMultiTile {
 		public bool IsValidTile(Tile tile, int left, int top, int style);
 		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) => MultiTypeMultiTile.NormallyBlocksPlacement(tile);
@@ -27,6 +26,7 @@ namespace Origins.Core {
 		public Point MainTileOffset => default;
 	}
 	public class MultiTypeMultiTile : ILoadable {
+		struct Move : IMoveToPegFlag;
 		public delegate bool ShouldPlacePartCheck(int i, int j, int style);
 		public delegate ushort? PlacePartCheck(int i, int j, int style);
 		public static PlacementHook PlaceWhereTrue(ShouldPlacePartCheck placeCheck, ushort type) => Place((i, j, style) => placeCheck(i, j, style) ? type : null);

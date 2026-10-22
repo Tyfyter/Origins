@@ -3,8 +3,8 @@ using Terraria.GameInput;
 using Terraria.ModLoader;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	internal class IgnoreRemainingInterface : ModSystem {
+		struct Moved : IMovedToPegFlag;
 		public static void Activate() => active = true;
 		static bool active;
 		public override void Load() {

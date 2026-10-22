@@ -25,8 +25,8 @@ using Terraria.UI.Chat;
 using static Origins.Core.SpecialChest.SpecialChestUI;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
 	public class SpecialChest : ILoadable {
+		struct Move : IMoveToPegFlag;
 		public const int chestID = -8479;
 		static readonly List<SlotDrawData.Modifier> slotVisualModifiers = [];
 		public static void AddSlotVisualModifier(SlotDrawData.Modifier modifier) => slotVisualModifiers.Add(modifier);

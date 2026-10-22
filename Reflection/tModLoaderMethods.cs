@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Reflection {
 	public class PrivateClassMethods {
-		//TODO: remove, moved to PegasusLib
+		struct Moved : IMovedToPegFlag;
 		public static FastStaticFieldInfo<bool> ContentLoadingFinished { get; } = new(typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.ContentCache"), "contentLoadingFinished");
 	}
 	public class TileLoaderMethods : ILoadable {

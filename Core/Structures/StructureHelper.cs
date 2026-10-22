@@ -33,8 +33,8 @@ using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.StructureCommand;
 
 namespace Origins.Core.Structures; 
-//TODO: move to PegasusLib
 public class StructureHelperUI : UIState {
+	struct Move : IMoveToPegFlag;
 	string structurePath;
 	public Structure structure;
 	readonly Stack<ViewState> viewStack = new();

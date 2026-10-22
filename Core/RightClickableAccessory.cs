@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	class RightClickableAccessory : ILoadable {
+		struct Moved : IMovedToPegFlag;
 		void ILoadable.Load(Mod mod) {
 			On_ItemSlot.RightClick_ItemArray_int_int += On_ItemSlot_RightClick_ItemArray_int_int;
 			On_ItemSlot.LeftClick_ItemArray_int_int += On_ItemSlot_LeftClick_ItemArray_int_int;

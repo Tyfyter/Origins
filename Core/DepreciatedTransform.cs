@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	internal class DepreciatedTransform : ILoadable {
+		struct Move : IMoveToPegFlag;
 		public static Dictionary<string, string> conversions = new() {
 			["Origins/Dusk_Stone_Item"] = nameof(ItemID.AshBlock)
 		};

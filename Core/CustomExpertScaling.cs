@@ -2,8 +2,8 @@
 using Terraria.ModLoader;
 
 namespace Origins.Core {
-	//TODO: remove, moved to PegasusLib
 	public class CustomExpertScaling : ILoadable {
+		struct Moved : IMovedToPegFlag;
 		public void Load(Mod mod) {
 			On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
 				orig(self);
