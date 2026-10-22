@@ -442,8 +442,10 @@ public class StructureHelperUI : UIState {
 					}
 				}
 			}
-			if (room is DeserializedRoom dRoom) {
-				weights = [..dRoom.weight.Parts.Select(p => new WeightUI(structure, p))];
+			if (room is DeserializedRoom { weight: WeightDescriptor dWeight }) {
+				weights = [..dWeight.Parts.Select(p => new WeightUI(structure, p))];
+			} else {
+				weights = [];
 			}
 		}
 		public ViewState(IEnumerable<ARoom> roomList) {
