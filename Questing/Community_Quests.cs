@@ -73,7 +73,7 @@ public abstract class CommunitySuggestionsQuest : Quest {
 	};
 	public async void Suggest(string idea, Color color) {
 		string identifier = Convert.ToBase64String(System.Security.Cryptography.SHA256.HashData(BitConverter.GetBytes(SteamUser.GetSteamID().m_SteamID)));
-		HttpResponseMessage response = await httpClient.GetAsync("https://raw.githubusercontent.com/Tyfyter/Origins/refs/heads/dev/blockedSuggestors.txt");
+		HttpResponseMessage response = await httpClient.GetAsync("https://raw.githubusercontent.com/Tyfyter/Origins/refs/heads/master/blockedSuggestors.txt");
 		if (!response.IsSuccessStatusCode) {
 			Main.QueueMainThreadAction(() => Main.NewText($"Error {(int)response.StatusCode}: {response.ReasonPhrase}"));
 			return;
@@ -93,10 +93,11 @@ public abstract class CommunitySuggestionsQuest : Quest {
 						text = identifier
 					}
 				}
-			}
+			}/*,
+			username = npcName*/
 		});
-		
-		response = await httpClient.PostAsync("https://discord.com/api/webhooks/1549286124940173453/jKx8sKpEDkOqtW8rEA3-1d_PThb0YHki3ptjcCYMPhMCt9g7LazAkHmWe_znaGf1v6uv", content);
+		const string anyone_can_already_use_this = "MTU2MzI2NDM1MDg1OTMwNTA0Mi9hb0JCSjhfaVJfQjloMTJiMW9yU05QVF8tOVk5RDAzY1pWVnNPYjhiLU5hR0VNWGV3RTI5NUFSbUh1aUpaLUZvOFlBUA==";
+		response = await httpClient.PostAsync($"https://discord.com/api/webhooks/{System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(anyone_can_already_use_this))}", content);
 		if (response.IsSuccessStatusCode) {
 			Suggested.Add($"[c/{color.Hex3()}:{idea}]");
 		} else {
@@ -123,7 +124,8 @@ public abstract class CommunitySuggestionsQuest : Quest {
 				);
 			}
 		}
-		public class SuggestionState : UIState {
+		public class SuggestionState(CommunitySuggestionsQuest quest, NPC npc) : UIState {
+			const string the_best_idea_ever = $"I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I .I.I.I.I.\nI.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.\nI.I.I.I.I.I .I.I.I.I.I.I.I.I.I.I.I.I.I.I.\nI.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I I.I.I.I\n.I.I.I.I.I.I.I.I.I.I.I.";
 			string idea;
 			Color color = Color.White;
 			public override void OnInitialize() {
@@ -132,12 +134,18 @@ public abstract class CommunitySuggestionsQuest : Quest {
 					VAlign = 1f,
 				});
 			}
-			//Main.npcChatText = Language.GetTextValue(quest.BaseKey + "MadeSuggestion");
-			//quest.Suggest("Test idea", Color.Green);
+			public override void Update(GameTime gameTime) {
+				if (Main.LocalPlayer.talkNPC != npc.whoAmI) ui.SetState(null);
+			}
+			void SubmitIdea() {
+				Main.npcChatText = Language.GetTextValue(quest.BaseKey + "MadeSuggestion");
+				quest.Suggest(idea, color);
+				ui.SetState(null);
+			}
 		}
 	}
-	public static void OpenSuggestionBox(CommunitySuggestionsQuest quest) {
-		SuggestionsUISystem.ui.SetState(new SuggestionsUISystem.SuggestionState());
+	public static void OpenSuggestionBox(CommunitySuggestionsQuest quest, NPC npc) {
+		SuggestionsUISystem.ui.SetState(new SuggestionsUISystem.SuggestionState(quest, npc));
 	}
 }
 public class SPE_Suggestions : CommunitySuggestionsQuest {
@@ -153,7 +161,7 @@ file class Send_Suggestion_Chat_Button(CommunitySuggestionsQuest quest) : QuestC
 	public override string Name => $"{base.Name}_{Quest.Name}";
 	public override double Priority => 101;
 	public override void OnClick(NPC npc, Player player) {
-		CommunitySuggestionsQuest.OpenSuggestionBox(quest);
+		CommunitySuggestionsQuest.OpenSuggestionBox(quest, npc);
 	}
 	public override string Text(NPC npc, Player player) => Language.GetTextValue(quest.BaseKey + "MakeSuggestion");
 	public override bool IsActive(NPC npc, Player player) {
