@@ -2020,7 +2020,7 @@ CONSUMABLES:
 
 (X) Abiu
 (X) Acerola
-)X_ Angel Fruit
+(X) Angel Fruit
 (X) Aqueoua Ribeye
 (^) Bad Juju Stone
 (X) Barnacle Stir Fry
