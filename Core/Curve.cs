@@ -171,11 +171,16 @@ namespace Origins.Core {
 			if (L != other.L) return false;
 			if (L is 0 or 1) return true;
 			if (S != other.S) return false;
-			if (L == 0) return true;
+			if (S == 0) return true;
 			return Hue == other.Hue;
 		}
 		public readonly override bool Equals(object obj) => obj is HSLColor color && Equals(color);
 		public static bool operator ==(HSLColor left, HSLColor right) => left.Equals(right);
 		public static bool operator !=(HSLColor left, HSLColor right) => !(left == right);
+		public readonly override int GetHashCode() {
+			if (L is 0 or 1) return HashCode.Combine(L);
+			if (S == 0) return HashCode.Combine(S, L);
+			return HashCode.Combine(Hue, S, L);
+		}
 	}
 }
