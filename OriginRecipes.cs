@@ -61,7 +61,7 @@ namespace Origins {
 
 			Recipe.Create(ItemID.CrystalNinjaHelmet)
 			.AddIngredient(ItemID.CrystalShard, 30)
-			.AddIngredient(ItemID.SoulofLight, 5)
+			.AddIngredient(ItemID.SoulofLight, 3)
 			.AddIngredient<Carburite_Item>(15)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
@@ -75,7 +75,7 @@ namespace Origins {
 
 			Recipe.Create(ItemID.CrystalNinjaLeggings)
 			.AddIngredient(ItemID.CrystalShard, 45)
-			.AddIngredient(ItemID.SoulofLight, 3)
+			.AddIngredient(ItemID.SoulofLight, 5)
 			.AddIngredient<Carburite_Item>(23)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();

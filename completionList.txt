@@ -562,6 +562,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor
 (^) Extremophile Armor
 (X) Faefinder's Armor
+(X) Herbal Defender Armor
 (^) Mildew Armor
 (X) Ruby Ranger Armor
 
