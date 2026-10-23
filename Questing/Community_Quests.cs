@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -126,21 +127,42 @@ public abstract class CommunitySuggestionsQuest : Quest {
 		}
 		public class SuggestionState(CommunitySuggestionsQuest quest, NPC npc) : UIState {
 			const string the_best_idea_ever = $"I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I .I.I.I.I.\nI.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.\nI.I.I.I.I.I .I.I.I.I.I.I.I.I.I.I.I.I.I.I.\nI.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I I.I.I.I\n.I.I.I.I.I.I.I.I.I.I.I.";
+			const string the_worst_idea_ever = $"iii.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ii";
 			string idea;
 			Color color = Color.White;
+			static new float Width => 367;
+			static new float Height => 120;
+			static new StyleDimension Left = new((Main.screenWidth - Width) * 0.5f, 0);
+			static new StyleDimension Top = new(Main.screenHeight - Height, 0);
+			UIPanel panel;
 			public override void OnInitialize() {
-				Append(new UIColorPicker(() => ref color) {
-					HAlign = 0.5f,
-					VAlign = 1f,
+				panel = new() {
+					Left = Left,
+					Top = Top,
+					Width = new(Width, 0),
+					Height = new(Height, 0),
+					PaddingTop = 8
+				};
+				UIDragController.Attach(panel, new(Drop: UpdatePositions));
+				panel.StopClickThrough();
+				panel.Append(new UIColorPicker(() => ref color) {
+					HAlign = 1f,
+					VAlign = 0.5f
 				});
+				Append(panel);
 			}
 			public override void Update(GameTime gameTime) {
+				base.Update(gameTime);
 				if (Main.LocalPlayer.talkNPC != npc.whoAmI) ui.SetState(null);
 			}
 			void SubmitIdea() {
 				Main.npcChatText = Language.GetTextValue(quest.BaseKey + "MadeSuggestion");
 				quest.Suggest(idea, color, npc);
 				ui.SetState(null);
+			}
+			void UpdatePositions() {
+				Left = panel.Left;
+				Top = panel.Top;
 			}
 		}
 	}

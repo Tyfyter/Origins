@@ -64,6 +64,8 @@ namespace Origins.UI {
 			bool Clamp = true,
 			bool StopClickThrough = false,
 			bool ConstantlyUpdate = false
-		);
+		) {
+			public static AttachParameters Default => new(ShouldDrag: null);
+		}
 	}
 }
