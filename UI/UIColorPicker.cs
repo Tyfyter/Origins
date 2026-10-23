@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,6 +10,9 @@ using Terraria.UI;
 namespace Origins.UI; 
 public class UIColorPicker(RefGet<Color> color, bool useAlpha = false) : UIElement {
 	readonly ColorChannelInput[] channels = new ColorChannelInput[useAlpha ? 4 : 3];
+	Color oldColor = color();
+	HSLColor currentHSLColor = color();
+	HSLColor oldHSLColor = color();
 	public override void OnInitialize() {
 		Width.Set(367, 0);
 		Height.Set(-2, 0);
@@ -27,12 +31,23 @@ public class UIColorPicker(RefGet<Color> color, bool useAlpha = false) : UIEleme
 	public override void LeftMouseDown(UIMouseEvent evt) { }
 	public override void Update(GameTime gameTime) {
 		base.Update(gameTime);
-		ref byte c = ref Unsafe.As<Color, byte>(ref color());
+		ref Color col = ref color();
+		ref byte c = ref Unsafe.As<Color, byte>(ref col);
 		Vector2 position = GetInnerDimensions().Position();
 		position.X += 64;
 		for (int i = 0; i < channels.Length; i++) {
 			channels[i].Update(ref Unsafe.AddByteOffset(ref c, i), position, mouseLeftRelease);
 			position.Y += 22;
+		}
+		currentHSLColor.H += 1f / 240;
+		if (oldColor.TrySet(col)) {
+			currentHSLColor = col;
+			oldHSLColor = currentHSLColor;
+		}
+		if (oldHSLColor.TrySet(currentHSLColor)) {
+			col = currentHSLColor.RGB;
+			oldColor = col;
+			for (int i = 0; i < channels.Length; i++) channels[i].Initialize(ref Unsafe.AddByteOffset(ref c, i));
 		}
 		mouseLeftRelease = !Main.mouseLeft;
 	}

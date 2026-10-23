@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Terraria;
 using V3 = System.Numerics.Vector3;
@@ -70,7 +71,7 @@ namespace Origins.Core {
 	public class HSLCurve(CurveInterpolation.LoopData? loopData = null) : Curve<HSLColor>(loopData) {
 		public override HSLColor Interpolate(HSLColor a, HSLColor b, float progress) => HSLColor.Lerp(a, b, progress);
 	}
-	public struct HSLColor(float H, float S, float L) {
+	public struct HSLColor(float H, float S, float L) : IEquatable<HSLColor> {
 		public float H = WrapHue(H), S = S, L = L;
 		public float Hue {
 			readonly get => WrapHue(H);
@@ -159,10 +160,22 @@ namespace Origins.Core {
 			if (hue < 0) return hue + 1;
 			return hue;
 		}
+
 		public static implicit operator HSLColor(Color value) {
 			HSLColor output = default;
 			output.RGB = value;
 			return output;
 		}
+
+		public readonly bool Equals(HSLColor other) {
+			if (L != other.L) return false;
+			if (L is 0 or 1) return true;
+			if (S != other.S) return false;
+			if (L == 0) return true;
+			return Hue == other.Hue;
+		}
+		public readonly override bool Equals(object obj) => obj is HSLColor color && Equals(color);
+		public static bool operator ==(HSLColor left, HSLColor right) => left.Equals(right);
+		public static bool operator !=(HSLColor left, HSLColor right) => !(left == right);
 	}
 }
