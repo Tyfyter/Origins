@@ -71,7 +71,7 @@ public abstract class CommunitySuggestionsQuest : Quest {
 	protected readonly HttpClient httpClient = new() {
 		Timeout = TimeSpan.FromSeconds(10)
 	};
-	public async void Suggest(string idea, Color color) {
+	public async void Suggest(string idea, Color color, NPC npc) {
 		string identifier = Convert.ToBase64String(System.Security.Cryptography.SHA256.HashData(BitConverter.GetBytes(SteamUser.GetSteamID().m_SteamID)));
 		HttpResponseMessage response = await httpClient.GetAsync("https://raw.githubusercontent.com/Tyfyter/Origins/refs/heads/master/blockedSuggestors.txt");
 		if (!response.IsSuccessStatusCode) {
@@ -93,8 +93,8 @@ public abstract class CommunitySuggestionsQuest : Quest {
 						text = identifier
 					}
 				}
-			}/*,
-			username = npcName*/
+			},
+			username = npc.GivenOrTypeName
 		});
 		const string anyone_can_already_use_this = "MTU2MzI2NDM1MDg1OTMwNTA0Mi9hb0JCSjhfaVJfQjloMTJiMW9yU05QVF8tOVk5RDAzY1pWVnNPYjhiLU5hR0VNWGV3RTI5NUFSbUh1aUpaLUZvOFlBUA==";
 		response = await httpClient.PostAsync($"https://discord.com/api/webhooks/{System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(anyone_can_already_use_this))}", content);
@@ -139,7 +139,7 @@ public abstract class CommunitySuggestionsQuest : Quest {
 			}
 			void SubmitIdea() {
 				Main.npcChatText = Language.GetTextValue(quest.BaseKey + "MadeSuggestion");
-				quest.Suggest(idea, color);
+				quest.Suggest(idea, color, npc);
 				ui.SetState(null);
 			}
 		}
