@@ -221,6 +221,12 @@ namespace Origins.NPCs.Ashen {
 			NPC.spriteDirection = NPC.direction;
 			#region Arm
 			Arm.start = GetArmStartPos();
+			Vector2 armTargetDiff = ArmTarget - Arm.start;
+			float armTargetDistSQ = armTargetDiff.LengthSquared();
+			float minArmDistance = Math.Abs(Arm.bone0.R - Arm.bone1.R) + 0.1f;
+			if (armTargetDistSQ < minArmDistance * minArmDistance) {
+				ArmTarget = Arm.start + (armTargetDiff * minArmDistance / float.Sqrt(armTargetDistSQ));
+			}
 			float[] targets = Arm.GetTargetAngles(ArmTarget, NPC.spriteDirection == -1);
 			float armDiff = GeometryUtils.AngleDif(targets[0], -MathHelper.PiOver2, out int armDir);
 			if (armDiff > MathHelper.PiOver4 && Main.LocalPlayer.controlThrow) {
