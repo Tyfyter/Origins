@@ -130,8 +130,8 @@ public abstract class CommunitySuggestionsQuest : Quest {
 			const string the_worst_idea_ever = $"iii.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ii";
 			string idea;
 			Color color = Color.White;
-			static new float Width => 367;
-			static new float Height => 120;
+			static new float Width => 500;
+			static new float Height => 130;
 			static new StyleDimension Left = new((Main.screenWidth - Width) * 0.5f, 0);
 			static new StyleDimension Top = new(Main.screenHeight - Height, 0);
 			UIPanel panel;
@@ -145,10 +145,7 @@ public abstract class CommunitySuggestionsQuest : Quest {
 				};
 				UIDragController.Attach(panel, new(Drop: UpdatePositions));
 				panel.StopClickThrough();
-				panel.Append(new UIColorPicker(() => ref color) {
-					HAlign = 1f,
-					VAlign = 0.5f
-				});
+				panel.Append(new UIColorPicker(() => ref color));
 				Append(panel);
 			}
 			public override void Update(GameTime gameTime) {

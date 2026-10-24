@@ -858,6 +858,8 @@ public class UIInputPanel(float textScale = 1, bool large = false) : UITextPanel
 	public bool IsWritingText { get; set; }
 	StringBuilder ITextInputContainer.Text => _text;
 	string lastSearch = "";
+	TextInputContainerExtensions.StringDrawer drawer;
+	Color lastColor;
 	public void Clear() {
 		_text.Clear();
 		CursorIndex = 0;
@@ -882,28 +884,26 @@ public class UIInputPanel(float textScale = 1, bool large = false) : UITextPanel
 			if (typed) SetText(_text);
 		}
 		DrawSelf(spriteBatch);
-		Vector2 offset = new(8 * (1 - TextHAlign), 2);
-		bool blink = Main.timeForVisualEffects % 40 < 20;
-		if (IsWritingText && blink) {
-			DynamicSpriteFont font = FontAssets.MouseText.Value;
+		if (IsWritingText) {
 			CalculatedStyle innerDimensions = GetInnerDimensions();
 			Vector2 pos = innerDimensions.Position();
 			if (_isLarge)
-				pos.Y -= 10f * _textScale * _textScale;
+				pos.Y += 10f * _textScale * _textScale;
 			else
-				pos.Y -= 2f * _textScale;
+				pos.Y += 4f * _textScale;
 
 			pos.X += (innerDimensions.Width - _textSize.X) * TextHAlign;
-			spriteBatch.DrawString(
-				font,
-				"|",
-				pos + font.MeasureString(Text.ToString()[..CursorIndex]) * Vector2.UnitX * _textScale + offset * new Vector2(0.5f, 1),
-				TextColor,
-				0,
-				new(0, 0),
-				_textScale,
-				0,
-			0);
+			if (lastColor.TrySet(TextColor) || drawer is null) drawer = TextInputContainerExtensions.BasicStringDrawer(TextColor);
+			TextInputContainerExtensions.DrawInputTextCursor(
+				PegasusConfig.Instance.preferredTextCursor,
+				Text,
+				CursorIndex,
+				spriteBatch,
+				pos,
+				FontAssets.MouseText.Value,
+				drawer,
+				_textScale
+			);
 		}
 		DrawChildren(spriteBatch);
 	}

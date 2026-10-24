@@ -86,7 +86,7 @@ namespace Origins.Core {
 			set => L = Math.Clamp(value, 0, 1);
 		}
 		public Color RGB {
-			readonly get => Main.hslToRgb(WrapHue(H), S, L);
+			readonly get => Main.hslToRgb(Hue, Saturation, Lightness);
 			set => Main.rgbToHsl(value).Deconstruct(out H, out S, out L);
 		}
 		public Vector3 RGBV {
@@ -94,7 +94,7 @@ namespace Origins.Core {
 				if (S == 0f) {
 					return new(L);
 				} else {
-					float H = WrapHue(this.H);
+					float H = Hue;
 					float t2 = L >= 0.5f ? L + S - L * S : (L * (1 + S));
 					float t = 2f * L - t2;
 					float r = H + 1f / 3f;

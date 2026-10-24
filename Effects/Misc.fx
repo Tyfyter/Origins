@@ -87,6 +87,41 @@ float4 Muddle(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 float4 Transparency(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	return float4(0, 0, 0, 0);
 }
+float hue2rgb(float c, float t1, float t2) {
+	if (c < 0.0) {
+		c += 1.0;
+	}
+	if (c > 1.0) {
+		c -= 1.0;
+	}
+	if (6.0 * c < 1.0) {
+		return t1 + (t2 - t1) * 6.0 * c;
+	}
+	if (2.0 * c < 1.0) {
+		return t2;
+	}
+	if (3.0 * c < 2.0) {
+		return t1 + (t2 - t1) * (2.0 / 3.0 - c) * 6.0;
+	}
+	return t1;
+}
+float3 hslToRgb(float Hue, float Saturation, float Luminosity) {
+	if (Saturation <= 0) {
+		return float3(Luminosity, Luminosity, Luminosity);
+	} else {
+		float num2 = Luminosity >= 0.5 ? Luminosity + Saturation - Luminosity * Saturation : Luminosity * (1.0 + Saturation);
+		float t = 2.0 * Luminosity - num2;
+		float c = Hue + 1.0 / 3.0;
+		float c3 = Hue - 1.0 / 3.0;
+		c = hue2rgb(c, t, num2);
+		float c2 = hue2rgb(Hue, t, num2);
+		float num4 = hue2rgb(c3, t, num2);
+		return float3(c, c2, num4);
+	}
+}
+float4 HueSaturationBox(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	return float4(hslToRgb(coords.x, 1 - coords.y, 0.5f), 1);
+}
 
 technique Technique1 {
 	pass MultiplyRGBA {
@@ -106,5 +141,8 @@ technique Technique1 {
 	}
 	pass Transparency {
 		PixelShader = compile ps_2_0 Transparency();
+	}
+	pass HueSaturationBox {
+		PixelShader = compile ps_2_0 HueSaturationBox();
 	}
 }
