@@ -21,7 +21,7 @@ public class UIColorPicker(RefGet<Color> color, bool useAlpha = false) : UIEleme
 	HSLColor oldHSLColor = color();
 	UIInputPanel hexPanel;
 	public override void OnInitialize() {
-		Width.Set(420, 0);
+		Width.Set(436, 0);
 		Height.Set(6, 0);
 		ref byte c = ref Unsafe.As<Color, byte>(ref color());
 		for (int i = 0; i < channels.Length; i++) {
@@ -223,7 +223,7 @@ public class UIColorPicker(RefGet<Color> color, bool useAlpha = false) : UIEleme
 			if (isDragging) currentValue = (byte)(float.Clamp(Main.mouseX - position.X, 0, 255));
 
 			if (!IsWritingText) c = currentValue;
-			isHovering = Main.MouseScreen.Between(position + new Vector2(255, 0), position + new Vector2(255 + 48, 16));
+			isHovering = Main.MouseScreen.Between(position + new Vector2(257, 0), position + new Vector2(257 + 48, 16));
 			if (clicked) IsWritingText = isHovering;
 		}
 		public void Draw(SpriteBatch spriteBatch, Vector2 position) {
@@ -245,7 +245,7 @@ public class UIColorPicker(RefGet<Color> color, bool useAlpha = false) : UIEleme
 				new(0, 0, 48, 16),
 				isHovering ? Color.White : Color.Black
 			);*/
-			this.DrawInputContainerText(spriteBatch, position + new Vector2(255, 0), FontAssets.MouseText.Value, Color.Black, IsWritingText, 0.85f);
+			this.DrawInputContainerText(spriteBatch, position + new Vector2(257, 0), FontAssets.MouseText.Value, Color.Black, IsWritingText, 0.85f);
 			rect.vertices[0].Color = rect.vertices[3].Color = start;
 			rect.vertices[1].Color = rect.vertices[2].Color = end;
 			rect.TranslateTo(position).Draw();

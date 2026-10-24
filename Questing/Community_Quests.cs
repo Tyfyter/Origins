@@ -1,11 +1,14 @@
-﻿using Origins.Items.Accessories;
+﻿using Origins.Core.Structures;
+using Origins.Items.Accessories;
 using Origins.UI;
 using Steamworks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
@@ -128,38 +131,69 @@ public abstract class CommunitySuggestionsQuest : Quest {
 		public class SuggestionState(CommunitySuggestionsQuest quest, NPC npc) : UIState {
 			const string the_best_idea_ever = $"I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I .I.I.I.I.\nI.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.\nI.I.I.I.I.I .I.I.I.I.I.I.I.I.I.I.I.I.I.I.\nI.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I.I I.I.I.I\n.I.I.I.I.I.I.I.I.I.I.I.";
 			const string the_worst_idea_ever = $"iii.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.\ni.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ii";
-			string idea;
 			Color color = Color.White;
-			static new float Width => 500;
+			static new float Width => 432;
 			static new float Height => 130;
 			static new StyleDimension Left = new((Main.screenWidth - Width) * 0.5f, 0);
 			static new StyleDimension Top = new(Main.screenHeight - Height, 0);
 			UIPanel panel;
+			UIInputPanel ideaInput;
+			UIColorPicker colorPicker;
+			int lastLinesCount = 0;
 			public override void OnInitialize() {
 				panel = new() {
 					Left = Left,
 					Top = Top,
 					Width = new(Width, 0),
 					Height = new(Height, 0),
-					PaddingTop = 8
+					PaddingTop = 8,
+					PaddingRight = 8
 				};
 				UIDragController.Attach(panel, new(Drop: UpdatePositions));
 				panel.StopClickThrough();
-				panel.Append(new UIColorPicker(() => ref color));
+				ideaInput = new() {
+					PaddingTop = 6,
+					PaddingBottom = 6,
+					TextHAlign = 0,
+					Width = new(0, 1),
+				};
+				ideaInput.OnUpdate += IdeaPanel_OnUpdate;
+				ideaInput.OnSubmit += IdeaPanel_OnSubmit;
+				panel.Append(ideaInput);
+				colorPicker = new(() => ref color);
+				panel.Append(colorPicker);
 				Append(panel);
 			}
 			public override void Update(GameTime gameTime) {
+				if (lastLinesCount.TrySet(ideaInput.Text.Count('\n') + 1)) {
+					panel.Height.Set(Height + 14 + lastLinesCount * FontAssets.MouseText.Value.LineSpacing, 0);
+					ideaInput.Height.Set(lastLinesCount * FontAssets.MouseText.Value.LineSpacing, 0);
+					colorPicker.Top.Pixels = ideaInput.Height.Pixels + 14;
+					Recalculate();
+				}
 				base.Update(gameTime);
+				mouseLeftRelease = !Main.mouseLeft;
 				if (Main.LocalPlayer.talkNPC != npc.whoAmI) ui.SetState(null);
 			}
+			bool mouseLeftRelease;
 			void SubmitIdea() {
 				Main.npcChatText = Language.GetTextValue(quest.BaseKey + "MadeSuggestion");
-				quest.Suggest(idea, color, npc);
+				quest.Suggest(ideaInput.Text, color, npc);
 				ui.SetState(null);
 			}
 			void UpdatePositions() {
 				Left = panel.Left;
 				Top = panel.Top;
+			}
+			void IdeaPanel_OnUpdate(UIElement affectedElement) {
+				if (Main.mouseLeft && mouseLeftRelease) ideaInput.IsWritingText = ideaInput.IsMouseHovering;
+			}
+			void IdeaPanel_OnSubmit(string hex) {
+				if (Main.inputText.PressingShift()) {
+					ITextInputContainer container = ideaInput;
+					container.Text.Insert(container.CursorIndex, '\n');
+					container.CursorIndex++;
+				} else ideaInput.IsWritingText = false;
 			}
 		}
 	}
