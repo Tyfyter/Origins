@@ -1827,6 +1827,7 @@ MATERIALS:
 (X) Battered Transponder
 (^) Bud Barnacle
 (^) Carburite
+(X) Cathartic Flower Seeds
 (^) Defiled Bar
 (^) Defiled Seeds
 (^) Dreadful Powder
@@ -1837,6 +1838,7 @@ MATERIALS:
 (^) Ocotillo Flower
 (X) Opium Bottle
 (^) Parasitic Powder
+(X) Poppy Seeds
 (^) Riven Carapace
 (^) Riven Seeds
 (^) Robot Guts
@@ -1844,11 +1846,14 @@ MATERIALS:
 (^) Sanguinite Bar
 (^) Silicon Bar
 (^) Strange String
+(^) Surveysprout Seeds
 (^) Tangela Bud
 (^) Tire
 (^) Tree Sap
 (^) Undead Chunk
 (^) Urn of Ashes
+(^) Wilting Rose Seeds
+(^) Wrycoral Seeds
 
 (^) Alkahest
 (^) Alkaliphiliac Tissue
