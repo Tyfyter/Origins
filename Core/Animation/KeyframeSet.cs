@@ -9,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
@@ -528,6 +529,13 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	protected override void TryInsertKeyframe(float time) {
 		InsertAtCurrentFrame(time);
 	}
+	protected override void TryPasteKeyframe(float currentTime, int insertIndex) {
+		if (currentTime == 0) {
+			Do(new ModifyStartValue(this, clipboardKeyframe.Target));
+			return;
+		}
+		base.TryPasteKeyframe(currentTime, insertIndex);
+	}
 	protected override bool CopyStart(out Keyframe keyframe) {
 		keyframe = new(0, start);
 		return true;
@@ -623,7 +631,9 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			static readonly MethodInfo getDrawer = typeof(Loader).GetMethod("GetDrawer");
 			static readonly MethodInfo getExporter = typeof(Loader).GetMethod("GetExporter");
 			static readonly MethodInfo getInterpolatable = typeof(Loader).GetMethod("GetInterpolatable");
-			static void IAutoloader.Autoload(Mod mod, Type type) {
+			static readonly MethodInfo checkLoad = typeof(Loader).GetMethod("CheckLoad");
+			public static void Autoload(Mod mod, Type type) {
+				if (!(bool)checkLoad.MakeGenericMethod(type).Invoke(null, [])) return;
 				KeyframeSet<T>.DrawGizmo = (GizmoDrawer)getDrawer.MakeGenericMethod(type).Invoke(null, []);
 				ExportValue = (Func<T, string>)getExporter.MakeGenericMethod(type).Invoke(null, []);
 				KeyframeSet<T>.Interpolatable = (bool)getInterpolatable.MakeGenericMethod(type).Invoke(null, []);
@@ -632,7 +642,12 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			public static GizmoDrawer GetDrawer<THandler>() where THandler : ITypeHandler => THandler.DrawGizmo;
 			public static Func<T, string> GetExporter<THandler>() where THandler : ITypeHandler => THandler.Export;
 			public static bool GetInterpolatable<THandler>() where THandler : ITypeHandler => THandler.Interpolatable;
+			public static bool CheckLoad<THandler>() where THandler : ITypeHandler => IsLoaded<THandler>.value.TrySet(true);
+			static class IsLoaded<THandler> where THandler : ITypeHandler {
+				public static bool value = false;
+			}
 		}
+		public static void EnsureLoaded<THandler>() where THandler : ITypeHandler => Loader.Autoload(ModContent.GetInstance<Origins>(), typeof(THandler));
 	}
 	static readonly Polygon keyframeDiamond = new(
 		new(-4, 0),
@@ -782,6 +797,17 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		5 * Vector2.UnitY.RotatedBy(-TwoThirdsPi)
 	);
 }
+public class EnumKeyframeSet<TEnum> : KeyframeSet<AnimatableEnum<TEnum>> where TEnum : struct, Enum {
+	public new TEnum CalculateValue(float time) => base.CalculateValue(time);
+	public new TEnum GetCurrentValue(float time) => base.GetCurrentValue(time);
+	public EnumKeyframeSet() : base() { }
+	public EnumKeyframeSet(TEnum startValue, AGizmoOffset gizmoOffset = null) : this(startValue, (false, null), gizmoOffset) { }
+	public EnumKeyframeSet(TEnum startValue, (bool looped, InterpolationStack interpolation) loopData, AGizmoOffset gizmoOffset = null) : base(startValue, loopData, gizmoOffset) { }
+	protected override void OnBind() {
+		base.OnBind();
+		ITypeHandler.EnsureLoaded<AnimatableEnum<TEnum>>();
+	}
+}
 public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyframe> where TKeyframe : IKeyframe<TKeyframe> {
 	protected float lastProcessedTime = -1;
 	protected int updateKeyframeAnimIndex = -1;
@@ -853,8 +879,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 			if (isSelected.ShowSidebars()) DrawKeyframeCreationSidebar(spriteBatch, currentTime);
 			if (Keybindings.InsertKeyframe.JustPressed) TryInsertKeyframe(currentTime);
 			if (Keybindings.Paste.JustPressed && GetInsertIndex(currentTime) is int insertIndex) {
-				clipboardKeyframe.Time = currentTime;
-				Do(new CreateKeyframe(this, insertIndex, clipboardKeyframe));
+				TryPasteKeyframe(currentTime, insertIndex);
 			}
 		}
 		if (deleteIndex != -1) Do(new DeleteKeyframe(this, deleteIndex));
@@ -885,6 +910,10 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	}
 	protected virtual void TryUpdateKeyframe(int keyframeIndex) { }
 	protected virtual void TryInsertKeyframe(float time) { }
+	protected virtual void TryPasteKeyframe(float currentTime, int insertIndex) {
+		clipboardKeyframe.Time = currentTime;
+		Do(new CreateKeyframe(this, insertIndex, clipboardKeyframe));
+	}
 	protected abstract void DrawKeyframeCreationSidebar(SpriteBatch spriteBatch, float time);
 	protected virtual void HandleGizmos() { }
 	public virtual void HandleMultiSelect(IKeyframeSet primary) { }
@@ -945,7 +974,7 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		}
 		Do(step, false);
 	}
-	static TKeyframe clipboardKeyframe;
+	protected static TKeyframe clipboardKeyframe;
 	UndoStep.StepBuffer history = new(10);
 	UndoStep.StepBuffer future = new(10);
 	protected class CreateKeyframe(AKeyframeSet<TKeyframe> set, int index, TKeyframe keyframe) : UndoStep {
@@ -1383,6 +1412,66 @@ public interface IAnimatableSpriteFrame<TSelf> : KeyframeSet<TSelf>.ITypeHandler
 	public static abstract implicit operator TSelf(int value);
 	public static abstract implicit operator int(TSelf value);
 }
+public struct AnimatableEnum<TEnum> : IAnimatableEnum<AnimatableEnum<TEnum>, TEnum> where TEnum : struct, Enum {
+	public TEnum value;
+	public static bool operator ==(AnimatableEnum<TEnum> left, AnimatableEnum<TEnum> right) => AreEqual(left, right);
+	public static bool operator !=(AnimatableEnum<TEnum> left, AnimatableEnum<TEnum> right) => !AreEqual(left, right);
+	public static implicit operator AnimatableEnum<TEnum>(TEnum value) => Unsafe.BitCast<TEnum, AnimatableEnum<TEnum>>(value);
+	public static implicit operator TEnum(AnimatableEnum<TEnum> value) => Unsafe.BitCast<AnimatableEnum<TEnum>, TEnum>(value);
+	public override readonly bool Equals(object obj) => obj is AnimatableEnum<TEnum> other && value == other;
+	public override int GetHashCode() => value.GetHashCode();
+	static readonly Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+	static bool AreEqual(TEnum a, TEnum b) => AsULong(a) == AsULong(b);
+	static ulong AsULong(TEnum value) {
+		if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<TEnum, byte>(value);
+		else if (underlyingType == typeof(short) || underlyingType == typeof(ushort)) return Unsafe.BitCast<TEnum, ushort>(value);
+		else if (underlyingType == typeof(int) || underlyingType == typeof(uint)) return Unsafe.BitCast<TEnum, uint>(value);
+		else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<TEnum, ulong>(value);
+		else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
+	}
+}
+public interface IAnimatableEnum<TSelf, TEnum> : KeyframeSet<TSelf>.ITypeHandler, IEquatable<TSelf>, IEqualityOperators<TSelf, TSelf, bool> where TSelf : struct, IAnimatableEnum<TSelf, TEnum> where TEnum : struct, Enum {
+	static TEnum[] values = Enum.GetValues<TEnum>();
+	bool IEquatable<TSelf>.Equals(TSelf other) => (TSelf)this == other;
+	static bool KeyframeSet<TSelf>.ITypeHandler.Interpolatable => false;
+	static KeyframeSet<TSelf>.IInterpolation KeyframeSet<TSelf>.ITypeHandler.Linear => null;
+	static readonly TextSnippet[] snippet = [new()];
+	static void KeyframeSet<TSelf>.ITypeHandler.DrawGizmo(SpriteBatch spriteBatch, ref TSelf value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
+		Vector2 pos = new(0, Main.screenHeight);
+		int hoveredIndex = -1;
+		float maxHeight = 0;
+		for (int i = 0; i < values.Length; i++) {
+			TEnum current = values[i];
+			snippet[0].Text = current.ToString();
+			snippet[0].Color = (TSelf)current == value ? Color.Goldenrod : Color.White;
+			Vector2 size = ChatManager.GetStringSize(FontAssets.MouseText.Value, snippet, Vector2.One);
+			if (pos.X + size.X > Main.screenWidth) {
+				pos.X = 0;
+				pos.Y -= maxHeight + 4;
+				maxHeight = 0;
+			}
+			ChatManager.DrawColorCodedStringWithShadow(
+				spriteBatch,
+				FontAssets.MouseText.Value,
+				snippet,
+				pos - size * Vector2.UnitY,
+				0,
+				Vector2.Zero,
+				Vector2.One,
+				out int isHovered
+			);
+			if (isHovered != -1) hoveredIndex = i;
+			pos.X += size.X + 4;
+		}
+		if (hoveredIndex != -1) {
+			Main.LocalPlayer.mouseInterface = true;
+			if (Main.mouseLeft && Main.mouseLeftRelease) value = values[hoveredIndex];
+		}
+	}
+	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => $"{typeof(TEnum).Name}.{value}";
+	public static abstract implicit operator TSelf(TEnum value);
+	public static abstract implicit operator TEnum(TSelf value);
+}
 public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) : KeyframeSet<PosRotScale>.ITypeHandler, IKeyframeOffsetModifier {
 	public PosRotScale() : this(default, 0, 1) { }
 	public Vector2 Position = Position;
@@ -1407,6 +1496,28 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 	}
 	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(Position, Rotation);
 	public static string Export(PosRotScale value) => value == new PosRotScale() ? "new()" : $"new({Vec2Interpolation.Export(value.Position)}, {value.Rotation}f, {value.Scale}f)";
+}
+public record struct RotScale(float Rotation, float Scale) : KeyframeSet<RotScale>.ITypeHandler, IKeyframeOffsetModifier {
+	public RotScale() : this(0, 1) { }
+	public float Rotation = Rotation;
+	public float Scale = Scale;
+	public static KeyframeSet<RotScale>.IInterpolation Linear { get; } = new Interpolation();
+	public readonly struct Interpolation : KeyframeSet<RotScale>.IInterpolation {
+		readonly RotScale KeyframeSet<RotScale>.IInterpolation.Interpolate(RotScale prevValue, RotScale nextValue, float progress) =>
+			new(
+				prevValue.Rotation + GeometryUtils.AngleDif(prevValue.Rotation, nextValue.Rotation, out int dir) * dir * progress,
+				float.Lerp(prevValue.Scale, nextValue.Scale, progress)
+			);
+		public readonly override string ToString() => "Interpolated";
+	}
+	public static PosRotScale operator +(RotScale a, PosRotScale b) => new(b.Position.RotatedBy(a.Rotation) * a.Scale, a.Rotation + b.Rotation, a.Scale * b.Scale);
+	public static PosRotScale operator +(RotScale a, Vector2 b) => new(b.RotatedBy(a.Rotation) * a.Scale, a.Rotation, a.Scale);
+	public static void DrawGizmo(SpriteBatch spriteBatch, ref RotScale value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
+		DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);
+		DrawScaleGizmo(spriteBatch, ref value.Scale, ref gizmoTracker, offset, 20);
+	}
+	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(default, Rotation);
+	public static string Export(RotScale value) => value == new RotScale() ? "new()" : $"new({value.Rotation}f, {value.Scale}f)";
 }
 public record struct Percentage(float Value) : KeyframeSet<Percentage>.ITypeHandler {
 	public Percentage() : this(1) { }
