@@ -159,7 +159,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.velocity *= 0.99f;
 				return;
 			}
-			Projectile.rotation += Projectile.direction * 0.3f;
 			Vector2 targetCenter = targetingData.HasTarget ? targetingData.Center : restRegion.Center();
 			Vector2 direction = (targetCenter - Projectile.Center).Normalized(out float distance);
 			float speed = Star_Harvest.BaseSpeed * SpeedModifier;
@@ -287,7 +286,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (SkipTargeting) Projectile.velocity *= 0.99f;
 			else base.MoveTowardsTarget();
 			Projectile.ai[1]++;
-			Projectile.rotation += Projectile.velocity.X * 0.1f;
 			Projectile.scale = 1f + 0.2f * MathHelper.Clamp(Projectile.ai[0] / Star_Harvest.BaseChildhoodDuration, 0f, 1f);
 			if (Projectile.ai[0].Warmup(Star_Harvest.BaseChildhoodDuration, SpeedModifier)) {
 				Projectile.SpawnProjectile(
