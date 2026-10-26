@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Origins.Core.Animation;
 using PegasusLib;
 using System;
 using System.Reflection;
@@ -74,13 +75,13 @@ namespace Origins {
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);
 			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Static)) {
-				if (field.FieldType == type && field.GetCustomAttribute<KeybindAttribute>() is KeybindAttribute data) {
-					field.SetValue(null, KeybindLoader.RegisterKeybind(mod, data.Name ?? field.Name, data.DefaultBinding));
+				if (field.FieldType == type && field.GetCustomAttribute<KeybindAttribute>() is KeybindAttribute { ShouldRegister: true } data) {
+					field.SetValue(null, data.Register(mod, field));
 				}
 			}
 			foreach (PropertyInfo property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Static)) {
-				if (property.PropertyType == type && property.GetCustomAttribute<KeybindAttribute>() is KeybindAttribute data) {
-					property.SetValue(null, KeybindLoader.RegisterKeybind(mod, data.Name ?? property.Name, data.DefaultBinding));
+				if (property.PropertyType == type && property.GetCustomAttribute<KeybindAttribute>() is KeybindAttribute { ShouldRegister: true } data) {
+					property.SetValue(null, data.Register(mod, property));
 				}
 			}
 		}
@@ -109,6 +110,17 @@ namespace Origins {
 				DebugType.Animator => DebugConfig.Instance.AnimatorMode,
 				_ => true
 			};
+			public ModKeybind Register(Mod mod, MemberInfo member) {
+				ModKeybind keybind = KeybindLoader.RegisterKeybind(mod, Name ?? member.Name, DefaultBinding);
+				switch (DebugType) {
+					case DebugType.Animator:
+					if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator)) {
+						controllerConfigurator.Call("RegisterKeybindCondition", keybind, () => Animation_Editor_UI.DrawEditorUI is not null);
+					}
+					break;
+				}
+				return keybind;
+			}
 		}
 		protected enum DebugType {
 			None,
