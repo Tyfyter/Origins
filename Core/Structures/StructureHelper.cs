@@ -145,6 +145,15 @@ public class StructureHelperUI : UIState {
 		};
 		textInput.OnExit += IngameFancyUI.Close;
 		Append(textInput);
+		UIElement region = new() {
+			Left = new(0, 0.25f * 0.5f),
+			Top = new(0, 0.1f),
+			Width = new(0, 0.75f),
+			Height = new(0, 0.8f),
+			IgnoresMouseInteraction = true
+		};
+		Append(region);
+		region.Append(toastHandler = new());
 	}
 	void ReloadStructure() {
 		structure = Load(structurePath);
@@ -172,6 +181,7 @@ public class StructureHelperUI : UIState {
 		}
 	}
 	IEnumerable<UIElement> ActiveElements() {
+		yield return toastHandler;
 		if (!StructureCommand.ReadyForNewAss) {
 			textInput.IsWritingText = true;
 			yield return inputFeedback;
@@ -206,6 +216,7 @@ public class StructureHelperUI : UIState {
 	UIImageButton selectFileButton;
 	UIImageButton saveFileButton;
 	UIImageButton deselectRoomButton;
+	ToastHandler toastHandler;
 	public override void Draw(SpriteBatch spriteBatch) {
 		if (!StructureCommand.ReadyForNewAss) {
 			SpriteBatchState state = spriteBatch.GetState();
@@ -332,7 +343,7 @@ public class StructureHelperUI : UIState {
 			UITextPanel<string> element = new("New room");
 			element.OnLeftClick += (_, _) => {
 				if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) {
-					Main.NewText($"Must specify bounds before adding room");
+					toastHandler.Push($"Must specify bounds before adding room");
 					return;
 				}
 				Task.Run(() => {
@@ -457,7 +468,7 @@ public class StructureHelperUI : UIState {
 			roomList?.Clear();
 			roomList?.Remove();
 		}
-		public struct WeightUI {
+		public readonly struct WeightUI {
 			public readonly WeightDescriptor.Kind source;
 			public readonly ParameterElement[] parameters;
 			static readonly Regex constantRegex = new("^\\d*.?\\d*$");
