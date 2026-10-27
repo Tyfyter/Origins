@@ -90,6 +90,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public float Life { get; set; }
 		public override Rectangle RestRegion => new Rectangle(0, 0, 48, 48).Recentered(Owner.MountedCenter - new Vector2(Owner.direction * 64, 0));
 		public float SacrificeAvoidance => float.PositiveInfinity;
+		public override bool AutomaticRotationAndDirection => false;
 		public override void SetStaticDefaults() {
 			this.SetIDProp();
 			Main.projFrames[Type] = 4;
@@ -285,6 +286,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void MoveTowardsTarget() {
 			if (SkipTargeting) Projectile.velocity *= 0.99f;
 			else base.MoveTowardsTarget();
+			Projectile.rotation += (float)Math.Sign(Projectile.velocity.X) * 0.3f;
 			Projectile.ai[1]++;
 			Projectile.scale = 1f + 0.2f * MathHelper.Clamp(Projectile.ai[0] / Star_Harvest.BaseChildhoodDuration, 0f, 1f);
 			if (Projectile.ai[0].Warmup(Star_Harvest.BaseChildhoodDuration, SpeedModifier)) {
