@@ -255,7 +255,7 @@ namespace Origins.Core.Structures {
 		CheckDescriptor isValidLayout;
 		public override void Load() {
 			StructorDescriptor descriptor = new();
-			JsonConvert.PopulateObject(data, descriptor, DeserializedStructure.SerializerSettings);
+			if (!string.IsNullOrWhiteSpace(data)) JsonConvert.PopulateObject(data, descriptor, DeserializedStructure.SerializerSettings);
 			if (descriptor.BreakCondition is not null) breakCondition = BreakDescriptor.Create(Mod, descriptor.BreakCondition);
 			if (descriptor.ValidLayoutCheck is not null) isValidLayout = CheckDescriptor.Create(Mod, descriptor.ValidLayoutCheck);
 			descriptor.TileDescriptors ??= [];
