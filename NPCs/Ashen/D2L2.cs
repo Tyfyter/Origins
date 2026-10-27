@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Core.Animation;
 using Origins.Dev;
@@ -64,7 +65,9 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		NPC.knockBackResist = 0f;
 		NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
 		NPC.DeathSound = SoundID.NPCDeath44;
-		NPC.noGravity = true;
+		NPC.noTileCollide = true;
+		NPC.noGravity = false;
+		//NPC.noGravity = true;
 		SpawnModBiomes = [
 			GetInstance<Ashen_Biome>().Type,
 		];
@@ -86,6 +89,16 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		GetLegTransforms(true, out _, out _, out PosRotScale backFoot);
 		Vector2 frontLegPos = frontFoot.Position;
 		Vector2 backLegPos = backFoot.Position;
+		Vector2 movement = NPC.position - NPC.oldPosition;
+		Vector2 oldMovement = movement;
+		/*NPC.position -= movement;
+		using (new ScopedRedirect<Vector2>(ref NPC.velocity, ref movement)) {
+			ApplyCollision(frontLegPos);
+			ApplyCollision(backLegPos);
+		}
+		NPC.position += movement;
+		if (oldMovement.Y != movement.Y) NPC.velocity.Y = movement.Y;*/
+		if (NPC.velocity.X > oldMovement.X) ;
 		switch (oldAnchor) {
 			case D2L2Animation.AnchorPoint.FrontFoot:
 			animotion = this.frontLegPos - frontLegPos;
@@ -94,11 +107,65 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			animotion = this.backLegPos - backLegPos;
 			break;
 		}
-		NPC.velocity += animotion - oldAnimotion;
+		if (oldAnchor != D2L2Animation.AnchorPoint.None) {
+			NPC.velocity += animotion - oldAnimotion;
+		}
 		oldAnimotion = animotion;
-		oldAnchor = Animation.anchorPoint.GetCurrentValue(AnimationTime);
+		if (oldAnchor.TrySet(Animation.anchorPoint.GetCurrentValue(AnimationTime))) {
+			Vector2 position = default;
+			switch (oldAnchor) {
+				case D2L2Animation.AnchorPoint.FrontFoot:
+				position = frontLegPos;
+				break;
+				case D2L2Animation.AnchorPoint.BackFoot:
+				position = backLegPos;
+				break;
+			}
+			while (position.Y > 0 && new Rectangle((int)position.X, (int)position.Y, 70, 20).OverlapsAnyTiles(false)) {
+				NPC.position.Y -= 2;
+				position.Y -= 2;
+			}
+		}
 		this.frontLegPos = frontLegPos;
 		this.backLegPos = backLegPos;
+		NPC.velocity.Y += NPC.gravity;
+		switch (oldAnchor) {
+			case D2L2Animation.AnchorPoint.FrontFoot:
+			ApplyCollision(frontLegPos);
+			break;
+			case D2L2Animation.AnchorPoint.BackFoot:
+			ApplyCollision(backLegPos);
+			break;
+			case D2L2Animation.AnchorPoint.None:
+			ApplyCollision(frontLegPos);
+			ApplyCollision(backLegPos);
+			break;
+		}
+		NPC.velocity.Y -= NPC.gravity;
+	}
+	void ApplyMovingCollision(Vector2 legPos, Vector2 movement) {
+		Vector2 footPos = NPC.Center + legPos - new Vector2(35, 8);
+		Vector2 oldFootPos = footPos;
+		Vector2 oldMovement = movement;
+		DoCollision(ref footPos, ref movement, 70, 20);
+		NPC.position += footPos - oldFootPos;
+		NPC.velocity += movement;
+	}
+	void ApplyCollision(Vector2 legPos) {
+		Vector2 footPos = NPC.Center + legPos - new Vector2(35, 8);
+		Vector2 oldFootPos = footPos;
+		Vector2 oldVel = NPC.velocity;
+		DoCollision(ref footPos, ref NPC.velocity, 70, 20);
+		NPC.position += footPos - oldFootPos;
+		if (NPC.velocity != oldVel) ;
+	}
+	public static void DoCollision(ref Vector2 position, ref Vector2 velocity, int width, int height, bool fallThrough = false) {
+		OriginExtensions.DrawDebugLine(position + new Vector2(0, height), position + new Vector2(width, height));
+		while (new Rectangle((int)position.X, (int)position.Y, width, height).OverlapsAnyTiles()) position.Y -= 2;
+		Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, width, height, fall: fallThrough);
+		position = slopeCollision.XY();
+		velocity = slopeCollision.ZW();
+		velocity = Collision.TileCollision(position, velocity, width, height, fallThrough, fallThrough);
 	}
 	public override void FindFrame(int frameHeight) {
 		NPC.spriteDirection = NPC.direction;
@@ -284,9 +351,10 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 	public void Unload() { }
 	public virtual void DrawExtras(SpriteBatch spriteBatch, D2L2 D2L2, Vector2 position, Color drawColor) { }
 	public enum AnchorPoint {
-		None,
+		Stop,
 		FrontFoot,
-		BackFoot
+		BackFoot,
+		None
 	}
 }
 public class D2L2_Walk : D2L2Animation {
@@ -373,6 +441,8 @@ public class D2L2_Walk : D2L2Animation {
 		anchorPoint = new(AnchorPoint.BackFoot) {
 			new(27, AnchorPoint.FrontFoot, new StepInterpolation<AnimatableEnum<AnchorPoint>>()),
 			new(61, AnchorPoint.BackFoot, new StepInterpolation<AnimatableEnum<AnchorPoint>>())
+		};
+		anchorPoint = new(AnchorPoint.FrontFoot) {
 		};
 		events = [];
 	}

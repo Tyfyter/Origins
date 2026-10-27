@@ -1468,7 +1468,7 @@ public interface IAnimatableEnum<TSelf, TEnum> : KeyframeSet<TSelf>.ITypeHandler
 			if (Main.mouseLeft && Main.mouseLeftRelease) value = values[hoveredIndex];
 		}
 	}
-	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => $"{typeof(TEnum).Name}.{value}";
+	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => $"{typeof(TEnum).Name}.{(TEnum)value}";
 	public static abstract implicit operator TSelf(TEnum value);
 	public static abstract implicit operator TEnum(TSelf value);
 }
