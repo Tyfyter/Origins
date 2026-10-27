@@ -86,7 +86,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			$"Stepped" :
 			$"[{string.Join(", ", this.Select(i => i.Export()))}]";
 		public string Export() => ToString();
-		public static implicit operator InterpolationStack(StepInterpolationToken token) => new() { baseInterpolation = new StepInterpolation<T>() };
+		public static implicit operator InterpolationStack(KeyframeData.StepInterpolationToken token) => new() { baseInterpolation = new StepInterpolation<T>() };
 	}
 	public interface IInterpolation {
 		public bool IsModifiable => true;
@@ -331,15 +331,15 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				}
 			}
 		} else if (stack.BaseInterpolation.IsModifiable) {
-			for (int i = KeyframeModifiers.modifierTypes.Count - 1; i >= 0; i--) Max(ref width, FontAssets.ItemStack.Value.MeasureString(KeyframeModifiers.modifierTypes[i].name).X);
+			for (int i = KeyframeData.modifierTypes.Count - 1; i >= 0; i--) Max(ref width, FontAssets.ItemStack.Value.MeasureString(KeyframeData.modifierTypes[i].name).X);
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
 				iPos + new Vector2(-2, -2),
-				new(0, 0, (int)width + 4, KeyframeModifiers.modifierTypes.Count * 16 + 4),
+				new(0, 0, (int)width + 4, KeyframeData.modifierTypes.Count * 16 + 4),
 				new Color(90, 90, 115)
 			);
-			for (int i = KeyframeModifiers.modifierTypes.Count - 1; i >= 0; i--) {
-				oneSnippet[0].Text = KeyframeModifiers.modifierTypes[i].name;
+			for (int i = KeyframeData.modifierTypes.Count - 1; i >= 0; i--) {
+				oneSnippet[0].Text = KeyframeData.modifierTypes[i].name;
 				ChatManager.DrawColorCodedStringWithShadow(
 					spriteBatch,
 					FontAssets.ItemStack.Value,
@@ -352,7 +352,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 				);
 				if (Main.mouseLeft && Main.mouseLeftRelease && hoveredModifier != -1) {
 					Main.mouseLeftRelease = false;
-					IInterpolationModifier modifier = KeyframeModifiers.modifierTypes[i].Item2();
+					IInterpolationModifier modifier = KeyframeData.modifierTypes[i].Item2();
 					if (Animation.modifyingInterpolation == -1) Do(new AddInterpolationModifier(stack, stack.Count, modifier, this, keyframeIndex));
 					else Do(new SetInterpolationModifier(stack, Animation.modifyingInterpolation, modifier, this, keyframeIndex));
 				}
@@ -507,7 +507,7 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
 		ref Keyframe keyframe = ref this[keyframeIndex];
-		float rotation = keyframeIndex == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -MathHelper.PiOver2 * animDir : 0;
+		float rotation = keyframeIndex == updateKeyframeAnimIndex ? new KeyframeData.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -MathHelper.PiOver2 * animDir : 0;
 		Vector2 pos = Animation.timelinePos with { X = Animation.TimelineToScreenPos(keyframe.Time) };
 		keyframeDiamond.ResetPositions().Rotate(rotation).Translate(pos);
 		keyframeDiamond.FillColor(keyframeIndex == draggingKeyframeIndex ? Color.Lime : Color.Orange);
@@ -703,7 +703,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	}
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
 		ref Keyframe keyframe = ref this[keyframeIndex];
-		float rotation = keyframeIndex == updateKeyframeAnimIndex ? new KeyframeModifiers.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -TwoThirdsPi * animDir : 0;
+		float rotation = keyframeIndex == updateKeyframeAnimIndex ? new KeyframeData.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -TwoThirdsPi * animDir : 0;
 		Vector2 pos = Animation.timelinePos with { X = Animation.TimelineToScreenPos(keyframe.Time) };
 		keyframeTriangle.ResetPositions().Rotate(rotation).Translate(pos);
 		keyframeTriangle.FillColor(keyframeIndex == draggingKeyframeIndex ? Color.Lime : KeyframeColor);
@@ -1079,7 +1079,7 @@ public interface IInterpolationModifier : IMustBeStruct, IAutoload<IInterpolatio
 		static readonly MethodInfo getCustomDefault = typeof(Loader).GetMethod("GetCustomDefault");
 		static void IAutoloader.Autoload(Mod mod, Type type) {
 			Func<IInterpolationModifier> func = getCustomDefault.MakeGenericMethod(type).Invoke(null, []) as Func<IInterpolationModifier> ?? CreateDefault(type);
-			KeyframeModifiers.modifierTypes.Add((func().ToString(), func));
+			KeyframeData.modifierTypes.Add((func().ToString(), func));
 		}
 
 		static Func<IInterpolationModifier> CreateDefault(Type type) {
@@ -1106,12 +1106,11 @@ public interface IInterpolationModifier<TSelf> : IInterpolationModifier where TS
 	IInterpolationModifier IInterpolationModifier.Clone() => (TSelf)this;
 }
 public static class KeyframeTypes {
-	public static KeyframeSet<T>.Keyframe Step<T>(int onFrame, T value) where T : IEquatable<T> => new(onFrame, value, new StepInterpolation<T>());
 	public readonly struct StepInterpolation<T> : KeyframeSet<T>.IInterpolation where T : IEquatable<T> {
 		public bool IsModifiable => false;
 		public readonly T Interpolate(T prevValue, T nextValue, float progress) => prevValue;
 		public readonly override string ToString() => "Stepped";
-		public static implicit operator StepInterpolation<T>(StepInterpolationToken token) => new();
+		public static implicit operator StepInterpolation<T>(KeyframeData.StepInterpolationToken token) => new();
 	}
 	/*public readonly struct FloatInterpolation : KeyframeSet<float>.IInterpolation, KeyframeSet<float>.ITypeHandler {
 		static KeyframeSet<float>.IInterpolation KeyframeSet<float>.ITypeHandler.Linear => new FloatInterpolation();
@@ -1271,10 +1270,8 @@ public static class KeyframeTypes {
 		}
 		public readonly BoneIterator<TBoneChain> GetEnumerator() => this;
 	}
-	public static readonly StepInterpolationToken Stepped = default;
-	public struct StepInterpolationToken;
 }
-public static class KeyframeModifiers {
+public static class KeyframeData {
 	public static List<(string name, Func<IInterpolationModifier>)> modifierTypes = [];
 	public record struct Exponential(float Exponent = 2) : IInterpolationModifier<Exponential> {
 		public readonly float ModifyProgress(float progress) => float.Pow(progress, Exponent);
@@ -1319,6 +1316,8 @@ public static class KeyframeModifiers {
 		public readonly float ModifyProgress(float progress) => (MathF.Cos(progress * MathHelper.Pi) - 1) * -0.5f;
 		public readonly override string ToString() => "Sinusoidal Ease In/Out";
 	}
+	public static readonly StepInterpolationToken Stepped = default;
+	public struct StepInterpolationToken;
 }
 public struct GizmoTracker() {
 	int usingGizmo = -1;

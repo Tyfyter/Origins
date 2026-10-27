@@ -9,8 +9,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Core.Animation.KeyframeModifiers;
-using static Origins.Core.Animation.KeyframeTypes;
+using static Origins.Core.Animation.KeyframeData;
 using static Origins.NPCs.Ashen.D2L2;
 using static Terraria.ModLoader.ModContent;
 
@@ -309,12 +308,12 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 	public readonly static Vector2 thighOffset = new(15, -19);
 	public readonly static Vector2 calfOffset = new(74, 0);
 	public readonly static Vector2 footOffset = new(-54, 100);
-	public KeyframeSet<PosRotScale> gun = new(new());
+	public KeyframeSet<PosRotScale> gun = new(new(), thighOffset);
 	public KeyframeSet<PosRotScale> thighFront = new(new());
 	public KeyframeSet<PosRotScale> calfFront = new(new(), new ChildOfOffset<PosRotScale>("thighFront", calfOffset));
 	public KeyframeSet<PosRotScale> footFront = new(new(), new ChildOfOffset<PosRotScale>("calfFront", footOffset));
 	public KeyframeSet<FootFrame> footFrontFrame = new();
-	public KeyframeSet<PosRotScale> thighBack = new(new());
+	public KeyframeSet<PosRotScale> thighBack = new(new(), thighOffset);
 	public KeyframeSet<PosRotScale> calfBack = new(new(), new ChildOfOffset<PosRotScale>("thighBack", calfOffset));
 	public KeyframeSet<PosRotScale> footBack = new(new(), new ChildOfOffset<PosRotScale>("calfBack", footOffset));
 	public KeyframeSet<FootFrame> footBackFrame = new();
@@ -341,7 +340,7 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 }
 public class D2L2_Walk : D2L2Animation {
 	public D2L2_Walk() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 			new(21, new(new(-0.75f, -2.25f), 0f, 1f), []),
 			new(28, new(new(0f, 3.75f), 0f, 1f), [new Exponential(2f)]),
 			new(32, new(new(0.75f, 0.75f), 0f, 1f), []),
@@ -349,7 +348,7 @@ public class D2L2_Walk : D2L2Animation {
 			new(65, new(new(0.75f, 6f), 0f, 1f), [new Exponential(2f)]),
 			new(68, new(new(0.75f, 0.75f), 0f, 1f), [])
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(13, new(Vector2.Zero, -0.7978264f, 1f), [new Exponential(2f)]),
 			new(27, new(Vector2.Zero, 0.7435203f, 1f), [new Exponential(2f)]),
 			new(44, new(Vector2.Zero, 0.26160896f, 1f), []),
@@ -377,7 +376,7 @@ public class D2L2_Walk : D2L2Animation {
 			new(27, 0, []),
 			new(44, 0, [])
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(13, new(Vector2.Zero, -0.08883035f, 1f), []),
 			new(27, new(Vector2.Zero, -0.27503765f, 1f), [new Exponential(2f)]),
 			new(44, new(Vector2.Zero, -0.5969832f, 1f), [new Exponential(2f)]),
@@ -414,11 +413,11 @@ public class D2L2_Walk : D2L2Animation {
 }
 public class D2L2_Crouch : D2L2Animation {
 	public D2L2_Crouch() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 			new(27, new(Vector2.Zero, 0.06814659f, 1f), []),
 			new(42, new(Vector2.Zero, 0.1473881f, 1f), [])
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(27, new(Vector2.Zero, -0.23580456f, 1f), []),
 			new(42, new(Vector2.Zero, -0.5379113f, 1f), [])
 		};
@@ -432,7 +431,7 @@ public class D2L2_Crouch : D2L2Animation {
 		};
 		footFrontFrame = new(0) {
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(27, new(Vector2.Zero, -0.3155309f, 1f), []),
 			new(42, new(Vector2.Zero, -0.5722594f, 1f), [])
 		};
@@ -451,10 +450,10 @@ public class D2L2_Crouch : D2L2Animation {
 }
 public class D2L2_Brace : D2L2Animation {
 	public D2L2_Brace() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 			new(81, new(Vector2.Zero, -0.28897548f, 1f), [])
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(1, new(Vector2.Zero, -0.6934594f, 1f), []),
 			new(81, new(Vector2.Zero, 0.11655903f, 1f), [])
 		};
@@ -469,7 +468,7 @@ public class D2L2_Brace : D2L2Animation {
 		footFrontFrame = new(0) {
 			new(1, 1, [])
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(1, new(Vector2.Zero, -0.53021574f, 1f), []),
 			new(81, new(Vector2.Zero, -0.077278495f, 1f), [])
 		};
@@ -489,12 +488,12 @@ public class D2L2_Brace : D2L2Animation {
 }
 public class D2L2_Land : D2L2Animation {
 	public D2L2_Land() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 			new(1, new(Vector2.Zero, -0.26547194f, 1f), []),
 			new(5, new(new(0f, 6f), -0.23197216f, 1f), []),
 			new(54, new(Vector2.Zero, 0.01776874f, 1f), [new SinEaseOut()])
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(5, new(Vector2.Zero, 0.035529256f, 1f), []),
 			new(54, new(Vector2.Zero, 0.01335752f, 1f), [new SinEaseOut()])
 		};
@@ -515,7 +514,7 @@ public class D2L2_Land : D2L2Animation {
 			new(5, 0, []),
 			new(40, 0, [])
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(5, new(Vector2.Zero, -0.46497536f, 1f), []),
 			new(54, new(Vector2.Zero, 0.0837723f, 1f), [new SinEaseBoth()])
 		};
@@ -541,13 +540,13 @@ public class D2L2_Land : D2L2Animation {
 }
 public class D2L2_Survey : D2L2Animation {
 	public D2L2_Survey() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 			new(79, new(Vector2.Zero, -0.6585114f, 1f), [new Exponential(2f)]),
 			new(121, new(Vector2.Zero, 0.5128758f, 1f), []),
 			new(154, new(Vector2.Zero, -0.13262355f, 1f), []),
 			new(191, new(Vector2.Zero, 0.039567232f, 1f), [])
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(48, new(Vector2.Zero, 1.2767458f, 1f), []),
 			new(51, new(Vector2.Zero, 1.2749019f, 1f), [])
 		};
@@ -561,7 +560,7 @@ public class D2L2_Survey : D2L2Animation {
 		};
 		footFrontFrame = new(0) {
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(48, new(Vector2.Zero, 1.23141f, 1f), [])
 		};
 		calfBack = new(new(), new ChildOfOffset<PosRotScale>("thighBack", new(new(74f, 0f), 0f))) {
@@ -577,9 +576,9 @@ public class D2L2_Survey : D2L2Animation {
 }
 public class D2L2_Stomp_Back : D2L2Animation {
 	public D2L2_Stomp_Back() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(22, new(Vector2.Zero, -0.9056177f, 1f), []),
 			new(25, new(Vector2.Zero, -0.119954824f, 1f), [new Exponential(2f)]),
 			new(31, new(Vector2.Zero, -0.1333272f, 1f), []),
@@ -607,7 +606,7 @@ public class D2L2_Stomp_Back : D2L2Animation {
 			new(34, 1, []),
 			new(66, 0, [])
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(22, new(Vector2.Zero, 0.37503123f, 1f), []),
 			new(25, new(Vector2.Zero, 0.47233462f, 1f), []),
 			new(31, new(Vector2.Zero, 0.45254993f, 1f), []),
@@ -632,9 +631,9 @@ public class D2L2_Stomp_Back : D2L2Animation {
 }
 public class D2L2_Stomp_Front : D2L2Animation {
 	public D2L2_Stomp_Front() {
-		gun = new(new()) {
+		gun = new(new(), gunOffset) {
 		};
-		thighFront = new(new()) {
+		thighFront = new(new(), thighOffset) {
 			new(12, new(Vector2.Zero, -1.1782508f, 1f), []),
 			new(16, new(Vector2.Zero, 1.405914f, 1f), [new Exponential(2f)]),
 			new(22, new(Vector2.Zero, 1.405914f, 1f), []),
@@ -667,7 +666,7 @@ public class D2L2_Stomp_Front : D2L2Animation {
 			new(26, 1, []),
 			new(42, 0, [])
 		};
-		thighBack = new(new()) {
+		thighBack = new(new(), thighOffset) {
 			new(12, new(Vector2.Zero, 0.23679745f, 1f), []),
 			new(16, new(Vector2.Zero, 0.004606843f, 1f), [new Exponential(2f)]),
 			new(22, new(Vector2.Zero, 0.004606843f, 1f), [])

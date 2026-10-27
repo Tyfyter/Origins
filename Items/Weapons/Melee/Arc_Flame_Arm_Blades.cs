@@ -20,7 +20,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod.Projectiles;
-using static Origins.Core.Animation.KeyframeModifiers;
+using static Origins.Core.Animation.KeyframeData;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Rei_Set : DevSet<Arc_Flame_Arm_Blades> {
