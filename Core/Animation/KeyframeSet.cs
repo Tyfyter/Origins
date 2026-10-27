@@ -83,9 +83,10 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 			baseInterpolation = BaseInterpolation.Clone()
 		};
 		public override string ToString() => baseInterpolation is StepInterpolation<T> ?
-			$"new StepInterpolation<{typeof(T).Name}>()" :
+			$"Stepped" :
 			$"[{string.Join(", ", this.Select(i => i.Export()))}]";
 		public string Export() => ToString();
+		public static implicit operator InterpolationStack(StepInterpolationToken token) => new() { baseInterpolation = new StepInterpolation<T>() };
 	}
 	public interface IInterpolation {
 		public bool IsModifiable => true;
@@ -1110,6 +1111,7 @@ public static class KeyframeTypes {
 		public bool IsModifiable => false;
 		public readonly T Interpolate(T prevValue, T nextValue, float progress) => prevValue;
 		public readonly override string ToString() => "Stepped";
+		public static implicit operator StepInterpolation<T>(StepInterpolationToken token) => new();
 	}
 	/*public readonly struct FloatInterpolation : KeyframeSet<float>.IInterpolation, KeyframeSet<float>.ITypeHandler {
 		static KeyframeSet<float>.IInterpolation KeyframeSet<float>.ITypeHandler.Linear => new FloatInterpolation();
@@ -1269,6 +1271,8 @@ public static class KeyframeTypes {
 		}
 		public readonly BoneIterator<TBoneChain> GetEnumerator() => this;
 	}
+	public static readonly StepInterpolationToken Stepped = default;
+	public struct StepInterpolationToken;
 }
 public static class KeyframeModifiers {
 	public static List<(string name, Func<IInterpolationModifier>)> modifierTypes = [];
@@ -1432,6 +1436,10 @@ public struct AnimatableEnum<TEnum> : IAnimatableEnum<AnimatableEnum<TEnum>, TEn
 }
 public interface IAnimatableEnum<TSelf, TEnum> : KeyframeSet<TSelf>.ITypeHandler, IEquatable<TSelf>, IEqualityOperators<TSelf, TSelf, bool> where TSelf : struct, IAnimatableEnum<TSelf, TEnum> where TEnum : struct, Enum {
 	static TEnum[] values = Enum.GetValues<TEnum>();
+	static DescriptionAttribute[] descriptions = typeof(TEnum)
+		.GetFields(BindingFlags.Public | BindingFlags.Static)
+		.Where(field => field.IsLiteral)
+		.Select(field => field.GetCustomAttribute<DescriptionAttribute>()).ToArray();
 	bool IEquatable<TSelf>.Equals(TSelf other) => (TSelf)this == other;
 	static bool KeyframeSet<TSelf>.ITypeHandler.Interpolatable => false;
 	static KeyframeSet<TSelf>.IInterpolation KeyframeSet<TSelf>.ITypeHandler.Linear => null;
@@ -1465,12 +1473,18 @@ public interface IAnimatableEnum<TSelf, TEnum> : KeyframeSet<TSelf>.ITypeHandler
 		}
 		if (hoveredIndex != -1) {
 			Main.LocalPlayer.mouseInterface = true;
+			var aaaaa = typeof(TEnum).GetFields();
+			if (descriptions[hoveredIndex] is DescriptionAttribute { Description: string description }) Main.instance.MouseText(description);
 			if (Main.mouseLeft && Main.mouseLeftRelease) value = values[hoveredIndex];
 		}
 	}
 	static string KeyframeSet<TSelf>.ITypeHandler.Export(TSelf value) => $"{typeof(TEnum).Name}.{(TEnum)value}";
 	public static abstract implicit operator TSelf(TEnum value);
 	public static abstract implicit operator TEnum(TSelf value);
+}
+[AttributeUsage(AttributeTargets.Field)]
+public sealed class DescriptionAttribute(string description) : Attribute {
+	public readonly string Description = description ?? throw new ArgumentException($"{nameof(description)} may not be null", nameof(description));
 }
 public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) : KeyframeSet<PosRotScale>.ITypeHandler, IKeyframeOffsetModifier {
 	public PosRotScale() : this(default, 0, 1) { }
@@ -1489,6 +1503,7 @@ public record struct PosRotScale(Vector2 Position, float Rotation, float Scale) 
 	}
 	public static PosRotScale operator +(PosRotScale a, PosRotScale b) => new(a.Position + b.Position.RotatedBy(a.Rotation) * a.Scale, a.Rotation + b.Rotation, a.Scale * b.Scale);
 	public static PosRotScale operator +(PosRotScale a, Vector2 b) => new(a.Position + b.RotatedBy(a.Rotation) * a.Scale, a.Rotation, a.Scale);
+	public static PosRotScale operator +(Vector2 a, PosRotScale b) => new(a + b.Position, b.Rotation, b.Scale);
 	public static void DrawGizmo(SpriteBatch spriteBatch, ref PosRotScale value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
 		Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
 		DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);
