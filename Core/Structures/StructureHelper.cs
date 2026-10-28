@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Origins.Items.Other.Testing;
 using Origins.Tiles.Dev;
@@ -46,6 +47,7 @@ public class StructureHelperUI : UIState {
 	}
 	static StructureHelperUI instance;
 	static AutoLoadingTexture saveIcon = "Origins/UI/Floppy_Disk";
+	static string reopenPath;
 	public override void OnInitialize() {
 		instance = this;
 		refreshButton = new(TextureAssets.Flame) {
@@ -67,15 +69,7 @@ public class StructureHelperUI : UIState {
 			Top = new(8, 0.1f),
 			HAlign = 0.25f * 0.5f
 		};
-		selectFileButton.OnLeftClick += (_, _) => {
-			if (FileBrowser.OpenFilePanel("Select Structure", "json") is not string select) return;
-			string sourcePath = Path.Combine(Program.SavePathShared, "ModSources");
-			string relativePath = Path.GetRelativePath(sourcePath, select);
-			if (relativePath.StartsWith('.')) return;
-			while (viewStack.Count > 0) viewStack.Pop();
-			structurePath = relativePath.Replace(Path.DirectorySeparatorChar, '/');
-			ReloadStructure();
-		};
+		selectFileButton.OnLeftClick += OpenStructureSelect;
 		selectFileButton.OnUpdate += _ => {
 			if (selectFileButton.IsMouseHovering) Main.instance.MouseText("Select Structure");
 		};
@@ -106,8 +100,26 @@ public class StructureHelperUI : UIState {
 		};
 		Append(saveFileButton);
 
-		deselectRoomButton = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Back")) {
+		Asset<Texture2D> favorited = Main.Assets.Request<Texture2D>("Images/UI/ButtonFavoriteActive");
+		Asset<Texture2D> notFavorited = Main.Assets.Request<Texture2D>("Images/UI/ButtonFavoriteInactive");
+		keepStructureButton = new(notFavorited) {
 			Left = new(82, 0),
+			Top = new(10, 0.1f),
+			HAlign = 0.25f * 0.5f
+		};
+		keepStructureButton.OnLeftClick += (_, _) => {
+			if (reopenPath == structurePath) reopenPath = null;
+			else reopenPath = structurePath;
+		};
+		keepStructureButton.OnUpdate += _ => {
+			if (structurePath == reopenPath) keepStructureButton.SetImage(favorited);
+			else keepStructureButton.SetImage(notFavorited);
+			if (keepStructureButton.IsMouseHovering) Main.instance.MouseText("Auto-reopen");
+		};
+		Append(keepStructureButton);
+
+		deselectRoomButton = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Back")) {
+			Left = new(108, 0),
 			Top = new(10, 0.1f),
 			HAlign = 0.25f * 0.5f
 		};
@@ -141,7 +153,7 @@ public class StructureHelperUI : UIState {
 			HAlign = 0.5f
 		};
 		textInput.OnSubmit += inputValue => {
-			if (Associate(new UITextCommandCaller(inputFeedback), inputValue?.Split(' '))) textInput.Clear();
+			if (Associate(new ToastCommandCaller(toastHandler), inputValue?.Split(' '))) textInput.Clear();
 		};
 		textInput.OnExit += IngameFancyUI.Close;
 		Append(textInput);
@@ -154,7 +166,22 @@ public class StructureHelperUI : UIState {
 		};
 		Append(region);
 		region.Append(toastHandler = new());
+		if (!string.IsNullOrWhiteSpace(reopenPath)) SelectStructure(reopenPath);
 	}
+	private void OpenStructureSelect(UIMouseEvent _, UIElement __) {
+		if (FileBrowser.OpenFilePanel("Select Structure", "json") is not string select) return;
+		string sourcePath = Path.Combine(Program.SavePathShared, "ModSources");
+		string relativePath = Path.GetRelativePath(sourcePath, select);
+		if (relativePath.StartsWith('.')) return;
+		SelectStructure(relativePath);
+	}
+
+	private void SelectStructure(string relativePath) {
+		while (viewStack.Count > 0) viewStack.Pop();
+		structurePath = relativePath.Replace(Path.DirectorySeparatorChar, '/');
+		ReloadStructure();
+	}
+
 	void ReloadStructure() {
 		structure = Load(structurePath);
 		OnRoomsChanged();
@@ -180,6 +207,11 @@ public class StructureHelperUI : UIState {
 			uiText.TextColor = color;
 		}
 	}
+	public class ToastCommandCaller(ToastHandler uiText) : CommandCaller {
+		public CommandType CommandType => CommandType.Chat;
+		public Player Player => Main.LocalPlayer;
+		public void Reply(string text, Color color = default) => uiText.Push(text, color);
+	}
 	IEnumerable<UIElement> ActiveElements() {
 		yield return toastHandler;
 		if (!StructureCommand.ReadyForNewAss) {
@@ -190,7 +222,10 @@ public class StructureHelperUI : UIState {
 		}
 		textInput.IsWritingText = false;
 		yield return selectFileButton;
-		if (structurePath is not null && structure is DeserializedStructure) yield return saveFileButton;
+		if (structurePath is not null && structure is DeserializedStructure) {
+			yield return saveFileButton;
+			yield return keepStructureButton;
+		}
 		if (viewStack.Count > 0) {
 			if (CurrentView.room is null) {
 				yield return CurrentView.roomList;
@@ -215,6 +250,7 @@ public class StructureHelperUI : UIState {
 	UIImageButton refreshButton;
 	UIImageButton selectFileButton;
 	UIImageButton saveFileButton;
+	UIImageButton keepStructureButton;
 	UIImageButton deselectRoomButton;
 	ToastHandler toastHandler;
 	public override void Draw(SpriteBatch spriteBatch) {
@@ -368,6 +404,10 @@ public class StructureHelperUI : UIState {
 					}
 					Structure_Helper_Item.ExportRoom(new UITextCommandCaller(inputFeedback)).ContinueWith(_descriptor => {
 						RoomDescriptor descriptor = _descriptor.Result;
+						if (descriptor is null) {
+							toastHandler.Push("Canceled");
+							return;
+						}
 						descriptor.Identifier = roomName;
 						structure.AddOrReplaceRoom(new DeserializedRoom(structure.Mod, descriptor));
 						OnRoomsChanged();
@@ -577,9 +617,10 @@ public class Structure_Helper_Item : TestingItem {
 			Main.NewText("Copied room to clipboard");
 		});
 	}
-	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null) {
+	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null, CommandCaller feedbackCaller = null) {
 		if (!leftClick.HasValue || !rightClick.HasValue) return null;
-		void NewText(string text, Color color = default) {
+		feedbackCaller ??= caller;
+		static void NewText(CommandCaller caller, string text, Color color = default) {
 			if (caller is null) Main.NewText(text, color);
 			else caller.Reply(text, color);
 		}
@@ -643,7 +684,7 @@ public class Structure_Helper_Item : TestingItem {
 						};
 						Main.QueueMainThreadAction(() => {
 							string format;
-							if (caller is StructureHelperUI.UITextCommandCaller) {
+							if (caller is StructureHelperUI.UITextCommandCaller or StructureHelperUI.ToastCommandCaller) {
 								format = "New socket, input {0} to set its {1}";
 							} else {
 								format = "New socket, use /ass {0} to set its {1}";
@@ -651,9 +692,9 @@ public class Structure_Helper_Item : TestingItem {
 								Main.chatText = "/ass ";
 							}
 							if (socket is null) {
-								NewText(string.Format(format, "<k>", "map key"));
+								NewText(caller, string.Format(format, "<k>", "map key"));
 							} else {
-								NewText(string.Format(format, "<k> <socket>", "map and socket keys"));
+								NewText(caller, string.Format(format, "<k> <socket>", "map and socket keys"));
 							}
 						});
 						SpinWait.SpinUntil(() => {
@@ -677,14 +718,14 @@ public class Structure_Helper_Item : TestingItem {
 							};
 							Main.QueueMainThreadAction(() => {
 								string format;
-								if (caller is StructureHelperUI.UITextCommandCaller) {
+								if (caller is StructureHelperUI.UITextCommandCaller or StructureHelperUI.ToastCommandCaller) {
 									format = "New tile pattern {0}, input {1} to set its {2}";
 								} else {
 									format = "New tile pattern {0}, use /ass {1} to set its {2}";
 									Main.OpenPlayerChat();
 									Main.chatText = "/ass ";
 								}
-								NewText(string.Format(format, CurrentTileData, "<k>", "map key"));
+								NewText(caller, string.Format(format, CurrentTileData, "<k>", "map key"));
 							});
 							SpinWait.SpinUntil(() => {
 								Structure_Helper_Item.leftClick = leftClick;

@@ -153,7 +153,7 @@ namespace Origins.Core.Structures {
 			yield return (parameters[0].ToString(), Color.White);
 		}
 		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
-			if (!int.TryParse(name["PlaceTile_".Length..], out int tileID)) tileID = new CachedTileType(name["PlaceTile_".Length..]);
+			if (!int.TryParse(name[$"{GetType().Name}_".Length..], out int tileID)) tileID = new CachedTileType(name[$"{GetType().Name}_".Length..]);
 			spriteBatch.Draw(
 				TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value,
 				destination,
@@ -194,7 +194,7 @@ namespace Origins.Core.Structures {
 			yield return ($"{parameters[0]};{parameters[1]};{parameters[2]}", Color.White);
 		}
 		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
-			string[] parts = name["PlaceFramedTile_".Length..].Split(';');
+			string[] parts = name[$"{GetType().Name}_".Length..].Split(';');
 			if (!int.TryParse(parts[0], out int tileID)) tileID = new CachedTileType(parts[0]);
 			if (!int.TryParse(parts[1], out int frameX)) return;
 			if (!int.TryParse(parts[2], out int frameY)) return;
@@ -260,7 +260,7 @@ namespace Origins.Core.Structures {
 			yield return ($"{parameters[0]};{parameters.GetIfInRange(1)}", Color.White);
 		}
 		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
-			string[] parts = name["PlaceSpecialTile_".Length..].Split(';');
+			string[] parts = name[$"{GetType().Name}_".Length..].Split(';');
 			if (!int.TryParse(parts[0], out int tileID)) tileID = new CachedTileType(parts[0]);
 			_ = int.TryParse(parts[1], out int style);
 			Texture2D texture = TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value;

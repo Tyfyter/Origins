@@ -1,0 +1,45 @@
+{
+	"Rooms": {
+		"test": {
+			"Map": [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"   c   p l C d  D btg o  u  ",
+				"  iIIIIIssssssssssssssssssss",
+				" i        FRGGG   Laa  A    ",
+				"i           GGG             ",
+				"            GGG             "
+			],
+			"Key": {
+				" ": "Empty",
+				".": "Void",
+				"c": "PlaceSpecialTile(Origins/Endowood_Grandfather_Clock)",
+				"p": "PlaceSpecialTile(EpikV2/Party_Pylon_Tile)",
+				"l": "PlaceChest(Containers,16,Needs Updating)",
+				"C": "PlaceChest(Containers,20,Needs Obtainability)",
+				"d": "PlaceSpecialTile(Origins/Music_Box_DW)",
+				"D": "PlaceSpecialTile(Origins/Music_Box_DC)",
+				"b": "PlaceSpecialTile(Bottles)",
+				"t": "PlaceSpecialTile(Origins/Bile_Torch_Tile)",
+				"g": "PlaceSpecialTile(GrandfatherClocks,3)",
+				"o": "PlaceSpecialTile(MythrilAnvil,1)",
+				"u": "PlaceSpecialTile(TeleportationPylon,8)",
+				"i": "PlaceSpecialTile(EpikV2/Slippery_Ice_Platform)+SlopeTile(SlopeDownRight)",
+				"I": "PlaceSpecialTile(EpikV2/Slippery_Ice_Platform)",
+				"s": "PlaceSpecialTile(EpikV2/Sandy_Sandstone_Platform)",
+				"F": "PlaceSpecialTile(ThoriumMod/MonsterBannerGranite)",
+				"R": "PlaceSpecialTile(Banners,31)",
+				"G": "Empty+PlaceWall(chadsfurniport/glasswall)",
+				"L": "PlaceSpecialTile(Origins/Bottomfeeder_Banner)",
+				"a": "PlaceSpecialTile(Origins/Defiled_Banner_NPC_Banner)",
+				"A": "PlaceSpecialTile(Origins/Cleaver_Head_Banner)"
+			},
+			"SocketKey": {},
+			"Tags": []
+		}
+	},
+	"TileDescriptors": {},
+	"BreakCondition": "MaxRoomCount(1000)"
+}

@@ -5,7 +5,7 @@ using Terraria.UI;
 namespace Origins.UI; 
 public class ToastHandler : UIElement {
 	public int toastHeight = 26;
-	public int toastDuration = 60 * 3;
+	public int toastDuration = 60 * 6;
 	public override void OnInitialize() {
 		Width.Set(0, 1);
 		Height.Set(0, 1);
@@ -19,8 +19,11 @@ public class ToastHandler : UIElement {
 			if (((ToastElement)Elements[i]).remove) Elements.RemoveAt(i);
 		}
 	}
-	public void Push(string text) {
-		ToastElement newToast = new(text, this);
+	public void Push(string text, Color color = default) {
+		if (color == default) color = Color.White;
+		ToastElement newToast = new(text, this) {
+			TextColor = color
+		};
 		Append(newToast);
 		newToast.Activate();
 	}
@@ -48,7 +51,6 @@ public class ToastHandler : UIElement {
 			MathUtils.LinearSmoothing(ref Top.Pixels, dest, dist * 0.1f + 1f);
 			if (recalc) Recalculate();
 			else if (ending) remove = true;
-			var bounds = GetDimensions();
 		}
 	}
 }
