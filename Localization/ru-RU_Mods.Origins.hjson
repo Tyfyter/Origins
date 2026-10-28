@@ -2763,6 +2763,9 @@ Keybinds: {
 	// PreviousKeyframeAnimation.DisplayName: Goto Previous Keyframe
 	// CreateLoopKeyframe.DisplayName: Create Loop Keyframe
 	// LoopTimeline.DisplayName: Loop Timeline
+	// CopyPose.DisplayName: Copy Pose
+	// PastePose.DisplayName: Paste Pose
+	// TrimStart.DisplayName: Trim Start
 }
 
 Configs: {

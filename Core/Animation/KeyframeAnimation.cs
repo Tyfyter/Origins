@@ -31,6 +31,7 @@ public abstract class KeyframeAnimation {
 	readonly List<IKeyframeSet> keyframeSets;
 	readonly List<string> keyframeSetNames;
 	readonly bool[] selected;
+	readonly object[] poseCopy;
 	bool exportAsCtor = false;
 	static readonly TextSnippet[] snippet = [new()];
 	float lastTime;
@@ -42,6 +43,7 @@ public abstract class KeyframeAnimation {
 		keyframeSetNames = [];
 		Setup();
 		selected = new bool[keyframeSets.Count];
+		poseCopy = new object[keyframeSets.Count];
 	}
 
 	private void Setup() {
@@ -290,6 +292,15 @@ public abstract class KeyframeAnimation {
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			keyframeSets[i].DrawEditorUI(spriteBatch, GetSelectionType(i), currentTime);
 			timelinePos.Y += 16;
+		}
+		if (Keybindings.PastePose.JustPressed) {
+			for (int i = 0; i < keyframeSets.Count; i++) keyframeSets[i].SetPose(poseCopy[i]);
+		} else if (Keybindings.CopyPose.JustPressed) {
+			for (int i = 0; i < keyframeSets.Count; i++) poseCopy[i] = keyframeSets[i].GetPose();
+		} else if (Keybindings.TrimStart.JustPressed) {
+			float firstKeyframe = float.PositiveInfinity;
+			for (int i = 0; i < keyframeSets.Count; i++) Min(ref firstKeyframe, keyframeSets[i].NextKeyframeTime(0));
+			if (float.IsFinite(firstKeyframe) && firstKeyframe != 0) for (int i = 0; i < keyframeSets.Count; i++) keyframeSets[i].TrimStart(firstKeyframe);
 		}
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			if (GetSelectionType(i) == SelectionType.Secondary) keyframeSets[i].HandleMultiSelect(keyframeSets[selectedIndex]);

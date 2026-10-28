@@ -21,7 +21,9 @@ public class D2L2 : ModNPC, IAshenEnemy {
 	static AutoLoadingTexture footTex = typeof(D2L2).GetDefaultTMLName("_Foot");
 	public D2L2Animation Animation {
 		get => D2L2Animation.animations[NPC.aiAction];
-		set => NPC.aiAction = value.Type;
+		set {
+			if (NPC.aiAction.TrySet(value.Type)) AnimationTime = 0;
+		}
 	}
 	public ref float AnimationTime => ref NPC.ai[0];
 	public override void Load() => this.AddBanner();
@@ -410,6 +412,7 @@ public class D2L2_Walk_Start : D2L2Animation {
 		};
 		events = [];
 	}
+	public static void EnterLoop(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_Loop>();
 }
 public class D2L2_Walk_Loop : D2L2Animation {
 	public D2L2_Walk_Loop() {
@@ -483,6 +486,8 @@ public class D2L2_Walk_Loop : D2L2Animation {
 		};
 		events = [];
 	}
+	public static void ExitLoopFront(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_End>();
+	//public static void ExitLoopBack(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_End>();
 }
 public class D2L2_Walk_End : D2L2Animation {
 	public D2L2_Walk_End() {

@@ -67,6 +67,12 @@ namespace Origins {
 		public static ModKeybind Cut { get; private set; }
 		[Keybind(null, "LeftControl+V", DebugType.Animator)]
 		public static ModKeybind Paste { get; private set; }
+		[Keybind(null, "P+C", DebugType.Animator)]
+		public static ModKeybind CopyPose { get; private set; }
+		[Keybind(null, "P+V", DebugType.Animator)]
+		public static ModKeybind PastePose { get; private set; }
+		[Keybind(null, "T+S", DebugType.Animator)]
+		public static ModKeybind TrimStart { get; private set; }
 		[Keybind(null, "LeftControl+LeftShift+Delete", DebugType.Animator)]
 		public static ModKeybind DeleteAllKeyframes { get; private set; }
 		[Keybind(null, "LeftControl+LeftShift+L", DebugType.Animator)]

@@ -550,6 +550,15 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	public override void HandleMultiSelect(IKeyframeSet primary) {
 		if (primary is KeyframeSet<T> _primary) currentValue = _primary.currentValue;
 	}
+	public override object GetPose() => currentValue;
+	public override void SetPose(object value) => currentValue = (T)value;
+	public override void TrimStart(float time) {
+		base.TrimStart(time);
+		if (keyframes.Count > 0 && keyframes[0].Time == 0) {
+			start = keyframes[0].Target;
+			keyframes.RemoveAt(0);
+		}
+	}
 	class SetKeyframeTarget(KeyframeSet<T> set, int index, T value) : KeyframeVariableStep<T>(set, index, value) {
 		public override string Text => $"Set Keyframe Value: {newValue}";
 		protected override ref T Variable => ref set[index].Target;
@@ -1022,6 +1031,15 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 		public override void Do() => set.keyframes = [];
 		public override void Undo() => set.keyframes = oldValue;
 	}
+	protected class TrimStartStep(AKeyframeSet<TKeyframe> set, float time) : UndoStep {
+		readonly List<TKeyframe> oldValue = set.keyframes;
+		public override string Text => $"Trim Start";
+		public override void Do() {
+			set.keyframes = [..oldValue.Select(k => k.CleanMutableRefs())];
+			set.TrimStart(time);
+		}
+		public override void Undo() => set.keyframes = oldValue;
+	}
 	protected abstract class KeyframeVariableStep<TVar>(AKeyframeSet<TKeyframe> set, int index, TVar value) : VariableUndoStep<TVar>(value) {
 		readonly AKeyframeSet<TKeyframe> set = set;
 		protected readonly int index = index;
@@ -1051,6 +1069,12 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 	protected virtual void OnBind() { }
 	public virtual bool CanLoop => false;
 	public bool IsLooped => looped;
+	public virtual object GetPose() => null;
+	public virtual void SetPose(object value) { }
+	public virtual void TrimStart(float time) {
+		for (int i = 0; i < keyframes.Count; i++) this[i].Time -= time;
+	}
+	void IKeyframeSet.TrimStart(float time) => Do(new TrimStartStep(this, time));
 }
 public interface IKeyframeSet {
 	public float Duration { get; }
@@ -1061,6 +1085,9 @@ public interface IKeyframeSet {
 	public string Export(string indent);
 	public string ExportType();
 	public void Bind(KeyframeAnimation animation) { }
+	public void TrimStart(float time);
+	public object GetPose() => null;
+	public void SetPose(object value) { }
 	public bool CanLoop { get; }
 	public bool IsLooped { get; }
 }
