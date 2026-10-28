@@ -342,81 +342,53 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 }
 public class D2L2_Walk_Start : D2L2Animation {
 	public D2L2_Walk_Start() {
-		gun = new(new(), gunOffset) {
-			new(21, new(new(-0.75f, -2.25f), 0f, 1f), []),
-			new(28, new(new(0f, 3.75f), 0f, 1f), [new Exponential(2f)]),
-			new(32, new(new(0.75f, 0.75f), 0f, 1f), []),
-			new(54, new(new(0.75f, -1.5f), 0f, 1f), []),
-			new(65, new(new(0.75f, 6f), 0f, 1f), [new Exponential(2f)]),
-			new(68, new(new(0.75f, 0.75f), 0f, 1f), [])
+		gun = new(new(), new Vector2(-11f, 29f)) {
+			new(21, new(new(-0.75f, -2.25f), 0f, 1f), [])
 		};
-		thighFront = new(new(), thighOffset) {
+		thighFront = new(new(), new Vector2(15f, -19f)) {
 			new(13, new(Vector2.Zero, -0.7978264f, 1f), [new Exponential(2f)]),
-			new(27, new(Vector2.Zero, 0.7435203f, 1f), [new Exponential(2f)]),
-			new(44, new(Vector2.Zero, 0.26160896f, 1f), []),
-			new(61, new(Vector2.Zero, -0.23204267f, 1f), []),
-			new(77, new(Vector2.Zero, 0.008316994f, 1f), [])
+			new(27, new(Vector2.Zero, 0.7435203f, 1f), [new Exponential(2f)])
 		};
 		calfFront = new(new(), new ChildOfOffset<PosRotScale>("thighFront", new(new(74f, 0f), 0f))) {
 			new(13, new(Vector2.Zero, 0.39644134f, 1f), []),
 			new(20, new(Vector2.Zero, 0.42721963f, 1f), []),
-			new(27, new(Vector2.Zero, -0.058840573f, 1f), [new Exponential(2f)]),
-			new(44, new(Vector2.Zero, -0.021928906f, 1f), []),
-			new(61, new(Vector2.Zero, -0.18748999f, 1f), []),
-			new(77, new(Vector2.Zero, 0.0060328245f, 1f), [])
+			new(27, new(Vector2.Zero, -0.058840573f, 1f), [new Exponential(2f)])
 		};
 		footFront = new(new(), new ChildOfOffset<PosRotScale>("calfFront", new(new(-54f, 100f), 0f))) {
 			new(13, new(Vector2.Zero, -0.30294824f, 1f), []),
 			new(20, new(Vector2.Zero, 0.41238415f, 1f), []),
-			new(27, new(Vector2.Zero, -0.6523212f, 1f), []),
-			new(44, new(Vector2.Zero, -0.24834383f, 1f), []),
-			new(61, new(Vector2.Zero, 0.4205594f, 1f), []),
-			new(77, new(Vector2.Zero, -0.006381631f, 1f), [])
+			new(27, new(Vector2.Zero, -0.6523212f, 1f), [])
 		};
 		footFrontFrame = new(0) {
 			new(13, 1, []),
-			new(27, 0, []),
-			new(44, 0, [])
+			new(27, 0, [])
 		};
-		thighBack = new(new(), thighOffset) {
+		thighBack = new(new(), new Vector2(15f, -19f)) {
 			new(13, new(Vector2.Zero, -0.08883035f, 1f), []),
-			new(27, new(Vector2.Zero, -0.27503765f, 1f), [new Exponential(2f)]),
-			new(44, new(Vector2.Zero, -0.5969832f, 1f), [new Exponential(2f)]),
-			new(61, new(Vector2.Zero, 0.47995877f, 1f), []),
-			new(77, new(Vector2.Zero, 0.010640144f, 1f), [])
+			new(27, new(Vector2.Zero, -0.27503765f, 1f), [new Exponential(2f)])
 		};
 		calfBack = new(new(), new ChildOfOffset<PosRotScale>("thighBack", new(new(74f, 0f), 0f))) {
 			new(13, new(Vector2.Zero, -0.10938823f, 1f), []),
-			new(27, new(Vector2.Zero, -0.3041209f, 1f), []),
-			new(44, new(Vector2.Zero, -0.091175914f, 1f), []),
-			new(53, new(Vector2.Zero, 0.3534186f, 1f), [new SinEaseBoth()]),
-			new(61, new(Vector2.Zero, 0.04447925f, 1f), [new Exponential(2f)]),
-			new(77, new(Vector2.Zero, 0.020093799f, 1f), [])
+			new(27, new(Vector2.Zero, -0.3041209f, 1f), [])
 		};
 		footBack = new(new(), new ChildOfOffset<PosRotScale>("calfBack", new(new(-54f, 100f), 0f))) {
-			new(13, new(Vector2.Zero, 0.19647622f, 1f), []),
-			new(29, new(Vector2.Zero, 0.53961456f, 1f), []),
-			new(37, new(Vector2.Zero, 0.031573534f, 1f), []),
-			new(44, new(Vector2.Zero, -0.19758749f, 1f), []),
-			new(53, new(Vector2.Zero, 0.28837478f, 1f), []),
-			new(61, new(Vector2.Zero, -0.49688005f, 1f), []),
-			new(77, new(Vector2.Zero, -0.031288266f, 1f), [])
+			new(13, new(Vector2.Zero, 0.19647622f, 1f), [])
 		};
 		footBackFrame = new(0) {
-			new(27, 1, []),
-			new(61, 0, [])
+			new(27, 1, [])
 		};
 		anchorPoint = new(AnchorPoint.BackFoot) {
-			new(27, AnchorPoint.FrontFoot, Stepped),
-			new(61, AnchorPoint.BackFoot, Stepped)
+			new(27, AnchorPoint.FrontFoot, Stepped)
 		};
-		events = [];
+		events = [
+					new(27, EnterLoop)
+				];
 	}
 	public static void EnterLoop(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_Loop>();
 }
 public class D2L2_Walk_Loop : D2L2Animation {
 	public D2L2_Walk_Loop() {
-		gun = new(new(), gunOffset) {
+		gun = new(new(), new Vector2(-11f, 29f)) {
 			new(21, new(new(-0.75f, -2.25f), 0f, 1f), []),
 			new(28, new(new(0f, 3.75f), 0f, 1f), [new Exponential(2f)]),
 			new(32, new(new(0.75f, 0.75f), 0f, 1f), []),
@@ -424,7 +396,7 @@ public class D2L2_Walk_Loop : D2L2Animation {
 			new(65, new(new(0.75f, 6f), 0f, 1f), [new Exponential(2f)]),
 			new(68, new(new(0.75f, 0.75f), 0f, 1f), [])
 		};
-		thighFront = new(new(), thighOffset) {
+		thighFront = new(new(), new Vector2(15f, -19f)) {
 			new(13, new(Vector2.Zero, -0.7978264f, 1f), [new Exponential(2f)]),
 			new(27, new(Vector2.Zero, 0.7435203f, 1f), [new Exponential(2f)]),
 			new(44, new(Vector2.Zero, 0.26160896f, 1f), []),
@@ -452,7 +424,7 @@ public class D2L2_Walk_Loop : D2L2Animation {
 			new(27, 0, []),
 			new(44, 0, [])
 		};
-		thighBack = new(new(), thighOffset) {
+		thighBack = new(new(), new Vector2(15f, -19f)) {
 			new(13, new(Vector2.Zero, -0.08883035f, 1f), []),
 			new(27, new(Vector2.Zero, -0.27503765f, 1f), [new Exponential(2f)]),
 			new(44, new(Vector2.Zero, -0.5969832f, 1f), [new Exponential(2f)]),
@@ -484,80 +456,53 @@ public class D2L2_Walk_Loop : D2L2Animation {
 			new(27, AnchorPoint.FrontFoot, Stepped),
 			new(61, AnchorPoint.BackFoot, Stepped)
 		};
-		events = [];
+		events = [
+					new(61, ExitLoopFront)
+				];
 	}
 	public static void ExitLoopFront(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_End>();
 	//public static void ExitLoopBack(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_End>();
 }
 public class D2L2_Walk_End : D2L2Animation {
 	public D2L2_Walk_End() {
-		gun = new(new(), gunOffset) {
-			new(21, new(new(-0.75f, -2.25f), 0f, 1f), []),
-			new(28, new(new(0f, 3.75f), 0f, 1f), [new Exponential(2f)]),
-			new(32, new(new(0.75f, 0.75f), 0f, 1f), []),
-			new(54, new(new(0.75f, -1.5f), 0f, 1f), []),
-			new(65, new(new(0.75f, 6f), 0f, 1f), [new Exponential(2f)]),
-			new(68, new(new(0.75f, 0.75f), 0f, 1f), [])
+		gun = new(new(), new Vector2(-11f, 29f)) {
 		};
-		thighFront = new(new(), thighOffset) {
-			new(13, new(Vector2.Zero, -0.7978264f, 1f), [new Exponential(2f)]),
-			new(27, new(Vector2.Zero, 0.7435203f, 1f), [new Exponential(2f)]),
-			new(44, new(Vector2.Zero, 0.26160896f, 1f), []),
-			new(61, new(Vector2.Zero, -0.23204267f, 1f), []),
-			new(77, new(Vector2.Zero, 0.008316994f, 1f), [])
+		thighFront = new(new(), new Vector2(15f, -19f)) {
+			new(1, new(Vector2.Zero, -0.23204267f, 1f), []),
+			new(9, new(Vector2.Zero, -0.36172557f, 1f), []),
+			new(17, new(Vector2.Zero, 0.008316994f, 1f), [])
 		};
 		calfFront = new(new(), new ChildOfOffset<PosRotScale>("thighFront", new(new(74f, 0f), 0f))) {
-			new(13, new(Vector2.Zero, 0.39644134f, 1f), []),
-			new(20, new(Vector2.Zero, 0.42721963f, 1f), []),
-			new(27, new(Vector2.Zero, -0.058840573f, 1f), [new Exponential(2f)]),
-			new(44, new(Vector2.Zero, -0.021928906f, 1f), []),
-			new(61, new(Vector2.Zero, -0.18748999f, 1f), []),
-			new(77, new(Vector2.Zero, 0.0060328245f, 1f), [])
+			new(1, new(Vector2.Zero, -0.18748999f, 1f), []),
+			new(9, new(Vector2.Zero, 0.23668003f, 1f), []),
+			new(17, new(Vector2.Zero, 0.0060328245f, 1f), [])
 		};
 		footFront = new(new(), new ChildOfOffset<PosRotScale>("calfFront", new(new(-54f, 100f), 0f))) {
-			new(13, new(Vector2.Zero, -0.30294824f, 1f), []),
-			new(20, new(Vector2.Zero, 0.41238415f, 1f), []),
-			new(27, new(Vector2.Zero, -0.6523212f, 1f), []),
-			new(44, new(Vector2.Zero, -0.24834383f, 1f), []),
-			new(61, new(Vector2.Zero, 0.4205594f, 1f), []),
-			new(77, new(Vector2.Zero, -0.006381631f, 1f), [])
+			new(1, new(Vector2.Zero, 0.4205594f, 1f), []),
+			new(9, new(Vector2.Zero, 0.3908286f, 1f), []),
+			new(17, new(Vector2.Zero, -0.006381631f, 1f), [])
 		};
 		footFrontFrame = new(0) {
-			new(13, 1, []),
-			new(27, 0, []),
-			new(44, 0, [])
+			new(5, 1, []),
+			new(15, 0, [])
 		};
-		thighBack = new(new(), thighOffset) {
-			new(13, new(Vector2.Zero, -0.08883035f, 1f), []),
-			new(27, new(Vector2.Zero, -0.27503765f, 1f), [new Exponential(2f)]),
-			new(44, new(Vector2.Zero, -0.5969832f, 1f), [new Exponential(2f)]),
-			new(61, new(Vector2.Zero, 0.47995877f, 1f), []),
-			new(77, new(Vector2.Zero, 0.010640144f, 1f), [])
+		thighBack = new(new(), new Vector2(15f, -19f)) {
+			new(1, new(Vector2.Zero, 0.47995877f, 1f), []),
+			new(17, new(Vector2.Zero, 0.010640144f, 1f), [])
 		};
 		calfBack = new(new(), new ChildOfOffset<PosRotScale>("thighBack", new(new(74f, 0f), 0f))) {
-			new(13, new(Vector2.Zero, -0.10938823f, 1f), []),
-			new(27, new(Vector2.Zero, -0.3041209f, 1f), []),
-			new(44, new(Vector2.Zero, -0.091175914f, 1f), []),
-			new(53, new(Vector2.Zero, 0.3534186f, 1f), [new SinEaseBoth()]),
-			new(61, new(Vector2.Zero, 0.04447925f, 1f), [new Exponential(2f)]),
-			new(77, new(Vector2.Zero, 0.020093799f, 1f), [])
+			new(1, new(Vector2.Zero, 0.04447925f, 1f), [new Exponential(2f)]),
+			new(17, new(Vector2.Zero, 0.020093799f, 1f), [])
 		};
 		footBack = new(new(), new ChildOfOffset<PosRotScale>("calfBack", new(new(-54f, 100f), 0f))) {
-			new(13, new(Vector2.Zero, 0.19647622f, 1f), []),
-			new(29, new(Vector2.Zero, 0.53961456f, 1f), []),
-			new(37, new(Vector2.Zero, 0.031573534f, 1f), []),
-			new(44, new(Vector2.Zero, -0.19758749f, 1f), []),
-			new(53, new(Vector2.Zero, 0.28837478f, 1f), []),
-			new(61, new(Vector2.Zero, -0.49688005f, 1f), []),
-			new(77, new(Vector2.Zero, -0.031288266f, 1f), [])
+			new(1, new(Vector2.Zero, -0.49688005f, 1f), []),
+			new(17, new(Vector2.Zero, -0.031288266f, 1f), [])
 		};
 		footBackFrame = new(0) {
-			new(27, 1, []),
-			new(61, 0, [])
+			new(1, 0, [])
 		};
 		anchorPoint = new(AnchorPoint.BackFoot) {
-			new(27, AnchorPoint.FrontFoot, Stepped),
-			new(61, AnchorPoint.BackFoot, Stepped)
+			new(1, AnchorPoint.BackFoot, Stepped)
 		};
 		events = [];
 	}
