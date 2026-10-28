@@ -617,9 +617,8 @@ public class Structure_Helper_Item : TestingItem {
 			Main.NewText("Copied room to clipboard");
 		});
 	}
-	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null, CommandCaller feedbackCaller = null) {
+	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null) {
 		if (!leftClick.HasValue || !rightClick.HasValue) return null;
-		feedbackCaller ??= caller;
 		static void NewText(CommandCaller caller, string text, Color color = default) {
 			if (caller is null) Main.NewText(text, color);
 			else caller.Reply(text, color);
