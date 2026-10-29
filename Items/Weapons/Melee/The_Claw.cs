@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Misc;
 using Origins.Tiles.Ashen;
 using System;
@@ -282,24 +283,5 @@ namespace Origins.Items.Weapons.Melee {
 			return base.Colliding(projHitbox, targetHitbox);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
-	}
-	public struct AutoGlowingTexture(string asset) : IUnloadable, IBatchLoadable {
-		AutoLoadingTexture texture = asset;
-		AutoLoadingTexture glowTexture = asset + "_Glow";
-		public Texture2D Texture => texture.Value;
-		public Texture2D GlowTexture => glowTexture.Value;
-		public static implicit operator AutoGlowingTexture(string asset) => new(asset);
-		void IBatchLoadable.Load() {
-			texture.LoadAsset();
-			glowTexture.LoadAsset();
-		}
-		void IUnloadable.Unload() {
-			texture.Unload();
-			glowTexture.Unload();
-		}
-		void IBatchLoadable.Wait() {
-			texture.Wait();
-			glowTexture.Wait();
-		}
 	}
 }

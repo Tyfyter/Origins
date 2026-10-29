@@ -5699,6 +5699,8 @@ namespace Origins {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
 		}
+		public static void DrawGlowingRiggedPart(this SpriteBatch spriteBatch, AutoGlowingTexture texture, Vector2 position, PosRotScale transform, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) =>
+			spriteBatch.DrawGlowingRiggedPart(texture.Texture, texture.GlowTexture, position, transform, sourceRectangle, color, glowColor, rotation, origin, scale, effects);
 		public static void DrawGlowingRiggedPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, PosRotScale transform, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
 			spriteBatch.DrawRiggedPart(texture, position, transform, sourceRectangle, color, rotation, origin, scale, effects);
 			spriteBatch.DrawRiggedPart(glowTexture, position, transform, sourceRectangle, glowColor, rotation, origin, scale, effects);

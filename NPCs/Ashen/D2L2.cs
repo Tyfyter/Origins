@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core.Animation;
-using Origins.Items.Weapons.Melee;
+using Origins.Graphics;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using System.IO;
@@ -231,8 +231,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		GetLegTransforms(back, out PosRotScale thigh, out PosRotScale calf, out PosRotScale foot);
 		if (!back) {
 			spriteBatch.DrawGlowingRiggedPart(
-				thighTex.Texture,
-				thighTex.GlowTexture,
+				thighTex,
 				pos,
 				thigh,
 				null,
