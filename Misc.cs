@@ -2145,6 +2145,14 @@ namespace Origins {
 			Utils.Swap(ref working, ref finalized);
 			working.Clear();
 		}
+		/// <summary>
+		/// See <see cref="List{T}.AddRange(IEnumerable{T})"/>
+		/// </summary>
+		public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> dict, IReadOnlyDictionary<TKey, TValue> other) {
+			MonoMod.Utils.Helpers.ThrowIfArgumentNull(dict);
+			foreach (KeyValuePair<TKey, TValue> entry in MonoMod.Utils.Helpers.ThrowIfNull(other))
+				dict.Add(entry.Key, entry.Value);
+		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 		public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
 			return new Vector2((float)(magnitude * Math.Cos(theta)), (float)(magnitude * Math.Sin(theta)));

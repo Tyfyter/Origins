@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Utils;
 using Newtonsoft.Json;
+using Origins.Graphics;
 using Origins.Items.Other.Testing;
 using Origins.Tiles.Dev;
 using Origins.UI;
@@ -32,6 +34,7 @@ using Terraria.Utilities.FileBrowser;
 using static Origins.Core.Structures.DescriptorParameter;
 using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.StructureCommand;
+using static Origins.Core.Structures.StructureHelperUI;
 
 namespace Origins.Core.Structures; 
 public class StructureHelperUI : UIState {
@@ -157,6 +160,12 @@ public class StructureHelperUI : UIState {
 		};
 		textInput.OnExit += IngameFancyUI.Close;
 		Append(textInput);
+		Append(globalKeyToggle = new() {
+			Left = new(16, 0),
+			Top = new(58, 0.1f),
+			HAlign = 0f
+		});
+
 		UIElement region = new() {
 			Left = new(0, 0.25f * 0.5f),
 			Top = new(0, 0.1f),
@@ -166,6 +175,11 @@ public class StructureHelperUI : UIState {
 		};
 		Append(region);
 		region.Append(toastHandler = new());
+		Append(visibilityToggle = new() {
+			Left = new(4, 0.25f * 0.5f),
+			Top = new(-4, -0.1f),
+			VAlign = 1
+		});
 		if (!string.IsNullOrWhiteSpace(reopenPath)) SelectStructure(reopenPath);
 	}
 	private void OpenStructureSelect(UIMouseEvent _, UIElement __) {
@@ -185,6 +199,16 @@ public class StructureHelperUI : UIState {
 	void ReloadStructure() {
 		structure = Load(structurePath);
 		OnRoomsChanged();
+		serializationContext ??= new();
+		serializationContext.globalKeyToggle = globalKeyToggle;
+		serializationContext.globalKey.Clear();
+		serializationContext.globalSocketKey.Clear();
+		if (structure is DeserializedStructure des/*Like, the roaring knight?*/) {
+			serializationContext.globalKey.AddRange(des.globalTileDescriptors);
+			foreach ((char key, RoomSocket socket) in des.Rooms.OfType<DeserializedRoom>().SelectMany(r => r.SocketKey)) {
+				serializationContext.globalSocketKey[key] = socket;
+			}
+		}
 	}
 	void OnRoomsChanged() {
 		RefreshRoomList();
@@ -196,6 +220,7 @@ public class StructureHelperUI : UIState {
 			element.IgnoresMouseInteraction = false;
 			element.Update(gameTime);
 		}
+
 	}
 	public class UITextCommandCaller(UIText uiText) : CommandCaller {
 		public CommandType CommandType => CommandType.Chat;
@@ -213,11 +238,21 @@ public class StructureHelperUI : UIState {
 		public void Reply(string text, Color color = default) => uiText.Push(text, color);
 	}
 	IEnumerable<UIElement> ActiveElements() {
+		yield return visibilityToggle;
+		if (!Visible) yield break;
 		yield return toastHandler;
 		if (!StructureCommand.ReadyForNewAss) {
 			textInput.IsWritingText = true;
 			yield return inputFeedback;
 			yield return textInput;
+			switch (serializationContext.state) {
+				case SerializationContext.SerializationState.Tile:
+				yield return globalKeyToggle;
+				break;
+				case SerializationContext.SerializationState.Socket:
+				//yield return globalKeyToggle;
+				break;
+			}
 			yield break;
 		}
 		textInput.IsWritingText = false;
@@ -253,7 +288,19 @@ public class StructureHelperUI : UIState {
 	UIImageButton keepStructureButton;
 	UIImageButton deselectRoomButton;
 	ToastHandler toastHandler;
+	GlobalKeyToggle globalKeyToggle;
+	UIImageButtonVisibility visibilityToggle;
+	public bool Visible => visibilityToggle.Visible;
+	public bool CanModifyBounds => !Visible && serializationContext.state == SerializationContext.SerializationState.Inactive;
+	SerializationContext serializationContext = new();
 	public override void Draw(SpriteBatch spriteBatch) {
+		if (!Visible) {
+			using (spriteBatch.OverrideState(transformMatrix: Main.GameViewMatrix.ZoomMatrix)) {
+				ModContent.GetInstance<Structure_Helper_HUD>().Draw(spriteBatch);
+			}
+			visibilityToggle.Draw(spriteBatch);
+			return;
+		}
 		if (!StructureCommand.ReadyForNewAss) {
 			SpriteBatchState state = spriteBatch.GetState();
 			spriteBatch.Restart(state, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
@@ -402,7 +449,7 @@ public class StructureHelperUI : UIState {
 						Structure_Helper_Item.ShouldCancel = false;
 						return;
 					}
-					Structure_Helper_Item.ExportRoom(new UITextCommandCaller(inputFeedback)).ContinueWith(_descriptor => {
+					Structure_Helper_Item.ExportRoom(new UITextCommandCaller(inputFeedback), serializationContext).ContinueWith(_descriptor => {
 						RoomDescriptor descriptor = _descriptor.Result;
 						if (descriptor is null) {
 							toastHandler.Push("Canceled");
@@ -561,12 +608,28 @@ public class StructureHelperUI : UIState {
 			);
 		}
 	}
+	public class GlobalKeyToggle : UIElement {
+		readonly Asset<Texture2D> toggleButton = Main.Assets.Request<Texture2D>("Images/UI/Settings_Toggle");
+		public bool Value { get; set; }
+		public override void OnInitialize() {
+			Width.Set(0, 1);
+			Height.Set(16, 0);
+			UIImageButtonFramed button = new(toggleButton);
+			button.OnUpdate += _ => {
+				if (button.IgnoresMouseInteraction) ;
+				button.SetFrame(toggleButton.Frame(2, frameX: Value.ToInt()));
+			};
+			button.OnLeftClick += (_, _) => Value = !Value;
+			Append(button);
+			Append(new UIText("Add as global tile key?") { Left = new(16, 0) });
+		}
+	}
+	public class SocketKeySelector : UIElement {
+
+	}
 }
 public class Structure_Helper_Item : TestingItem {
 	public override string Texture => "Terraria/Images/Item_" + ItemID.WireKite;
-#if !DEBUG
-	public override bool IsLoadingEnabled(Mod mod) => DebugConfig.Instance.ForceEnableDebugItems;
-#endif
 	internal static Point? leftClick;
 	internal static Point? rightClick;
 	static bool shouldCancel = false;
@@ -589,6 +652,7 @@ public class Structure_Helper_Item : TestingItem {
 	public override bool AltFunctionUse(Player player) => true;
 	public override bool? UseItem(Player player) {
 		if (Main.myPlayer == player.whoAmI) {
+			if (Main.InGameUI.CurrentState is StructureHelperUI { CanModifyBounds: false }) return false;
 			if (player.altFunctionUse == 2) {
 				rightClick = new(Player.tileTargetX, Player.tileTargetY);
 			} else {
@@ -617,17 +681,23 @@ public class Structure_Helper_Item : TestingItem {
 			Main.NewText("Copied room to clipboard");
 		});
 	}
-	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null) {
+	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null, SerializationContext context = null) {
 		if (!leftClick.HasValue || !rightClick.HasValue) return null;
 		static void NewText(CommandCaller caller, string text, Color color = default) {
 			if (caller is null) Main.NewText(text, color);
 			else caller.Reply(text, color);
 		}
+		context ??= new();
 		return Task.Run<RoomDescriptor>(() => {
 			if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return null;
+			Dictionary<char, string> globalKey = context.globalKey;
+			Dictionary<char, RoomSocket> globalSocketKey = context.globalSocketKey;
 			Associations.Clear();
 			Associations.Add("Empty", ' ');
 			Associations.Add("Void", '.');
+			foreach (KeyValuePair<char, string> item in globalKey) {
+				Associations.Add(item.Value, item.Key);
+			}
 			Point min = leftClick;
 			Point max = rightClick;
 			MinMax(ref min.X, ref max.X);
@@ -644,6 +714,7 @@ public class Structure_Helper_Item : TestingItem {
 					CurrentTileData = SerializableTileDescriptor.Serialize(tile);
 					SpinWait.SpinUntil(() => StructureCommand.ReadyForNewAss);
 					if (Room_Socket_Marker.IsSocketMarker(tile)) {
+						context.state = SerializationContext.SerializationState.Socket;
 						string pattern = CurrentTileData;
 						char? ch = null;
 						RoomSocket socket = new(null, default);
@@ -704,16 +775,26 @@ public class Structure_Helper_Item : TestingItem {
 						if (ShouldCancel) {
 							Associations.Clear();
 							Structure_Helper_HUD.HighlightTile = default;
+							context.state = SerializationContext.SerializationState.Inactive;
 							return null;
 						}
 						builder.Append(ch.Value);
 						key.Add(ch.Value, pattern);
-						if (socket is not null) socketKey.Add(ch.Value, socket);
+						if (context.ShouldAddGlobal) globalKey.Add(ch.Value, pattern);
+						if (socket is not null) {
+							socketKey.Add(ch.Value, socket);
+							globalSocketKey.Add(ch.Value, socket);
+						}
 					} else {
 						if (!Associations.ContainsKey(CurrentTileData)) {
+							context.state = SerializationContext.SerializationState.Tile;
 							StructureCommand.OnAss += (_c, _) => {
 								char c = AsChar(_c);
-								return !Associations.ContainsValue(c) && Associations.TryAdd(CurrentTileData, c);
+								bool global = context.ShouldAddGlobal;
+								if (global && globalKey.ContainsKey(c)) return false;
+								if (Associations.ContainsValue(c) || !Associations.TryAdd(CurrentTileData, c)) return false;
+								if (global) globalKey.Add(c, CurrentTileData);
+								return true;
 							};
 							Main.QueueMainThreadAction(() => {
 								string format;
@@ -735,10 +816,12 @@ public class Structure_Helper_Item : TestingItem {
 						if (ShouldCancel) {
 							Associations.Clear();
 							Structure_Helper_HUD.HighlightTile = default;
+							context.state = SerializationContext.SerializationState.Inactive;
 							return null;
 						}
 						builder.Append(Associations[CurrentTileData]);
 					}
+					context.state = SerializationContext.SerializationState.Processing;
 				}
 				lines[j - min.Y] = builder.ToString();
 			}
@@ -749,6 +832,7 @@ public class Structure_Helper_Item : TestingItem {
 			Associations.Clear();
 			Structure_Helper_Item.leftClick = null;
 			Structure_Helper_Item.rightClick = null;
+			context.state = SerializationContext.SerializationState.Inactive;
 			return new() {
 				Map = lines,
 				Key = key,
@@ -967,5 +1051,41 @@ public class UIConditionalButton(Asset<Texture2D> texture, Func<string> conditio
 			return false;
 		}
 		return true;
+	}
+}
+public class UIImageButtonFramed(Asset<Texture2D> texture) : UIElement() {
+	Rectangle frame;
+	public void SetFrame(Rectangle frame) {
+		//Non-short-circuiting or because it needs to do both even if width succeeds
+		this.frame = frame;
+		if (Width.TrySet(new(frame.Width, 0f)) | Height.TrySet(new(frame.Height, 0f))) Recalculate();
+	}
+	protected override void DrawSelf(SpriteBatch spriteBatch) {
+		CalculatedStyle dimensions = GetDimensions();
+		spriteBatch.Draw(texture.Value, dimensions.ToRectangle(), frame, Color.White);
+	}
+}
+public class UIImageButtonVisibility(bool visible = true) : UIImageButton(GetImage(visible)) {
+	static readonly Asset<Texture2D> toggleOn = Main.Assets.Request<Texture2D>("Images/Inventory_Tick_On");
+	static readonly Asset<Texture2D> toggleOff = Main.Assets.Request<Texture2D>("Images/Inventory_Tick_Off");
+	public bool Visible { get; private set; } = visible;
+	public override void LeftClick(UIMouseEvent evt) {
+		base.LeftClick(evt);
+		Visible = !Visible;
+		SetImage(GetImage(Visible));
+	}
+	static Asset<Texture2D> GetImage(bool visible) => visible ? toggleOn : toggleOff;
+}
+public class SerializationContext {
+	public SerializationState state;
+	public Dictionary<char, string> globalKey = [];
+	public Dictionary<char, RoomSocket> globalSocketKey = [];
+	public StructureHelperUI.GlobalKeyToggle globalKeyToggle;
+	public bool ShouldAddGlobal => globalKeyToggle?.Value ?? false;
+	public enum SerializationState {
+		Inactive,
+		Processing,
+		Tile,
+		Socket
 	}
 }
