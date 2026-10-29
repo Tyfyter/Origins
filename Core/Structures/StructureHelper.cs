@@ -206,7 +206,7 @@ public class StructureHelperUI : UIState {
 		if (structure is DeserializedStructure des/*Like, the roaring knight?*/) {
 			serializationContext.globalKey.AddRange(des.globalTileDescriptors);
 			foreach ((char key, RoomSocket socket) in des.Rooms.OfType<DeserializedRoom>().SelectMany(r => r.SocketKey)) {
-				serializationContext.globalSocketKey[key] = socket;
+				serializationContext.globalSocketKey.Add(socket.Key);
 			}
 		}
 	}
@@ -691,7 +691,7 @@ public class Structure_Helper_Item : TestingItem {
 		return Task.Run<RoomDescriptor>(() => {
 			if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return null;
 			Dictionary<char, string> globalKey = context.globalKey;
-			Dictionary<char, RoomSocket> globalSocketKey = context.globalSocketKey;
+			List<string> globalSocketKey = context.globalSocketKey;
 			Associations.Clear();
 			Associations.Add("Empty", ' ');
 			Associations.Add("Void", '.');
@@ -705,6 +705,7 @@ public class Structure_Helper_Item : TestingItem {
 			string[] lines = new string[max.Y + 1 - min.Y];
 			Dictionary<char, string> key = [];
 			Dictionary<char, RoomSocket> socketKey = [];
+			SerializableTileDescriptor.CurrentlySerializingMod = context.mod;
 			for (int j = min.Y; j <= max.Y; j++) {
 				StringBuilder builder = new();
 				Structure_Helper_HUD.HighlightTile.Y = j;
@@ -780,10 +781,9 @@ public class Structure_Helper_Item : TestingItem {
 						}
 						builder.Append(ch.Value);
 						key.Add(ch.Value, pattern);
-						if (context.ShouldAddGlobal) globalKey.Add(ch.Value, pattern);
 						if (socket is not null) {
 							socketKey.Add(ch.Value, socket);
-							globalSocketKey.Add(ch.Value, socket);
+							if (!globalSocketKey.Contains(socket.Key)) globalSocketKey.Add(socket.Key);
 						}
 					} else {
 						if (!Associations.ContainsKey(CurrentTileData)) {
@@ -833,6 +833,7 @@ public class Structure_Helper_Item : TestingItem {
 			Structure_Helper_Item.leftClick = null;
 			Structure_Helper_Item.rightClick = null;
 			context.state = SerializationContext.SerializationState.Inactive;
+			SerializableTileDescriptor.CurrentlySerializingMod = null;
 			return new() {
 				Map = lines,
 				Key = key,
@@ -1079,8 +1080,9 @@ public class UIImageButtonVisibility(bool visible = true) : UIImageButton(GetIma
 public class SerializationContext {
 	public SerializationState state;
 	public Dictionary<char, string> globalKey = [];
-	public Dictionary<char, RoomSocket> globalSocketKey = [];
+	public List<string> globalSocketKey = [];
 	public StructureHelperUI.GlobalKeyToggle globalKeyToggle;
+	public Mod mod;
 	public bool ShouldAddGlobal => globalKeyToggle?.Value ?? false;
 	public enum SerializationState {
 		Inactive,

@@ -550,7 +550,7 @@ namespace Origins.Items.Other.Testing {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			if (structure is null) {
 				if (task is null) {
-					task = DeserializedStructure.AsyncLoad("Origins/World/Structures/TestOverlapStructure");
+					task = DeserializedStructure.AsyncLoad("Origins/World/Structures/Woxes");
 				} else if (task.IsCompleted) {
 					structure = task.Result;
 					task = null;

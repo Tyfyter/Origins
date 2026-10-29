@@ -294,7 +294,11 @@ namespace Origins.Core.Structures {
 					int alternate = 0;
 					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
 					string lootPool = "";
-					if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is Chest { name: string name } && !string.IsNullOrWhiteSpace(name)) lootPool = "," + name;
+					if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is Chest { name: string name } && !string.IsNullOrWhiteSpace(name)) {
+						if (CurrentlySerializingMod is not null && !name.Contains('/')) name = $"{Mod}/{name}";
+						lootPool = "," + name;
+						if (!ModContent.TryFind<LootPool>(name, out _)) (CurrentlySerializingMod ?? Mod).Logger.Warn($"Could not find LootPool \"{name}\"");
+					}
 					return $"{Name}({TileID.Search.GetName(tile.TileType)},{style}{lootPool})";
 				}
 				return null;

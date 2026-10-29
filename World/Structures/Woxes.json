@@ -1,0 +1,94 @@
+{
+	"Rooms": {
+		"Left": {
+			"Map": [
+				" SS",
+				"SSS",
+				"SSp",
+				"SWW",
+				"SWW",
+				" WW",
+				"dWW",
+				" WR",
+				"sss",
+				"Sss"
+			],
+			"Key": {
+				"d": "PlaceSpecialTile(ClosedDoor,9)"
+			},
+			"SocketKey": {
+				"R": {
+					"Key": "socket",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Right": {
+			"Map": [
+				"SS  ",
+				"SSS ",
+				"pSSS",
+				"WwSS",
+				"WWSS",
+				"WWSS",
+				"WWSS",
+				"LWSS",
+				"sssS",
+				"ssSS"
+			],
+			"Key": {
+				"w": "PlaceSpecialTile(Banners,7)+PlaceWall(DiscWall)"
+			},
+			"SocketKey": {
+				"L": {
+					"Key": "socket",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Center": {
+			"Map": [
+				"SSSSSSSSSSSSSSSSS",
+				"SSSSSSSSSSSSSSSSS",
+				"WWWWWWWWWWWWWWWWW",
+				"WWWgggWWWWWgggWWW",
+				"WWWgggWWWWWgggWWW",
+				"WWWgggWWWWWgggWWW",
+				"WWWWWWWWWWWWWWWWW",
+				"LWWWWWWCWcWWWWWWR",
+				"sssssssssssssssss",
+				"sssssssSSssssssss"
+			],
+			"Key": {
+				"c": "Empty+PlaceWall(DiscWall)",
+				"g": "Empty+PlaceWall(Glass)",
+				"C": "PlaceChest(Containers,13,Origins/Ashen_Generic)+PlaceWall(DiscWall)"
+			},
+			"SocketKey": {
+				"L": {
+					"Key": "socket",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "socket",
+					"Direction": "Right"
+				}
+			}, 
+			"Tags": [],
+			"StartPos": "c"
+		}
+	},
+	"TileDescriptors": {
+		"R": "Empty+PlaceWall(DiscWall)",
+		" ": "Empty",
+		".": "Void",
+		"S": "PlaceTile(Sunplate)",
+		"p": "PlaceSpecialTile(Banners,9)+PlaceWall(DiscWall)",
+		"W": "Empty+PlaceWall(DiscWall)",
+		"s": "PlaceTile(Sunplate)+PlaceWall(DiscWall)",
+		"L": "Empty+PlaceWall(DiscWall)"
+	},
+	"BreakCondition": "MaxRoomCount(1000)"
+}

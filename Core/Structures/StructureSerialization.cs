@@ -21,6 +21,7 @@ using static Origins.Core.Structures.DeserializedStructure;
 namespace Origins.Core.Structures; 
 public abstract class SerializableTileDescriptor : SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
 	static Accumulator<Tile, string> Serializer = null;
+	protected internal static Mod CurrentlySerializingMod { get; internal set; }
 	protected static void AddSerializer(Func<Tile, string> serializer) {
 		Serializer += (Tile tile, ref string data) => {
 			string newDesc = serializer(tile);
