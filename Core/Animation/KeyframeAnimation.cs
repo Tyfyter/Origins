@@ -464,35 +464,36 @@ public abstract class KeyframeAnimation {
 		public bool? overrideAnimatorMode;
 		public float? loopStart;
 		public float? loopEnd;
-		public void Play(Time time, float duration, float speed) {
+		public void Play(Time time, float duration, float speed, bool loop) {
+			bool playing = true;
 			if (overrideAnimatorMode ?? DebugConfig.Instance.AnimatorMode) {
-				if (Keybindings.PlayPauseAnimation.JustPressed) playing = !playing;
+				if (Keybindings.PlayPauseAnimation.JustPressed) this.playing = !this.playing;
 				if (Keybindings.LoopAnimation.JustPressed) forceLoop = !forceLoop;
-				if (playing) {
-					if (forceLoop) {
-						speed = speed.Abs(out int dir);
-						float start = loopStart ?? 0;
-						duration = (loopEnd ?? duration) - start;
-						float t = time.Value - start;
-						switch (dir) {
-							case 1:
-							t.CycleUp(duration + 1, speed);
-							break;
-							case -1:
-							t.CycleDownWithZero(duration, speed);
-							break;
-						}
-						time.Value = t + start;
-					} else {
-						time.Value += speed;
+				playing = this.playing;
+				loop |= forceLoop;
+			}
+			if (playing) {
+				if (loop) {
+					speed = speed.Abs(out int dir);
+					float start = loopStart ?? 0;
+					duration = (loopEnd ?? duration) - start;
+					float t = time.Value - start;
+					switch (dir) {
+						case 1:
+						t.CycleUp(duration + 1, speed);
+						break;
+						case -1:
+						t.CycleDownWithZero(duration, speed);
+						break;
 					}
+					time.Value = t + start;
+				} else {
+					time.Value += speed;
 				}
-			} else {
-				time.Value += speed;
 			}
 		}
-		public void Play(ref float time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
-		public void Play(ref int time, KeyframeAnimation animation, float speed = 1) => Play(new Time(ref time), animation.totalLength, speed);
+		public void Play(ref float time, KeyframeAnimation animation, float speed = 1, bool loop = false) => Play(new Time(ref time), animation.totalLength, speed, loop);
+		public void Play(ref int time, KeyframeAnimation animation, float speed = 1, bool loop = false) => Play(new Time(ref time), animation.totalLength, speed, loop);
 	}
 	const float button_scale = 10;
 	const float half_tri_base = 0.8660254f;
