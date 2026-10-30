@@ -329,18 +329,32 @@ public class VV13_Holding : VV13Animation {
 public class VV13_Drop : VV13Animation {
 	public VV13_Drop() {
 		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
+			new(7, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
+			new(19, new(new(12f, 0.88321584f), new(12f, 0.33936298f), new(12f, -0.19077718f), new(12f, 0.022064716f), new(12f, -0.15902036f), new(12f, -0.1429162f), new(12f, -0.2447167f), new(24f, -0.01968513f)), [])
 		};
 		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
+			new(7, new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), []),
+			new(19, new(new(12f, 0.558076f), new(12f, 0.06368241f), new(12f, 0.24257427f), new(12f, -0.03894925f), new(12f, -0.378919f), new(12f, -0.3924481f), new(12f, -0.11583215f), new(24f, -0.16935521f)), [])
 		};
 		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
+			new(7, new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), []),
+			new(19, new(new(12f, 1.5285354f), new(12f, 0.63582313f), new(12f, 0.37780166f), new(12f, -6.086339f), new(12f, -6.094507f), new(12f, -6.230354f), new(12f, -6.242133f), new(24f, -6.015459f)), [])
 		};
 		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
+			new(7, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), []),
+			new(19, new(new(12f, 2.0584033f), new(12f, 6.0768595f), new(12f, 0.16546845f), new(12f, 0.28798866f), new(12f, -0.037413836f), new(12f, 0.17829704f), new(12f, -5.9599066f), new(24f, 0.22610116f)), [])
 		};
 		tool = new(new()) {
+			new(7, new(new(252f, 111.75f), 0f, 1f), [])
+		};
+		toolOpacity = new(1f) {
+			new(7, 0.9916667f, []),
+			new(120, 0f, [])
 		};
 		events = [
-			new(120, Drop)
-		];
+					new(7, Dev_CycleTool),
+			new(10, Drop)
+				];
 	}
 }
 public class VV13_Use_Tool : VV13Animation {
