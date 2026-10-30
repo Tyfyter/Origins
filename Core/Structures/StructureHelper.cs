@@ -325,7 +325,7 @@ public class StructureHelperUI : UIState {
 	UIImageButton saveFileButton;
 	UIImageButton keepStructureButton;
 	UIImageButton deselectRoomButton;
-	ToastHandler toastHandler;
+	public ToastHandler toastHandler;
 	GlobalKeyToggle globalKeyToggle;
 	SocketKeySelector socketSelector;
 	UIImageButtonVisibility visibilityToggle;

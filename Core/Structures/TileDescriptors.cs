@@ -297,11 +297,7 @@ namespace Origins.Core.Structures {
 					int alternate = 0;
 					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
 					string lootPool = "";
-					if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is Chest { name: string name } && !string.IsNullOrWhiteSpace(name)) {
-						if (CurrentlySerializingMod is not null && !name.Contains('/')) name = $"{Mod}/{name}";
-						lootPool = "," + name;
-						if (!ModContent.TryFind<LootPool>(name, out _)) (CurrentlySerializingMod ?? Mod).Logger.Warn($"Could not find LootPool \"{name}\"");
-					}
+					if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is Chest { name: string name }) lootPool = GetLootPoolArg(name);
 					return $"{Name}({TileID.Search.GetName(tile.TileType)},{style}{lootPool})";
 				}
 				return null;
@@ -318,6 +314,18 @@ namespace Origins.Core.Structures {
 				IsExpertMode = Main.expertMode,
 				IsMasterMode = Main.masterMode
 			});
+		}
+		public static string GetLootPoolArg(string name) {
+			if (!string.IsNullOrWhiteSpace(name)) {
+				if (CurrentlySerializingMod is not null && !name.Contains('/')) name = $"{CurrentlySerializingMod}/{name}";
+				if (!ModContent.TryFind<LootPool>(name, out _)) {
+					string warning = $"Could not find LootPool \"{name}\"";
+					(CurrentlySerializingMod ?? Origins.instance).Logger.Warn(warning);
+					if (Main.InGameUI.CurrentState is StructureHelperUI helperUI) helperUI.toastHandler.Push(warning);
+				}
+				return "," + name;
+			}
+			return "";
 		}
 	}
 	public class PlaceSpecialChest : PlaceSpecialTile {
@@ -345,13 +353,7 @@ namespace Origins.Core.Structures {
 					int style = 0;
 					int alternate = 0;
 					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
-					string lootPool = "";
-					string name = chest.GivenName;
-					if (!string.IsNullOrWhiteSpace(name)) {
-						if (CurrentlySerializingMod is not null && !name.Contains('/')) name = $"{Mod}/{name}";
-						lootPool = "," + name;
-						if (!ModContent.TryFind<LootPool>(name, out _)) (CurrentlySerializingMod ?? Mod).Logger.Warn($"Could not find LootPool \"{name}\"");
-					}
+					string lootPool = PlaceChest.GetLootPoolArg(chest.GivenName);
 					return $"{Name}({TileID.Search.GetName(tile.TileType)},{style}{lootPool})";
 				}
 				return null;
