@@ -14,7 +14,9 @@
 				"Sss"
 			],
 			"Key": {
-				"d": "PlaceSpecialTile(ClosedDoor,9)"
+				"d": "PlaceSpecialTile(ClosedDoor,9)",
+				"R": "Empty+PlaceWall(DiscWall)",
+				"L": "Empty+PlaceWall(DiscWall)"
 			},
 			"SocketKey": {
 				"R": {
@@ -38,7 +40,9 @@
 				"ssSS"
 			],
 			"Key": {
-				"w": "PlaceSpecialTile(Banners,7)+PlaceWall(DiscWall)"
+				"w": "PlaceSpecialTile(Banners,7)+PlaceWall(DiscWall)",
+				"R": "Empty+PlaceWall(DiscWall)",
+				"L": "Empty+PlaceWall(DiscWall)"
 			},
 			"SocketKey": {
 				"L": {
@@ -64,7 +68,9 @@
 			"Key": {
 				"c": "Empty+PlaceWall(DiscWall)",
 				"g": "Empty+PlaceWall(Glass)",
-				"C": "PlaceChest(Containers,13,Origins/Ashen_Generic)+PlaceWall(DiscWall)"
+				"C": "PlaceChest(Containers,13,Origins/Ashen_Generic)+PlaceWall(DiscWall)",
+				"R": "Empty+PlaceWall(DiscWall)",
+				"L": "Empty+PlaceWall(DiscWall)"
 			},
 			"SocketKey": {
 				"L": {
@@ -75,20 +81,43 @@
 					"Key": "socket",
 					"Direction": "Right"
 				}
-			}, 
-			"Tags": [],
-			"StartPos": "c"
+			},
+			"StartPos": "c",
+			"Tags": []
+		},
+		"LeftClosed": {
+			"Map": [
+				"  SS",
+				" SSS",
+				"SSSp",
+				"SSuW",
+				"SSWW",
+				"SSWW",
+				"SSWW",
+				"SSWR",
+				"Ssss",
+				"SSss"
+			],
+			"Key": {
+				"R": "Empty+PlaceWall(DiscWall)",
+				"u": "PlaceSpecialTile(Banners,8)+PlaceWall(DiscWall)"
+			},
+			"SocketKey": {
+				"R": {
+					"Key": "socket",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
 		}
 	},
 	"TileDescriptors": {
-		"R": "Empty+PlaceWall(DiscWall)",
 		" ": "Empty",
 		".": "Void",
 		"S": "PlaceTile(Sunplate)",
 		"p": "PlaceSpecialTile(Banners,9)+PlaceWall(DiscWall)",
 		"W": "Empty+PlaceWall(DiscWall)",
-		"s": "PlaceTile(Sunplate)+PlaceWall(DiscWall)",
-		"L": "Empty+PlaceWall(DiscWall)"
+		"s": "PlaceTile(Sunplate)+PlaceWall(DiscWall)"
 	},
 	"BreakCondition": "MaxRoomCount(1000)"
 }

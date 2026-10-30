@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Primitives;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Utils;
 using Newtonsoft.Json;
@@ -240,7 +241,7 @@ public class StructureHelperUI : UIState {
 		if (structure is DeserializedStructure des/*Like, the roaring knight?*/) {
 			serializationContext.globalKey.AddRange(des.globalTileDescriptors);
 			foreach ((char key, RoomSocket socket) in des.Rooms.OfType<DeserializedRoom>().SelectMany(r => r.SocketKey)) {
-				serializationContext.globalSocketKey[socket.Key] |= (int)socket.Direction;
+				serializationContext.globalSocketKey[socket.Key] |= 1 << (int)socket.Direction;
 			}
 		}
 	}
@@ -669,8 +670,12 @@ public class StructureHelperUI : UIState {
 				builder.Clear();
 				builder.Append(name);
 				builder.Append(" (");
+				bool comma = false;
 				for (int i = 1; i <= 4; i++) {
-					if ((_dirs & (1 << i)) != 0) builder.Append(((Direction)i).ToString());
+					if ((_dirs & (1 << i)) != 0) {
+						if (!comma.TrySet(true)) builder.Append(", ");
+						builder.Append(((Direction)i).ToString());
+					}
 				}
 				builder.Append(')');
 				snippet[0].Text = builder.ToString();
@@ -684,12 +689,12 @@ public class StructureHelperUI : UIState {
 					Vector2.One,
 					out int isHovered
 				).Y;
-				/*if (isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
+				if (isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
 					ITextInputContainer container = serializationContext.socketInput;
 					container.Text.Clear();
 					container.Text.Append(name);
 					container.Submit();
-				}*/
+				}
 			}
 		}
 	}
@@ -850,7 +855,7 @@ public class Structure_Helper_Item : TestingItem {
 						key.Add(ch.Value, pattern);
 						if (socket is not null) {
 							socketKey.Add(ch.Value, socket);
-							globalSocketKey[socket.Key] |= (int)socket.Direction;
+							globalSocketKey[socket.Key] |= 1 << (int)socket.Direction;
 						}
 					} else {
 						if (!Associations.ContainsKey(CurrentTileData)) {
