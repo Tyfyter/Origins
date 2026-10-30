@@ -446,7 +446,9 @@ public class D2L2_Walk_Loop : D2L2Animation {
 	public static void ExitLoopFront(in D2L2 d2L2) {
 		if (Main.LocalPlayer.controlSmart) d2L2.Animation = GetInstance<D2L2_Walk_End>();
 	}
-	//public static void ExitLoopBack(in D2L2 d2L2) => d2L2.Animation = GetInstance<D2L2_Walk_End>();
+	public static void ExitLoopBack(in D2L2 d2L2) {
+		if (Main.LocalPlayer.controlSmart) d2L2.Animation = GetInstance<D2L2_Walk_End_Back>();
+	}
 }
 public class D2L2_Walk_End : D2L2Animation {
 	public D2L2_Walk_End() {
@@ -482,6 +484,10 @@ public class D2L2_Walk_End : D2L2Animation {
 		anchorPoint = new(AnchorPoint.BackFoot) {
 		};
 		events = [];
+	}
+}
+public class D2L2_Walk_End_Back : D2L2Animation {
+	public D2L2_Walk_End_Back() {
 	}
 }
 public class D2L2_Crouch : D2L2Animation {
