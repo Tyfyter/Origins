@@ -664,8 +664,10 @@ public class StructureHelperUI : UIState {
 		public SerializationContext serializationContext;
 		public override void Draw(SpriteBatch spriteBatch) {
 			Vector2 position = GetDimensions().Position();
+			float startY = position.Y;
 			TextSnippet[] snippet = [new()];
 			StringBuilder builder = new();
+			float width = 0;
 			foreach ((string name, int _dirs) in serializationContext.globalSocketKey) {
 				builder.Clear();
 				builder.Append(name);
@@ -679,7 +681,7 @@ public class StructureHelperUI : UIState {
 				}
 				builder.Append(')');
 				snippet[0].Text = builder.ToString();
-				position.Y += ChatManager.DrawColorCodedStringWithShadow(
+				ChatManager.DrawColorCodedStringWithShadow(
 					spriteBatch,
 					FontAssets.ItemStack.Value,
 					snippet,
@@ -688,7 +690,15 @@ public class StructureHelperUI : UIState {
 					default,
 					Vector2.One,
 					out int isHovered
-				).Y;
+				);
+				Vector2 size = ChatManager.GetStringSize(FontAssets.ItemStack.Value, snippet, Vector2.One) + (Vector2.One * 4);
+				position.Y += size.Y;
+				Max(ref width, 0);
+				if (position.Y + size.Y > Main.screenHeight) {
+					position.Y = startY;
+					position.X += width;
+					width = 0;
+				}
 				if (isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
 					ITextInputContainer container = serializationContext.socketInput;
 					container.Text.Clear();
