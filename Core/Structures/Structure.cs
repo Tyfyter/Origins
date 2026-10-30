@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Origins.Core.Structures.DeserializedStructure;
+using static Origins.Core.Structures.RoomSocket;
 
 namespace Origins.Core.Structures {
 	public abstract class Structure {
@@ -142,19 +143,20 @@ namespace Origins.Core.Structures {
 				return false;
 			}
 		}
-		public static void Nudge(this Direction direction, ref int x, ref int y) {
+		public static void Nudge(this Direction direction, ref int x, ref int y, OffsetType offset = OffsetType.NormalOffset) {
+			int mult = 1 + (sbyte)offset;
 			switch (direction) {
 				case Direction.Right:
-				x++;
+				x += mult;
 				break;
 				case Direction.Left:
-				x--;
+				x -= mult;
 				break;
 				case Direction.Up:
-				y--;
+				y -= mult;
 				break;
 				case Direction.Down:
-				y++;
+				y += mult;
 				break;
 			}
 		}
@@ -243,7 +245,7 @@ namespace Origins.Core.Structures {
 		public override string ToString() => string.Join('+', Parts ?? [nameof(Void)]);
 		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, CombineParts(a, b), a.Ignore && b.Ignore);
 	}
-	public record class RoomSocket(string Key, Direction Direction, bool Optional = false) {
+	public record class RoomSocket(string Key, Direction Direction, bool Optional = false, OffsetType Offset = OffsetType.NormalOffset) {
 		public class RoomSocketConverter : JsonConverter {
 			public override bool CanConvert(Type objectType) {
 				ArgumentNullException.ThrowIfNull(objectType, nameof(objectType));
@@ -301,6 +303,13 @@ namespace Origins.Core.Structures {
 				writer.WriteValue(value.Optional);
 				writer.WriteEndObject();
 			}
+		}
+		public enum OffsetType : sbyte {
+			InverseOffset = -2,
+			NoOffset = -1,
+			NormalOffset = 0,
+			TripleOffset = 2,
+			QuadOffset = 3,
 		}
 	}
 	public class StructureInstance {
@@ -516,35 +525,38 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public class SocketTracker {
-		readonly List<int> requiredSockets = [];
+		List<(int i, int j)> requiredSockets = [];
 		public List<TrackedSocket> sockets = [];
 		public int RequiredCount => requiredSockets.Count;
 		public void Add(RoomSocket socket, ARoom fromRoom, int i, int j, bool optional) {
 			int x = i;
 			int y = j;
-			socket.Direction.Nudge(ref x, ref y);
+			socket.Direction.Nudge(ref x, ref y, socket.Offset);
 			for (int k = 0; k < sockets.Count; k++) {
 				(RoomSocket socket2, _, int i2, int j2) = sockets[k];
 				if (i2 == x && j2 == y) {
 					if (socket.Direction.IsInverse(socket2.Direction)) {
-						requiredSockets.Remove(k);
+						requiredSockets.Remove((i2, j2));
 						sockets.RemoveAt(k);
 					}
 					return;
 				}
 			}
-			if (!optional) requiredSockets.Add(sockets.Count);
+			if (!optional) requiredSockets.Add((i, j));
 			sockets.Add(new(socket, fromRoom, i, j));
 		}
 		public bool IsImportant(int i, int j) {
 			for (int k = 0; k < sockets.Count; k++) {
 				(RoomSocket socket, _, int i2, int j2) = sockets[k];
-				socket.Direction.Nudge(ref i2, ref j2);
+				socket.Direction.Nudge(ref i2, ref j2, socket.Offset);
 				if (i2 == i && j2 == j) return true;
 			}
 			return false;
 		}
-		public SocketTracker Clone() => new() { sockets = sockets.ToList() };
+		public SocketTracker Clone() => new() {
+			sockets = sockets.ToList(),
+			requiredSockets = requiredSockets.ToList()
+		};
 		public record struct TrackedSocket(RoomSocket Socket, ARoom FromRoom, int I, int J) {
 			public readonly bool Matches(RoomSocket socket, int i, int j) => socket == Socket && i == I && j == J;
 		}

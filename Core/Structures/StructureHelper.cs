@@ -182,7 +182,8 @@ public class StructureHelperUI : UIState {
 			}
 			if (Associate(new ToastCommandCaller(toastHandler), [
 				key,
-				inputValue
+				inputValue,
+				""//$"optional,{RoomSocket.OffsetType.InverseOffset}"
 			])) textInput2.Clear();
 		};
 		textInput2.OnExit += IngameFancyUI.Close;
@@ -487,7 +488,7 @@ public class StructureHelperUI : UIState {
 				Task.Run(() => {
 					Structure_Helper_Item.ShouldCancel = false;
 					string roomName = null;
-					StructureCommand.OnAss += (c, _) => {
+					StructureCommand.OnAss += (c, _, _) => {
 						roomName = c;
 						return true;
 					};
@@ -773,6 +774,7 @@ public class Structure_Helper_Item : TestingItem {
 			Main.NewText("Copied room to clipboard");
 		});
 	}
+	static readonly Regex socketOptionParser = new($"(?:(optional)|({string.Join('|', Enum.GetNames<RoomSocket.OffsetType>())})|.+?)+", RegexOptions.Compiled);
 	public static Task<RoomDescriptor> ExportRoom(CommandCaller caller = null, SerializationContext context = null) {
 		if (!leftClick.HasValue || !rightClick.HasValue) return null;
 		static void NewText(CommandCaller caller, string text, Color color = default) {
@@ -834,7 +836,7 @@ public class Structure_Helper_Item : TestingItem {
 							socket = null;
 							break;
 						}
-						StructureCommand.OnAss += (_c, socketKey) => {
+						StructureCommand.OnAss += (_c, socketKey, parameters) => {
 							char c = AsChar(_c);
 							if (Associations.ContainsValue(c)) return false;
 							if (socket is null) {
@@ -842,7 +844,13 @@ public class Structure_Helper_Item : TestingItem {
 								return true;
 							}
 							if (string.IsNullOrWhiteSpace(socketKey)) return false;
-							socket = socket with { Key = socketKey };
+							Match match = socketOptionParser.Match(parameters);
+							_ = Enum.TryParse(match.Groups[2].Value, out RoomSocket.OffsetType offsetType);
+							socket = socket with {
+								Key = socketKey,
+								Optional = match.Groups[1].Success,
+								Offset = offsetType,
+							};
 							ch = c;
 							return true;
 						};
@@ -874,14 +882,14 @@ public class Structure_Helper_Item : TestingItem {
 						}
 						builder.Append(ch.Value);
 						key.Add(ch.Value, pattern);
-						if (socket is not null) {
+						if (socket?.Key is not null) {
 							socketKey.Add(ch.Value, socket);
 							globalSocketKey[socket.Key] |= 1 << (int)socket.Direction;
 						}
 					} else {
 						if (!Associations.ContainsKey(CurrentTileData)) {
 							context.state = SerializationContext.SerializationState.Tile;
-							StructureCommand.OnAss += (_c, _) => {
+							StructureCommand.OnAss += (_c, _, _) => {
 								char c = AsChar(_c);
 								bool global = context.ShouldAddGlobal;
 								if (global && globalKey.ContainsKey(c)) return false;
@@ -1043,7 +1051,7 @@ public class StructureCommand : ModCommand {
 	public override string Usage => "/ass cancel or as described when prompted to use this command";
 	public override string Description => "";
 	public override bool IsCaseSensitive => true;
-	public static event Func<string, string, bool> OnAss = null;
+	public static event Func<string, string, string, bool> OnAss = null;
 	public static bool ReadyForNewAss => OnAss is null;
 	public static void Cancel() {
 		Structure_Helper_Item.ShouldCancel = true;
@@ -1055,7 +1063,7 @@ public class StructureCommand : ModCommand {
 			Cancel();
 			return true;
 		}
-		if (OnAss?.Invoke(args[0], args.GetIfInRange(1)) ?? false) {
+		if (OnAss?.Invoke(args[0], args.GetIfInRange(1), args.GetIfInRange(2)) ?? false) {
 			OnAss = null;
 			caller.Reply($"Successfully added {args[0]} <---> {Structure_Helper_Item.CurrentTileData}");
 			return true;
