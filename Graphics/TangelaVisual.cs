@@ -1,5 +1,6 @@
 ﻿using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Melee;
 using PegasusLib.Graphics;
@@ -135,7 +136,7 @@ namespace Origins.Graphics {
 			), tangelaSeed, extraOffset);
 		}
 		public static void DrawTangela(DrawData data, int tangelaSeed, Vector2 extraOffset = default) {
-			if (OriginsModIntegrations.DrawingAOMap) return;
+			if (FancyLighting.DrawingAOMap) return;
 			data.shader = ShaderID;
 			data.color = Color.White;
 			drawDatas.Add(new(data, tangelaSeed, extraOffset));

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.CrossMod;
 using Origins.Tiles.Other;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -47,8 +48,8 @@ namespace Origins.Walls {
 			orig(self);
 			if (OriginClientConfig.Instance.DisableCoolVisualEffects) return;
 			if (drawWalls is null) return;
-			if (OriginsModIntegrations.FancyLightingEngineActive) {
-				if (OriginsModIntegrations.FancyLightingEnhancedGlowMaskSupport && !OriginsModIntegrations.FancyLightingDrawingRealLight) return;
+			if (FancyLighting.FancyLightingEngineEnabled) {
+				if (FancyLighting.GlowRenderMode == FancyLighting.SmoothLightingGlowRenderMode.Accurate && !FancyLighting.FancyLightingDrawingRealLight) return;
 
 				RenderTarget2D wallTarget = Main.instance.wallTarget;
 				AnyWallsVisible = drawWalls.Count > 0;
@@ -119,7 +120,7 @@ namespace Origins.Walls {
 			return true;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (!OriginsModIntegrations.FancyLightingEngineActive || OriginsModIntegrations.FancyLightingEnhancedGlowMaskSupport) return;
+			if (!FancyLighting.FancyLightingEngineEnabled || FancyLighting.EnhancedGlowMaskSupport) return;
 			const float num2 = 1f / 255;
 			r = num2;
 			g = num2;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
@@ -252,7 +253,7 @@ namespace Origins.Tiles.Ashen {
 			return walked;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (OriginsModIntegrations.FancyLightingEngineActive) this.DrawTileGlow(i, j, spriteBatch);
+			if (FancyLighting.FancyLightingEngineEnabled) this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Main.tile[i, j].TileFrameY < 18 * 3) {

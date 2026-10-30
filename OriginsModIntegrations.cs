@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Core;
+using Origins.CrossMod;
 using Origins.CrossMod.Fargos.Items;
 using Origins.CrossMod.Fargos.NPCs;
 using Origins.Dev;
@@ -101,11 +102,6 @@ namespace Origins {
 		public static Mod Thorium { get => instance.thorium; set => instance.thorium = value; }
 		Mod fancyLighting;
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
-		Func<bool> FancyLightingEngineEnabled;
-		public static bool FancyLightingEngineActive => instance?.FancyLightingEngineEnabled?.Invoke() ?? false;
-		Func<bool> FancyLightingUseEnhancedGlowMaskSupport;
-		public static bool FancyLightingEnhancedGlowMaskSupport => instance?.FancyLightingUseEnhancedGlowMaskSupport?.Invoke() ?? false;
-		public static bool FancyLightingDrawingRealLight { get; private set; }
 		Mod fargosMutant;
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
 		Mod avalon;
@@ -133,8 +129,6 @@ namespace Origins {
 		public static void SearchKeybind(string text) {
 			instance.searchKeybinds?.Invoke(text);
 		}
-		static bool drawingAOMap;
-		public static bool DrawingAOMap => drawingAOMap;
 		public static string SwarmContext = "FromSwarm";
 		public void Load(Mod mod) {
 			instance = this;
@@ -474,6 +468,7 @@ namespace Origins {
 			}
 		}
 		public static void LateLoad() {
+			IModIntegration.DoLateLoad();
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {
 				instance.goToKeybindKeybind = keybind;
 				instance.goToKeybind = (keybind) => controllerConfigurator.Call("OPENKEYBINDSTOSEARCH", keybind);
@@ -502,13 +497,7 @@ namespace Origins {
 					(Predicate<Item>)(i => i.CountsAsClass<Explosive>())
 				);
 			}
-			instance.FancyLightingEngineEnabled = () => false;
-			instance.FancyLightingUseEnhancedGlowMaskSupport = () => false;
-			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
-				instance.LoadFancyLighting();
-			} else {
-				compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.AddFancyLighting"));
-			}
+			ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting);
 
 			conditionalCompatRecommendations.Add((() => !Lighting.NotRetro, Language.GetText("Mods.Origins.ModCompatNotes.RetroBad")));
 
@@ -626,169 +615,6 @@ namespace Origins {
 		public static List<(Func<bool> condition, LocalizedText text)> conditionalCompatRecommendations = [];
 		public static List<LocalizedText> compatRecommendations = [];
 		public static List<LocalizedText> compatErrors = [];
-		[JITWhenModsEnabled("FancyLighting")]
-		void LoadFancyLighting() {
-			try {
-				Assembly flAssembly = fancyLighting.GetType().Assembly;
-				Type smoothLightingType = flAssembly.GetType("FancyLighting.SmoothLighting") ?? flAssembly.GetType("FancyLighting.Core.SmoothLighting");
-				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				static void TileShine_Impl(ref Vector3 color, Tile tile) {
-					if (tile.HasTile) {
-						switch (tile.TileType) {
-							case TileID.DyePlants:
-							if (tile.TileFrameX == 204 || tile.TileFrameX == 202) goto case TileID.Cactus;
-							break;
-							case TileID.Cactus: {
-								Point pos = tile.GetTilePosition();
-								WorldGen.GetCactusType(pos.X, pos.Y, tile.TileFrameX, tile.TileFrameY, out int sandType);
-								if (PlantLoader.Get<ModCactus>(80, sandType) is IGlowingModPlant glowingPlant) {
-									glowingPlant.FancyLightingGlowColor(tile, ref color);
-								}
-								break;
-							}
-							case TileID.VanityTreeSakura:
-							case TileID.VanityTreeYellowWillow:
-							break;
-							default: {
-								if (!TileID.Sets.IsATreeTrunk[tile.TileType]) break;
-								if (OriginExtensions.GetTreeType(tile) is IGlowingModTile glowingTree) {
-									(int x, int y) = tile.GetTilePosition();
-									glowingTree.FancyLightingGlowColor(tile, x, y, ref color);
-								}
-								break;
-							}
-						}
-					}
-				}
-				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) {
-					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_1_0)((orig_TileShine_1_1_0 orig, ref Vector3 color, Tile tile, float shimmerAlpha) => {
-						orig(ref color, tile, shimmerAlpha);
-						TileShine_Impl(ref color, tile);
-					}));
-				} else {
-					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_0_2)((orig_TileShine_1_0_2 orig, ref Vector3 color, Tile tile) => {
-						orig(ref color, tile);
-						TileShine_Impl(ref color, tile);
-					}));
-				}
-				foreach (ModTile tile in Origins.instance.GetContent<ModTile>()) {
-					if (tile is IGlowingModTile glowingTile) fancyLighting.Call("AddCustomTileLighting", tile.Type, (TileLightModifier)glowingTile.FancyLightingGlowColor);
-				}
-
-				/*
-				int wallShineCount = 0;
-				foreach (var item in smoothLightingType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
-					MethodInfo wallShineMethod = null;
-					if (item.GetMethod("<CalculateSmoothLightingReach>b__0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static) is MethodInfo meth0) {
-						wallShineMethod = meth0;
-					} else if (item.GetMethod("<CalculateSmoothLightingHiDef>b__0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static) is MethodInfo meth1) {
-						wallShineMethod = meth1;
-					}
-					if (wallShineMethod is not null && false) {
-						MonoModHooks.Modify(wallShineMethod, (il) => {
-							ILCursor c = new(il);
-							c.GotoNext(MoveType.Before,
-								i => i.MatchCall("FancyLighting.Util.VectorToColor", "Assign")
-							);
-							c.EmitLdloc(4);
-							c.EmitDelegate<Func<Vector3, Tile, Vector3>>((color, tile) => {
-								if (WallLoader.GetWall(tile.WallType) is IGlowingModWall glowingWall) glowingWall.FancyLightingGlowColor(tile, ref color);
-								return color;
-							});
-						});
-						wallShineCount++;
-					}
-				}
-				if (wallShineCount == 0) {
-					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
-				}
-				//*/
-				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
-				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
-
-				Type CompatibilityConfig = fancyLighting.GetConfig("CompatibilityConfig").GetType();
-				FancyLightingUseEnhancedGlowMaskSupport = CompatibilityConfig.GetMethod("get_UseAccurateGlowRendering", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-					.CreateDelegate<Func<bool>>(CompatibilityConfig.GetField("Instance").GetValue(null));
-
-				Type ambientOcclusionType = flAssembly.GetType("FancyLighting.AmbientOcclusion") ?? flAssembly.GetType("FancyLighting.Core.AmbientOcclusion");
-				if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo ApplyAmbientOcclusion) {
-					MonoModHooks.Add(
-						ApplyAmbientOcclusion,
-						(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((orig, self, wallTarget, doDraw, updateWallTarget) => {
-							try {
-								drawingAOMap = true;
-								return orig(self, wallTarget, doDraw, updateWallTarget);
-							} finally {
-								drawingAOMap = false;
-							}
-						})
-					);
-				} else if (ambientOcclusionType?.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance) is MethodInfo DrawAmbientOcclusion) {
-					MonoModHooks.Add(
-						DrawAmbientOcclusion,
-						((Func<object, RenderTarget2D, RenderTarget2D, RenderTarget2D, bool, bool, RenderTarget2D> orig,
-						object self,
-						RenderTarget2D wallTarget,
-						RenderTarget2D tileTarget,
-						RenderTarget2D tile2Target,
-						bool tileEntityShadows,
-						bool cameraMode) => {
-							try {
-								drawingAOMap = true;
-								return orig(self, wallTarget, tileTarget, tile2Target, tileEntityShadows, cameraMode);
-							} finally {
-								drawingAOMap = false;
-							}
-						})
-					);
-				}
-				if (fancyLighting.GetType().GetMethod("DoSmoothLighting", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance) is MethodInfo DoSmoothLighting) {
-					MonoModHooks.Modify(DoSmoothLighting, il => {
-						ILCursor c = new(il);
-						int useEnhancedGlowMaskSupport = -1;
-						c.GotoNext(MoveType.After,
-							i => i.MatchCallOrCallvirt(CompatibilityConfig, "get_UseAccurateGlowRendering")
-						);
-						c.GotoNext(MoveType.After,
-							i => i.MatchStloc(out useEnhancedGlowMaskSupport)
-						);
-						ILLabel end = default;
-						c.GotoNext(MoveType.After,
-							i => i.MatchLdloc(useEnhancedGlowMaskSupport),
-							i => i.MatchBrfalse(out end)
-						);
-						MethodInfo fancyLightingDrawingRealLight = typeof(OriginsModIntegrations).GetProperty(nameof(FancyLightingDrawingRealLight)).SetMethod;
-						c.EmitLdcI4(1);
-						c.EmitCall(fancyLightingDrawingRealLight);
-						c.GotoLabel(end);
-						c.MoveBeforeLabels();
-						c.EmitLdcI4(0);
-						c.EmitCall(fancyLightingDrawingRealLight);
-					});
-				}
-			} catch (Exception e) {
-				FancyLighting = null;
-				FancyLightingEngineEnabled = null;
-				if (Origins.LogLoadingILError("LoadFancyLighting", e)) throw;
-			}
-			/*for (int i = 0; i < OriginTile.IDs.Count; i++) {
-				if (OriginTile.IDs[i] is IGlowingModTile glowingTile) {
-					glowingTiles[OriginTile.IDs[i].Type] = true;
-					glowingTileColors[OriginTile.IDs[i].Type] = glowingTile.GlowColor;
-				}
-			}*/
-		}
-		delegate void TileLightModifier(
-			Tile tile,
-			int x,
-			int y,
-			ref Vector3 lightColor
-		);
-		delegate void orig_TileShine_1_0_2(ref Vector3 color, Tile tile);
-		delegate void hook_TileShine_1_0_2(orig_TileShine_1_0_2 orig, ref Vector3 color, Tile tile);
-		delegate void orig_TileShine_1_1_0(ref Vector3 color, Tile tile, float shimmerAlpha);
-		delegate void hook_TileShine_1_1_0(orig_TileShine_1_1_0 orig, ref Vector3 color, Tile tile, float shimmerAlpha);
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void LoadThorium() {
 			MonoModHooks.Add(

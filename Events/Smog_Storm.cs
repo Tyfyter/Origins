@@ -2,6 +2,7 @@
 using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Core;
+using Origins.CrossMod;
 using Origins.Graphics.Primitives;
 using Origins.Graphics.Unlighting;
 using Origins.Items.Accessories;
@@ -166,7 +167,7 @@ namespace Origins.Events {
 		delegate void orig_ModifyLightingBrightness(ref float negLight, ref float negLight2);
 		void ModifyLightingBrightness(orig_ModifyLightingBrightness orig, ref float negLight, ref float negLight2) {
 			orig(ref negLight, ref negLight2);
-			if (OriginsModIntegrations.FancyLightingEngineActive) negLight -= negLight * sky.Opacity * 0.5f;
+			if (FancyLighting.FancyLightingEngineEnabled) negLight -= negLight * sky.Opacity * 0.5f;
 		}
 		public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>();
 		public override void SpecialVisuals(Player player, bool isActive) {
