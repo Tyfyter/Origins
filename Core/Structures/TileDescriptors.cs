@@ -16,6 +16,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Origins.Core.SpecialChest;
 
 namespace Origins.Core.Structures {
 	public class PaintTile : SerializableTileDescriptor {
@@ -118,6 +119,8 @@ namespace Origins.Core.Structures {
 		readonly ConcurrentDictionary<string, TileDescriptor> descriptors = [];
 		protected static Type GetDescriptorType(Tile tile) {
 			if (Structure_Void_Marker.IsVoid(tile)) return typeof(Void);
+			if (tile.TileType > TileID.Count) ;
+			if (PlaceSpecialChest.TryGetSpecialChestPos(tile, out _, out _, out _)) return typeof(PlaceSpecialChest);
 			if (Main.tileContainer[tile.TileType]) return typeof(PlaceChest);
 			if (TileObjectData.GetTileData(tile) is not null) return typeof(PlaceSpecialTile);
 			if (Main.tileFrameImportant[tile.TileType]) return typeof(PlaceFramedTile);
@@ -240,7 +243,7 @@ namespace Origins.Core.Structures {
 			return new((_, _, i, j) => PlaceTile(i, j, type, style, dir, parameters), Parts: [originalText]);
 		}
 		public virtual void PlaceTile(int i, int j, CachedTileType type, int style, int dir, string[] parameters) {
-			TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData);
+			TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData, forcedRandom: 0);
 			TileObject.Place(objectData);
 			TileObjectData.CallPostPlacementPlayerHook(i, j, type, style, dir, objectData.alternate, objectData);
 			TileLoader.GetTile(type)?.PlaceInWorld(i, j, null);
@@ -310,6 +313,58 @@ namespace Origins.Core.Structures {
 			if (parameters.Length <= 2) return;
 			if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is not Chest chest || !ModContent.TryFind(parameters[2], out LootPool pool)) return;
 			pool.Resolve(chest.item, new DropAttemptInfo() {
+				player = new() { luck = (float)Main.starGameMath() - 1 },
+				rng = WorldGen.genRand,
+				IsExpertMode = Main.expertMode,
+				IsMasterMode = Main.masterMode
+			});
+		}
+	}
+	public class PlaceSpecialChest : PlaceSpecialTile {
+		public static bool TryGetSpecialChestPos(Tile tile, out int x, out int y, out ChestData chest) {
+			(x, y) = tile.GetTilePosition();
+			int originalX = x, originalY = y;
+			if (TileObjectData.GetTileData(tile) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(x, y, objectData, out x, out y);
+			int chestX = x, chestY = y;
+			if (TileLoader.GetTile(tile.TileType) is ICustomTELocation customTELocation) customTELocation.ModifyTELocation(ref chestX, ref chestY, originalX, originalY);
+			if (SpecialChest.TryGetChest(chestX, chestY) is ChestData _chest) {
+				chest = _chest;
+				return true;
+			}
+			chest = null;
+			return false;
+		}
+		public override void Load() {
+			AddSerializer(tile => {
+				if (tile.HasTile && GetDescriptorType(tile) == typeof(PlaceSpecialChest)) {
+					TileObjectData data = TileObjectData.GetTileData(tile);
+					(int i, int j) = tile.GetTilePosition();
+					TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+					if (i != left + data.Origin.X || j != top + data.Origin.Y) return "Empty";
+					if (!TryGetSpecialChestPos(tile, out _, out _, out ChestData chest)) throw new Exception();
+					int style = 0;
+					int alternate = 0;
+					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
+					string lootPool = "";
+					string name = chest.GivenName;
+					if (!string.IsNullOrWhiteSpace(name)) {
+						if (CurrentlySerializingMod is not null && !name.Contains('/')) name = $"{Mod}/{name}";
+						lootPool = "," + name;
+						if (!ModContent.TryFind<LootPool>(name, out _)) (CurrentlySerializingMod ?? Mod).Logger.Warn($"Could not find LootPool \"{name}\"");
+					}
+					return $"{Name}({TileID.Search.GetName(tile.TileType)},{style}{lootPool})";
+				}
+				return null;
+			});
+		}
+		public override void PlaceTile(int i, int j, CachedTileType type, int style, int dir, string[] parameters) {
+			base.PlaceTile(i, j, type, style, dir, parameters);
+			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
+			if (parameters.Length <= 2) return;
+			if (!ModContent.TryFind(parameters[2], out LootPool pool)) return;
+			if (TileLoader.GetTile(type.Value) is ICustomTELocation customTELocation) customTELocation.ModifyTELocation(ref left, ref top, i, j);
+			if (SpecialChest.TryGetChest(left, top) is not ChestData chest) throw new Exception();
+			pool.Resolve(chest.Items(), new DropAttemptInfo() {
 				player = new() { luck = (float)Main.starGameMath() - 1 },
 				rng = WorldGen.genRand,
 				IsExpertMode = Main.expertMode,

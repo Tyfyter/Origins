@@ -768,7 +768,7 @@ public class Structure_Helper_Item : TestingItem {
 			Associations.Add("Void", '.');
 			foreach (KeyValuePair<char, string> item in globalKey) {
 				if (item.Key is ' ' or '.') continue;
-				Associations.Add(item.Value, item.Key);
+				Associations.TryAdd(item.Value, item.Key);
 			}
 			Point min = leftClick;
 			Point max = rightClick;

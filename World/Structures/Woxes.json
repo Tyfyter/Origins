@@ -66,8 +66,6 @@
 				"sssssssSSssssssss"
 			],
 			"Key": {
-				"c": "Empty+PlaceWall(DiscWall)",
-				"g": "Empty+PlaceWall(Glass)",
 				"C": "PlaceChest(Containers,13,Origins/Ashen_Generic)+PlaceWall(DiscWall)",
 				"R": "Empty+PlaceWall(DiscWall)",
 				"L": "Empty+PlaceWall(DiscWall)"
@@ -109,6 +107,36 @@
 				}
 			},
 			"Tags": []
+		},
+		"TestSerialize": {
+			"Map": [
+				"SSSSSS",
+				"SSSSSS",
+				"WWWWWW",
+				"gWWWWW",
+				"gWWWWW",
+				"gWWWWW",
+				"WWWWWW",
+				"LWCWWR",
+				"ssssss",
+				"ssSSss"
+			],
+			"Key": {
+				"L": "Empty+PlaceWall(DiscWall)",
+				"R": "Empty+PlaceWall(DiscWall)",
+				"C": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Origins/Ashen_GenericLore)+PlaceWall(DiscWall)"
+			},
+			"SocketKey": {
+				"L": {
+					"Key": "socket",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "socket",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
 		}
 	},
 	"TileDescriptors": {
@@ -117,7 +145,9 @@
 		"S": "PlaceTile(Sunplate)",
 		"p": "PlaceSpecialTile(Banners,9)+PlaceWall(DiscWall)",
 		"W": "Empty+PlaceWall(DiscWall)",
-		"s": "PlaceTile(Sunplate)+PlaceWall(DiscWall)"
+		"s": "PlaceTile(Sunplate)+PlaceWall(DiscWall)",
+		"c": "Empty+PlaceWall(DiscWall)",
+		"g": "Empty+PlaceWall(Glass)"
 	},
 	"BreakCondition": "MaxRoomCount(1000)"
 }
