@@ -214,6 +214,13 @@ public class StructureHelperUI : UIState {
 			Top = new(-4, -0.1f),
 			VAlign = 1
 		});
+		Append(roomListWrapper = new() {
+			Top = new(32, 0.1f),
+			Width = new(0, 0.4f),
+			Height = new(-33, 0.8f),
+			HAlign = 0.5f,
+			OverflowHidden = true
+		});
 		if (!string.IsNullOrWhiteSpace(reopenPath)) SelectStructure(reopenPath);
 	}
 	private void OpenStructureSelect(UIMouseEvent _, UIElement __) {
@@ -311,10 +318,11 @@ public class StructureHelperUI : UIState {
 				text.SetText(structurePath);
 				yield return text;
 				yield return refreshButton;
-				yield return roomList;
+				yield return roomListWrapper;
 			}
 		}
 	}
+	UIElement roomListWrapper;
 	UIList roomList;
 	UIText text;
 	UIText inputFeedback;
@@ -435,10 +443,18 @@ public class StructureHelperUI : UIState {
 	}
 
 	public void RefreshRoomList() {
-		if (roomList is not null) RemoveChild(roomList);
-		roomList = [];
+		if (roomList is not null) roomListWrapper.RemoveChild(roomList);
+		roomList = new() {
+			Width = new(0, 1f),
+			Height = new(0, 1f),
+			MaxHeight = new(0, 1f),
+			MinHeight = new(0, 1f),
+			HAlign = 0.5f,
+			OverflowHidden = true
+		};
+		roomList.SetScrollbar(new UIScrollbar());
 		FillRoomList(roomList);
-		Append(roomList);
+		roomListWrapper.Append(roomList);
 	}
 	public void FillRoomList(UIList roomList, IEnumerable<ARoom> rooms = null) {
 		rooms ??= structure.Rooms;
@@ -504,11 +520,6 @@ public class StructureHelperUI : UIState {
 			roomList.Add(element);
 			height += element.Height.Pixels + 4;
 		}
-		roomList.MinHeight.Set(0, 1);
-		roomList.Height.Set(height, 0);
-		roomList.Width.Set(0, 0.4f);
-		roomList.HAlign = 0.5f;
-		roomList.Top.Set(32, 0.1f);
 	}
 	public override void OnDeactivate() {
 		StructureCommand.Cancel();
