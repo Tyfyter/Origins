@@ -287,8 +287,10 @@ public class DeserializedStructure(Mod mod, string fileName, string data) : Stru
 		};
 		{
 			CompressorMap<char, string> sharedKeys = new();
+			HashSet<char> uncompressable = new(Rooms.SelectMany(r => r.SocketKey).Select(s => s.Key));
 			for (int i = 0; i < Rooms.Count; i++) {
 				foreach (KeyValuePair<char, TileDescriptor> item in Rooms[i].Key) {
+					if (uncompressable.Contains(item.Key)) continue;
 					sharedKeys.Add(item.Key, item.Value.ToString());
 				}
 			}

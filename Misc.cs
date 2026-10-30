@@ -7003,10 +7003,11 @@ namespace Origins {
 		}
 		[Pure]
 		public static Flags<T> EnumerateFlags<T>(this T value) where T : struct, Enum => new(value);
-		public ref struct Flags<T>(T value) where T : struct, Enum {
+		public struct Flags<T>(T value) : IEnumerable<T>, IEnumerator<T> where T : struct, Enum {
 			int index = -1;
-			readonly Span<T> possibleFlags = FlagsCache<T>.possibleFlags;
+			readonly T[] possibleFlags = FlagsCache<T>.possibleFlags;
 			public readonly T Current => possibleFlags[index];
+			readonly object IEnumerator.Current => Current;
 			public bool MoveNext() {
 				while (++index < possibleFlags.Length) {
 					if (value.HasFlag(possibleFlags[index])) return true;
@@ -7014,6 +7015,10 @@ namespace Origins {
 				return false;
 			}
 			public readonly Flags<T> GetEnumerator() => this;
+			readonly IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+			readonly IEnumerator IEnumerable.GetEnumerator() => this;
+			void IEnumerator.Reset() => index = -1;
+			readonly void IDisposable.Dispose() { }
 		}
 	}
 }

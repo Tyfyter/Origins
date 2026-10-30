@@ -156,10 +156,43 @@ public class StructureHelperUI : UIState {
 			HAlign = 0.5f
 		};
 		textInput.OnSubmit += inputValue => {
+			if (serializationContext.state == SerializationContext.SerializationState.Socket) {
+				textInput.IsWritingText = false;
+				textInput2.IsWritingText = true;
+				return;
+			}
 			if (Associate(new ToastCommandCaller(toastHandler), inputValue?.Split(' '))) textInput.Clear();
 		};
 		textInput.OnExit += IngameFancyUI.Close;
 		Append(textInput);
+
+		textInput2 = new() {
+			Left = new(0, 0),
+			Top = new(62, 0.1f),
+			Width = new(0, 1),
+			HAlign = 0.5f
+		};
+		textInput2.OnSubmit += inputValue => {
+			string key = ((ITextInputContainer)textInput).TextDisplay;
+			if (key?.Length != 1) {
+				textInput.IsWritingText = true;
+				textInput2.IsWritingText = false;
+				return;
+			}
+			if (Associate(new ToastCommandCaller(toastHandler), [
+				key,
+				inputValue
+			])) textInput2.Clear();
+		};
+		textInput2.OnExit += IngameFancyUI.Close;
+		Append(textInput2);
+		Append(socketSelector = new() {
+			Left = new(4, 0.25f * 0.5f),
+			Top = new(116, 0f),
+			Width = new(0, 1),
+			VAlign = 0.5f
+		});
+
 		Append(globalKeyToggle = new() {
 			Left = new(16, 0),
 			Top = new(58, 0.1f),
@@ -201,12 +234,13 @@ public class StructureHelperUI : UIState {
 		OnRoomsChanged();
 		serializationContext ??= new();
 		serializationContext.globalKeyToggle = globalKeyToggle;
+		serializationContext.socketInput = textInput2;
 		serializationContext.globalKey.Clear();
 		serializationContext.globalSocketKey.Clear();
 		if (structure is DeserializedStructure des/*Like, the roaring knight?*/) {
 			serializationContext.globalKey.AddRange(des.globalTileDescriptors);
 			foreach ((char key, RoomSocket socket) in des.Rooms.OfType<DeserializedRoom>().SelectMany(r => r.SocketKey)) {
-				serializationContext.globalSocketKey.Add(socket.Key);
+				serializationContext.globalSocketKey[socket.Key] |= (int)socket.Direction;
 			}
 		}
 	}
@@ -250,7 +284,9 @@ public class StructureHelperUI : UIState {
 				yield return globalKeyToggle;
 				break;
 				case SerializationContext.SerializationState.Socket:
-				//yield return globalKeyToggle;
+				yield return textInput2;
+				socketSelector.serializationContext = serializationContext;
+				yield return socketSelector;
 				break;
 			}
 			yield break;
@@ -282,6 +318,7 @@ public class StructureHelperUI : UIState {
 	UIText text;
 	UIText inputFeedback;
 	UIInputPanel textInput;
+	UIInputPanel textInput2;
 	UIImageButton refreshButton;
 	UIImageButton selectFileButton;
 	UIImageButton saveFileButton;
@@ -289,6 +326,7 @@ public class StructureHelperUI : UIState {
 	UIImageButton deselectRoomButton;
 	ToastHandler toastHandler;
 	GlobalKeyToggle globalKeyToggle;
+	SocketKeySelector socketSelector;
 	UIImageButtonVisibility visibilityToggle;
 	public bool Visible => visibilityToggle.Visible;
 	public bool CanModifyBounds => !Visible && serializationContext.state == SerializationContext.SerializationState.Inactive;
@@ -615,17 +653,45 @@ public class StructureHelperUI : UIState {
 			Width.Set(0, 1);
 			Height.Set(16, 0);
 			UIImageButtonFramed button = new(toggleButton);
-			button.OnUpdate += _ => {
-				if (button.IgnoresMouseInteraction) ;
-				button.SetFrame(toggleButton.Frame(2, frameX: Value.ToInt()));
-			};
+			button.OnUpdate += _ => button.SetFrame(toggleButton.Frame(2, frameX: Value.ToInt()));
 			button.OnLeftClick += (_, _) => Value = !Value;
 			Append(button);
 			Append(new UIText("Add as global tile key?") { Left = new(16, 0) });
 		}
 	}
 	public class SocketKeySelector : UIElement {
-
+		public SerializationContext serializationContext;
+		public override void Draw(SpriteBatch spriteBatch) {
+			Vector2 position = GetDimensions().Position();
+			TextSnippet[] snippet = [new()];
+			StringBuilder builder = new();
+			foreach ((string name, int _dirs) in serializationContext.globalSocketKey) {
+				builder.Clear();
+				builder.Append(name);
+				builder.Append(" (");
+				for (int i = 1; i <= 4; i++) {
+					if ((_dirs & (1 << i)) != 0) builder.Append(((Direction)i).ToString());
+				}
+				builder.Append(')');
+				snippet[0].Text = builder.ToString();
+				position.Y += ChatManager.DrawColorCodedStringWithShadow(
+					spriteBatch,
+					FontAssets.ItemStack.Value,
+					snippet,
+					position,
+					0,
+					default,
+					Vector2.One,
+					out int isHovered
+				).Y;
+				/*if (isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
+					ITextInputContainer container = serializationContext.socketInput;
+					container.Text.Clear();
+					container.Text.Append(name);
+					container.Submit();
+				}*/
+			}
+		}
 	}
 }
 public class Structure_Helper_Item : TestingItem {
@@ -691,11 +757,12 @@ public class Structure_Helper_Item : TestingItem {
 		return Task.Run<RoomDescriptor>(() => {
 			if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return null;
 			Dictionary<char, string> globalKey = context.globalKey;
-			List<string> globalSocketKey = context.globalSocketKey;
+			FungibleSet<string> globalSocketKey = context.globalSocketKey;
 			Associations.Clear();
 			Associations.Add("Empty", ' ');
 			Associations.Add("Void", '.');
 			foreach (KeyValuePair<char, string> item in globalKey) {
+				if (item.Key is ' ' or '.') continue;
 				Associations.Add(item.Value, item.Key);
 			}
 			Point min = leftClick;
@@ -783,7 +850,7 @@ public class Structure_Helper_Item : TestingItem {
 						key.Add(ch.Value, pattern);
 						if (socket is not null) {
 							socketKey.Add(ch.Value, socket);
-							if (!globalSocketKey.Contains(socket.Key)) globalSocketKey.Add(socket.Key);
+							globalSocketKey[socket.Key] |= (int)socket.Direction;
 						}
 					} else {
 						if (!Associations.ContainsKey(CurrentTileData)) {
@@ -1080,8 +1147,9 @@ public class UIImageButtonVisibility(bool visible = true) : UIImageButton(GetIma
 public class SerializationContext {
 	public SerializationState state;
 	public Dictionary<char, string> globalKey = [];
-	public List<string> globalSocketKey = [];
+	public FungibleSet<string> globalSocketKey = [];
 	public StructureHelperUI.GlobalKeyToggle globalKeyToggle;
+	public UIInputPanel socketInput;
 	public Mod mod;
 	public bool ShouldAddGlobal => globalKeyToggle?.Value ?? false;
 	public enum SerializationState {
