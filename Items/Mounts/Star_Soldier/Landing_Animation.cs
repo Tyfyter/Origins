@@ -96,7 +96,7 @@ public class Landing_Animation : KeyframeAnimation {
 			readonly AnimationOffsets KeyframeSet<AnimationOffsets>.IInterpolation.Interpolate(AnimationOffsets prevValue, AnimationOffsets nextValue, float progress) =>
 				new(
 					Vector2.Lerp(prevValue.Position, nextValue.Position, progress),
-					float.Lerp(prevValue.Rotation, nextValue.Rotation, progress)
+					prevValue.Rotation + GeometryUtils.AngleDif(prevValue.Rotation, nextValue.Rotation, out int dir) * dir * progress
 				);
 			public readonly override string ToString() => "Interpolated";
 		}

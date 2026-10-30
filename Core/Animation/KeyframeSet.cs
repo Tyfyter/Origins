@@ -1611,7 +1611,7 @@ public record struct Rotation(float Value) : KeyframeSet<Rotation>.ITypeHandler,
 	public static KeyframeSet<Rotation>.IInterpolation Linear { get; } = new Interpolation();
 	public readonly struct Interpolation : KeyframeSet<Rotation>.IInterpolation {
 		readonly Rotation KeyframeSet<Rotation>.IInterpolation.Interpolate(Rotation prevValue, Rotation nextValue, float progress) =>
-			new(float.Lerp(prevValue.Value, nextValue.Value, progress));
+			prevValue.Value + GeometryUtils.AngleDif(prevValue.Value, nextValue.Value, out int dir) * dir * progress;
 		public readonly override string ToString() => "Interpolated";
 	}
 	public static Rotation operator -(Rotation a, float b) => new(a.Value - b);
@@ -1636,7 +1636,8 @@ public interface IBoneChain<TSelf> : KeyframeSet<TSelf>.ITypeHandler, IKeyframeO
 			for (int i = 0; i < TSelf.Length; i++) {
 				ref PolarVec2 output = ref prevValue[i];
 				PolarVec2 next = nextValue[i];
-				output.Theta = float.Lerp(output.Theta, next.Theta, progress);
+				float diff = GeometryUtils.AngleDif(output.Theta, next.Theta, out int dir) * dir;
+				output.Theta += diff * progress;
 				output.R = float.Lerp(output.R, next.R, progress);
 			}
 			return prevValue;
