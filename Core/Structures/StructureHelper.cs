@@ -183,7 +183,7 @@ public class StructureHelperUI : UIState {
 			if (Associate(new ToastCommandCaller(toastHandler), [
 				key,
 				inputValue,
-				""//$"optional,{RoomSocket.OffsetType.InverseOffset}"
+				$"{(socketSelector.optional ? "optional" : "")},{socketSelector.offsetType}"//$"optional,{RoomSocket.OffsetType.InverseOffset}"
 			])) textInput2.Clear();
 		};
 		textInput2.OnExit += IngameFancyUI.Close;
