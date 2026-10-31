@@ -222,6 +222,13 @@ public class StructureHelperUI : UIState {
 			HAlign = 0.5f,
 			OverflowHidden = true
 		});
+		Append(socketRoomListWrapper = new() {
+			Top = new(32, 0.1f),
+			Width = new(0, 0.4f),
+			Height = new(-33, 0.8f),
+			HAlign = 0.5f,
+			OverflowHidden = true
+		});
 		if (!string.IsNullOrWhiteSpace(reopenPath)) SelectStructure(reopenPath);
 	}
 	private void OpenStructureSelect(UIMouseEvent _, UIElement __) {
@@ -263,7 +270,6 @@ public class StructureHelperUI : UIState {
 			element.IgnoresMouseInteraction = false;
 			element.Update(gameTime);
 		}
-
 	}
 	public class UITextCommandCaller(UIText uiText) : CommandCaller {
 		public CommandType CommandType => CommandType.Chat;
@@ -308,7 +314,7 @@ public class StructureHelperUI : UIState {
 		}
 		if (viewStack.Count > 0) {
 			if (CurrentView.room is null) {
-				yield return CurrentView.roomList;
+				yield return socketRoomListWrapper;
 			} else {
 				text.SetText(CurrentView.room.Identifier);
 				yield return text;
@@ -324,6 +330,7 @@ public class StructureHelperUI : UIState {
 		}
 	}
 	UIElement roomListWrapper;
+	SocketRoomListWrapper socketRoomListWrapper;
 	UIList roomList;
 	UIText text;
 	UIText inputFeedback;
@@ -445,14 +452,7 @@ public class StructureHelperUI : UIState {
 
 	public void RefreshRoomList() {
 		if (roomList is not null) roomListWrapper.RemoveChild(roomList);
-		roomList = new() {
-			Width = new(0, 1f),
-			Height = new(0, 1f),
-			MaxHeight = new(0, 1f),
-			MinHeight = new(0, 1f),
-			HAlign = 0.5f,
-			OverflowHidden = true
-		};
+		roomList = [];
 		roomList.SetScrollbar(new UIScrollbar());
 		FillRoomList(roomList);
 		roomListWrapper.Append(roomList);
@@ -521,6 +521,13 @@ public class StructureHelperUI : UIState {
 			roomList.Add(element);
 			height += element.Height.Pixels + 4;
 		}
+
+		roomList.Width = new(0, 1f);
+		roomList.Height = new(0, 1f);
+		roomList.MaxHeight = new(0, 1f);
+		roomList.MinHeight = new(0, 1f);
+		roomList.HAlign = 0.5f;
+		roomList.OverflowHidden = true;
 	}
 	public override void OnDeactivate() {
 		StructureCommand.Cancel();
@@ -599,8 +606,9 @@ public class StructureHelperUI : UIState {
 		}
 		public ViewState(IEnumerable<ARoom> roomList) {
 			this.roomList = [];
+			this.roomList.SetScrollbar(new UIScrollbar());
 			instance.FillRoomList(this.roomList, roomList);
-			instance.Append(this.roomList);
+			instance.socketRoomListWrapper.Append(this.roomList);
 		}
 		~ViewState() {
 			roomList?.Clear();
@@ -737,6 +745,16 @@ public class StructureHelperUI : UIState {
 				width = 0;
 			}
 			return isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease;
+		}
+	}
+	class SocketRoomListWrapper : UIElement {
+		public override void Update(GameTime gameTime) {
+			for (int i = 0; i < Elements.Count - 1; i++) Elements[i].IgnoresMouseInteraction = true;
+			Elements[^1].IgnoresMouseInteraction = false;
+			Elements[^1].Update(gameTime);
+		}
+		protected override void DrawChildren(SpriteBatch spriteBatch) {
+			Elements[^1].Draw(spriteBatch);
 		}
 	}
 }
