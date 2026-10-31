@@ -673,6 +673,7 @@ public class StructureHelperUI : UIState {
 		}
 	}
 	public class SocketKeySelector : UIElement {
+		static readonly RoomSocket.OffsetType[] offsetTypes = Enum.GetValues<RoomSocket.OffsetType>();
 		public SerializationContext serializationContext;
 		readonly TextSnippet[] snippet = [new()];
 		public bool optional = false;
@@ -708,7 +709,6 @@ public class StructureHelperUI : UIState {
 			if (DrawLine(spriteBatch, ref position, startY, $"{(optional ? "☑" : "☐")} optional?", ref width, lineHeight)) {
 				optional = !optional;
 			}
-			RoomSocket.OffsetType[] offsetTypes = Enum.GetValues<RoomSocket.OffsetType>();
 			for (int i = 0; i < offsetTypes.Length; i++) {
 				RoomSocket.OffsetType current = offsetTypes[i];
 				if (DrawLine(spriteBatch, ref position, startY, $"{(current == offsetType ? "⚫" : "⚪")} {current}", ref width, lineHeight)) {
