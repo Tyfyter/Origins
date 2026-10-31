@@ -189,10 +189,10 @@ public class StructureHelperUI : UIState {
 		textInput2.OnExit += IngameFancyUI.Close;
 		Append(textInput2);
 		Append(socketSelector = new() {
-			Left = new(4, 0.25f * 0.5f),
-			Top = new(116, 0f),
-			Width = new(0, 1),
-			VAlign = 0.5f
+			Left = new(4, 0),
+			Width = new(0, 0.4f),
+			Height = new(-204, 1),
+			VAlign = 1
 		});
 
 		Append(globalKeyToggle = new() {
@@ -674,12 +674,15 @@ public class StructureHelperUI : UIState {
 	}
 	public class SocketKeySelector : UIElement {
 		public SerializationContext serializationContext;
+		readonly TextSnippet[] snippet = [new()];
+		public bool optional = false;
+		public RoomSocket.OffsetType offsetType = RoomSocket.OffsetType.NormalOffset;
 		public override void Draw(SpriteBatch spriteBatch) {
 			Vector2 position = GetDimensions().Position();
 			float startY = position.Y;
-			TextSnippet[] snippet = [new()];
 			StringBuilder builder = new();
 			float width = 0;
+			float lineHeight = FontAssets.ItemStack.Value.LineSpacing + 4;
 			foreach ((string name, int _dirs) in serializationContext.globalSocketKey) {
 				builder.Clear();
 				builder.Append(name);
@@ -692,32 +695,48 @@ public class StructureHelperUI : UIState {
 					}
 				}
 				builder.Append(')');
-				snippet[0].Text = builder.ToString();
-				ChatManager.DrawColorCodedStringWithShadow(
-					spriteBatch,
-					FontAssets.ItemStack.Value,
-					snippet,
-					position,
-					0,
-					default,
-					Vector2.One,
-					out int isHovered
-				);
-				Vector2 size = ChatManager.GetStringSize(FontAssets.ItemStack.Value, snippet, Vector2.One) + (Vector2.One * 4);
-				position.Y += size.Y;
-				Max(ref width, 0);
-				if (position.Y + size.Y > Main.screenHeight) {
-					position.Y = startY;
-					position.X += width;
-					width = 0;
-				}
-				if (isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
+				if (DrawLine(spriteBatch, ref position, startY, builder.ToString(), ref width, lineHeight)) {
 					ITextInputContainer container = serializationContext.socketInput;
 					container.Text.Clear();
 					container.Text.Append(name);
 					container.Submit();
 				}
 			}
+			position.Y = startY;
+			position.X += width + 16;
+			width = 0;
+			if (DrawLine(spriteBatch, ref position, startY, $"{(optional ? "☑" : "☐")} optional?", ref width, lineHeight)) {
+				optional = !optional;
+			}
+			RoomSocket.OffsetType[] offsetTypes = Enum.GetValues<RoomSocket.OffsetType>();
+			for (int i = 0; i < offsetTypes.Length; i++) {
+				RoomSocket.OffsetType current = offsetTypes[i];
+				if (DrawLine(spriteBatch, ref position, startY, $"{(current == offsetType ? "⚫" : "⚪")} {current}", ref width, lineHeight)) {
+					offsetType = offsetTypes[i];
+				}
+			}
+		}
+
+		bool DrawLine(SpriteBatch spriteBatch, ref Vector2 position, float startY, string text, ref float width, float lineHeight) {
+			snippet[0].Text = text;
+			ChatManager.DrawColorCodedStringWithShadow(
+				spriteBatch,
+				FontAssets.ItemStack.Value,
+				snippet,
+				position,
+				0,
+				default,
+				Vector2.One,
+				out int isHovered
+			);
+			position.Y += lineHeight;
+			Max(ref width, ChatManager.GetStringSize(FontAssets.ItemStack.Value, snippet, Vector2.One).X + 4);
+			if (position.Y + lineHeight > Main.screenHeight) {
+				position.Y = startY;
+				position.X += width;
+				width = 0;
+			}
+			return isHovered != -1 && Main.mouseLeft && Main.mouseLeftRelease;
 		}
 	}
 }
