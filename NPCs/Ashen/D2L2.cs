@@ -2,6 +2,7 @@
 using Origins.Core.Animation;
 using Origins.Graphics;
 using Origins.World.BiomeData;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -68,11 +69,14 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		get => collideY < 4;
 		set => collideY = (!value).Mul(4);
 	}
+	bool oldFlipped;
 	public override void AI() {
+		bool flipped = NPC.direction.TrySet(Math.Sign(Main.LocalPlayer.MountedCenter.X - (NPC.Center.X - 80 * NPC.direction)));
+		Dust.NewDustPerfect(NPC.Center - new Vector2(80 * NPC.direction, 0), 6, Vector2.Zero);
 		//NPC.velocity = default;
 		Vector2 animotion = default;
-		GetLegTransforms(false, out _, out _, out PosRotScale frontFoot);
-		GetLegTransforms(true, out _, out _, out PosRotScale backFoot);
+		GetLegTransforms(false, out _, out _, out Transform frontFoot);
+		GetLegTransforms(true, out _, out _, out Transform backFoot);
 		Vector2 frontLegPos = frontFoot.Position;
 		Vector2 backLegPos = backFoot.Position;
 		D2L2Animation.AnchorPoint newAnchor = Animation.anchorPoint.GetCurrentValue(AnimationTime);
@@ -172,7 +176,8 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		Color glowColor = NPC.GetTintColor(Color.White);
 		D2L2Animation animation = Animation;
 		Vector2 pos = NPC.Center - screenPos + (NPC.oldPosition - NPC.position) * 0.5f;
-		DrawLeg(spriteBatch, pos, true, drawColor.MultiplyRGBA(Color.Gray), glowColor.MultiplyRGBA(Color.Gray));
+		SpriteEffects effects = NPC.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+		DrawLeg(spriteBatch, pos, true, drawColor.MultiplyRGBA(Color.Gray), glowColor.MultiplyRGBA(Color.Gray), effects);
 		spriteBatch.DrawRiggedPart(
 			gunTex,
 			pos,
@@ -182,7 +187,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			0,
 			new(62, 9),
 			1,
-			SpriteEffects.None
+			effects
 		);
 		spriteBatch.DrawRiggedPart(
 			TextureAssets.Npc[Type].Value,
@@ -193,15 +198,15 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			0,
 			new(35, 38),
 			1,
-			SpriteEffects.None
+			effects
 		);
-		DrawLeg(spriteBatch, pos, false, drawColor, glowColor);
+		DrawLeg(spriteBatch, pos, false, drawColor, glowColor, effects);
 		NPC.DrawConfused();
 		Editor.D2L2 = this;
 		Animation_Editor_UI.DrawEditorUI = Editor.DrawUI;
 		return false;
 	}
-	public void GetLegTransforms(bool back, out PosRotScale thigh, out PosRotScale calf, out PosRotScale foot) {
+	public void GetLegTransforms(bool back, out Transform thigh, out Transform calf, out Transform foot) {
 		D2L2Animation animation = Animation;
 		KeyframeSet<PosRotScale> thighOffset;
 		KeyframeSet<PosRotScale> calfOffset;
@@ -215,7 +220,10 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			calfOffset = animation.calfFront;
 			footOffset = animation.footFront;
 		}
-		PosRotScale legTransform = D2L2Animation.thighOffset + thighOffset.GetCurrentValue(AnimationTime);
+		Transform legTransform = new() {
+			Mirror = NPC.direction == 1
+		};
+		legTransform += D2L2Animation.thighOffset + thighOffset.GetCurrentValue(AnimationTime);
 		thigh = legTransform;
 
 		legTransform += D2L2Animation.calfOffset;
@@ -226,9 +234,9 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		legTransform += footOffset.GetCurrentValue(AnimationTime);
 		foot = legTransform;
 	}
-	public void DrawLeg(SpriteBatch spriteBatch, Vector2 pos, bool back, Color drawColor, Color glowColor) {
+	public void DrawLeg(SpriteBatch spriteBatch, Vector2 pos, bool back, Color drawColor, Color glowColor, SpriteEffects effects) {
 		KeyframeSet<FootFrame> footFrame = back ? Animation.footBackFrame : Animation.footFrontFrame;
-		GetLegTransforms(back, out PosRotScale thigh, out PosRotScale calf, out PosRotScale foot);
+		GetLegTransforms(back, out Transform thigh, out Transform calf, out Transform foot);
 		if (!back) {
 			spriteBatch.DrawGlowingRiggedPart(
 				thighTex,
@@ -240,7 +248,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 				0,
 				new(16, 16),
 				1,
-				SpriteEffects.None
+				effects
 			);
 		}
 		spriteBatch.DrawRiggedPart(
@@ -252,7 +260,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			0,
 			new(68, 20),
 			1,
-			SpriteEffects.None
+			effects
 		);
 		if (back) {
 			spriteBatch.DrawGlowingRiggedPart(
@@ -266,7 +274,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 				0,
 				new(16, 16),
 				1,
-				SpriteEffects.None
+				effects
 			);
 		}
 		spriteBatch.DrawRiggedPart(
@@ -278,7 +286,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			0,
 			new(32, 10),
 			1,
-			SpriteEffects.None
+			effects
 		);
 		/*
 		Vector2 footPos = NPC.Center + foot.Position - new Vector2(35, 8);

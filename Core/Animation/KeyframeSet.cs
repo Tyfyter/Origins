@@ -1560,6 +1560,31 @@ public record struct RotScale(float Rotation, float Scale) : KeyframeSet<RotScal
 	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(default, Rotation);
 	public static string Export(RotScale value) => value == new RotScale() ? "new()" : $"new({value.Rotation}f, {value.Scale}f)";
 }
+public record struct Transform(Vector2 Position, float Rotation, float Scale) {
+	public Transform() : this(default, 0, 1) { }
+	public Vector2 Position = Position;
+	public float Rotation = Rotation;
+	public float Scale = Scale;
+	public bool Mirror = false;
+	public bool YMirror = false;
+	readonly Vector2 Flip => new(-Mirror.ToDirectionInt(), -YMirror.ToDirectionInt());
+	readonly int Chirality => (Mirror == YMirror).ToDirectionInt();
+	public static Transform operator +(Transform a, Transform b) => new(
+		a.Position + (b.Position * a.Flip).RotatedBy(a.Rotation) * a.Scale,
+		a.Rotation + b.Rotation * a.Chirality,
+		a.Scale * b.Scale
+	) {
+		Mirror = a.Mirror ^ b.Mirror,
+		YMirror = a.YMirror ^ b.YMirror,
+	};
+	public static implicit operator Transform(Vector2 val) => new(val, 0, 1);
+	public static implicit operator Transform(PosRotScale val) => new(val.Position, val.Rotation, val.Scale);
+	public static void DrawGizmo(SpriteBatch spriteBatch, ref Transform value, ref GizmoTracker gizmoTracker, GizmoOffset offset) {
+		Vec2Interpolation.DrawGizmo(spriteBatch, ref value.Position, ref gizmoTracker, offset);
+		DrawRotationGizmo(spriteBatch, ref value.Rotation, ref gizmoTracker, offset, 32);
+		DrawScaleGizmo(spriteBatch, ref value.Scale, ref gizmoTracker, offset, 20);
+	}
+}
 public record struct Percentage(float Value) : KeyframeSet<Percentage>.ITypeHandler {
 	public Percentage() : this(1) { }
 	public float Value = Value;
