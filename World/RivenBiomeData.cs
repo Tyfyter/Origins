@@ -26,6 +26,7 @@ using Origins.Water;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -1135,6 +1136,7 @@ namespace Origins.World.BiomeData {
 
 			BiomeFlesh = TileType<Amoeba_Fluid>(); // temp?
 			BiomeFleshWall = OriginsWall.GetWallID<Amebic_Gel_Wall>(WallVersion.Natural);
+			if (GetType().GetField("FleshCraftingStationItem") is FieldInfo FleshCraftingStationItem) FleshCraftingStationItem.SetValue(this, (int?)TileItem.ItemType<Flesh_Shredder>());
 
 			SeedType = ItemType<Riven_Grass_Seeds>();
 			BiomeOre = TileType<Encrusted_Ore>();
@@ -1193,6 +1195,9 @@ namespace Origins.World.BiomeData {
 			);
 			this.AddChambersiteTileConversions(Chambersite_Ore.GetOreID(TileType<Spug_Flesh>()));
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
+		}
+		struct FutureFeatureFlag : IBroken {
+			static string IBroken.BrokenReason => "Register Flesh Shredder properly";
 		}
 		public IEnumerable<int> ProvideItemObtainability() {
 			yield return BiomeChestItem.Value;

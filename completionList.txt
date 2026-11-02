@@ -1676,7 +1676,7 @@ TILES:
 
 (X) Elderforge
 (^) Fabricator
-(#, ^2) Flesh Shredder !!!
+(☻) Flesh Shredder !!!
 (X) Interstellar Sampler
 (^) Medicine Fabricator
 (^) Metal Presser
