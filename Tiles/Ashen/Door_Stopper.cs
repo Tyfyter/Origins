@@ -60,6 +60,7 @@ namespace Origins.Tiles.Ashen {
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
 		}
 		public override void HitWire(int i, int j) {
 			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
