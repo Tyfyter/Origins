@@ -13,7 +13,9 @@ using ReLogic.Content;
 using ReLogic.Graphics;
 using ReLogic.OS;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -195,11 +197,28 @@ public class StructureHelperUI : UIState {
 			VAlign = 1
 		});
 
-		Append(globalKeyToggle = new() {
+		Append(globalKeyToggle = new("Add as global tile key?") {
 			Left = new(16, 0),
 			Top = new(58, 0.1f),
 			HAlign = 0f
 		});
+		Append(autoKeyToggle = new("Automatically select unused keys?") {
+			Left = new(16, 0),
+			Top = new(90, 0.1f),
+			HAlign = 0f
+		});
+		Append(autoKeyConfirm = new("Automatically confirm keys?", Color.Gray) {
+			Left = new(16, 0),
+			Top = new(122, 0.1f),
+			HAlign = 0f
+		});
+		globalKeyToggle.OnSet += WarnAutoGlobal;
+		autoKeyToggle.OnSet += WarnAutoGlobal;
+		autoKeyToggle.OnSet += () => autoKeyConfirm.Color = Color.White;
+		autoKeyToggle.OnUnset += () => {
+			autoKeyConfirm.Color = Color.Gray;
+			autoKeyConfirm.Value = false;
+		};
 
 		UIElement region = new() {
 			Left = new(0, 0.25f * 0.5f),
@@ -230,6 +249,9 @@ public class StructureHelperUI : UIState {
 			OverflowHidden = true
 		});
 		if (!string.IsNullOrWhiteSpace(reopenPath)) SelectStructure(reopenPath);
+		void WarnAutoGlobal() {
+			if (globalKeyToggle.Value && autoKeyToggle.Value) toastHandler.Push("Auto-assigning global associations is more likely to result in some globals only being used once");
+		}
 	}
 	private void OpenStructureSelect(UIMouseEvent _, UIElement __) {
 		if (FileBrowser.OpenFilePanel("Select Structure", "json") is not string select) return;
@@ -244,13 +266,14 @@ public class StructureHelperUI : UIState {
 		structurePath = relativePath.Replace(Path.DirectorySeparatorChar, '/');
 		ReloadStructure();
 	}
-
+	
 	void ReloadStructure() {
 		structure = Load(structurePath);
 		OnRoomsChanged();
 		serializationContext ??= new();
 		serializationContext.globalKeyToggle = globalKeyToggle;
 		serializationContext.socketInput = textInput2;
+		serializationContext.tileReady = OnTileReady;
 		serializationContext.globalKey.Clear();
 		serializationContext.globalSocketKey.Clear();
 		if (structure is DeserializedStructure des/*Like, the roaring knight?*/) {
@@ -258,6 +281,13 @@ public class StructureHelperUI : UIState {
 			foreach ((char key, RoomSocket socket) in des.Rooms.OfType<DeserializedRoom>().SelectMany(r => r.SocketKey)) {
 				serializationContext.globalSocketKey[socket.Key] |= 1 << (int)socket.Direction;
 			}
+		}
+	}
+	void OnTileReady() {
+		if (autoKeyToggle.Value) {
+			textInput.Clear();
+			textInput.Append(Structure_Helper_Item.FindUnused(new ToastCommandCaller(toastHandler)).ToString());
+			if (autoKeyConfirm.Value) ((ITextInputContainer)textInput).Submit();
 		}
 	}
 	void OnRoomsChanged() {
@@ -297,6 +327,8 @@ public class StructureHelperUI : UIState {
 			switch (serializationContext.state) {
 				case SerializationContext.SerializationState.Tile:
 				yield return globalKeyToggle;
+				yield return autoKeyToggle;
+				if (autoKeyToggle.Value) yield return autoKeyConfirm;
 				break;
 				case SerializationContext.SerializationState.Socket:
 				yield return textInput2;
@@ -342,7 +374,9 @@ public class StructureHelperUI : UIState {
 	UIImageButton keepStructureButton;
 	UIImageButton deselectRoomButton;
 	public ToastHandler toastHandler;
-	GlobalKeyToggle globalKeyToggle;
+	ToggleElement globalKeyToggle;
+	ToggleElement autoKeyToggle;
+	ToggleElement autoKeyConfirm;
 	SocketKeySelector socketSelector;
 	UIImageButtonVisibility visibilityToggle;
 	public bool Visible => visibilityToggle.Visible;
@@ -667,17 +701,44 @@ public class StructureHelperUI : UIState {
 			);
 		}
 	}
-	public class GlobalKeyToggle : UIElement {
+	public class ToggleElement(string text, Color startColor = default) : UIElement {
 		readonly Asset<Texture2D> toggleButton = Main.Assets.Request<Texture2D>("Images/UI/Settings_Toggle");
-		public bool Value { get; set; }
+		public bool Value { get;
+			set {
+				if (field.TrySet(value)) {
+					if (value) {
+						OnSet?.Invoke();
+					} else {
+						OnUnset?.Invoke();
+					}
+				}
+			}
+		}
+		public Color Color {
+			get => button.color;
+			set {
+				button.color = value;
+				uiText.TextColor = value;
+			}
+		}
+		public event Action OnSet;
+		public event Action OnUnset;
+		UIImageButtonFramed button;
+		UIText uiText;
 		public override void OnInitialize() {
+			if (startColor == default) startColor = Color.White;
 			Width.Set(0, 1);
 			Height.Set(16, 0);
-			UIImageButtonFramed button = new(toggleButton);
+			button = new(toggleButton) {
+				color = startColor
+			};
 			button.OnUpdate += _ => button.SetFrame(toggleButton.Frame(2, frameX: Value.ToInt()));
 			button.OnLeftClick += (_, _) => Value = !Value;
 			Append(button);
-			Append(new UIText("Add as global tile key?") { Left = new(16, 0) });
+			Append(uiText = new UIText(text) {
+				Left = new(16, 0),
+				TextColor = startColor
+			});
 		}
 	}
 	public class SocketKeySelector : UIElement {
@@ -768,6 +829,59 @@ public class Structure_Helper_Item : TestingItem {
 		set => shouldCancel = value;
 	}
 	public static Dictionary<string, char> Associations { get; private set; } = [];
+	public static BitArray ConsumedAssociations { get; private set; } = new(ushort.MaxValue + 1);
+	static void ClearConsumed() {
+		ConsumedAssociations.SetAll(false);
+		for (char i = default; i <= ' '; i++) ConsumedAssociations[i] = true;
+		ConsumedAssociations['.'] = true;
+		ConsumedAssociations['"'] = true;
+		ConsumedAssociations['['] = true;
+		ConsumedAssociations[']'] = true;
+		ConsumedAssociations['{'] = true;
+		ConsumedAssociations['}'] = true;
+		ConsumedAssociations['\''] = true;
+		ConsumedAssociations['\\'] = true;
+		ConsumedAssociations['\u007f'] = true;
+		for (char i = ' '; i < char.MaxValue; i++) {
+			switch (CharUnicodeInfo.GetUnicodeCategory(i)) {
+				case UnicodeCategory.UppercaseLetter:
+				case UnicodeCategory.LowercaseLetter:
+				case UnicodeCategory.TitlecaseLetter:
+				case UnicodeCategory.OtherLetter:
+				case UnicodeCategory.NonSpacingMark:
+				case UnicodeCategory.DecimalDigitNumber:
+				case UnicodeCategory.LetterNumber:
+				case UnicodeCategory.OtherNumber:
+				case UnicodeCategory.ConnectorPunctuation:
+				case UnicodeCategory.DashPunctuation:
+				case UnicodeCategory.OpenPunctuation:
+				case UnicodeCategory.ClosePunctuation:
+				case UnicodeCategory.InitialQuotePunctuation:
+				case UnicodeCategory.FinalQuotePunctuation:
+				case UnicodeCategory.OtherPunctuation:
+				case UnicodeCategory.MathSymbol:
+				case UnicodeCategory.CurrencySymbol:
+				case UnicodeCategory.ModifierSymbol:
+				case UnicodeCategory.OtherSymbol:
+				break;
+				default:
+				ConsumedAssociations[i] = true;
+				break;
+			}
+		}
+		ConsumedAssociations[char.MaxValue] = true;
+	}
+	static void ConsumeAssociations() {
+		foreach (char c in Associations.Values) ConsumedAssociations[c] = true;
+	}
+	static void ConsumeAssociation(char c) => ConsumedAssociations[c] = true;
+	public static char? FindUnused(CommandCaller feedback = null) {
+		for (char i = ' '; i < char.MaxValue; i++) {
+			if (!ConsumedAssociations[i]) return i;
+		}
+		feedback.Reply($"You have evidently used all 55011 supported characters in one room, please don't do that");
+		return null;
+	}
 	public static string CurrentTileData { get; private set; }
 	public override void SetDefaults() {
 		Item.width = 16;
@@ -824,12 +938,14 @@ public class Structure_Helper_Item : TestingItem {
 			Dictionary<char, string> globalKey = context.globalKey;
 			FungibleSet<string> globalSocketKey = context.globalSocketKey;
 			Associations.Clear();
+			ClearConsumed();
 			Associations.Add("Empty", ' ');
 			Associations.Add("Void", '.');
 			foreach (KeyValuePair<char, string> item in globalKey) {
 				if (item.Key is ' ' or '.') continue;
 				Associations.TryAdd(item.Value, item.Key);
 			}
+			ConsumeAssociations();
 			Point min = leftClick;
 			Point max = rightClick;
 			MinMax(ref min.X, ref max.X);
@@ -919,6 +1035,7 @@ public class Structure_Helper_Item : TestingItem {
 						}
 						builder.Append(ch.Value);
 						key.Add(ch.Value, pattern);
+						ConsumeAssociation(ch.Value);
 						if (socket?.Key is not null) {
 							socketKey.Add(ch.Value, socket);
 							globalSocketKey[socket.Key] |= 1 << (int)socket.Direction;
@@ -945,6 +1062,7 @@ public class Structure_Helper_Item : TestingItem {
 								}
 								NewText(caller, string.Format(format, CurrentTileData, "<k>", "map key"));
 							});
+							context.tileReady?.Invoke();
 							SpinWait.SpinUntil(() => {
 								Structure_Helper_Item.leftClick = leftClick;
 								Structure_Helper_Item.rightClick = rightClick;
@@ -957,6 +1075,7 @@ public class Structure_Helper_Item : TestingItem {
 							context.state = SerializationContext.SerializationState.Inactive;
 							return null;
 						}
+						ConsumeAssociation(Associations[CurrentTileData]);
 						builder.Append(Associations[CurrentTileData]);
 					}
 					context.state = SerializationContext.SerializationState.Processing;
@@ -1138,6 +1257,10 @@ public class UIInputPanel(float textScale = 1, bool large = false) : UITextPanel
 		_text.Clear();
 		CursorIndex = 0;
 	}
+	public void Append(string text) {
+		if (CursorIndex == _text.Length) CursorIndex += text.Length;
+		_text.Append(text);
+	}
 	public event Action<string> OnSubmit;
 	public event Action OnExit;
 	public void Reset() {
@@ -1194,6 +1317,7 @@ public class UIConditionalButton(Asset<Texture2D> texture, Func<string> conditio
 }
 public class UIImageButtonFramed(Asset<Texture2D> texture) : UIElement() {
 	Rectangle frame;
+	public Color color = Color.White;
 	public void SetFrame(Rectangle frame) {
 		//Non-short-circuiting or because it needs to do both even if width succeeds
 		this.frame = frame;
@@ -1201,7 +1325,7 @@ public class UIImageButtonFramed(Asset<Texture2D> texture) : UIElement() {
 	}
 	protected override void DrawSelf(SpriteBatch spriteBatch) {
 		CalculatedStyle dimensions = GetDimensions();
-		spriteBatch.Draw(texture.Value, dimensions.ToRectangle(), frame, Color.White);
+		spriteBatch.Draw(texture.Value, dimensions.ToRectangle(), frame, color);
 	}
 }
 public class UIImageButtonVisibility(bool visible = true) : UIImageButton(GetImage(visible)) {
@@ -1219,9 +1343,10 @@ public class SerializationContext {
 	public SerializationState state;
 	public Dictionary<char, string> globalKey = [];
 	public FungibleSet<string> globalSocketKey = [];
-	public StructureHelperUI.GlobalKeyToggle globalKeyToggle;
+	public StructureHelperUI.ToggleElement globalKeyToggle;
 	public UIInputPanel socketInput;
 	public Mod mod;
+	public Action tileReady;
 	public bool ShouldAddGlobal => globalKeyToggle?.Value ?? false;
 	public enum SerializationState {
 		Inactive,

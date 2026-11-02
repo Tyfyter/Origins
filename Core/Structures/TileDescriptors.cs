@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Core;
+using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ModLoader;
 using Origins.Items.Tools.Wiring;
 using Origins.Tiles.Dev;
 using PegasusLib;
@@ -396,29 +398,36 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public class PlaceLiquid : SerializableTileDescriptor {
-		readonly TileDescriptor[] fullDescriptors = new TileDescriptor[LiquidID.Count];
+		TileDescriptor[] FullDescriptors {
+			get {
+				if (field.Length != LiquidLoader.LiquidCount) Array.Resize(ref field, LiquidLoader.LiquidCount);
+				return field;
+			}
+		}
 		public override void Load() {
 			AddSerializer(tile => tile.LiquidAmount switch {
 				0 => null,
-				255 => $"PlaceLiquid({LiquidID.Search.GetName(tile.LiquidType)})",
-				_ => $"PlaceLiquid({LiquidID.Search.GetName(tile.LiquidType)},{tile.LiquidAmount})"
+				255 => $"PlaceLiquid({LiquidLoader.GetLiquid(tile.LiquidType)?.FullName ?? LiquidID.Search.GetName(tile.LiquidType)})",
+				_ => $"PlaceLiquid({LiquidLoader.GetLiquid(tile.LiquidType)?.FullName ?? LiquidID.Search.GetName(tile.LiquidType)},{tile.LiquidAmount})"
 			});
 		}
 		protected override TileDescriptor Create(string[] parameters, string originalText) {
-			byte liquidType = (byte)LiquidID.Search.GetId(parameters[0]);
+			ushort liquidType;
+			if (LiquidID.Search.TryGetId(parameters[0], out int _liquidType)) liquidType = (byte)_liquidType;
+			else liquidType = ModContent.Find<ModLiquid>(parameters[0]).Type;
 			byte liquidAmount = 255;
 			if (parameters.Length > 1) liquidAmount = byte.Parse(parameters[1]);
 			return Create(liquidType, liquidAmount, originalText);
 		}
-		TileDescriptor Create(byte liquidType, byte liquidAmount, string originalText) {
-			TileDescriptor descriptor = fullDescriptors[liquidType];
+		TileDescriptor Create(ushort liquidType, byte liquidAmount, string originalText) {
+			TileDescriptor descriptor = FullDescriptors[liquidType];
 			if (liquidAmount != 255 || descriptor is null) {
 				descriptor = new((_, _, i, j) => {
 					Tile tile = Main.tile[i, j];
 					tile.LiquidType = liquidType;
 					tile.LiquidAmount = liquidAmount;
 				}, Parts: [originalText]);
-				if (liquidAmount == 255) fullDescriptors[liquidType] = descriptor;
+				if (liquidAmount == 255) FullDescriptors[liquidType] = descriptor;
 			}
 			return descriptor;
 		}
