@@ -282,7 +282,7 @@ ENEMY NPCS:
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
-(^) QM-76 'Quakemaker'
+($2, ^2/3) QM-76 'Quakemaker' !!!
 (^) Reject
 (^) Repairboy
 (^) Riven Penguin
