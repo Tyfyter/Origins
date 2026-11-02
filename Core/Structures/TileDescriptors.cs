@@ -403,7 +403,7 @@ namespace Origins.Core.Structures {
 				if (field.Length != LiquidLoader.LiquidCount) Array.Resize(ref field, LiquidLoader.LiquidCount);
 				return field;
 			}
-		}
+		} = new TileDescriptor[LiquidID.Count];
 		public override void Load() {
 			AddSerializer(tile => tile.LiquidAmount switch {
 				0 => null,
