@@ -8562,7 +8562,15 @@ Star_Soldier_Summon_Item: {
 		''' */
 	/* UsedTooltip:
 		'''
-		New tooltip goes here
+		Calls in a customizable SS-22 'Star Soldier' mechanized powersuit from space
+		750 max life and 58 defense
+		Dashing and flying capability
+		After inital activation, select arm weapons for both arms
+		Use <left> and <right> to use weapons
+		+28.5s breath time
+		3 minute cooldown and 200 life penalty after destroyed
+		140 second cooldown ejecting after being damaged
+		15 second cooldown ejecting while intact
 		'Summons a mech to totally zerk your foes'
 		''' */
 }
@@ -8711,7 +8719,7 @@ Jumpsuit: {
 
 Door_Stopper_Item: {
 	// DisplayName: Door Stopper
-	// Tooltip: Locks connected powerable doors when it is unpowered
+	// Tooltip: Locks adjacent powerable doors when it is unpowered
 }
 
 Enemy_Freezer: {

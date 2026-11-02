@@ -413,6 +413,7 @@ EVENTS:
 (X) Evvillll
 (^) Laser Tag
 
+(X) Defiled Mimicry Procession
 (X) End of Sanctity
 ---
 
@@ -932,8 +933,11 @@ TOOLS:
 (X) Bleeding Obsidian Hamaxe
 (X) Bleeding Obsidian Pickaxe
 
+(X) Axepick Axe
 (^) Impactaxe
+(X) Shellaslammer
 (X) Umbramere Terrain Ripper
+(X) Xerill
 
 (X) Edenwood Hammer
 (X) Nova Bomb
@@ -1011,9 +1015,11 @@ MELEE WEAPONS:
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
+(X) Clarent
 (X) Edenwood Sword
 (X) Edge of Aether
 (X) Executioner
+(X) Holy Knuckledusters
 (X) Laser Tag Sabre
 (^) Personal Laser Blade
 (X) Pile Bunker
@@ -1022,6 +1028,7 @@ MELEE WEAPONS:
 (X) Solitaire's Warhammer
 (^) Telephone Pole
 (^) Terrarang
+(X) True Clarent
 (^) True Light Disc
 (^) True Waning Crescent
 (^) Tyrfing
@@ -1088,6 +1095,7 @@ RANGED WEAPONS:
 (^) Fumethrower
 (^) Hallowed Cleaver
 (^) Harpoon Burst Rifle
+(X) Hevn
 (^) HNO-3 "Viper"
 (^) Incision
 (#, ^2) Lag Spike
@@ -1100,6 +1108,7 @@ RANGED WEAPONS:
 (^) Spray 'N Pray
 (^) Tiny Sniper
 (^) Titanium Harpoon Gun
+(X) X-Harpoon
 (^) 3-in-1 Shotty
 
 (X) Assassin's Blade
@@ -1163,6 +1172,7 @@ MAGIC WEAPONS:
 (X) Bandwidth Sapper
 (X) Bitcrusher
 (^) Breach
+(X) Gospel
 (^) Hævateinn
 (^) Haunted Vase
 (^) Laser Tag Gun
@@ -1254,7 +1264,7 @@ SUMMONER WEAPONS:
 (X) Skipping Stone
 (^) SMART Wrench
 (X) Squid Staff
-(#2, ^2) Star Harvest !!! (please see pre-existing feedback)
+(^) Star Harvest
 (X) Star Streak
 (X) Technomancer 4000
 (X) Tentacle Snare Incantation
@@ -1868,6 +1878,7 @@ MATERIALS:
 
 (^) Busted Servo
 (X) Dream Essence
+(X) Edon Bar
 (X) Empathy Node
 (X) Flesh Core Fragment
 (^) Geothermal Sludge
@@ -2140,6 +2151,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Robot Toy Controller (Toy Trenchmaker)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (X) The Stick (Arabel But Fox)
+(X) Unrigged Bone (Doggo Seer)
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
@@ -2328,6 +2340,7 @@ UI:
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
+(X) End of Sanctity Backdrop
 (^) Eutrophic Sea Icon
 (^) Fiberglass Icon
 (^) Fiberglass Map/Bestiary Backdrop
@@ -2398,6 +2411,8 @@ VOLUME I MUSIC:
 (X) Test of Ancients
 
 (^) Ashen Warhead Music
+(X) Defiled Mimicry Procession
+(X) End of Sanctity
 (X) Star Soldier Juggernaut Music
 ---
 
@@ -2448,6 +2463,8 @@ VOLUME III MUSIC:
 (X) Test of Ancients
 
 (X) Ashen Warhead Music
+(X) Defiled Mimicry Procession
+(X) End of Sanctity
 (X) Hawken Surfing Music !!!
 ($2) Star Soldier Juggernaut Music
 ---
