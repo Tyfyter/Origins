@@ -546,6 +546,10 @@ public class VV13_Swap_Tool : VV13Animation {
 				];
 	}
 	static void SwitchTool(in VV13 vv13) => Utils.Swap(ref vv13.CurrentToolIndex, ref vv13.AnimationVar);
+	static void Dev_GuaranteeTools(in VV13 vv13) {
+		vv13.CurrentTool = ModContent.GetInstance<VV13_Drill>();
+		vv13.AnimationVar = ModContent.GetInstance<VV13_Saw>().Type;
+	}
 	public override void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) {
 		VV13Tool.tools[(int)vv13.AnimationVar].Draw(
 			spriteBatch,
