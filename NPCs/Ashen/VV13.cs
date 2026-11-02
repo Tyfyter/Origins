@@ -179,6 +179,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		NPC.DrawConfused();
 		Editor.vv13 = this;
 		Animation_Editor_UI.DrawEditorUI = Editor.DrawUI;
+		spriteBatch.DrawDebugTextAbove(CurrentTool, NPC.Top - screenPos);
 		return false;
 	}
 #if DRAWPLATFORM
