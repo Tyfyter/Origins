@@ -356,7 +356,8 @@ public class VV13_Holding : VV13Animation {
 			new(10, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [])
 		};
 		tool = new(new()) {
-			new(10, new(new(-13.5f, 78.75f), 0f, 1f), Stepped)
+			new(1, new(new(4.950001f, 99.45f), 0f, 1f), []),
+			new(10, new(new(-10.5f, 79.5f), 0f, 1f), [])
 		};
 		toolOpacity = new(1f) {
 		};
@@ -493,8 +494,24 @@ public class VV13_Swap_Tool : VV13Animation {
 	};
 	public VV13_Swap_Tool() {
 		swappingInTool = new(new()) {
+			new(22, new(new(-2.25f, -12.75f), 3.1352565f, 1f), Stepped),
+			new(55, new(new(12f, -38.25f), 3.1104045f, 1f), []),
+			new(77, new(new(76.5f, -43.5f), 3.0947933f, 1f), []),
+			new(85, new(new(108.75f, -15.75f), 4.4197235f, 1f), []),
+			new(91, new(new(109.5f, 3.75f), -1.0832675f, 1f), []),
+			new(95, new(new(115.704544f, 19.09091f), -0.8582682f, 1f), []),
+			new(102, new(new(99.75f, 56.25f), -0.4645195f, 1f), []),
+			new(107, new(new(88.36363f, 70.5f), -0.39913133f, 1f), []),
+			new(111, new(new(72.91042f, 82.411766f), -0.3468208f, 1f), []),
+			new(114, new(new(62.89263f, 89.98982f), -0.3075879f, 1f), []),
+			new(123, new(new(19.114265f, 88.57398f), -0.059376836f, 1f), []),
+			new(124, new(new(13.5f, 85.5f), 0.024232745f, 1f), []),
+			new(128, new(new(-4.5f, 78f), 0.024232745f, 1f), [])
 		};
 		swappingInToolOpacity = new(1f) {
+			new(1, 0f, []),
+			new(9, 0f, []),
+			new(22, 1f, [])
 		};
 		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
 			new(2, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
@@ -537,11 +554,28 @@ public class VV13_Swap_Tool : VV13Animation {
 			new(129, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [])
 		};
 		tool = new(new()) {
+			new(2, new(new(-9.75f, 74.25f), 0f, 1f), []),
+			new(9, new(new(-11.25f, 69f), 0f, 1f), Stepped),
+			new(22, new(new(-12f, 77.25f), 0f, 1f), []),
+			new(34, new(new(23.884615f, 89.71154f), -0.21782172f, 1f), []),
+			new(35, new(new(31.5f, 89.25f), -0.108270645f, 1f), []),
+			new(37, new(new(55.35f, 85.95f), -0.44343635f, 1f), []),
+			new(38, new(new(67.368744f, 83.081245f), -0.61101925f, 1f), []),
+			new(39, new(new(80.8875f, 75.712494f), -0.7786021f, 1f), []),
+			new(40, new(new(93.90625f, 64.84374f), -0.946185f, 1f), []),
+			new(41, new(new(103.775f, 49.174995f), -1.1137677f, 1f), []),
+			new(42, new(new(111.95625f, 33.88125f), -1.2813506f, 1f), []),
+			new(45, new(new(109.5f, -21f), 4.4990864f, 1f), []),
+			new(51, new(new(76.5f, -43.5f), 3.0947933f, 1f), []),
+			new(53, new(new(10.596153f, -32.942307f), 3.0159793f, 1f), []),
+			new(93, new(new(-2.6781387f, -9.485828f), 3.1173968f, 1f), [])
 		};
 		toolOpacity = new(1f) {
+			new(53, 1f, []),
+			new(93, 0f, [])
 		};
 		events = [
-					new(0, Dev_CycleTool),
+					new(2, SwitchTool),
 			new(61, SwitchTool)
 				];
 	}

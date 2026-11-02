@@ -1018,6 +1018,7 @@ MELEE WEAPONS:
 (X) Clarent
 (X) Edenwood Sword
 (X) Edge of Aether
+(X) Edon Jousting Lance
 (X) Executioner
 (X) Holy Knuckledusters
 (X) Laser Tag Sabre
@@ -1271,6 +1272,7 @@ SUMMONER WEAPONS:
 (X) Tentacle Whip
 (^) Terratotem
 (X) Tonal Resonator
+(X) Trinity Incantation
 (^) Vampire Fireflower in a Pot
 (X) Wind Gong Whip
 
@@ -1452,6 +1454,7 @@ TILES:
 (^) Defiled Stone
 (X) Defiled Stone Brick
 (X) Edenwood
+(X) Edon Brick
 (X) Edon Ore
 (^) Eitrite Ore
 (@4) Encrusted Brick
@@ -1527,6 +1530,7 @@ TILES:
 (X) Defiled Stone Brick Wall
 (X) Edenwood Fence
 (X) Edenwood Wall
+(X) Edon Brick Wall
 (@, ^3) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
@@ -1577,6 +1581,7 @@ TILES:
 (^) Defiled Water Fountain
 (X) Destroyed Fountain
 (X) Edenwood Furniture
+(X) Edon Furniture
 (^) Endowood Furniture
 (^) Hyrax Cage
 (^) Limestone Furniture
