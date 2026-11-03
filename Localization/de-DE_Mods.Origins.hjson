@@ -2370,6 +2370,7 @@ Projectiles: {
 	// Quakemaker_Lava.DisplayName: Quakemaker Lava
 	// Trenchmaker_Spread_Missile.DisplayName: Trenchmaker Spread Missile
 	// Trenchmaker_Self_Destruct.DisplayName: Trenchmaker Self Destruct
+	// Trenchmaker_Seeker_Missile.DisplayName: Trenchmaker Seeker Missile
 }
 
 Prefixes: {

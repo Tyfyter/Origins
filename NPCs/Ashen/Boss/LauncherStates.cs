@@ -476,7 +476,7 @@ public class Missile_Silo_State : AIState {
 			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
 		}
 		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 128, sound: SoundID.Item14, hostile: true);
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, sound: SoundID.Item14, hostile: true);
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			if (Projectile.hide) behindNPCs.Add(index);
