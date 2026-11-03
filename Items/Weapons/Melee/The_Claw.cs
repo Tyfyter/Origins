@@ -272,16 +272,6 @@ namespace Origins.Items.Weapons.Melee {
 				SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, Projectile.Center);
 			}
 		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (Projectile.ai[0] == 0f) {
-				Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
-				Vector2 diff = targetHitbox.ClosestPointInRect(mountedCenter) - mountedCenter;
-				diff.Y /= 0.8f;
-				float num = 77f;
-				return diff.LengthSquared() <= num * num;
-			}
-			return base.Colliding(projHitbox, targetHitbox);
-		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
 	}
 }
