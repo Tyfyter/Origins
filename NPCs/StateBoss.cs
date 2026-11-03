@@ -77,6 +77,7 @@ namespace Origins.NPCs {
 		/// Used by boss controller debugging items
 		/// </summary>
 		public AutoLoadingAsset<Texture2D> iconTexture;
+		public Rectangle? iconFrame;
 		public int Index { get; private set; }
 		public void Load(Mod mod) {
 			Index = TBoss.AIStates.Count;
@@ -118,7 +119,18 @@ namespace Origins.NPCs {
 				texture = textures[hovered.ToInt() + 2];
 			}
 			DrawIcon(texture, position, Color.White);
-			if (iconTexture.Exists) DrawIcon(iconTexture, position, Color.White);
+			if (iconTexture.Exists) {
+				Main.spriteBatch.Draw(
+					iconTexture,
+					position,
+					iconFrame,
+					Color.White,
+					0f,
+					(iconFrame?.Size() ?? texture.Size()) * 0.5f,
+					1,
+					SpriteEffects.None,
+				0f);
+			}
 			if (hovered) {
 				UICommon.TooltipMouseText(GetType().Name);
 			}

@@ -2368,6 +2368,8 @@ Projectiles: {
 	CM_17_Laser.DisplayName: CM-17 Laser
 	Quakemaker_Fire.DisplayName: Quakemaker Fire
 	Quakemaker_Lava.DisplayName: Quakemaker Lava
+	Trenchmaker_Spread_Missile.DisplayName: Trenchmaker Spread Missile
+	Trenchmaker_Self_Destruct.DisplayName: Trenchmaker Self Destruct
 }
 
 Prefixes: {
