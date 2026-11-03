@@ -426,7 +426,9 @@ public class Missile_Silo_State : AIState {
 		int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 		Min(ref shotsToHaveFired, MissileCount);
 		if (shotsToHaveFired > npc.ai[1]) {
-			SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+			SoundEngine.PlaySound(Origins.Sounds.StarDash.WithPitchRange(0.5f, 0.8f), npc.Center);
+			SoundEngine.PlaySound(Origins.Sounds.WeldingTorchCancel.WithPitch(2f), npc.Center);
+			SoundEngine.PlaySound(SoundID.Item61.WithVolume(0.35f), npc.Center);
 			npc.ai[1]++;
 			Vector2 spread = Main.rand.NextVector2Circular(1, 1);
 			Vector2 perp = direction.Perpendicular();
@@ -507,6 +509,7 @@ public class Assult_Armor_State : AIState {
 			Damage,
 			1
 		);
+		SoundEngine.PlaySound(Origins.Sounds.IMustScream.WithPitch(1.65f), npc.Center);
 	}
 	public override double GetWeight(Trenchmaker boss, int[] previousStates) {
 		if (boss.NPC.GetGlobalNPC<OriginGlobalNPC>().brokenArmorDebuff) return 0;
@@ -545,7 +548,9 @@ public class Assult_Armor_State : AIState {
 		}
 		public override void OnKill(int timeLeft) {
 			if (Main.npc.GetIfInRange((int)Projectile.ai[0]) is NPC npc) npc.AddBuff(Broken_Armor_Debuff.ID, DebuffDuration);
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, Range, sound: SoundID.Item14, hostile: true);
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, Range, sound: Origins.Sounds.ConvincingExplosion.WithPitch(0.5f), hostile: true);
+			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(0.5f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item74.WithPitch(0.5f), Projectile.Center);
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			if (Projectile.hide) behindNPCs.Add(index);

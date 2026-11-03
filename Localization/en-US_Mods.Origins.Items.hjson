@@ -8729,5 +8729,5 @@ Enemy_Freezer: {
 
 Flesh_Shredder_Item: {
 	DisplayName: Flesh Shredder
-	Tooltip: ""
+	Tooltip: "Used for special crafting"
 }

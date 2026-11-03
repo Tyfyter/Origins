@@ -98,11 +98,11 @@ public class Quakemaker_Head : WormHead {
 				Main.instance.CameraModifiers.Add(new CameraShakeModifier(
 					NPC.Center, 2f, 1f, 10, 750f, -1f, "Quakemaker"
 				));
-				/*drillSound.PlaySoundIfInactive(
-					Origins.Sounds.Saw,
+				drillSound.PlaySoundIfInactive(
+					Origins.Sounds.DrillOutGround,
 					NPC.Center,
 					_IsDrilling ??= IsDrilling
-				);*/
+				);
 			}
 		}
 	}

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dusts;
 using Origins.Graphics;
-using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System.Linq;
 using Terraria;
@@ -39,7 +37,7 @@ namespace Origins.Tiles.Riven {
 
 			AddMapEntry(new(75, 96, 161), TileItem.Get(this).DisplayName);
 			AdjTiles = [BaseTileID, Type];
-			HitSound = SoundID.Tink;
+			HitSound = SoundID.NPCHit18;
 			DustType = Ashen_Biome.DefaultTileDust;
 			ID = Type;
 		}

@@ -143,6 +143,8 @@ namespace Origins {
 			public static SoundStyle DrillLeaveGround = new("Origins/Sounds/Custom/DrillLeaveGround");
 			public static SoundStyle DrillOutGround = new("Origins/Sounds/Custom/DrillOutGround");
 			public static SoundStyle DrillEnterGround = new("Origins/Sounds/Custom/DrillEnterGround");
+			public static SoundStyle OilLube = new("Origins/Sounds/Custom/OilLube", 3);
+			public static SoundStyle ConvincingExplosion = new("Origins/Sounds/Custom/ConvincingExplosion");
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",

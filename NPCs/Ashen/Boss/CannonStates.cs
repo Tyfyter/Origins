@@ -211,6 +211,8 @@ public class Tracker_Missiles_State : AIState {
 		}
 		public override void AI() {
 			if (Projectile.ai[1] > 0) {
+				SoundEngine.PlaySound(Origins.Sounds.StarDash.WithPitch(0.5f), Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DrillLeaveGround.WithPitch(2f), Projectile.Center);
 				Projectile.ai[1]--;
 				Projectile.numUpdates++;
 				return;

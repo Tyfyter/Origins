@@ -573,6 +573,7 @@ ARMOR:
 (X) Conduit Armor
 (X) Doombringer's Armor
 (X) Edenwood Armor
+(X) Edon Armor
 (X) Mitotic Armor
 (X) Mk. 3 CRISIS Armor
 (^) Necromancer Armor
@@ -1625,7 +1626,7 @@ TILES:
 (^) Delay Component
 (^) Diode Component
 (^) Dirt Chest
-(☻) Door Stopper !!! (dont forget glow)
+(^) Door Stopper
 (^) Edge Detector
 (^) Fast Conveyor Belt
 (^) Fire Extinguisher Holder
@@ -1676,7 +1677,7 @@ TILES:
 
 (X) Elderforge
 (^) Fabricator
-(☻) Flesh Shredder !!!
+(^) Flesh Shredder
 (X) Interstellar Sampler
 (^) Medicine Fabricator
 (^) Metal Presser
