@@ -78,7 +78,7 @@ public abstract class KeyframeAnimation {
 			IKeyframeSet item = (IKeyframeSet)field.GetValue(this);
 			keyframeSets.Add(item);
 			keyframeSetNames.Add(field.Name);
-			item.Bind(this);
+			item.Bind(this, field);
 			Max(ref totalLength, item.Duration);
 			exportAsCtor |= field.FieldType.DeclaringType != GetType();
 		}
@@ -488,7 +488,7 @@ public abstract class KeyframeAnimation {
 					}
 					time.Value = t + start;
 				} else {
-					time.Value += speed;
+					time.Value = float.Clamp(time.Value + speed, 0, duration);
 				}
 			}
 		}

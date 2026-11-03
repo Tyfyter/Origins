@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -23,10 +24,11 @@ public class D2L2 : ModNPC, IAshenEnemy {
 	public D2L2Animation Animation {
 		get => D2L2Animation.animations[NPC.aiAction];
 		set {
-			if (NPC.aiAction.TrySet(value.Type)) AnimationTime = 0;
+			if (NPC.aiAction.TrySet(value.Type)) AnimationTime = AnimationSpeed < 0 ? value.totalLength : 0;
 		}
 	}
 	public ref float AnimationTime => ref NPC.ai[0];
+	public ref float AnimationSpeed => ref NPC.ai[1];
 	public override void Load() => this.AddBanner();
 	public override void SetStaticDefaults() {
 		NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
@@ -54,6 +56,9 @@ public class D2L2 : ModNPC, IAshenEnemy {
 			GetInstance<Ashen_Biome>().Type,
 		];
 	}
+	public override void OnSpawn(IEntitySource source) {
+		AnimationSpeed = 1;
+	}
 	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 		bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName"));
 		bestiaryEntry.AddTags(
@@ -69,11 +74,9 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		get => collideY < 4;
 		set => collideY = (!value).Mul(4);
 	}
-	bool oldFlipped;
 	public override void AI() {
-		bool flipped = NPC.direction.TrySet(Math.Sign(Main.LocalPlayer.MountedCenter.X - (NPC.Center.X - 80 * NPC.direction)));
-		Dust.NewDustPerfect(NPC.Center - new Vector2(80 * NPC.direction, 0), 6, Vector2.Zero);
-		//NPC.velocity = default;
+		NPC.TargetClosestUpgraded();
+		NPC.direction.TrySet(Math.Sign(NPC.GetTargetData().Center.X - (NPC.Center.X - 80 * NPC.direction)));
 		Vector2 animotion = default;
 		GetLegTransforms(false, out _, out _, out Transform frontFoot);
 		GetLegTransforms(true, out _, out _, out Transform backFoot);
@@ -151,8 +154,10 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		NPC.spriteDirection = NPC.direction;
 		D2L2Animation animation = Animation;
 		float oldTime = AnimationTime;
-		animationControls.Play(ref AnimationTime, animation, loop: Animation.Loop);
-		animation.events.Update(this, oldTime, AnimationTime);
+		animationControls.Play(ref AnimationTime, animation, AnimationSpeed, Animation.Loop);
+		bool reversed = AnimationSpeed < 0;
+		(reversed ? animation.reverseEvents : animation.events).Update(this, oldTime, AnimationTime, reversed);
+		animation.Update(this);
 	}
 	public override void ModifyNPCLoot(NPCLoot npcLoot) {
 	}
@@ -328,7 +333,9 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 	public KeyframeSet<FootFrame> footBackFrame = new();
 	public EnumKeyframeSet<AnchorPoint> anchorPoint = new();
 	public EventKeyframeSet<D2L2> events = [];
-
+	[ShowIfTrue(nameof(Reversible)), ReverseEvents]
+	public EventKeyframeSet<D2L2> reverseEvents = [];
+	public virtual bool Reversible => false;
 	public int Type { get; private set; }
 	public void Load(Mod mod) {
 		Type = animations.Count;
@@ -336,7 +343,8 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 	}
 	public void Unload() { }
 	public virtual bool Loop => false;
-	public virtual void DrawExtras(SpriteBatch spriteBatch, D2L2 D2L2, Vector2 position, Color drawColor) { }
+	public virtual void DrawExtras(SpriteBatch spriteBatch, D2L2 d2L2, Vector2 position, Color drawColor) { }
+	public virtual void Update(D2L2 d2L2) { }
 	public enum AnchorPoint {
 		[Description("The D2L2 will not attempt to move")]
 		Stop,
@@ -348,7 +356,9 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 		None
 	}
 }
+public class D2L2_Stand : D2L2Animation;
 public class D2L2_Walk_Start : D2L2Animation {
+	public override bool Reversible => true;
 	public D2L2_Walk_Start() {
 		gun = new(new(), new Vector2(-11f, 29f)) {
 			new(21, new(new(-0.75f, -2.25f), 0f, 1f), [])
@@ -389,13 +399,21 @@ public class D2L2_Walk_Start : D2L2Animation {
 			new(27, AnchorPoint.FrontFoot, Stepped)
 		};
 		events = [
-					new(27, EnterLoop)
-				];
+			new(27, EnterLoop)
+		];
+		reverseEvents = [
+			new(0, Stand)
+		];
 	}
 	public static void EnterLoop(in D2L2 d2L2) => d2L2.Animation = Main.LocalPlayer.controlSmart ? GetInstance<D2L2_Walk_End>() : GetInstance<D2L2_Walk_Loop>();
+	public static void Stand(in D2L2 d2L2) {
+		d2L2.AnimationSpeed = 1;
+		d2L2.Animation = GetInstance<D2L2_Stand>();
+	}
 }
 public class D2L2_Walk_Loop : D2L2Animation {
 	public override bool Loop => true;
+	public override bool Reversible => true;
 	public D2L2_Walk_Loop() {
 		gun = new(new(new(-0.75f, -2.25f), 0f, 1f), (true, []), new Vector2(-11f, 29f)) {
 			new(1, new(new(0f, 3.75f), 0f, 1f), [new Exponential(2f)]),
@@ -449,16 +467,32 @@ public class D2L2_Walk_Loop : D2L2Animation {
 		events = [
 			new(34, ExitLoopFront)
 		];
+		reverseEvents = [
+			new(0, ExitLoopReverse)
+		];
 		MinimumLength = 68f;
 	}
 	public static void ExitLoopFront(in D2L2 d2L2) {
-		if (Main.LocalPlayer.controlSmart) d2L2.Animation = GetInstance<D2L2_Walk_End>();
+		NPC NPC = d2L2.NPC;
+		float chex = NPC.Center.X + 200 * NPC.direction;
+		if (Math.Sign(NPC.GetTargetData().Center.X - chex) != NPC.direction) d2L2.Animation = GetInstance<D2L2_Walk_End>();
 	}
 	public static void ExitLoopBack(in D2L2 d2L2) {
-		if (Main.LocalPlayer.controlSmart) d2L2.Animation = GetInstance<D2L2_Walk_End_Back>();
+		NPC NPC = d2L2.NPC;
+		float chex = NPC.Center.X + 200 * NPC.direction;
+		if (Math.Sign(NPC.GetTargetData().Center.X - chex) != NPC.direction) d2L2.Animation = GetInstance<D2L2_Walk_End_Back>();
+	}
+	public static void ExitLoopReverse(in D2L2 d2L2) {
+		d2L2.Animation = GetInstance<D2L2_Walk_Start>();
+	}
+	public override void Update(D2L2 d2L2) {
+		NPC NPC = d2L2.NPC;
+		float chex = NPC.Center.X + 80 * NPC.direction;
+		if (d2L2.AnimationSpeed < 1 || (Math.Sign(NPC.GetTargetData().Center.X - chex) != NPC.direction)) MathUtils.LinearSmoothing(ref d2L2.AnimationSpeed, -1, 0.1f);
 	}
 }
 public class D2L2_Walk_End : D2L2Animation {
+	public override bool Reversible => true;
 	public D2L2_Walk_End() {
 		gun = new(new(), new Vector2(-11f, 29f)) {
 		};
@@ -493,10 +527,12 @@ public class D2L2_Walk_End : D2L2Animation {
 		};
 		events = [];
 	}
+	public static void Stand(in D2L2 d2L2) => GetInstance<D2L2_Stand>();
 }
 public class D2L2_Walk_End_Back : D2L2Animation {
 	public D2L2_Walk_End_Back() {
 	}
+	public static void Stand(in D2L2 d2L2) => GetInstance<D2L2_Stand>();
 }
 public class D2L2_Crouch : D2L2Animation {
 	public D2L2_Crouch() {

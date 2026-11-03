@@ -665,12 +665,13 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 		new(4, 0),
 		new(0, 4)
 	);
-	protected override void OnBind() {
+	protected override void OnBind(FieldInfo field) {
 		gizmoOffset?.Bind(Animation);
 	}
 	#endregion
 }
 public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.Keyframe> {
+	public bool isReverse = false;
 	public delegate void Event(in TParams parameter);
 	public record struct Keyframe(float Time, Event Event) : IKeyframe<Keyframe> {
 		public Event Event = Event;
@@ -687,7 +688,16 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	public static Color KeyframeColor { get; } = new(43, 185, 255);
 	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
 	protected override int KeyframeUpdateAnimationFrames => 27;
-	public void Update(in TParams parameters, float lastTime, float currentTime) {
+	public void Update(in TParams parameters, float lastTime, float currentTime, bool reversed = false) {
+		if (reversed) {
+			for (int i = keyframes.Count - 1; i >= 0; i--) {
+				ref Keyframe keyframe = ref this[i];
+				if (keyframe.Time >= lastTime) continue;
+				if (keyframe.Time < currentTime) break;
+				keyframe.Event(in parameters);
+			}
+			return;
+		}
 		for (int i = 0; i < keyframes.Count; i++) {
 			ref Keyframe keyframe = ref this[i];
 			if (keyframe.Time <= lastTime) continue;
@@ -713,10 +723,11 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 	protected override bool DrawKeyframe(SpriteBatch spriteBatch, int keyframeIndex, Vector2 position, bool isKeyframeSelected, bool isTimelineSelected) {
 		ref Keyframe keyframe = ref this[keyframeIndex];
 		float rotation = keyframeIndex == updateKeyframeAnimIndex ? new KeyframeData.SinEaseBoth().ModifyProgress(updateKeyframeAnim.Abs(out int animDir)) * -TwoThirdsPi * animDir : 0;
+		if (isReverse) rotation = MathHelper.Pi - rotation;
 		Vector2 pos = Animation.timelinePos with { X = Animation.TimelineToScreenPos(keyframe.Time) };
 		keyframeTriangle.ResetPositions().Rotate(rotation).Translate(pos);
 		keyframeTriangle.FillColor(keyframeIndex == draggingKeyframeIndex ? Color.Lime : KeyframeColor);
-		if (keyframe.Time <= currentlyDrawingTime) keyframeTriangle.MultiplyColor(Color.Gray);
+		if (isReverse ? (keyframe.Time >= currentlyDrawingTime) : (keyframe.Time <= currentlyDrawingTime)) keyframeTriangle.MultiplyColor(Color.Gray);
 		if (isKeyframeSelected) {
 			using (keyframeTriangle.ModificationContext()) {
 				keyframeTriangle.Scale(2f, keyframeTriangle.TransformedOrigin).Draw(KeyframeAnimation.primitiveBatch);
@@ -785,7 +796,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		return builder.ToString();
 	}
 	public override string ExportType() => $"EventKeyframeSet<{typeof(TParams).Name}>";
-	protected override void OnBind() {
+	protected override void OnBind(FieldInfo field) {
 		options = [];
 		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static)) {
 			if (meth.ReturnType != typeof(void)) continue;
@@ -795,6 +806,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 			if (!parameters[0].Attributes.HasFlag(ParameterAttributes.In)) continue;
 			options.Add(meth.CreateDelegate<Event>());
 		}
+		isReverse = field.GetCustomAttribute<ReverseEventsAttribute>() is not null;
 	}
 	class SetKeyframeEvent(EventKeyframeSet<TParams> set, int index, Event value) : KeyframeVariableStep<Event>(set, index, value) {
 		public override string Text => $"Set Keyframe Event: {newValue}";
@@ -807,14 +819,16 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		5 * Vector2.UnitY.RotatedBy(-TwoThirdsPi)
 	);
 }
+[AttributeUsage(AttributeTargets.Field)]
+public sealed class ReverseEventsAttribute : Attribute;
 public class EnumKeyframeSet<TEnum> : KeyframeSet<AnimatableEnum<TEnum>> where TEnum : struct, Enum {
 	public new TEnum CalculateValue(float time) => base.CalculateValue(time);
 	public new TEnum GetCurrentValue(float time) => base.GetCurrentValue(time);
 	public EnumKeyframeSet() : base() { }
 	public EnumKeyframeSet(TEnum startValue, AGizmoOffset gizmoOffset = null) : this(startValue, (false, null), gizmoOffset) { }
 	public EnumKeyframeSet(TEnum startValue, (bool looped, InterpolationStack interpolation) loopData, AGizmoOffset gizmoOffset = null) : base(startValue, loopData, gizmoOffset) { }
-	protected override void OnBind() {
-		base.OnBind();
+	protected override void OnBind(FieldInfo field) {
+		base.OnBind(field);
 		ITypeHandler.EnsureLoaded<AnimatableEnum<TEnum>>();
 	}
 }
@@ -1062,11 +1076,11 @@ public abstract class AKeyframeSet<TKeyframe> : IKeyframeSet, IEnumerable<TKeyfr
 
 	IEnumerator<TKeyframe> IEnumerable<TKeyframe>.GetEnumerator() => keyframes.GetEnumerator();
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)keyframes).GetEnumerator();
-	public void Bind(KeyframeAnimation animation) {
+	public void Bind(KeyframeAnimation animation, FieldInfo field) {
 		Animation = animation;
-		OnBind();
+		OnBind(field);
 	}
-	protected virtual void OnBind() { }
+	protected virtual void OnBind(FieldInfo field) { }
 	public virtual bool CanLoop => false;
 	public bool IsLooped => looped;
 	public virtual object GetPose() => null;
@@ -1084,7 +1098,7 @@ public interface IKeyframeSet {
 	public void HandleMultiSelect(IKeyframeSet primary) { }
 	public string Export(string indent);
 	public string ExportType();
-	public void Bind(KeyframeAnimation animation) { }
+	public void Bind(KeyframeAnimation animation, FieldInfo field) { }
 	public void TrimStart(float time);
 	public object GetPose() => null;
 	public void SetPose(object value) { }
