@@ -272,6 +272,7 @@ namespace Origins.Items.Weapons.Melee {
 				SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, Projectile.Center);
 			}
 		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => null;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
 	}
 }
