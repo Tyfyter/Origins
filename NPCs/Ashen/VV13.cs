@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
@@ -32,9 +33,6 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen;
 public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargetingNPC {
-	public override void OnSpawn(IEntitySource source) {
-		AnimationVar = 1;
-	}
 	public Rectangle DrawRect => new(0, 0, 34, 46);
 	public int AnimationFrames => 3;
 	public int FrameDuration => 3;
@@ -80,6 +78,10 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		SpawnModBiomes = [
 			GetInstance<Ashen_Biome>().Type,
 		];
+	}
+	public override void OnSpawn(IEntitySource source) {
+		CurrentTool = VV13Tool.GetRandom();
+		AnimationVar = 1;
 	}
 	public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
 		TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilter);
@@ -610,6 +612,7 @@ public abstract class VV13Tool : ModTexturedType {
 	public virtual int DroppedHealth => 200;
 	public virtual int IncineratorPowerTime => 900;
 	public int Type { get; private set; }
+	protected static RangeRandom randomWeights;
 	protected sealed override void Register() {
 		ModTypeLookup<VV13Tool>.Register(this);
 		Type = tools.Count;
@@ -620,6 +623,7 @@ public abstract class VV13Tool : ModTexturedType {
 		RequestIfExists(Texture + "_Glow", out Sets.GlowTexture[Type]);
 	}
 	public sealed override void SetupContent() {
+		randomWeights ??= new(Main.rand, 0, tools.Count);
 		AutoStaticDefaults();
 		SetStaticDefaults();
 	}
@@ -644,6 +648,7 @@ public abstract class VV13Tool : ModTexturedType {
 			data.Draw(spriteBatch);
 		}
 	}
+	public static VV13Tool GetRandom() => tools[randomWeights.Get()];
 	public static class Sets {
 		public static SetFactory Factory { get; } = new(tools.Count, nameof(ToolID), ToolID.Search);
 		public static Asset<Texture2D>[] Texture = Factory.CreateCustomSet(Asset<Texture2D>.Empty);
@@ -661,6 +666,7 @@ public class VV13_No_Tool : VV13Tool {
 	public override Vector2 Origin => default;
 	public override int FrameCount => default;
 	public override int DroppedSize => default;
+	public override void SetStaticDefaults() => randomWeights.Multiply(Type, Type + 1, 0);
 	public override void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) { }
 }
 public class VV13_Drill : VV13Tool {
@@ -697,6 +703,7 @@ public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
 	public override int DroppedSize => scrap.Size;
 	public override int DroppedHealth => scrap.ScrapValue.Max * 40;
 	public override int IncineratorPowerTime => scrap.ScrapValue.GetValue() * 180;
+	public override void SetStaticDefaults() => randomWeights.Multiply(Type, Type + 1, 1f / GetContent<VV13_Scrap>().Count());
 }
 #endregion tool
 public class VV13_Dropped_Tool : ModNPC, IIncineratorPitValue {
