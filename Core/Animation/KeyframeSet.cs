@@ -1574,8 +1574,8 @@ public record struct RotScale(float Rotation, float Scale) : KeyframeSet<RotScal
 	public readonly void ModifyGizmoOffset(ref GizmoOffset gizmoOffset) => gizmoOffset += new GizmoOffset(default, Rotation);
 	public static string Export(RotScale value) => value == new RotScale() ? "new()" : $"new({value.Rotation}f, {value.Scale}f)";
 }
-public record struct Transform(Vector2 Position, float Rotation, float Scale) {
-	public Transform() : this(default, 0, 1) { }
+public record struct Transform(Vector2 Position, float Rotation = 0, float Scale = 1) {
+	public Transform() : this(default, 0) { }
 	public Vector2 Position = Position;
 	public float Rotation = Rotation;
 	public float Scale = Scale;

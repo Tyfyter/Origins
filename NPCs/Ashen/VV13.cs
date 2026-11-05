@@ -53,6 +53,9 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		set => CurrentToolIndex = value.Type;
 	}
 	public ref float AnimationVar => ref NPC.ai[3];
+	public Transform RootTransform => new(NPC.Bottom + Vector2.UnitY * 2) {
+		Mirror = NPC.direction == 1
+	};
 	public override void Load() => this.AddBanner();
 	public override void SetStaticDefaults() {
 		NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
@@ -157,18 +160,19 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		using ScopedOverride<bool> o = NPC.oiled.ScopedOverride(false);
 		Color glowColor = NPC.GetTintColor(Color.White);
 		VV13Animation animation = Animation;
-		Vector2 position = NPC.Bottom + Vector2.UnitY * 2 - screenPos;
+		Transform root = RootTransform;
+		root.Position -= screenPos;
 		Vector2 dirMult = new(NPC.direction, 1);
-		if (animation.HasTool) CurrentTool.Draw(spriteBatch, this, position, animation.tool.GetCurrentValue(AnimationTime), drawColor, animation.toolOpacity.GetCurrentValue(AnimationTime));
-		animation.DrawExtras(spriteBatch, this, position, drawColor);
-		animation.tentacleMidFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosMidFront * dirMult, drawColor, 0, NPC.direction);
-		animation.tentacleMidBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosMidBack * dirMult, drawColor, 0, NPC.direction);
-		animation.tentacleBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosBack * dirMult, drawColor, 0, NPC.direction);
-		animation.tentacleFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, position + VV13Animation.tentaclePosFront * dirMult, drawColor, 0, NPC.direction);
+		if (animation.HasTool) CurrentTool.Draw(spriteBatch, this, root + animation.tool.GetCurrentValue(AnimationTime), drawColor, animation.toolOpacity.GetCurrentValue(AnimationTime));
+		animation.DrawExtras(spriteBatch, this, root, drawColor);
+		animation.tentacleMidFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, root + VV13Animation.tentaclePosMidFront, drawColor, 0, NPC.direction);
+		animation.tentacleMidBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, root + VV13Animation.tentaclePosMidBack, drawColor, 0, NPC.direction);
+		animation.tentacleBack.GetCurrentValue(AnimationTime).Draw(spriteBatch, root + VV13Animation.tentaclePosBack, drawColor, 0, NPC.direction);
+		animation.tentacleFront.GetCurrentValue(AnimationTime).Draw(spriteBatch, root + VV13Animation.tentaclePosFront, drawColor, 0, NPC.direction);
 		spriteBatch.DrawGlowingNPCPart(
 			TextureAssets.Npc[Type].Value,
 			glowTexture,
-			position,
+			root.Position,
 			NPC.frame,
 			drawColor,
 			glowColor,
@@ -202,12 +206,13 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 			}
 		}
 		public readonly override string ToString() => $"{A}, {B}, {C}, {D}, {E}, {F}, {G}, {H}";
-		public readonly void Draw(SpriteBatch spriteBatch, Vector2 offset, Color drawColor, int xFrame, int direction) {
+		public readonly void Draw(SpriteBatch spriteBatch, Transform transform, Color drawColor, int xFrame, int direction) {
 			Rectangle frame = texture.Frame(3, 3, xFrame);
 			frame.Height = 12;
 			int i = 0;
 			Vector2 origin = frame.Size() * new Vector2(0.5f, 1);
 			Vector2 mult = new(direction, 1);
+			Vector2 offset = transform.Position;
 			foreach ((Vector2 position, float length, float angle) in Unsafe.AsRef(in this).Iterate()) {
 				switch (++i) {
 					default:
@@ -252,10 +257,10 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	public static List<VV13Animation> animations = [];
 	static Tentacle Default => new(new(12, MathHelper.PiOver2), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(12, 0), new(24, 0));
-	public static readonly Vector2 tentaclePosFront = new(40, 0);
-	public static readonly Vector2 tentaclePosMidFront = new(10, -2);
-	public static readonly Vector2 tentaclePosMidBack = new(-18, -4);
-	public static readonly Vector2 tentaclePosBack = new(-48, -8);
+	public static readonly Vector2 tentaclePosFront = new(-40, 0);
+	public static readonly Vector2 tentaclePosMidFront = new(-10, -2);
+	public static readonly Vector2 tentaclePosMidBack = new(18, -4);
+	public static readonly Vector2 tentaclePosBack = new(48, -8);
 	//front
 	public KeyframeSet<Tentacle> tentacleFront = new(Default, tentaclePosFront) {
 	};
@@ -300,7 +305,7 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 		animations.Add(this);
 	}
 	public void Unload() { }
-	public virtual void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) { }
+	public virtual void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Transform root, Color drawColor) { }
 }
 public class VV13_Idle : VV13Animation {
 	public override bool HasTool => false;
@@ -575,21 +580,19 @@ public class VV13_Swap_Tool : VV13Animation {
 			new(93, 0f, [])
 		};
 		events = [
-					new(2, SwitchTool),
-			new(61, SwitchTool)
-				];
+			new(129, SwitchTool)
+		];
 	}
 	static void SwitchTool(in VV13 vv13) => Utils.Swap(ref vv13.CurrentToolIndex, ref vv13.AnimationVar);
 	static void Dev_GuaranteeTools(in VV13 vv13) {
 		vv13.CurrentTool = ModContent.GetInstance<VV13_Drill>();
 		vv13.AnimationVar = ModContent.GetInstance<VV13_Saw>().Type;
 	}
-	public override void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, Color drawColor) {
+	public override void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Transform root, Color drawColor) {
 		VV13Tool.tools[(int)vv13.AnimationVar].Draw(
 			spriteBatch,
 			vv13,
-			position,
-			swappingInTool.GetCurrentValue(vv13.AnimationTime),
+			root + swappingInTool.GetCurrentValue(vv13.AnimationTime),
 			drawColor,
 			swappingInToolOpacity.GetCurrentValue(vv13.AnimationTime)
 		);
@@ -620,12 +623,12 @@ public abstract class VV13Tool : ModTexturedType {
 		AutoStaticDefaults();
 		SetStaticDefaults();
 	}
-	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, PosRotScale transform, Color drawColor, float opacity) {
+	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) {
 		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount);
 		SpriteEffects spriteEffects = vv13?.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		DrawData data = new(
 			Sets.Texture[Type].Value,
-			position + transform.Position,
+			transform.Position,
 			frame,
 			drawColor,
 			transform.Rotation,
@@ -658,7 +661,7 @@ public class VV13_No_Tool : VV13Tool {
 	public override Vector2 Origin => default;
 	public override int FrameCount => default;
 	public override int DroppedSize => default;
-	public override void Draw(SpriteBatch spriteBatch, VV13 vv13, Vector2 position, PosRotScale transform, Color drawColor, float opacity) { }
+	public override void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) { }
 }
 public class VV13_Drill : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
