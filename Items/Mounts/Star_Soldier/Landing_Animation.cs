@@ -73,7 +73,8 @@ public class Landing_Animation : KeyframeAnimation {
 	public EventKeyframeSet<EventParams> exampleEventTimeline = [
 		new(1, LandingSound),
 		new(3, HidePlayer),
-		new(37, PleaseNameThisSound)
+		new(37, PleaseNameThisSound),
+		new(46, SpawnStarSoldier)
 	];
 
 
@@ -86,6 +87,9 @@ public class Landing_Animation : KeyframeAnimation {
 	static void PleaseNameThisSound(in EventParams parameters) {
 		SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithPitchRange(0.5f, 0.7f).WithVolume(0.3f), parameters.Player.Bottom);
 		SoundEngine.PlaySound(SoundID.Item88.WithPitchRange(1.6f, 1.9f).WithVolume(0.1f), parameters.Player.Bottom);
+	}
+	static void SpawnStarSoldier(in EventParams parameters) {
+		parameters.WagonHandler.SpawnStarSoldier(parameters.Player);
 	}
 	public record struct EventParams(Player Player, Star_Soldier_Wagon.MountHandler WagonHandler);
 	public record struct AnimationOffsets(Vector2 Position, float Rotation) : KeyframeSet<AnimationOffsets>.ITypeHandler, IKeyframeOffsetModifier {

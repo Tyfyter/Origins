@@ -963,10 +963,10 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 				Landing_Animation.instance.exampleEventTimeline.Update(new(player, this), lastAnimationTime, fallingStarSoldier.fallAnimationTime);
 			}
 			if (hidePlayer) player.OriginPlayer().mountOnly = true;
-			if (fallingStarSoldier.fallAnimationTime > Landing_Animation.instance.totalLength) {
-				player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
-				new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
-			}
+		}
+		public void SpawnStarSoldier(Player player) {
+			player.mount.SetMount(ModContent.MountType<Star_Soldier>(), player, player.direction == -1);
+			new Star_Soldier.Star_Soldier_Set_Weapons(player, leftClickSelection.Type, rightClickSelection.Type).Perform();
 		}
 		public bool ModifyTriggers(Player player, TriggersSet triggersSet) {
 			if (leftClickSelection is not null && rightClickSelection is not null) {
@@ -1180,10 +1180,10 @@ public class Star_Soldier_Wagon : ModMount, IModifyTriggers {
 		if (drawType == 3) handler?.DrawFallingStar(playerDrawData, drawPlayer, drawPosition, drawColor, rotation, spriteEffects, drawScale);
 		return false;
 	}
-	public class Star_Soldier_UI : SwitchableUIState {
+	public class Star_Soldier_Spawn_UI : SwitchableUIState {
 		public override void AddToList() => OriginSystem.Instance.MountHUD.AddState(this);
 		public override bool IsActive() => !Main.LocalPlayer.dead && Main.LocalPlayer.mount.IsMount<Star_Soldier_Wagon>();
-		public Star_Soldier_UI() : base() {
+		public Star_Soldier_Spawn_UI() : base() {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) => GetHandler(Main.LocalPlayer)?.DrawUI(spriteBatch);
