@@ -8728,6 +8728,11 @@ Enemy_Freezer: {
 }
 
 Flesh_Shredder_Item: {
-	// DisplayName: Flesh Shredder
-	// Tooltip: ""
+	// DisplayName: Malformed Flesh Shredder
+	// Tooltip: Not used for special crafting yet
+}
+
+The_Demaker_Item: {
+	// DisplayName: Unmade Demaker
+	// Tooltip: Not used for special crafting yet
 }

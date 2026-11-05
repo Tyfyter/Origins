@@ -97,7 +97,8 @@ namespace Origins.NPCs {
 					shop.InsertAfter(ItemID.ConveyorBeltLeft, TileItem.ItemType<Fast_Conveyor_Belt>(), Fast_Conveyor_Belt.HasFastConveyorBelt);
 					shop.InsertAfter(ItemID.ConveyorBeltRight, TileItem.ItemType<Fast_Conveyor_Belt_CC>(), Fast_Conveyor_Belt.HasFastConveyorBelt);
 
-					shop.InsertAfter(ItemID.FleshCloningVaat, TileItem.ItemType<Flesh_Shredder>(), ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>());
+					shop.InsertAfter(ItemID.FleshCloningVaat, TileItem.ItemType<The_Demaker>(), ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>());
+					shop.InsertAfter(TileItem.ItemType<The_Demaker>(), TileItem.ItemType<Flesh_Shredder>(), ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>());
 					break;
 				}
 				case NPCID.Dryad: {

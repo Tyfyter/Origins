@@ -19,11 +19,13 @@ using Origins.Projectiles.Misc;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -838,6 +840,7 @@ namespace Origins.World.BiomeData {
 
 			BiomeFlesh = TileID.SilverBrick;
 			BiomeFleshWall = WallID.SilverBrick;
+			if (GetType().GetField("FleshCraftingStationItem") is FieldInfo FleshCraftingStationItem) FleshCraftingStationItem.SetValue(this, (int?)TileItem.ItemType<The_Demaker>());
 
 			FleshDoorTile = TileID.ClosedDoor;
 			FleshChairTile = TileID.Chairs;
