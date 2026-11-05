@@ -98,6 +98,7 @@ public class Star_Soldier_UI : SwitchableUIState {
 	}
 	// We could go full NieR and let the player interact with the UI components as items
 	IUISegment[] uiSegments = [
+		new FontHUD(),
 		new WeaponHUD(),
 		new HPHUD(),
 		new O2HUD(),
@@ -152,6 +153,21 @@ public class Star_Soldier_UI : SwitchableUIState {
 				default,
 				scale
 			) - position;
+		}
+	}
+	public class FontHUD : IUISegment {
+		public void Draw(SpriteBatch spriteBatch, Star_Soldier.MountHandler handler, Vector2 uiScale) {
+			DrawText(spriteBatch,
+				"""
+				ABCDEFGHIJKLMNOPQRSTUVWXYZ
+				abcdefghijklmnopqrstuvwxyz
+				 !"#$%&'()*+,-./0123456789
+				:;<=>?@[\]^_`{|}~©‘’‚‛“”„‟
+				""",
+				default,
+				Color.OrangeRed,
+				Vector2.One
+			);
 		}
 	}
 	public class WeaponHUD : IUISegment {
