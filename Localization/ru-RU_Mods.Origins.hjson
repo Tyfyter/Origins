@@ -3305,6 +3305,11 @@ Configs: {
 			// Label: Item Specific Options
 			// Tooltip: ""
 		}
+
+		ReduceFlashes: {
+			// Label: Reduce Flashes
+			// Tooltip: ""
+		}
 	}
 
 	ServerSideAccessibility: {
