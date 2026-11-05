@@ -103,30 +103,29 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 			SoundEngine.PlaySound(Origins.Sounds.VV13Idle, NPC.Center);
 		}
 		NPC.TargetClosestUpgraded();
-		if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
-			NPCAimedTarget target = NPC.GetTargetData();
-			float speed = 8f;
-			float inertia = 128f;
-			//NPC.rotation = NPC.velocity.X * 0.1f;
-			Vector2 vectorToTargetPosition = (target.Center - NPC.Center).Normalized(out float dist);
-			if (NPC.confused) vectorToTargetPosition *= -1;
-			const float hover_range = 16 * 13;
-			if (dist < hover_range - 32) {
-				speed *= -1;
-			} else if (dist < hover_range + 32) {
-				speed = 0;
-				if (NPC.velocity.LengthSquared() < 0.1f) {
-					// If there is a case where it's not moving at all, give it a little "poke"
-					NPC.velocity += Main.rand.NextVector2Circular(1, 1) * 0.05f;
-				}
-			}
-			NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
-			vectorToTargetPosition *= speed;
-			NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
-		}
+		CurrentTool.AI(this);
 		Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 		if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 		if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+	}
+	public void Approach(Vector2 target, float minRange, float maxRange) {
+		float speed = 8f;
+		float inertia = 128f;
+		//NPC.rotation = NPC.velocity.X * 0.1f;
+		Vector2 vectorToTargetPosition = (target - NPC.Center).Normalized(out float dist);
+		if (NPC.confused) vectorToTargetPosition *= -1;
+		if (dist < minRange) {
+			speed *= -1;
+		} else if (dist < maxRange) {
+			speed = 0;
+			if (NPC.velocity.LengthSquared() < 0.1f) {
+				// If there is a case where it's not moving at all, give it a little "poke"
+				NPC.velocity += Main.rand.NextVector2Circular(1, 1) * 0.05f;
+			}
+		}
+		NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
+		vectorToTargetPosition *= speed;
+		NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
 	}
 	public override bool? CanFallThroughPlatforms() => true;
 	public override void FindFrame(int frameHeight) {
@@ -627,6 +626,14 @@ public abstract class VV13Tool : ModTexturedType {
 		AutoStaticDefaults();
 		SetStaticDefaults();
 	}
+	public virtual void AI(VV13 vv13) {
+		NPC npc = vv13.NPC;
+		if (npc.HasValidTarget && npc.HasPlayerTarget) {
+			NPCAimedTarget target = npc.GetTargetData();
+			const float hover_range = 16 * 13;
+			vv13.Approach(target.Center, hover_range - 32, hover_range + 32);
+		}
+	}
 	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) {
 		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount);
 		SpriteEffects spriteEffects = vv13?.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -673,25 +680,33 @@ public class VV13_Drill : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 3;
 	public override Vector2 Origin => new(80, 8);
-	public override int DroppedSize => 1;
+	public override int DroppedSize => 38;
+	public override void AI(VV13 vv13) {
+		NPC npc = vv13.NPC;
+		if (npc.HasValidTarget && npc.HasPlayerTarget) {
+			NPCAimedTarget target = npc.GetTargetData();
+			const float hover_range = 16 * 13;
+			vv13.Approach(target.Center, hover_range - 32, hover_range + 32);
+		}
+	}
 }
 public class VV13_Saw : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 5;
 	public override Vector2 Origin => new(72, 10);
-	public override int DroppedSize => 1;
+	public override int DroppedSize => 48;
 }
 public class VV13_Puncher : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 5;
 	public override Vector2 Origin => new(56, 40);
-	public override int DroppedSize => 1;
+	public override int DroppedSize => 30;
 }
 public class VV13_Torch : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 1;
 	public override Vector2 Origin => new(10, 18);
-	public override int DroppedSize => 1;
+	public override int DroppedSize => 24;
 }
 [Autoload(false)]
 public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
