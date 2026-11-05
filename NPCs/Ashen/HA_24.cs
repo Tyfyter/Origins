@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Gores;
+using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,8 @@ public class HA_24 : Glowing_Mod_NPC, IAshenEnemy {
 	}
 	public override void AI() {
 		NPC.noGravity = false;
+		NPCAimedTarget target = NPC.GetTargetData();
+		Vector2 gunPos = NPC.Center - new Vector2(NPC.direction * -19, 8);
 		switch (NPC.aiAction) {
 			case -1: {
 				NPC.noGravity = true;
@@ -72,14 +75,51 @@ public class HA_24 : Glowing_Mod_NPC, IAshenEnemy {
 				if (NPC.localAI[0].CycleUp(TransformTime)) Transform(HA_24_Flying.ID);
 				break;
 			}
-			case 0: {
-				if (NPC.ai[0].Warmup(60)) {
-					NPC.aiAction = -1;
-					NPC.velocity.Y = -7;
-					NPC.netUpdate = true;
-				}
+			case -2: {
+				NPC.aiAction = Main.rand.NextBool(5).ToInt();
+				NPC.netUpdate = true;
+				NPC.ai[2] = 0;
 				break;
 			}
+			case 0:
+			switch ((int)++NPC.ai[2]) {
+				case 5:
+				case 15:
+				NPC.SpawnProjectile(NPC.GetSource_FromAI(),
+					gunPos,
+					gunPos.DirectionTo(target.Center) * 8,
+					ModContent.ProjectileType<HA_24_Missile>(),
+					(int)(20 * ContentExtensions.DifficultyDamageMultiplier),
+					4
+				);
+				break;
+			}
+			if (NPC.ai[2] >= 40) goto case -2;
+			break;
+
+			case 1:
+			switch ((int)++NPC.ai[2]) {
+				case 10:
+				Vector2 vel;
+				if (GeometryUtils.AngleToTarget(target.Center - gunPos, 8, 0.08f) is float a) vel = a.ToRotationVector2();
+				else vel = gunPos.DirectionTo(target.Center);
+				NPC.SpawnProjectile(NPC.GetSource_FromAI(),
+					gunPos,
+					vel * 8,
+					ModContent.ProjectileType<HA_24_Grenade>(),
+					(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
+					4
+				);
+				break;
+			}
+			if (NPC.ai[2] >= 40) goto case -2;
+			break;
+		}
+
+		if (NPC.aiAction != -1 && target.Invalid) {
+			NPC.aiAction = -1;
+			NPC.velocity.Y = -7;
+			NPC.netUpdate = true;
 		}
 	}
 	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -90,7 +130,7 @@ public class HA_24 : Glowing_Mod_NPC, IAshenEnemy {
 		);
 	}
 	public override void FindFrame(int frameHeight) {
-		NPC.DoFrames(6);
+		NPC.DoFrames(7, NPC.velocity.X);
 	}
 	public override void HitEffect(NPC.HitInfo hit) {
 		if (NPC.life <= 0) {
@@ -316,5 +356,76 @@ public class HA_24_Flying : HA_24, IPlatformNPC {
 		} else if (Main.rand.NextBool(5)) {
 			OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, GoreCache.Ashen_Generic);
 		}
+	}
+}
+public class HA_24_Missile : ModProjectile {
+	public override void SetStaticDefaults() {
+		ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		Main.projFrames[Type] = 3;
+	}
+	public override void SetDefaults() {
+		Projectile.width = 34;
+		Projectile.height = 34;
+		Projectile.aiStyle = -1;
+		Projectile.hostile = true;
+		Projectile.penetrate = -1;
+		Projectile.timeLeft = 360;
+		Projectile.extraUpdates = 1;
+		Projectile.hide = false;
+	}
+	public override void AI() {
+		Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
+		if (Projectile.frameCounter.CycleUp(4)) Projectile.frame.CycleUp(Main.projFrames[Type]);
+		const int HalfSpriteWidth = 52 / 2;
+		const int HalfSpriteHeight = 20 / 2;
+
+		int HalfProjWidth = Projectile.width / 2;
+		int HalfProjHeight = Projectile.height / 2;
+
+		// Vanilla configuration for "hitbox in middle of sprite"
+		DrawOriginOffsetX = 0;
+		DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
+		DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
+	}
+	public override void OnKill(int timeLeft) {
+		ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, sound: SoundID.Item14, hostile: true);
+	}
+	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		if (Projectile.hide) behindNPCs.Add(index);
+	}
+}
+public class HA_24_Grenade : ModProjectile {
+	public override void SetStaticDefaults() {
+		ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+	}
+	public override void SetDefaults() {
+		Projectile.width = 34;
+		Projectile.height = 34;
+		Projectile.aiStyle = -1;
+		Projectile.hostile = true;
+		Projectile.penetrate = -1;
+		Projectile.timeLeft = 360;
+		Projectile.extraUpdates = 1;
+		Projectile.hide = false;
+	}
+	public override void AI() {
+		Projectile.rotation += Projectile.direction * 0.25f;
+		Projectile.velocity.Y += 0.08f;
+		const int HalfSpriteWidth = 20 / 2;
+		const int HalfSpriteHeight = 8 / 2;
+
+		int HalfProjWidth = Projectile.width / 2;
+		int HalfProjHeight = Projectile.height / 2;
+
+		// Vanilla configuration for "hitbox in middle of sprite"
+		DrawOriginOffsetX = 0;
+		DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
+		DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
+	}
+	public override void OnKill(int timeLeft) {
+		ExplosiveGlobalProjectile.DoExplosion(Projectile, 112, sound: SoundID.Item14, hostile: true);
+	}
+	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		if (Projectile.hide) behindNPCs.Add(index);
 	}
 }

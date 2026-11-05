@@ -278,7 +278,7 @@ ENEMY NPCS:
 (^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
-(#2, ^2) Packhunter !!!
+(☻) Packhunter !!!
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
@@ -633,7 +633,7 @@ ACCESSORIES:
 (^) Coologne
 (^) CORE Generator
 (^) Counter-offensive Scarf
-(#2, ^2) CSTAA Jacket !!!
+(☻) CSTAA Jacket !!!
 (^) Danger Barrel
 (^) Decorative A.S.H.E.S.
 (^) Destructive Claws
@@ -1683,7 +1683,7 @@ TILES:
 (^) Metal Presser
 (X) Psymanti Mixing Station
 (X) Rite Shrine
-(#, ^2) The Demaker !!!
+(☻) The Demaker !!!
 
 (^) Acetabularia
 (^) Administrator Panel

@@ -2371,6 +2371,8 @@ Projectiles: {
 	// Trenchmaker_Spread_Missile.DisplayName: Trenchmaker Spread Missile
 	// Trenchmaker_Self_Destruct.DisplayName: Trenchmaker Self Destruct
 	// Trenchmaker_Seeker_Missile.DisplayName: Trenchmaker Seeker Missile
+	// HA_24_Grenade.DisplayName: H A_24 Grenade
+	// HA_24_Missile.DisplayName: H A_24 Missile
 }
 
 Prefixes: {
