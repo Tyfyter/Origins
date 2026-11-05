@@ -391,3 +391,32 @@ public class Smog_Storm_Sky : CustomSky {
 		MathUtils.LinearSmoothing(ref Opacity, isActive.ToInt(), 1f / 180);
 	}
 }
+public class Smog_Storm_Obscure_Map_Players : ILoadable {
+
+	/*public override void HideDrawLayers(PlayerDrawSet drawInfo) {
+		if (drawInfo.headOnlyRender && Player.InModBiome<Smog_Storm>()) {
+			foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.Layers) layer.Hide();
+		}
+	}*/
+	void ILoadable.Load(Mod mod) {
+		try {
+			IL_Main.DrawMap += il => {
+				ILCursor c = new(il);
+				int index = -1;
+				while (c.TryGotoNext(MoveType.After,
+					i => i.MatchLdsfld<Main>(nameof(Main.player)),
+					i => i.MatchLdloc(out index),
+					i => i.MatchLdelemRef(),
+					i => i.MatchLdfld<Entity>(nameof(Entity.active))
+				)) {
+					c.EmitLdloc(index);
+					c.EmitDelegate(HidePlayer);
+				}
+			};
+		} catch (Exception e) {
+			if (Origins.LogLoadingILError(nameof(Smog_Storm_Obscure_Map_Players), e)) throw;
+		}
+	}
+	void ILoadable.Unload() { }
+	static bool HidePlayer(bool active, int i) => active && !Main.player[i].InModBiome<Smog_Storm>() && !Main.LocalPlayer.InModBiome<Smog_Storm>();
+}
