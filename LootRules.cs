@@ -60,14 +60,19 @@ public class LeadingSuccessRule : IItemDropRule {
 		return result;
 	}
 }
-public class DropForPlayersWithoutItem(int itemId, int chanceDenominator = 1, int chanceNumerator = 1) : CommonDrop(itemId, chanceDenominator, chanceNumerator: chanceNumerator) {
+public class DropForPlayersWithoutItem(int itemId, int chanceDenominator = 1, int chanceNumerator = 1, params IItemDropRuleCondition[] extraConditions) : CommonDrop(itemId, chanceDenominator, chanceNumerator: chanceNumerator) {
 	public override void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
 		float num = chanceNumerator / (float)chanceDenominator;
 		float dropRate = num * ratesInfo.parentDroprateChance;
 		List<IItemDropRuleCondition> conditions = (ratesInfo.conditions ?? []).ToList();
 		conditions.Add(new Condition(itemId));
+		conditions.AddRange(extraConditions);
 		drops.Add(new DropRateInfo(itemId, 1, 1, dropRate, conditions));
 		Chains.ReportDroprates(ChainedRules, num, drops, ratesInfo);
+	}
+	public override bool CanDrop(DropAttemptInfo info) {
+		for (int i = 0; i < extraConditions.Length; i++) if (!extraConditions[i].CanDrop(info)) return false;
+		return base.CanDrop(info);
 	}
 	public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
 		ItemDropAttemptResult result;
