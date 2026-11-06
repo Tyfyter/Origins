@@ -1,5 +1,6 @@
 ﻿using Origins.Core;
 using Origins.Items.Materials;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using System;
@@ -57,6 +58,44 @@ public class LeadingSuccessRule : IItemDropRule {
 		ItemDropAttemptResult result = default;
 		result.State = ItemDropAttemptResultState.Success;
 		return result;
+	}
+}
+public class DropForPlayersWithoutItem(int itemId, int chanceDenominator = 1, int chanceNumerator = 1) : CommonDrop(itemId, chanceDenominator, chanceNumerator: chanceNumerator) {
+	public override void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+		float num = chanceNumerator / (float)chanceDenominator;
+		float dropRate = num * ratesInfo.parentDroprateChance;
+		List<IItemDropRuleCondition> conditions = (ratesInfo.conditions ?? []).ToList();
+		conditions.Add(new Condition(itemId));
+		drops.Add(new DropRateInfo(itemId, 1, 1, dropRate, conditions));
+		Chains.ReportDroprates(ChainedRules, num, drops, ratesInfo);
+	}
+	public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+		ItemDropAttemptResult result;
+		if (info.rng.Next(chanceDenominator) >= chanceNumerator) {
+			result = default;
+			result.State = ItemDropAttemptResultState.FailedRandomRoll;
+			return result;
+		}
+		if (NetmodeActive.Server && info.npc is not null) {
+			int item = Item.NewItem(info.npc.GetSource_Loot(), info.npc.position, info.npc.Size, itemId, 1, noBroadcast: true, -1);
+			Main.timeItemSlotCannotBeReusedFor[item] = 54000;
+			for (int i = 0; i < 255; i++) {
+				if (Main.player[i].active && info.npc.playerInteraction[i] && !Main.player[i].HasItemInAnyInventory(itemId)) {
+					NetMessage.SendData(MessageID.InstancedItem, i, -1, null, item);
+				}
+			}
+			Main.item[item].active = false;
+		} else if (!info.player.HasItemInAnyInventory(itemId)) {
+			CommonCode.DropItem(info, itemId, 1);
+		}
+		result = default;
+		result.State = ItemDropAttemptResultState.Success;
+		return result;
+	}
+	public class Condition(int itemId) : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) => !info.player.HasItemInAnyInventory(itemId);
+		public bool CanShowItemDropInUI() => true;
+		public string GetConditionDescription() => Language.GetTextValue("Mods.Origins.Conditions.NoDuplicates");
 	}
 }
 public class DropInstancedPerClient(int itemId, int chanceDenominator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1, IItemDropRuleCondition condition = null) : CommonDrop(itemId, chanceDenominator, amountDroppedMinimum, amountDroppedMaximum) {
