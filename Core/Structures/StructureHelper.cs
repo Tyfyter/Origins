@@ -76,8 +76,9 @@ public class StructureHelperUI : UIState {
 			HAlign = 0.25f * 0.5f
 		};
 		selectFileButton.OnLeftClick += OpenStructureSelect;
+		selectFileButton.OnRightClick += OpenStructureCreate;
 		selectFileButton.OnUpdate += _ => {
-			if (selectFileButton.IsMouseHovering) Main.instance.MouseText("Select Structure");
+			if (selectFileButton.IsMouseHovering) Main.instance.MouseText("Select Structure (right click to create)");
 		};
 		Append(selectFileButton);
 
@@ -255,10 +256,28 @@ public class StructureHelperUI : UIState {
 	}
 	private void OpenStructureSelect(UIMouseEvent _, UIElement __) {
 		if (FileBrowser.OpenFilePanel("Select Structure", "json") is not string select) return;
+		if (!File.Exists(select)) return;
+		SelectPath(select);
+	}
+	private void OpenStructureCreate(UIMouseEvent _, UIElement __) {
+		if (OpenFileSavePanel("json") is not string select) return;
+		if (Path.GetExtension(select) != ".json") select += ".json";
+		if (File.Exists(select)) return;
+		using (StreamWriter writer = File.CreateText(select)) writer.Flush();
+		SelectPath(select);
+	}
+
+	private void SelectPath(string select) {
 		string sourcePath = Path.Combine(Program.SavePathShared, "ModSources");
 		string relativePath = Path.GetRelativePath(sourcePath, select);
-		if (relativePath.StartsWith('.')) return;
+		if (relativePath.StartsWith('.') || relativePath.StartsWith('/') || relativePath.StartsWith('\\') || (relativePath.Length > 1 && relativePath[1] == ':')) return;
 		SelectStructure(relativePath);
+	}
+	public static string OpenFileSavePanel(params string[] extensions) {
+		if (nativefiledialog.NFD_SaveDialog(string.Join(",", extensions), null, out string outPath) == nativefiledialog.nfdresult_t.NFD_OKAY) {
+			return outPath;
+		}
+		return null;
 	}
 
 	private void SelectStructure(string relativePath) {
