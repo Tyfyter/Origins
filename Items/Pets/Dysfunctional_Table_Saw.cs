@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Gores;
 using Origins.Items.Pets;
 using Terraria;
 using Terraria.Audio;
@@ -18,26 +19,31 @@ namespace Origins.Items.Pets {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(gold: 7, silver: 50);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = null;
+			Item.UseSound = SoundID.Item38.WithPitch(1);
 		}
 		static bool DuringOrAfterSlam(Player player, int offset = 0) => (player.itemAnimation + offset) / (float)player.itemAnimationMax <= 0.1f;
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			if (player.ItemTimeIsZero) player.ApplyItemTime(Item, 1f, false);
 			else if (DuringOrAfterSlam(player) && !DuringOrAfterSlam(player, 1)) {
+				Vector2 slamPos = player.MountedCenter + new Vector2(player.direction * 40, player.gravDir * 6);
+				Rectangle rect = new Rectangle(0, 0, 16, 16).Recentered(slamPos);
+				rect.X -= 16 * player.direction;
+				rect.Y -= 8;
+				Vector2 vel = player.velocity + new Vector2(player.direction * 6, 0);
 
-				SoundEngine.PlaySound(SoundID.Item174.WithPitch(-0.3f), player.Center);
-				SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd.WithVolume(0.5f), player.Center);
-				SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.4f).WithVolume(0.5f), player.Center);
-
-				/*Origins.instance.SpawnGoreByName(player, Main.rand.NextVector2FromRectangle(player.Hitbox), player.velocity, "Gores/NPCs/Ashen_Gore1");
-				Origins.instance.SpawnGoreByName(player, Main.rand.NextVector2FromRectangle(player.Hitbox), player.velocity, "Gores/NPCs/Ashen_Gore2");
-				Origins.instance.SpawnGoreByName(player, Main.rand.NextVector2FromRectangle(player.Hitbox), player.velocity, "Gores/NPCs/Ashen_Gore3");
-				Origins.instance.SpawnGoreByName(player, Main.rand.NextVector2FromRectangle(player.Hitbox), player.velocity, "Gores/NPCs/Ashen_Gore4");
-				for (int i = 0; i < 7; i++) {
-					Origins.instance.SpawnGoreByName(player, Main.rand.NextVector2FromRectangle(player.Hitbox), player.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
-				}*/
-					Vector2 slamPos = player.MountedCenter + new Vector2(player.direction * 40, player.gravDir * 6);
+				SoundEngine.PlaySound(SoundID.Item174.WithPitch(-0.3f), slamPos);
+				SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd.WithVolume(0.5f), slamPos);
+				SoundEngine.PlaySound(Origins.Sounds.MetalDoorOpen.WithPitch(0.4f).WithVolume(0.5f), slamPos);
 				SoundEngine.PlaySound(Item.UseSound, slamPos);
+
+				IEntitySource source = player.GetSource_ItemUse(Item);
+				OriginExtensions.SpawnGoreByType(source, Main.rand.NextVector2FromRectangle(rect), vel - Vector2.UnitY * Main.rand.NextFloat(4), GoreCache.Ashen_Generic[0]);
+				OriginExtensions.SpawnGoreByType(source, Main.rand.NextVector2FromRectangle(rect), vel - Vector2.UnitY * Main.rand.NextFloat(4), GoreCache.Ashen_Generic[1]);
+				OriginExtensions.SpawnGoreByType(source, Main.rand.NextVector2FromRectangle(rect), vel - Vector2.UnitY * Main.rand.NextFloat(4), GoreCache.Ashen_Generic[2]);
+				OriginExtensions.SpawnGoreByType(source, Main.rand.NextVector2FromRectangle(rect), vel - Vector2.UnitY * Main.rand.NextFloat(4), GoreCache.Ashen_Generic[3]);
+				for (int i = 0; i < 7; i++) {
+					OriginExtensions.SpawnGoreByType(source, Main.rand.NextVector2FromRectangle(rect), vel - Vector2.UnitY * Main.rand.NextFloat(4), GoreCache.Ashen_Generic);
+				}
 				if (!player.IsLocallyOwned()) return;
 				if (player.ownedProjectileCounts[Item.shoot] > 0) {
 					foreach (Projectile proj in Main.ActiveProjectiles) {
