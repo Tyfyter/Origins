@@ -75,7 +75,8 @@
 				"........ff......"
 			],
 			"Key": {
-				"h": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_Oil)"
+				"h": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_Oil)",
+				"*": "PlaceTile(Origins/Murky_Sludge)"
 			},
 			"SocketKey": {},
 			"Tags": []
@@ -105,45 +106,12 @@
 		}
 	},
 	"TileDescriptors": {
-		"6": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+PlaceWire(Black_Wire_Mode)",
-		"7": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)",
-		"8": "PaintTile(BlackPaint)+PlaceTile(Origins/Steel_Support_Beam)",
-		"9": "PaintTile(BlackPaint)+PlaceSpecialTile(Origins/Catwalk)",
-		"0": "PaintTile(BlackPaint)+PlaceTile(Origins/Steel_Support_Beam)+PlaceWire(Black_Wire_Mode)",
-		"-": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeDownRight)",
-		"=": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeUpLeft)",
-		"q": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeDownLeft)",
-		"w": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeUpRight)",
-		"e": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Black_Wire_Mode)",
-		"r": "PaintTile(BlackPaint)+PlaceTile(Origins/Modular_Light_Fixture)",
-		"t": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
-		"y": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"u": "PlaceTile(Origins/Fortified_Steel_Block2)",
-		"i": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
-		"o": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"p": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Brown_Wire_Mode)",
-		"[": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+PlaceWire(Brown_Wire_Mode)",
-		"]": "PaintTile(BlackPaint)+PlaceTile(Origins/Fortified_Steel_Block1)+SlopeTile(HalfBlock)",
-		"\\": "PlaceTile(Origins/Fortified_Steel_Block1)",
-		"a": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWire(Brown_Wire_Mode)",
-		"s": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(HalfBlock)",
 		"d": "PlaceSpecialChest(Origins/Oil_Derrick,1,Oil Derrick)",
+		"s": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(HalfBlock)",
 		"f": "PlaceTile(Origins/Tainted_Stone)",
-		"h": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(SlopeDownLeft)",
-		"k": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Brown_Wire_Mode)",
-		"'": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"v": "PlaceSpecialTile(Origins/Tool_Rack,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"!": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
 		" ": "Empty",
 		".": "Void",
-		"`": "PaintTile(BlackPaint)+PlaceSpecialTile(Origins/Scrap_Railing,2)",
-		"1": "PaintTile(BlackPaint)+PlaceSpecialTile(Origins/Scrap_Railing,1)",
-		"2": "Empty+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+PlaceWire(Black_Wire_Mode)",
-		"3": "PlaceSpecialTile(Origins/Beacon_Light,1)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
-		"4": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+PlaceWire(Black_Wire_Mode)",
-		"c": "PlaceSpecialTile(Origins/Suit_Locker,8)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"g": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
-		"~": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
-		"*": "PlaceTile(Origins/Murky_Sludge)"
-	}
+		"h": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(SlopeDownLeft)"
+	},
+	"BreakCondition": "MaxRoomCount(1000)"
 }
