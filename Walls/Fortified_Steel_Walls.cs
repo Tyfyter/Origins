@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Walls {
@@ -65,6 +68,7 @@ namespace Origins.Walls {
 		public abstract int HammerPower { get; }
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			OriginsSets.Walls.AshenFactoryWalls[Type] = true;
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = HammerPower;
 		}
 		bool IComplexMineDamageWall.CanMine(Player self, Item item, int i, int j) {
@@ -74,6 +78,7 @@ namespace Origins.Walls {
 	}
 	public class Fortified_Steel_Wall1 : Fortified_Steel_Wall {
 		public override Color MapColor => FromHexRGB(0x3b2b21);
+		public override int TileItemType => ModContent.ItemType<Fortified_Steel_Block1_Item>();
 		public override int HammerPower => 80;
 		public override SoundStyle? HitSound => SoundID.Tink;
 		public override int BGCount => 3;
@@ -89,6 +94,7 @@ namespace Origins.Walls {
 	}
 	public class Fortified_Steel_Wall2 : Fortified_Steel_Wall {
 		public override Color MapColor => FromHexRGB(0x3b2b21);
+		public override int TileItemType => ModContent.ItemType<Fortified_Steel_Block2_Item>();
 		public override int BGCount => 1;
 		public override int HammerPower => 80;
 		public override void SetStaticDefaults() {
@@ -113,6 +119,7 @@ namespace Origins.Walls {
 	}
 	public class Fortified_Steel_Wall3 : Fortified_Steel_Wall {
 		public override Color MapColor => FromHexRGB(0x170c0f);
+		public override int TileItemType => ModContent.ItemType<Fortified_Steel_Block3_Item>();
 		public override int HammerPower => 100;
 		public override int BGCount => 1;
 		public override bool CanMineNatural(Player self, Item item, int i, int j) => NPC.downedGolemBoss;

@@ -36,6 +36,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			TileID.Sets.BlocksStairsAbove[Type] = true;
 			OriginsSets.Tiles.LavaAboveEmitsSmoke[Type] = true;
+			OriginsSets.Tiles.AshenFactoryTiles[Type] = true;
 			AddMapEntry(MapColor);
 
 			MinPick = 110;

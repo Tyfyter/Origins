@@ -473,6 +473,7 @@ namespace Origins {
 			public static TileBoolSetWithIndexes DefiledBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static TileBoolSetWithIndexes RivenBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static TileBoolSetWithIndexes AshenBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
+			public static TileBoolSetWithIndexes AshenFactoryTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static TileBoolSetWithIndexes LimestoneBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static bool[] LavaAboveEmitsSmoke = TileID.Sets.Factory.CreateBoolSet();
 			public static bool[] GemTilesToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
@@ -549,6 +550,8 @@ namespace Origins {
 		[ReinitializeDuringResizeArrays]
 		public static class Walls {
 			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
+			.RegisterBoolSet(false);
+			public static bool[] AshenFactoryWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(AshenFactoryWalls))
 			.RegisterBoolSet(false);
 			public static int[] GeneratesLiquid { get; } = WallID.Sets.Factory.CreateIntSet(-1);
 			internal static void Initialize() {

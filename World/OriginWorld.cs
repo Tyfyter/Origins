@@ -37,6 +37,7 @@ namespace Origins {
 		public static int defiledTiles;
 		public static int rivenTiles;
 		public static int ashenTiles;
+		public static int ashenFactoryTiles;
 		public static int repairboyTiles;
 		public static int brineTiles;
 		public static int fiberglassTiles;
@@ -261,6 +262,7 @@ namespace Origins {
 			defiledTiles = 0;
 			rivenTiles = 0;
 			ashenTiles = 0;
+			ashenFactoryTiles = 0;
 			repairboyTiles = 0;
 			brineTiles = 0;
 			fiberglassTiles = 0;
@@ -281,6 +283,7 @@ namespace Origins {
 			defiledTiles = OriginsSets.Tiles.DefiledBiomeTiles.Sum(tileCounts);
 			rivenTiles = OriginsSets.Tiles.RivenBiomeTiles.Sum(tileCounts);
 			ashenTiles = OriginsSets.Tiles.AshenBiomeTiles.Sum(tileCounts);
+			ashenFactoryTiles = OriginsSets.Tiles.AshenFactoryTiles.Sum(tileCounts);
 
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 

@@ -13,6 +13,7 @@ using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -169,7 +170,7 @@ public class Smog_Storm : ModBiome {
 		orig(ref negLight, ref negLight2);
 		if (FancyLighting.FancyLightingEngineEnabled) negLight -= negLight * sky.Opacity * 0.5f;
 	}
-	public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>();
+	public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>() && !Ashen_Factory_Biome.IsActive(Main.LocalPlayer);
 	public override void SpecialVisuals(Player player, bool isActive) {
 		player.ManageSpecialBiomeVisuals(biomeName, isActive, player.MountedCenter);
 		active = sky.Opacity != 0;

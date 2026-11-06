@@ -2589,6 +2589,11 @@ Biomes: {
 		DisplayName: Смоговая буря
 		TownNPCDialogueName: Смоговая буря
 	}
+
+	Ashen_Factory_Biome: {
+		// DisplayName: Ashen Factory Biome
+		// TownNPCDialogueName: the Ashen_ Factory_ Biome
+	}
 }
 
 CaptureBiomeChoice: {
