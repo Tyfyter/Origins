@@ -278,7 +278,7 @@ ENEMY NPCS:
 (^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
-(☻) Packhunter !!!
+(^) Packhunter
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
@@ -604,48 +604,67 @@ ARMOR:
 
 ACCESSORIES:
 |---
+(X) Ablative Armor Shield !!!
 (^) Abyssal Anchor
 (^) ACME Crate
 (^) Advanced Imaging
 (^) Air Tank
 (^) Akaliegis
+(X) Artificer's Visor !!!
 (^) Asylum Whistle
 (^) A.S.H. Attack Relay
 (^) Automated Returns Handler
 (^) Bark Shield
 (^) Binding Book
+(X) Blast Miner's Glove !!!
+(X) Blast-Proof Core !!!
 (^) Blast-Resistant Plate
+(X) Blood Donor Bag !!!
+(X) Blood-Powered Robot !!!
+(X) Bloody Knuckles !!!
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
 (^) Bomb Handling Device
+(X) Bomb-Throwing Bomb Throwing Glove !!!
 (^) Boomerang Magnet
 (^) Breathing Unit
 (^) Brine-Leafed Clover
 (^) Bug Trapper
+(X) Busted Vitals Monitor !!!
 (^) C.F.H.E.S.
 (X) Cablegore
+(X) Catalytic Converter !!!
+(X) Catto-Calmer 4000
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence
+(X) Cluster Bomb Boots !!!
 (^) Comb
+(X) Comfort Beads !!!
 (^) Control Locus
 (^) Coologne
 (^) CORE Generator
 (^) Counter-offensive Scarf
-(☻) CSTAA Jacket !!!
+(^) CSTAA Jacket
+(X) Cute Plushie !!!
 (^) Danger Barrel
+(X) Danger Dan's Glove !!!
 (^) Decorative A.S.H.E.S.
+(X) Demolisher Jacket !!!
 (^) Destructive Claws
 (X) Dial-Up Modem
 (^) Dim Starlight
 (^) Donor Wristband
+(X) Druidic Bee Cloak !!!
 (^) Dryad's Inheritance
 (^) Dysfunctional Endless Explosives Bag
+(X) E.M.F.I.D. !!!
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
+(X) Excavator's Glove !!!
 (^) Exo-Arm
 (^) Exo-Legs
 (^) Exo-Suit
@@ -656,6 +675,7 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
+(X) Fiberwrap !!!
 (^) Filter Breather
 (^) Flak Jacket
 (^) Fleshy Figurine
@@ -673,10 +693,18 @@ ACCESSORIES:
 (^) Harpy Horseshoe Balloon
 (^) Hazard Charm
 (^) Headphones
+(X) Heart in a Tube !!!
+(X) Heart Squeezy !!!
 (^) Helium Tank
 (X) Helpful Cloak
+(X) Hive Jacket !!!
 (^) I-WTPA Standard
+(X) Industrial-Grade Arm !!!
+(X) Infusion Bag !!!
+(X) Iron Lung !!!
+(X) IV Bag !!!
 (^) Keepsake Remains
+(X) Kinetic Cuffs !!!
 (X) Laden Crown
 (X) Land Surveyor
 (^) Laser Tag Vest
@@ -688,11 +716,13 @@ ACCESSORIES:
 (X) Looking Glass
 (^) Lousy Liver
 (^) Lover's Leap
+(X) Madman's Hand !!!
 (^) Magic Glove
 (^) Magic Pain Glove
 (^) Magic Tripwire
 (^) Makeover Choker
 (^) Master Magician's Cloak
+(X) Medical Mask !!!
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Mildew Heart
@@ -713,17 +743,20 @@ ACCESSORIES:
 (^) Pacemaker
 (X) Parasite Arm
 (^) Party Ring Balloon
+(X) Plague Doctor Mask !!!
 (^) Plasma Bag
 (^) Playtime's Over
 (^) Pneumatic Bomb Thrower
 (^) Potato Battery
 (^) Power Lotus
 (^) Powerflower
+(X) Prankster's Glove !!!
 (^) Primordial Soup
 (^) Priority Mail
 (^) Protomind
 (^) Razorwire
 (^) Rebreather
+(X) Repulsive Organ !!!
 (^) Resin Shield
 (^) Resizing Glove
 (^) Return To Sender
@@ -733,13 +766,18 @@ ACCESSORIES:
 (^) Scavenger Bag
 (^) Scrap Barrier (Cursed)
 (^) Scrap Barrier (Uncursed)
+(#2, ^2) Scrap Compactor !!!
+(X) Scrappicker's Glove !!!
 (^) Shield of Retribution
 (X) Shield of Shimmering
 (^) Shock Collar
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)
 (^) Slag Bucket (Uncursed)
+(X) SMART Bomb Glove
+(X) SMART Control Liver !!!
 (^) Smog Pod-4
+(X) Smogwalker's Trenchcoat !!!
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
@@ -747,7 +785,9 @@ ACCESSORIES:
 (^) Sparking Flame Barrel
 (^) Speed Booster
 (^) Spirit Shard
+(X) Star Squishy !!!
 (^) Stone Mask
+(X) Storm Marker Launcher !!!
 (ᥢ) Strange Computer
 (^) Stress Ball
 (^) Sunder Gut
@@ -756,6 +796,7 @@ ACCESSORIES:
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Tender Flesh Heart
+(X) Thorn Ring !!!
 (^) Tiki Buckler
 (X) Timbre of Hell
 (^) Trap Charm
@@ -1683,7 +1724,7 @@ TILES:
 (^) Metal Presser
 (X) Psymanti Mixing Station
 (X) Rite Shrine
-(☻) The Demaker !!!
+(^) The Demaker
 
 (^) Acetabularia
 (^) Administrator Panel
@@ -2161,7 +2202,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
-(☻) Dysfunctional Table Saw (Sprockey) !!! (needs use gores)
+(^) Dysfunctional Table Saw (Sprockey)
 (^) Smith's Hammer (Walking Furnace)
 (^) Suspicious Looking Pebble (Defiled Blight)
 
@@ -2179,7 +2220,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (␡) Ninja Ravel
 (␡) Ravel
 (␡) Spider Ravel
-(☻) Scrap Wagon (SS-22 'Star Soldier') !!!
+(#2, ^2) Scrap Wagon (SS-22 'Star Soldier') !!! (offset sound and tooltip keybinds and it's done)
 (␡) Stealth Ravel
 (X) Sunflower Veil
 ---

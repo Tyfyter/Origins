@@ -32,7 +32,7 @@ internal class Flashbang_Overlay() : Overlay(EffectPriority.VeryHigh, RenderLaye
 			return;
 		}
 		float str = float.Min(Main.LocalPlayer.buffTime[index] / 45f, 1);
-		MathUtils.LinearSmoothing(ref realOpacity, float.Pow(str, str + 0.5f), OriginAccessibilityConfig.Instance.ReduceFlashes ? 0.1f : 0.25f);
+		MathUtils.LinearSmoothing(ref realOpacity, float.Pow(str, str + 0.5f), OriginAccessibilityConfig.Instance.ReduceFlashes ? 0.05f : 0.25f);
 		DrawOverlay(spriteBatch);
 	}
 
