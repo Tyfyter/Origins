@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 using Terraria.UI;
 using static Origins.Core.Structures.ARoom;
 using static Origins.Core.Structures.DeserializedStructure;
@@ -218,6 +219,18 @@ public class DeserializedRoom : ARoom {
 		Map = string.Join('\n', descriptor.Map);
 		Key = descriptor.Key.Select<KeyValuePair<char, string>, KeyValuePair<char, TileDescriptor>>(v => new(v.Key, TileDescriptor.Deserialize(mod, v.Value))).ToDictionary();
 		SocketKey = descriptor.SocketKey ?? [];
+		foreach ((char k, RoomSocket s) in SocketKey) {
+			if (!Map.Contains(k)) mod.Logger.Warn($"Missing socket {k} ({s})");
+		}
+		LoaderUtils.ForEachAndAggregateExceptions(Map, k => {
+			switch (char.GetUnicodeCategory(k)) {
+				case System.Globalization.UnicodeCategory.LineSeparator:
+				case System.Globalization.UnicodeCategory.ParagraphSeparator:
+				case System.Globalization.UnicodeCategory.Control:
+				return;
+			}
+			if (!Key.ContainsKey(k)) throw new KeyNotFoundException($"Key does not contain a definition for {k}");
+		});
 		RepetitionRange = descriptor.RepetitionRange;
 		StartPos = descriptor.StartPos;
 		postGenerate = PostGenerateDescriptor.Create(mod, descriptor.PostGenerate);
@@ -226,7 +239,7 @@ public class DeserializedRoom : ARoom {
 	}
 	public override RoomDescriptor Serialize(StructorDescriptor forStructure) => new() {
 		Map = Map.Split('\n', StringSplitOptions.RemoveEmptyEntries),
-		Key = new Dictionary<char, string>(Key.TrySelect((KeyValuePair<char, TileDescriptor> element, out KeyValuePair<char, string> pattern) => {
+		Key = new Dictionary<char, string>(Key.Where(kvp => Map.Contains(kvp.Key)).TrySelect((KeyValuePair<char, TileDescriptor> element, out KeyValuePair<char, string> pattern) => {
 			pattern = new(element.Key, element.Value.ToString());
 			if (forStructure?.TileDescriptors is null) return true;
 			return !forStructure.TileDescriptors.TryGetValue(element.Key, out string global) || global != pattern.Value;
@@ -291,6 +304,7 @@ public class DeserializedStructure(Mod mod, string fileName, string data) : Stru
 			for (int i = 0; i < Rooms.Count; i++) {
 				foreach (KeyValuePair<char, TileDescriptor> item in Rooms[i].Key) {
 					if (uncompressable.Contains(item.Key)) continue;
+					if (!Rooms[i].Map.Contains(item.Key)) continue;
 					sharedKeys.Add(item.Key, item.Value.ToString());
 				}
 			}
