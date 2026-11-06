@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Ammo.Canisters;
+﻿using Origins.CrossMod.Thorium.Projectiles;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using System;
 using Terraria;
@@ -87,6 +88,9 @@ namespace Origins.Items.Weapons.Ammo {
 		public static Color InnerColor => FromHexRGB(0xED1C24);
 		public static Color OuterColor => Color.White;
 		public CanisterData GetCanisterData => IRocketItem.GetCanisterData<Homing_Rocket_I>();
+		public override void Load() {
+			Mod.AddExtraRockets<Homing_Rocket_I>(this, InnerColor);
+		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.Celeb2][Type] = ProjectileID.Celeb2Rocket;
@@ -118,6 +122,9 @@ namespace Origins.Items.Weapons.Ammo {
 		public static Color InnerColor => FromHexRGB(0x434BE1);
 		public static Color OuterColor => Color.White;
 		public CanisterData GetCanisterData => IRocketItem.GetCanisterData<Homing_Rocket_II>();
+		public override void Load() {
+			Mod.AddExtraRockets<Homing_Rocket_II>(this, InnerColor);
+		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.Celeb2][Type] = ProjectileID.Celeb2RocketExplosive;

@@ -24,6 +24,7 @@ using Origins.Items.Other.Critters;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
+using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
@@ -71,12 +72,16 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Items;
+using ThoriumMod.Items.BossThePrimordials.Omni;
 using ThoriumMod.Items.Darksteel;
 using ThoriumMod.Items.Donate;
+using ThoriumMod.Items.Illumite;
 using ThoriumMod.Items.MeleeItems;
 using ThoriumMod.Items.Misc;
 using ThoriumMod.Items.Painting;
+using ThoriumMod.Items.RangedItems;
 using ThoriumMod.Mounts;
+using ThoriumMod.Projectiles;
 using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
@@ -694,6 +699,15 @@ namespace Origins {
 					Paintings[itm.Type] = true;
 			}
 			Paintings[ItemType<GrayDPaintingItem>()] = true;
+
+			foreach (ModItem item in Origins.instance.GetContent<ModItem>()) {
+				if (item.Item.ammo == AmmoID.Rocket) {
+					AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.GetOrAdd(ItemType<TheJavelin>()).TryAdd(item.Type, ProjectileType<JavelinPro>());
+					AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.GetOrAdd(ItemType<BuffaloLauncher>()).TryAdd(item.Type, ProjectileType<BuffaloLauncherPro>());
+					AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.GetOrAdd(ItemType<IllumiteBarrage>()).TryAdd(item.Type, ProjectileType<IllumiteRocketPro>());
+					AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.GetOrAdd(ItemType<MicroLauncher>()).TryAdd(item.Type, ProjectileType<MicroRocketPro>());
+				}
+			}
 
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();

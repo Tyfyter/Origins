@@ -1,6 +1,7 @@
 ﻿using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Core;
+using Origins.CrossMod.Thorium.Projectiles;
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Liquids;
@@ -27,12 +28,14 @@ namespace Origins.Items.Weapons.Ammo {
 		public abstract int LiquidType { get; }
 		public abstract int DustType { get; }
 		public virtual Color DustColor { get; }
+		public virtual Color OverlayColor { get; }
 		protected override bool CloneNewInstances => true;
 		public override void Load() {
 			Mod.AddContent(new BaseLiquidRocketP(this));
 			Mod.AddContent(new BaseLiquidGrenade(this));
 			Mod.AddContent(new BaseLiquidMine(this));
 			Mod.AddContent(new BaseLiquidSnowmanRocket(this));
+			Mod.AddExtraRockets(this);
 		}
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.IsSpecialist[Type] = true;
@@ -85,7 +88,7 @@ namespace Origins.Items.Weapons.Ammo {
 			BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor);
 		}
 
-		public static void BaseLiquidExplosiveKill(Projectile proj, int liquid, int dust, Color color, bool isGrenade = false) {
+		public static void BaseLiquidExplosiveKill(Projectile proj, int liquid, int dust, Color color, bool isGrenade = false, float spreadSize = 3f) {
 			proj.Resize(22, 22);
 			if (isGrenade) SoundEngine.PlaySound(in SoundID.Item62, proj.position);
 			else SoundEngine.PlaySound(in SoundID.Item14, proj.position);
@@ -111,7 +114,7 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 			if (!NetmodeActive.MultiplayerClient) {
 				Point projPos = proj.Center.ToTileCoordinates();
-				proj.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(projPos, 3f, SpreadLiquid(liquid, dust));
+				proj.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(projPos, spreadSize, SpreadLiquid(liquid, dust));
 			}
 		}
 		public static Utils.TileActionAttempt SpreadLiquid<TLiquid, TDust>(Func<Color> color = null) where TLiquid : ModLiquid where TDust : ModDust {
@@ -220,10 +223,12 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Oil_Rocket : BaseLiquidRocket<Oil> {
 		public override int DustType => GetDustType();
 		public override Color DustColor => GetDustColor();
+		public override Color OverlayColor => new(79,49,29);
 		public static int GetDustType() => OriginsModIntegrations.CheckAprilFools() ? ModContent.DustType<Black_Smoke_Dust>() : White_Water_Dust.ID;
 		public static Color GetDustColor() => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
 	}
 	public class Brine_Rocket : BaseLiquidRocket<Brine> {
 		public override int DustType => DustID.Water_Jungle;
+		public override Color OverlayColor => new(0, 167, 124);
 	}
 }

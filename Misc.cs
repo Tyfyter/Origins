@@ -6439,6 +6439,11 @@ namespace Origins {
 			if (proj.DamageType == DamageClass.Default) proj.DamageType = defaultOverride ?? DamageClasses.Explosive;
 			else if (!proj.DamageType.CountsAsClass(DamageClasses.Explosive)) proj.DamageType = DamageClasses.ExplosiveVersion[proj.DamageType];
 		}
+		public static void SetupTripwireValues(this Projectile proj, int range, int style = 0) => SetupTripwireValues(proj.type, range, style);
+		public static void SetupTripwireValues(int type, int range, int style = 0) {
+			Origins.MagicTripwireRange[type] = range;
+			Origins.MagicTripwireDetonationStyle[type] = style;
+		}
 	}
 	public static class ContentExtensions {
 		public static T[] RegisterSet<T>(this SetFactory.NamedSetKey set, T defaultState, params (int index, T value)[] inputs) => set.RegisterCustomSet<T>(defaultState,
