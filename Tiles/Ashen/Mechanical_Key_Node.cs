@@ -222,6 +222,8 @@ namespace Origins.Tiles.Ashen {
 
 		public class Mechanical_Key_Node_Item(Mechanical_Key_Node tile) : ModItem {
 			static AutoLoadingAsset<Texture2D> overlay = typeof(Mechanical_Key_Node_Item).GetDefaultTMLName("_Color");
+			[CloneByReference]
+			readonly Mechanical_Key_Node tile = tile;
 			public override string Name => tile.Name + "_Item";
 			public override string Texture => GetType().GetDefaultTMLName();
 			protected override bool CloneNewInstances => true;

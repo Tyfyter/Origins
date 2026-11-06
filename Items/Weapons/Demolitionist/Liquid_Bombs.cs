@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public abstract int LiquidType { get; }
 		public abstract int DustType { get; }
 		public virtual Color DustColor { get; }
+		[CloneByReference]
 		LiquidBombP projectile;
 		protected override bool CloneNewInstances => true;
 		public override void Load() {

@@ -14,6 +14,7 @@ public abstract class ATail : ModItem {
 	.RegisterCustomSet<Vector2>(default,
 		MountID.Wolf, new Vector2(-2, -14)
 	);
+	[field: CloneByReference]
 	public Tail_Layer DrawInLayer { get; private set; }
 	public virtual int Length => 10;
 	public override ModItem NewInstance(Item entity) {
