@@ -234,7 +234,7 @@ Destructive_Claws: {
 	/* Tooltip:
 		'''
 		25% increased explosive throwing velocity
-		Increases attack speed of thrown explosives
+		10% increased thrown explosive attack speed
 		Enables autouse for all explosive weapons
 		''' */
 }
@@ -533,7 +533,7 @@ Missile_Armcannon: {
 		25% increased explosive throwing velocity
 		20% increased explosive knockback
 		15% increased explosive blast radius
-		Increases explosive attack speed
+		10% increased explosive attack speed
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
 		'Payload not included'
@@ -3976,7 +3976,7 @@ CORE_Generator: {
 		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases damage, movement speed[ox:,] and length of invincibility after taking damage
-		Increases explosive attack speed
+		10% increased explosive attack speed
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
 		Additionally causes stars to fall and canisters from your inventory to release after taking damage
@@ -4256,7 +4256,7 @@ Nova_Swarm: {
 }
 
 Counter_Offensive_Scarf: {
-	// DisplayName: Counter Offensive Scarf
+	// DisplayName: Counter-offensive Scarf
 	/* Tooltip:
 		'''
 		Reduces damage you take by up to 20% when enemies gain distance from you
@@ -4405,7 +4405,7 @@ Forbidden_Voice_Uncursed: {
 	/* Tooltip:
 		'''
 		10% increased melee damage
-		Increases the size of melee weapons
+		25% increased melee weapon size
 		Your attacks [buffhint/dnweaken:Origins/Soulhide_Weakened_Debuff] enemies
 		''' */
 }
@@ -8563,7 +8563,7 @@ Star_Soldier_Summon_Item: {
 	/* UsedTooltip:
 		'''
 		Calls in a customizable SS-22 'Star Soldier' mechanized powersuit from space
-		750 max life and 58 defense
+		750 max life and 48 defense
 		Dashing and flying capability
 		After inital activation, select arm weapons for both arms
 		Use <left> and <right> to use weapons
