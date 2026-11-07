@@ -303,6 +303,8 @@ public class StructureHelperUI : UIState {
 		}
 	}
 	void OnTileReady() {
+		textInput.IsWritingText = true;
+		textInput2.IsWritingText = false;
 		if (autoKeyToggle.Value) {
 			textInput.Clear();
 			textInput.Append(Structure_Helper_Item.FindUnused(new ToastCommandCaller(toastHandler)).ToString());
@@ -319,6 +321,8 @@ public class StructureHelperUI : UIState {
 			element.IgnoresMouseInteraction = false;
 			element.Update(gameTime);
 		}
+		if (textInput.IsWritingText && textInput2.IsWritingText) textInput2.IsWritingText = false;
+		if (!StructureCommand.ReadyForNewAss && !textInput.IsWritingText && !textInput2.IsWritingText) textInput.IsWritingText = true;
 	}
 	public class UITextCommandCaller(UIText uiText) : CommandCaller {
 		public CommandType CommandType => CommandType.Chat;
@@ -340,7 +344,6 @@ public class StructureHelperUI : UIState {
 		if (!Visible) yield break;
 		yield return toastHandler;
 		if (!StructureCommand.ReadyForNewAss) {
-			textInput.IsWritingText = true;
 			yield return inputFeedback;
 			yield return textInput;
 			switch (serializationContext.state) {
@@ -358,6 +361,7 @@ public class StructureHelperUI : UIState {
 			yield break;
 		}
 		textInput.IsWritingText = false;
+		textInput2.IsWritingText = false;
 		yield return selectFileButton;
 		if (structurePath is not null && structure is DeserializedStructure) {
 			yield return saveFileButton;
@@ -549,6 +553,7 @@ public class StructureHelperUI : UIState {
 						inputFeedback.SetText($"Creating room, input a name");
 						inputFeedback.TextColor = Color.White;
 					});
+					textInput.IsWritingText = true;
 					SpinWait.SpinUntil(() => {
 						Structure_Helper_Item.leftClick = leftClick;
 						Structure_Helper_Item.rightClick = rightClick;
@@ -1293,6 +1298,9 @@ public class UIInputPanel(float textScale = 1, bool large = false) : UITextPanel
 		void onSubmit(string inputText) {
 			if (action(inputText)) OnSubmit -= onSubmit;
 		}
+	}
+	public override void LeftClick(UIMouseEvent evt) {
+		base.LeftClick(evt);
 	}
 	public override void Draw(SpriteBatch spriteBatch) {
 		if (IsWritingText) {

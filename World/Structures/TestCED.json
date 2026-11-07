@@ -1,0 +1,49 @@
+{
+	"Rooms": {
+		"Top": {
+			"Map": [
+				"FFF        D        FFF",
+				"FFFFFF           FFFFFF",
+				"FFFFFF           FFFFFF",
+				"FFFFFF     O     FFFFFF"
+			],
+			"Key": {
+				"D": "Empty"
+			},
+			"SocketKey": {
+				"D": {
+					"Key": "Door",
+					"Direction": "Down",
+					"Offset": 3
+				}
+			},
+			"Tags": []
+		},
+		"Bottom": {
+			"Map": [
+				"FFFFFF           FFFFFF",
+				"FFFFFF           FFFFFF",
+				"FFFFFF     O     FFFFFF",
+				"FFF        U        FFF"
+			],
+			"StartPos": "O",
+			"Key": {
+				"U": "Empty"
+			},
+			"SocketKey": {
+				"U": {
+					"Key": "Door",
+					"Direction": "Up",
+					"Offset": 3
+				}
+			},
+			"Tags": []
+		}
+	},
+	"TileDescriptors": {
+		" ": "Empty",
+		"F": "PlaceTile(Origins/Fortified_Steel_Block3)",
+		"O": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,7)"
+	},
+	"BreakCondition": "MaxRoomCount(1000)"
+}

@@ -51,7 +51,7 @@ namespace Origins.Core.Structures {
 			StructureInstance instance;
 			while (start.TryPop(out ARoom startRoom)) {
 				bool canGenerate = false;
-				int tries = 100000;
+				int tries = 1000;
 				do {
 					instance = new(this);
 					if (!instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin(startRoom.StartPos)), out instance)) break;
@@ -311,7 +311,7 @@ namespace Origins.Core.Structures {
 			NoOffset = -1,
 			NormalOffset = 0,
 			TripleOffset = 2,
-			QuadOffset = 3,
+			QuadOffset = 3
 		}
 	}
 	public class StructureInstance {
@@ -371,20 +371,7 @@ namespace Origins.Core.Structures {
 
 				Direction direction = socket.Direction;
 				Point pos = new(x, y);
-				switch (direction) {
-					case Direction.Right:
-					pos.X++;
-					break;
-					case Direction.Left:
-					pos.X--;
-					break;
-					case Direction.Up:
-					pos.Y--;
-					break;
-					case Direction.Down:
-					pos.Y++;
-					break;
-				}
+				direction.Nudge(ref pos.X, ref pos.Y, socket.Offset);
 				foreach ((ARoom room, char entrance) in lookup[socket.Key][direction.Index()]) {
 					float weight = room.GetWeight(new(this, pos, fromRoom, socket.Key));
 					if (weight <= 0) continue;
