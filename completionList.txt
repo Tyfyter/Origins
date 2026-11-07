@@ -616,32 +616,32 @@ ACCESSORIES:
 (^) Automated Returns Handler
 (^) Bark Shield
 (^) Binding Book
-(X) Blast Miner's Glove !!!
-(X) Blast-Proof Core !!!
+(#, ^2) Blast Miner's Glove !!!
+(#, ^2) Blast-Proof Core !!!
 (^) Blast-Resistant Plate
-(X) Blood Donor Bag !!!
-(X) Blood-Powered Robot !!!
-(X) Bloody Knuckles !!!
+(#, ^2) Blood Donor Bag !!!
+(#, ^2) Blood-Powered Robot !!!
+(#, ^2) Bloody Knuckles !!!
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
 (^) Bomb Handling Device
-(X) Bomb-Throwing Bomb Throwing Glove !!!
+(#, ^2) Bomb-Throwing Bomb Throwing Glove !!!
 (^) Boomerang Magnet
 (^) Breathing Unit
 (^) Brine-Leafed Clover
 (^) Bug Trapper
-(X) Busted Vitals Monitor !!!
+(#, ^2) Busted Vitals Monitor !!!
 (^) C.F.H.E.S.
 (X) Cablegore
-(X) Catalytic Converter !!!
+(#, ^2) Catalytic Converter !!!
 (X) Catto-Calmer 4000
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence
-(X) Cluster Bomb Boots !!!
+(#, ^2) Cluster Bomb Boots !!!
 (^) Comb
-(X) Comfort Beads !!!
+(#, ^2) Comfort Beads !!!
 (^) Control Locus
 (^) Coologne
 (^) CORE Generator
