@@ -1,6 +1,8 @@
-﻿using Avalon.Items.Weapons.Magic.Other;
+﻿using Avalon.Common;
+using Avalon.Items.Weapons.Magic.Other;
 using Avalon.Items.Weapons.Magic.Wands;
 using Avalon.ModSupport.MLL.Items;
+using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -44,6 +46,12 @@ namespace Origins.CrossMod.Avalon.Items {
 			}
 
 			if (statsModified) item.StatsModifiedBy.Add(Origins.instance);
+		}
+	}
+	[ExtendsFromMod("Avalon")]
+	public class TOAvalonBiomeKeyCurseEffect : BiomeKeyCurseEffect {
+		public override bool AppliesToEntity(Item item, bool lateInstantiation) {
+			return base.AppliesToEntity(item, lateInstantiation) || item?.ModItem is Key_Base;
 		}
 	}
 }
