@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.NPCs.Ashen;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -53,6 +54,8 @@ namespace Origins.CrossMod.Thorium.Projectiles {
 		}
 		public static void SetExplosiveData(int type, int tripwireRange = 0, int tripwireStyle = 0) {
 			projectileTypes.Add(type);
+			if (type == ProjectileType<IllumiteRocketPro>() || type == ProjectileType<IllumiteRocketClusterPro>()) Defensive_Turret.OohShiny[type] = true;
+			else Defensive_Turret.TargetProjectilesLow[type] = true;
 			if (tripwireRange > 0) ProjectileExtensions.SetupTripwireValues(type, tripwireRange, tripwireStyle);
 		}
 		public static void SetExplosiveData(int tripwireRange = 0, int tripwireStyle = 0, params int[] types) {

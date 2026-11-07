@@ -105,7 +105,7 @@ namespace Origins.CrossMod.Thorium.Projectiles {
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.GetOrAdd(ModContent.ItemType<IllumiteBarrage>()).Add(Item.Type, Type);
 			Projectile.SetupTripwireValues(48, 1);
-			Defensive_Turret.TargetProjectilesLow[Type] = true;
+			Defensive_Turret.OohShiny[Type] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
