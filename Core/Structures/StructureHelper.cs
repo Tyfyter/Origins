@@ -986,31 +986,19 @@ public class Structure_Helper_Item : TestingItem {
 					Tile tile = Main.tile[i, j];
 					CurrentTileData = SerializableTileDescriptor.Serialize(tile);
 					SpinWait.SpinUntil(() => StructureCommand.ReadyForNewAss);
-					if (Room_Socket_Marker.IsSocketMarker(tile)) {
+					if (Room_Socket_Marker.HasSocket(i, j, out Direction direction)) {
 						context.state = SerializationContext.SerializationState.Socket;
 						string pattern = CurrentTileData;
 						char? ch = null;
 						RoomSocket socket = new(null, default);
-						switch (tile.TileFrameX / 18) {
-							case 1:
-							CurrentTileData = "Right";
-							socket = socket with { Direction = Direction.Right };
-							break;
-							case 2:
-							CurrentTileData = "Left";
-							socket = socket with { Direction = Direction.Left };
-							break;
-							case 3:
-							CurrentTileData = "Down";
-							socket = socket with { Direction = Direction.Down };
-							break;
-							case 4:
-							CurrentTileData = "Up";
-							socket = socket with { Direction = Direction.Up };
-							break;
-							default:
+						switch (direction) {
+							case 0:
 							CurrentTileData = "None";
 							socket = null;
+							break;
+							default:
+							CurrentTileData = direction.ToString();
+							socket = socket with { Direction = direction };
 							break;
 						}
 						StructureCommand.OnAss += (_c, socketKey, parameters) => {

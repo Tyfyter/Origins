@@ -2,19 +2,25 @@
 	"Rooms": {
 		"Top": {
 			"Map": [
-				"FFF        D        FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
 				"FFFFFF           FFFFFF",
-				"FFFFFF           FFFFFF",
+				"FFFFFF     S     FFFFFF",
 				"FFFFFF     O     FFFFFF"
 			],
+			"StartPos": "S",
 			"Key": {
-				"D": "Empty"
+				"S": "Empty"
 			},
 			"SocketKey": {
-				"D": {
+				"S": {
 					"Key": "Door",
 					"Direction": "Down",
-					"Offset": 3
+					"Offset": -1
 				}
 			},
 			"Tags": []
@@ -22,19 +28,24 @@
 		"Bottom": {
 			"Map": [
 				"FFFFFF           FFFFFF",
-				"FFFFFF           FFFFFF",
+				"FFFFFF     S     FFFFFF",
 				"FFFFFF     O     FFFFFF",
-				"FFF        U        FFF"
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF",
+				"FFF                 FFF"
 			],
-			"StartPos": "O",
+			"StartPos": "S",
 			"Key": {
-				"U": "Empty"
+				"S": "Empty"
 			},
 			"SocketKey": {
-				"U": {
+				"S": {
 					"Key": "Door",
 					"Direction": "Up",
-					"Offset": 3
+					"Offset": -1
 				}
 			},
 			"Tags": []
