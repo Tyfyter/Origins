@@ -9,7 +9,7 @@
 				"      l           j      ",
 				"      l           j      ",
 				" zxxb l           j  xx  ",
-				"*ffff*;nm     ,n    bbbf*",
+				"*ffff*;nm   S ,n    bbbf*",
 				"*****/            ~/*xb**",
 				"***ff/             /*f***",
 				"****f/             /fff**",
@@ -36,6 +36,7 @@
 				"......f!!!!!!fffff.......",
 				".......ffffffffff........"
 			],
+			"StartPos": "S",
 			"Key": {
 				"j": "PlaceTile(Origins/Truss_Block)",
 				"l": "PlaceTile(Origins/Truss_Block)+PlaceWire(Black_Wire_Mode)",
@@ -63,7 +64,7 @@
 				"                         ",
 				"                     jl; ",
 				" sfhj              jjsff ",
-				"zffffj            zfffffh",
+				"zffffj      S     zfffffh",
 				"fffffhx          jfffffff",
 				"fffffff          ffffffff",
 				"*ffff*             **fff*",
@@ -93,6 +94,7 @@
 				"......f!!!!!!fffff.......",
 				".......ffffffffff........"
 			],
+			"StartPos": "S",
 			"Key": {
 				"j": "PlaceTile(Origins/Hanging_Scrap_Tile)",
 				"l": "PlaceSpecialTile(Origins/Fungarust,2)",
@@ -117,7 +119,7 @@
 				"                         ",
 				"                    jj   ",
 				" jssll             jljs; ",
-				"*ffff*             **fff*",
+				"*ffff*      S      **fff*",
 				"*ffffz            xz*ff**",
 				"***ffz             z*f***",
 				"***ffz             zfff**",
@@ -144,6 +146,7 @@
 				"......f!!!!!!fffff.......",
 				".......ffffffffff........"
 			],
+			"StartPos": "S",
 			"Key": {
 				"j": "PlaceTile(Origins/Scrap_Heap)",
 				"l": "PlaceTile(Origins/Hanging_Scrap_Tile)",
@@ -166,6 +169,7 @@
 		"f": "PlaceTile(Origins/Tainted_Stone)",
 		"!": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
 		" ": "Empty",
+		"S": "Empty",
 		".": "Void",
 		"*": "PlaceTile(Origins/Murky_Sludge)",
 		"s": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(HalfBlock)"

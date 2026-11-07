@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
+using ThoriumMod.Items.EarlyMagic;
 using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.RoomSocket;
 
@@ -41,7 +42,7 @@ namespace Origins.Core.Structures {
 		}
 		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public virtual bool Break(StructureInstance instance) => instance.rooms.Length > 25;
-		public void Generate(int i, int j) {
+		public Rectangle[] Generate(int i, int j) {
 			Dictionary<string, List<(ARoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
 			WeightedRandom<ARoom> start = new(WorldGen.genRand);
 			for (int k = 0; k < rooms.Count; k++) {
@@ -58,9 +59,10 @@ namespace Origins.Core.Structures {
 				} while (!(canGenerate = instance.CanGenerate()) && --tries > 0);
 				if (canGenerate) {
 					instance.Generate();
-					break;
+					return instance.GetBoundingBoxes();
 				}
 			}
+			return null;
 		}
 		public void AddRoom(ARoom room) {
 			room.Validate();
@@ -405,8 +407,34 @@ namespace Origins.Core.Structures {
 		public void Generate() {
 			for (int k = 0; k < rooms.Length; k++) rooms[k].Generate(socketTracker);
 		}
+		public Rectangle[] GetBoundingBoxes() {
+			Rectangle[] boxes = new Rectangle[rooms.Length];
+			for (int i = 0; i < rooms.Length; i++) boxes[i] = rooms[i].GetBoundingBox();
+			return boxes;
+		}
 	}
 	public record class RoomInstance(ARoom Room, Point Position, RepetitionData Repetitions = default) {
+		int minX, maxX, minY, maxY;
+		void ResetRange() {
+			minX = int.MaxValue;
+			maxX = int.MinValue;
+
+			minY = int.MaxValue;
+			maxY = int.MinValue;
+		}
+		void AddChangeToRange(int i, int j) {
+			if (i < minX) minX = i;
+			if (i > maxX) maxX = i;
+
+			if (j < minY) minY = j;
+			if (j > maxY) maxY = j;
+		}
+		public Rectangle GetBoundingBox() => new(
+			minX,
+			minY,
+			maxX - minX,
+			maxY - minY
+		);
 		public void Generate(SocketTracker socketTracker) {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			Position.Deconstruct(out int i, out int j);
@@ -419,6 +447,7 @@ namespace Origins.Core.Structures {
 			foreach (KeyValuePair<char, RoomSocket> soc in Room.SocketKey) expectedSockets.Add((soc.Key, soc.Value, Room.GetOrigin(soc.Key)));
 			HashSet<char> connectedSockets = [];
 			Structure.ignoreEmpty.Clear();
+			ResetRange();
 			do {
 				connectedSockets.Clear();
 				for (int k = 0; k < expectedSockets.Count; k++) {
@@ -427,7 +456,9 @@ namespace Origins.Core.Structures {
 				}
 				for (int y = 0; y < map.Length; y++) {
 					for (int x = 0; x < map[y].Length; x++) {
-						Room.Key[map[y][x]].DoAction(this, connectedSockets, i + x, j + y);
+						TileDescriptor descriptor = Room.Key[map[y][x]];
+						descriptor.DoAction(this, connectedSockets, i + x, j + y);
+						if (!descriptor.Ignore) AddChangeToRange(i + x, j + y);
 					}
 				}
 				Min(ref minX, i);

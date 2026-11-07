@@ -8,12 +8,12 @@
 				"      ",
 				"      ",
 				"p V  p",
-				"juuuuj",
-				"jjjjjj",
+				"kuSuuk",
+				"kkkkkk",
 				"uuuuuu"
 			],
+			"StartPos": "S",
 			"Key": {
-				"j": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Brown_Wire_Mode)",
 				"V": "PlaceSpecialTile(Origins/Heat_Vent)"
 			},
 			"SocketKey": {},
@@ -26,13 +26,14 @@
 				"      ",
 				"      ",
 				"      ",
-				"p j  p",
-				"kuuuuk",
+				"p V  p",
+				"kuSuuk",
 				"kkkkkk",
 				"uuuuuu"
 			],
+			"StartPos": "S",
 			"Key": {
-				"j": "PlaceSpecialTile(Origins/Heat_Vent,1)"
+				"V": "PlaceSpecialTile(Origins/Heat_Vent,1)"
 			},
 			"SocketKey": {},
 			"Tags": []
@@ -44,13 +45,14 @@
 				"      ",
 				"      ",
 				"      ",
-				"p j  p",
-				"kuuuuk",
+				"p V  p",
+				"kuSuuk",
 				"kkkkkk",
 				"uuuuuu"
 			],
+			"StartPos": "S",
 			"Key": {
-				"j": "PlaceSpecialTile(Origins/Heat_Vent,2)"
+				"V": "PlaceSpecialTile(Origins/Heat_Vent,2)"
 			},
 			"SocketKey": {},
 			"Tags": []
@@ -58,6 +60,7 @@
 	},
 	"TileDescriptors": {
 		"u": "PlaceTile(Origins/Fortified_Steel_Block2)",
+		"S": "PlaceTile(Origins/Fortified_Steel_Block2)",
 		"p": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Brown_Wire_Mode)",
 		" ": "Empty",
 		"k": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Brown_Wire_Mode)"

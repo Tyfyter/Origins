@@ -114,11 +114,11 @@
 				"        oooo 1  1 i       65  q6=      66       ",
 				"     ppppppppppppp[pp     65   q6=     66       ",
 				"     p[[[[[[[[[[[[[[p]    65    q6=    66       ",
-				"\\\\\\\\\\ppp[pppppp[ppp[[p\\\\\\\\65\\\\\\a q6=   66       ",
-				"ssssssds[pprrrrfgrrr[pshss65ssssa\\q6=  66       ",
-				"ssssssdsujprrkrrlrrr[ps hs65;'ssss\\q6= 66       ",
-				"ssasssds\\rrrrrrrrrrr[ps\\ss66z'sssss\\q6666       ",
-				"ssssssdssrrrrrrrrrrg[pssss66rrssssss\\6666       ",
+				"RRRRRppp[pppppp[ppp[[pRRRR65RRRa q6=   66       ",
+				"ssssssds[pprrrrfgrrr[pshss65ssssaRq6=  66       ",
+				"ssssssdsujprrkrrlrrr[ps hs65;'ssssRq6= 66       ",
+				"ssasssdsRrrrrrrrrrrr[psRss66z'sssssRq6666       ",
+				"ssssssdssrrrrrrrrrrg[pssss66rrssssssR6666       ",
 				"ssssssdssrxrgcvrrbnr[pssss666666666666666       ",
 				"mmmmmmmmpppp[ppppppp[pmmm,///////////////,mmmmmm",
 				"mmmmmmmm~[[[[[[[[[[[[~!!m@@@@,,,@@@@,@@,@@!mmmmm",
@@ -149,7 +149,7 @@
 				"p": "PlaceTile(Origins/Fortified_Steel_Block1)",
 				"[": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWire(Brown_Wire_Mode)",
 				"]": "PlaceTile(Origins/Fortified_Steel_Block1)+SlopeTile(SlopeDownLeft)",
-				"\\": "PlaceSpecialTile(Origins/Scrap_Railing,2)",
+				"R": "PlaceSpecialTile(Origins/Scrap_Railing,2)",
 				"a": "PlaceSpecialTile(Origins/Scrap_Railing)+SlopeTile(SlopeDownLeft)",
 				"s": "PlaceSpecialTile(Origins/Scrap_Railing,1)",
 				"d": "PlaceTile(Origins/Steel_Support_Beam)",
@@ -298,7 +298,7 @@
 				"    77[p      w7777       ",
 				"    77yy       7777       ",
 				"    777777777777777       ",
-				"   ]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\]      ",
+				"   ]RRRRRRRRRRRRRRR]      ",
 				"   ]]]]]]]]]]]]]]]]]      ",
 				"   ]]]]]]]]]]]]]]]]]      "
 			],
@@ -313,7 +313,7 @@
 				"p": "PaintTile(BlackPaint)+Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"[": "PaintTile(BlackPaint)+PlaceSpecialTile(Origins/Power_Box)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"]": "PlaceTile(Origins/Fortified_Steel_Block2)",
-				"\\": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+				"R": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
 			},
 			"SocketKey": {},
 			"Tags": []

@@ -4292,6 +4292,7 @@ namespace Origins {
 			}
 		}
 		[Flags]
+		[SuppressMessage("Design", "CA1069:Enums values should not be duplicated", Justification = "<Pending>")]
 		public enum TileOrder {
 			RowMajor = 0b000,
 			AscX = 0b000,

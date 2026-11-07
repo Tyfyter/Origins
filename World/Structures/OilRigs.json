@@ -9,7 +9,7 @@
 				"                ",
 				"                ",
 				"  ss   d     s  ",
-				"ffffffffffffffff",
+				"fffffffSffffffff",
 				"..fffffffffffff.",
 				"...ffffffffffff.",
 				"...ffffffffff...",
@@ -20,6 +20,7 @@
 				"......fffff.....",
 				"........ff......"
 			],
+			"StartPos": "S",
 			"Key": {
 				"d": "PlaceSpecialChest(Origins/Oil_Derrick,0,Oil Derrick)"
 			},
@@ -35,7 +36,7 @@
 				"               ",
 				"               ",
 				" s    d        ",
-				"fffffffffffh jf",
+				"ffffffSffffh jf",
 				".fffffffffffff.",
 				"..ffffffffffff.",
 				"..ffffffffff...",
@@ -46,6 +47,7 @@
 				".....fffff.....",
 				".......ff......"
 			],
+			"StartPos": "S",
 			"Key": {
 				"s": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_Oil)",
 				"d": "PlaceSpecialTile(Origins/Oil_Derrick,0,1)",
@@ -63,7 +65,7 @@
 				"                ",
 				"                ",
 				"  ss    d    h  ",
-				"ffffffffffffffff",
+				"ffffffffSfffffff",
 				"..fffffffffffff.",
 				"...ffffffffffff.",
 				"...ffffffffff...",
@@ -74,6 +76,7 @@
 				"......fffff.....",
 				"........ff......"
 			],
+			"StartPos": "S",
 			"Key": {
 				"h": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_Oil)",
 				"*": "PlaceTile(Origins/Murky_Sludge)"
@@ -90,7 +93,7 @@
 				"                ",
 				"                ",
 				"  s     d   fh  ",
-				"fffssfffffffffff",
+				"fffssfffSfffffff",
 				"..fffffffffffff.",
 				"...ffffffffffff.",
 				"...ffffffffff...",
@@ -101,6 +104,7 @@
 				"......fffff.....",
 				"........ff......"
 			],
+			"StartPos": "S",
 			"SocketKey": {},
 			"Tags": []
 		}
@@ -109,6 +113,7 @@
 		"d": "PlaceSpecialChest(Origins/Oil_Derrick,1,Oil Derrick)",
 		"s": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(HalfBlock)",
 		"f": "PlaceTile(Origins/Tainted_Stone)",
+		"S": "PlaceTile(Origins/Tainted_Stone)",
 		" ": "Empty",
 		".": "Void",
 		"h": "PlaceTile(Origins/Tainted_Stone)+SlopeTile(SlopeDownLeft)"

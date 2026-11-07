@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Core;
+using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using Origins.Items.Tools.Wiring;
@@ -245,14 +246,26 @@ namespace Origins.Core.Structures {
 			return new((_, _, i, j) => PlaceTile(i, j, type, style, dir, parameters), Parts: [originalText]);
 		}
 		public virtual void PlaceTile(int i, int j, CachedTileType type, int style, int dir, string[] parameters) {
+			using ScopedOverride<bool> _ = MultiTypeMultiTile.ForcePlace();
+			Point pos;
 			TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData, forcedRandom: 0);
-			TileObject.Place(objectData);
+			TileObjectData data = TileObjectData.GetTileData(type, objectData.style, objectData.alternate);
+			int left = objectData.xCoord;
+			int top = objectData.yCoord;
+			if (TileLoader.GetTile(type) is not IMultiTypeMultiTile) {
+				for (int y = 0; y < data.Height; y++) {
+					pos.Y = top + y;
+					for (int x = 0; x < data.Width; x++) {
+						pos.X = left + x;
+						Tile tile = Main.tile[pos];
+						tile.HasTile = false;
+					}
+				}
+			}
+			bool succeeded = TileObject.Place(objectData);
 			TileObjectData.CallPostPlacementPlayerHook(i, j, type, style, dir, objectData.alternate, objectData);
 			TileLoader.GetTile(type)?.PlaceInWorld(i, j, null);
 
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			Point pos = default;
 			for (int y = 0; y < data.Height; y++) {
 				pos.Y = top + y;
 				for (int x = 0; x < data.Width; x++) {

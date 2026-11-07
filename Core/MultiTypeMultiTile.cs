@@ -26,6 +26,8 @@ namespace Origins.Core {
 		public Point MainTileOffset => default;
 	}
 	public class MultiTypeMultiTile : ILoadable {
+		static bool forcePlace = false;
+		public static ScopedOverride<bool> ForcePlace() => forcePlace.ScopedOverride(true);
 		struct Move : IMoveToPegFlag;
 		public delegate bool ShouldPlacePartCheck(int i, int j, int style);
 		public delegate ushort? PlacePartCheck(int i, int j, int style);
@@ -76,7 +78,7 @@ namespace Origins.Core {
 				for (int j = 0; j < tileData.Height; j++) {
 					if (placeCheck(i, j, style) is ushort tileType) {
 						Tile tile = Framing.GetTileSafely(x + i, y + j);
-						if (!tile.HasTile) {
+						if (forcePlace || !tile.HasTile) {
 							tile.SetActive(true);
 							tile.TileFrameX = (short)num8;
 							tile.TileFrameY = (short)num9;

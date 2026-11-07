@@ -8736,3 +8736,8 @@ The_Demaker_Item: {
 	DisplayName: Unmade Demaker
 	Tooltip: Not used for special crafting yet
 }
+
+Structure_Empty_Wall_Marker_Safe_Item: {
+	DisplayName: Structure Empty Wall Marker Safe Item
+	Tooltip: ""
+}
