@@ -9,6 +9,7 @@ using Origins.World.BiomeData;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -52,7 +53,7 @@ namespace Origins.Items.Other.Testing {
 					parameters.Clear();
 					bool loopGuard = true;
 					skipContinue:
-					if (player.controlSmart) {
+					if (player.controlTorch) {
 						mode = (mode + ModeCount - 1) % ModeCount;
 					} else {
 						mode = (mode + 1) % ModeCount;
@@ -62,7 +63,7 @@ namespace Origins.Items.Other.Testing {
 						if (modes[mode] is Continue_Worldgen_Testing_Mode) goto skipContinue;
 					}
 				} else {
-					if (player.controlSmart) {
+					if (player.controlTorch) {
 						modes[mode].Apply(parameters);
 					} else if (player.controlDown) {
 						if (parameters.Count > 0) parameters.RemoveAt(parameters.Count - 1);
@@ -548,16 +549,17 @@ namespace Origins.Items.Other.Testing {
 		DeserializedStructure structure;
 		Task<DeserializedStructure> task;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			if (structure is null) {
+			string path = "Origins/World/Structures/TestCED";
+			if (structure is null || structure.Name != Path.GetFileNameWithoutExtension(path)) {
 				if (task is null) {
-					task = DeserializedStructure.AsyncLoad("Origins/World/Structures/TestCED");
+					task = DeserializedStructure.AsyncLoad(path);
 				} else if (task.IsCompleted) {
 					structure = task.Result;
 					task = null;
 				}
 				return "Loading Structure" + new string('.', (int)(Main.timeForVisualEffects / 45 % 3) + 1);
 			}
-			return "Place Structure";
+			return "Place Structure: " + structure.Name;
 		}
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			if (structure is null) return;
