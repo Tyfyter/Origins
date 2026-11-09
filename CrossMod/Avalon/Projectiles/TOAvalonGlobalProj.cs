@@ -24,6 +24,7 @@ namespace Origins.CrossMod.Avalon.Projectiles {
 			}
 		}
 		public override void SetDefaults(Projectile proj) {
+			if (projectileTypes.Contains(proj.type)) proj.MakeExplosive();
 			try {
 				AvalonProjectile(proj);
 			} catch (Exception e) {
@@ -38,7 +39,6 @@ namespace Origins.CrossMod.Avalon.Projectiles {
 			if (proj.IsType<AcidBombProj>() || proj.IsType<BloodBombProj>()) proj.MakeExplosive(DamageClasses.ThrownExplosive);
 			if (proj.IsType<AcidRocketProj>() || proj.IsType<AcidGrenadeProj>() || proj.IsType<AcidMineProj>() || proj.IsType<AcidSnowmanRocketProj>()) proj.MakeExplosive();
 			if (proj.IsType<BloodRocketProj>() || proj.IsType<BloodGrenadeProj>() || proj.IsType<BloodMineProj>() || proj.IsType<BloodSnowmanRocketProj>()) proj.MakeExplosive();
-			if (projectileTypes.Contains(proj.type)) proj.MakeExplosive();
 		}
 		public static DamageClass MakeExplo(DamageClass damageClass) => DamageClasses.ExplosiveVersion[damageClass];
 	}
