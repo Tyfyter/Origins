@@ -647,11 +647,11 @@ ACCESSORIES:
 (^) CORE Generator
 (^) Counter-offensive Scarf
 (^) CSTAA Jacket
-(X) Cute Plushie !!!
+(#, ^2) Cute Plushie !!!
 (^) Danger Barrel
 (X) Danger Dan's Glove !!!
 (^) Decorative A.S.H.E.S.
-(X) Demolisher Jacket !!!
+(#, ^2) Demolisher Jacket !!!
 (^) Destructive Claws
 (X) Dial-Up Modem
 (^) Dim Starlight
@@ -659,12 +659,12 @@ ACCESSORIES:
 (X) Druidic Bee Cloak !!!
 (^) Dryad's Inheritance
 (^) Dysfunctional Endless Explosives Bag
-(X) E.M.F.I.D. !!!
+(#, ^2) E.M.F.I.D. !!!
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(X) Excavator's Glove !!!
+(#, ^2) Excavator's Glove !!!
 (^) Exo-Arm
 (^) Exo-Legs
 (^) Exo-Suit
@@ -675,7 +675,7 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(X) Fiberwrap !!!
+(#, ^2) Fiberwrap !!!
 (^) Filter Breather
 (^) Flak Jacket
 (^) Fleshy Figurine
@@ -722,7 +722,7 @@ ACCESSORIES:
 (^) Magic Tripwire
 (^) Makeover Choker
 (^) Master Magician's Cloak
-(X) Medical Mask !!!
+(#, ^2) Medical Mask !!!
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Mildew Heart
@@ -743,7 +743,7 @@ ACCESSORIES:
 (^) Pacemaker
 (X) Parasite Arm
 (^) Party Ring Balloon
-(X) Plague Doctor Mask !!!
+(#, ^2) Plague Doctor Mask !!!
 (^) Plasma Bag
 (^) Playtime's Over
 (^) Pneumatic Bomb Thrower
