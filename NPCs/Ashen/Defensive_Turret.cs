@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
 using Origins.Gores;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Summoner;
-using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
@@ -68,6 +65,7 @@ namespace Origins.NPCs.Ashen {
 			Projectile probe = new();
 			for (int i = 0; i < ProjectileLoader.ProjectileCount; i++) {
 				if (OohShiny[i] || TargetProjectilesLow[i]) continue;
+				if (ContentSamples.ProjectilesByType[i]?.ModProjectile?.Mod?.Name == "Fargowiltas") continue;
 				probe.SetDefaults(i);
 				if (probe.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.GolfBall) TargetProjectilesLow[i] = true;
 			}
