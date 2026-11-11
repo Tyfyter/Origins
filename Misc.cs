@@ -5773,6 +5773,10 @@ namespace Origins {
 						}
 						LastTargetRect = targetNPC.Hitbox;
 						break;
+						case TargetSearchTypes.Tiles:
+						if (TargetTile is not Tile tile) break;
+						LastTargetRect = new Rectangle(0, 0, 16, 16).Add(tile.GetTilePosition().ToWorldCoordinates(0, 0));
+						break;
 					}
 					return LastTargetRect;
 				}

@@ -21,8 +21,10 @@ namespace Origins.Buffs {
 			if (npc.TryGetGlobalNPC(out Blind_Debuff_Global global)) global.blinded = true;
 		}
 	}
+	[ReinitializeDuringResizeArrays]
 	public class Blind_Debuff_Global : GlobalNPC {
 		public override bool InstancePerEntity => true;
+		public static bool[] IsBlindable = NPCID.Sets.Factory.CreateNamedSet($"{nameof(Terraria)}/{nameof(IsBlindable)}").RegisterBoolSet();
 		public bool blinded = false;
 		public bool blindable = false;
 		public NPCAimedTarget lastTarget;
@@ -36,6 +38,7 @@ namespace Origins.Buffs {
 				return orig(self, ignorePlayerTankPets);
 			};
 		}
+		public override void SetDefaults(NPC entity) => blindable = IsBlindable[entity.type];
 		public override void ResetEffects(NPC npc) {
 			blinded = false;
 		}

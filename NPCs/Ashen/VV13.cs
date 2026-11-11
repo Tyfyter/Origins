@@ -1,5 +1,6 @@
 ﻿#define DRAWPLATFORM //uncomment this to see where the platform is
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Core;
 using Origins.Core.Animation;
 using Origins.Dev;
@@ -26,13 +27,16 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using static Origins.Core.Animation.KeyframeData;
+using static Origins.NPCExtensions;
+using static Origins.NPCs.Ashen.Repairboy;
 using static Origins.NPCs.Ashen.VV13;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen;
-public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargetingNPC {
+public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 	public Rectangle DrawRect => new(0, 0, 34, 46);
 	public int AnimationFrames => 3;
 	public int FrameDuration => 3;
@@ -40,6 +44,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 	public float PlatformWidth => 128;
 	Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 	static AutoLoadingTexture glowTexture = typeof(VV13).GetDefaultTMLName("_Glow");
+	public AdvancedTargetSearchResults target;
 	public VV13Animation Animation {
 		get => VV13Animation.animations[NPC.aiAction];
 		set => NPC.aiAction = value.Type;
@@ -61,6 +66,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 			PortraitPositionXOverride = 0,
 			PortraitPositionYOverride = 0
 		};
+		Blind_Debuff_Global.IsBlindable[Type] = true;
 		GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
 	}
 	public override void SetDefaults() {
@@ -83,14 +89,6 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		CurrentTool = VV13Tool.GetRandom();
 		AnimationVar = 1;
 	}
-	public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
-		TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilter);
-		if (searchResults.FoundTarget) {
-			NPC.target = searchResults.NearestTargetIndex;
-			NPC.targetRect = searchResults.NearestTargetHitbox;
-			if (faceTarget && NPC.ShouldFaceTarget(ref searchResults)) NPC.FaceTarget();
-		}
-	}
 	bool SearchFilter(Player player) => player?.OriginPlayer()?.standingOnPlatformNPC != NPC;
 	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 		bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName"));
@@ -102,11 +100,69 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 		if (Main.rand.NextBool(650)) {
 			SoundEngine.PlaySound(Origins.Sounds.VV13Idle, NPC.Center);
 		}
-		NPC.TargetClosestUpgraded();
+		TargetClosest(true, true);
 		CurrentTool.AI(this);
 		Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 		if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 		if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+	}
+	public void TargetClosest(bool resetTarget = true, bool faceTarget = true) {
+		if (NPC.GetGlobalNPC<Blind_Debuff_Global>().blinded) return;
+		Tile? oldTargetPos = target.TargetTile;
+		AdvancedTargetSearchResults searchResults = NPC.SearchForTarget(
+			new Rectangle(0, 0, 1920 * 2, 1080 * 2).Recentered(NPC.Center),
+			TargetSearchTypes.All,
+			playerSearcher: static (Player player, Rectangle area, NPC searcher, ref Rectangle hitbox) => {
+				if (player?.OriginPlayer()?.standingOnPlatformNPC == searcher) return null;
+				return searcher.Distance(player.Center) + (!searcher.playerInteraction[player.whoAmI]).Mul(800) - player.aggro;
+			},
+			npcSearcher: NPCSearcher,
+			tileSearcher: TileSearcher
+		);
+		if (searchResults.HasTarget || resetTarget) target = searchResults;
+		NPC.targetRect = target.TargetRect;
+		if (faceTarget) NPC.FaceTarget();
+	}
+	static float? NPCSearcher(NPC target, Rectangle area, NPC searcher, ref Rectangle hitbox) {
+		if (target.ModNPC is IAshenEnemy) return null;
+		return searcher.Distance(target.Center) + 800;
+	}
+	static (float cost, int id, Rectangle hitbox)? TileSearcher(Rectangle area, NPC searcher) {
+		if (VV13Tool.tools[(int)searcher.ai[1]] is not VV13_Scrap) return null;
+		Point low = area.TopLeft().ToTileCoordinates();
+		Point high = area.BottomRight().ToTileCoordinates();
+		Max(ref low.X, 0);
+		Max(ref low.Y, 0);
+		Min(ref high.X, Main.maxTilesX);
+		Min(ref high.Y, Main.maxTilesY);
+
+		float bestCost = float.PositiveInfinity;
+		Rectangle bestHitbox = default;
+		Tile bestTile = default;
+
+		Rectangle hitbox = default;
+		Vector2 center = searcher.Center;
+		int incinerator = TileType<Incinerator_Pit>();
+		for (int j = low.Y; j < high.Y; j++) {
+			for (int i = low.X; i < high.X; i++) {
+				Tile tile = Main.tile[i, j];
+				if (!tile.HasTile || tile.TileType != incinerator) continue;
+				if (!MultiTypeMultiTile.IsMainTile(i, j)) continue;
+				if (TileObjectData.GetTileData(tile) is not TileObjectData data) continue;
+				TileUtils.GetMultiTileTopLeft(i, j, data, out hitbox.X, out hitbox.Y);
+				hitbox.X *= 16;
+				hitbox.Y *= 16;
+				hitbox.Width = data.Width * 16;
+				hitbox.Height = data.Height * 16;
+				float weight = center.Distance(hitbox.Center());
+				if (Minimize(ref bestCost, weight)) {
+					bestHitbox = hitbox;
+					bestTile = tile;
+				}
+			}
+		}
+		if (bestHitbox == default) return null;
+		return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 	}
 	public void Approach(Vector2 target, float minRange, float maxRange) {
 		float speed = 8f;
@@ -152,9 +208,11 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC, ISpecialTargeti
 	}
 	public override void SendExtraAI(BinaryWriter writer) {
 		writer.Write(NPC.aiAction);
+		target.Write(writer);
 	}
 	public override void ReceiveExtraAI(BinaryReader reader) {
 		NPC.aiAction = reader.ReadInt32();
+		target = AdvancedTargetSearchResults.Read(reader);
 	}
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 		drawColor = NPC.GetAlpha(NPC.GetNPCColorTintedByBuffs(drawColor));
@@ -719,6 +777,16 @@ public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
 	public override int DroppedHealth => scrap.ScrapValue.Max * 40;
 	public override int IncineratorPowerTime => scrap.ScrapValue.GetValue() * 180;
 	public override void SetStaticDefaults() => randomWeights.Multiply(Type, Type + 1, 1f / GetContent<VV13_Scrap>().Count());
+	public override void AI(VV13 vv13) {
+		NPC npc = vv13.NPC;
+		Vector2 targetPos = vv13.target.TargetRect.Center();
+		targetPos.X += 3.5f * 16;
+		Vector2 center = npc.Center;
+		if (targetPos.Y > center.Y && targetPos.Y - 320 <= center.Y) targetPos.Y = center.Y;
+		else targetPos.Y -= 320f;
+		vv13.Approach(targetPos, 0, 32);
+		if (vv13.Animation == HoldAnimation && center.WithinRange(targetPos, 64)) vv13.Animation = UseAnimation;
+	}
 }
 #endregion tool
 public class VV13_Dropped_Tool : ModNPC, IIncineratorPitValue {
