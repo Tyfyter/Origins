@@ -619,9 +619,9 @@ ACCESSORIES:
 (#, ^2) Blast Miner's Glove !!!
 (#, ^2) Blast-Proof Core !!!
 (^) Blast-Resistant Plate
-(#, ^2) Blood Donor Bag !!!
+(#2, ^2) Blood Donor Bag !!!
 (#, ^2) Blood-Powered Robot !!!
-(#, ^2) Bloody Knuckles !!!
+(☻, ♠) Bloody Knuckles !!!
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
 (^) Bomb Handling Device
@@ -675,7 +675,7 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(#, ^2) Fiberwrap !!!
+(#, ^2, ♠) Fiberwrap !!!
 (^) Filter Breather
 (^) Flak Jacket
 (^) Fleshy Figurine
@@ -700,7 +700,7 @@ ACCESSORIES:
 (X) Hive Jacket !!!
 (^) I-WTPA Standard
 (X) Industrial-Grade Arm !!!
-(X) Infusion Bag !!!
+(@, ^3, ♠) Infusion Bag !!!
 (X) Iron Lung !!!
 (X) IV Bag !!!
 (^) Keepsake Remains
@@ -722,7 +722,7 @@ ACCESSORIES:
 (^) Magic Tripwire
 (^) Makeover Choker
 (^) Master Magician's Cloak
-(#, ^2) Medical Mask !!!
+(#2, ^2, 々) Medical Mask !!! (needs infections in order to be immune to them and "Medicines applied to nearby allies last 20% longer")
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Mildew Heart
@@ -743,7 +743,7 @@ ACCESSORIES:
 (^) Pacemaker
 (X) Parasite Arm
 (^) Party Ring Balloon
-(#, ^2) Plague Doctor Mask !!!
+(☻, ♠) Plague Doctor Mask !!!
 (^) Plasma Bag
 (^) Playtime's Over
 (^) Pneumatic Bomb Thrower

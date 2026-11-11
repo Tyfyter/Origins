@@ -60,7 +60,11 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (ImmunitySet[player.buffType[i]]) player.DelBuff(i--);
 			}
-			if (ImmunityBuff is not null) player.AddBuff(ImmunityBuff.Type, Item.buffTime);
+			if (ImmunityBuff is not null) {
+				int buffTime = Item.buffTime;
+				if (player.OriginPlayer().medicalMask) buffTime = (int)(buffTime * 1.40f);
+				player.AddBuff(ImmunityBuff.Type, buffTime);
+			}
 			OnUseItem(player);
 			return base.UseItem(player);
 		}

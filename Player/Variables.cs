@@ -428,6 +428,7 @@ namespace Origins {
 		public Action<ActiveSound> loopedWingSoundUpdate;
 		SlotId loopedWingSoundSlot;
 		[AutoReset] public bool superJump;
+		[AutoReset] public bool medicalMask;
 		#endregion
 
 		#region explosive stats
