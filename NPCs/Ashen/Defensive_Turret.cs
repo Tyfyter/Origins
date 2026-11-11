@@ -4,7 +4,6 @@ using Origins.Gores;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -238,27 +237,6 @@ namespace Origins.NPCs.Ashen {
 			if (MathHelper.WrapAngle(NPC.rotation) is < -MathHelper.PiOver2 or > MathHelper.PiOver2) {
 				effects = SpriteEffects.None;
 				rotation += MathHelper.Pi;
-			}
-			string path = typeof(Defensive_Turret).GetDefaultTMLName() + "_TargetPriorityList.hjson";
-			string sourcePath = Path.Combine([Program.SavePathShared, "ModSources", path.Replace('/', Path.DirectorySeparatorChar)]);
-			string tmp = string.Empty;
-			if (Main.LocalPlayer.controlTorch) {
-				for (int i = 0; i < ProjectileLoader.ProjectileCount; i++) {
-					string text = $"{ContentSamples.ProjectilesByType[i]?.ModProjectile?.FullName ?? ProjectileID.Search.GetName(i)}: ";
-					if (i == ProjectileID.Count) tmp += "\n";
-					if (!OohShiny[i] && !TargetProjectilesLow[i]) continue;
-					if (OohShiny[i]) text += "Is Shiny: true,";
-					if (TargetProjectilesLow[i]) text += "Low Priority: true,";
-
-					if (string.IsNullOrEmpty(tmp)) tmp = text;
-					else tmp += "\n" + text;
-				}
-				try {
-					File.WriteAllText(sourcePath, tmp);
-					Debugging.ChatMessage("File Created!");
-				} catch (Exception e) {
-					Debugging.ChatMessage(e);
-				}
 			}
 			spriteBatch.DrawGlowingNPCPart(
 				gunTexture,
