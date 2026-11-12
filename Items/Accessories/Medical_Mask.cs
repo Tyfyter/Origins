@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 26);
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 15);
+			Item.value = Item.sellPrice(silver: 60);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().medicalMask = true;

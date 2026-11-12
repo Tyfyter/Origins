@@ -8744,30 +8744,56 @@ Structure_Empty_Wall_Marker_Safe_Item: {
 
 Blood_Donor_Bag: {
 	// DisplayName: Blood Donor Bag
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$ItemTooltip.PhilosophersStone}
+		Nearby allies have {$GenericTooltip.DecreasedPotionSickness}
+		{$Infusion_Bag.Tooltip}
+		''' */
 }
 
 Bloody_Knuckles: {
 	// DisplayName: Bloody Knuckles
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$ItemTooltip.FleshKnuckles}
+		{$Fiberwrap.Tooltip}
+		''' */
 }
 
 Fiberwrap: {
 	// DisplayName: Fiberwrap
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$ItemTooltip.BlackBelt}
+		{$Medical_Mask.Tooltip}
+		''' */
 }
 
 Infusion_Bag: {
 	// DisplayName: Infusion Bag
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$Plasma_Bag.Tooltip}
+		{$Medical_Mask.Tooltip}
+		''' */
 }
 
 Medical_Mask: {
 	// DisplayName: Medical Mask
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Grants immunity to infections that don't currently exist
+		Increases the duration of medicinal benefits by 40%
+		Medicines applied to nearby allies last 20% longer
+		''' */
 }
 
 Plague_Doctor_Mask: {
 	// DisplayName: Plague Doctor Mask
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$Gas_Mask.Tooltip}
+		{$Medical_Mask.Tooltip}
+		''' */
 }

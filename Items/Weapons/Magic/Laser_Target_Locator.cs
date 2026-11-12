@@ -20,14 +20,14 @@ namespace Origins.Items.Weapons.Magic {
 			Item.autoReuse = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.UseSound = SoundID.Item157;
-			Item.damage = 80;
+			Item.damage = 100;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.shootSpeed = 1f;
 			Item.noMelee = true;
 			Item.width = 26;
 			Item.height = 18;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
 			Item.knockBack = 16;
 			Item.mana = 60;
 			Item.shoot = ModContent.ProjectileType<Laser_Target_Locator_P>();

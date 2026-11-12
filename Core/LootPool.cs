@@ -247,6 +247,7 @@ public class Ashen_Medical : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Medical_Mask>(), 5, 1, 3));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>(), 2));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 2, 16));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 2, 1, 11));
@@ -263,6 +264,7 @@ public class Ashen_Medical : LootPool {
 public class Ashen_MedicalLore : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()).OncePerWorld());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Medical_Mask>()));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Jumpsuit>()));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 1, 35, 35));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 1, 13, 13));

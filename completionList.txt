@@ -247,7 +247,7 @@ ENEMY NPCS:
 (^) Crimbrain
 (X) Crying Creeper
 (X) Dark Elf
-(^) Defensive Turret
+(#2, ^2) Defensive Turret !!! (list of distractions provided, now it needs them)
 (^) Defiled Broadcaster
 (^) Defiled Cyclops
 (^) Defiled Digger
@@ -619,9 +619,9 @@ ACCESSORIES:
 (#, ^2) Blast Miner's Glove !!!
 (#, ^2) Blast-Proof Core !!!
 (^) Blast-Resistant Plate
-(#2, ^2) Blood Donor Bag !!!
+(#2, ^2) Blood Donor Bag !!! (missing ally boost effect)
 (#, ^2) Blood-Powered Robot !!!
-(☻, ♠) Bloody Knuckles !!!
+(^) Bloody Knuckles
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
 (^) Bomb Handling Device
@@ -675,7 +675,7 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(#, ^2, ♠) Fiberwrap !!!
+(^) Fiberwrap
 (^) Filter Breather
 (^) Flak Jacket
 (^) Fleshy Figurine
@@ -702,9 +702,9 @@ ACCESSORIES:
 (X) Industrial-Grade Arm !!!
 (@, ^3, ♠) Infusion Bag !!!
 (X) Iron Lung !!!
-(X) IV Bag !!!
+(#, ^2) IV Bag !!!
 (^) Keepsake Remains
-(X) Kinetic Cuffs !!!
+(#, ^2) Kinetic Cuffs !!!
 (X) Laden Crown
 (X) Land Surveyor
 (^) Laser Tag Vest
@@ -716,13 +716,13 @@ ACCESSORIES:
 (X) Looking Glass
 (^) Lousy Liver
 (^) Lover's Leap
-(X) Madman's Hand !!!
+(#, ^2) Madman's Hand !!!
 (^) Magic Glove
 (^) Magic Pain Glove
 (^) Magic Tripwire
 (^) Makeover Choker
 (^) Master Magician's Cloak
-(#2, ^2, 々) Medical Mask !!! (needs infections in order to be immune to them and "Medicines applied to nearby allies last 20% longer")
+(#2, ^2, ᗢ) Medical Mask !!! (needs ally boost effect)
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Mildew Heart
@@ -743,20 +743,20 @@ ACCESSORIES:
 (^) Pacemaker
 (X) Parasite Arm
 (^) Party Ring Balloon
-(☻, ♠) Plague Doctor Mask !!!
+(^) Plague Doctor Mask
 (^) Plasma Bag
 (^) Playtime's Over
 (^) Pneumatic Bomb Thrower
 (^) Potato Battery
 (^) Power Lotus
 (^) Powerflower
-(X) Prankster's Glove !!!
+(#, ^2) Prankster's Glove !!!
 (^) Primordial Soup
 (^) Priority Mail
 (^) Protomind
 (^) Razorwire
 (^) Rebreather
-(X) Repulsive Organ !!!
+(#, ^2) Repulsive Organ !!!
 (^) Resin Shield
 (^) Resizing Glove
 (^) Return To Sender
@@ -767,7 +767,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)
 (^) Scrap Barrier (Uncursed)
 (#2, ^2) Scrap Compactor !!!
-(X) Scrappicker's Glove !!!
+(#, ^2) Scrappicker's Glove !!!
 (^) Shield of Retribution
 (X) Shield of Shimmering
 (^) Shock Collar
@@ -775,9 +775,9 @@ ACCESSORIES:
 (^) Slag Bucket (Cursed)
 (^) Slag Bucket (Uncursed)
 (X) SMART Bomb Glove
-(X) SMART Control Liver !!!
+(#, ^2) SMART Liver !!!
 (^) Smog Pod-4
-(X) Smogwalker's Trenchcoat !!!
+(#, ^2) Smogwalker's Trenchcoat !!!
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
@@ -785,9 +785,9 @@ ACCESSORIES:
 (^) Sparking Flame Barrel
 (^) Speed Booster
 (^) Spirit Shard
-(X) Star Squishy !!!
+(#, ^2) Star Squishy !!!
 (^) Stone Mask
-(X) Storm Marker Launcher !!!
+(#, ^2) Storm Marker Launcher !!!
 (ᥢ) Strange Computer
 (^) Stress Ball
 (^) Sunder Gut
@@ -796,7 +796,7 @@ ACCESSORIES:
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Tender Flesh Heart
-(X) Thorn Ring !!!
+(#, ^2) Thorn Ring !!!
 (^) Tiki Buckler
 (X) Timbre of Hell
 (^) Trap Charm

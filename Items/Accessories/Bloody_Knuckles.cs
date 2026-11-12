@@ -14,8 +14,8 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(34, 34);
 			Item.defense = 8;
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 35);
+			Item.rare = ItemRarityID.Lime;
+			Item.value = Item.sellPrice(gold: 11, silver: 60);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().medicalMask = true;
@@ -25,7 +25,7 @@ namespace Origins.Items.Accessories {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(ItemID.FleshKnuckles)
-			.AddIngredient<Medical_Mask>()
+			.AddIngredient<Fiberwrap>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

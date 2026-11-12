@@ -15,8 +15,8 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 24);
 			Item.defense = 2;
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 35);
+			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(gold: 1, silver: 20);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer oP = player.OriginPlayer();

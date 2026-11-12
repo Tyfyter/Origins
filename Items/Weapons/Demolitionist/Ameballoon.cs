@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 1;
 			Projectile.width = 22;
 			Projectile.height = 22;
-			Projectile.scale *= 0.6f;
+			//Projectile.scale *= 0.6f;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 60;
 			Projectile.alpha = 150;

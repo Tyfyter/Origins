@@ -25,14 +25,44 @@ namespace Origins.NPCs.Ashen {
 			ProjectileID.CursedFlare,
 			ProjectileID.RainbowFlare,
 			ProjectileID.ShimmerFlare,
-			ProjectileID.SpelunkerFlare
+			ProjectileID.SpelunkerFlare/*
+			Flare Launcher,
+			Matrix,
+			Thermite Launcher,
+			Generic Weapon,
+			Shimmerstar Staff,
+			The Calibrator,
+			Astral Scythe,
+			Cool Sword,
+			Constellation,
+			Amebolize Incantation,
+			Super Generic Weapon
+			*/
 		);
 		public static bool[] TargetProjectilesLow = ProjectileID.Sets.Factory.CreateNamedSet($"{nameof(Defensive_Turret)}_{nameof(TargetProjectilesLow)}").RegisterBoolSet(
 			ProjectileID.Grenade,
 			ProjectileID.StickyGrenade,
 			ProjectileID.BouncyGrenade,
 			ProjectileID.Beenade,
-			ProjectileID.MolotovCocktail
+			ProjectileID.MolotovCocktail/*
+			Alkaline Grenade,
+			Brainade,
+			Crystal Grenade,
+			Eyenade,
+			Felnum Shock Grenade,
+			Flashbang,
+			Link Grenade,
+			Sticky Link Grenade,
+			Bombardment,
+			Meteor,
+			Mine Flayer,
+			Ticking Grenade,
+			Ticking Bomb,
+			Ticking Dynamite,
+			Area Denial,
+			Boomboom,
+			Accretion Ribbon
+			*/
 		);
 		static AutoLoadingTexture glowTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Glow");
 		static AutoLoadingTexture armTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Arm");
