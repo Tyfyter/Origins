@@ -5,9 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
-	public class Infusion_Bag : ModItem, ICustomWikiStat, IBroken {
-		public static string BrokenReason => "Needs sprites";
-		public override string Texture => typeof(Blood_Donor_Bag).GetDefaultTMLName();
+	public class Infusion_Bag : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Misc
 		];

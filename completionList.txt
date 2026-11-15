@@ -604,13 +604,13 @@ ARMOR:
 
 ACCESSORIES:
 |---
-(X) Ablative Armor Shield !!!
+(#, ^2) Ablative Armor Shield !!!
 (^) Abyssal Anchor
 (^) ACME Crate
 (^) Advanced Imaging
 (^) Air Tank
 (^) Akaliegis
-(X) Artificer's Visor !!!
+(#, ^2) Artificer's Visor !!!
 (^) Asylum Whistle
 (^) A.S.H. Attack Relay
 (^) Automated Returns Handler
@@ -649,7 +649,7 @@ ACCESSORIES:
 (^) CSTAA Jacket
 (#, ^2) Cute Plushie !!!
 (^) Danger Barrel
-(X) Danger Dan's Glove !!!
+(#, ^2) Danger Dan's Glove !!!
 (^) Decorative A.S.H.E.S.
 (#, ^2) Demolisher Jacket !!!
 (^) Destructive Claws
@@ -693,15 +693,15 @@ ACCESSORIES:
 (^) Harpy Horseshoe Balloon
 (^) Hazard Charm
 (^) Headphones
-(X) Heart in a Tube !!!
-(X) Heart Squeezy !!!
+(#, ^2) Heart in a Tube !!!
+(#, ^2) Heart Squeezy !!!
 (^) Helium Tank
 (X) Helpful Cloak
-(X) Hive Jacket !!!
+(#, ^2) Hive Jacket !!!
 (^) I-WTPA Standard
-(X) Industrial-Grade Arm !!!
-(@, ^3, ♠) Infusion Bag !!!
-(X) Iron Lung !!!
+(#, ^2) Industrial-Grade Arm !!!
+(^) Infusion Bag
+(#, ^2) Iron Lung !!!
 (#, ^2) IV Bag !!!
 (^) Keepsake Remains
 (#, ^2) Kinetic Cuffs !!!
