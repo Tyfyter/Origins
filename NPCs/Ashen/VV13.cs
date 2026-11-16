@@ -1,4 +1,5 @@
 ﻿#define DRAWPLATFORM //uncomment this to see where the platform is
+using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Core;
@@ -30,10 +31,8 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.Core.Animation.KeyframeData;
 using static Origins.NPCExtensions;
-using static Origins.NPCs.Ashen.Repairboy;
 using static Origins.NPCs.Ashen.VV13;
 using static Terraria.ModLoader.ModContent;
-using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen;
 public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
@@ -45,6 +44,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 	Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 	static AutoLoadingTexture glowTexture = typeof(VV13).GetDefaultTMLName("_Glow");
 	public AdvancedTargetSearchResults target;
+	public Rectangle toolHitbox;
 	public VV13Animation Animation {
 		get => VV13Animation.animations[NPC.aiAction];
 		set => NPC.aiAction = value.Type;
@@ -164,9 +164,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		if (bestHitbox == default) return null;
 		return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 	}
-	public void Approach(Vector2 target, float minRange, float maxRange) {
-		float speed = 8f;
-		float inertia = 128f;
+	public void ApproachRing(Vector2 target, float minRange, float maxRange, float speed = 8f, float inertia = 128f) {
 		//NPC.rotation = NPC.velocity.X * 0.1f;
 		Vector2 vectorToTargetPosition = (target - NPC.Center).Normalized(out float dist);
 		if (NPC.confused) vectorToTargetPosition *= -1;
@@ -182,6 +180,16 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
 		vectorToTargetPosition *= speed;
 		NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
+	}
+	static float CalculateStoppingDist(float currentSpeed, float speed, float inertia, float distanceCovered = 0) {
+		while (currentSpeed > 0) {
+			distanceCovered += currentSpeed;
+			currentSpeed = (currentSpeed * (inertia - 1) - speed) / inertia;
+		}
+		return distanceCovered;
+	}
+	public void ApproachPoint(Vector2 target, float maxRange, float speed = 8f, float inertia = 128f) {
+		ApproachRing(target, CalculateStoppingDist(NPC.velocity.Length(), speed, inertia), maxRange, speed, inertia);
 	}
 	public override bool? CanFallThroughPlatforms() => true;
 	public override void FindFrame(int frameHeight) {
@@ -202,9 +210,13 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		base.HitEffect(hit);
 	}
 	public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+		if (toolHitbox.Intersects(victimHitbox) && CurrentTool.ModifyCollisionData(this, victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref toolHitbox)) {
+			npcHitbox = toolHitbox;
+			return false;
+		}
 		npcHitbox.Height -= 22;
 		npcHitbox.Y += 22;
-		return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
+		return false;
 	}
 	public override void SendExtraAI(BinaryWriter writer) {
 		writer.Write(NPC.aiAction);
@@ -666,6 +678,10 @@ public abstract class VV13Tool : ModTexturedType {
 	public abstract Vector2 Origin { get; }
 	public abstract int FrameCount { get; }
 	public abstract int DroppedSize { get; }
+	public virtual bool HasHitbox => true;
+	public virtual Vector2 HitboxOffset => Vector2.Zero;
+	public virtual float VisualRotationOffset => 0;
+	public virtual int HitboxSize => 32;
 	public virtual int DroppedHealth => 200;
 	public virtual int IncineratorPowerTime => 900;
 	public int Type { get; private set; }
@@ -685,16 +701,29 @@ public abstract class VV13Tool : ModTexturedType {
 		SetStaticDefaults();
 	}
 	public virtual void AI(VV13 vv13) {
-		NPC npc = vv13.NPC;
-		if (npc.HasValidTarget && npc.HasPlayerTarget) {
-			NPCAimedTarget target = npc.GetTargetData();
-			const float hover_range = 16 * 13;
-			vv13.Approach(target.Center, hover_range - 32, hover_range + 32);
+		if (vv13.target.HasTarget) {
+			Vector2 hitboxOffset = default;
+			if (HasHitbox) {
+				Transform transform = vv13.RootTransform;
+				transform.Position -= vv13.NPC.Center;
+				transform += vv13.Animation.tool.GetCurrentValue(vv13.AnimationTime);
+				transform.Mirror ^= true;
+				transform += HitboxOffset;
+				hitboxOffset = transform.Position;
+			}
+			Vector2 pos = vv13.target.TargetRect.Center();
+			vv13.ApproachPoint(pos - hitboxOffset, 32);
+			if (HasHitbox) {
+				vv13.toolHitbox = new Rectangle(0, 0, HitboxSize, HitboxSize).Recentered(vv13.NPC.Center + hitboxOffset);
+				vv13.toolHitbox.DrawDebugOutline();
+			}
 		}
 	}
+	public virtual bool ModifyCollisionData(VV13 vv13, Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle toolHitbox) => true;
 	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) {
 		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount);
 		SpriteEffects spriteEffects = vv13?.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+		transform += new Transform(default, VisualRotationOffset);
 		DrawData data = new(
 			Sets.Texture[Type].Value,
 			transform.Position,
@@ -738,34 +767,34 @@ public class VV13_Drill : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 3;
 	public override Vector2 Origin => new(80, 8);
+	public override Vector2 HitboxOffset => new(48, 16);
+	public override int HitboxSize => 28;
 	public override int DroppedSize => 38;
-	public override void AI(VV13 vv13) {
-		NPC npc = vv13.NPC;
-		if (npc.HasValidTarget && npc.HasPlayerTarget) {
-			NPCAimedTarget target = npc.GetTargetData();
-			const float hover_range = 16 * 13;
-			vv13.Approach(target.Center, hover_range - 32, hover_range + 32);
-		}
-	}
+	public override void AI(VV13 vv13) => base.AI(vv13);
 }
 public class VV13_Saw : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 5;
 	public override Vector2 Origin => new(72, 10);
+	public override Vector2 HitboxOffset => new(48, 16);
+	public override int HitboxSize => 38;
 	public override int DroppedSize => 48;
 }
 public class VV13_Puncher : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 5;
 	public override Vector2 Origin => new(56, 40);
+	public override Vector2 HitboxOffset => base.HitboxOffset;
+	public override int HitboxSize => base.HitboxSize;
 	public override int DroppedSize => 30;
+	public override float VisualRotationOffset => -MathHelper.PiOver4;
 }
-public class VV13_Torch : VV13Tool {
+/*public class VV13_Torch : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
 	public override int FrameCount => 1;
 	public override Vector2 Origin => new(10, 18);
 	public override int DroppedSize => 24;
-}
+}*/
 [Autoload(false)]
 public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
 	public override string Texture => scrap.Texture;
@@ -784,7 +813,7 @@ public class VV13_Scrap(HangingScrap scrap) : VV13Tool {
 		Vector2 center = npc.Center;
 		if (targetPos.Y > center.Y && targetPos.Y - 320 <= center.Y) targetPos.Y = center.Y;
 		else targetPos.Y -= 320f;
-		vv13.Approach(targetPos, 0, 32);
+		vv13.ApproachPoint(targetPos, 32);
 		if (vv13.Animation == HoldAnimation && center.WithinRange(targetPos, 64)) vv13.Animation = UseAnimation;
 	}
 }
