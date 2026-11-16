@@ -113,7 +113,7 @@ public class Room_Socket_Marker : ModTile {
 			Rectangle rect = new(-16, -16, Main.screenWidth + 16, Main.screenHeight + 16);
 			Main.spriteBatch.Begin();
 			foreach ((Point16 pos, Data data) in tileEntities) {
-				Vector2 position = pos.ToWorldCoordinates(0, 0).ToScreenPosition();
+				Vector2 position = pos.ToWorldCoordinates(0, 0).ToScreenPosition() * Main.UIScale;
 				if (rect.Contains(position)) Main.spriteBatch.Draw(tex, position, new Rectangle(18 * (int)data.Value, 0, 16, 16), Color.White);
 			}
 			Main.spriteBatch.End();
