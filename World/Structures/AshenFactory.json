@@ -1,0 +1,5 @@
+{
+	"Rooms": {},
+	"TileDescriptors": {},
+	"BreakCondition": "MaxRoomCount(1000)"
+}
