@@ -21,6 +21,7 @@ using Origins.Tiles.Other;
 using Origins.UI;
 using Origins.Walls;
 using Origins.World.BiomeData;
+using PegasusLib.DynamicCode;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -4061,6 +4062,18 @@ namespace Origins {
 				}
 			}
 			return property;
+		}
+		public static Instr WithLabel(this Instr instr, Ref<Label> label) => Instr.GenerateOperand(instr.OpCode, gen => {
+			gen.MarkLabel(label.Value);
+			return instr.Operand;
+		});
+		public static Instr WithLabel(this Instr instr, out Ref<Label> label) {
+			Ref<Label> _label = label = new();
+			return Instr.GenerateOperand(instr.OpCode, gen => {
+				_label.Value = gen.DefineLabel();
+				gen.MarkLabel(_label.Value);
+				return instr.Operand;
+			});
 		}
 	}
 	public static class ShopExtensions {
