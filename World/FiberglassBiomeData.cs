@@ -1,10 +1,13 @@
 ﻿using Origins.Items.Other.Fish;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs.Fiberglass;
 using Origins.Tiles.Other;
 using Origins.Walls;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,7 +22,15 @@ namespace Origins.World.BiomeData {
 		public override bool IsBiomeActive(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneFiberglass = OriginSystem.fiberglassTiles > Fiberglass_Undergrowth.NeededTiles;
 		}
+		SlotId ambientSound;
 		public override void SpecialVisuals(Player player, bool isActive) {
+			if (OriginSystem.fiberglassTiles > 0 && !SoundEngine.TryGetActiveSound(ambientSound, out _) && Main.rand.NextBool(1000)) {
+				Rectangle screen = Main.Camera.GetWorldRect();
+				Vector2 pos = Main.rand.NextVectorIn(screen.Inflated(new Vector2(16 * 15) / Main.GameViewMatrix.Zoom));
+				Tile tile = Framing.GetTileSafely(pos);
+				if ((tile.TileIsType<Fiberglass_Tile>() || tile.WallType == ModContent.WallType<Fiberglass_Wall>()) && !screen.Contains(pos))
+					ambientSound = SoundEngine.PlaySound(Origins.Sounds.FiberglassAmbience, pos);
+			}
 			player.ManageSpecialBiomeVisuals("Origins:ZoneFiberglassUndergrowth", Fiberglass_Wall.AnyWallsVisible, player.Center);
 		}
 		public const int NeededTiles = 1000;

@@ -50,6 +50,7 @@ using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameInput;
+using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -1856,6 +1857,9 @@ namespace Origins {
 			return new Vector4(frame.X / save.X, frame.Y / save.Y, frame.Width / save.X, frame.Height / save.Y);
 		}
 		[Pure]
+		public static Rectangle Inflated(this Rectangle frame, Vector2 toAdd) =>
+			new((int)(frame.X - toAdd.X), (int)(frame.Y - toAdd.Y), (int)(frame.Width + toAdd.X * 2), (int)(frame.Height + toAdd.Y * 2));
+		[Pure]
 		public static bool Contains(this Rectangle area, int x, int y, int xPadding, int yPadding) {
 			return (area.X <= x + xPadding) && (x < area.Right + xPadding) && (area.Y <= y + yPadding) && (y < area.Bottom + yPadding);
 		}
@@ -2616,6 +2620,13 @@ namespace Origins {
 		public static Color GetWallMapColor(int type) {
 			if (Main.netMode == NetmodeID.Server) return Color.Transparent;
 			return MapColorLookup.GetValue()[MapHelper.wallLookup[type]];
+		}
+		[Pure]
+		public static Rectangle GetWorldRect(this Camera self) {
+			Rectangle rectangle = new();
+			(rectangle.X, rectangle.Y) = self.ScaledPosition.ToPoint();
+			(rectangle.Width, rectangle.Height) = self.ScaledSize.ToPoint();
+			return rectangle;
 		}
 		internal static void UnInitExt() {
 			_inext = null;
