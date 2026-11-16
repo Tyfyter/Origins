@@ -8,6 +8,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs.Ashen;
 using Origins.Projectiles;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -368,7 +369,7 @@ public class Star_Soldier_Blade : Star_Soldier_Weapon {
 				}
 				Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Matrix.Invert(Main.GameViewMatrix.TransformationMatrix));
 				Origins.shaderOroboros.Reset(default);
-				using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate);
+				using SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate);
 				//Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, renderTarget.Width, renderTarget.Height), Color.Black);
 				bladeShader.Apply(null,
 					uColorMatrix1 with { Value = colors.InitialMult },
@@ -764,7 +765,7 @@ public class Star_Soldier_Laser : Star_Soldier_Weapon {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
-			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+			using SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
 				AOEParams.uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
 				AOEParams.uColorMatrix1 with { Value = Colors.InitialMult },

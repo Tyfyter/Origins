@@ -7,7 +7,7 @@ namespace Origins.Graphics {
 	public class GraphicsUtils {
 		public static bool drawingEffect = false;
 	}
-	public static class GraphicsExt {
+	/*public static class GraphicsExt {
 		public static SpritebatchOverride OverrideState(this SpriteBatch spriteBatch, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
 			if (spriteBatch.IsRunning()) {
 				SpritebatchOverride @override = new(spriteBatch, true);
@@ -56,5 +56,5 @@ namespace Origins.Graphics {
 				tileBatch.Begin(state.sortMode, state.blendState, state.samplerState, state.depthStencilState, state.rasterizerState, state.effect, state.transformMatrix);
 			}
 		}
-	}
+	}*/
 }

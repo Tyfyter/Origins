@@ -5,6 +5,7 @@ using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
+using PegasusLib.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -140,7 +141,7 @@ public class Fire_Lasers_State : AIState {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
-			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+			using SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 			float reduce = IsActive ? 0 : -(Projectile.localAI[1] / ChargeTime);
 			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
 				uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },

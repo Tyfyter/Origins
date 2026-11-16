@@ -25,6 +25,7 @@ using static Origins.OriginExtensions;
 using static Origins.NPCs.Ashen.Boss.Fire_Lasers_State;
 using static PegasusLib.KinematicUtils;
 using static Terraria.ModLoader.ModContent;
+using PegasusLib.Graphics;
 
 namespace Origins.NPCs.Ashen {
 	public class CM_17 : Glowing_Mod_NPC, IWikiNPC, IMeleeCollisionDataNPC, IAshenEnemy, IBroken {
@@ -456,7 +457,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (!TargetPos.IsWithin(TargetPos.Clamp(Main.screenPosition, Main.screenPosition + Main.ScreenSize.ToVector2()), 64) && !Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
-			using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+			using SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 			float reduce = IsActive ? 0 : -(Projectile.localAI[1] / ChargeTime);
 			hitAOEShader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]).Apply(null,
 				uImageOffset1 with { Value = new Vector2(Projectile.localAI[2], Projectile.localAI[2] * -0.5f) },
@@ -645,7 +646,7 @@ namespace Origins.NPCs.Ashen {
 			for (int i = 0; i < ConnectedWatchlings.Count; i++) {
 				NPC connected = Main.npc[ConnectedWatchlings[i]];
 				if (connected.Center.HasNaNs()) continue;
-				using GraphicsExt.SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+				using SpritebatchOverride _ = Main.spriteBatch.OverrideState(SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				Vector2 diff = connected.Center - NPC.Center;
 				Vector2 position = NPC.Center;
