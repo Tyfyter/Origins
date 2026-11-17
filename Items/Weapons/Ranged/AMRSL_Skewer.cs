@@ -2,6 +2,7 @@
 using Origins.Items.Weapons.Ammo;
 using Origins.NPCs;
 using Origins.UI;
+using PegasusLib.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;

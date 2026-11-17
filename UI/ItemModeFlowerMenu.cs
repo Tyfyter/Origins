@@ -8,7 +8,7 @@ using Terraria.GameContent;
 using Terraria.GameInput;
 
 namespace Origins.UI {
-	public abstract class ItemModeFlowerMenu<TMode, TExtraModeData> : ItemModeHUD where TMode : IFlowerMenuItem<TExtraModeData> {
+	/*public abstract class ItemModeFlowerMenu<TMode, TExtraModeData> : ItemModeHUD where TMode : IFlowerMenuItem<TExtraModeData> {
 		TMode[] showingModes;
 		public int ModeCount => showingModes.Length;
 		public abstract IEnumerable<TMode> GetModes();
@@ -96,5 +96,5 @@ namespace Origins.UI {
 	public interface IFlowerMenuItem<TExtraModeData> {
 		public void Draw(Vector2 position, bool hovered, TExtraModeData extraData);
 		public bool IsHovered(Vector2 position);
-	}
+	}*/
 }
