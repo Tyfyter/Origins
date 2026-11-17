@@ -42,7 +42,8 @@ namespace Origins.Core.Structures {
 			}
 			if (irresolvableSockets.Count > 0) {
 				string message = $"{Name} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]";
-				Origins.LogLoadingWarning(Language.GetText("{0}").WithFormatArgs(message));
+				if (!OriginSystem.HasSetupAllContent) Origins.LogLoadingWarning(Language.GetText("{0}").WithFormatArgs(message));
+				Main.NewText(message, Color.OrangeRed);
 				exceptions.Add(new FormatException(message));
 			}
 		}
