@@ -8833,7 +8833,7 @@ Iron_Lung: {
 		'''
 		{$Air_Tank.Tooltip}
 		{$Pacemaker.Tooltip}
-		[buffname:Origins/Toxic_Shock_Debuff] no Longer prevents breath regeneration
+		[bufftip/self:Origins/Toxic_Shock_Debuff] no Longer prevents breath regeneration
 		''' */
 }
 
