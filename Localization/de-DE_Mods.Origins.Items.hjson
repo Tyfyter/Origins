@@ -8801,30 +8801,57 @@ Plague_Doctor_Mask: {
 
 Blast_Proof_Core: {
 	// DisplayName: Blast Proof Core
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$Pacemaker.Tooltip} ignoring self-Damage
+		-20%-95% self-damage depending on remaining health
+		''' */
 }
 
 Catalytic_Converter: {
 	// DisplayName: Catalytic Converter
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$Blast_Proof_Core.Tooltip}
+			Rapidly regenerate life after taking self-damage
+		''' */
 }
 
 Heart_Tube: {
-	// DisplayName: Heart Tube
-	// Tooltip: ""
+	// DisplayName: Heart in a Tube
+	/* Tooltip:
+		'''
+		{$ItemTooltip.FrozenTurtleShell}
+		{$Pacemaker.Tooltip}
+		+25% damage reduction while not regenerating life
+		''' */
 }
 
 Iron_Lung: {
 	// DisplayName: Iron Lung
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$Air_Tank.Tooltip}
+		{$Pacemaker.Tooltip}
+		[buffname:Origins/Toxic_Shock_Debuff] no Longer prevents breath regeneration
+		''' */
 }
 
 IV_Bag: {
-	// DisplayName: I V Bag
-	// Tooltip: ""
+	// DisplayName: IV Bag
+	/* Tooltip:
+		'''
+		{$Plasma_Bag.Tooltip}
+		{$Pacemaker.Tooltip}
+		When the regeneration effect is prompted decrease debuffs time by 5 seconds
+		''' */
 }
 
 Kinetic_Cuffs: {
 	// DisplayName: Kinetic Cuffs
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		{$ItemTooltip.CelestialCuffs}
+		{$Pacemaker.Tooltip}
+		''' */
 }

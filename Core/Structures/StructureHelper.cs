@@ -165,6 +165,10 @@ public class StructureHelperUI : UIState {
 				textInput2.IsWritingText = true;
 				return;
 			}
+			if (string.IsNullOrEmpty(inputValue) && autoKeyToggle.Value) {
+				inputValue = Structure_Helper_Item.FindUnused(new ToastCommandCaller(toastHandler)).ToString();
+				textInput.Append(inputValue);
+			}
 			if (Associate(new ToastCommandCaller(toastHandler), inputValue?.Split(' '))) textInput.Clear();
 		};
 		textInput.OnExit += IngameFancyUI.Close;
@@ -302,12 +306,12 @@ public class StructureHelperUI : UIState {
 			}
 		}
 	}
-	void OnTileReady() {
+	void OnTileReady(bool isSocket) {
 		textInput.Clear();
 		textInput2.Clear();
 		textInput.IsWritingText = true;
 		textInput2.IsWritingText = false;
-		if (autoKeyToggle.Value) {
+		if (autoKeyToggle.Value && !isSocket) {
 			textInput.Append(Structure_Helper_Item.FindUnused(new ToastCommandCaller(toastHandler)).ToString());
 			if (autoKeyConfirm.Value) ((ITextInputContainer)textInput).Submit();
 		}
@@ -901,7 +905,10 @@ public class Structure_Helper_Item : TestingItem {
 	}
 	static void ConsumeAssociation(char c) => ConsumedAssociations[c] = true;
 	public static char? FindUnused(CommandCaller feedback = null) {
-		for (char i = ' '; i < char.MaxValue; i++) {
+		for (char i = '\u007F'; i < char.MaxValue; i++) {
+			if (!ConsumedAssociations[i]) return i;
+		}
+		for (char i = ' '; i < '\u007F'; i++) {
 			if (!ConsumedAssociations[i]) return i;
 		}
 		feedback.Reply($"You have evidently used all 55011 supported characters in one room, please don't do that");
@@ -1035,6 +1042,7 @@ public class Structure_Helper_Item : TestingItem {
 								NewText(caller, string.Format(format, "<k> <socket>", "map and socket keys"));
 							}
 						});
+						context.tileReady?.Invoke(true);
 						SpinWait.SpinUntil(() => {
 							Structure_Helper_Item.leftClick = leftClick;
 							Structure_Helper_Item.rightClick = rightClick;
@@ -1075,7 +1083,7 @@ public class Structure_Helper_Item : TestingItem {
 								}
 								NewText(caller, string.Format(format, CurrentTileData, "<k>", "map key"));
 							});
-							context.tileReady?.Invoke();
+							context.tileReady?.Invoke(false);
 							SpinWait.SpinUntil(() => {
 								Structure_Helper_Item.leftClick = leftClick;
 								Structure_Helper_Item.rightClick = rightClick;
@@ -1362,7 +1370,7 @@ public class SerializationContext {
 	public StructureHelperUI.ToggleElement globalKeyToggle;
 	public UIInputPanel socketInput;
 	public Mod mod;
-	public Action tileReady;
+	public Action<bool> tileReady;
 	public bool ShouldAddGlobal => globalKeyToggle?.Value ?? false;
 	public enum SerializationState {
 		Inactive,
