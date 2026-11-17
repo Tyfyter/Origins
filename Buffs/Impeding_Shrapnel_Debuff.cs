@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.World;
+using PegasusLib.UI;
 using System;
 using System.IO;
 using Terraria;
@@ -17,6 +18,7 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
 			ID = Type;
 		}
 		public static void SpawnShrapnel(NPC npc, int buffTime) {
