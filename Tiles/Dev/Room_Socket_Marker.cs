@@ -39,7 +39,7 @@ public class Room_Socket_Marker : ModTile {
 	public sealed override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) => false;
 	class Room_Socket_Marker_Item : ModItem, IExpectToBeUnobtainable {
 #if !DEBUG
-		public override bool IsLoadingEnabled(Mod mod) => !IsDebug || DebugConfig.Instance.ForceEnableDebugItems;
+		public override bool IsLoadingEnabled(Mod mod) => DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
