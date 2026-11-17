@@ -65,7 +65,7 @@ public abstract class KeyframeAnimation {
 		}
 		foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)) {
 			if (!field.FieldType.IsAssignableTo(typeof(IKeyframeSet))) continue;
-			if (field.GetCustomAttribute<ShowIfTrueAttribute>()?.ShouldShow(this) == false) continue;
+			if (!field.GetCustomAttributes<ShowIfAttribute>().ShouldShow(this)) continue;
 			if (needsReset is null) {
 				gen.Emit(OpCodes.Ldloc_0);
 				gen.Emit(OpCodes.Ldfld, field);
@@ -96,10 +96,7 @@ public abstract class KeyframeAnimation {
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref float currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, ref int currentTime, ref PlayingState animationControls) => DrawEditorUI(spriteBatch, new(ref currentTime), ref animationControls);
 	public void DrawEditorUI(SpriteBatch spriteBatch, Time currentTime, ref PlayingState animationControls) {
-		if (needsReset is not null) {
-			if (needsReset(this)) Setup();
-			needsReset = null;
-		}
+		EnsureSetup();
 		leftBound = float.PositiveInfinity;
 		gizmoTracker.ResetCurrent();
 		float hoveredTime = ScreenPosToTimeline(Main.mouseX);
@@ -305,6 +302,7 @@ public abstract class KeyframeAnimation {
 		for (int i = 0; i < keyframeSets.Count; i++) {
 			if (GetSelectionType(i) == SelectionType.Secondary) keyframeSets[i].HandleMultiSelect(keyframeSets[selectedIndex]);
 		}
+		//spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
 		spriteBatch.Restart(spriteBatch.GetState());
 		Main.graphics.GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
@@ -325,6 +323,13 @@ public abstract class KeyframeAnimation {
 			buttonRect.FillColor(color.MultiplyRGBA(baseColor)).Draw(primitiveBatch);
 			if (hovered) Main.LocalPlayer.mouseInterface = true;
 			return hovered && Main.mouseLeft && Main.mouseLeftRelease;
+		}
+	}
+
+	public void EnsureSetup() {
+		if (needsReset is not null) {
+			if (needsReset(this)) Setup();
+			needsReset = null;
 		}
 	}
 
@@ -535,9 +540,15 @@ public abstract class KeyframeAnimation {
 		new(-button_scale * 0.25f, button_scale * 0.375f)
 	);
 	public static readonly Polygon.PrimitiveBatch primitiveBatch = new();
-	[AttributeUsage(AttributeTargets.Field, Inherited = false)]
-	protected sealed class ShowIfTrueAttribute(string propertyName) : Attribute {
-		public bool ShouldShow(object instance) => (bool)instance.GetType().GetProperty(propertyName).GetValue(instance);
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
+	public abstract class ShowIfAttribute : Attribute {
+		public abstract bool ShouldShow(object instance);
+	}
+	public sealed class ShowIfTrueAttribute(string propertyName) : ShowIfAttribute {
+		public override bool ShouldShow(object instance) => (bool)instance.GetType().GetProperty(propertyName).GetValue(instance);
+	}
+	public sealed class ShowIfFalseAttribute(string propertyName) : ShowIfAttribute {
+		public override bool ShouldShow(object instance) => !(bool)instance.GetType().GetProperty(propertyName).GetValue(instance);
 	}
 }
 public class Animation_Editor_UI : SwitchableUIState {
@@ -573,4 +584,8 @@ public static class SelectionExt {
 	public static bool ShowGizmos(this SelectionType selectionType) => selectionType is SelectionType.Alone or SelectionType.Primary;
 	public static bool CanCopy(this SelectionType selectionType) => selectionType is SelectionType.Alone or SelectionType.Primary;
 	public static bool ShowSidebars(this SelectionType selectionType) => selectionType is SelectionType.Alone;
+	public static bool ShouldShow(this IEnumerable<KeyframeAnimation.ShowIfAttribute> conditions, object instance) {
+		foreach (KeyframeAnimation.ShowIfAttribute condition in conditions) if (!condition.ShouldShow(instance)) return false;
+		return true;
+	}
 }

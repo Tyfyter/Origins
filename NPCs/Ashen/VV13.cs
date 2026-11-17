@@ -1,5 +1,4 @@
 ﻿#define DRAWPLATFORM //uncomment this to see where the platform is
-using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Core;
@@ -47,14 +46,22 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 	public Rectangle toolHitbox;
 	public VV13Animation Animation {
 		get => VV13Animation.animations[NPC.aiAction];
-		set => NPC.aiAction = value.Type;
+		set {
+			if (NPC.aiAction.TrySet(value.Type)) {
+				AnimationTime = 0;
+				ToolFrame = 0;
+			}
+		}
 	}
 	public ref float AnimationTime => ref NPC.ai[0];
 	public ref float CurrentToolIndex => ref NPC.ai[1];
 	public VV13Tool CurrentTool {
 		get => VV13Tool.tools[(int)CurrentToolIndex];
-		set => CurrentToolIndex = value.Type;
+		set {
+			if (CurrentToolIndex.TrySet(value.Type)) ToolFrame = 0;
+		}
 	}
+	public ref float ToolFrame => ref NPC.localAI[0];
 	public ref float AnimationVar => ref NPC.ai[3];
 	public Transform RootTransform => new(NPC.Bottom + Vector2.UnitY * 2) {
 		Mirror = NPC.direction == 1
@@ -89,7 +96,6 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		CurrentTool = VV13Tool.GetRandom();
 		AnimationVar = 1;
 	}
-	bool SearchFilter(Player player) => player?.OriginPlayer()?.standingOnPlatformNPC != NPC;
 	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 		bestiaryEntry.CustomBestiaryName(Type, this.GetLocalizationKey("FullName"));
 		bestiaryEntry.AddTags(
@@ -105,6 +111,14 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 		if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 		if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+		Rectangle baseHitbox = NPC.Hitbox;
+		if (Animation.toolHitboxActive.GetCurrentValue(AnimationTime)) {
+			foreach (NPC other in Main.ActiveNPCs) {
+				if (other == NPC || OriginsSets.NPCs.TargetDummies[other.type]) continue;
+				if (other?.ModNPC is IAshenEnemy) continue;
+				NPC.StrikeSingleOtherNPC(other, NPC.damage, 6, NPC.direction, baseHitbox);
+			}
+		}
 	}
 	public void TargetClosest(bool resetTarget = true, bool faceTarget = true) {
 		if (NPC.GetGlobalNPC<Blind_Debuff_Global>().blinded) return;
@@ -124,7 +138,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		if (faceTarget) NPC.FaceTarget();
 	}
 	static float? NPCSearcher(NPC target, Rectangle area, NPC searcher, ref Rectangle hitbox) {
-		if (target.ModNPC is IAshenEnemy) return null;
+		if (target.ModNPC is IAshenEnemy || OriginsSets.NPCs.TargetDummies[target.type]) return null;
 		return searcher.Distance(target.Center) + 800;
 	}
 	static (float cost, int id, Rectangle hitbox)? TileSearcher(Rectangle area, NPC searcher) {
@@ -164,7 +178,9 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		if (bestHitbox == default) return null;
 		return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 	}
-	public void ApproachRing(Vector2 target, float minRange, float maxRange, float speed = 8f, float inertia = 128f) {
+	const float default_speed = 8f;
+	const float default_inertia = 64f;
+	public void ApproachRing(Vector2 target, float minRange, float maxRange, float speed = default_speed, float inertia = default_inertia) {
 		//NPC.rotation = NPC.velocity.X * 0.1f;
 		Vector2 vectorToTargetPosition = (target - NPC.Center).Normalized(out float dist);
 		if (NPC.confused) vectorToTargetPosition *= -1;
@@ -188,7 +204,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		}
 		return distanceCovered;
 	}
-	public void ApproachPoint(Vector2 target, float maxRange, float speed = 8f, float inertia = 128f) {
+	public void ApproachPoint(Vector2 target, float maxRange, float speed = default_speed, float inertia = default_inertia) {
 		ApproachRing(target, CalculateStoppingDist(NPC.velocity.Length(), speed, inertia), maxRange, speed, inertia);
 	}
 	public override bool? CanFallThroughPlatforms() => true;
@@ -210,7 +226,7 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		base.HitEffect(hit);
 	}
 	public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
-		if (toolHitbox.Intersects(victimHitbox) && CurrentTool.ModifyCollisionData(this, victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref toolHitbox)) {
+		if (Animation.toolHitboxActive.GetCurrentValue(AnimationTime) && toolHitbox.Intersects(victimHitbox) && CurrentTool.ModifyCollisionData(this, victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref toolHitbox)) {
 			npcHitbox = toolHitbox;
 			return false;
 		}
@@ -333,26 +349,30 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 	public static readonly Vector2 tentaclePosMidBack = new(18, -4);
 	public static readonly Vector2 tentaclePosBack = new(48, -8);
 	//front
-	public KeyframeSet<Tentacle> tentacleFront = new(Default, tentaclePosFront) {
-	};
+	public KeyframeSet<Tentacle> tentacleFront = new(Default, tentaclePosFront);
 	// middle front
-	public KeyframeSet<Tentacle> tentacleMidFront = new(Default, tentaclePosMidFront) {
-	};
+	public KeyframeSet<Tentacle> tentacleMidFront = new(Default, tentaclePosMidFront);
 	// middle back
-	public KeyframeSet<Tentacle> tentacleMidBack = new(Default, tentaclePosMidBack) {
-	};
+	public KeyframeSet<Tentacle> tentacleMidBack = new(Default, tentaclePosMidBack);
 	//back
-	public KeyframeSet<Tentacle> tentacleBack = new(Default, tentaclePosBack) {
-	};
+	public KeyframeSet<Tentacle> tentacleBack = new(Default, tentaclePosBack);
 	[ShowIfTrue(nameof(HasTool))]
-	public KeyframeSet<PosRotScale> tool = new(new()) {
-	};
+	public KeyframeSet<PosRotScale> tool = new(new());
 	[ShowIfTrue(nameof(HasTool))]
-	public KeyframeSet<Percentage> toolOpacity = new(1f) {
-	};
-	public EventKeyframeSet<VV13> events = [
-	];
+	public KeyframeSet<Percentage> toolOpacity = new(1f);
+	[ShowIfTrue(nameof(HasHitbox))]
+	public KeyframeSet<bool> toolHitboxActive = new(false);
+	[ShowIfFalse(nameof(ManualToolFrame))]
+	public KeyframeSet<bool> animateTool = new(false);
+	[ShowIfTrue(nameof(ManualToolFrame)), ShowIfTrue(nameof(PuncherAnimation))]
+	public KeyframeSet<PuncherFrame> puncherFrame = new(0);
+	public EventKeyframeSet<VV13> events = [];
 	public virtual bool HasTool => true;
+	public virtual bool HasHitbox => false;
+	public virtual bool CanUse => false;
+	public virtual bool CanEndUse => false;
+	public virtual bool ManualToolFrame => false;
+	public virtual bool PuncherAnimation => false;
 	public static void Drop(in VV13 vv13) {
 		if (NetmodeActive.MultiplayerClient) return;
 		if (vv13.CurrentTool is VV13_No_Tool) return;
@@ -368,15 +388,27 @@ public abstract class VV13Animation : KeyframeAnimation, ILoadable {
 		);
 		vv13.CurrentTool = GetInstance<VV13_No_Tool>();
 	}
+	[ShowIfTrue(nameof(CanUse))]
+	public static void StartUse(in VV13 vv13) => vv13.CurrentTool.TryStartUse(vv13);
+	[ShowIfTrue(nameof(CanEndUse))]
+	public static void EndUse(in VV13 vv13) => vv13.CurrentTool.TryEndUse(vv13);
 	public static void Dev_CycleTool(in VV13 vv13) =>
 		vv13.CurrentToolIndex = (vv13.CurrentToolIndex + 1) % VV13Tool.tools.Count;
 	public int Type { get; private set; }
 	public void Load(Mod mod) {
 		Type = animations.Count;
 		animations.Add(this);
+		EnsureSetup();
 	}
 	public void Unload() { }
 	public virtual void DrawExtras(SpriteBatch spriteBatch, VV13 vv13, Transform root, Color drawColor) { }
+	public record struct PuncherFrame(int Frame) : IAnimatableSpriteFrame<PuncherFrame> {
+		static AutoLoadingTexture tex = typeof(VV13_Puncher).GetDefaultTMLName();
+		public static Texture2D Texture => tex;
+		public static int FrameCount => 2;
+		public static implicit operator PuncherFrame(int value) => new(value);
+		public static implicit operator int(PuncherFrame value) => value.Frame;
+	}
 }
 public class VV13_Idle : VV13Animation {
 	public override bool HasTool => false;
@@ -419,28 +451,29 @@ public class VV13_Idle : VV13Animation {
 }
 public class VV13_Holding : VV13Animation {
 	public VV13_Holding() {
-		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
-			new(10, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), [])
+		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(40f, 0f)) {
+			new(9, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), [])
 		};
-		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
-			new(10, new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [])
+		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(10f, -2f)) {
+			new(9, new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [])
 		};
-		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
-			new(10, new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [])
+		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(-18f, -4f)) {
+			new(9, new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [])
 		};
-		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
-			new(10, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [])
+		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), (true, []), new Vector2(-48f, -8f)) {
+			new(9, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [])
 		};
-		tool = new(new()) {
-			new(1, new(new(4.950001f, 99.45f), 0f, 1f), []),
-			new(10, new(new(-10.5f, 79.5f), 0f, 1f), [])
+		tool = new(new(new(4.950001f, 99.45f), 0f, 1f), (true, [])) {
+			new(9, new(new(-10.5f, 79.5f), 0f, 1f), [])
 		};
-		toolOpacity = new(1f) {
+		toolOpacity = new(1f, (true, [])) {
 		};
 		events = [
-					new(10, Dev_CycleTool)
-				];
+			new(9, StartUse)
+		];
+		MinimumLength = 18f;
 	}
+	public override bool CanUse => true;
 }
 public class VV13_Drop : VV13Animation {
 	public VV13_Drop() {
@@ -487,81 +520,83 @@ public class VV13_Drop : VV13Animation {
 }
 public class VV13_Use_Tool : VV13Animation {
 	public VV13_Use_Tool() {
-		tentacleFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(40f, 0f)) {
-			new(3, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
-			new(14, new(new(12f, 0.5871603f), new(12f, 0.39242095f), new(12f, 0.1754865f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
-			new(22, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(24, new(new(12f, 0.5871603f), new(12f, 0.55561954f), new(12f, 0.1835351f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(30, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(34, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(36, new(new(12f, 0.5871603f), new(12f, 0.6435645f), new(12f, 0.019587755f), new(12f, 0.12641954f), new(12f, 0.21015894f), new(12f, 0.29367328f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(43, new(new(12f, 0.5871603f), new(12f, 0.55561954f), new(12f, 0.1835351f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(48, new(new(12f, 0.6144761f), new(12f, 0.31161153f), new(12f, 0.33250868f), new(12f, 0.13775766f), new(12f, 0.09110165f), new(12f, 0.389529f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(55, new(new(12f, 0.6144761f), new(12f, 0.5178317f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(60, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(64, new(new(12f, 0.5871603f), new(12f, 0.55561954f), new(12f, 0.1835351f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(69, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
-			new(75, new(new(12f, 0.5871603f), new(12f, 0.39242095f), new(12f, 0.1754865f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
-			new(85, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), [])
+		tentacleFront = new(new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), new Vector2(40f, 0f)) {
+			new(11, new(new(12f, 0.5871603f), new(12f, 0.39242095f), new(12f, 0.1754865f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
+			new(19, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(21, new(new(12f, 0.5871603f), new(12f, 0.55561954f), new(12f, 0.1835351f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(27, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(31, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(33, new(new(12f, 0.5871603f), new(12f, 0.6435645f), new(12f, 0.019587755f), new(12f, 0.12641954f), new(12f, 0.21015894f), new(12f, 0.29367328f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(40, new(new(12f, 0.5871603f), new(12f, 0.55561954f), new(12f, 0.1835351f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(45, new(new(12f, 0.6144761f), new(12f, 0.31161153f), new(12f, 0.33250868f), new(12f, 0.13775766f), new(12f, 0.09110165f), new(12f, 0.389529f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(52, new(new(12f, 0.6144761f), new(12f, 0.5178317f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(57, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(61, new(new(12f, 0.5871603f), new(12f, 0.55561954f), new(12f, 0.1835351f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(66, new(new(12f, 0.6144761f), new(12f, 0.3911534f), new(12f, 0.11738706f), new(12f, 0.23773241f), new(12f, 0.08912492f), new(12f, 0.43082714f), new(12f, 0.17347062f), new(24f, 0.3173499f)), [new Exponential(2f)]),
+			new(72, new(new(12f, 0.5871603f), new(12f, 0.39242095f), new(12f, 0.1754865f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), []),
+			new(82, new(new(12f, 0.7912359f), new(12f, 0.4286418f), new(12f, 0.275985f), new(12f, 0.23773241f), new(12f, 0.18323064f), new(12f, 0.3792218f), new(12f, 0.19664812f), new(24f, 0.3173499f)), [])
 		};
-		tentacleMidFront = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
-			new(3, new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), []),
-			new(14, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), []),
-			new(22, new(new(12f, 0.30794883f), new(12f, 0.26833296f), new(12f, 0.37028813f), new(12f, 0.34958053f), new(12f, 0.3383193f), new(12f, 0.0890286f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(24, new(new(12f, 0.38169897f), new(12f, 0.2828483f), new(12f, 0.4220088f), new(12f, 0.35594785f), new(12f, 0.24594212f), new(12f, 0.24232852f), new(12f, -0.09355855f), new(24f, 0.15989864f)), [new Exponential(2f)]),
-			new(30, new(new(12f, 0.23602024f), new(12f, 0.2212297f), new(12f, 0.52080625f), new(12f, 0.23253429f), new(12f, 0.4836527f), new(12f, 0.09250188f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(34, new(new(12f, 0.17532724f), new(12f, 0.3082058f), new(12f, 0.49593705f), new(12f, 0.4060377f), new(12f, 0.14973521f), new(12f, 0.3193711f), new(12f, 0.21650255f), new(24f, 0f)), [new Exponential(2f)]),
-			new(36, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(43, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.53753525f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.27141345f), new(12f, 0.05239439f), new(24f, 0f)), [new Exponential(2f)]),
-			new(48, new(new(12f, 0.40765545f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.16207826f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(55, new(new(12f, 0.5398751f), new(12f, 0.15243012f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.22965086f), new(12f, 0.27545965f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(60, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(64, new(new(12f, 0.30794883f), new(12f, 0.37559247f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.13905776f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(69, new(new(12f, 0.30794883f), new(12f, 0.26124012f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.22330737f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
-			new(75, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), []),
-			new(85, new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [])
+		tentacleMidFront = new(new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), new Vector2(10f, -2f)) {
+			new(11, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), []),
+			new(19, new(new(12f, 0.30794883f), new(12f, 0.26833296f), new(12f, 0.37028813f), new(12f, 0.34958053f), new(12f, 0.3383193f), new(12f, 0.0890286f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(21, new(new(12f, 0.38169897f), new(12f, 0.2828483f), new(12f, 0.4220088f), new(12f, 0.35594785f), new(12f, 0.24594212f), new(12f, 0.24232852f), new(12f, -0.09355855f), new(24f, 0.15989864f)), [new Exponential(2f)]),
+			new(27, new(new(12f, 0.23602024f), new(12f, 0.2212297f), new(12f, 0.52080625f), new(12f, 0.23253429f), new(12f, 0.4836527f), new(12f, 0.09250188f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(31, new(new(12f, 0.17532724f), new(12f, 0.3082058f), new(12f, 0.49593705f), new(12f, 0.4060377f), new(12f, 0.14973521f), new(12f, 0.3193711f), new(12f, 0.21650255f), new(24f, 0f)), [new Exponential(2f)]),
+			new(33, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(40, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.53753525f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.27141345f), new(12f, 0.05239439f), new(24f, 0f)), [new Exponential(2f)]),
+			new(45, new(new(12f, 0.40765545f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.16207826f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(52, new(new(12f, 0.5398751f), new(12f, 0.15243012f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.22965086f), new(12f, 0.27545965f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(57, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(61, new(new(12f, 0.30794883f), new(12f, 0.37559247f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.13905776f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(66, new(new(12f, 0.30794883f), new(12f, 0.26124012f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.22330737f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [new Exponential(2f)]),
+			new(72, new(new(12f, 0.30794883f), new(12f, 0.19047421f), new(12f, 0.4220088f), new(12f, 0.34360647f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), []),
+			new(82, new(new(12f, 0.30794883f), new(12f, 0.4286418f), new(12f, 0.4878528f), new(12f, 0.49038506f), new(12f, 0.3383193f), new(12f, 0.15430582f), new(12f, 0f), new(24f, 0f)), [])
 		};
-		tentacleMidBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-18f, -4f)) {
-			new(3, new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), []),
-			new(14, new(new(12f, 2.0380852f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), []),
-			new(22, new(new(12f, 2.0380852f), new(12f, -0.17001462f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(24, new(new(12f, 2.086883f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(30, new(new(12f, 1.9146014f), new(12f, 0.073403835f), new(12f, -0.10795784f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(34, new(new(12f, 2.113903f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(36, new(new(12f, 1.9440367f), new(12f, -0.19132245f), new(12f, 0.05039215f), new(12f, -0.022704482f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(43, new(new(12f, 2.1905236f), new(12f, -0.0040709972f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(48, new(new(12f, 1.8399204f), new(12f, -0.053531766f), new(12f, -0.14826512f), new(12f, -0.021516204f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(55, new(new(12f, 2.2554238f), new(12f, -0.23461759f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.20527661f), new(24f, 0f)), [new Exponential(2f)]),
-			new(60, new(new(12f, 1.8635529f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.059476376f), new(12f, -0.1928742f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(64, new(new(12f, 2.1824846f), new(12f, -0.07647014f), new(12f, -0.20247364f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(69, new(new(12f, 2.0380852f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
-			new(75, new(new(12f, 2.0380852f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), []),
-			new(85, new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [])
+		tentacleMidBack = new(new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), new Vector2(-18f, -4f)) {
+			new(11, new(new(12f, 2.0380852f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), []),
+			new(19, new(new(12f, 2.0380852f), new(12f, -0.17001462f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(21, new(new(12f, 2.086883f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(27, new(new(12f, 1.9146014f), new(12f, 0.073403835f), new(12f, -0.10795784f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(31, new(new(12f, 2.113903f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(33, new(new(12f, 1.9440367f), new(12f, -0.19132245f), new(12f, 0.05039215f), new(12f, -0.022704482f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(40, new(new(12f, 2.1905236f), new(12f, -0.0040709972f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(45, new(new(12f, 1.8399204f), new(12f, -0.053531766f), new(12f, -0.14826512f), new(12f, -0.021516204f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(52, new(new(12f, 2.2554238f), new(12f, -0.23461759f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.20527661f), new(24f, 0f)), [new Exponential(2f)]),
+			new(57, new(new(12f, 1.8635529f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.059476376f), new(12f, -0.1928742f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(61, new(new(12f, 2.1824846f), new(12f, -0.07647014f), new(12f, -0.20247364f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(66, new(new(12f, 2.0380852f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [new Exponential(2f)]),
+			new(72, new(new(12f, 2.0380852f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.15500224f), new(12f, -0.3890586f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), []),
+			new(82, new(new(12f, 2.1406956f), new(12f, -0.07647014f), new(12f, -0.14826512f), new(12f, -0.20927048f), new(12f, -0.46808028f), new(12f, -0.31638932f), new(12f, -0.30729944f), new(24f, 0f)), [])
 		};
-		tentacleBack = new(new(new(12f, 1.5707964f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(12f, 0f), new(24f, 0f)), new Vector2(-48f, -8f)) {
-			new(3, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), []),
-			new(14, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), []),
-			new(22, new(new(12f, 1.8080842f), new(12f, 6.269969f), new(12f, -0.025649786f), new(12f, 0.07095587f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
-			new(24, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
-			new(30, new(new(12f, 1.935117f), new(12f, 6.1668153f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.3729931f), new(12f, -0.21191466f), new(12f, -0.3533004f), new(24f, 0f)), [new Exponential(2f)]),
-			new(34, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, 0.12461209f), new(12f, -0.04045129f), new(12f, -0.6080668f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, -0.02006954f)), [new Exponential(2f)]),
-			new(36, new(new(12f, 1.8807759f), new(12f, 6.2445655f), new(12f, -0.025649786f), new(12f, -0.060984254f), new(12f, -0.44736588f), new(12f, -0.0018289089f), new(12f, -0.36739022f), new(24f, 0f)), [new Exponential(2f)]),
-			new(43, new(new(12f, 1.9356172f), new(12f, 6.3895144f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
-			new(48, new(new(12f, 1.7211057f), new(12f, 6.2548985f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.2503842f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
-			new(55, new(new(12f, 1.8807759f), new(12f, 6.361508f), new(12f, -0.059361458f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.39565343f), new(24f, 0f)), [new Exponential(2f)]),
-			new(60, new(new(12f, 1.7833673f), new(12f, 6.157698f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.26642f), new(12f, -0.2471441f), new(12f, -0.35526103f), new(24f, 0f)), [new Exponential(2f)]),
-			new(69, new(new(12f, 1.7870811f), new(12f, 6.2943196f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.32674658f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
-			new(75, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), []),
-			new(85, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [])
+		tentacleBack = new(new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), new Vector2(-48f, -8f)) {
+			new(11, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), []),
+			new(19, new(new(12f, 1.8080842f), new(12f, 6.269969f), new(12f, -0.025649786f), new(12f, 0.07095587f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
+			new(21, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
+			new(27, new(new(12f, 1.935117f), new(12f, 6.1668153f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.3729931f), new(12f, -0.21191466f), new(12f, -0.3533004f), new(24f, 0f)), [new Exponential(2f)]),
+			new(31, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, 0.12461209f), new(12f, -0.04045129f), new(12f, -0.6080668f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, -0.02006954f)), [new Exponential(2f)]),
+			new(33, new(new(12f, 1.8807759f), new(12f, 6.2445655f), new(12f, -0.025649786f), new(12f, -0.060984254f), new(12f, -0.44736588f), new(12f, -0.0018289089f), new(12f, -0.36739022f), new(24f, 0f)), [new Exponential(2f)]),
+			new(40, new(new(12f, 1.9356172f), new(12f, 6.3895144f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
+			new(45, new(new(12f, 1.7211057f), new(12f, 6.2548985f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.2503842f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
+			new(52, new(new(12f, 1.8807759f), new(12f, 6.361508f), new(12f, -0.059361458f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.39565343f), new(24f, 0f)), [new Exponential(2f)]),
+			new(57, new(new(12f, 1.7833673f), new(12f, 6.157698f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.26642f), new(12f, -0.2471441f), new(12f, -0.35526103f), new(24f, 0f)), [new Exponential(2f)]),
+			new(66, new(new(12f, 1.7870811f), new(12f, 6.2943196f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.32674658f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [new Exponential(2f)]),
+			new(72, new(new(12f, 1.8807759f), new(12f, 6.3123713f), new(12f, -0.025649786f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), []),
+			new(82, new(new(12f, 2.1481814f), new(12f, 6.0126324f), new(12f, -0.12210536f), new(12f, -0.04045129f), new(12f, -0.44736588f), new(12f, -0.21190906f), new(12f, -0.5274541f), new(24f, 0f)), [])
 		};
 		tool = new(new()) {
 		};
 		toolOpacity = new(1f) {
 		};
+		toolHitboxActive = new(true) {
+		};
+		animateTool = new(true) {
+		};
 		events = [
-					new(-0, Dev_CycleTool)
-				];
+			new(82, EndUse)
+		];
 	}
+	public override bool CanEndUse => true;
+	public override bool HasHitbox => true;
 }
 public class VV13_Swap_Tool : VV13Animation {
 	public KeyframeSet<PosRotScale> swappingInTool = new(new()) {
@@ -654,7 +689,10 @@ public class VV13_Swap_Tool : VV13Animation {
 			new(129, SwitchTool)
 		];
 	}
-	static void SwitchTool(in VV13 vv13) => Utils.Swap(ref vv13.CurrentToolIndex, ref vv13.AnimationVar);
+	static void SwitchTool(in VV13 vv13) {
+		Utils.Swap(ref vv13.CurrentToolIndex, ref vv13.AnimationVar);
+		vv13.Animation = vv13.CurrentTool.HoldAnimation;
+	}
 	static void Dev_GuaranteeTools(in VV13 vv13) {
 		vv13.CurrentTool = ModContent.GetInstance<VV13_Drill>();
 		vv13.AnimationVar = ModContent.GetInstance<VV13_Saw>().Type;
@@ -713,15 +751,18 @@ public abstract class VV13Tool : ModTexturedType {
 			}
 			Vector2 pos = vv13.target.TargetRect.Center();
 			vv13.ApproachPoint(pos - hitboxOffset, 32);
-			if (HasHitbox) {
-				vv13.toolHitbox = new Rectangle(0, 0, HitboxSize, HitboxSize).Recentered(vv13.NPC.Center + hitboxOffset);
-				vv13.toolHitbox.DrawDebugOutline();
-			}
+			if (HasHitbox) vv13.toolHitbox = new Rectangle(0, 0, HitboxSize, HitboxSize).Recentered(vv13.NPC.Center + hitboxOffset);
 		}
+	}
+	public virtual void TryStartUse(VV13 vv13) {
+		if (vv13.toolHitbox.Inflated(new(12)).Intersects(vv13.target.TargetRect)) vv13.Animation = UseAnimation;
+	}
+	public virtual void TryEndUse(VV13 vv13) {
+		if (!vv13.toolHitbox.Inflated(new(12)).Intersects(vv13.target.TargetRect)) vv13.Animation = HoldAnimation;
 	}
 	public virtual bool ModifyCollisionData(VV13 vv13, Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle toolHitbox) => true;
 	public virtual void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) {
-		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount);
+		Rectangle frame = Sets.Texture[Type].Frame(verticalFrames: FrameCount, frameY: (int)vv13.ToolFrame);
 		SpriteEffects spriteEffects = vv13?.NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		transform += new Transform(default, VisualRotationOffset);
 		DrawData data = new(
@@ -779,6 +820,10 @@ public class VV13_Saw : VV13Tool {
 	public override Vector2 HitboxOffset => new(48, 16);
 	public override int HitboxSize => 38;
 	public override int DroppedSize => 48;
+	public override void AI(VV13 vv13) {
+		base.AI(vv13);
+		if (vv13.Animation.animateTool.GetCurrentValue(vv13.AnimationTime)) vv13.ToolFrame.CycleUp(5, 1f / 6);
+	}
 }
 public class VV13_Puncher : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();
@@ -788,6 +833,10 @@ public class VV13_Puncher : VV13Tool {
 	public override int HitboxSize => base.HitboxSize;
 	public override int DroppedSize => 30;
 	public override float VisualRotationOffset => -MathHelper.PiOver4;
+	public override void Draw(SpriteBatch spriteBatch, VV13 vv13, Transform transform, Color drawColor, float opacity) {
+		vv13.ToolFrame = vv13.Animation.puncherFrame.GetCurrentValue(vv13.AnimationTime);
+		base.Draw(spriteBatch, vv13, transform, drawColor, opacity);
+	}
 }
 /*public class VV13_Torch : VV13Tool {
 	public override VV13Animation UseAnimation => GetInstance<VV13_Use_Tool>();

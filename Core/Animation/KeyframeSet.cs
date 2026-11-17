@@ -97,7 +97,6 @@ public class KeyframeSet<T>() : AKeyframeSet<KeyframeSet<T>.Keyframe> where T : 
 	#region Editing
 	public T currentValue;
 	T resetValue;
-	//TODO: "child of" offset
 	readonly AGizmoOffset gizmoOffset;
 	public static Color ModifiedKeyframeColor { get; } = new(120, 71, 222);
 	public T GetCurrentValue(float time) {
@@ -800,6 +799,7 @@ public class EventKeyframeSet<TParams> : AKeyframeSet<EventKeyframeSet<TParams>.
 		options = [];
 		foreach (MethodInfo meth in Animation.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static)) {
 			if (meth.ReturnType != typeof(void)) continue;
+			if (!meth.GetCustomAttributes<ShowIfAttribute>().ShouldShow(Animation)) continue;
 			ParameterInfo[] parameters = meth.GetParameters();
 			if (parameters.Length != 1) continue;
 			if (!parameters[0].ParameterType.IsByRef) continue;
@@ -1212,7 +1212,7 @@ public static class KeyframeTypes {
 			handle.ResetVertices().Scale(8).Rotate(MathHelper.PiOver4).Translate(zoomedPos);
 			bool isHovering = handle.Contains(Main.MouseScreen);
 
-			handle.MultiplyColor(0.5f + isHovering.Mul(0.5f)).DrawOutline();
+			handle.MultiplyColor(0.5f + isHovering.Mul(0.5f)).DrawOutline(KeyframeAnimation.primitiveBatch);
 			if (value) handle.Scale(6f / 8, zoomedPos).Draw(KeyframeAnimation.primitiveBatch);
 
 			if (Main.mouseLeft && Main.mouseLeftRelease && isHovering) value = !value;

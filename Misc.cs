@@ -5959,20 +5959,24 @@ namespace Origins {
 			damage ??= self.damage;
 			Rectangle baseHitbox = self.Hitbox;
 			foreach (NPC other in Main.ActiveNPCs) {
-				if (other == self) continue;
-				if (other.active && other.immune[255] == 0 && !(other.dontTakeDamage || other.dontTakeDamageFromHostiles || other.immortal)) {
-					int specialHitSetter = 1;
-					float damageMultiplier = 1f;
-					Rectangle hurtbox = other.Hitbox;
-					Rectangle hitbox = baseHitbox;
-					NPC.GetMeleeCollisionData(hurtbox, self.whoAmI, ref specialHitSetter, ref damageMultiplier, ref hitbox);
-					if (NPCLoader.CanHitNPC(self, other) && hitbox.Intersects(hurtbox)) {
-						self.StrikeOtherNPC(other, (int)(damage * damageMultiplier), knockback, direction ?? (other.Center.X > self.Center.X).ToDirectionInt());
-						break;
-					}
+				if (other == self || OriginsSets.NPCs.TargetDummies[other.type]) continue;
+				self.StrikeSingleOtherNPC(other, damage, knockback, direction, baseHitbox);
+			}
+		}
+		public static void StrikeSingleOtherNPC(this NPC self, NPC other, float? damage, float knockback, int? direction, Rectangle baseHitbox) {
+			if (other.active && other.immune[255] == 0 && !(other.dontTakeDamage || other.dontTakeDamageFromHostiles)) {
+				int specialHitSetter = 1;
+				float damageMultiplier = 1f;
+				Rectangle hurtbox = other.Hitbox;
+				Rectangle hitbox = baseHitbox;
+				NPC.GetMeleeCollisionData(hurtbox, self.whoAmI, ref specialHitSetter, ref damageMultiplier, ref hitbox);
+				if (NPCLoader.CanHitNPC(self, other) && hitbox.Intersects(hurtbox)) {
+					self.StrikeOtherNPC(other, (int)(damage * damageMultiplier), knockback, direction ?? (other.Center.X > self.Center.X).ToDirectionInt());
+					other.immune[255] = 10;
 				}
 			}
 		}
+
 		public static Color GetRivenGlowAlpha(this NPC npc, Color lightColor) {
 			return npc.GetTintColor(Riven_Hive.GetGlowAlpha(lightColor));
 		}

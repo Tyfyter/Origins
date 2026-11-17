@@ -340,6 +340,7 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 	public void Load(Mod mod) {
 		Type = animations.Count;
 		animations.Add(this);
+		EnsureSetup();
 	}
 	public void Unload() { }
 	public virtual bool Loop => false;
