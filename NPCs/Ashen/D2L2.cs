@@ -186,7 +186,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 		spriteBatch.DrawRiggedPart(
 			gunTex,
 			pos,
-			D2L2Animation.gunOffset + animation.gun.GetCurrentValue(AnimationTime),
+			new Transform() { Mirror = NPC.direction == 1 } + D2L2Animation.gunOffset + animation.gun.GetCurrentValue(AnimationTime),
 			null,
 			drawColor,
 			0,
@@ -322,7 +322,7 @@ public abstract class D2L2Animation : KeyframeAnimation, ILoadable {
 	public readonly static Vector2 thighOffset = new(15, -19);
 	public readonly static Vector2 calfOffset = new(74, 0);
 	public readonly static Vector2 footOffset = new(-54, 100);
-	public KeyframeSet<PosRotScale> gun = new(new(), thighOffset);
+	public KeyframeSet<PosRotScale> gun = new(new(), gunOffset);
 	public KeyframeSet<PosRotScale> thighFront = new(new());
 	public KeyframeSet<PosRotScale> calfFront = new(new(), new ChildOfOffset<PosRotScale>("thighFront", calfOffset));
 	public KeyframeSet<PosRotScale> footFront = new(new(), new ChildOfOffset<PosRotScale>("calfFront", footOffset));
