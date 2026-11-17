@@ -1,1 +1,2 @@
 BossNameDisplay.BossNames.Trenchmaker: "{$Mods.Origins.NPCs.Trenchmaker.DisplayNameGeneric}"
+PegasusLib.ListAll.Any: "[{n}, ]{n}[ox:,] and {n}"
