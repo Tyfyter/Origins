@@ -303,10 +303,11 @@ public class StructureHelperUI : UIState {
 		}
 	}
 	void OnTileReady() {
+		textInput.Clear();
+		textInput2.Clear();
 		textInput.IsWritingText = true;
 		textInput2.IsWritingText = false;
 		if (autoKeyToggle.Value) {
-			textInput.Clear();
 			textInput.Append(Structure_Helper_Item.FindUnused(new ToastCommandCaller(toastHandler)).ToString());
 			if (autoKeyConfirm.Value) ((ITextInputContainer)textInput).Submit();
 		}
