@@ -3,6 +3,7 @@ using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
 using Origins.Items.Tools.Wiring;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Dev;
 using PegasusLib;
 using PegasusLib.Content;
@@ -144,6 +145,7 @@ namespace Origins.Core.Structures {
 				CachedTileType type = new(parameter);
 				return new((_, _, i, j) => {
 					Tile tile = Main.tile[i, j];
+					if (tile.TileType == ModContent.TileType<Door_Stopper>()) return;
 					tile.HasTile = true;
 					tile.TileType = type;
 				}, Parts: [originalText]);
@@ -169,7 +171,11 @@ namespace Origins.Core.Structures {
 		}
 		public override bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) {
 			if (otherSource is Empty) return false;
-			if (otherSource is PlaceTile && otherSource != this) return false;
+			if (otherSource is PlaceTile) {
+				if (parameters[0] == nameof(Door_Stopper)) return true;
+				if (otherParameters[0] == nameof(Door_Stopper)) return true;
+				if (otherSource != this) return false;
+			}
 			return base.CanOverlap(parameters, otherSource, otherParameters);
 		}
 	}
@@ -485,5 +491,9 @@ namespace Origins.Core.Structures {
 			AddSerializer(tile => tile.HasTile ? null : nameof(Empty));
 		}
 		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
+		public override bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) {
+			if (otherSource is PlaceTile && otherParameters[0] == nameof(Door_Stopper)) return true;
+			return base.CanOverlap(parameters, otherSource, otherParameters);
+		}
 	}
 }
