@@ -226,7 +226,12 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Asphyxiator_Debuff : ModBuff {
 		public override string Texture => typeof(Defiled_Asphyxiator_P2).GetDefaultTMLName();
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() => ID = Type;
+		public override void SetStaticDefaults() {
+			this.SetIDProp();
+			Main.debuff[Type] = true;
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+		}
+
 		public override void Update(Player player, ref int buffIndex) {
 			int level = GetLevel(player, buffIndex);
 			switch (level) { // temporary implementation for balance testing
@@ -289,7 +294,6 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Asphyxiator_Debuff_2 : Defiled_Asphyxiator_Debuff {
 		public override string Texture => typeof(Defiled_Asphyxiator_P3).GetDefaultTMLName();
 		public static new int ID { get; private set; }
-		public override void SetStaticDefaults() => ID = Type;
 		public override void Update(Player player, ref int buffIndex) {
 			if (player.buffTime[buffIndex] == 1) {
 				player.buffType[buffIndex] = Defiled_Asphyxiator_Debuff.ID;
@@ -301,6 +305,5 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Asphyxiator_Debuff_3 : Defiled_Asphyxiator_Debuff {
 		public override string Texture => typeof(Defiled_Asphyxiator_P1).GetDefaultTMLName();
 		public static new int ID { get; private set; }
-		public override void SetStaticDefaults() => ID = Type;
 	}
 }

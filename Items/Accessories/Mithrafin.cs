@@ -42,6 +42,7 @@ namespace Origins.Items.Accessories {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
+			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) {

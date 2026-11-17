@@ -53,6 +53,7 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
+			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type] = new() {
 				Toxic_Shock_Debuff.ID

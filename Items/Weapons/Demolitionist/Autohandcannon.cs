@@ -104,6 +104,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Autohandcannon_Jam_Debuff : ModBuff {
 		public override string Texture => "Origins/Buffs/Weapon_Jam_Debuff";
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.OriginPlayer().autohandcannonJammed = true;
 			if (player.buffTime[buffIndex] == 0) SoundEngine.PlaySound(SoundID.Item149.WithPitch(-0.5f));

@@ -97,7 +97,9 @@ namespace Origins.Items.Armor.Lost {
 }
 namespace Origins.Buffs {
 	public class Mana_Buffer_Debuff : ModBuff {
-
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.manaRegenBuff = false;
 			player.manaRegen = 0;

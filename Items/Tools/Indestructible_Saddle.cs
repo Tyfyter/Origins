@@ -353,6 +353,8 @@ namespace Origins.Items.Tools {
 	public class Indestructible_Saddle_Mount_Cooldown : ModBuff {
 		public override string Texture => "Origins/Buffs/Indestructible_Saddle_Mount_Cooldown";
 		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 		}
 	}
