@@ -72,10 +72,28 @@ namespace Origins.Liquids {
 		public override void OnNPCCollision(NPC npc) {
 			//Make sure that the NPC can take damage, and the game is not a player on a server
 			if (!npc.dontTakeDamage && !NetmodeActive.MultiplayerClient) npc.AddBuff(BuffID.Oiled, 3 * 60);
+			if (npc.onFire || npc.onFire3) {
+				foreach (Point pos in ContentExtensions.LiquidCollision(npc.position, npc.width, npc.height)) {
+					Tile tile = Main.tile[pos];
+					if (tile.LiquidType == Oil.ID) {
+						tile.LiquidType = Burning_Oil.ID;
+						UpdateAdjacentLiquids(pos.X, pos.Y);
+					}
+				}
+			}
 		}
 		//Secondly, we apply the 2nd tier of Well Fed for 30 seconds
 		public override void OnPlayerCollision(Player player) {
 			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 15 * 60);
+			if (player.onFire || player.onFire3) {
+				foreach (Point pos in ContentExtensions.LiquidCollision(player.position, player.width, player.height)) {
+					Tile tile = Main.tile[pos];
+					if (tile.LiquidType == Oil.ID) {
+						tile.LiquidType = Burning_Oil.ID;
+						UpdateAdjacentLiquids(pos.X, pos.Y);
+					}
+				}
+			}
 		}
 		public override void OnProjectileCollision(Projectile proj) {
 			if (OriginsSets.Projectiles.FireProjectiles[proj.type]) {
