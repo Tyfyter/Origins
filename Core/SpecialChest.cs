@@ -636,6 +636,7 @@ namespace Origins.Core {
 				if (!(TryGetChest(i, j)?.CanDestroy() ?? true)) return false;
 				if (!Main.tileNoAttach[type]) {
 					Point16 thisTopLeft = TileObjectData.TopLeft(i, j);
+					Point lastChecked = new(-1, -1);
 					for (int k = 0; k < (data?.Width ?? 1); k++) {
 						tile = Main.tile[i + k, top - 1];
 						if (!tile.HasTile) continue;
@@ -645,7 +646,8 @@ namespace Origins.Core {
 						if (TileObjectData.TopLeft(i + k, top - 1) == thisTopLeft) continue;
 						TileObjectData aboveData = TileObjectData.GetTileData(tile.TileType, style);
 						if (aboveData is not null && aboveData.AnchorBottom != AnchorData.Empty) {
-							TileUtils.GetMultiTileTopLeft(i + k, top - 1, aboveData, out int x, out _);
+							TileUtils.GetMultiTileTopLeft(i + k, top - 1, aboveData, out int x, out int y);
+							if (!lastChecked.TrySet(new(x, y))) continue;
 							if (i + k >= x + aboveData.AnchorBottom.checkStart && i + k <= x + aboveData.AnchorBottom.checkStart + aboveData.AnchorBottom.tileCount) {
 								if (!WorldGen.CanKillTile(i + k, top - 1)) return false;
 							}
