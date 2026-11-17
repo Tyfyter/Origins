@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
@@ -20,6 +21,7 @@ namespace Origins.Core.Structures {
 		public abstract string Name { get; }
 		protected readonly List<ARoom> rooms = [];
 		public IReadOnlyList<ARoom> Rooms => rooms;
+		List<Exception> exceptions = [];
 		public Structure(Mod mod) {
 			Mod = mod;
 			Load();
@@ -38,11 +40,16 @@ namespace Origins.Core.Structures {
 				bool down = forKey[Direction.Down.Index()].Count > 0;
 				if (up != down) irresolvableSockets.Add($"{name}_{(down ? Direction.Up : Direction.Down)}");
 			}
-			if (irresolvableSockets.Count > 0) throw new FormatException($"{Name} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]");
+			if (irresolvableSockets.Count > 0) {
+				string message = $"{Name} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]";
+				Origins.LogLoadingWarning(Language.GetText("{0}").WithFormatArgs(message));
+				exceptions.Add(new FormatException(message));
+			}
 		}
 		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public virtual bool Break(StructureInstance instance) => instance.rooms.Length > 25;
 		public Rectangle[] Generate(int i, int j) {
+			if (exceptions.Count > 0) throw new AggregateException(exceptions);
 			Dictionary<string, List<(ARoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
 			WeightedRandom<ARoom> start = new(WorldGen.genRand);
 			for (int k = 0; k < rooms.Count; k++) {
