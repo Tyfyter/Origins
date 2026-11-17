@@ -654,11 +654,20 @@ namespace Origins {
 					Max(ref Player.lifeRegen, 0);
 					Player.lifeRegen = Main.rand.RandomRound(Player.lifeRegen * Pacemaker.RegenMult);
 					if (Player.palladiumRegen) Player.lifeRegenCount += Main.rand.RandomRound(4 * (Pacemaker.RegenMult - 1));
+					if (drippinIt && !drippedIt) {
+						for (int i = 0; i < Player.buffTime.Length; i++) {
+							int buff = Player.buffType[i];
+							if (Player.buffTime[i] != 0 && Main.debuff[buff] && !BuffID.Sets.NurseCannotRemoveDebuff[buff])
+								Player.buffTime[i] = Math.Max(Player.buffTime[i] - 5 * 60, 0);
+						}
+						drippedIt = true;
+					}
 				} else {
 					SoundEngine.PlaySound(SoundID.Zombie87.WithVolumeScale(0.3f).WithPitch(-0.72f), Player.position, _ => !pacemakerActive);
 					Min(ref regen, 0);
 					Min(ref Player.lifeRegen, 0);
 					Min(ref Player.lifeRegenCount, 0);
+					drippedIt = false;
 					Player.palladiumRegen = false;
 				}
 			}

@@ -853,7 +853,6 @@ namespace Origins {
 			Player.lifeRegenTime += keepNaturalRegenMult.ApplyTo(oldNaturalRegen);
 			lifeRegenTimeSinceHit = 0;
 			timeSinceHit = 0;
-			pacemakerTime = 0;
 			if (extremophileSet) extremophileSetHits++;
 			extremophileSetTime = 0;
 			bool isSelfDamage = false;
@@ -861,6 +860,7 @@ namespace Origins {
 				isSelfDamage = true;
 				selfDamageRally = info.Damage;
 			}
+			if (!blastProofCore || !isSelfDamage) pacemakerTime = 0;
 			if (retaliatoryTendril && !isSelfDamage && info.Damage > retaliatoryTendrilItem.useAnimation) {
 				float strength = info.Damage * retaliatoryTendrilItem.knockBack;
 				if (strength > retaliatoryTendrilStrength) {

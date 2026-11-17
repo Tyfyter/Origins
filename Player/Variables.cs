@@ -429,6 +429,10 @@ namespace Origins {
 		SlotId loopedWingSoundSlot;
 		[AutoReset] public bool superJump;
 		[AutoReset] public bool medicalMask;
+		[AutoReset] public bool ironLung;
+		[AutoReset] public bool blastProofCore;
+		[AutoReset] public bool drippinIt;
+		public bool drippedIt;
 		#endregion
 
 		#region explosive stats
@@ -513,7 +517,7 @@ namespace Origins {
 		public float windPailPosition;
 		[AutoReset] public bool arcBurn = false;
 
-		public bool DisableBreathRestore => toxicShock || miasma;
+		public bool DisableBreathRestore => (toxicShock && !ironLung) || miasma;
 		public bool sendBuffs = false;
 		#endregion
 
@@ -1010,6 +1014,7 @@ namespace Origins {
 			if (!pacemaker.TrySet(false)) {
 				pacemakerTime = 0;
 				pacemakerActive = false;
+				drippedIt = false;
 			}
 			if (!stressBall.TrySet(false)) {
 				stressBallTimer = 0;

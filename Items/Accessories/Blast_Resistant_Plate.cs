@@ -9,6 +9,9 @@ namespace Origins.Items.Accessories {
 			WikiCategories.ExplosiveBoostAcc,
 			WikiCategories.SelfDamageProtek
 		];
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);
 			Item.defense = 3;
@@ -16,7 +19,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
+			player.OriginPlayer().explosiveSelfDamage -= 0.2f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

@@ -8798,3 +8798,33 @@ Plague_Doctor_Mask: {
 		{$Medical_Mask.Tooltip}
 		''' */
 }
+
+Blast_Proof_Core: {
+	// DisplayName: Blast Proof Core
+	// Tooltip: ""
+}
+
+Catalytic_Converter: {
+	// DisplayName: Catalytic Converter
+	// Tooltip: ""
+}
+
+Heart_Tube: {
+	// DisplayName: Heart Tube
+	// Tooltip: ""
+}
+
+Iron_Lung: {
+	// DisplayName: Iron Lung
+	// Tooltip: ""
+}
+
+IV_Bag: {
+	// DisplayName: I V Bag
+	// Tooltip: ""
+}
+
+Kinetic_Cuffs: {
+	// DisplayName: Kinetic Cuffs
+	// Tooltip: ""
+}
