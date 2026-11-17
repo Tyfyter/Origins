@@ -412,6 +412,8 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			OriginsSets.WireModes.LogicUpgrade[Type] = true;
 		}
+		public override bool Visible => WireModeKite.Cutter;
+		public override int GetItemType(int x, int y) => Logic_Gate.Get(Main.tile[x, y].Get<Logic_Gate_Data>().TruthTable)?.Type ?? base.GetItemType(x, y);
 		public override bool GetWire(int x, int y) => !Main.tile[x, y].Get<Logic_Gate_Data>().TruthTable.IsEmpty;
 		public override bool SetWire(int x, int y, bool value) {
 			if (value) return false;

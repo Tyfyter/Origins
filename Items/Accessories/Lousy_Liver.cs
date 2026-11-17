@@ -35,6 +35,7 @@ namespace Origins.Items.Accessories {
 				ModContent.BuffType<Rasterized_Debuff>()
 			];
 			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
+			Main.debuff[Type] = true;
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
