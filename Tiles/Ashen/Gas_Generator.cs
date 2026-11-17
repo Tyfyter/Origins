@@ -132,14 +132,15 @@ public class Gas_Generator : ModTile {
 				CheckTransparent(in vertices);
 				ApplyPowered(ref vertices);
 				CheckTransparent(in vertices);
+				Tile currentTile = Main.tile[i + x, j + y];
 				Main.tileBatch.Draw(
-					TextureAssets.Tile[Type].Value,
+					Main.instance.TilesRenderer.GetTileDrawTexture(currentTile, i + x, j + y),
 					destination,
 					frame,
 					vertices
 				);
 				Main.tileBatch.Draw(
-					GlowTexture,
+					CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(GlowPaintKey, currentTile.TileColor, GlowTexture),
 					destination,
 					frame,
 					glow
