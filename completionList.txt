@@ -617,7 +617,7 @@ ACCESSORIES:
 (^) Bark Shield
 (^) Binding Book
 (#, ^2) Blast Miner's Glove !!!
-(#, ^2) Blast-Proof Core !!!
+(☻) Blast-Proof Core !!!
 (^) Blast-Resistant Plate
 (#2, ^2) Blood Donor Bag !!! (missing ally boost effect)
 (#, ^2) Blood-Powered Robot !!!
@@ -633,7 +633,7 @@ ACCESSORIES:
 (#, ^2) Busted Vitals Monitor !!!
 (^) C.F.H.E.S.
 (X) Cablegore
-(#, ^2) Catalytic Converter !!!
+(☻) Catalytic Converter !!!
 (X) Catto-Calmer 4000
 (^) Celestial Starlight
 (^) Celestial Stone Mask
@@ -693,7 +693,7 @@ ACCESSORIES:
 (^) Harpy Horseshoe Balloon
 (^) Hazard Charm
 (^) Headphones
-(#, ^2) Heart in a Tube !!!
+(☻) Heart in a Tube !!!
 (#, ^2) Heart Squeezy !!!
 (^) Helium Tank
 (X) Helpful Cloak
@@ -702,9 +702,9 @@ ACCESSORIES:
 (#, ^2) Industrial-Grade Arm !!!
 (^) Infusion Bag
 (#, ^2) Iron Lung !!!
-(#, ^2) IV Bag !!!
+(☻) IV Bag !!!
 (^) Keepsake Remains
-(#, ^2) Kinetic Cuffs !!!
+(☻) Kinetic Cuffs !!!
 (X) Laden Crown
 (X) Land Surveyor
 (^) Laser Tag Vest
