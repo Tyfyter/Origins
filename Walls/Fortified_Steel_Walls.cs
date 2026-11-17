@@ -55,7 +55,7 @@ namespace Origins.Walls {
 			Vector4 destination = new(pos, 16, 16);
 			Rectangle source = new((i * 16) % texture.Width, (j * 16) % texture.Height, 16, 16);
 			Main.tileBatch.Draw(
-				patternTexture,
+				texture,
 				destination,
 				source,
 				vertices
