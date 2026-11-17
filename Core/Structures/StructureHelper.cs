@@ -171,7 +171,6 @@ public class StructureHelperUI : UIState {
 			}
 			if (Associate(new ToastCommandCaller(toastHandler), inputValue?.Split(' '))) textInput.Clear();
 		};
-		textInput.OnExit += IngameFancyUI.Close;
 		Append(textInput);
 
 		textInput2 = new() {
@@ -193,7 +192,6 @@ public class StructureHelperUI : UIState {
 				$"{(socketSelector.optional ? "optional" : "")},{socketSelector.offsetType}"//$"optional,{RoomSocket.OffsetType.InverseOffset}"
 			])) textInput2.Clear();
 		};
-		textInput2.OnExit += IngameFancyUI.Close;
 		Append(textInput2);
 		Append(socketSelector = new() {
 			Left = new(4, 0),
