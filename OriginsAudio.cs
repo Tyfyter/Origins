@@ -139,9 +139,9 @@ namespace Origins {
 			public static SoundStyle ArabelTwinkle = new("Origins/Sounds/Custom/ArabelMagic6");
 			public static SoundStyle Arabel80sDowntone = new("Origins/Sounds/Custom/ArabelMagic7");
 			public static SoundStyle ArabelScream = new("Origins/Sounds/Custom/Arabel_Scream");
-			public static SoundStyle DrillInGround = new("Origins/Sounds/Custom/DrillInGround");
+			public static SoundStyle DrillInGround = new("Origins/Sounds/Custom/DrillInGround") { IsLooped = true };
 			public static SoundStyle DrillLeaveGround = new("Origins/Sounds/Custom/DrillLeaveGround");
-			public static SoundStyle DrillOutGround = new("Origins/Sounds/Custom/DrillOutGround");
+			public static SoundStyle DrillOutGround = new("Origins/Sounds/Custom/DrillOutGround") { IsLooped = true };
 			public static SoundStyle DrillEnterGround = new("Origins/Sounds/Custom/DrillEnterGround");
 			public static SoundStyle OilLube = new("Origins/Sounds/Custom/OilLube", 3);
 			public static SoundStyle ConvincingExplosion = new("Origins/Sounds/Custom/ConvincingExplosion");

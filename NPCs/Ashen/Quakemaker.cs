@@ -93,31 +93,28 @@ public class Quakemaker_Head : WormHead {
 
 			NPC.soundDelay = (int)delay;
 
-			SoundEngine.PlaySound(DigSound, NPC.Center);
-			if (IsDrilling()) {
+			//SoundEngine.PlaySound(DigSound, NPC.Center);
+			if (isDrilling) {
 				Main.instance.CameraModifiers.Add(new CameraShakeModifier(
 					NPC.Center, 2f, 1f, 10, 750f, -1f, "Quakemaker"
 				));
-				drillSound.PlaySoundIfInactive(
-					Origins.Sounds.DrillOutGround,
-					NPC.Center,
-					_IsDrilling ??= IsDrilling
-				);
 			}
 		}
 	}
 	SoundUpdateCallback _IsDrilling;
-	float soundVolume;
+	bool isDrilling;
+	bool wasDrilling;
 	bool IsDrilling(ActiveSound sound = default) {
 		Rectangle hitbox = NPC.Hitbox.Add((NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * 16);
-		hitbox.Inflate(-12, -12);
 		if (sound is not null) {
-			const float volume = 0.5f;
+			//const float volume = 0.5f;
 			sound.Position = hitbox.Center();
-			MathUtils.LinearSmoothing(ref soundVolume, (NPC.active && hitbox.OverlapsAnyTiles()).Mul(volume), volume / 10);
-			sound.Volume = soundVolume;
-			return soundVolume > 0;
+			sound.Position = null;
+			//MathUtils.LinearSmoothing(ref soundVolume, (NPC.active && hitbox.OverlapsAnyTiles()).Mul(volume), volume / 10);
+			//sound.Volume = soundVolume;
+			return NPC.active && wasDrilling == isDrilling;
 		}
+		hitbox.Inflate(-12, -12);
 		return hitbox.OverlapsAnyTiles();
 	}
 	SlotId drillSound;
@@ -154,7 +151,27 @@ public class Quakemaker_Head : WormHead {
 			FollowerNPC.localAI[2] = attackRot;
 		}
 		skipAttack:
+		isDrilling = IsDrilling();
 		base.HeadAI();
+		if (!drillSound.IsValid || !SoundEngine.TryGetActiveSound(drillSound, out ActiveSound sound) || !sound.IsPlayingOrPaused) {
+			Main.NewText($"{isDrilling} --> {wasDrilling}");
+			switch ((isDrilling, wasDrilling)) {
+				case (true, true):
+				drillSound = SoundEngine.PlaySound(Origins.Sounds.DrillInGround, NPC.Center, _IsDrilling ??= IsDrilling);
+				break;
+				case (true, false):
+				wasDrilling = isDrilling;
+				drillSound = SoundEngine.PlaySound(Origins.Sounds.DrillEnterGround, NPC.Center, _IsDrilling ??= IsDrilling);
+				break;
+				case (false, false):
+				drillSound = SoundEngine.PlaySound(Origins.Sounds.DrillOutGround, NPC.Center, _IsDrilling ??= IsDrilling);
+				break;
+				case (false, true):
+				wasDrilling = isDrilling;
+				drillSound = SoundEngine.PlaySound(Origins.Sounds.DrillLeaveGround, NPC.Center, _IsDrilling ??= IsDrilling);
+				break;
+			}
+		}
 	}
 	public override void DeathEffect(in NPC.HitInfo hit, IEntitySource source, Vector2 velocity, int index) {
 		for (int i = 0; i < 4; i++) {
@@ -361,10 +378,11 @@ public class Quakemaker_Fire : ModProjectile {
 	}
 	public override bool ShouldUpdatePosition() => Projectile.tileCollide;
 	public override void AI() {
-		if (Projectile.soundDelay.TrySet(-1)) ;
-		if (Projectile.tileCollide) {
-			SoundEngine.PlaySound(Origins.Sounds.Bonk.WithVolume(0.5f), Projectile.Center);
+		if (Projectile.soundDelay.TrySet(-1)) {
 			SoundEngine.PlaySound(SoundID.Item45.WithVolume(0.8f), Projectile.Center);
+			SoundEngine.PlaySound(Origins.Sounds.Bonk.WithVolume(0.5f), Projectile.Center);
+		}
+		if (Projectile.tileCollide) {
 			Projectile.velocity.Y += 0.08f;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		} else {
@@ -385,6 +403,8 @@ public class Quakemaker_Fire : ModProjectile {
 		return false;
 	}
 	public override bool OnTileCollide(Vector2 oldVelocity) {
+		SoundEngine.PlaySound(SoundID.Item45.WithVolume(0.4f), Projectile.Center);
+		SoundEngine.PlaySound(Origins.Sounds.Bonk.WithVolume(0.25f), Projectile.Center);
 		if (Projectile.velocity.Y > oldVelocity.Y) return false;
 		Projectile.position += Projectile.velocity;
 		Projectile.tileCollide = false;
