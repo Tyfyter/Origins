@@ -154,7 +154,6 @@ public class Quakemaker_Head : WormHead {
 		isDrilling = IsDrilling();
 		base.HeadAI();
 		if (!drillSound.IsValid || !SoundEngine.TryGetActiveSound(drillSound, out ActiveSound sound) || !sound.IsPlayingOrPaused) {
-			Main.NewText($"{isDrilling} --> {wasDrilling}");
 			switch ((isDrilling, wasDrilling)) {
 				case (true, true):
 				drillSound = SoundEngine.PlaySound(Origins.Sounds.DrillInGround, NPC.Center, _IsDrilling ??= IsDrilling);
@@ -217,7 +216,6 @@ public class Quakemaker_Head : WormHead {
 		NPC.DoFrames(4);
 	}
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-		UseAltHead = false;
 		if (UseAltHead) {
 			Main.EntitySpriteDraw(
 				altHeadTexture.Value,
@@ -227,9 +225,11 @@ public class Quakemaker_Head : WormHead {
 				NPC.rotation,
 				NPC.frame.Size() * 0.5f,
 				NPC.scale,
-				SpriteEffects.None);
+				SpriteEffects.None
+			);
+			return false;
 		}
-		return !UseAltHead;
+		return true;
 	}
 }
 public class Quakemaker_Body : WormBody {
