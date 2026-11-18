@@ -76,8 +76,7 @@ public class D2L2 : ModNPC, IAshenEnemy {
 	}
 	public override void AI() {
 		NPC.TargetClosestUpgraded(false);
-		float xDiff = NPC.GetTargetData().Center.X - NPC.Center.X;
-		if (Math.Abs(xDiff) > 80) NPC.direction = Math.Sign(xDiff + 80 * NPC.direction);
+		NPC.direction = Math.Sign(NPC.GetTargetData().Center.X - (NPC.Center.X - 80 * NPC.direction));
 		Vector2 animotion = default;
 		GetLegTransforms(false, out _, out _, out Transform frontFoot);
 		GetLegTransforms(true, out _, out _, out Transform backFoot);
