@@ -93,12 +93,12 @@ namespace Origins.Tiles.Ashen {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
-		public static bool Toggle(int i, int j, bool actuallyDo = true) {
+		public static bool Toggle(int i, int j, bool actuallyDo = true, bool? targetOpen = null) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			Door_Animation animation = Industrial_Door_TE_System.GetAnimation(new(left, top));
 			if (animation.IsAnimating) return false;
-			if (actuallyDo) new Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
+			if (actuallyDo) new Industrial_Door_Action(new(left, top), targetOpen ?? !animation.TargetOpen).Perform();
 			return true;
 		}
 		public static int GetHoik(int realSlope, Tile tile) => (tile.TileFrameX % 72 >= 36) ? SlopeID.TopRight : SlopeID.TopLeft;

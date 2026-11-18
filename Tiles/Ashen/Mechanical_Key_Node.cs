@@ -2,6 +2,7 @@
 using Origins.Items.Other.Consumables;
 using Origins.Items.Tools.Wiring;
 using Origins.Journal;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
 using System;
@@ -270,6 +271,18 @@ namespace Origins.Tiles.Ashen {
 			if (!alreadyOverridden && Main.tile[pos].TileFrameY == 0) return;
 			usedByNPCs.Add(pos, npc);
 			new Mechanical_Switch_Action(pos, false).Perform();
+			OpenDoors(pos);
+		}
+		static void OpenDoors(Point16 pos) {
+			Span<Point16> dirs = [
+				new(0, 1),
+				new(0, -1),
+				new(1, 0),
+				new(-1, 0)
+			];
+			foreach (Point16 dir in dirs) {
+				if (Main.tile[pos + dir].TileIsType<Industrial_Door>()) Industrial_Door.Toggle(pos.X + dir.X, pos.Y + dir.Y, targetOpen: true);
+			}
 		}
 		public static void DoNPCUse(Entity npc, int maxClearance = 2) {
 			if (NetmodeActive.MultiplayerClient) return;
