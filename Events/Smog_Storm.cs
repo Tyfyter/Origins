@@ -19,19 +19,24 @@ using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Threading;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
+using Filters = Terraria.Graphics.Effects.Filters;
 
 namespace Origins.Events; 
 [ReinitializeDuringResizeArrays]
-public class Smog_Storm : ModBiome {
+public class Smog_Storm : ModBiome, IMultipleBestiaryElementBiome, IMapBackgroundOverlayBiome {
 	public static Action<Projectile>[] CutThroughSmogStorm = ProjectileID.Sets.Factory.CreateNamedSet(nameof(CutThroughSmogStorm))
 	.Description("The provided action will be called while drawing into the brightness mask during a smog storm")
 	.RegisterCustomSet<Action<Projectile>>(null);
@@ -40,6 +45,12 @@ public class Smog_Storm : ModBiome {
 	public override int Music => Origins.Music.SmogStorm;
 	public override SceneEffectPriority Priority => SceneEffectPriority.Event;
 	public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
+	public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Scrapyard";
+	public override string MapBackground => BackgroundPath;
+	public IEnumerable<IBestiaryInfoElement> ExtraElements { get; } = [
+		new BestiaryOverlayInfoElement("Origins/UI/MapBGs/Smog_Storm_Overlay", Color.White) { OrderPriority = -2f }
+	];
+	static Asset<Texture2D> IMapBackgroundOverlayBiome.OverlayTexture { get; } = ModContent.Request<Texture2D>("Origins/UI/MapBGs/Smog_Storm_Overlay");
 	public override void SetStaticDefaults() {
 		SkyManager.Instance.Bind(biomeName, sky);
 		try {
@@ -420,4 +431,43 @@ public class Smog_Storm_Obscure_Map_Players : ILoadable {
 	}
 	void ILoadable.Unload() { }
 	static bool HidePlayer(bool active, int i) => active && !Main.player[i].InModBiome<Smog_Storm>() && !Main.LocalPlayer.InModBiome<Smog_Storm>();
+}
+public interface IMultipleBestiaryElementBiome {
+	public IEnumerable<IBestiaryInfoElement> ExtraElements { get; }
+	private class MultiElementHandler : GlobalNPC {
+		public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			foreach (int biomeType in (npc.ModNPC?.SpawnModBiomes ?? [])) {
+				if (LoaderManager.Get<BiomeLoader>().Get(biomeType) is IMultipleBestiaryElementBiome extras) bestiaryEntry.Info.AddRange(extras.ExtraElements);
+			}
+		}
+	}
+}
+public interface IMapBackgroundOverlayBiome : IAutoload<IMapBackgroundOverlayBiome.Loader> {
+	public virtual static Color OverlayColor => Color.White;
+	public abstract static Asset<Texture2D> OverlayTexture { get; }
+	class Loader : IAutoloader {
+		static readonly MethodInfo method = ((Action)Load<Smog_Storm>).Method.GetGenericMethodDefinition();
+		static bool hasInitialized = false;
+		static Action overlays = null;
+		public static void Autoload(Mod mod, Type type) => method.MakeGenericMethod(type).Invoke(null, []);
+		static void Load<T>() where T : ModBiome, IMapBackgroundOverlayBiome {
+			if (hasInitialized.TrySet(true)) On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
+			overlays += Draw<T>;
+		}
+		static void Draw<T>() where T : ModBiome, IMapBackgroundOverlayBiome {
+			if (Main.LocalPlayer.InModBiome<T>()) Main.spriteBatch.Draw(T.OverlayTexture.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), T.OverlayColor);
+		}
+		static void On_Main_DrawMapFullscreenBackground(On_Main.orig_DrawMapFullscreenBackground orig, Vector2 screenPosition, int screenWidth, int screenHeight) {
+			orig(screenPosition, screenWidth, screenHeight);
+			overlays();
+		}
+	}
+}
+public class BestiaryOverlayInfoElement(Asset<Texture2D> texture, Color? overlayColor = null) : IBestiaryInfoElement, IBestiaryBackgroundOverlayAndColorProvider, IBestiaryPrioritizedElement {
+	public BestiaryOverlayInfoElement(string texture, Color? overlayColor = null) : this(ModContent.Request<Texture2D>(texture), overlayColor) { }
+	public float DisplayPriority { get; set; }
+	public float OrderPriority { get; set; }
+	public Asset<Texture2D> GetBackgroundOverlayImage() => texture;
+	public Color? GetBackgroundOverlayColor() => overlayColor;
+	UIElement IBestiaryInfoElement.ProvideUIElement(BestiaryUICollectionInfo info) => null;
 }

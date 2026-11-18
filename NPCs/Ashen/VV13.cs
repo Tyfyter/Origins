@@ -271,13 +271,13 @@ public class VV13 : ModNPC, IWikiNPC, IAshenEnemy, IPlatformNPC {
 		NPC.DrawConfused();
 		Editor.vv13 = this;
 		Animation_Editor_UI.DrawEditorUI = Editor.DrawUI;
-		spriteBatch.DrawDebugTextAbove(CurrentTool, NPC.Top - screenPos);
 		return false;
 	}
 #if DRAWPLATFORM
 	public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 		Vector2 platformStart = NPC.position + PlatformOffset - screenPos;
 		OriginExtensions.DrawDebugLineSprite(platformStart, platformStart + PlatformWidth * Vector2.UnitX, Color.Red);
+		spriteBatch.DrawDebugTextAbove(CurrentTool, NPC.Top - screenPos);
 	}
 	struct DebugFlag : IDebugFlag;
 #endif
