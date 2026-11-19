@@ -279,6 +279,7 @@ ENEMY NPCS:
 (X) Limestone Creeper
 (^) Optiphage
 (^) Packhunter
+(X) Packhunter Prowler
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
@@ -290,6 +291,7 @@ ENEMY NPCS:
 (X) Rivenpotamus
 (X) Robot Arm
 (^) Robot Penguin
+(X) Scorcher
 (^) Scraptooth
 (^) Shattered Goldfish
 (^) Shimmer Drone
@@ -358,6 +360,7 @@ ENEMY NPCS:
 (X) Terrogator
 (^) Torn Ghoul
 (^) Trash Compactor Mimic
+(X) Tree Sapper
 (^) Trijaw Shark
 (#2, ^2) VV-13 !!!
 
