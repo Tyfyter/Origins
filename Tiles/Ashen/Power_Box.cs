@@ -55,6 +55,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = false;
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(FromHexRGB(0xBE845A), CreateMapEntryName());
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);

@@ -47,6 +47,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolidTop[Type] = false;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileID.Sets.FramesOnKillWall[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(new Color(255, 81, 0));
 
 			TileObjectData.newTile.Width = 1;

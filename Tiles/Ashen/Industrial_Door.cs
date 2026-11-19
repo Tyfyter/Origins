@@ -47,6 +47,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 			// Names
 			AddMapEntry(FromHexRGB(0x756982), CreateMapEntryName());

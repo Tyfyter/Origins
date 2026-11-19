@@ -40,6 +40,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 			// Names
 			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());

@@ -113,6 +113,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLighted[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 			// Names
 			AddMapEntry(new Color(154, 56, 11));

@@ -38,6 +38,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileNoAttach[Type] = false;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalCreakOpen.WithVolume(0.3f), Origins.Sounds.MetalCreakClose.WithVolume(0.3f));
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {

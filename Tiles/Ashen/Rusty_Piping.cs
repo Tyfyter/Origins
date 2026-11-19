@@ -24,8 +24,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.Stone[Type] = false;
 			TileID.Sets.Conversion.Stone[Type] = false;
-			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(FromHexRGB(0x6c452c));
 
 			MinPick = 65;

@@ -56,6 +56,7 @@ namespace Origins.Tiles {
 			TileID.Sets.AvoidedByNPCs[Type] = true;
 			TileID.Sets.InteractibleByNPCs[Type] = true;
 			TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = [16, 18];

@@ -28,6 +28,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileNoAttach[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.addTile(Type);

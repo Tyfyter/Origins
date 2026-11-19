@@ -48,6 +48,7 @@ public class Ancient_Industrial_Door : OriginTile, IComplexMineDamageTile, IGlow
 		TileID.Sets.DrawsWalls[Type] = true;
 		TileID.Sets.HasOutlines[Type] = true;
 		TileID.Sets.DrawTileInSolidLayer[Type] = true;
+		TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 		// Names
 		AddMapEntry(FromHexRGB(0x756982), CreateMapEntryName());

@@ -44,6 +44,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			HitSound = SoundID.Tink;
 
 			// Names

@@ -52,6 +52,7 @@ public class Gas_Generator : ModTile {
 		Main.tileFrameImportant[Type] = true;
 		Main.tileNoAttach[Type] = true;
 		TileID.Sets.HasOutlines[Type] = true;
+		TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 		TileObjectData.newTile.Width = 3;
 		TileObjectData.newTile.SetHeight(2);

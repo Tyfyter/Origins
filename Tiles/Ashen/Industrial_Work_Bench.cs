@@ -33,6 +33,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileNoAttach[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 			TileID.Sets.DisableSmartCursor[Type] = TileID.Sets.DisableSmartCursor[BaseTileID];
 			TileID.Sets.AvoidedByNPCs[Type] = TileID.Sets.AvoidedByNPCs[BaseTileID];

@@ -17,6 +17,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileHammer[Type] = true;
 			Main.tileLighted[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + 2 * TileObjectData.newTile.Height;

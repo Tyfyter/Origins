@@ -42,6 +42,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 		}
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
 			switch (tile.TileFrameY / 18) {

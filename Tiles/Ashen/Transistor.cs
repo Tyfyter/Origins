@@ -35,6 +35,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMergeDirt[Type] = false;
 			Catwalk.OverrideTileNoAttach[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(MapColor, CreateMapEntryName());
 
 			MinPick = 65;

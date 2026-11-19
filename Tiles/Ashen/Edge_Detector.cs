@@ -32,6 +32,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(FromHexRGB(0xe47430), this.GetTileItem().DisplayName);
 
 			MinPick = 65;

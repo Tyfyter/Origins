@@ -41,6 +41,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			HitSound = SoundID.Tink;
 
 			// Names

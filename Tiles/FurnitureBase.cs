@@ -674,6 +674,7 @@ namespace Origins.Tiles {
 			Main.tileLavaDeath[Type] = LavaDeath;
 			TileID.Sets.Platforms[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.CanBeSloped[Type] = BaseTileID == TileID.Platforms;
 			AdjTiles = [BaseTileID];
 

@@ -88,6 +88,7 @@ public class Incinerator_Pit : OriginTile, IComplexMineDamageTile, IMultiTypeMul
 		TileID.Sets.DisableSmartCursor[Type] = true;
 		TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 		TileID.Sets.DrawsWalls[Type] = true;
+		TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
 		// Names
 		AddMapEntry(MapColor, CreateMapEntryName());

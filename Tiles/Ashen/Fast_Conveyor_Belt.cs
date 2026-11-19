@@ -52,6 +52,7 @@ public class Fast_Conveyor_Belt : ModTile {
 		TileID.Sets.ConveyorDirection[Type] = 2;
 		TileID.Sets.HasSlopeFrames[Type] = true;
 		TileID.Sets.IsSkippedForNPCSpawningGroundTypeCheck[Type] = true;
+		TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 		AddMapEntry(new(116, 111, 111));
 
 		MinPick = 65;

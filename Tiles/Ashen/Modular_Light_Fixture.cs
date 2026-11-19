@@ -24,6 +24,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = false;
 			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
 			TileID.Sets.FramesOnKillWall[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			//TileID.Sets.DontDrawTileSliced[Type] = true;
 
 			DustType = DustID.Smoke;

@@ -25,6 +25,7 @@ namespace Origins.Tiles.Ashen {
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
 			DustType = Ashen_Biome.DefaultTileDust;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 		}
 		public override void ModifyTileData() {
 			TileObjectData.newTile.SetHeight(4);

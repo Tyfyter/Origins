@@ -48,8 +48,8 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.CanBeSloped[Type] = true;
-			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			OriginsSets.Tiles.CanBeGrappledTo[Type] = true;
 			OriginsSets.Tiles.DisableHoiking[Type] = true;
 			AddMapEntry(FromHexRGB(0xBE9170));
