@@ -28,8 +28,6 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Brine_Pool";
 		public override string MapBackground => BackgroundPath;
 		public override ModWaterStyle WaterStyle => GetInstance<Brine_Water_Style>();
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Placeholder_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => null;
 		public static bool forcedBiomeActive;
 		public override void Load() {
 			On_Player.UpdateBiomes += On_Player_UpdateBiomes;
