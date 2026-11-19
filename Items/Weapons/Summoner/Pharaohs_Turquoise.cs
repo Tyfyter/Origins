@@ -99,8 +99,6 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void AI() {
 			//Lighting.AddLight(Projectile.Center, 0.9f, 0.4f, 0f);
-			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
-			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.BlueTorch, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
 			Main.projFrames[Type] = 10;
 			if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation();
 			const int HalfSpriteWidth = 30 / 2;
@@ -121,6 +119,9 @@ namespace Origins.Items.Weapons.Summoner {
 				DrawOriginOffsetX += Main.rand.Next(3) * Main.rand.NextBool().ToDirectionInt();
 				DrawOriginOffsetY += Main.rand.Next(3) * Main.rand.NextBool().ToDirectionInt();
 				if (Projectile.localAI[1].TrySet(1)) Projectile.extraUpdates++;
+			} else {
+				if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
+				if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.BlueTorch, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
 			}
 			Projectile.frame = (int)Projectile.localAI[0] * 5;
 			int addFrame = (int)(Projectile.ai[2] * (1f / 15) * 5);
