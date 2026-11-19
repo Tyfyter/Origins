@@ -1673,7 +1673,7 @@ Absorption_Potion: {
 	DisplayName: Absorption Potion
 	Tooltip:
 		'''
-		-80% explosive self-damage
+		-70% explosive self-damage
 		Pre-existing higher self-damage reduction amounts override this
 		'''
 }

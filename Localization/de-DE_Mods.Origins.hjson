@@ -685,7 +685,7 @@ Buffs: {
 
 	Safe_Buff: {
 		// DisplayName: Safe From Yourself
-		// Description: Impervious to self-inflicted explosive damage
+		// Description: Nearly impervious to self-inflicted explosive damage
 	}
 
 	Slow_Debuff: {
