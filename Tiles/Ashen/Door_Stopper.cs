@@ -40,6 +40,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMergeDirt[Type] = false;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLighted[Type] = true;
+			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
