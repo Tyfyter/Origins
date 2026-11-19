@@ -8856,3 +8856,7 @@ Kinetic_Cuffs: {
 		{$Pacemaker.Tooltip}
 		'''
 }
+
+Cluster_Bomb_Boots: {
+	DisplayName: Cluster Bomb Boots
+}
