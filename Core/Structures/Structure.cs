@@ -443,27 +443,30 @@ namespace Origins.Core.Structures {
 			HashSet<char> connectedSockets = [];
 			Structure.ignoreEmpty.Clear();
 			ResetRange();
-			do {
-				connectedSockets.Clear();
-				for (int k = 0; k < expectedSockets.Count; k++) {
-					(char key, RoomSocket socket, Point origin) = expectedSockets[k];
-					if (!socketTracker.Contains(socket, i + origin.X, j + origin.Y)) connectedSockets.Add(key);
-				}
-				for (int y = 0; y < map.Length; y++) {
-					for (int x = 0; x < map[y].Length; x++) {
-						TileDescriptor descriptor = Room.Key[map[y][x]];
-						descriptor.DoAction(this, connectedSockets, i + x, j + y);
-						if (!descriptor.Ignore) AddChangeToRange(i + x, j + y);
+			using (SkipFraming.doSkip.ScopedOverride(true)) {
+				do {
+					connectedSockets.Clear();
+					for (int k = 0; k < expectedSockets.Count; k++) {
+						(char key, RoomSocket socket, Point origin) = expectedSockets[k];
+						if (!socketTracker.Contains(socket, i + origin.X, j + origin.Y)) connectedSockets.Add(key);
 					}
-				}
-				Min(ref minX, i);
-				Min(ref minY, j);
-				Max(ref maxX, i + map[0].Length);
-				Max(ref maxY, j + map.Length);
-				Structure.ignoreEmpty.Clear();
-			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
+					for (int y = 0; y < map.Length; y++) {
+						for (int x = 0; x < map[y].Length; x++) {
+							TileDescriptor descriptor = Room.Key[map[y][x]];
+							descriptor.DoAction(this, connectedSockets, i + x, j + y);
+							if (!descriptor.Ignore) AddChangeToRange(i + x, j + y);
+						}
+					}
+					Min(ref minX, i);
+					Min(ref minY, j);
+					Max(ref maxX, i + map[0].Length);
+					Max(ref maxY, j + map.Length);
+					Structure.ignoreEmpty.Clear();
+				} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
+			}
+			WorldGen.RangeFrame(minX, minY, maxX, maxY);
 			Room.PostGenerate(new(this, new(minX, minY, maxX - minX, maxY - minY)));
-			if (!WorldGen.generatingWorld) WorldGen.RangeFrame(minX, minY, maxX, maxY);
+			//if (!WorldGen.generatingWorld) WorldGen.RangeFrame(minX, minY, maxX, maxY);
 		}
 		public bool CheckPosition(int[] tileCounts) {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -827,4 +830,11 @@ XXXOBOXXX";
 			}
 		}
 	}*/
+	file class SkipFraming : GlobalTile {
+		public static bool doSkip;
+		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) => !doSkip;
+		class SkipWallFraming : GlobalWall {
+			public override bool WallFrame(int i, int j, int type, bool randomizeFrame, ref int style, ref int frameNumber) => !doSkip;
+		}
+	}
 }
