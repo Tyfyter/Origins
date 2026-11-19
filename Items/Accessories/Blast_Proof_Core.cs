@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer oP = player.OriginPlayer();
 			oP.pacemaker = true;
 			oP.blastProofCore = true;
-			oP.explosiveSelfDamage -= float.Lerp(0.2f, 0.95f, Utils.GetLerpValue(150, 0, player.statLife));
+			oP.explosiveSelfDamage -= float.Lerp(0.2f, 0.95f, Utils.GetLerpValue(150, 0, player.statLife, true));
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
