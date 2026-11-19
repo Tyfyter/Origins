@@ -16,6 +16,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 11);
 			Item.defense = 3;
+			Item.frontSlot = ModContent.GetInstance<Blast_Proof_Core>().Item.frontSlot;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer oP = player.OriginPlayer();
