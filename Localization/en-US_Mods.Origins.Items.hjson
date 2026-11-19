@@ -8803,8 +8803,9 @@ Blast_Proof_Core: {
 	DisplayName: Blast Proof Core
 	Tooltip:
 		'''
-		{$Pacemaker.Tooltip} ignoring self-Damage
-		-20%-95% self-damage depending on remaining health
+		{$Pacemaker.Tooltip}, ignoring self-Damage
+		-20% self-damage
+		Self-damage reduction increases up to 95% while at or below 150 remaining life
 		'''
 }
 
@@ -8813,7 +8814,7 @@ Catalytic_Converter: {
 	Tooltip:
 		'''
 		{$Blast_Proof_Core.Tooltip}
-			Rapidly regenerate life after taking self-damage
+		Rapidly regenerate life after taking self-damage
 		'''
 }
 
@@ -8833,7 +8834,7 @@ Iron_Lung: {
 		'''
 		{$Air_Tank.Tooltip}
 		{$Pacemaker.Tooltip}
-		[bufftip/self:Origins/Toxic_Shock_Debuff] no Longer prevents breath regeneration
+		[bufftip/self:Origins/Toxic_Shock_Debuff] no longer stops breath regeneration
 		'''
 }
 
@@ -8843,7 +8844,7 @@ IV_Bag: {
 		'''
 		{$Plasma_Bag.Tooltip}
 		{$Pacemaker.Tooltip}
-		When the regeneration effect is prompted decrease debuffs time by 5 seconds
+		Decreases debuff time by 8 seconds when regeneration starts
 		'''
 }
 

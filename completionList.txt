@@ -282,7 +282,7 @@ ENEMY NPCS:
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
-($2, ^2/3) QM-76 'Quakemaker' !!!
+(^) QM-76 'Quakemaker'
 (^) Reject
 (^) Repairboy
 (^) Riven Penguin
@@ -633,7 +633,7 @@ ACCESSORIES:
 (#, ^2) Busted Vitals Monitor !!!
 (^) C.F.H.E.S.
 (X) Cablegore
-(☻) Catalytic Converter !!!
+(#2, ^2) Catalytic Converter !!! (needs B-PC's accUse)
 (X) Catto-Calmer 4000
 (^) Celestial Starlight
 (^) Celestial Stone Mask
@@ -693,7 +693,7 @@ ACCESSORIES:
 (^) Harpy Horseshoe Balloon
 (^) Hazard Charm
 (^) Headphones
-(☻) Heart in a Tube !!!
+(^) Heart in a Tube
 (#, ^2) Heart Squeezy !!!
 (^) Helium Tank
 (X) Helpful Cloak
@@ -701,10 +701,10 @@ ACCESSORIES:
 (^) I-WTPA Standard
 (#, ^2) Industrial-Grade Arm !!!
 (^) Infusion Bag
-(#, ^2) Iron Lung !!!
-(☻) IV Bag !!!
+(^) Iron Lung
+(^) IV Bag
 (^) Keepsake Remains
-(☻) Kinetic Cuffs !!!
+(^) Kinetic Cuffs
 (X) Laden Crown
 (X) Land Surveyor
 (^) Laser Tag Vest

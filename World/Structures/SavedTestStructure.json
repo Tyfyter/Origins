@@ -12,6 +12,10 @@
 				"LOCOR",
 				"XXXXX"
 			],
+			"Key": {
+				"L": "Empty",
+				"R": "Empty"
+			},
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
@@ -41,7 +45,6 @@
 			"Key": {
 				"o": "PlaceTile(ObsidianBrick)",
 				"w": "Empty+PlaceWall(ObsidianBrick)",
-				"b": "PlaceWall(ObsidianBrick)",
 				"c": "PlaceSpecialTile(Containers,3)+PlaceWall(ObsidianBrick)",
 				"L": "Empty+PlaceWall(ObsidianBrick)",
 				"R": "Empty+PlaceWall(ObsidianBrick)"
@@ -71,6 +74,10 @@
 				"LOCOR",
 				"XXXXX"
 			],
+			"Key": {
+				"L": "Empty",
+				"R": "Empty"
+			},
 			"SocketKey": {
 				"R": {
 					"Key": "Hallway",
@@ -96,6 +103,10 @@
 				"LOCOR",
 				"XXXXX"
 			],
+			"Key": {
+				"L": "Empty",
+				"R": "Empty"
+			},
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
@@ -117,6 +128,9 @@
 				"XOR",
 				"XXX"
 			],
+			"Key": {
+				"R": "Empty"
+			},
 			"SocketKey": {
 				"R": {
 					"Key": "ClosetLeft",
@@ -133,6 +147,9 @@
 				"LOX",
 				"XXX"
 			],
+			"Key": {
+				"L": "Empty"
+			},
 			"SocketKey": {
 				"L": {
 					"Key": "ClosetRight",
@@ -150,6 +167,10 @@
 				"L      C      R",
 				"GGGGGGGGGGGGGGG"
 			],
+			"Key": {
+				"L": "Empty",
+				"R": "Empty"
+			},
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
@@ -173,7 +194,9 @@
 			],
 			"Key": {
 				"h": "PlaceSpecialTile(Chairs,0,1)",
-				"c": "PlaceSpecialTile(Chairs,0,-1)"
+				"c": "PlaceSpecialTile(Chairs,0,-1)",
+				"L": "Empty",
+				"R": "Empty"
 			},
 			"SocketKey": {
 				"L": {
@@ -191,15 +214,9 @@
 	"TileDescriptors": {
 		"C": "Empty",
 		"O": "Empty",
-		"L": "Empty",
-		"R": "Empty",
 		"X": "PlaceTile(Grass)+PaintTile(Red)",
-		"Y": "PlaceTile(Grass)+PaintTile(Blue)",
-		"_": "PlaceTile(Grass)+PaintTile(Blue)+SlopeTile(HalfBlock)",
-		"V": "PlaceSpecialTile(Origins/Heat_Vent)",
-		" ": "Empty",
 		"D": "PlaceSpecialTile(ClosedDoor,48)",
-		".": "Void",
+		" ": "Empty",
 		"G": "PaintTile(Red)+PlaceTile(Grass)"
 	},
 	"BreakCondition": "MaxRoomCount(15)",

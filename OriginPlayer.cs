@@ -658,7 +658,7 @@ namespace Origins {
 						for (int i = 0; i < Player.buffTime.Length; i++) {
 							int buff = Player.buffType[i];
 							if (Player.buffTime[i] != 0 && Main.debuff[buff] && !BuffID.Sets.NurseCannotRemoveDebuff[buff])
-								Player.buffTime[i] = Math.Max(Player.buffTime[i] - 5 * 60, 0);
+								Player.buffTime[i] = Math.Max(Player.buffTime[i] - 8 * 60, 0);
 						}
 						drippedIt = true;
 					}

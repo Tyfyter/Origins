@@ -860,7 +860,7 @@ Buffs: {
 	Impeding_Shrapnel_Debuff: {
 		DisplayName: Задет шрапнелью
 		Description: В вас полно чужеродного металла
-		// EffectDescription: Mods.Origins.Buffs.Impeding_Shrapnel_Debuff.EffectDescription
+		// EffectDescription: Causes slain enemies to explode into chaining frenzied shrapnel
 	}
 
 	Strange_Tooth_Buff: {

@@ -1415,177 +1415,6 @@
 			},
 			"Tags": []
 		},
-		"Cargo_Bay_1": {
-			"Map": [
-				"2(222222222222222222222222222222222222222222222222           222(2",
-				"(((((((((((((((((((((((((((((((((((((((((((((((((266666↑666662((((",
-				"2(22222222222222222222222222222222222222222222222266666r66666222(2",
-				"2(266*666**6666666666666666*666*66666T**U6666666666q6666666q6*62(2",
-				"2(2*******66666666666666666*****6666666666666666666q6666666q6**2(2",
-				"2(2++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
-				"2(2IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^IVW^2(2",
-				"2(2++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
-				"2(2666666666666666666666666666666666666666666666666q6666666q6662(2",
-				"2(266_566666666666666666666-56666666666666666-56666q6666666q6`52(2",
-				"2((555554444455555544444555555555555555555555555555a5444445a555((2",
-				"((266666,,,,,666656,,,,,666666666656666656666656666q6,,,,,6q6562((",
-				"2(2666666666666665666666666666666646666656666646666q6666666q6562(2",
-				"2(2666666666666664666666666666666646666646666646666q6666666q6462(2",
-				"2(266666b66666666c6666666666666666666666c6666666666q6666666q6c62(2",
-				"2(266666666666666c6666666666666666666666c6666666666q6666666q6c62(2",
-				"2(266d66f6f666666c66666h66666666666666i6c6666666666q6666666q6c62(2",
-				"2(2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXq6666666qXXX2(2",
-				"2(266666666666666c6666666666666666666666c6666666666q6666666q6c62(2",
-				"2(266666666666666c6666666666666666666666c6666666666q6666666q6c62(2",
-				"2(266666666666666c6666666666j66666666666c66j6666666q6666666q6c62(2",
-				"((266666666666666c6666666666666666666666c6666666666q6666666q6c62((",
-				"2((55555555555555k5444445555545555555545k5555555555a5444445a5k5((2",
-				"2(266666666666666c6,,,,,66666,66666666,6c6666666666q6,,,,,6q6c62(2",
-				"2(26l666666m66666c6666666666666666666666c6666666666q6666666q6c62(2",
-				"2(26666666666666666666666666666666666666c66666666666666666666c62(2",
-				"2(26666666666666666666666666666666666666c66666666666666666666c62(2",
-				"2(26666666666666666666666666666666666666c66666666666666666666c42(2",
-				"2(26666666666666666666666666A66666666666c6666666666666666666Acn((2",
-				"2op6666s66666666t66666u66v66666666x66666c6g6g666y666666s66666cRpo2",
-				"2op222222222222222222222222222222222222222222222226666666666Rzzpo2",
-				"(((((((((((((((((((((((((((((((((((((((((((((((((266666↓66666|5(((",
-				"2(22222222222222222222222222222222222222222222222266666r66666222(2"
-			],
-			"Key": {
-				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"V": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
-				"W": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
-				"^": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
-				"_": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"`": "PlaceSpecialTile(Origins/Air_Vent,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"b": "PlaceChest(Origins/Small_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"c": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"d": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"f": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"h": "PlaceSpecialTile(Origins/Background_Door,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"j": "PlaceSpecialTile(Origins/Sheet_Metal,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"l": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"m": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"n": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode,White_Wire_Mode)",
-				"o": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
-				"p": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"s": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"t": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"u": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"v": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"x": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"y": "PlaceSpecialChest(Origins/Medium_Storage_Container,2,Ashen_Rations)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"z": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(White_Wire_Mode)"
-			},
-			"SocketKey": {
-				"↑": {
-					"Key": "Entrance",
-					"Direction": "Up"
-				},
-				"↓": {
-					"Key": "CED",
-					"Direction": "Down"
-				}
-			},
-			"Tags": []
-		},
-		"Cargo_Bay_2": {
-			"Map": [
-				"..............................2(222222222222222222222222222222222222222           222222222222222222222222(2",
-				"..............................((((((((((((((((((((((((((((((((((((((((266666↑666662(((((((((((((((((((((((((",
-				"..............................2(22222222222(22222222222222222222222222266666r66666222222222222222222222222(2",
-				"..............................2(2666666666656666666666666666666666666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666I++++++V+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
-				"..............................2(2666++W^WI_`WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^W2(2",
-				"..............................2(2666+^+++++V+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
-				"..............................2(2666+I+666656666666666666666666666666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+_+666656666666666666666666666666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+W+666656666666666666666666666666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+^+6662(2666666666666666666666666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+I+6662((555555554555555555455555555a5444445a555555545555555554555555(((",
-				"..............................2(2666+_+6662(26666i666,66666b666,6666c666q6,,,,,6q66-6666,666666666,6666662(2",
-				"..............................2(2666+W+6662(2XXXXXXXXXXXXXXXXd6666666666q6666666q6666666666666666666666662(2",
-				"..............................2((545V`V545((266666666666666666d666666666q6666666q666666666666f6666h6666662(2",
-				"..............................2(2666+I+6662(26j6666666666666666d66666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+_+6662(26666666666666666666d6666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+W+6662(266666666666666666666d666666q6666666q6666666666666666666666662(2",
-				"..............................2(2666+^+6662(2666666666666666666666d666A6q6666666q6666666666666666666666662(2",
-				"..............................2(2666+I+6662(26k66l66666m666n66j6666d6666q6666666q6666g66666o66666666o66662(2",
-				"2(22222222222222222222222222222(  6666666  (222222222222222222222222222  6666666  222222222222222222222222(2",
-				"((((((((((((((((((((((((((((((((pp5555555pp(((((((((((((((((((((((((((2  66666666 2(((((((((((((((((((((((((",
-				"2(222222222222222222222222222222  666r666  2222222222222222222222222222  666s666  2222(2222222222222222222(2",
-				"2(2666666666666666666666666666666666+++666666666666666666666666666666666q6666666q66662(2....................",
-				"2(2++++++++++++++++++++++++++++++++++6+++++++++++++++++++++++++++++++++++++++++++++++2(2....................",
-				"2(2I_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_+WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_^WI_2(2....................",
-				"2(2++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2....................",
-				"2((555555555555555555555555555555555555555555555555555555555555555555555a5555555a5555((2....................",
-				"2(266666666666-6666666666666666666t6666666666666666666t66666666666666666q6666666q66**2(2....................",
-				"2(2666666666666666666666666666666666666666666666666666666666666666666666q6666666q66*62(2....................",
-				"2(2666666666666666666666666666666666666666666666666666666666666666666666q6666666q66*62(2....................",
-				"(((55555555554555555555455555555545555555554555555555455555u555455555u55a5444445a55vv(((....................",
-				"2(26666666666,666666666,66666x666,666666666,6666i6666,666666666,66666666q6,,,,,6q66662(2....................",
-				"2(26666666666666XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXd66666666666666666q6666666q66**2(2....................",
-				"2(2h6j6666666666666666666666666666666666666666666666666d6666666666666666q6666666q66*62(2....................",
-				"2(26666666666666666666666666666666666y6h6666666666666666d666666666666666q6666666q66**2(2....................",
-				"2(2666666666666666666666666666666666666666666666666666666d66666666666666q6666666q66662(2....................",
-				"2(26666666666666666666666666666666666666666666666666666666d6666666666666q6666666q6664((2....................",
-				"2(266666666666A66666666666666666666666666666666666666666666d6666A6666666q6666666q666z2(2....................",
-				"2|~6666¡6666h66g66666¢66666666£66666¤666¥6666666¦66j6§666666d666666g6g66q6666666q666R~|2....................",
-				"2|~222222222222222222222222222222222222222222222222222222222222222222226666666666R¨¨¨2|2....................",
-				"((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((266666↓66666©5((((....................",
-				"2(22222222222222222222222222222222222222222222222222222222222222222222266666r666662222(2...................."
-			],
-			"Key": {
-				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"V": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
-				"W": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
-				"^": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
-				"_": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
-				"`": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpRight)",
-				"b": "PlaceSpecialTile(Origins/Background_Door,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"c": "PlaceSpecialTile(Origins/Air_Vent,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"d": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
-				"f": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"h": "PlaceChest(Origins/Small_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"k": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"l": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"m": "PlaceSpecialChest(Origins/Medium_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"n": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"o": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Rations)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"p": "Empty+PlaceWire(Brown_Wire_Mode)",
-				"s": "PlaceSpecialTile(Origins/Cargo_Elevator_Door_Open,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"t": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"u": "PlaceSpecialTile(Origins/Sheet_Metal,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
-				"v": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
-				"x": "PlaceSpecialTile(Origins/Background_Door,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"y": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"z": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(White_Wire_Mode)",
-				"|": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
-				"~": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¡": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¢": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"£": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¤": "PlaceSpecialTile(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¥": "PlaceSpecialChest(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¦": "PlaceSpecialChest(Origins/Medium_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"§": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¨": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWire(White_Wire_Mode)",
-				"©": "PlaceSpecialTile(Origins/Door_Stopper,1,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
-			},
-			"SocketKey": {
-				"↑": {
-					"Key": "Entrance",
-					"Direction": "Up"
-				},
-				"↓": {
-					"Key": "CED",
-					"Direction": "Down"
-				}
-			},
-			"Tags": []
-		},
 		"S_Way_Right": {
 			"Map": [
 				"2(22222222222222222222222222222(2",
@@ -2857,75 +2686,6 @@
 			},
 			"Tags": []
 		},
-		"Corner_Way_Right": {
-			"Map": [
-				"2(2XX[66↑6[XX2(2",
-				"2(266666666662((",
-				"2(26666666666222",
-				"2(26666666666666",
-				"2((5554,,,,66666",
-				"2(2666,,,,,66666",
-				"2(26666666666m66",
-				"2(26666666666666",
-				"2(2c6[¥X66666666",
-				"2(2X6§6XXX[6©66→",
-				"2(22222222222222",
-				"2(((((((((((((((",
-				"2222222222222222"
-			],
-			"Key": {
-				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"[": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¥": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
-				"©": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
-			},
-			"SocketKey": {
-				"↑": {
-					"Key": "Base",
-					"Direction": "Up"
-				},
-				"→": {
-					"Key": "Base",
-					"Direction": "Right"
-				}
-			},
-			"Tags": []
-		},
-		"Corner_Way_Left": {
-			"Map": [
-				"2(2XXXXX↑XXXX[X2(2",
-				"((2666666666[662(2",
-				"22266666666[6662(2",
-				"6666666666[66662(2",
-				"666645555m55545((2",
-				"6666,666[6666,62(2",
-				"6666666[66666662(2",
-				"666666[666¡66662(2",
-				"66666[6666666662(2",
-				"←g66[66h666Y5662(2",
-				"222222222222(222(2",
-				"(((((((((((((((((2",
-				"222222222222222222"
-			],
-			"Key": {
-				"↑": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"[": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
-				"m": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownRight)"
-			},
-			"SocketKey": {
-				"↑": {
-					"Key": "Base",
-					"Direction": "Up"
-				},
-				"←": {
-					"Key": "Base",
-					"Direction": "Left"
-				}
-			},
-			"Tags": []
-		},
 		"Hallway_2": {
 			"Map": [
 				"222222222222222222",
@@ -3424,8 +3184,7 @@
 				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"↤": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"\\": "PlaceSpecialTile(Origins/Industrial_Work_Bench)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"«": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownLeft)",
-				"¯": "PlaceChest(Origins/Small_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+				"«": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownLeft)"
 			},
 			"SocketKey": {
 				"←": {
@@ -3838,7 +3597,6 @@
 			"Key": {
 				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"¯": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"°": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"±": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
 			},
 			"SocketKey": {
@@ -4087,7 +3845,6 @@
 				"À": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
 				"Á": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(White_Wire_Mode)",
 				"Â": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"Ã": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
 				"Ä": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
 				"Å": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(White_Wire_Mode)",
 				"Æ": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
@@ -4613,7 +4370,6 @@
 				"³": "PlaceSpecialTile(Origins/Cargo_Elevator_Door_Open,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"µ": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"¶": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"·": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"¹": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"º": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Medical)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 				"»": "PlaceSpecialTile(Origins/Suit_Locker,7)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
@@ -4642,6 +4398,1867 @@
 				},
 				"↣": {
 					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Mother_Unit_Chamber_Hall": {
+			"Map": [
+				"1111111",
+				"!!!!!!!",
+				"111!111",
+				"###%###",
+				"###%###",
+				"###V###",
+				"###V###",
+				"###%###",
+				"###%###",
+				"←##%##→",
+				"111!111",
+				"111!111",
+				"111!111",
+				"111!111",
+				"111!111",
+				"111!111",
+				"!!!!!!!",
+				"111!111",
+				"###%###",
+				"###%###",
+				"###V###",
+				"###V###",
+				"###%###",
+				"###%###",
+				"↢##%##↣",
+				"111!111",
+				"!!!!!!!",
+				"1111111"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
+				"↣": "Empty+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Secret",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Secret",
+					"Direction": "Right"
+				},
+				"↢": {
+					"Key": "Secret",
+					"Direction": "Left"
+				},
+				"↣": {
+					"Key": "Secret",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Oil_Shaft_Top_2": {
+			"Map": [
+				"2(2222222(2",
+				"(((((((((((",
+				"2(222(222(2",
+				"2(2665662(2",
+				"2(2665662(2",
+				"2((66566((2",
+				"22(66466(22",
+				"66566'66566",
+				"66566'66566",
+				"←G566↓6656→"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↓": {
+					"Key": "Thinup",
+					"Direction": "Down"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Oil_Shaft_Bottom": {
+			"Map": [
+				"2(2XX↑XX2(2",
+				"2(266'662(2",
+				"2(266'662(2",
+				"2(266'662(2",
+				"2(266'662(2",
+				"((266'662((",
+				"2(266'462(2",
+				"65666'46656",
+				"65666'56656",
+				"←¯666'5665→",
+				"2°2XXX^^((2",
+				"((266'562((",
+				"2(266'562(2",
+				"2(2³³µ¶³2(2",
+				"2(2··¹º·2(2",
+				"((2··¹º·2((",
+				"2(2··¹»·2(2",
+				"65···¹»··56",
+				"65···¹···56",
+				"↢¯···¹···5↣",
+				"2(2¼¼¼¼¼2(2",
+				"((2··¹··2((",
+				"2(2··¹··2(2",
+				"2(2··¹··2(2",
+				"2(2··¹··2(2",
+				"2(2··¹··2(2",
+				"2(2··¹½·2(2",
+				"2(2··¹½·2(2",
+				"2(2··¹··2(2",
+				"2(2··¹··2(2",
+				"2(2222222(2",
+				"(((((((((((",
+				"2(2222222(2"
+			],
+			"Key": {
+				"↑": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¯": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"°": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"³": "Empty+PlaceLiquid(Origins/Oil,238)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"µ": "PlaceLiquid(Origins/Oil,238)+PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¶": "Empty+PlaceLiquid(Origins/Oil,238)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"·": "Empty+PlaceLiquid(Origins/Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¹": "PlaceLiquid(Origins/Oil)+PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"º": "Empty+PlaceLiquid(Origins/Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"»": "PlaceLiquid(Origins/Oil)+PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"¼": "PlaceLiquid(Origins/Oil)+PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Thinup",
+					"Direction": "Up"
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Oil_Shaft": {
+			"Map": [
+				"2(2XX↑XX2(2",
+				"2(266'662(2",
+				"2(266'662(2",
+				"2(266'662(2",
+				"2(266'662(2",
+				"((266'662((",
+				"2(266'462(2",
+				"65666'46656",
+				"65666'56656",
+				"←{¯¯¯°³¯¯5→",
+				"2(2µµµ¶µ2(2",
+				"(((··¹··(((",
+				"2(2ºº»·º2(2",
+				"2(2ºº»·º2(2",
+				"2(2ºº»·º2(2",
+				"((2ºº»·º2((",
+				"2(2ºº»¼º2(2",
+				"65ººº»½ºº56",
+				"65ººº»ººº56",
+				"↢¿ººº»ººº5↣",
+				"2(2µµµµµ2(2",
+				"((2ºº»ºº2((",
+				"2(2ºº»ºº2(2",
+				"2(2ºº»ºº2(2",
+				"2(2ºº»ºº2(2",
+				"2(2ºº»ºº2(2",
+				"2(2ºº»ºº2(2",
+				"2(2ºº»ºº2(2",
+				"2(2ºº»ºº2(2",
+				"2(2ºº↓ºº2(2"
+			],
+			"Key": {
+				"↑": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceLiquid(Origins/Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"{": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"¯": "Empty+PlaceLiquid(Origins/Oil,19)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"°": "PlaceLiquid(Origins/Oil,19)+PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"³": "Empty+PlaceLiquid(Origins/Oil,19)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"µ": "PlaceLiquid(Origins/Oil)+PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¶": "PlaceLiquid(Origins/Oil)+PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"·": "Empty+PlaceLiquid(Origins/Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"¹": "PlaceLiquid(Origins/Oil)+PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"º": "Empty+PlaceLiquid(Origins/Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"»": "PlaceLiquid(Origins/Oil)+PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¼": "PlaceLiquid(Origins/Oil)+PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"¿": "PlaceSpecialTile(Origins/Industrial_Door,1,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Thinup",
+					"Direction": "Up"
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Crane": {
+			"Map": [
+				"           {                                                             ",
+				" ¯2222° ³µµµ³³³                                                          ",
+				" 222222 ³¶··¹¹³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³º                     ",
+				" 222222 ³¶··¹¹³ ···· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··»³º                    ",
+				" 222222¼³¶··¹¹³¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿À³³                    ",
+				" ·Á··Á··³¶··¹¹³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³³¿                    ",
+				"³³³³³³³³³µ³³³³³0000000000000000000000000000000000000¿                    ",
+				"00000000 ÂÃ ÃÃ                                      ¿                    ",
+				"        ÄÅÄÄÄÄÄ                                     ¿                    ",
+				"        ÄÆ000ÇÄ                                     ¿                    ",
+				"         ÆÇÇÇÇ                                      ¿                    ",
+				"         ÆÇ ÇÇ                                      ¿                    ",
+				"         ÆÇ ÇÇ                                      ¿                    ",
+				"         ÆÇÇÇÇ                                      ¿                    ",
+				"         ÆÇ  Ç                                      ¿                    ",
+				"         ÆÇÇÇÇ                                      ¿                    ",
+				"         ÆÇ  Ç                                      ¿                    ",
+				"         ÆÇÈ Ç                                      ¿                    ",
+				"         ÆÉÇÈÇ                                      ÇÈ                   ",
+				"         Æ ÉÇÇ                                      ÉÇ                   ",
+				"         Æ  ÇÇ                                     ÈÊÇ                   ",
+				"         ÆÇÇÇÇ                                     ÉÇË                   ",
+				"         Æ  ÇÇ                                                           ",
+				"         Æ ÊÇÇ                                                           ",
+				"         ÆÊÇËÇ                                                           ",
+				"         ÆÇË Ç                                                           ",
+				"         ÆÇ  Ç                                                           ",
+				"         ÆÇÇÇÇ                                                           ",
+				"         ÆÇ  Ç                                                           ",
+				"         ÆÇÈ Ç                                                           ",
+				"         ÆÉÇÈÇ           Ì                                               ",
+				"        ÄÅÄÄÄÄÄ                                                          ",
+				"        ÄÅÄÄÄÄÄÍ                                                         ",
+				"        ÄÅÅÅÄÄÄÎ                                                         ",
+				"       2222(ÄÄÄÎ                                                         ",
+				"       2222(2222     Ì        Ï    {                                   { ",
+				".......2(22(22222222222222222222222(...........2222222222...........222(2",
+				".......(((((((((((((((((((((((((((((.....↓.....2222222222.....↧.....22(((",
+				".......2(22222222222222222222222222(...........2222222222...........222(2"
+			],
+			"Key": {
+				"↓": "Void",
+				"↧": "Void",
+				"{": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Brown_Wire_Mode)",
+				"¯": "PlaceTile(Origins/Fortified_Steel_Block1)+SlopeTile(SlopeDownRight)",
+				"°": "PlaceTile(Origins/Fortified_Steel_Block1)+SlopeTile(SlopeDownLeft)",
+				"³": "PaintTile(DeepOrangePaint)+PlaceTile(Origins/Truss_Block)",
+				"µ": "PaintTile(DeepOrangePaint)+PlaceTile(Origins/Truss_Block)+PlaceWire(Brown_Wire_Mode)",
+				"¶": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)+PlaceWire(Brown_Wire_Mode)",
+				"·": "PaintTile(BlackPaint)+PlaceTile(Origins/Truss_Block)",
+				"¹": "Empty+PlaceWall(Glass)",
+				"º": "PaintTile(DeepOrangePaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeDownLeft)",
+				"»": "PaintTile(DeepOrangePaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeUpRight)",
+				"¼": "PlaceSpecialTile(Origins/Catwalk)+SlopeTile(SlopeDownLeft)",
+				"¿": "PlaceTile(Chain)",
+				"À": "PaintTile(DeepOrangePaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeDownRight)",
+				"Á": "PaintTile(BlackPaint)+PlaceTile(Origins/Steel_Support_Beam)",
+				"Â": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWire(Brown_Wire_Mode)",
+				"Ã": "PlaceTile(Origins/Steel_Support_Beam)",
+				"Ä": "PlaceTile(Origins/Truss_Block)",
+				"Å": "PlaceTile(Origins/Truss_Block)+PlaceWire(Brown_Wire_Mode)",
+				"Æ": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWire(Brown_Wire_Mode)",
+				"Ç": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)",
+				"È": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeDownLeft)",
+				"É": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeUpRight)",
+				"Ê": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeDownRight)",
+				"Ë": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+SlopeTile(SlopeUpLeft)",
+				"Ì": "PlaceSpecialChest(Origins/Large_Storage_Container,0)",
+				"Í": "PlaceTile(Origins/Rusty_Piping)+SlopeTile(SlopeDownLeft)",
+				"Î": "PlaceTile(Origins/Rusty_Piping)",
+				"Ï": "PlaceSpecialChest(Origins/Large_Storage_Container,1)"
+			},
+			"SocketKey": {
+				"↓": {
+					"Key": "Entrance",
+					"Direction": "Down",
+					"Optional": true,
+					"Offset": -1
+				},
+				"↧": {
+					"Key": "Entrance",
+					"Direction": "Down",
+					"Optional": true,
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"Cargo_Bay_1": {
+			"Map": [
+				"2(222222222222222222222222222222222222222222222222           222(2",
+				"(((((((((((((((((((((((((((((((((((((((((((((((((266666↑666662((((",
+				"2(22222222222222222222222222222222222222222222222266666r66666222(2",
+				"2(266*666**6666666666666666*666*66666T**U6666666666q6666666q6*62(2",
+				"2(2*******66666666666666666*****6666666666666666666q6666666q6**2(2",
+				"2(2++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
+				"2(2I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{2(2",
+				"2(2++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
+				"2(2666666666666666666666666666666666666666666666666q6666666q6662(2",
+				"2(266¥566666666666666666666-56666666666666666-56666q6666666q6b52(2",
+				"2((555554444455555544444555555555555555555555555555a5444445a555((2",
+				"((266666,,,,,666656,,,,,666666666656666656666656666q6,,,,,6q6562((",
+				"2(2666666666666665666666666666666646666656666646666q6666666q6562(2",
+				"2(2666666666666664666666666666666646666646666646666q6666666q6462(2",
+				"2(266666¯66666666'6666666666666666666666'6666666666q6666666q6'62(2",
+				"2(266666666666666'6666666666666666666666'6666666666q6666666q6'62(2",
+				"2(266°66³6³666666'66666µ66666666666666i6'6666666666q6666666q6'62(2",
+				"2(2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXq6666666qXXX2(2",
+				"2(266666666666666'6666666666666666666666'6666666666q6666666q6'62(2",
+				"2(266666666666666'6666666666666666666666'6666666666q6666666q6'62(2",
+				"2(266666666666666'6666666666m66666666666'66m6666666q6666666q6'62(2",
+				"((266666666666666'6666666666666666666666'6666666666q6666666q6'62((",
+				"2((55555555555555k5444445555545555555545k5555555555a5444445a5k5((2",
+				"2(266666666666666'6,,,,,66666,66666666,6'6666666666q6,,,,,6q6'62(2",
+				"2(26¶666666·66666'6666666666666666666666'6666666666q6666666q6'62(2",
+				"2(26666666666666666666666666666666666666'66666666666666666666'62(2",
+				"2(26666666666666666666666666666666666666'66666666666666666666'62(2",
+				"2(26666666666666666666666666666666666666'66666666666666666666'42(2",
+				"2(26666666666666666666666666A66666666666'6666666666666666666A'¹((2",
+				"2ºy6666»66666666¼66666¿66À66666666Á66666'6g6g666Â666666»66666'Ryº2",
+				"2ºy222222222222222222222222222222222222222222222226666666666RÃÃyº2",
+				"(((((((((((((((((((((((((((((((((((((((((((((((((266666↓66666|5(((",
+				"2(22222222222222222222222222222222222222222222222266666r66666222(2"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"°": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"³": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"µ": "PlaceSpecialTile(Origins/Background_Door,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¶": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"·": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¹": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode,White_Wire_Mode)",
+				"º": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"»": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¼": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¿": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"À": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Á": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Â": "PlaceSpecialChest(Origins/Medium_Storage_Container,2,Ashen_Rations)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ã": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(White_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Entrance",
+					"Direction": "Up",
+					"Optional": true,
+					"Offset": -1
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"Cargo_Bay_2": {
+			"Map": [
+				"..............................2(222222222222222222222222222222222222222           222222222222222222222222(2",
+				"..............................((((((((((((((((((((((((((((((((((((((((266666↑666662(((((((((((((((((((((((((",
+				"..............................2(22222222222(22222222222222222222222222266666r66666222222222222222222222222(2",
+				"..............................2(2666666666656666666666666666666666666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666I++++++p+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
+				"..............................2(2666++{©{I\\°{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{2(2",
+				"..............................2(2666+©+++++p+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2",
+				"..............................2(2666+I+666656666666666666666666666666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+\\+666656666666666666666666666666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+{+666656666666666666666666666666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+©+6662(2666666666666666666666666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+I+6662((555555554555555555455555555a5444445a555555545555555554555555(((",
+				"..............................2(2666+\\+6662(26666i666,66666³666,6666b666q6,,,,,6q66-6666,666666666,6666662(2",
+				"..............................2(2666+{+6662(2XXXXXXXXXXXXXXXXc6666666666q6666666q6666666666666666666666662(2",
+				"..............................2((545p°p545((266666666666666666c666666666q6666666q666666666666µ6666¯6666662(2",
+				"..............................2(2666+I+6662(26j6666666666666666c66666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+\\+6662(26666666666666666666c6666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+{+6662(266666666666666666666c666666q6666666q6666666666666666666666662(2",
+				"..............................2(2666+©+6662(2666666666666666666666c666A6q6666666q6666666666666666666666662(2",
+				"..............................2(2666+I+6662(26¶66·66666¹666º66j6666c6666q6666666q6666g66666»66666666»66662(2",
+				"2(22222222222222222222222222222(  6666666  (222222222222222222222222222  6666666  222222222222222222222222(2",
+				"((((((((((((((((((((((((((((((((¼¼5555555¼¼(((((((((((((((((((((((((((2  66666666 2(((((((((((((((((((((((((",
+				"2(222222222222222222222222222222  666r666  2222222222222222222222222222  666¿666  2222(2222222222222222222(2",
+				"2(2666666666666666666666666666666666+++666666666666666666666666666666666q6666666q66662(2....................",
+				"2(2++++++++++++++++++++++++++++++++++6+++++++++++++++++++++++++++++++++++++++++++++++2(2....................",
+				"2(2I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\+{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\2(2....................",
+				"2(2++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++2(2....................",
+				"2((555555555555555555555555555555555555555555555555555555555555555555555a5555555a5555((2....................",
+				"2(266666666666-6666666666666666666¥6666666666666666666¥66666666666666666q6666666q66**2(2....................",
+				"2(2666666666666666666666666666666666666666666666666666666666666666666666q6666666q66*62(2....................",
+				"2(2666666666666666666666666666666666666666666666666666666666666666666666q6666666q66*62(2....................",
+				"(((55555555554555555555455555555545555555554555555555455555À555455555À55a5444445a55ÁÁ(((....................",
+				"2(26666666666,666666666,66666Â666,666666666,6666i6666,666666666,66666666q6,,,,,6q66662(2....................",
+				"2(26666666666666XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXc66666666666666666q6666666q66**2(2....................",
+				"2(2¯6j6666666666666666666666666666666666666666666666666c6666666666666666q6666666q66*62(2....................",
+				"2(26666666666666666666666666666666666Ã6¯6666666666666666c666666666666666q6666666q66**2(2....................",
+				"2(2666666666666666666666666666666666666666666666666666666c66666666666666q6666666q66662(2....................",
+				"2(26666666666666666666666666666666666666666666666666666666c6666666666666q6666666q6664((2....................",
+				"2(266666666666A66666666666666666666666666666666666666666666c6666A6666666q6666666q666Ä2(2....................",
+				"2Åy6666Æ6666¯66g66666Ç66666666È66666É666Ê6666666±66j6Ë666666c666666g6g66q6666666q666RyÅ2....................",
+				"2Åy222222222222222222222222222222222222222222222222222222222222222222226666666666RÌÌÌ2Å2....................",
+				"((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((266666↓66666|5((((....................",
+				"2(22222222222222222222222222222222222222222222222222222222222222222222266666r666662222(2...................."
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"°": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpRight)",
+				"³": "PlaceSpecialTile(Origins/Background_Door,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"µ": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¹": "PlaceSpecialChest(Origins/Medium_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"º": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"»": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Rations)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¼": "Empty+PlaceWire(Brown_Wire_Mode)",
+				"À": "PlaceSpecialTile(Origins/Sheet_Metal,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Á": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Â": "PlaceSpecialTile(Origins/Background_Door,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ã": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ä": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(White_Wire_Mode)",
+				"Å": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Æ": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ç": "PlaceSpecialChest(Origins/Large_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceSpecialChest(Origins/Large_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"É": "PlaceSpecialTile(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ê": "PlaceSpecialChest(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ë": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ì": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWire(White_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Entrance",
+					"Direction": "Up",
+					"Optional": true,
+					"Offset": -1
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"CED_Shaft_Bottom_1": {
+			"Map": [
+				"........↑........",
+				".................",
+				"6666q6666666q6666",
+				"6666q6,,,,,6q6666",
+				"6666q6,,4,,6q6666",
+				"6666q6665666q6666",
+				"6666q6665666q6666",
+				"66A6q6665666q6666",
+				"←666q6}65°66q6h6→",
+				"22222222(22222222",
+				"(((((((((((((((((",
+				"22222222222222222"
+			],
+			"Key": {
+				"↑": "Empty",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"}": "PlaceSpecialChest(Origins/Medium_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"°": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"CED_Shaft_Intermediary": {
+			"Map": [
+				"........↑........",
+				".................",
+				"6666q6666666q6666",
+				"6666q6,,,,,6q6666",
+				"6666q6,,4,,6q6666",
+				"6666q6665666q6666",
+				"6666q6665666q6666",
+				"6666q6665666q6A66",
+				"←666q6665666q666→",
+				"22266666566666222",
+				"(((55555↓55555(((",
+				"2(266666r666662(2"
+			],
+			"Key": {
+				"↑": "Empty",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"CED_Shaft_1": {
+			"Map": [
+				"2(2666666666662(2",
+				"(((55555↑55555(((",
+				"22266666}66666222",
+				"6666q6665666q6666",
+				"6666q6,,4,,6q6666",
+				"6666q6,,,,,6q6666",
+				"6666q6666666q6666",
+				"6666q66°6666q6666",
+				"66A6q6666666q6666",
+				"←666q6j6³666q6Y5→",
+				"2226666666666 2(2",
+				"(((55555555555(((",
+				"22266666µ66666222",
+				"6666q6665666q6666",
+				"6666q6,,4,,6q6666",
+				"6666q6,,,,,6q66m6",
+				"6666q6666666q6666",
+				"6666q6666666q6666",
+				"6666q6666666qA666",
+				"↢g66q6¶66°66q66[↣",
+				"222666666666662(2",
+				"(((55555555555(((",
+				"22266666µ66666222",
+				"6666q6665666q6666",
+				"6666q6,,4,,6q6666",
+				"6666q6,,,,,6q6666",
+				"6666q6666666q6666",
+				"6666q6666666q6666",
+				"66A66666666666666",
+				"↤666j66666¯6j666↦",
+				"22266666666666222",
+				"(((55555↓55555(((",
+				"2(266666r666662(2"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↤": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↦": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"³": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"µ": "PlaceSpecialTile(Origins/Cargo_Elevator_Door_Open,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↤": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"↦": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"CED_Shaft_2": {
+			"Map": [
+				"2(2666666666662(2",
+				"(((55555↑55555(((",
+				"22266666}666662(2",
+				"6666q6665666q6656",
+				"6666q6,,4,,6q6656",
+				"66666666666666b66",
+				"66666666666666666",
+				"66666666666666666",
+				"66666666666666666",
+				"←³666666µ6666666→",
+				"22266666666666222",
+				"(((55555555555(((",
+				"22266666}66666222",
+				"6666q6665666q6666",
+				"6666q6,,4,,6q6666",
+				"6666q6,,,,,6q6666",
+				"6666q6666666q6666",
+				"6666q6j66666q6666",
+				"6A66q6666666q666A",
+				"↢666q·6·6666q6h6↣",
+				"22266666666666222",
+				"(((55555555555(((",
+				"22266666¹666662(2",
+				"6666q6665666q6656",
+				"6666q6,,4,,6q6656",
+				"6666q6,,,,,6q6-66",
+				"6666q666666666666",
+				"6666qº66666666666",
+				"6666666666666666A",
+				"↤[66¯6¯6666¶6666↦",
+				"2(266666666666222",
+				"(((55555↓55555(((",
+				"2(266666r666662(2"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↤": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↦": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"³": "PlaceSpecialTile(Origins/Metal_Presser)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"µ": "PlaceSpecialChest(Origins/Large_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¹": "PlaceSpecialTile(Origins/Cargo_Elevator_Door_Open,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"º": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↤": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"↦": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"C_Way_Left_3": {
+			"Map": [
+				"2222222222222222(2",
+				"((((((((((((((((((",
+				"222(222222222222(2",
+				"66656666666*6*62(2",
+				"6,,44466666*6*62(2",
+				"6,,,,455556*6**2(2",
+				"66666666656*6662(2",
+				"6¯666666656***62(2",
+				"66666A666M6*6**2(2",
+				"←¯6g6666666*6662(2",
+				"222222Xc666****2(2",
+				"(((((266«6666*62((",
+				"2222(26666666*62(2",
+				"6q62(26666666**2(2",
+				"6q62(26666666662(2",
+				"6q62(26666666662(2",
+				"6q62(26666666662(2",
+				"6q62(26666666662(2",
+				"6q62(26666666662(2",
+				"↢q62(26666666662(2",
+				"2222(26666666662(2",
+				"(((((26666666662((",
+				"222(22666655555((2",
+				"666566666b666662(2",
+				"6,,4,,6666666662(2",
+				"6,,,,,6666666662(2",
+				"6666666ª«66666ª2(2",
+				"666666666]§«6ª62(2",
+				"6666666A6§66«662(2",
+				"↤h66¶666§66ª]6]2(2",
+				"2222222222222222(2",
+				"((((((((((((((((((",
+				"2222222222222222(2"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↤": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"↤": {
+					"Key": "Base",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Corner_Way_Right": {
+			"Map": [
+				"2(2XX]↑6662(2",
+				"((26666666(((",
+				"2(266666662(2",
+				"2(26666666666",
+				"2((5554,,,,66",
+				"2(2666,,,,,66",
+				"2(26666666666",
+				"2(26666666666",
+				"2(2c6]ªX66666",
+				"2(2X6§6XXX]6→",
+				"2(22222222222",
+				"(((((((((((((",
+				"2(222222222(2"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Base",
+					"Direction": "Up"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Corner_Way_Left": {
+			"Map": [
+				"2(2XXX↑XXX2(2",
+				"(((666'6662((",
+				"2(2666'6662(2",
+				"666666'6662(2",
+				"555555k545((2",
+				"666666'6,62(2",
+				"666666'6662(2",
+				"666£66'6662(2",
+				"66666666662(2",
+				"←6h666Y5662(2",
+				"2222222(222(2",
+				"(((((((((((((",
+				"2(222222222(2"
+			],
+			"Key": {
+				"↑": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Base",
+					"Direction": "Up"
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Vertical_Way_1": {
+			"Map": [
+				"2(222222222(2",
+				"(((((((((((((",
+				"2⊞2222(2222(2",
+				"6³66665*66656",
+				"6³****³*66656",
+				"6566665666656",
+				"6566664666656",
+				"656666'666656",
+				"656666'666656",
+				"←[66µ6'66¹65→",
+				"2(2XXXXXXX2(2",
+				"2(2666'6662(2",
+				"2(2666'655((2",
+				"656666'-66656",
+				"656666'666656",
+				"646666'666646",
+				"646666'666646",
+				"656666'666656",
+				"656666'666656",
+				"↢566i666·665↣",
+				"2(222222222(2",
+				"(((((((((((((",
+				"2(222222222(2"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"³": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"µ": "PlaceSpecialTile(Origins/Background_Door,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¹": "PlaceSpecialTile(Origins/Background_Door,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Vertical_Connector_Top": {
+			"Map": [
+				"2(222222222(2",
+				"(((((((((((((",
+				"2(2222(2222(2",
+				"6566665*666⊞6",
+				"6566665****⊞6",
+				"6556665666656",
+				"65-6665666656",
+				"6566664666656",
+				"656666'666656",
+				"←56666↓66665→"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊞": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↓": {
+					"Key": "Base",
+					"Direction": "Down"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Vertical_Connector_Bottom": {
+			"Map": [
+				"2(2XXX↑XXX2(2",
+				"(((666'666(((",
+				"2(2666'6662(2",
+				"6a6666'6666a6",
+				"6a6666'6666a6",
+				"6a6666'6666a6",
+				"6a6666'6,45a6",
+				"6a6666'666656",
+				"6a6666'6666⊞6",
+				"←a6³66666L6a→",
+				"2(222222222(2",
+				"(((((((((((((",
+				"2(222222222(2"
+			],
+			"Key": {
+				"↑": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊞": "PlaceSpecialTile(Origins/Fire_Extinguisher_Holder,6)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"³": "PlaceSpecialChest(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "Base",
+					"Direction": "Up"
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Mine_Loading_Bay_Right": {
+			"Map": [
+				"7)77777777777777777777777777777)7",
+				")))))))))))))))))))))))))))))))))",
+				"7)77777777777777777777777777777)7",
+				"7)7∐∐∐∐∐∐³∐µ¹µ∐∐∐∐µºµ∐³∐∐∐³∐∐∐7)7",
+				"7)7³³³³³³³∐µ»µ∐∐∐∐µ¼µ∐³³³³³∐∐∐7)7",
+				"7)7∐∐∐∐∐∐∐∐µºµ∐∐∐∐µ¹µ∐∐∐∐∐∐∐∐¿7)7",
+				"7)7∐∐∐∐∐∐∐µµµµµµµµµµµµ∐∐∐∐∐∐³³7)7",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐³7)7",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐³7)7",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐À7)7",
+				"7))ÁÁÂÁÁÁÁÁÁÁÁÁÂÁÁÁÁÁÁÁÁÁÂÁÁÁÁ))7",
+				"))7∐∐Ã∐∐∐Ä∐∐∐∐∐Ã∐∐∐∐Å∐∐∐∐Ã∐∐∐∐7)7",
+				"777∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"µ¼µ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"µ¹µ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"µ»µ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"µºµ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐ÆJÇÈ",
+				"µ¼µ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐É66P",
+				"µ¹µ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐Ê6RË",
+				"µ»µ∐∐∐∐∐Ì∐∐∐∐ÍÁÎÁÏ∐∐∐∐Ð∐∐∐∐∐∐Á6f→",
+				"7777777777777777)777777777777)77)",
+				")))))))))))))))))))))))))))))))))",
+				"7)77777777777777777777777777777)7"
+			],
+			"Key": {
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"¿": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
+				"À": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
+				"Á": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Â": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ä": "PlaceSpecialTile(Origins/Air_Vent,3)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Å": "PlaceSpecialTile(Origins/Air_Vent,2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Æ": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
+				"Ç": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"È": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Ê": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Ì": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Í": "PlaceSpecialTile(Origins/Suit_Locker,7)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ï": "PlaceSpecialTile(Origins/Suit_Locker,6)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Ð": "PlaceSpecialChest(Origins/Large_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Mine_Loading_Bay_Left": {
+			"Map": [
+				"7)77777777777777777777777777777)7",
+				")))))))))))))))))))))))))))))))))",
+				"7)77777777777777777777777777777)7",
+				"7)7∐∐³∐∐³∐∐µ¹µ∐∐∐∐µºµ∐∐∐∐³∐∐∐∐7)7",
+				"7)7³³³³³³∐∐µ»µ∐∐∐∐µ¼µ∐∐∐∐³∐³³∐7)7",
+				"7)7∐∐∐∐∐∐∐∐µºµ∐∐∐∐µ¹µ∐∐∐∐³³³³³7)7",
+				"7)7∐∐∐∐∐∐∐µµµµµµµµµµµµ∐∐∐∐∐∐∐∐7)7",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐7)7",
+				"7))¿¿À¿¿¿¿¿¿¿¿¿À¿¿¿¿¿¿¿¿¿À¿¿¿¿))7",
+				"7)7∐∐Ã∐∐∐Á∐∐∐∐∐Ã∐∐∐∐Â∐∐∐∐Ã∐∐∐∐7))",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐777",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐µ¹µ",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐µ»µ",
+				"7)7∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐µºµ",
+				"ÄÅÆÇ∐∐ÈÈÈÈÈÈ∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐µ¼µ",
+				"P66É∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐Ê∐∐∐∐∐∐µ¹µ",
+				"ËR6Ì∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐∐µ»µ",
+				"←6G¿∐∐Í∐Í∐Í∐∐∐Î¿¿¿Ï¿Ð∐Ê∐Ñ∐∐∐∐∐µºµ",
+				")77)7777777777)777777777777777777",
+				")))))))))))))))))))))))))))))))))",
+				"7)77777777777777777777777777777)7"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"¿": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"À": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Á": "PlaceSpecialTile(Origins/Air_Vent,3)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Â": "PlaceSpecialTile(Origins/Air_Vent,2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Ä": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Å": "PlaceSpecialTile(Origins/Door_Stopper,1,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Æ": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Ç": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
+				"È": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(HalfBlock)",
+				"Ê": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Ì": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Í": "PlaceChest(Origins/Rusty_Locker,0)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Ï": "PlaceSpecialTile(Origins/Suit_Locker,7)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ð": "PlaceSpecialTile(Origins/Suit_Locker,6)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Ñ": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Main_Lobby": {
+			"Map": [
+				"2(22222222222222222222222222266666666666222222222222222222222222222(2",
+				"((((((((((((((((((((((((((((266666↑666662((((((((((((((((((((((((((((",
+				"2⊞y2222222222222222222222222266666r6666622222222222222222222222222y⊞2",
+				"2⊞y666666666666666666666666666q6666666q666666666666666666666666666y⊞2",
+				"2((555554555555555455555555545a5555555a545555555554555555555455555((2",
+				"2(266666,6666-6666,6666¥6666,6q6666666q6,666b66666,666M66666,666662(2",
+				"2(2666666666666666666666666666q6666666q6666666666666666666666666662(2",
+				"2(26¿6666666666666666666666666q6666666q6666666666666666666666666662(2",
+				"2(2666666666666666£66x66666666q6666666q666666666¡66£666666666666662(2",
+				"2(2°6°666666666À666666666i6666q6666666q666666L666666666i6666¯66Á662(2",
+				"2(222222222222222222XXcXXXXXXXq6666666qXXXXXXX§XX222222222222222222(2",
+				"((((((((((((((((((Â2666c666666q6666666q666666§6662(((((((((((((((((((",
+				"2222222222(2222222226666c66666q6666666q66666§6666222222222(2222222222",
+				"6666666666566666666666666c6666q6666666q6666§6666666666666656666666666",
+				"66666666,,4,,6666666666666c666q6666666q666§6666666666666,,4,,66666666",
+				"66666666,,4,,6666666666666§XX6q6666666q6XXc6666666666666,,4,,66666666",
+				"6666666ZZZÄZZ666666666666§6666q6666666q6666c666666666666ZZÄZZZ6666666",
+				"666¡66666656666666666666§66666q6666666q66666c66666666666665666666¡666",
+				"6666666666566666666A666§666666q6666666q666666c6666A666666656666666666",
+				"←666666Å6Æ5g666À666666§6666666q6666666q6666666c6666666Ç6g6È6g6666666→",
+				"2222222222(22222222222222222266666666666222222222222222222(2222222222",
+				"((((((((((((((((((((((((((((266666↓666662((((((((((((((((((((((((((((",
+				"2(22222222222222222222222222266666r66666222222222222222222222222222(2"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¿": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"À": "PlaceSpecialTile(Origins/Background_Door,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Á": "PlaceSpecialChest(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Â": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+				"Ä": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(HalfBlock)",
+				"Å": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Æ": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ç": "PlaceSpecialTile(Origins/Background_Door,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceChest(Origins/Rusty_Locker,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"Junction_Tall_1": {
+			"Map": [
+				"2(22222222266666666666222222222(2",
+				"(((((((((((66666↑66666(((((((((((",
+				"2(22222222266666r66666222222222(2",
+				"2(2666*66*66q6666666q666*66*662(2",
+				"2(2466*66*66q6666666q666****642(2",
+				"2(2566****66q6664666q6666666652(2",
+				"2(2566666666q6665666q6666666652(2",
+				"2(2566666666q6665666q666666'652(2",
+				"2(2566666666q6665666q666666'652(2",
+				"2(256666⊟666q6665666q666666'652(2",
+				"2(2(2222222Xq6665666qX222XXXX^2(2",
+				"((((((((((26q6664666q622266'652((",
+				"222(22222226q6665666q622266'65222",
+				"666566666666q6665666q666666'65666",
+				"666455566666q6665666q665555k54666",
+				"666566¥66666q6665666q6¥6666'65666",
+				"666566666666q6665666q666666'65666",
+				"666¿66x66666q6664666q666666'65666",
+				"666566666666q6665666q666666'65666",
+				"←665h6666666q6665666q666666'6566→",
+				"222(2222222Xq6665666qX222XXXX^222",
+				"((((((((((26q6665666q622266'652((",
+				"2(2(22222226q6665666q622266'652(2",
+				"2(256T**U666q6664666q666666'652(2",
+				"2(2466666666q6665666q666666'642(2",
+				"2(2566666666q6665666q666666'652(2",
+				"2(2ÀZZZZZ666q6665666q666666'652(2",
+				"2(2566666666q6665666q666666'652(2",
+				"2(2566666666q6665666q666666'65((2",
+				"2(2Á6g6Â6666q6664666q666666'652(2",
+				"2(2(2222222Xq6665666qX222XXXX^2(2",
+				"((((((((((26q6665666q622266'652((",
+				"222(22222226q6665666q622266'65222",
+				"666566666666q6665666q666666'65666",
+				"666455555555a5555555a555555k54666",
+				"666566-66666q6664666q6M6666'65666",
+				"666566666666q6665666q666666'65666",
+				"666566666666q6665666q666666'65666",
+				"666566666666q6665666q666666'65666",
+				"↢6Ä566Y56666q6665666q666666'6566↣",
+				"222(222(222Xq6665666qX222XXXX^222",
+				"((((((((2226q6664666q622266'652((",
+				"2(2(22222226q6665666q622266'652(2",
+				"2(256666*666q6665666q666666'652(2",
+				"2(246666*666q6665666q666666'642(2",
+				"2(26666**666q6665666q666666'662(2",
+				"2(2***6*6666q6664666q666666'662(2",
+				"2(266*6*6666q6666666q666666'662(2",
+				"2(2Å6*6***66q6666666q666666'662(2",
+				"2(2*6*6*6*66q6666666q66Æ666'¯62(2",
+				"2(22222222266666666666222222222(2",
+				"(((((((((((66666↓66666(((((((((((",
+				"2(22222222266666r66666222222222(2"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↓": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊟": "PlaceSpecialTile(Origins/Background_Door,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"¿": "PlaceSpecialTile(Origins/Tool_Rack,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"À": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(HalfBlock)",
+				"Á": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Â": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ä": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Å": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+				"Æ": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left",
+					"Optional": true
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right",
+					"Optional": true
+				},
+				"↓": {
+					"Key": "CED",
+					"Direction": "Down",
+					"Offset": -1
+				}
+			},
+			"Tags": []
+		},
+		"Shinespark_Puzzle_2": {
+			"Map": [
+				"2(22222222222222222222222222222(2",
+				"(((((((((((((⊞⊞⊞(⊞⊞⊞(((((((((((((",
+				"2(22222(2(222yyy(yyy222(2(22222(2",
+				"65*66*656566+66,4,66+6656⊟****656",
+				"65****64656+++++++++++65646666656",
+				"6566666,6566+6666666+6656,6666656",
+				"6566666,6M66+6666666+6M66,6666656",
+				"656666666666+6666666+666666666656",
+				"←566i6666666+6666666+6666666i665→",
+				"2(2yyyyyyyy66666666666yyyyyyyy2(2",
+				"(((⊞⊞⊞⊞⊞⊞⊞⊞66666666666⊞⊞⊞⊞⊞⊞⊞⊞(((",
+				"2(2yyyy⊞yy⊞66666¿66666⊞yy⊞yyyy2(2",
+				"2(y6+66466p5a5k55k55a5p66466+6y⊞2",
+				"2(y6+66666+6q6'65'66q6+66666+6y⊞2",
+				"2(y6+66666+6q6'65'66q6+66666+6y⊞2",
+				"2(y6+66666+6q6'65'66q6+66666+6y⊞2",
+				"2(y+++++++++q6'65'66q+++++++++y⊞2",
+				"2(⊞5p55466+6q6'65'66q6+66455p5⊞⊞2",
+				"2(y6+66666+6q6'65'66q6+66666+6y⊞2",
+				"2(y6+6¡666+6q6'65'66q6+66666+6y⊞2",
+				"2(26+66666+6q6ÀÁ5'66q6+66666+62(2",
+				"2(26+6£666+6q6ÂÄ5'66q6+6Å666+62(2",
+				"2(2+++++++++q6665'66q+++++++++2(2",
+				"2((5p55466+6q6665'66q6+66455p5((2",
+				"2(26+66666+6q6665'66q6+66666+62(2",
+				"2(26+66666+6q6665666q6+66666+62(2",
+				"2(26+66666+6q6665666q6+66666+62(2",
+				"2(26+66666+6q6665666q6+6Æ6Æ6+62(2",
+				"2(2+++++++++q6664,66q+++++++++2(2",
+				"2((5p55466+6q6666666q6+66455p5((2",
+				"2(26+66666+6q6666666q6+66666+62(2",
+				"2(26+66666+6q6666L66q6+66666+62(2",
+				"2(26+66666+6q6XXXXX6q6+66666+62(2",
+				"2(26+6·666+6q6666666q6+66666+62(2",
+				"2(2+++++++++q6666666q+++++++++2(2",
+				"2((5p55466+6q6666666q6+66455p5((2",
+				"2(26+66666+6q6666666q6+66666+62(2",
+				"2(26+66666+6q6666666q6+66°66+62(2",
+				"2(26+66666+6q6666666q6+66666+62(2",
+				"2(26+66±66+6q6666666q6+6Ç6È6+62(2",
+				"2(2yyyyyyyy66666666666yyyyyyyy2(2",
+				"(((⊞⊞⊞⊞⊞⊞⊞y66666666666y⊞⊞⊞⊞⊞⊞⊞(((",
+				"2(2yyyyyyyy66666r66666yyyyyyyy2(2",
+				"65+6666666+66666666666+6666666+56",
+				"6p+++++++++++++++++++++++++++++p6",
+				"656666666666666666666666666666656",
+				"656666666666666666666666666666656",
+				"6566666666666666¥5666666666666656",
+				"6566666,45555666656655554,6666656",
+				"↢56Ê66666666Ì6666566Í66666666Ï65↣",
+				"2(22ÐÐÐÐÐÐÐÐ(2222(22(ÑÑÑÑÑÑÑÑ22(2",
+				"(((((((((((((((((((((((((((((((((",
+				"2(22222222222222222222222222222(2"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↢": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"↣": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊟": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpRight)",
+				"À": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Á": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
+				"Â": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
+				"Ä": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
+				"Å": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Medical)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Æ": "PlaceSpecialTile(Origins/Radio_Broadcaster,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ç": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ê": "PlaceSpecialTile(Origins/Conveyor_Scooper,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ì": "PlaceSpecialTile(Origins/Auto_Assembler,2,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Í": "PlaceSpecialTile(Origins/Auto_Assembler,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ï": "PlaceSpecialTile(Origins/Conveyor_Scooper,0,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ð": "PlaceTile(Origins/Fast_Conveyor_Belt_CC)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ñ": "PlaceTile(Origins/Fast_Conveyor_Belt)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				},
+				"↢": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"↣": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_Edge_Right_1": {
+			"Map": [
+				"7)77777777766666666666777777777)7",
+				")))))))))))66666↑66666)))))))))))",
+				"7)77777777)66666r66666)77777777e7",
+				"7)766T***⊖À555555555555*66*6T****",
+				"7)76666*66*666665666666**6*666666",
+				"7)7********666665666666**********",
+				"7)7+++++++++++++p++++++++++++++++",
+				"7)7{I\\©{I\\©{I\\©{Á\\©{I\\©{I\\©{I\\©{+",
+				"7)7+++++++++++++p++++++++++++++++",
+				"7)7666666666666656666666666666666",
+				"7)7666666666666656666666666666666",
+				"7)766666666666,,4,,66666666666666",
+				"7)76666666'666,,,,,66666666666666",
+				"7)76666666'6666666666666666666666",
+				"7)7XXXXXXXXXXXXXXXXXXXXXqXXXXXXXX",
+				"7)76666666'6666666666666q66666666",
+				"7)76666666'6666666666666q66666666",
+				"7)76666666'6666666666666q66666666",
+				"7)e6666666'6666666666666q66666666",
+				"7)e6Â66666'6666666666666q66666666",
+				"7)e6666666'66666A6666666q66666666",
+				"7)7¯6Â6Ä6`Å6`5ÆÅÅÇÈÊÊÊÊÊÊÊÊÊÊÊÊÊ→",
+				"7)777ÌÌÌÌÍÌÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ",
+				"7)777ÌÌÌÌÍÌÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ",
+				"7)777ÌÌÌÌÍÏÏÍÌÌÌÌÌÌÌÌÌÌÌÌÌÏÏÏÌÌÌÌ",
+				")))))ÍÍÍÍÐÐÐÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÐÐÍÍÍÍ",
+				"7)777ÌÌÌÌÌÌÏÏÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊖": "PlaceTile(Origins/Rusty_Piping)",
+				"À": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Â": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ä": "PlaceSpecialTile(Origins/Fungarust,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Å": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(HalfBlock)",
+				"Æ": "PlaceSpecialTile(Origins/Suit_Locker,6)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ï": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ð": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"→": {
+					"Key": "Mine",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_1": {
+			"Map": [
+				"7)77777777777777777777777777777777777777777777777777777777777777777)7",
+				")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+				"777777)777777777777777777777777777)777777777777777777777777777)777777",
+				"****665666*666666*66666666666666*656*66666666*6*66666*6666666656666T*",
+				"6666665666*666666*****************∿**66666666****6666*666666**∿**6666",
+				"******∿****6666666666666**666666665666666666666666666********65******",
+				"++++++p+++++++++++++++++++++++++++p+++++++++++++++++++++++++++p++++++",
+				"+I\\©{IÀ©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{IÀ©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{IÀ©{I\\©+",
+				"++++++p+++++++++++++++++++++++++++p+++++++++++++++++++++++++++p++++++",
+				"666666566666666666666666666666666656666666666666666666666666665666666",
+				"666666566666666666666666666666666656666666666666666666666666665666666",
+				"6666,,4,,66666666666666666666666,,4,,66666666666666666666666,,4,,6666",
+				"6666,,,,,66666666666666666666666,,4,,6666A6666'6666666666666,,,,,6666",
+				"666666666666666666j6°6666666Á66666566666666666'6666666Â66666666666666",
+				"XXXXXXXXXXXXXXqXXXXXXXXXXXXXXXXXXX^XXXXXXXXXXXXXXXqXXXXXXXXXXXXXXXXXX",
+				"66666666666666q6666666666666666666566666666666'666q666666666666666666",
+				"66666666666666q6666666666666666666566666666666'666q666666666666666666",
+				"66666666666666q6666666666666666666566666666666'666q666666666666666666",
+				"66666666666666q6666666666666666666566666666666'666q666666666666666666",
+				"66666666666666q66666666666666666¡656x666666666'666q666666666666666666",
+				"66666666666666q6666666666666666666566666666666'666q666666666666666666",
+				"←ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ→",
+				"ÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÇÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÈÈÈÈÈÆÆÆ",
+				"ÆÆÆÆÆÆÆÆÆÈÈÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÊÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÈÈÈÆÆÆÆ",
+				"ÆÆÆÆÆÆÈÈÈÈÈÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÊÈÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÈÈÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆ",
+				"ÇÇÇÇÇÇÇÊÊÊÊÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÊÊÊÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇ",
+				"ÆÇÆÆÆÆÆÆÈÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÇÆ"
+			],
+			"Key": {
+				"←": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"∿": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"À": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpLeft)",
+				"Á": "PlaceSpecialTile(Origins/Background_Door,3)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Â": "PlaceSpecialChest(Origins/Medium_Storage_Container,0,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ä": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Å": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Æ": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ç": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)",
+				"È": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ê": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Mine",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Mine",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_Edge_Left_1": {
+			"Map": [
+				"7)77777777766666666666777777777)7",
+				")))))))))))66666↑66666)))))))))))",
+				"7777777777)66666r66666)77777777)7",
+				"***U666*665555555555555*666*667)7",
+				"666666**666666665666666******67)7",
+				"*******666666666566666666666**7)7",
+				"++++++++++++++++p+++++++++++++7)7",
+				"+©{I\\©{I\\©{I\\©{I⊕©{I\\©{I\\©{I\\©7)7",
+				"++++++++++++++++p+++++++++++++7)7",
+				"6666666666666666566666666666667)7",
+				"6666666666666666566666666666667)7",
+				"66666666666666,,4,,666666666667)7",
+				"66666666666666,,,,,666666'66667)7",
+				"666666°666666666666666666'66667)7",
+				"XXXXXXXXXXqXXXXXXXXXXXXXXXXXXX7)7",
+				"6666666666q66666666666666'66667)7",
+				"6666666666q66666666666666'66667)7",
+				"6666666666q66666666666666'66667)7",
+				"6666666666q66666666666666'66667)7",
+				"6666666666q666666666666x6'66667)7",
+				"6666666666q666666A6666666'66667)7",
+				"←ÀÀÀÀÀÀÀÀÀÀÀÀÀÁ6ÂÄ6`5ÅÆÇÈÄ6Ê667)7",
+				"ÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌÌÍÌÌÌÌÌÌÌÌ777)7",
+				"ÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌÌÍÌÌÌÌÌÌÌÌ777)7",
+				"ÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌÌÍÌÌÌÌÌÌÌÌ777)7",
+				"ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÏ))))",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ777)7"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊕": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpLeft)",
+				"À": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Á": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Â": "PlaceSpecialTile(Origins/Suit_Locker,8)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ä": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(HalfBlock)",
+				"Å": "PlaceSpecialTile(Origins/Suit_Locker,6)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Æ": "PlaceSpecialTile(Origins/Fungarust,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceSpecialTile(Origins/Fungarust,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ê": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ï": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Mine",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_Edge_Right_2": {
+			"Map": [
+				"7)77777777766666666666777777777)7",
+				")))))))))))66666↑66666)))))))))))",
+				"7)77777777)66666r66666)77777777e7",
+				"≖ÀÁ6*6666*55555555555556*6T******",
+				"ÌÂÁ6******66666666666666*66666666",
+				"ÌÍÁ66+66+666666666666666*********",
+				"ÌÍÄ66+66+66666666666666666666666+",
+				"ÌÍÌ66+66+66666666666666666666666+",
+				"ÌÍÅÆ6+66+66666666666666666666666+",
+				"ÌÍÌÌ++++++66666666666666666666666",
+				"ÌÍÌÌ6+66+666666666666666666666666",
+				"ÌÍÌÌÈ+66+666666666666666666666666",
+				"ÌÍÌÌÊÊ66+66666666666666'666666666",
+				"ÌÍÌÌÌÊ66+66666666666666'666666666",
+				"ÌÍÌÌÌÊÈ+++66666666666XXXXXXXXXXXX",
+				"ÌÍÌÌÌÌÊ6+66666666666666'666666666",
+				"ÌÍÌÌÌÌÊ6+66666666666666'666666666",
+				"ÌÍÌÌÌÌÊ6+66666666666666'666666666",
+				"ÌÍÌÌÌÌÌÈ+66666666666666'666666666",
+				"ÌÍÌÌÌÌÌÊÊ6666666¡666x66'666666666",
+				"ÌÍÌÌÌÌÌÌÊÆ6666566666666'666666666",
+				"ÌÍÌÊÌÌÌÌÌÊÈ66Ï566ÇÐÑÑÑÑÑÑÑÑÑÑÑÑÑ→",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÍÌÌÌÌÌÌÌÒÌÌÌÌÌÌÌÌÌÌ",
+				"ÅÍÌÌÌÌÌÌÌÌÌÌÌÌÍÌÌÌÌÌÒÒÒÌÌÌÌÌÌÌÌÌÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÍÌÒÒÌÌÒÒÒÒÌÌÌÌÌÌÌÌÌ",
+				"ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"≖": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(HalfBlock)",
+				"Á": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Â": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownLeft)",
+				"Ä": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeDownLeft)",
+				"Å": "PlaceTile(Origins/Tainted_Stone)",
+				"È": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+				"Ê": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ï": "PlaceSpecialTile(Origins/Floodlight,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ð": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ñ": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ò": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"→": {
+					"Key": "Mine",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_2": {
+			"Map": [
+				"7)77777777777777777777777777777777777777777777777777777777777777777)7",
+				")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+				"7)7777)777777777777777777777777777)777777777777777777777777777)7777)7",
+				"*⊖***U5666**********U66*6666T*****566*66666666666666T*********À6666Á*",
+				"65666656666666666666666*6666666666566*********66666666666666665666656",
+				"*⊖****⊖*****************666666666656666666666*****************⊖****⊖*",
+				"+p++++p+++++++++++++++++++++++++++p+++++++++++++++++++++++++++p++++p+",
+				"+Â\\©{IÄ©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{IÄ©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{IÄ©{I\\Å+",
+				"+p++++p+++++++++++++++++++++++++++p+++++++++++++++++++++++++++p++++p+",
+				"6566665666666666666666666666'6'66656666666666666666666666666665666656",
+				"6566665666666666666666666666'6'66656666666666666666666666666665666656",
+				"6566,,4,,6666666666666666666'6'6,,4,,66666666666666666666666,,4,,6656",
+				"6566,,,,,66666A666666'666666'6'6,,,,,66666666666666666666666,,,,,6656",
+				"65666666666666666Æ666'666666'6'66666666666È66666666666666666666666656",
+				"X^XXXXXXXXXXXXXXXXqXXXXXX]66'6'666666]XXXXXXXXXXXXXXXXXXXqXXXXXXXXX^X",
+				"656666666666666666q66'666666'6'66666666666666666666666666q66666666656",
+				"656666666666666666q66'666666'6'66666666666666666666666666q66666666656",
+				"656666666666666666q66'666666'6'66666666666666666666666666q66666666656",
+				"656666666666666666q66'66666666'66666666666666666666666666q66666666656",
+				"656666666666¡66666q66'66666666'66666666666666666666¡66x66q66666666656",
+				"656666666666666666q66'66666666'66666666666666666666666666q66666666656",
+				"←ÊÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÐÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÏÊ→",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÑÒÒÒÒÒÓÒÕÒÒÒÒÒÒÖÌÌÌÌÌÌÌÌÌÌÌÌÌ×××××ÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÑÒÒÒÒØÙÒÕÒÒÒÒÒÒÖÌÌÌÌÌÌÌÌÌÌÌÌÌ××Ì×ÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÑÒÒÒÚÛÒÒÕÒÒÒÒÒÒÖÌÌÌÌÌÌÌÌÌÌÌ××××ÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÍÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÑÒÒÒÒÒÒÒÕÒÒÒÒÒÒÖÌÌÌÌÌÌÌÌÌÌÌ××ÌÌÌÌÌÌÌÌÌÌÌÍÍ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÑÒÒÒÒÒÒÒÕÒÒÒÒÒÒÖÌÌÌÌÌÌÌÌÌ×××ÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌ×××ÌÌÌÌÌÌÌÌÌÌÌÒÒÒÒÒÒÒÒÒÕÒÒÒÒÒÒÒÜÒÒÜÒÒÒÒ××ÒÒÒÒÜÒÒÒÒÒÒÒÝÞ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌ×××××ÌÌÌÌÌÌÌßÒÒÒÒÒÒÒÒÒÒÒÒÕÒÒÒÒÒÒÜÒÒÜÒÒÒÒÒÒÒÒÒÒÜÒÒÒÒÒÒÒàÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌ××ÌÌÌÌÌÌÌÌÌÌÒÒÒÒÒÒÒÒÒÒÒÒÒÕÒÒÒÒÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÒÒÒÒÒÒÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÞÒÒÒÒÒÒÒÒÒÒÒÒÒÕÒÒÒÜÜÒÒÜÒÒÒÒÜÜÒÒÒÒÜÒÒÒÒÒÒÒÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÒÒÒÒÒÒÒÒÒÒÒÒÒÒÕÒÒÜÜÒÒÜÒÒÒÒÜÜÒÒÒÒÜÒÒÒÒÒÒáÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÕÒÒÜÒÒÜÒÒÒÒÒÒÒÒÒÒÜÒÒÒÒÒÒÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÕÒÜÒÒÜÒÒÒÒÒÒÒÒÒÒÜÒÒÒÒßâÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÕÜÒÒÜÒÒÒÒÒÒÒÒÒÒÒÒÒÒáÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ×ÌÒãßÞäÒÒÒåÒææçèæéÒßêÒßÞëìììììììììììììíãÌâÌÌÌÌÍÌ",
+				"ÌîïïïïïïïïïïïïïïïïïïðïððïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïñÌ",
+				"ÌîïïïïïïïïïïïïïïïïïïïðððððïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïïðððñÌ",
+				"ÌîïïïïïïïïïïïïïïïïïïïððððïïïïïïïïïïïïïïïïïïïïððïïïïïïïïïïïïïïïïïïïðñÌ",
+				"ÍîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîîÍ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ"
+			],
+			"Key": {
+				"←": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊖": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"À": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpLeft)",
+				"Á": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpRight)",
+				"Â": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownRight)",
+				"Ä": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpLeft)",
+				"Å": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpRight)",
+				"Æ": "PlaceSpecialTile(Origins/Background_Door,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceSpecialChest(Origins/Medium_Storage_Container,2,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ê": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ï": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ð": "PlaceFramedTile(MinecartTrack,5,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ñ": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeDownLeft)",
+				"Ò": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ó": "PlaceTile(Chain)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Õ": "PlaceFramedTile(MinecartTrack,8,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ö": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeUpRight)",
+				"×": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ø": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ù": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeDownRight)",
+				"Ú": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeUpRight)",
+				"Û": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeUpLeft)",
+				"Ü": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ý": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)",
+				"Þ": "PlaceSpecialTile(Origins/Fungarust)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ß": "PlaceSpecialTile(Origins/Fungarust,2)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"à": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownRight)",
+				"á": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeDownRight)",
+				"â": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(HalfBlock)",
+				"ã": "PlaceSpecialTile(Origins/Fungarust,1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ä": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_Oil)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"å": "PlaceSpecialTile(Origins/Floodlight,1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"æ": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Black_Wire_Mode)",
+				"ç": "PlaceSpecialTile(Origins/Fungarust)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Black_Wire_Mode)",
+				"è": "PlaceSpecialTile(Origins/Fungarust,1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Black_Wire_Mode)",
+				"é": "PlaceSpecialTile(Origins/Gas_Generator)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ê": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Mineral)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ë": "PlaceFramedTile(MinecartTrack,7,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ì": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"í": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"î": "PlaceTile(Origins/Tainted_Stone)+PlaceWire(Brown_Wire_Mode)",
+				"ï": "PlaceTile(Origins/Tainted_Stone)",
+				"ð": "PlaceTile(Origins/Sanguinite_Ore)",
+				"ñ": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Mine",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Mine",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_Edge_Left_2": {
+			"Map": [
+				"7)77777777766666666666777777777)7",
+				")))))))))))66666↑66666)))))))))))",
+				"7777777777)66666r66666)77777777)7",
+				"*****U66*655555555555556+666+6⊕ÀÁ",
+				"6666666**666666666666666+666+6⊕ÂÌ",
+				"********666666666666666+++++++ÁÍÌ",
+				"+66666666666666666666666+666+6ÌÍÌ",
+				"+66666666666666666666666+666+ÄÌÍÌ",
+				"+66666666666666666666666+666+ÅÌÍÌ",
+				"666666666666666666666666+666+ÅÌÍÌ",
+				"66666666666666666666666+++++ÅÌÌÍÌ",
+				"666666666666666666666666+666ÅÌÌÍÌ",
+				"666666666'66666666666666+666ÅÌÌÍÌ",
+				"66666¯666'66666666666666+66ÆÅÌÌÍÌ",
+				"XXXXXXXXXXXX666666666666+66ÅÌÌÌÍÌ",
+				"666666666'6666666666666+++ÄÅÌÌÌÍÌ",
+				"666666666'66666666666666+6ÅÅÌÌÌÍÌ",
+				"666666666'66666666666666+6ÅÌÌÌÌÍÌ",
+				"666666666'66666666666666+ÄÌÌÌÌÌÍÌ",
+				"666666666'66666666666666+ÅÌÌÅÌÈÍÌ",
+				"666666666'666666A656666ÇÅÅÌÌÌÌÈÍÌ",
+				"←ÊÊÊÊÊÊÊÊÊÊÊÊÊÊÏ66Ð666ÆÅÌÌÌÌÌÌÌÍÌ",
+				"ÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÑÌÌÍÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÌÌÌÌÌÌÌÌÌÑÌÌÌÑÑÑÑÒÑÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÌÌÌÑÑÑÑÌÌÑÑÌÌÌÌÑÑÒÑÑÑÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÍÍÍÍÍÍÍÒÒÍÍÍÒÍÍÍÒÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ"
+			],
+			"Key": {
+				"↑": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"←": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊕": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Á": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(HalfBlock)",
+				"Â": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownRight)",
+				"Ä": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
+				"Å": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceTile(Origins/Tainted_Stone)",
+				"Ï": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ð": "PlaceSpecialTile(Origins/Floodlight,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ñ": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ò": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"↑": {
+					"Key": "CED",
+					"Direction": "Up",
+					"Offset": -1
+				},
+				"←": {
+					"Key": "Mine",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Ashen_Mine_3": {
+			"Map": [
+				"7)77777777777777777777777777777777777777777777777777777777777777777)7",
+				")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+				"7)7777)777777777777777777777777777)777777777777777777777777777)7777)7",
+				"U5*6*6566666666666*666666666*6666656*6666*666666T******U66*66*56***⊕*",
+				"65*6*6566666666666*666666666******⊕**6666*6666666666666666*66*5666656",
+				"*⊕****⊕************6666666666666665666666*********************⊕****⊕*",
+				"+p++++p+++++++++++++++++++++++++++p+++++++++++++++++++++++++++p++++p+",
+				"+Á\\©{IÂ©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{IÂ©{I\\©{I\\©{I\\©{I\\©{I\\©{I\\©{IÂ©{I\\Ä+",
+				"+p++++p+++++++++++++++++++++++++++p+++++++++++++++++++++++++++p++++p+",
+				"6566665666666666666666666666666'6656666666666666666666666666665666656",
+				"6566665666666666666666666666666'6656666666666666666666666666665666656",
+				"6566,,4,,666666Å666666666666666',,4,,66666666666666666666666,,4,,6656",
+				"6566,,,,,6666666666666666666666',,,,,66A6666'666666666666666,,,,,6656",
+				"65666666666666j6È6666666666i666'666666666666'6666666Ï6666666666666656",
+				"X^XXXXXXXXXqXXXXXXXX]6]XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXqXXXXXXXX^X",
+				"65666666666q6666666666666666666'666666666666'6666666666666q6666666656",
+				"65666666666q6666666666666666666'666666666666'6666666666666q6666666656",
+				"65666666666q666666666666666666ÐÑ666666666666'6666666666666q6666666656",
+				"65666666666q666666666666666666ÒÓ666666666666'6666666666666q6666666656",
+				"65666666666q66x66666666666666666666666666666'666666¡66x666q6666666656",
+				"65666666666q66666666666666666666666666666666'6666666666666q6666666656",
+				"←ÕÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÖÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÕ→",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ×ØØØØØÙØØØØØØØÚÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÛÌÌÌÌÌÌÌÌÌÌÌÌÌ×ØØØØØÙØØØØØØØÚÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÛÛÛÛÌÌÌÌÌÌÌÌÌ×ØØØØØÙØØØØØØØÚÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÛÛÛÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÛÛÛÌÌÌÌÌÌÌÌ×ØØØØØÙØØØØØØØÚÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÛÛÛÛÌÌÌÌÌÌÌÍÌ",
+				"ÍÍÌÌÌÌÌÌÌÌÌÌÌÌÛÛÌÌÌÌÌÌÌÌ×ØØØØØÙØØØØØØØÚÌÌÌÌÌÌÌÌÌÌÌÛÛÛÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÍ",
+				"ÌÜØØØÝØØØÝØØØØØÝÛØØØØÝØØØØØØØÙØØØØØØØØÌÝÌÌÌÌÌÌÌÌÌÌÛÛÛÛÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÞÝÝÝÝÝÝÝÝÝÝÝÝÝÝÝÝÝÝÝÝØØØØØÙØØØØØØØØØÌÝÌÌÌÌÌÌÌÌÌÌÛÛÌÛÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌØÝØØØÝØØØØÝÝÝØØØØÝØØØØØÙØØØØØØØØØØÝÝÝÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÞÝØØØÝØØØØØØØØØØØÝØØØØÙØØØØØØØØØØØØÝØÝÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌØØØÝØØØØØØØØØØØÝØØØÙØØØØØØØØØØØØÝÝÝÝÝÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌØØØÝØØØØØØØØØØØÝØØÙØØØØØØØØØØØØØØÝØÝØÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÞØØÝØØØØØØØØØØØÝØÙØØØØØØØØØØØØØØØØØÝØØßÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÌÌØØØØØØØØØØØØØØÝÙØØØØØØØØØØØàààààØØÝØØØßÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌÍÌÌÌÛÛáØâãããããããããããäåæçåæèØéØØØêØØØåØëØÝçØæçåØçÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ",
+				"ÌìíííîîîîííííííííííííííííííííííííííííííííííííííííííííííííííîíííííííìÌ",
+				"ÌìííííîîîîííííííííííííííííííííííîíííííííííííííííííííííííííííîííííííìÌ",
+				"ÌìíííííííîííííííííííííííííííîîîîîîíííííííííííííííííííííííííííííííííìÌ",
+				"ÍììììììììììììììììììììììììììììììïïïììììììììììììììììììììììììììììììììììÍ",
+				"ÌÍÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÍÌ"
+			],
+			"Key": {
+				"←": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "PlaceFramedTile(MinecartTrack,3,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊕": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Â": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpLeft)",
+				"Ä": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeUpRight)",
+				"Å": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Oil)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"È": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Supplies)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ï": "PlaceSpecialChest(Origins/Medium_Storage_Container,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ð": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+				"Ñ": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ò": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
+				"Ó": "PaintTile(GrayPaint)+PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
+				"Õ": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+				"Ö": "PlaceFramedTile(MinecartTrack,4,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"×": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeUpLeft)",
+				"Ø": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ù": "PlaceFramedTile(MinecartTrack,9,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ú": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeDownRight)",
+				"Û": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Ü": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownLeft)",
+				"Ý": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"Þ": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(HalfBlock)",
+				"ß": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(SlopeUpRight)",
+				"à": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Black_Wire_Mode)",
+				"á": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+SlopeTile(HalfBlock)",
+				"â": "PlaceFramedTile(MinecartTrack,2,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ã": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ä": "PlaceFramedTile(MinecartTrack,6,-1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"å": "PlaceSpecialTile(Origins/Fungarust,2)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"æ": "PlaceSpecialTile(Origins/Fungarust)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ç": "PlaceSpecialTile(Origins/Fungarust,1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"è": "PlaceChest(Origins/Small_Storage_Container,2,Ashen_Mineral)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"é": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Oil)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ê": "PlaceSpecialTile(Origins/Floodlight,1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ë": "PlaceSpecialTile(Origins/Gas_Generator)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+				"ì": "PlaceTile(Origins/Tainted_Stone)+PlaceWire(Brown_Wire_Mode)",
+				"í": "PlaceTile(Origins/Tainted_Stone)",
+				"î": "PlaceTile(Origins/Sanguinite_Ore)",
+				"ï": "PlaceTile(Origins/Sanguinite_Ore)+PlaceWire(Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Mine",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Mine",
 					"Direction": "Right"
 				}
 			},
@@ -4723,42 +6340,70 @@
 		"l": "PlaceSpecialChest(Origins/Medium_Storage_Container,2,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"g": "PlaceChest(Origins/Rusty_Locker,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"w": "PlaceSpecialTile(FoodPlatter,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"t": "PlaceSpecialTile(Origins/Air_Vent)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
 		"m": "PlaceSpecialTile(Origins/Sheet_Metal,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"n": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+PlaceWire(Black_Wire_Mode)",
 		"o": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
 		"p": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
 		"s": "PlaceSpecialTile(Origins/Fire_Extinguisher_Holder)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
-		"t": "PlaceSpecialTile(Origins/Air_Vent)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
 		"u": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
 		"v": "PlaceFramedTile(Origins/Mechanical_Key_Node_Blue,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode,White_Wire_Mode)",
-		"x": "PlaceSpecialTile(Origins/Tool_Rack,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"y": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"z": "PlaceSpecialTile(Origins/Door_Stopper,0,1)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
 		"|": "PlaceSpecialTile(Origins/Door_Stopper,1,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"r": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,7)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"~": "PlaceSpecialTile(Origins/Door_Stopper,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
 		"¡": "PlaceSpecialTile(Origins/Tool_Rack,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"¢": "PlaceSpecialTile(Origins/Administrator_Panel)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)",
+		"x": "PlaceSpecialTile(Origins/Tool_Rack,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"£": "PlaceSpecialTile(Origins/Tool_Rack)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"¤": "PlaceFramedTile(Origins/Mechanical_Key_Node_Yellow,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode,White_Wire_Mode)",
 		"¥": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"¦": "PlaceSpecialTile(Origins/Modular_Bunk,2,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"§": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
-		"¨": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
 		"©": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
 		"ª": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
 		"«": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
 		"®": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+		"¯": "PlaceChest(Origins/Small_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"°": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"±": "PlaceSpecialChest(Origins/Medium_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"²": "PlaceFramedTile(Origins/Transistor,18,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+		"³": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
 		"´": "PlaceSpecialTile(Origins/Modular_Bunk,0,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"µ": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"¨": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
 		"¬": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall3_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
 		"[": "PlaceSpecialTile(Origins/Industrial_Work_Bench)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+		"¶": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"·": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Generic)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"¸": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownLeft)",
+		"¹": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
+		"º": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+		"»": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
+		"¼": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
+		"½": "PlaceLiquid(Origins/Oil)+PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"¾": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"¿": "PlaceSpecialTile(Origins/Cargo_Elevator_Door_Open,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"À": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)",
+		"Á": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)+SlopeTile(SlopeDownRight)",
+		"r": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,7)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"]": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"\\": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
-		"Ô": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Brown_Wire_Mode,White_Wire_Mode)"
+		"'": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"Ã": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"Æ": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(HalfBlock)",
+		"Ç": "PlaceSpecialTile(Origins/Fungarust)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"É": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode)",
+		"Ê": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"Ë": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Brown_Wire_Mode,White_Wire_Mode)",
+		"Ì": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
+		"Í": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Brown_Wire_Mode)",
+		"Î": "PlaceSpecialTile(Origins/Suit_Locker,6)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+		"Ô": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Brown_Wire_Mode,White_Wire_Mode)",
+		"{": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+		"}": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,7)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+		"⊞": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Brown_Wire_Mode)",
+		"∐": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)"
 	},
 	"BreakCondition": "MaxRoomCount(1000)"
 }
