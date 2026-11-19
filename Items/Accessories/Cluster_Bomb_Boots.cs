@@ -13,7 +13,6 @@ public class Cluster_Bomb_Boots: ModItem {
 		);
 	public override void SetStaticDefaults() {
 		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(160);
-		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
