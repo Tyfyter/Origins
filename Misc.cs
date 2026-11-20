@@ -6514,7 +6514,7 @@ namespace Origins {
 			}
 		}
 		public static void SetExplosiveData(this GlobalProjectile self, int type, int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low) {
-			if (self.GetType().GetProperty("projectileTypes", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is PropertyInfo id && id.PropertyType == typeof(HashSet<int>)) (id.GetValue(null) as HashSet<int>).Add(type);
+			if (self.GetType().GetField("projectileTypes", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is FieldInfo id && id.FieldType == typeof(HashSet<int>)) (id.GetValue(null) as HashSet<int>).Add(type);
 			SetExplosiveData(type, tripwireRange, tripwireStyle, priority);
 		}
 		public static void SetExplosiveData(this GlobalProjectile self, int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low, params int[] types) {
