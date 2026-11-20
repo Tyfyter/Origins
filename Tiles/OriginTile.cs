@@ -52,7 +52,6 @@ namespace Origins.Tiles {
 			}
 		}
 	}
-	//temp solution
 	public interface IDefiledTile {
 		public bool CountsForSpawns(NPCSpawnInfo spawnInfo) => true;
 	}

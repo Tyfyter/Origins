@@ -23,6 +23,7 @@
 					"Offset": -1
 				}
 			},
+			"Weight": "0.1*WithoutRoom(Bottom)",
 			"Tags": []
 		},
 		"Bottom": {
