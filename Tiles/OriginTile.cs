@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core.Structures;
 using Origins.Graphics;
 using ReLogic.Content;
 using System;
@@ -36,6 +37,11 @@ namespace Origins.Tiles {
 			}
 		}
 		public static void FrameSurrounding(int i, int j, out int left, out int top) {
+			if (SkipFraming.doSkip) {
+				left = i;
+				top = j;
+				return;
+			}
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out left, out top);
 			for (int x = 0; x < data.Width; x++) {

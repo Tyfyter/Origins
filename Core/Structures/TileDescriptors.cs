@@ -38,14 +38,16 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public class PlaceWire : SerializableTileDescriptor {
+		public interface IIgnore;
 		public override void Load() {
 			AddSerializer(tile => {
 				StringBuilder builder = new();
 				foreach (WireMode mode in ModContent.GetContent<WireMode>()) {
+					if (mode is IIgnore) continue;
 					(int i, int j) = tile.GetTilePosition();
 					if (mode.GetWire(i, j)) {
 						if (builder.Length > 0) builder.Append(',');
-						builder.Append(mode.Mod is Origins ? mode.Name : mode.FullName);
+						builder.Append(mode.Mod is PegasusLib.PegasusLib ? mode.Name : mode.FullName);
 					}
 				}
 				if (builder.Length <= 0) return null;

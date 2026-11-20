@@ -4537,7 +4537,8 @@ Scrap_Compactor: {
 	/* Tooltip:
 		'''
 		Your explosives will explode into frenzied shrapnel
-		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
+		Nearby enemies below 40% max life while affected
+		by [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
 		''' */
 }
 
@@ -7802,7 +7803,7 @@ Lathe_Item: {
 }
 
 Bomb_Rack: {
-	// DisplayName: Bomb Rack
+	// DisplayName: Bomb Rack Boots
 	/* Tooltip:
 		'''
 		Allows flight

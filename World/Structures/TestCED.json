@@ -12,7 +12,6 @@
 				"FFFFFF     S     FFFFFF",
 				"FFFFFF     O     FFFFFF"
 			],
-			"StartPos": "S",
 			"Key": {
 				"S": "Empty"
 			},
@@ -23,11 +22,12 @@
 					"Offset": -1
 				}
 			},
+			"StartPos": "S",
 			"Tags": []
 		},
 		"Bottom": {
 			"Map": [
-				"FFFFFF           FFFFFF",
+				"¡¢£¤¥F           FFFFFF",
 				"FFFFFF     S     FFFFFF",
 				"FFFFFF     O     FFFFFF",
 				"FFF                 FFF",
@@ -37,9 +37,13 @@
 				"FFF                 FFF",
 				"FFF                 FFF"
 			],
-			"StartPos": "S",
 			"Key": {
-				"S": "Empty"
+				"S": "Empty",
+				"¡": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(AND, 4)",
+				"¢": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(OR, 7)",
+				"£": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(XOR, 3)",
+				"¤": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(NIMPLY, 225)",
+				"¥": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(Diode, 5)"
 			},
 			"SocketKey": {
 				"S": {

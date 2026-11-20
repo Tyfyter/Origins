@@ -15,12 +15,12 @@ public class StructureCommand : ModCommand {
 
 	public override void Action(CommandCaller caller, string input, string[] args) {
 		Point pos = caller.Player.Bottom.ToTileCoordinates();
-		DeserializedStructure.AsyncLoad(args[0]).ContinueWith(result => {
+		DeserializedStructure.AsyncLoad(args[0]).ContinueWith(result => Main.RunOnMainThread(delegate {
 			if (result.IsFaulted) {
 				caller.Reply($"Failed to generate structure. reason: {result.Exception}", Color.OrangeRed);
 			} else {
 				result.Result.Generate(pos.X, pos.Y);
 			}
-		});
+		}));
 	}
 }

@@ -830,7 +830,7 @@ XXXOBOXXX";
 			}
 		}
 	}*/
-	file class SkipFraming : GlobalTile {
+	public class SkipFraming : GlobalTile {
 		public static bool doSkip;
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) => !doSkip;
 		class SkipWallFraming : GlobalWall {
