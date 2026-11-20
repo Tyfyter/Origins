@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back, EquipType.Front)]
 	public class Blizzardwalkers_Jacket : ModItem, ICustomWikiStat {
@@ -9,7 +10,7 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 		];
 		public override void SetDefaults() {
-			Item.DefaultToAccessory(20, 28);
+			Item.DefaultToAccessory(30, 34);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.master = true;

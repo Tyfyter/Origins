@@ -4537,7 +4537,7 @@ Scrap_Compactor: {
 	/* Tooltip:
 		'''
 		Your explosives will explode into frenzied shrapnel
-		Nearby enemies below 40% max life while affected
+		Nearby enemies below {0}% max life while affected
 		by [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
 		''' */
 }
@@ -8859,3 +8859,13 @@ Kinetic_Cuffs: {
 }
 
 // Cluster_Bomb_Boots.DisplayName: Cluster Bomb Boots
+
+Scrappickers_Glove: {
+	// DisplayName: Scrappickers Glove
+	// Tooltip: ""
+}
+
+Smogwalkers_Trenchcoat: {
+	// DisplayName: Smogwalkers Trenchcoat
+	// Tooltip: ""
+}

@@ -286,6 +286,7 @@ namespace Origins {
 		public bool strangeComputer = false;
 		public Color strangeComputerColor = Color.Blue;
 		public bool scrapCompactor = false;
+		[AutoReset] public IScrapCompactor scrapCompactorItem;
 		public int scrapCompactorTimer = 0;
 		public bool scrapBarrierCursed = false;
 		public bool slagBucketCursed = false;

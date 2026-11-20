@@ -6,7 +6,7 @@ using Terraria.Utilities;
 
 namespace Origins.Items.Accessories;
 [AutoloadEquip(EquipType.Shoes, EquipType.Wings)]
-public class Cluster_Bomb_Boots: ModItem {
+public class Cluster_Bomb_Boots : ModItem {
 	public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 			Language.GetOrRegister($"Mods.Origins.Items.{nameof(Bomb_Rack)}.Tooltip"),
 			Language.GetOrRegister($"Mods.Origins.Items.{nameof(Scrap_Compactor)}.Tooltip")
@@ -15,7 +15,7 @@ public class Cluster_Bomb_Boots: ModItem {
 		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(160);
 	}
 	public override void SetDefaults() {
-		Item.DefaultToAccessory();
+		Item.DefaultToAccessory(30, 24);
 		Item.DamageType = DamageClasses.Explosive;
 		Item.damage = 48;
 		Item.useTime = 12;

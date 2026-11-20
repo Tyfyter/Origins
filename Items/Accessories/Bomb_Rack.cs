@@ -13,7 +13,7 @@ public class Bomb_Rack : ModItem {
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
-		Item.DefaultToAccessory();
+		Item.DefaultToAccessory(30, 26);
 		Item.DamageType = DamageClasses.Explosive;
 		Item.damage = 48;
 		Item.useTime = 12;

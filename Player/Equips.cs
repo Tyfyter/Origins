@@ -160,9 +160,12 @@ namespace Origins {
 					const int range = 16 * 20;
 					const int rangeSQ = range * range;
 					foreach (NPC npc in Main.ActiveNPCs) {
-						if (npc.life <= npc.lifeMax * (npc.boss ? 0.1f : 0.4f) && npc.HasBuff<Impeding_Shrapnel_Debuff>() && Player.DistanceSQ(npc.Center) <= rangeSQ) {
+						float healthThreshold = scrapCompactorItem?.HealthThreshold(npc) ?? (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type] ? 0.1f : 0.4f);
+						float damage = scrapCompactorItem?.Damage(Player, npc) ?? (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type] ? 0.005f : 0.05f);
+
+						if (npc.life <= npc.lifeMax * healthThreshold && npc.HasBuff<Impeding_Shrapnel_Debuff>() && Player.DistanceSQ(npc.Center) <= rangeSQ) {
 							npc.StrikeNPC(new NPC.HitInfo() {
-								Damage = (int)(npc.lifeMax * (npc.boss ? 0.005f : 0.05f))
+								Damage = (int)(npc.lifeMax * damage)
 							});
 						}
 					}
