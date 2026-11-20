@@ -53,7 +53,7 @@ public class Star_Soldier_Summon_Item : ModItem, ICustomWikiStat {
 				if (!match.Success) continue;
 				tooltips.RemoveAt(i);
 				if (match.Groups[1].Value == "0") {
-					tooltips.Insert(i, new(Mod, "UsedTooltip", this.GetLocalization("UsedTooltip").Value));
+					tooltips.Insert(i, new(Mod, "UsedTooltip", Lang.SupportGlyphs(this.GetLocalization("UsedTooltip").Value)));
 					break;
 				}
 			}
