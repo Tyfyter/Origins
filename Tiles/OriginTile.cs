@@ -37,12 +37,13 @@ namespace Origins.Tiles {
 			}
 		}
 		public static void FrameSurrounding(int i, int j, out int left, out int top) {
-			if (SkipFraming.doSkip) {
-				left = i;
-				top = j;
-				return;
-			}
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+#if DEBUG
+			if (data is null) {
+				Tile tile = Main.tile[i, j];
+				throw new Exception("Please hover over tile & send a screenshot if you encounter this");
+			}
+#endif
 			TileUtils.GetMultiTileTopLeft(i, j, data, out left, out top);
 			for (int x = 0; x < data.Width; x++) {
 				for (int y = 0; y < data.Height; y++) {

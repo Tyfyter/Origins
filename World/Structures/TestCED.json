@@ -12,6 +12,7 @@
 				"FFFFFF     S     FFFFFF",
 				"FFFFFF     O     FFFFFF"
 			],
+			"StartPos": "S",
 			"Key": {
 				"S": "Empty"
 			},
@@ -22,7 +23,6 @@
 					"Offset": -1
 				}
 			},
-			"StartPos": "S",
 			"Tags": []
 		},
 		"Bottom": {
@@ -64,6 +64,12 @@
 					"Offset": -1
 				}
 			},
+			"Tags": []
+		},
+		"JustDoor": {
+			"Map": [
+				"O"
+			],
 			"Tags": []
 		}
 	},
