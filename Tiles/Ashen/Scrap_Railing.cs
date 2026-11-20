@@ -242,6 +242,7 @@ public class Scrap_Railing : Platform_Tile {
 		HitSound = SoundID.Tink;
 	}
 	public override bool Slope(int i, int j) {
+		return false;
 		Tile tile = Main.tile[i, j];
 		switch (tile.Slope) {
 			case SlopeType.Solid:
