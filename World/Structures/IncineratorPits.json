@@ -39,8 +39,8 @@
 			"StartPos": "S",
 			"Key": {
 				"j": "PlaceTile(Origins/Truss_Block)",
-				"l": "PlaceTile(Origins/Truss_Block)+PlaceWire(Black_Wire_Mode)",
-				";": "Empty+PlaceWire(Black_Wire_Mode)",
+				"l": "PlaceTile(Origins/Truss_Block)+PlaceWire(Origins/Black_Wire_Mode)",
+				";": "Empty+PlaceWire(Origins/Black_Wire_Mode)",
 				"z": "PlaceSpecialTile(Origins/Fungarust)",
 				"x": "PlaceTile(Origins/Hanging_Scrap_Tile)",
 				"b": "PlaceTile(Origins/Scrap_Heap)",
@@ -54,7 +54,7 @@
 				"$": "PaintTile(BlackPaint)+PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
 				"%": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
 				"^": "PaintTile(GrayPaint)+PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
-				"e": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Black_Wire_Mode)"
+				"e": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Origins/Black_Wire_Mode)"
 			},
 			"SocketKey": {},
 			"Tags": []

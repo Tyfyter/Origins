@@ -30,12 +30,12 @@
 				"¡¢£¤¥F           FFFFFF",
 				"FFFFFF     S     FFFFFF",
 				"FFFFFF     O     FFFFFF",
-				"FFF                 FFF",
-				"FFF                 FFF",
-				"FFF¦               §FFF",
-				"FFF                 FFF",
-				"FFF                 FFF",
-				"FFF                 FFF"
+				"FFF¦§               FFF",
+				"FFF¨             ©ª«FFF",
+				"FFF¬©©©©©©©©©©©©©®¯°FFF",
+				"FFF                ±FFF",
+				"FFF                ²FFF",
+				"FFF                §FFF"
 			],
 			"Key": {
 				"S": "Empty",
@@ -44,8 +44,18 @@
 				"£": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(XOR, 3)",
 				"¤": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(NIMPLY, 225)",
 				"¥": "PlaceTile(Origins/Fortified_Steel_Block3)+SetLogicGate(Diode, 5)",
-				"¦": "PlaceDelayComponent(222)",
-				"§": "PlaceSpecialTile(Origins/Radio_Component)"
+				"¦": "PlaceFramedTile(Origins/Edge_Detector,0,0)+PlaceWire(Red_Wire_Mode,Origins/Brown_Wire_Mode)",
+				"§": "PlaceWire(Red_Wire_Mode)+PlaceRadioComponent(Signal, 71)",
+				"¨": "PlaceWire(Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)+PlaceRadioComponent(Receive, 36, 2)",
+				"©": "Empty+PlaceWire(Origins/Black_Wire_Mode)",
+				"ª": "PlaceSpecialTile(Origins/Gas_Generator)",
+				"«": "Empty+PlaceWire(Origins/White_Wire_Mode)",
+				"¬": "PlaceWire(Origins/Black_Wire_Mode,Origins/White_Wire_Mode)+PlaceDelayComponent(222)",
+				"®": "PlaceSpecialTile(TeamBlockGreenPlatform)+PlaceWire(Origins/Black_Wire_Mode)",
+				"¯": "PlaceSpecialTile(TeamBlockGreenPlatform)",
+				"°": "PlaceSpecialTile(TeamBlockGreenPlatform)+PlaceWire(Origins/White_Wire_Mode)",
+				"±": "PlaceWire(Origins/White_Wire_Mode)+PlaceRadioComponent(Send, 36, 4)",
+				"²": "PlaceSpecialTile(Origins/Bile_Torch_Tile)+PlaceWire(Red_Wire_Mode)"
 			},
 			"SocketKey": {
 				"S": {

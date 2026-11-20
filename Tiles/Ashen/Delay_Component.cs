@@ -247,7 +247,7 @@ public class PlaceDelayComponent : PlaceSpecialTile {
 		new Delay_Component_TE.Set_Delay_Action(i, j, int.Parse(parameters[0])).Perform();
 	}
 	public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) => [
-		("", Color.White)
+		(parameters[0], Color.White)
 	];
 	public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
 		spriteBatch.Draw(

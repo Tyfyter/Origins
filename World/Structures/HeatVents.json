@@ -61,9 +61,9 @@
 	"TileDescriptors": {
 		"u": "PlaceTile(Origins/Fortified_Steel_Block2)",
 		"S": "PlaceTile(Origins/Fortified_Steel_Block2)",
-		"p": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Brown_Wire_Mode)",
+		"p": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWire(Origins/Brown_Wire_Mode)",
 		" ": "Empty",
-		"k": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Brown_Wire_Mode)"
+		"k": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Brown_Wire_Mode)"
 	},
 	"BreakCondition": "MaxRoomCount(1000)"
 }

@@ -8861,11 +8861,15 @@ Kinetic_Cuffs: {
 // Cluster_Bomb_Boots.DisplayName: Cluster Bomb Boots
 
 Scrappickers_Glove: {
-	// DisplayName: Scrappickers Glove
-	// Tooltip: ""
+	// DisplayName: Scrappicker's Glove
+	/* Tooltip:
+		'''
+		12% increased melee and explosive speed
+		Enables auto swing for melee, whips[ox:,] and explosive weapons
+		''' */
 }
 
 Smogwalkers_Trenchcoat: {
-	// DisplayName: Smogwalkers Trenchcoat
-	// Tooltip: ""
+	// DisplayName: Smogwalker's Trenchcoat
+	// Tooltip: While not immune [buffhint:Origins/Impeding_Shrapnel_Debuff] has increased damage
 }

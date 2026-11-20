@@ -55,7 +55,7 @@ namespace Origins.Core.Structures {
 			});
 		}
 		protected override TileDescriptor Create(string[] parameters, string originalText) {
-			WireMode[] wireModes = parameters.Select(n => ModContent.TryFind(n, out WireMode wireMode) ? wireMode : ModContent.Find<WireMode>("Origins/" + n)).ToArray();
+			WireMode[] wireModes = parameters.Select(n => ModContent.TryFind(n, out WireMode wireMode) ? wireMode : ModContent.Find<WireMode>("PegasusLib/" + n)).ToArray();
 			return new((_, _, i, j) => {
 				for (int k = 0; k < wireModes.Length; k++) {
 					wireModes[k].SetWire(i, j, true);
