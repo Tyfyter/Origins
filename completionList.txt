@@ -770,7 +770,7 @@ ACCESSORIES:
 (^) Scavenger Bag
 (^) Scrap Barrier (Cursed)
 (^) Scrap Barrier (Uncursed)
-(#2, ^2) Scrap Compactor !!!
+(☻) Scrap Compactor !!!
 (☻) Scrappicker's Glove !!!
 (^) Shield of Retribution
 (X) Shield of Shimmering
