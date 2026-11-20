@@ -771,7 +771,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)
 (^) Scrap Barrier (Uncursed)
 (#2, ^2) Scrap Compactor !!!
-(#, ^2) Scrappicker's Glove !!!
+(☻) Scrappicker's Glove !!!
 (^) Shield of Retribution
 (X) Shield of Shimmering
 (^) Shock Collar
@@ -781,7 +781,7 @@ ACCESSORIES:
 (X) SMART Bomb Glove
 (#, ^2) SMART Liver !!!
 (^) Smog Pod-4
-(#, ^2) Smogwalker's Trenchcoat !!!
+(†) Smogwalker's Trenchcoat !!!
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
