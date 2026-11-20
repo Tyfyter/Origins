@@ -71,7 +71,7 @@ namespace Origins.Liquids {
 		//Firstly, we apply the dryad's ward debuff to NPCs
 		public override void OnNPCCollision(NPC npc) {
 			//Make sure that the NPC can take damage, and the game is not a player on a server
-			if (!npc.dontTakeDamage && !NetmodeActive.MultiplayerClient) npc.AddBuff(BuffID.Oiled, 3 * 60);
+			if (!npc.dontTakeDamage && !NetmodeActive.MultiplayerClient) npc.AddBuff(BuffID.Oiled, 15 * 60);
 			if (npc.onFire || npc.onFire3) {
 				foreach (Point pos in ContentExtensions.LiquidCollision(npc.position, npc.width, npc.height)) {
 					Tile tile = Main.tile[pos];
@@ -250,6 +250,7 @@ namespace Origins.Liquids {
 	}
 	public class Burning_Oil : Oil {
 		public new static int ID { get; private set; }
+		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override Color MapColor => FromHexRGB(0x1C120D);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -271,13 +272,13 @@ namespace Origins.Liquids {
 		}
 		public override void OnNPCCollision(NPC npc) {
 			if (!npc.dontTakeDamage && !NetmodeActive.MultiplayerClient) {
-				npc.AddBuff(BuffID.Oiled, 3 * 60);
-				npc.AddBuff(BuffID.OnFire3, 2 * 60);
+				npc.AddBuff(BuffID.Oiled, 15 * 60);
+				npc.AddBuff(BuffID.OnFire3, 3 * 60);
 			}
 		}
 		public override void OnPlayerCollision(Player player) {
-			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 3 * 60);
-			player.AddBuff(BuffID.OnFire, 2 * 60);
+			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 15 * 60);
+			player.AddBuff(BuffID.OnFire, 3 * 60);
 		}
 		public override void OnProjectileCollision(Projectile proj) { }
 		public override bool UpdateLiquid(int i, int j, Liquid liquid) {

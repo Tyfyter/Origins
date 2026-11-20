@@ -14,7 +14,6 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(48, 36);
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 2);
-			Item.expert = true;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().scrapCompactor = true;

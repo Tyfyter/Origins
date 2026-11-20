@@ -52,7 +52,7 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.Common(Music_Box.ItemType<Music_Box_SS>(), 50));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 26, amountDroppedMaximum: 52));
-			npcLoot.Add(ItemDropRule.Common(ItemType<Scrap_Compactor>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Scrap_Compactor>(), 12));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));

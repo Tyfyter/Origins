@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DefaultToCanisterLauncher<Clunkaclusta_P>(22, 42, 13f, 62, 40);
 			Item.knockBack = 2f;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 45);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.UseSound = null;
 			Item.channel = true;
 		}
@@ -96,7 +96,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			this.DoGravity(0.08f);
+			this.DoGravity(0.2f);
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
 			if (player.channel && StoppedChanneling == 0) {
 				Max(ref Projectile.timeLeft, 3);
@@ -114,7 +114,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			Projectile.GeometricBounce(CollisionExtensions.MultiplyTangentNormal(0.9f, 1));
+			Projectile.GeometricBounce(CollisionExtensions.MultiplyTangentNormal(0.7f, 0.8f));
 			return false;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) => false;

@@ -23,8 +23,8 @@ public class Cluster_Bomb_Boots: ModItem {
 		Item.knockBack = 3;
 		Item.useLimitPerAnimation = 9;
 		Item.useAnimation = Item.useTime;
-		Item.rare = ItemRarityID.Blue;
-		Item.value = Item.sellPrice(gold: 2);
+		Item.rare = ItemRarityID.Green;
+		Item.value = Item.sellPrice(gold: 4);
 		Item.expert = true;
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) {
