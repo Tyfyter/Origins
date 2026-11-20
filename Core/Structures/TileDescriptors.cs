@@ -348,7 +348,7 @@ namespace Origins.Core.Structures {
 				if (!ModContent.TryFind<LootPool>(name, out _)) {
 					string warning = $"Could not find LootPool \"{name}\"";
 					(CurrentlySerializingMod ?? Origins.instance).Logger.Warn(warning);
-					if (Main.InGameUI.CurrentState is StructureHelperUI helperUI) helperUI.toastHandler.Push(warning);
+					if (Main.InGameUI.CurrentState is Structure_Helper_UI helperUI) helperUI.toastHandler.Push(warning);
 				}
 				return "," + name;
 			}

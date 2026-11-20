@@ -36,11 +36,11 @@ using Terraria.UI.Chat;
 using Terraria.Utilities.FileBrowser;
 using static Origins.Core.Structures.DescriptorParameter;
 using static Origins.Core.Structures.DeserializedStructure;
-using static Origins.Core.Structures.StructureCommand;
-using static Origins.Core.Structures.StructureHelperUI;
+using static Origins.Core.Structures.Structure_Association_Command;
+using static Origins.Core.Structures.Structure_Helper_UI;
 
 namespace Origins.Core.Structures; 
-public class StructureHelperUI : UIState {
+public class Structure_Helper_UI : UIState {
 	struct Move : IMoveToPegFlag;
 	string structurePath;
 	public Structure structure;
@@ -51,7 +51,7 @@ public class StructureHelperUI : UIState {
 	public override bool ContainsPoint(Vector2 point) {
 		return CurrentView?.room is null && base.ContainsPoint(point);
 	}
-	static StructureHelperUI instance;
+	static Structure_Helper_UI instance;
 	static AutoLoadingTexture saveIcon = "Origins/UI/Floppy_Disk";
 	static string reopenPath;
 	public override void OnInitialize() {
@@ -325,7 +325,7 @@ public class StructureHelperUI : UIState {
 			element.Update(gameTime);
 		}
 		if (textInput.IsWritingText && textInput2.IsWritingText) textInput2.IsWritingText = false;
-		if (!StructureCommand.ReadyForNewAss && !textInput.IsWritingText && !textInput2.IsWritingText) textInput.IsWritingText = true;
+		if (!Structure_Association_Command.ReadyForNewAss && !textInput.IsWritingText && !textInput2.IsWritingText) textInput.IsWritingText = true;
 	}
 	public class UITextCommandCaller(UIText uiText) : CommandCaller {
 		public CommandType CommandType => CommandType.Chat;
@@ -346,7 +346,7 @@ public class StructureHelperUI : UIState {
 		yield return visibilityToggle;
 		if (!Visible) yield break;
 		yield return toastHandler;
-		if (!StructureCommand.ReadyForNewAss) {
+		if (!Structure_Association_Command.ReadyForNewAss) {
 			yield return inputFeedback;
 			yield return textInput;
 			switch (serializationContext.state) {
@@ -416,7 +416,7 @@ public class StructureHelperUI : UIState {
 			visibilityToggle.Draw(spriteBatch);
 			return;
 		}
-		if (!StructureCommand.ReadyForNewAss) {
+		if (!Structure_Association_Command.ReadyForNewAss) {
 			SpriteBatchState state = spriteBatch.GetState();
 			spriteBatch.Restart(state, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 			ModContent.GetInstance<Structure_Helper_HUD>().Draw(spriteBatch);
@@ -548,7 +548,7 @@ public class StructureHelperUI : UIState {
 				Task.Run(() => {
 					Structure_Helper_Item.ShouldCancel = false;
 					string roomName = null;
-					StructureCommand.OnAss += (c, _, _) => {
+					Structure_Association_Command.OnAss += (c, _, _) => {
 						roomName = c;
 						return true;
 					};
@@ -591,7 +591,7 @@ public class StructureHelperUI : UIState {
 		roomList.OverflowHidden = true;
 	}
 	public override void OnDeactivate() {
-		StructureCommand.Cancel();
+		Structure_Association_Command.Cancel();
 	}
 	public record StructureLayer(string Name, Color Color, bool[,] Map, SerializableTileDescriptor Source) {
 		public void Draw(SpriteBatch spriteBatch, Point basePos) {
@@ -926,7 +926,7 @@ public class Structure_Helper_Item : TestingItem {
 	public override bool AltFunctionUse(Player player) => true;
 	public override bool? UseItem(Player player) {
 		if (Main.myPlayer == player.whoAmI) {
-			if (Main.InGameUI.CurrentState is StructureHelperUI { CanModifyBounds: false }) return false;
+			if (Main.InGameUI.CurrentState is Structure_Helper_UI { CanModifyBounds: false }) return false;
 			if (player.altFunctionUse == 2) {
 				rightClick = new(Player.tileTargetX, Player.tileTargetY);
 			} else {
@@ -937,7 +937,7 @@ public class Structure_Helper_Item : TestingItem {
 		return false;
 	}
 	public override void RightClick(Player player) {
-		IngameFancyUI.OpenUIState(new StructureHelperUI());
+		IngameFancyUI.OpenUIState(new Structure_Helper_UI());
 	}
 	static Task<RoomDescriptor> task;
 	public static void CopyStructure() {
@@ -991,7 +991,7 @@ public class Structure_Helper_Item : TestingItem {
 					Structure_Helper_HUD.HighlightTile.X = i;
 					Tile tile = Main.tile[i, j];
 					CurrentTileData = SerializableTileDescriptor.Serialize(tile);
-					SpinWait.SpinUntil(() => StructureCommand.ReadyForNewAss);
+					SpinWait.SpinUntil(() => Structure_Association_Command.ReadyForNewAss);
 					if (Room_Socket_Marker.HasSocket(i, j, out Direction direction)) {
 						context.state = SerializationContext.SerializationState.Socket;
 						string pattern = CurrentTileData;
@@ -1007,7 +1007,7 @@ public class Structure_Helper_Item : TestingItem {
 							socket = socket with { Direction = direction };
 							break;
 						}
-						StructureCommand.OnAss += (_c, socketKey, parameters) => {
+						Structure_Association_Command.OnAss += (_c, socketKey, parameters) => {
 							char c = AsChar(_c);
 							if (Associations.ContainsValue(c)) return false;
 							if (socket is null) {
@@ -1027,7 +1027,7 @@ public class Structure_Helper_Item : TestingItem {
 						};
 						Main.QueueMainThreadAction(() => {
 							string format;
-							if (caller is StructureHelperUI.UITextCommandCaller or StructureHelperUI.ToastCommandCaller) {
+							if (caller is Structure_Helper_UI.UITextCommandCaller or Structure_Helper_UI.ToastCommandCaller) {
 								format = "New socket, input {0} to set its {1}";
 							} else {
 								format = "New socket, use /ass {0} to set its {1}";
@@ -1062,7 +1062,7 @@ public class Structure_Helper_Item : TestingItem {
 					} else {
 						if (!Associations.ContainsKey(CurrentTileData)) {
 							context.state = SerializationContext.SerializationState.Tile;
-							StructureCommand.OnAss += (_c, _, _) => {
+							Structure_Association_Command.OnAss += (_c, _, _) => {
 								char c = AsChar(_c);
 								bool global = context.ShouldAddGlobal;
 								if (global && globalKey.ContainsKey(c)) return false;
@@ -1072,7 +1072,7 @@ public class Structure_Helper_Item : TestingItem {
 							};
 							Main.QueueMainThreadAction(() => {
 								string format;
-								if (caller is StructureHelperUI.UITextCommandCaller or StructureHelperUI.ToastCommandCaller) {
+								if (caller is Structure_Helper_UI.UITextCommandCaller or Structure_Helper_UI.ToastCommandCaller) {
 									format = "New tile pattern {0}, input {1} to set its {2}";
 								} else {
 									format = "New tile pattern {0}, use /ass {1} to set its {2}";
@@ -1220,7 +1220,7 @@ public class Structure_Helper_HUD : SwitchableUIState {
 		}
 	}
 }
-public class StructureCommand : ModCommand {
+public class Structure_Association_Command : ModCommand {
 	public override CommandType Type => CommandType.Chat;
 	public override string Command => "ass";
 	public override string Usage => "/ass cancel or as described when prompted to use this command";
@@ -1365,7 +1365,7 @@ public class SerializationContext {
 	public SerializationState state;
 	public Dictionary<char, string> globalKey = [];
 	public FungibleSet<string> globalSocketKey = [];
-	public StructureHelperUI.ToggleElement globalKeyToggle;
+	public Structure_Helper_UI.ToggleElement globalKeyToggle;
 	public UIInputPanel socketInput;
 	public Mod mod;
 	public Action<bool> tileReady;
