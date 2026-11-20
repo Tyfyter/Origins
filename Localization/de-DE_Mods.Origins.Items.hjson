@@ -8569,8 +8569,8 @@ Star_Soldier_Summon_Item: {
 		Dashing and flying capability
 		After inital activation, select arm weapons for both arms
 		Use <left> and <right> to use weapons
-		+28.5s breath time
-		3 minute cooldown and 200 life penalty after destroyed
+		+23.33s breath time
+		3 minute cooldown and 25% life penalty after destroyed
 		140 second cooldown ejecting after being damaged
 		15 second cooldown ejecting while intact
 		'Summons a mech to totally zerk your foes'
