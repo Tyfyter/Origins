@@ -121,11 +121,12 @@ namespace Origins.Core.Structures {
 			}, Parts: [originalText]);
 		}
 	}
+	[ReinitializeDuringResizeArrays]
 	public class PlaceTile : SerializableTileDescriptor {
+		public static Type[] IndividualTileDescriptors = TileID.Sets.Factory.CreateCustomSet<Type>(null);
 		readonly ConcurrentDictionary<string, TileDescriptor> descriptors = [];
 		protected static Type GetDescriptorType(Tile tile) {
-			if (Structure_Void_Marker.IsVoid(tile)) return typeof(Void);
-			if (tile.TileType > TileID.Count) ;
+			if (tile.HasTile && IndividualTileDescriptors[tile.TileType] is Type individual) return individual;
 			if (PlaceSpecialChest.TryGetSpecialChestPos(tile, out _, out _, out _)) return typeof(PlaceSpecialChest);
 			if (Main.tileContainer[tile.TileType]) return typeof(PlaceChest);
 			if (TileObjectData.GetTileData(tile) is not null) return typeof(PlaceSpecialTile);

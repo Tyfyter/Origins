@@ -1,4 +1,5 @@
-﻿using Origins.Walls;
+﻿using Origins.Core.Structures;
+using Origins.Walls;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,6 +9,7 @@ public class Structure_Void_Marker : ModTile {
 	public override void Load() {
 		Mod.AddContent(new TileItem(this, true));
 	}
+	public override void SetStaticDefaults() => PlaceTile.IndividualTileDescriptors[Type] = typeof(Void);
 	public sealed override bool Slope(int i, int j) => false;
 	public sealed override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) => false;
 }
