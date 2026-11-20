@@ -80,6 +80,7 @@ namespace Origins.Core {
 						Tile tile = Framing.GetTileSafely(x + i, y + j);
 						if (forcePlace || !tile.HasTile) {
 							tile.SetActive(true);
+							tile.BlockType = BlockType.Solid;
 							tile.TileFrameX = (short)num8;
 							tile.TileFrameY = (short)num9;
 							if (!Main.tileFrameImportant[tileType]) toFrame[i, j] = true;

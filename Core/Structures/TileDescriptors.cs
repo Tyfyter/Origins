@@ -147,6 +147,7 @@ namespace Origins.Core.Structures {
 					Tile tile = Main.tile[i, j];
 					if (tile.TileType == ModContent.TileType<Door_Stopper>()) return;
 					tile.HasTile = true;
+					tile.BlockType = BlockType.Solid;
 					tile.TileType = type;
 				}, Parts: [originalText]);
 			});
@@ -197,6 +198,7 @@ namespace Origins.Core.Structures {
 			return new((_, _, i, j) => {
 				Tile tile = Main.tile[i, j];
 				tile.HasTile = true;
+				tile.BlockType = BlockType.Solid;
 				tile.TileType = type;
 				tile.TileFrameX = frameX;
 				tile.TileFrameY = frameY;
@@ -264,6 +266,7 @@ namespace Origins.Core.Structures {
 					for (int x = 0; x < data.Width; x++) {
 						pos.X = left + x;
 						Tile tile = Main.tile[pos];
+						tile.BlockType = BlockType.Solid;
 						tile.HasTile = false;
 					}
 				}
@@ -461,6 +464,7 @@ namespace Origins.Core.Structures {
 				return null;
 			});
 		}
+		delegate void Setter<TSelf, TVar>(ref TSelf self, TVar value);
 		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			BlockType blockType = Enum.Parse<BlockType>(parameters[0]);
 			return descriptors[(int)blockType] ??= new((_, _, i, j) => {

@@ -8857,6 +8857,4 @@ Kinetic_Cuffs: {
 		'''
 }
 
-Cluster_Bomb_Boots: {
-	DisplayName: Cluster Bomb Boots
-}
+Cluster_Bomb_Boots.DisplayName: Cluster Bomb Boots

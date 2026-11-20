@@ -52,6 +52,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			OriginsSets.Tiles.CanBeGrappledTo[Type] = true;
 			OriginsSets.Tiles.DisableHoiking[Type] = true;
+			OriginsSets.Tiles.IgnoreInSmoothWorld[Type] = true;
 			AddMapEntry(FromHexRGB(0xBE9170));
 
 			MinPick = 65;

@@ -14,6 +14,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Generation;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -476,6 +477,7 @@ namespace Origins {
 			public static TileBoolSetWithIndexes AshenFactoryTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static TileBoolSetWithIndexes LimestoneBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static bool[] LavaAboveEmitsSmoke = TileID.Sets.Factory.CreateBoolSet();
+			public static bool[] IgnoreInSmoothWorld = TileID.Sets.Factory.CreateBoolSet();
 			public static bool[] GemTilesToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
 				.Description("Gem ores in this set can be corrupted into chambersite ores")
 				.RegisterBoolSet(
@@ -501,6 +503,11 @@ namespace Origins {
 				} catch (Exception e) {
 					if (Origins.LogLoadingILError(nameof(IL_Collision_SlopeCollision), e)) throw;
 				}
+				try {
+					WorldGen.ModifyPass((PassLegacy)WorldGen.VanillaGenPasses["Smooth World"], IL_SmoothWorld_ApplySet);
+				} catch (Exception e) {
+					if (Origins.LogLoadingILError(nameof(IL_SmoothWorld_ApplySet), e)) throw;
+				}
 			}
 			static void IL_Collision_SlopeCollision(ILContext il) {
 				ILCursor c = new(il);
@@ -514,6 +521,22 @@ namespace Origins {
 				c.EmitLdloca(tile);
 				c.EmitDelegate((in Tile tile) => DisableHoiking[tile.TileType] && tile.BottomSlope);
 				c.EmitBrtrue(cont);
+			}
+			static void IL_SmoothWorld_ApplySet(ILContext il) {
+				ILCursor c = new(il);
+				int tile = -1;
+				ILLabel skip = default;
+				while (c.TryGotoNext(MoveType.After,
+					i => i.MatchLdloca(out tile), //IL_004d: ldloca.s 3
+					i => i.MatchCall<Tile>("get_type"), //IL_004f: call instance uint16& Terraria.Tile::get_type()
+					i => i.MatchLdindU2(), //IL_0054: ldind.u2
+					i => i.MatchLdcI4(48), //IL_0055: ldc.i4.s 48
+					i => i.MatchBeq(out skip) //IL_0057: beq IL_09c2
+				)) {
+					c.EmitLdloca(tile);
+					c.EmitDelegate((in Tile tile) => tile.HasTile && IgnoreInSmoothWorld[tile.TileType]);
+					c.EmitBrtrue(skip);
+				}
 			}
 			public static int GetModContent(Mod mod, string name) {
 				return mod.GetContent<ModTile>().First(content => content.Name == name).Type;

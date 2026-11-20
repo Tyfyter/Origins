@@ -113,8 +113,10 @@ public partial class Ashen_Alt_Biome {
 			Ashen_Generation_Pass.scrapyards.Clear();
 			passes.Add(new PassLegacy("Scrap and Oil", (_, _) => {
 				for (int i = 0; i < Ashen_Generation_Pass.scrapyards.Count; i++) ScrapyardPass2(Ashen_Generation_Pass.scrapyards[i]);
-				ScrapyardPass3(genRand.Next(Ashen_Generation_Pass.scrapyards));
 			}));
+		}
+		if (originalPass.Name == "Smooth World") {
+			passes.Add(new PassLegacy("Paving Paradise", (_, _) => ScrapyardPass3(genRand.Next(Ashen_Generation_Pass.scrapyards))));
 		}
 		static void ScrapyardPass2(Rectangle scrapyard) {
 			ushort sludgeType = (ushort)TileType<Murky_Sludge>();
