@@ -223,15 +223,6 @@ public class Structure_Helper_UI : UIState {
 			autoKeyConfirm.Value = false;
 		};
 
-		UIElement region = new() {
-			Left = new(0, 0.25f * 0.5f),
-			Top = new(0, 0.1f),
-			Width = new(0, 0.75f),
-			Height = new(0, 0.8f),
-			IgnoresMouseInteraction = true
-		};
-		Append(region);
-		region.Append(toastHandler = new());
 		Append(visibilityToggle = new() {
 			Left = new(4, 0.25f * 0.5f),
 			Top = new(-4, -0.1f),
@@ -250,6 +241,13 @@ public class Structure_Helper_UI : UIState {
 			Height = new(-33, 0.8f),
 			HAlign = 0.5f,
 			OverflowHidden = true
+		});
+
+		Append(toastHandler = new() {
+			Left = new(0, 0.25f * 0.5f),
+			Top = new(0, 0.1f),
+			Width = new(0, 0.75f),
+			Height = new(0, 0.8f),
 		});
 		if (!string.IsNullOrWhiteSpace(reopenPath)) SelectStructure(reopenPath);
 		void WarnAutoGlobal() {
@@ -345,7 +343,6 @@ public class Structure_Helper_UI : UIState {
 	IEnumerable<UIElement> ActiveElements() {
 		yield return visibilityToggle;
 		if (!Visible) yield break;
-		yield return toastHandler;
 		if (!Structure_Association_Command.ReadyForNewAss) {
 			yield return inputFeedback;
 			yield return textInput;
@@ -361,6 +358,7 @@ public class Structure_Helper_UI : UIState {
 				yield return socketSelector;
 				break;
 			}
+			yield return toastHandler;
 			yield break;
 		}
 		textInput.IsWritingText = false;
@@ -386,6 +384,7 @@ public class Structure_Helper_UI : UIState {
 				yield return roomListWrapper;
 			}
 		}
+		yield return toastHandler;
 	}
 	UIElement roomListWrapper;
 	SocketRoomListWrapper socketRoomListWrapper;

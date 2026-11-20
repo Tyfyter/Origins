@@ -7,10 +7,7 @@ public class ToastHandler : UIElement {
 	public int toastHeight = 26;
 	public int toastDuration = 60 * 6;
 	public override void OnInitialize() {
-		Width.Set(0, 1);
-		Height.Set(0, 1);
 		OverflowHidden = true;
-		IgnoresMouseInteraction = true;
 	}
 	public override void Update(GameTime gameTime) {
 		for (int i = 0; i < Elements.Count; i++) ((ToastElement)Elements[i]).index = Elements.Count - i;
@@ -26,6 +23,10 @@ public class ToastHandler : UIElement {
 		};
 		Append(newToast);
 		newToast.Activate();
+	}
+	public override bool ContainsPoint(Vector2 point) {
+		for (int i = 0; i < Elements.Count; i++) if (Elements[i].ContainsPoint(point)) return true;
+		return false;
 	}
 	class ToastElement(string text, ToastHandler handler) : UITextPanel<string>(text) {
 		public int index;
