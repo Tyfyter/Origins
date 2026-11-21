@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public interface IScrapCompactor {
-		public float HealthThreshold(NPC target);
+		public float? HealthThreshold(NPC target) => null;
 		public float? Damage(Player player, NPC target) => null;
 	}
 	public class Scrap_Compactor : ModItem, ICustomWikiStat {

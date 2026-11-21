@@ -6,16 +6,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back, EquipType.Front)]
-	public class Smogwalkers_Trenchcoat : ModItem, ICustomWikiStat {
+	public class Smogwalkers_Trenchcoat : ModItem, ICustomWikiStat, IScrapCompactor {
 		public string[] Categories => [
 			WikiCategories.Combat
 		];
 		public float? Damage(Player player, NPC target) {
 			bool isBoss = target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type];
 			if (player.OriginPlayer().blizzardwalkerActiveTime < Blizzardwalkers_Jacket.max_active_time) {
-				return isBoss ? 0.008f : 0.08f;
+				return isBoss ? 0 : 0.05f;
 			}
-			return isBoss ? 0.005f : 0.05f;
+			return isBoss ? 0 : 0.02f;
 		}
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Blizzardwalkers_Jacket)}.Tooltip"),
@@ -35,6 +35,7 @@ namespace Origins.Items.Accessories {
 			player.GetAttackSpeed(DamageClass.Melee) += 0.12f;
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.12f;
 			oP.scrapCompactor = true;
+			oP.scrapCompactorItem = this;
 			oP.destructiveClaws = true;
 			oP.blizzardwalkerJacket = true;
 			oP.blizzardwalkerJacketVisual = !hideVisual;
