@@ -623,7 +623,7 @@ ACCESSORIES:
 (^) Blast-Proof Core
 (^) Blast-Resistant Plate
 (#2, ^2) Blood Donor Bag !!! (missing ally boost effect)
-(#, ^2) Blood-Powered Robot !!!
+(☻) Blood-Powered Robot !!!
 (^) Bloody Knuckles
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
@@ -701,7 +701,7 @@ ACCESSORIES:
 (#, ^2) Heart Squeezy !!!
 (^) Helium Tank
 (X) Helpful Cloak
-(#, ^2) Hive Jacket !!!
+(☻) Hive Jacket !!!
 (^) I-WTPA Standard
 (#, ^2) Industrial-Grade Arm !!!
 (^) Infusion Bag

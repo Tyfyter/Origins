@@ -1174,6 +1174,7 @@ namespace Origins {
 			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
 				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 3 * 60);
 			}
+			if (hiveJacket) Player.AddBuff(BuffID.Honey, 5 * 60);
 
 
 			if (Player.whoAmI == Main.myPlayer && info.DamageSource.TryGetCausingEntity(out Entity sourceEntity)) {

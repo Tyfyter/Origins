@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Items;
+using Origins.Items.Accessories;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -30,6 +31,7 @@ namespace Origins.Projectiles {
 		public bool scrapCompactor = false;
 		public bool hasAmber = false;
 		public bool fromDeath = false;
+		public bool bloodRobot = false;
 		public StatModifier projectileBlastRadius = StatModifier.Default;
 		public StatModifier selfDamageModifier = StatModifier.Default;
 		public StatModifier modifierBlastRadius = StatModifier.Default;
@@ -168,6 +170,7 @@ namespace Origins.Projectiles {
 			}
 			if (originPlayer.scrapCompactor) {
 				scrapCompactor = true;
+				bloodRobot = originPlayer.bloodRobot;
 			}
 			if (originPlayer.amberSet) {
 				hasAmber = true;
@@ -282,6 +285,7 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(fromDeath);
 			bitWriter.WriteBit(novaSwarm);
 			bitWriter.WriteBit(scrapCompactor);
+			bitWriter.WriteBit(bloodRobot);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isHoming = bitReader.ReadBit();
@@ -303,6 +307,7 @@ namespace Origins.Projectiles {
 				novaSwarm = false;
 			}
 			scrapCompactor = bitReader.ReadBit();
+			bloodRobot = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile, bool isHitting = false) {
 			if (projectile.type == Shimmer_Guardian_Shard.ID) {
@@ -517,7 +522,8 @@ namespace Origins.Projectiles {
 					}
 				}
 				int shrapnelShardType = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
-				if (scrapCompactor && projectile.damage > 0 && projectile.type != shrapnelShardType) {
+				int shrapnelBloodType = ModContent.ProjectileType<Explosive_Artery_P>();
+				if (scrapCompactor && projectile.damage > 0 && projectile.type != shrapnelShardType && projectile.type != shrapnelBloodType) {
 					SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest, projectile.Center);
 					for (int i = 3; i-- > 0;) {
 						Vector2 v = Main.rand.NextVector2Unit() * 4;
@@ -531,6 +537,20 @@ namespace Origins.Projectiles {
 							projectile.owner,
 							ai2: 0.5f
 						);
+					}
+					if (bloodRobot) {
+						for (int i = 3; i-- > 0;) {
+							Vector2 v = Main.rand.NextVector2Unit() * 4;
+							Projectile.NewProjectile(
+								projectile.GetSource_Death(),
+								projectile.Center + v * 8,
+								v,
+								shrapnelBloodType,
+								projectile.damage / 2,
+								projectile.knockBack / 4,
+								projectile.owner
+							);
+						}
 					}
 				}
 			}

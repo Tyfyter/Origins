@@ -8873,3 +8873,13 @@ Smogwalkers_Trenchcoat: {
 	// DisplayName: Smogwalker's Trenchcoat
 	// Tooltip: While not immune [buffhint:Origins/Impeding_Shrapnel_Debuff] has increased damage
 }
+
+Blood_Powered_Robot: {
+	// DisplayName: Blood Powered Robot
+	// Tooltip: ""
+}
+
+Hive_Jacket: {
+	// DisplayName: Hive Jacket
+	// Tooltip: ""
+}

@@ -434,6 +434,8 @@ namespace Origins {
 		[AutoReset] public bool blastProofCore;
 		[AutoReset] public bool drippinIt;
 		public bool drippedIt;
+		[AutoReset] public bool hiveJacket;
+		[AutoReset] public bool bloodRobot;
 		#endregion
 
 		#region explosive stats
