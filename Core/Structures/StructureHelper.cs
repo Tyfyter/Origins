@@ -314,8 +314,8 @@ public class Structure_Helper_UI : UIState {
 			if (autoKeyConfirm.Value) ((ITextInputContainer)textInput).Submit();
 		}
 	}
-	void OnRoomsChanged() {
-		RefreshRoomList();
+	void OnRoomsChanged(bool keepScroll = false) {
+		RefreshRoomList(keepScroll);
 		connectionLookup = structure.Rooms.GenerateConnectionLookup();
 	}
 	public override void Update(GameTime gameTime) {
@@ -514,18 +514,22 @@ public class Structure_Helper_UI : UIState {
 		if (Main.MouseScreen.IsWithinRectangular(bgStart + bgSize * 0.5f, bgSize * 0.5f)) Main.LocalPlayer.mouseInterface = true;
 	}
 
-	public void RefreshRoomList() {
+	public void RefreshRoomList(bool keepScroll) {
+		Action<List<UIElement>> manualSortMethod = roomList?.ManualSortMethod;
 		if (roomList is not null) roomListWrapper.RemoveChild(roomList);
+		float vp = roomList?.ViewPosition ?? 0;
 		roomList = [];
-		roomList.SetScrollbar(new UIScrollbar());
+		if (keepScroll) roomList.ManualSortMethod = manualSortMethod;
+		roomList.SetScrollbar(new());
 		FillRoomList(roomList);
 		roomListWrapper.Append(roomList);
+		if (keepScroll) roomList.ViewPosition = vp;
 	}
 	public void FillRoomList(UIList roomList, IEnumerable<ARoom> rooms = null) {
 		rooms ??= structure.Rooms;
 		float height = 0;
 		int index = 0;
-		roomList.ManualSortMethod = ViewState.originalSort;
+		roomList.ManualSortMethod ??= ViewState.originalSort;
 		foreach (ARoom room in rooms) {
 			UIOrderedTextPanel element = new(room.Identifier) {
 				OriginalIndex = index++
@@ -537,7 +541,7 @@ public class Structure_Helper_UI : UIState {
 			UIConditionalButton deleteButton = new(TextureAssets.MapDeath, () => ItemSlot.ShiftInUse ? null : "Must hold shift to delete rooms");
 			deleteButton.OnLeftClick += (_, _) => {
 				structure.RemoveRoom(room);
-				OnRoomsChanged();
+				OnRoomsChanged(true);
 			};
 			deleteButton.HAlign = 1f;
 			deleteButton.VAlign = 0.5f;
@@ -582,7 +586,7 @@ public class Structure_Helper_UI : UIState {
 						}
 						descriptor.Identifier = roomName;
 						structure.AddOrReplaceRoom(new DeserializedRoom(structure.Mod, descriptor));
-						OnRoomsChanged();
+						OnRoomsChanged(true);
 					});
 				});
 			};
