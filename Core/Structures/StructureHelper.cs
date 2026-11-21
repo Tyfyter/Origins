@@ -46,6 +46,7 @@ public class Structure_Helper_UI : UIState {
 	public Structure structure;
 	readonly Stack<ViewState> viewStack = new();
 	ViewState CurrentView => viewStack.TryPeek(out ViewState result) ? result : null;
+	internal UIList CurrentRoomList => CurrentView?.roomList ?? roomList;
 
 	Dictionary<string, List<(ARoom room, char entrance)>[]> connectionLookup;
 	public override bool ContainsPoint(Vector2 point) {
@@ -242,7 +243,7 @@ public class Structure_Helper_UI : UIState {
 			HAlign = 0.5f,
 			OverflowHidden = true
 		});
-		Append(roomListSortButtons = ViewState.CreateSortButtons(viewStack));
+		Append(roomListSortButtons = ViewState.CreateSortButtons(this));
 
 		Append(toastHandler = new() {
 			Left = new(0, 0.25f * 0.5f),
@@ -384,7 +385,7 @@ public class Structure_Helper_UI : UIState {
 				yield return text;
 				yield return refreshButton;
 				yield return roomListWrapper;
-				//yield return roomListSortButtons;
+				yield return roomListSortButtons;
 			}
 		}
 		yield return toastHandler;
@@ -524,6 +525,7 @@ public class Structure_Helper_UI : UIState {
 		rooms ??= structure.Rooms;
 		float height = 0;
 		int index = 0;
+		roomList.ManualSortMethod = ViewState.originalSort;
 		foreach (ARoom room in rooms) {
 			UIOrderedTextPanel element = new(room.Identifier) {
 				OriginalIndex = index++
@@ -682,8 +684,8 @@ public class Structure_Helper_UI : UIState {
 			roomList?.Remove();
 		}
 		static readonly Color selectedColor = new Color(63, 82, 151) * 0.8f;
-		static readonly Color unselectedColor = new Color(57, 76, 136) * 0.7f;
-		public static UIElement CreateSortButtons(Stack<ViewState> viewStack) {
+		static readonly Color unselectedColor = new Color(50, 68, 121) * 0.7f;
+		public static UIElement CreateSortButtons(Structure_Helper_UI ui) {
 			UIElement wrapper = new() {
 				Left = new(-24, -0.2f),
 				Top = new(32, 0.1f),
@@ -710,22 +712,26 @@ public class Structure_Helper_UI : UIState {
 				};
 				wrapper.Height.Pixels += button.Height.Pixels + 2;
 				button.OnLeftClick += (_, _) => {
-					ViewState state = viewStack.Peek();
-					state.roomList.ManualSortMethod = omegapsicalSort;
-					state.roomList.UpdateOrder();
+					UIList roomList = ui.CurrentRoomList;
+					roomList.ManualSortMethod = sortMethod;
+					roomList.UpdateOrder();
 				};
-				button.OnUpdate += (_) => button.BackgroundColor = button.IsMouseHovering || viewStack.Peek().roomList.ManualSortMethod == sortMethod ? selectedColor : unselectedColor;
+				button.OnUpdate += (_) => {
+					bool selected = button.IsMouseHovering || ui.CurrentRoomList.ManualSortMethod == sortMethod;
+					button.BackgroundColor = selected ? selectedColor : unselectedColor;
+					button.TextColor = selected ? Color.White : (Color.White * 0.7f);
+				};
 				wrapper.Append(button);
 			}
 		}
-		static readonly Action<List<UIElement>> originalSort = elements => elements.Sort(
+		public static readonly Action<List<UIElement>> originalSort = elements => elements.Sort(
 			(a, b) => ((a as UIOrderedTextPanel)?.OriginalIndex ?? int.MaxValue).CompareTo((b as UIOrderedTextPanel)?.OriginalIndex ?? int.MaxValue)
 		);
 		static readonly Action<List<UIElement>> alphabeticalSort = elements => elements.Sort(
-			(a, b) => ((a as UIOrderedTextPanel)?.Text ?? "").CompareTo((b as UIOrderedTextPanel)?.Text ?? "")
+			(a, b) => ((a as UIOrderedTextPanel)?.Text ?? "μ").CompareTo((b as UIOrderedTextPanel)?.Text ?? "μ")
 		);
 		static readonly Action<List<UIElement>> omegapsicalSort = elements => elements.Sort(
-			(a, b) => -((a as UIOrderedTextPanel)?.Text ?? "").CompareTo((b as UIOrderedTextPanel)?.Text ?? "")
+			(a, b) => -((a as UIOrderedTextPanel)?.Text ?? "A").CompareTo((b as UIOrderedTextPanel)?.Text ?? "A")
 		);
 		public readonly struct WeightUI {
 			public readonly WeightDescriptor.Kind source;
