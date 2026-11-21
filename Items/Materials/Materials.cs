@@ -429,12 +429,7 @@ public class Formium_Scrap : MaterialItem, IExpectToBeUnobtainable {
 	public override int Rare => ItemRarityID.Purple;
 	public override bool Hardmode => true;
 }
-public class NE8 : MaterialItem, IJournalEntrySource {
-	public string EntryName => "Origins/" + typeof(NE_8_Entry).Name;
-	public class NE_8_Entry : JournalEntry {
-		public override string TextKey => "NE_8";
-		public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 3);
-	}
+public class NE8 : MaterialItem {
 	public override int Rare => ItemRarityID.Blue;
 	public override int Value => Item.sellPrice(silver: 1, copper: 50);
 	public override bool Hardmode => false;

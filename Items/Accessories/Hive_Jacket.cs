@@ -15,13 +15,13 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(34, 30);
-			Item.damage = 81;
+			Item.damage = 78;
 			Item.knockBack = 4f;
-			Item.defense = 1;
+			Item.defense = 3;
 			Item.shoot = ModContent.ProjectileType<Hive_Jacket_Explosion>();
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.ArmorPenetration += 3;
+			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(gold: 3);
+			//Item.ArmorPenetration += 3;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer oP = player.OriginPlayer();
@@ -48,7 +48,7 @@ namespace Origins.Items.Accessories {
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
 				Player owner = Main.player[Projectile.owner];
-				int count = 2 + Main.rand.Next(3) + (owner.strongBees && Main.rand.NextBool()).ToInt();
+				int count = 2 + Main.rand.Next(5) + (owner.strongBees && Main.rand.NextBool()).ToInt();
 				float rot = MathHelper.TwoPi / count;
 				for (int i = count; i > 0; i--) {
 					Projectile.NewProjectile(
@@ -56,7 +56,7 @@ namespace Origins.Items.Accessories {
 						Projectile.Center,
 						GeometryUtils.Vec2FromPolar(5, rot * i + Main.rand.NextFloat(0.3f) * Main.rand.NextBool().ToDirectionInt()) + Main.rand.NextVector2Unit(),
 						owner.beeType(),
-						owner.beeDamage(Projectile.damage / 3),
+						owner.beeDamage(Projectile.damage / 7),
 						owner.beeKB(Projectile.knockBack * 0.05f),
 						Projectile.owner
 					);

@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.useTime = 6;
 			Item.knockBack = 4f;
-			Item.defense = 1;
+			Item.defense = 3;
 			Item.shoot = ModContent.ProjectileType<CSTAA_Jacket_Explosion>();
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 2);

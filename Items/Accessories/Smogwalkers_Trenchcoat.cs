@@ -6,11 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back, EquipType.Front)]
-	public class Smogwalkers_Trenchcoat : ModItem, ICustomWikiStat, IScrapCompactor {
+	public class Smogwalkers_Trenchcoat : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Combat
 		];
-		public float HealthThreshold(NPC target) => target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type] ? 0.2f : 0.6f;
 		public float? Damage(Player player, NPC target) {
 			bool isBoss = target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type];
 			if (player.OriginPlayer().blizzardwalkerActiveTime < Blizzardwalkers_Jacket.max_active_time) {
@@ -20,14 +19,14 @@ namespace Origins.Items.Accessories {
 		}
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Blizzardwalkers_Jacket)}.Tooltip"),
-				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Scrap_Compactor)}.Tooltip").WithFormatArgs("60"),
+				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Scrap_Compactor)}.Tooltip").WithFormatArgs("40"),
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Scrappickers_Glove)}.Tooltip"),
 				base.Tooltip
 			);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(gold: 4);
 			Item.master = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
@@ -36,7 +35,6 @@ namespace Origins.Items.Accessories {
 			player.GetAttackSpeed(DamageClass.Melee) += 0.12f;
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.12f;
 			oP.scrapCompactor = true;
-			oP.scrapCompactorItem = this;
 			oP.destructiveClaws = true;
 			oP.blizzardwalkerJacket = true;
 			oP.blizzardwalkerJacketVisual = !hideVisual;

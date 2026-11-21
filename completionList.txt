@@ -623,7 +623,7 @@ ACCESSORIES:
 (^) Blast-Proof Core
 (^) Blast-Resistant Plate
 (#2, ^2) Blood Donor Bag !!! (missing ally boost effect)
-(☻) Blood-Powered Robot !!!
+(^) Blood-Powered Robot
 (^) Bloody Knuckles
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
@@ -701,7 +701,7 @@ ACCESSORIES:
 (#, ^2) Heart Squeezy !!!
 (^) Helium Tank
 (X) Helpful Cloak
-(☻) Hive Jacket !!!
+(^) Hive Jacket
 (^) I-WTPA Standard
 (#, ^2) Industrial-Grade Arm !!!
 (^) Infusion Bag
@@ -770,8 +770,8 @@ ACCESSORIES:
 (^) Scavenger Bag
 (^) Scrap Barrier (Cursed)
 (^) Scrap Barrier (Uncursed)
-(☻) Scrap Compactor !!!
-(☻) Scrappicker's Glove !!!
+(^) Scrap Compactor
+(^) Scrappicker's Glove
 (^) Shield of Retribution
 (X) Shield of Shimmering
 (^) Shock Collar
@@ -781,7 +781,7 @@ ACCESSORIES:
 (X) SMART Bomb Glove
 (#, ^2) SMART Liver !!!
 (^) Smog Pod-4
-(†) Smogwalker's Trenchcoat !!!
+(^) Smogwalker's Trenchcoat
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
@@ -1899,7 +1899,6 @@ MATERIALS:
 (^) Encrusted Bar
 (^) Felnum Bar
 (^) Magic Hair Spray
-(^) NE-8
 (^) Ocotillo Flower
 (X) Opium Bottle
 (^) Parasitic Powder
@@ -1911,6 +1910,7 @@ MATERIALS:
 (^) Sanguinite Bar
 (^) Silicon Bar
 (^) Strange String
+(^) Sturdy Robot Part
 (^) Surveysprout Seeds
 (^) Tangela Bud
 (^) Tire

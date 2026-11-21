@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Journal;
 using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Tank_Rifle : ModItem, ICustomDrawItem, IOilableItem {
+	public class Tank_Rifle : ModItem, ICustomDrawItem, IOilableItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Tank_Rifle_Entry).Name;
+		public class Tank_Rifle_Entry : JournalEntry {
+			public override string TextKey => "Tank_Rifle";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 3);
+		}
 		public int MaxOilCount => 150;
 		public int OilCount { get; set; }
 		public override void SetStaticDefaults() {

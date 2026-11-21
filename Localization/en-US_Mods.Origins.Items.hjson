@@ -3396,7 +3396,7 @@ Alkahest_Torch: {
 }
 
 Surveysprout.DisplayName: Surveysprout
-NE8.DisplayName: NE-8
+NE8.DisplayName: Sturdy Robot Part
 Nova_Fragment.DisplayName: Nova Fragment
 
 Polyeel: {
@@ -6877,7 +6877,7 @@ Suit_Locker_Item: {
 }
 
 Tank_Rifle: {
-	DisplayName: Tank Rifle
+	DisplayName: TRC-88 Tank Rifle
 	Tooltip: "'Tank beats everything!'"
 }
 
@@ -8871,7 +8871,7 @@ Scrappickers_Glove: {
 
 Smogwalkers_Trenchcoat: {
 	DisplayName: Smogwalker's Trenchcoat
-	Tooltip: While not immune [buffhint:Origins/Impeding_Shrapnel_Debuff] has increased damage
+	Tooltip: While not immune, [buffhint:Origins/Impeding_Shrapnel_Debuff] deals more damage
 }
 
 Blood_Powered_Robot: {
@@ -8881,6 +8881,7 @@ Blood_Powered_Robot: {
 		Your explosives will explode into blood and frenzied shrapnel
 		Nearby enemies below 40% max life while affected
 		by [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
+		'Blood is fuel'
 		'''
 }
 
@@ -8889,7 +8890,6 @@ Hive_Jacket: {
 	Tooltip:
 		'''
 		Reduces damage taken by 5%
-		Explodes into bees when damaged
-		Douses the user in honey when damaged
+		Explodes into bees and douses the user in honey when damaged
 		'''
 }

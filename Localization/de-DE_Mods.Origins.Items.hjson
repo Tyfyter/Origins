@@ -3396,7 +3396,7 @@ Alkahest_Torch: {
 }
 
 // Surveysprout.DisplayName: Surveysprout
-// NE8.DisplayName: NE-8
+// NE8.DisplayName: Sturdy Robot Part
 // Nova_Fragment.DisplayName: Nova Fragment
 
 Polyeel: {
@@ -6877,7 +6877,7 @@ Suit_Locker_Item: {
 }
 
 Tank_Rifle: {
-	// DisplayName: Tank Rifle
+	// DisplayName: TRC-88 Tank Rifle
 	// Tooltip: "'Tank beats everything!'"
 }
 
@@ -8871,7 +8871,7 @@ Scrappickers_Glove: {
 
 Smogwalkers_Trenchcoat: {
 	// DisplayName: Smogwalker's Trenchcoat
-	// Tooltip: While not immune [buffhint:Origins/Impeding_Shrapnel_Debuff] has increased damage
+	// Tooltip: While not immune, [buffhint:Origins/Impeding_Shrapnel_Debuff] deals more damage
 }
 
 Blood_Powered_Robot: {

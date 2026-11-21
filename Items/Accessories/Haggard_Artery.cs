@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);
-			Item.damage = 45;
+			Item.damage = 42;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.knockBack = 4;
 			Item.useTime = 6;

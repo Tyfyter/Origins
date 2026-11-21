@@ -17,15 +17,15 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(58, 44);
-			Item.damage = 45;
+			Item.damage = 42;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.knockBack = 4;
 			Item.useTime = 6;
 			Item.useAnimation = 1;//used as the numerator for the chance
 			Item.reuseDelay = 30;//used as the denominator for the chance
 			Item.shoot = ModContent.ProjectileType<Explosive_Artery_P>();
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.value = Item.sellPrice(gold: 3);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer oP = player.GetModPlayer<OriginPlayer>();

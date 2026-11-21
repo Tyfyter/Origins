@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(46, 36);
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().scrapCompactor = true;

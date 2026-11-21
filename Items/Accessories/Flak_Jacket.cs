@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(20, 34);
 			Item.damage = 81;
 			Item.knockBack = 4f;
-			Item.defense = 1;
+			Item.defense = 3;
 			Item.shoot = ModContent.ProjectileType<Flak_Jacket_Explosion>();
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 1);

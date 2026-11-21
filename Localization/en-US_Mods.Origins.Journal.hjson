@@ -822,12 +822,12 @@ Mechanicus_Sovereignty: {
 		The next one up were the aforementioned Apprentinces, those either too young for higher education or at an average level of intellect. This was the most populous caste of the Mechanicus Sovereignty and didn't have anyone of notable history. The Apprentice caste is treated as a beginner-level caste where the primary objective is to expand upon information. Apprentices don't get their specialties until they become Craftsmen.
 		'''
 
-	NE_8: {
-		Name: "{$Items.NE8.DisplayName}"
+	Tank_Rifle: {
+		Name: "{$Items.Tank_Rifle.DisplayName}"
 		Text:
 			'''
 			[header:{$Name} (3/{$SeriesLength})]
-			[jimage/sc3d:Origins/Items/Materials/NE8]
+			[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Tank_Rifle]
 
 
 

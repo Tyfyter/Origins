@@ -826,18 +826,18 @@ Mechanicus_Sovereignty: {
 		Следующими после вышеупомянутых в иерархической системе шли ученики — они либо были слишком юны для получения высшего образования, либо их интеллект оставался на среднем уровне. Будучи самой многочисленной кастой Суверенного Государства, она не подарила истории ни одной примечательной личности. К касте учеников относились как к неофитам, главной целью которых было постижение всё больших объёмов информации. Ученики не способны получить специальность до посвящения в ремесленники.
 		'''
 
-	NE_8: {
-		Name: "{$Items.NE8.DisplayName}"
-		Text:
+	Tank_Rifle: {
+		// Name: "{$Items.Tank_Rifle.DisplayName}"
+		/* Text:
 			'''
-			[header:НЭ	-8 (3/{$SeriesLength})]
-			[jimage/sc3d:Origins/Items/Materials/NE8]
+			[header:{$Name} (3/{$SeriesLength})]
+			[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Tank_Rifle]
 
 
 
 			*****
-			Ремесленники и ремесленницы — это либо те, кто занимается получением высшего образования, либо те, кто уже получил его и трудится на желаемой работе. Ремесленники выполняют особую работу, которую ученики неспособны выполнить без предварительных инструкций и подготовки. Эту касту составляют представители типичных профессий вроде столяров и электриков; в самой же касте встречаются и именитые личности, как, например, Механик. 
-			'''
+			Craftsmen and women are either young adults pursuing a college-level education or satisfied with their particular line of work. Craftsmen work in specific jobs that Laborers can't really do without pre-requisite knowledge and understanding. Typical jobs like woodwork and trade electricians would be covered by this caste, which is to include notable figures like who you know as the Mechanic.
+			''' */
 	}
 
 	Internal_Combustionfish.Text:
