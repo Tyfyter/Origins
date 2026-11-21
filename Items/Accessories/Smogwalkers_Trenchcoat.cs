@@ -11,11 +11,10 @@ namespace Origins.Items.Accessories {
 			WikiCategories.Combat
 		];
 		public float? Damage(Player player, NPC target) {
-			bool isBoss = target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type];
 			if (player.OriginPlayer().blizzardwalkerActiveTime < Blizzardwalkers_Jacket.max_active_time) {
-				return isBoss ? 0 : 0.05f;
+				return 0.05f;
 			}
-			return isBoss ? 0 : 0.02f;
+			return 0.02f;
 		}
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Blizzardwalkers_Jacket)}.Tooltip"),
