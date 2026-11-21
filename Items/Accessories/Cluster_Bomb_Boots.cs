@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories;
 public class Cluster_Bomb_Boots : ModItem {
 	public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 			Language.GetOrRegister($"Mods.Origins.Items.{nameof(Bomb_Rack)}.Tooltip"),
-			Language.GetOrRegister($"Mods.Origins.Items.{nameof(Scrap_Compactor)}.Tooltip")
+			Language.GetOrRegister($"Mods.Origins.Items.{nameof(Scrap_Compactor)}.Tooltip").WithFormatArgs("40")
 		);
 	public override void SetStaticDefaults() {
 		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(160);
