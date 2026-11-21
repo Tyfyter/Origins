@@ -3607,276 +3607,6 @@
 			},
 			"Tags": []
 		},
-		"Radio_Puzzle_Receiver_Right": {
-			"Map": [
-				"7)77777777777777)7",
-				"))))))))))))))))))",
-				"7)7)7777)77777)777",
-				"7)75666,4,,6665777",
-				"7)7¥66666666665777",
-				"7)7666666666665777",
-				"7)766666666666'¯67",
-				"7)76°666666666RR64",
-				"7)766666666666666±",
-				"7)7²6³6666µ66666G→",
-				"7)777777777777777)",
-				"))))))))))))))))))",
-				"7)77777777777777)7"
-			],
-			"Key": {
-				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"'": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
-				"¯": "PlaceSpecialTile(Origins/Door_Stopper,1,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"°": "PlaceChest(Origins/Small_Storage_Container,1,Ashen_Armory)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"±": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"²": "PlaceChest(Origins/Small_Storage_Container,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"³": "PlaceChest(Origins/Small_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"µ": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_Medical)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
-			},
-			"SocketKey": {
-				"→": {
-					"Key": "Base",
-					"Direction": "Right"
-				}
-			},
-			"Tags": []
-		},
-		"Radio_Puzzle_Receiver_Left": {
-			"Map": [
-				"7)77777777777777)7",
-				"))))))))))))))))))",
-				"777)77777)7777)7)7",
-				"7775666,,4,66657)7",
-				"7775666666666M67)7",
-				"777566¡66£666667)7",
-				"7'5¯6ZZZZZZ66**7)7",
-				"46RR666666666*67)7",
-				"°666666666666*67)7",
-				"←6f66g6±6²666*67)7",
-				")777777777777777)7",
-				"))))))))))))))))))",
-				"7)77777777777777)7"
-			],
-			"Key": {
-				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"'": "PlaceSpecialTile(Origins/Door_Stopper,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"¯": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
-				"°": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"±": "PlaceChest(Origins/Rusty_Locker,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"²": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Personal)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
-			},
-			"SocketKey": {
-				"←": {
-					"Key": "Base",
-					"Direction": "Left"
-				}
-			},
-			"Tags": []
-		},
-		"Radio_Puzzle_Sender_Left": {
-			"Map": [
-				"7)77777777777777)7",
-				"))))))))))))))))))",
-				"7777)777)7777)77)7",
-				"7776466656666467)7",
-				"77766666¥6666667)7",
-				"777666£666666667)7",
-				")~66ZZZZ6666'B¯7)7",
-				"466666666666°K±7)7",
-				"vR666666666666²))7",
-				"←6f6g6³66§+++++7)7",
-				")777777777777777)7",
-				"))))))))))))))))))",
-				"7)77777777777777)7"
-			],
-			"Key": {
-				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"'": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
-				"¯": "PlaceFramedTile(Origins/Transistor,18,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
-				"°": "PlaceSpecialTile(Switches,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
-				"±": "PlaceFramedTile(Origins/Transistor,18,72)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
-				"³": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
-			},
-			"SocketKey": {
-				"←": {
-					"Key": "Base",
-					"Direction": "Left"
-				}
-			},
-			"Tags": []
-		},
-		"Radio_Puzzle_Sender_Right": {
-			"Map": [
-				"7)77777777777777)7",
-				"))))))))))))))))))",
-				"7)77)777)7777)7777",
-				"7)7646665666646777",
-				"7)766666b666666777",
-				"7)7666666666666777",
-				"7)7'B¯666666666|5)",
-				"7)7°K±666666666664",
-				"7))²666666666666Rv",
-				"7)7+++++c66_6666G→",
-				"7)777777777777777)",
-				"))))))))))))))))))",
-				"7)77777777777777)7"
-			],
-			"Key": {
-				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"'": "PlaceFramedTile(Origins/Transistor,18,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
-				"¯": "PlaceSpecialTile(Origins/Radio_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
-				"°": "PlaceFramedTile(Origins/Transistor,18,72)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
-				"±": "PlaceSpecialTile(Switches,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)"
-			},
-			"SocketKey": {
-				"→": {
-					"Key": "Base",
-					"Direction": "Right"
-				}
-			},
-			"Tags": []
-		},
-		"Timer_Puzzle_Right": {
-			"Map": [
-				"7)777777777777777)'¯777777777777777)7",
-				")°±³)))))))))))))µ¶·¸¸¸¸¸¸¸¸¸¸¸¸¸¸'¹)",
-				"7)º77777777777777ee¯7777777777777H»7)",
-				"6¼½6*66q6T*****666¾¿ÀÀÀÁÀÀÁÀÀÁÀ¾7H¯ÂÃ",
-				"6¼Ä**66,6666666666Å¿ÀÀÁÁÁÁÁÁÁÁÁÅ7H¯ÂÃ",
-				"65½6666,6666666666Å¿ÀÀÀÁÀÀÁÀÀÁÀÅ7H¯ÂÃ",
-				"65½666646ZZZZ66666Æ¿ÀÀÀÁÇÃÁÈÃÁÀÆÉHÊËÃ",
-				"65½6666a6666666666Ì¿ÀÀÀÁÀÃÁÀÃÁÀÌÀÍ¿ÀÃ",
-				"65½6666a6666666§X7)ÊÎÏÀÁÀÃÁÀÃÁÀÌÀÀÀÀÃ",
-				"←5Ð6666a6g6Ñ66§667)ÊÀÀÏÁÈÃÁÇÃÁÀÌÀÀÒÓ→",
-				"7)77777)7777777777)¯¯¯¯¯¯Ô¯¯Ô¯¯Ô¯¯ÕÖ)",
-				")))))))))))))))))))))))))))))))))×ØÙ)",
-				"7)777777777777777777777777777777))))7"
-			],
-			"Key": {
-				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"'": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
-				"¯": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/White_Wire_Mode)",
-				"°": "PlaceFramedTile(Origins/Transistor,54,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"±": "PlaceFramedTile(Origins/Transistor,54,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"³": "PlaceFramedTile(Origins/Transistor,54,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"µ": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"¶": "PlaceSpecialTile(Origins/Delay_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
-				"·": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode,Origins/White_Wire_Mode)",
-				"¸": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode)",
-				"¹": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"º": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"»": "PlaceFramedTile(Origins/Edge_Detector,0,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Origins/White_Wire_Mode)",
-				"¼": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"½": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"¿": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
-				"À": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Á": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Â": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Ã": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"Ä": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"Å": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Æ": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"Ç": "PlaceSpecialTile(Origins/Air_Vent)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"È": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"É": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
-				"Ê": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
-				"Ë": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
-				"Ì": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"Í": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
-				"Î": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Ï": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
-				"Ð": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"Ñ": "PlaceChest(Origins/Rusty_Locker,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"Ò": "PlaceSpecialTile(Origins/Industrial_Door,1,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Ó": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Yellow_Wire_Mode)",
-				"Õ": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Yellow_Wire_Mode)",
-				"Ö": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Yellow_Wire_Mode,Origins/Brown_Wire_Mode)",
-				"×": "PlaceFramedTile(Origins/Transistor,36,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
-				"Ø": "PlaceFramedTile(Origins/Transistor,36,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Yellow_Wire_Mode)",
-				"Ù": "PlaceFramedTile(Origins/Transistor,36,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)"
-			},
-			"SocketKey": {
-				"←": {
-					"Key": "Base",
-					"Direction": "Left"
-				},
-				"→": {
-					"Key": "Base",
-					"Direction": "Right"
-				}
-			},
-			"Tags": []
-		},
-		"Timer_Puzzle_Left": {
-			"Map": [
-				"7)777777777777777'¯)777777777777777)7",
-				")°¯±±±±±±±±±±±±±±³µ¶)))))))))))))·¸¹)",
-				")7ºH7777777777777'ee77777777777777»)7",
-				"¼½'H7¾¿À¿¿À¿¿À¿¿¿Á¾6666666666q6666Â56",
-				"¼½'H7ÃÀÀÀÀÀÀÀÀÀ¿¿ÁÃ6666666666,6666Â56",
-				"¼½'H7Ã¿À¿¿À¿¿À¿¿¿ÁÃ6666666666,6666Â56",
-				"¼ÄÅHÆÇ¿ÀÈ¿ÀÈ¿À¿¿¿ÁÇ666666666646£66Â56",
-				"¼¿ÁÉ¿Ê¿À¼¿À¼¿À¿¿¿ÁÊ6666666666a6666Â56",
-				"¼¿¿¿¿Ê¿À¼¿À¼¿À¿ËÌÅ)7Xc6666666a6x66Â56",
-				"←Í¿Î¿Ê¿ÀÈ¿ÀÏ¿ÀË¿¿Å)766c66Ð666a6666Ñ5→",
-				")ÒÓ''Ô''Ô''Ô'''''')7777777777)77777)7",
-				")ÕÖ×)))))))))))))))))))))))))))))))))",
-				"7))))777777777777777777777777777777)7"
-			],
-			"Key": {
-				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"'": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/White_Wire_Mode)",
-				"¯": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
-				"°": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"±": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode)",
-				"³": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode,Origins/White_Wire_Mode)",
-				"µ": "PlaceSpecialTile(Origins/Delay_Component)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
-				"¶": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"·": "PlaceFramedTile(Origins/Transistor,36,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"¸": "PlaceFramedTile(Origins/Transistor,36,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"¹": "PlaceFramedTile(Origins/Transistor,36,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"º": "PlaceFramedTile(Origins/Edge_Detector,0,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Origins/White_Wire_Mode)",
-				"»": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"¼": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"½": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"¿": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"À": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Á": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
-				"Â": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"Ä": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
-				"Å": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
-				"Æ": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
-				"Ç": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"È": "PlaceSpecialTile(Origins/Air_Vent)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"É": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode)",
-				"Ê": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"Ë": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
-				"Ì": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Í": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Yellow_Wire_Mode)",
-				"Î": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
-				"Ï": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"Ð": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-				"Ñ": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Blue_Wire_Mode)",
-				"Ò": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Yellow_Wire_Mode,Origins/Brown_Wire_Mode)",
-				"Ó": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(PegasusLib/Yellow_Wire_Mode)",
-				"Õ": "PlaceFramedTile(Origins/Transistor,54,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-				"Ö": "PlaceFramedTile(Origins/Transistor,54,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Yellow_Wire_Mode)",
-				"×": "PlaceFramedTile(Origins/Transistor,54,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)"
-			},
-			"SocketKey": {
-				"←": {
-					"Key": "Base",
-					"Direction": "Left"
-				},
-				"→": {
-					"Key": "Base",
-					"Direction": "Right"
-				}
-			},
-			"Tags": []
-		},
 		"Scenic_Room_1": {
 			"Map": [
 				"....7)777777777777777777777777777777777777777777777777777777777)7....",
@@ -6263,6 +5993,261 @@
 				}
 			},
 			"Tags": []
+		},
+		"Timer_Puzzle_Left": {
+			"Map": [
+				"7)777777777777777⊛²)777777777777777)7",
+				")¾ÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÈÏ)))))))))))))ÐÑÒ)",
+				")7ÓÔ7777777777777⊛ee77777777777777Õ)7",
+				"Ö×⊛Ô7Ø∐µ∐∐µ∐∐µ∐∐∐ÙØ6666666666q6666Ú56",
+				"Ö×⊛Ô7Ãµµµµµµµµµ∐∐ÙÃ6666666666,6666Ú56",
+				"Ö×⊛Ô7Ã∐µ∐∐µ∐∐µ∐∐∐ÙÃ6666666666,6666Ú56",
+				"ÖÛÜÔÝÞ∐µß∐µß∐µ∐∐∐ÙÞ666666666646£66Ú56",
+				"Ö∐Ùà∐á∐µÖ∐µÖ∐µ∐∐∐Ùá6666666666a6666Ú56",
+				"Ö∐∐∐∐á∐µÖ∐µÖ∐µ∐âãÜ)7Xc6666666a6x66Ú56",
+				"←ä∐å∐á∐µß∐µæ∐µâ∐∐Ü)766c66ç666a6666è5→",
+				")éê⊛⊛ë⊛⊛ë⊛⊛ë⊛⊛⊛⊛⊛⊛)7777777777)77777)7",
+				")ìíî)))))))))))))))))))))))))))))))))",
+				"7))))777777777777777777777777777777)7"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"⊛": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/White_Wire_Mode)",
+				"²": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)+SetLogicGate(OR, 167)",
+				"¾": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Â": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)+SetLogicGate(NIMPLY, 129)",
+				"Ä": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode)",
+				"Å": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode,Origins/White_Wire_Mode)",
+				"Ï": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ð": "PlaceFramedTile(Origins/Transistor,36,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ñ": "PlaceFramedTile(Origins/Transistor,36,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"Ò": "PlaceFramedTile(Origins/Transistor,36,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ó": "PlaceFramedTile(Origins/Edge_Detector,0,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode,Origins/White_Wire_Mode)",
+				"Õ": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Blue_Wire_Mode)",
+				"Ö": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"×": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Ú": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"Û": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
+				"Ü": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
+				"Ý": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
+				"Þ": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"ß": "PlaceSpecialTile(Origins/Air_Vent)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"à": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)",
+				"á": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"â": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownRight)",
+				"ã": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"ä": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Yellow_Wire_Mode)",
+				"å": "PlaceSpecialTile(Origins/Industrial_Door,0,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"æ": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"ç": "PlaceSpecialChest(Origins/Medium_Storage_Container,1,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"è": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"é": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Yellow_Wire_Mode,Origins/Brown_Wire_Mode)",
+				"ê": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Yellow_Wire_Mode)",
+				"ì": "PlaceFramedTile(Origins/Transistor,54,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"í": "PlaceFramedTile(Origins/Transistor,54,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Yellow_Wire_Mode)",
+				"î": "PlaceFramedTile(Origins/Transistor,54,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Timer_Puzzle_Right": {
+			"Map": [
+				"7)777777777777777)⊛²777777777777777)7",
+				")¾ÂÄ)))))))))))))ÅÈÏÐÐÐÐÐÐÐÐÐÐÐÐÐÐÑÒ)",
+				"7)Ó77777777777777ee²7777777777777ÔÕ7)",
+				"6Ö×6*66q6T*****666ØÙ∐∐∐µ∐∐µ∐∐µ∐Ø7Ô²ÚÛ",
+				"6ÖÜ**66,6666666666ÃÙ∐∐µµµµµµµµµÃ7Ô²ÚÛ",
+				"65×6666,6666666666ÃÙ∐∐∐µ∐∐µ∐∐µ∐Ã7Ô²ÚÛ",
+				"65×666646ZZZZ66666ÝÙ∐∐∐µÞÛµßÛµ∐ÝàÔáâÛ",
+				"65×6666a6666666666ãÙ∐∐∐µ∐Ûµ∐Ûµ∐ã∐äÙ∐Û",
+				"65×6666a6666666§X7)áåæ∐µ∐Ûµ∐Ûµ∐ã∐∐∐∐Û",
+				"←5ç6666a6g6è66§667)á∐∐æµßÛµÞÛµ∐ã∐∐éê→",
+				"7)77777)7777777777)²²²²²²ë²²ë²²ë²²ìí)",
+				")))))))))))))))))))))))))))))))))îïð)",
+				"7)777777777777777777777777777777))))7"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"⊛": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)+SetLogicGate(OR, 199)",
+				"²": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/White_Wire_Mode)",
+				"¾": "PlaceFramedTile(Origins/Transistor,54,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Â": "PlaceFramedTile(Origins/Transistor,54,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"Ä": "PlaceFramedTile(Origins/Transistor,54,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Å": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ï": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode,Origins/White_Wire_Mode)",
+				"Ð": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode)",
+				"Ñ": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Black_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)+SetLogicGate(NIMPLY, 129)",
+				"Ò": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ó": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Blue_Wire_Mode)",
+				"Õ": "PlaceFramedTile(Origins/Edge_Detector,0,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode,Origins/White_Wire_Mode)",
+				"Ö": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"×": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"Ú": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"Û": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ü": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"Ý": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Þ": "PlaceSpecialTile(Origins/Air_Vent)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"ß": "PlaceSpecialTile(Origins/Air_Vent,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"à": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
+				"á": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
+				"â": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
+				"ã": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"ä": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)",
+				"å": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"æ": "PlaceSpecialTile(Origins/Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
+				"ç": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Blue_Wire_Mode)",
+				"è": "PlaceChest(Origins/Rusty_Locker,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"é": "PlaceSpecialTile(Origins/Industrial_Door,1,1)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+				"ê": "PlaceSpecialTile(WeightedPressurePlate)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Yellow_Wire_Mode)",
+				"ì": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Yellow_Wire_Mode)",
+				"í": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Yellow_Wire_Mode,Origins/Brown_Wire_Mode)",
+				"î": "PlaceFramedTile(Origins/Transistor,36,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
+				"ï": "PlaceFramedTile(Origins/Transistor,36,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Yellow_Wire_Mode)",
+				"ð": "PlaceFramedTile(Origins/Transistor,36,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				},
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Radio_Puzzle_Receiver_Right": {
+			"Map": [
+				"7)77777777777777)7",
+				"))))))))))))))))))",
+				"777)77777)7777)7)7",
+				"7775666,,4,66657)7",
+				"7775666666666M67)7",
+				"777566¡66£666667)7",
+				"7⊛5²6ZZZZZZ66**7)7",
+				"46RR666666666*67)7",
+				"¾666666666666*67)7",
+				"←6f66g6Â6Ä666*67)7",
+				")777777777777777)7",
+				"))))))))))))))))))",
+				"7)77777777777777)7"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Â": "PlaceChest(Origins/Rusty_Locker,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ä": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Personal)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Radio_Puzzle_Sender_Left": {
+			"Map": [
+				"7)77777777777777)7",
+				"))))))))))))))))))",
+				"7777)777)7777)77)7",
+				"7776466656666467)7",
+				"77766666¥6666667)7",
+				"777666£666666667)7",
+				")~66ZZZZ6666⊛B²7)7",
+				"466666666666¾ÂÄ7)7",
+				"vR666666666666Å))7",
+				"←6f6g6Ï66§+++++7)7",
+				")777777777777777)7",
+				"))))))))))))))))))",
+				"7)77777777777777)7"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"⊛": "PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)+PlaceRadioComponent(Send, 65, 2)",
+				"²": "PlaceFramedTile(Origins/Transistor,18,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
+				"¾": "PlaceSpecialTile(Switches,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)",
+				"Ä": "PlaceFramedTile(Origins/Transistor,18,72)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)",
+				"Ï": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Mineral)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
+		},
+		"Radio_Puzzle_Sender_Right": {
+			"Map": [
+				"7)77777777777777)7",
+				"))))))))))))))))))",
+				"7)77)777)7777)7777",
+				"7)7646665666646777",
+				"7)766666b666666777",
+				"7)7666666666666777",
+				"7)7⊛B²666666666|5)",
+				"7)7¾ÂÄ666666666664",
+				"7))Å666666666666Rv",
+				"7)7+++++c66_6666G→",
+				"7)777777777777777)",
+				"))))))))))))))))))",
+				"7)77777777777777)7"
+			],
+			"Key": {
+				"→": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"⊛": "PlaceFramedTile(Origins/Transistor,18,36)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)",
+				"²": "PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)+PlaceRadioComponent(Send, 65, 2)",
+				"¾": "PlaceFramedTile(Origins/Transistor,18,72)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)",
+				"Ä": "PlaceSpecialTile(Switches,4)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)"
+			},
+			"SocketKey": {
+				"→": {
+					"Key": "Base",
+					"Direction": "Right"
+				}
+			},
+			"Tags": []
+		},
+		"Radio_Puzzle_Receiver_Left": {
+			"Map": [
+				"7)77777777777777)7",
+				"))))))))))))))))))",
+				"777)77777)7777)7)7",
+				"7775666,,4,66657)7",
+				"7775666666666M67)7",
+				"777566¡66£666667)7",
+				"7⊛5²6ZZZZZZ66**7)7",
+				"46RR666666666*67)7",
+				"¾666666666666*67)7",
+				"←6f66g6Ä6Ï666*67)7",
+				")777777777777777)7",
+				"))))))))))))))))))",
+				"7)77777777777777)7"
+			],
+			"Key": {
+				"←": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+				"Ä": "PlaceChest(Origins/Rusty_Locker,0,Ashen_GenericLore)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+				"Ï": "PlaceChest(Origins/Rusty_Locker,0,Ashen_Personal)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)"
+			},
+			"SocketKey": {
+				"←": {
+					"Key": "Base",
+					"Direction": "Left"
+				}
+			},
+			"Tags": []
 		}
 	},
 	"TileDescriptors": {
@@ -6367,7 +6352,7 @@
 		"¯": "PlaceChest(Origins/Small_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"°": "PlaceChest(Origins/Small_Storage_Container,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"±": "PlaceSpecialChest(Origins/Medium_Storage_Container,2)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"²": "PlaceFramedTile(Origins/Transistor,18,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
+		"²": "PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)+PlaceRadioComponent(Receive, 65, 4)",
 		"³": "PlaceTile(Origins/Rusty_Piping)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
 		"´": "PlaceSpecialTile(Origins/Modular_Bunk,0,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"µ": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
@@ -6382,7 +6367,7 @@
 		"»": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
 		"¼": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+SlopeTile(SlopeUpRight)",
 		"½": "PlaceLiquid(Origins/Oil)+PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
-		"¾": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"¾": "PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)+PlaceRadioComponent(Signal, 65)",
 		"¿": "PlaceSpecialTile(Origins/Cargo_Elevator_Door_Open,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"À": "Empty+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Origins/Brown_Wire_Mode)",
 		"Á": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)+SlopeTile(SlopeDownRight)",
@@ -6390,20 +6375,27 @@
 		"]": "PlaceSpecialTile(Origins/Broken_Catwalk)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"\\": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeUpLeft)",
 		"'": "PlaceTile(Chain)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"Â": "Empty+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Red_Wire_Mode)",
 		"Ã": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"Å": "PlaceFramedTile(Origins/Transistor,18,0)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
 		"Æ": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(HalfBlock)",
 		"Ç": "PlaceSpecialTile(Origins/Fungarust)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"È": "PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Black_Wire_Mode)+PlaceDelayComponent(138)",
 		"É": "PlaceTile(Origins/Modular_Light_Fixture)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Origins/Brown_Wire_Mode)",
 		"Ê": "PlaceFramedTile(MinecartTrack,1,-1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
 		"Ë": "PlaceFramedTile(Origins/Mechanical_Key_Node_Purple,0,18)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(PegasusLib/Red_Wire_Mode,Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
 		"Ì": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)",
 		"Í": "PlaceTile(Origins/Tainted_Stone)+PlaceWall(Origins/Tainted_Stone_Wall_Safe)+PlaceWire(Origins/Brown_Wire_Mode)",
 		"Î": "PlaceSpecialTile(Origins/Suit_Locker,6)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-		"Ô": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
+		"Ø": "PlaceTile(Origins/Steel_Support_Beam)+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"Ù": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)+PlaceWire(Origins/White_Wire_Mode)",
 		"{": "PlaceTile(Origins/Truss_Block)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+SlopeTile(SlopeDownLeft)",
 		"}": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,7)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
 		"⊞": "PlaceTile(Origins/Fortified_Steel_Block1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)+PlaceWire(Origins/Brown_Wire_Mode)",
-		"∐": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)"
+		"∐": "Empty+PlaceWall(Origins/Fortified_Steel_Wall2_Placed_Unsafe)",
+		"ë": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Origins/Brown_Wire_Mode,Origins/White_Wire_Mode)",
+		"⊛": "PlaceSpecialTile(Origins/Door_Stopper,0,1)+PlaceWall(Origins/Fortified_Steel_Wall1_Placed_Unsafe)",
+		"Ô": "PlaceTile(Origins/Fortified_Steel_Block2)+PlaceWire(Red_Wire_Mode)"
 	},
 	"BreakCondition": "MaxRoomCount(1000)"
 }
