@@ -242,6 +242,7 @@ public class Structure_Helper_UI : UIState {
 			HAlign = 0.5f,
 			OverflowHidden = true
 		});
+		Append(roomListSortButtons = ViewState.CreateSortButtons(viewStack));
 
 		Append(toastHandler = new() {
 			Left = new(0, 0.25f * 0.5f),
@@ -371,6 +372,7 @@ public class Structure_Helper_UI : UIState {
 		if (viewStack.Count > 0) {
 			if (CurrentView.room is null) {
 				yield return socketRoomListWrapper;
+				yield return roomListSortButtons;
 			} else {
 				text.SetText(CurrentView.room.Identifier);
 				yield return text;
@@ -382,6 +384,7 @@ public class Structure_Helper_UI : UIState {
 				yield return text;
 				yield return refreshButton;
 				yield return roomListWrapper;
+				//yield return roomListSortButtons;
 			}
 		}
 		yield return toastHandler;
@@ -389,6 +392,7 @@ public class Structure_Helper_UI : UIState {
 	UIElement roomListWrapper;
 	SocketRoomListWrapper socketRoomListWrapper;
 	UIList roomList;
+	UIElement roomListSortButtons;
 	UIText text;
 	UIText inputFeedback;
 	UIInputPanel textInput;
@@ -519,8 +523,11 @@ public class Structure_Helper_UI : UIState {
 	public void FillRoomList(UIList roomList, IEnumerable<ARoom> rooms = null) {
 		rooms ??= structure.Rooms;
 		float height = 0;
+		int index = 0;
 		foreach (ARoom room in rooms) {
-			UITextPanel<string> element = new(room.Identifier);
+			UIOrderedTextPanel element = new(room.Identifier) {
+				OriginalIndex = index++
+			};
 			element.OnLeftClick += (@event, _) => {
 				if (@event.Target == element) viewStack.Push(new(structure, room));
 			};
@@ -674,6 +681,52 @@ public class Structure_Helper_UI : UIState {
 			roomList?.Clear();
 			roomList?.Remove();
 		}
+		static readonly Color selectedColor = new Color(63, 82, 151) * 0.8f;
+		static readonly Color unselectedColor = new Color(57, 76, 136) * 0.7f;
+		public static UIElement CreateSortButtons(Stack<ViewState> viewStack) {
+			UIElement wrapper = new() {
+				Left = new(-24, -0.2f),
+				Top = new(32, 0.1f),
+				Width = new(40, 0),
+				Height = new(0, 0),
+				HAlign = 0.5f
+			};
+			Append("O", originalSort);
+			Append("A»Z", alphabeticalSort);
+			Append("Z»A", omegapsicalSort);
+			return wrapper;
+			void Append(string text, Action<List<UIElement>> sortMethod) {
+				Vector2 size = FontAssets.MouseText.Value.MeasureString(text);
+				float scale = 24 / size.Max();
+				UITextPanel<string> button = new(text, scale) {
+					Top = new(wrapper.Height.Pixels, 0),
+					Width = new(32, 0),
+					Height = new(size.Y * scale, 0),
+					MaxWidth = new(32, 0),
+					PaddingBottom = 4,
+					PaddingLeft = 4,
+					PaddingRight = 4,
+					PaddingTop = 4
+				};
+				wrapper.Height.Pixels += button.Height.Pixels + 2;
+				button.OnLeftClick += (_, _) => {
+					ViewState state = viewStack.Peek();
+					state.roomList.ManualSortMethod = omegapsicalSort;
+					state.roomList.UpdateOrder();
+				};
+				button.OnUpdate += (_) => button.BackgroundColor = button.IsMouseHovering || viewStack.Peek().roomList.ManualSortMethod == sortMethod ? selectedColor : unselectedColor;
+				wrapper.Append(button);
+			}
+		}
+		static readonly Action<List<UIElement>> originalSort = elements => elements.Sort(
+			(a, b) => ((a as UIOrderedTextPanel)?.OriginalIndex ?? int.MaxValue).CompareTo((b as UIOrderedTextPanel)?.OriginalIndex ?? int.MaxValue)
+		);
+		static readonly Action<List<UIElement>> alphabeticalSort = elements => elements.Sort(
+			(a, b) => ((a as UIOrderedTextPanel)?.Text ?? "").CompareTo((b as UIOrderedTextPanel)?.Text ?? "")
+		);
+		static readonly Action<List<UIElement>> omegapsicalSort = elements => elements.Sort(
+			(a, b) => -((a as UIOrderedTextPanel)?.Text ?? "").CompareTo((b as UIOrderedTextPanel)?.Text ?? "")
+		);
 		public readonly struct WeightUI {
 			public readonly WeightDescriptor.Kind source;
 			public readonly ParameterElement[] parameters;
@@ -693,6 +746,7 @@ public class Structure_Helper_UI : UIState {
 			}
 			public override string ToString() => source is null ? parameters[0].GetParameterValue() : $"{source.FullName}({string.Join(',', parameters.Select(p => p.GetParameterValue()))})";
 		}
+
 	}
 	public abstract class StructureOverlay {
 		public virtual string Name => GetType().Name;
@@ -1375,4 +1429,7 @@ public class SerializationContext {
 		Tile,
 		Socket
 	}
+}
+public class UIOrderedTextPanel(string text, float textScale = 1, bool large = false) : UITextPanel<string>(text, textScale, large) {
+	public int OriginalIndex { get; init; }
 }
