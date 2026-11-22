@@ -6470,12 +6470,15 @@ namespace Origins {
 		}
 		[Pure]
 		public static bool IsType<TProj>(this Projectile proj) where TProj : ModProjectile => proj.type == ModContent.ProjectileType<TProj>();
-		public static void MakeExplosive(this Projectile proj, DamageClass? defaultOverride = null) {
+		public static void MakeExplosive(this Projectile proj, DamageClass defaultOverride = null) {
 			if (proj.DamageType == DamageClass.Default) proj.DamageType = defaultOverride ?? DamageClasses.Explosive;
 			else if (!proj.DamageType.CountsAsClass(DamageClasses.Explosive)) proj.DamageType = DamageClasses.ExplosiveVersion[proj.DamageType];
 		}
 		public static void SetupTripwireValues(this Projectile proj, int range, int style = 0) => SetupTripwireValues(proj.type, range, style);
 		public static void SetupTripwireValues(this ModProjectile proj, int range, int style = 0) => SetupTripwireValues(proj.Type, range, style);
+		public static void SetupTripwireValues<TProj>(int range, int style = 0) where TProj : ModProjectile {
+			SetupTripwireValues(ModContent.ProjectileType<TProj>(), range, style);
+		}
 		public static void SetupTripwireValues(int type, int range, int style = 0) {
 			Origins.MagicTripwireRange[type] = range;
 			Origins.MagicTripwireDetonationStyle[type] = style;
@@ -6487,6 +6490,9 @@ namespace Origins {
 		}
 		public static void SetupTurretTargetPriorities(this Projectile proj, TurretTargetPriority priority) => SetupTurretTargetPriorities(proj.type, priority);
 		public static void SetupTurretTargetPriorities(this ModProjectile proj, TurretTargetPriority priority) => SetupTurretTargetPriorities(proj.Type, priority);
+		public static void SetupTurretTargetPriorities<TProj>(TurretTargetPriority priority) where TProj : ModProjectile {
+			SetupTurretTargetPriorities(ModContent.ProjectileType<TProj>(), priority);
+		}
 		public static void SetupTurretTargetPriorities(int type, TurretTargetPriority priority) {
 			switch (priority) {
 				case TurretTargetPriority.low:
@@ -6501,29 +6507,43 @@ namespace Origins {
 				break;
 			}
 		}
-		public static void SetExplosiveData(int type, int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low) {
+		public static void SetupHoming(this Projectile proj, float multiplier, int mode = 0) => SetupHoming(proj.type, multiplier, mode);
+		public static void SetupHoming(this ModProjectile proj, float multiplier, int mode = 0) => SetupHoming(proj.Type, multiplier, mode);
+		public static void SetupHoming<TProj>(float multiplier, int mode = 0) where TProj : ModProjectile {
+			SetupHoming(ModContent.ProjectileType<TProj>(), multiplier, mode);
+		}
+		public static void SetupHoming(int type, float multiplier, int mode = 0) {
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[type] = multiplier;
+			OriginsSets.Projectiles.HomingEffectivenessMode[type] = mode;
+		}
+		public static void SetExplosiveData(int type, int tripwireRange = 0, int tripwireStyle = 0, float homingMulti = 1, int homingMode = 0, TurretTargetPriority priority = TurretTargetPriority.low) {
 			SetupTripwireValues(type, tripwireRange, tripwireStyle);
 			SetupTurretTargetPriorities(type, priority);
+			SetupHoming(type, homingMulti, homingMode);
 		}
-		public static void SetExplosiveData<TExplosive>(int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low) where TExplosive : ModProjectile {
-			SetExplosiveData(ModContent.ProjectileType<TExplosive>(), tripwireRange, tripwireStyle, priority);
+		public static void SetExplosiveData<TExplosive>(int tripwireRange = 0, int tripwireStyle = 0, float homingMulti = 1, int homingMode = 0, TurretTargetPriority priority = TurretTargetPriority.low) where TExplosive : ModProjectile {
+			SetExplosiveData(ModContent.ProjectileType<TExplosive>(), tripwireRange, tripwireStyle, homingMulti, homingMode, priority);
 		}
-		public static void SetExplosiveData(int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low, params int[] types) {
-			for (int i = 0; i < types.Length; i++) {
-				SetExplosiveData(types[i], tripwireRange, tripwireStyle, priority);
+		public static void SetExplosiveData(this GlobalProjectile self, int type, int tripwireRange = 0, int tripwireStyle = 0, float homingMulti = 1, int homingMode = 0, TurretTargetPriority priority = TurretTargetPriority.low) {
+			FieldInfo? projectileTypes = self.GetType().GetField("projectileTypes", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+			if (projectileTypes is FieldInfo id) {
+				if (id.FieldType == typeof(HashSet<int>)) (id.GetValue(null) as HashSet<int>).Add(type);
+				if (id.FieldType == typeof(Dictionary<int, DamageClass>)) (id.GetValue(null) as Dictionary<int, DamageClass>).Add(type, null);
 			}
+			SetExplosiveData(type, tripwireRange, tripwireStyle, homingMulti, homingMode, priority);
 		}
-		public static void SetExplosiveData(this GlobalProjectile self, int type, int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low) {
-			if (self.GetType().GetField("projectileTypes", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly) is FieldInfo id && id.FieldType == typeof(HashSet<int>)) (id.GetValue(null) as HashSet<int>).Add(type);
-			SetExplosiveData(type, tripwireRange, tripwireStyle, priority);
-		}
-		public static void SetExplosiveData(this GlobalProjectile self, int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low, params int[] types) {
-			for (int i = 0; i < types.Length; i++) {
-				self.SetExplosiveData(types[i], tripwireRange, tripwireStyle, priority);
+		public static void SetExplosiveData(this GlobalProjectile self, int type, DamageClass damageClass, int tripwireRange = 0, int tripwireStyle = 0, float homingMulti = 1, int homingMode = 0, TurretTargetPriority priority = TurretTargetPriority.low) {
+			FieldInfo? projectileTypes = self.GetType().GetField("projectileTypes", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+			if (projectileTypes is FieldInfo id) {
+				if (id.FieldType == typeof(Dictionary<int, DamageClass>)) (id.GetValue(null) as Dictionary<int, DamageClass>).Add(type, damageClass);
 			}
+			SetExplosiveData(type, tripwireRange, tripwireStyle, homingMulti, homingMode, priority);
 		}
-		public static void SetExplosiveData<TExplosive>(this GlobalProjectile self, int tripwireRange = 0, int tripwireStyle = 0, TurretTargetPriority priority = TurretTargetPriority.low) where TExplosive : ModProjectile {
-			self.SetExplosiveData(ModContent.ProjectileType<TExplosive>(), tripwireRange, tripwireStyle, priority);
+		public static void SetExplosiveData<TExplosive>(this GlobalProjectile self, int tripwireRange = 0, int tripwireStyle = 0, float homingMulti = 1, int homingMode = 0, TurretTargetPriority priority = TurretTargetPriority.low) where TExplosive : ModProjectile {
+			self.SetExplosiveData(ModContent.ProjectileType<TExplosive>(), tripwireRange, tripwireStyle, homingMulti, homingMode, priority);
+		}
+		public static void SetExplosiveData<TExplosive>(this GlobalProjectile self, DamageClass damageClass, int tripwireRange = 0, int tripwireStyle = 0, float homingMulti = 1, int homingMode = 0, TurretTargetPriority priority = TurretTargetPriority.low) where TExplosive : ModProjectile {
+			self.SetExplosiveData(ModContent.ProjectileType<TExplosive>(), damageClass, tripwireRange, tripwireStyle, homingMulti, homingMode, priority);
 		}
 	}
 	public static class ContentExtensions {

@@ -3,43 +3,47 @@ using Avalon.ModSupport.MLL.Projectiles;
 using Avalon.Projectiles.Magic.Other;
 using Avalon.Projectiles.Magic.Wands;
 using MonoMod.Cil;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using PE = Origins.ProjectileExtensions;
 
 namespace Origins.CrossMod.Avalon.Projectiles {
 	[ExtendsFromMod("Avalon")]
 	public class TOAvalonGlobalProj : GlobalProjectile {
-		public static HashSet<int> projectileTypes = [];
+		public static Dictionary<int, DamageClass> projectileTypes = [];
 		public override void SetStaticDefaults() {
 			if (ModContent.TryFind("Avalon/BoomlashSeed", out ModProjectile proj)) {
-				projectileTypes.Add(proj.Type);
+				this.SetExplosiveData(proj.Type, homingMulti: 0, priority: PE.TurretTargetPriority.none);
 			} else {
 				MonoModHooks.Modify(typeof(BoomlashProj).GetMethod(nameof(ModProjectile.OnKill)), iL => {
 					ILCursor c = new(iL);
 					c.GotoNext(MoveType.After, inst => inst.MatchCall<DamageClass>("get_Magic"));
-					c.EmitDelegate(MakeExplo);
+					c.EmitDelegate(SetExplosive);
 				});
 			}
+			Projectiles(this);
 		}
 		public override void SetDefaults(Projectile proj) {
-			if (projectileTypes.Contains(proj.type)) proj.MakeExplosive();
-			try {
-				AvalonProjectile(proj);
-			} catch (Exception e) {
-				if (Origins.LogLoadingError("MissingCrossModItem", nameof(TOAvalonGlobalProj), e)) throw;
-			}
+			if (projectileTypes.ContainsKey(proj.type)) proj.MakeExplosive(projectileTypes[proj.type]);
 		}
 		[NoJIT]
-		public static void AvalonProjectile(Projectile proj) {
-			if (proj.IsType<Blahcket>()) proj.MakeExplosive();
-			if (proj.IsType<BoomlashProj>()) proj.MakeExplosive();
-			if (proj.IsType<MagicGrenadeProj>() || proj.IsType<MagicGrenadeBoom>()) proj.MakeExplosive();
-			if (proj.IsType<AcidBombProj>() || proj.IsType<BloodBombProj>()) proj.MakeExplosive(DamageClasses.ThrownExplosive);
-			if (proj.IsType<AcidRocketProj>() || proj.IsType<AcidGrenadeProj>() || proj.IsType<AcidMineProj>() || proj.IsType<AcidSnowmanRocketProj>()) proj.MakeExplosive();
-			if (proj.IsType<BloodRocketProj>() || proj.IsType<BloodGrenadeProj>() || proj.IsType<BloodMineProj>() || proj.IsType<BloodSnowmanRocketProj>()) proj.MakeExplosive();
+		public static void Projectiles(GlobalProjectile self) {
+			self.SetExplosiveData<Blahcket>();
+			self.SetExplosiveData<BoomlashProj>();
+			self.SetExplosiveData<MagicGrenadeProj>();
+			self.SetExplosiveData<MagicGrenadeBoom>(homingMulti: 0, priority: PE.TurretTargetPriority.none);
+			self.SetExplosiveData<AcidBombProj>(DamageClasses.ThrownExplosive);
+			self.SetExplosiveData<BloodBombProj>(DamageClasses.ThrownExplosive);
+			self.SetExplosiveData<AcidGrenadeProj>();
+			self.SetExplosiveData<AcidMineProj>();
+			self.SetExplosiveData<AcidRocketProj>();
+			self.SetExplosiveData<AcidSnowmanRocketProj>();
+			self.SetExplosiveData<BloodGrenadeProj>();
+			self.SetExplosiveData<BloodMineProj>();
+			self.SetExplosiveData<BloodRocketProj>();
+			self.SetExplosiveData<BloodSnowmanRocketProj>();
 		}
-		public static DamageClass MakeExplo(DamageClass damageClass) => DamageClasses.ExplosiveVersion[damageClass];
+		public static DamageClass SetExplosive(DamageClass damageClass) => DamageClasses.ExplosiveVersion[damageClass];
 	}
 }

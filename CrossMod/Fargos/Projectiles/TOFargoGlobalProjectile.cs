@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.CrossMod.Fargos.Projectiles {
 	[ExtendsFromMod(nameof(Fargowiltas))]
 	public class TOFargoGlobalProjectile : GlobalProjectile {
-		public static HashSet<int> projectileTypes = [];
+		public static Dictionary<int, DamageClass> projectileTypes = [];
 		public override void SetStaticDefaults() {
 			try {
 				FargosProjectile(this);
@@ -16,12 +16,12 @@ namespace Origins.CrossMod.Fargos.Projectiles {
 			}
 		}
 		public override void SetDefaults(Projectile proj) {
-			if (projectileTypes.Contains(proj.type)) proj.MakeExplosive(DamageClasses.ThrownExplosive);
+			if (projectileTypes.ContainsKey(proj.type)) proj.MakeExplosive(projectileTypes[proj.type]);
 		}
 
 		[NoJIT]
 		public static void FargosProjectile(GlobalProjectile self) {
-			self.SetExplosiveData(ModContent.ProjectileType<ShurikenProj>());
+			self.SetExplosiveData<ShurikenProj>(DamageClasses.ThrownExplosive, homingMulti: 0, priority: ProjectileExtensions.TurretTargetPriority.none);
 		}
 	}
 }
