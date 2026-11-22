@@ -13,12 +13,12 @@ namespace Origins.Items.Accessories {
 			);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);
-			Item.damage = 78;
+			Item.damage = 120;
 			Item.knockBack = 4f;
 			Item.defense = 6;
 			Item.shoot = ModContent.ProjectileType<Hive_Jacket_Explosion>();
 			Item.rare = ItemRarityID.Lime;
-			Item.value = Item.sellPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 8);
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

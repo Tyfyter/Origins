@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(34, 30);
-			Item.damage = 78;
+			Item.damage = 48;
 			Item.knockBack = 4f;
 			Item.defense = 3;
 			Item.shoot = ModContent.ProjectileType<Hive_Jacket_Explosion>();
@@ -44,6 +44,7 @@ namespace Origins.Items.Accessories {
 		public override bool DealsSelfDamage => false;
 		public override void SetStaticDefaults() {
 			OriginsSets.Projectiles.NoMultishot[Type] = true;
+			Projectile.ArmorPenetration += 2;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
@@ -56,7 +57,7 @@ namespace Origins.Items.Accessories {
 						Projectile.Center,
 						GeometryUtils.Vec2FromPolar(5, rot * i + Main.rand.NextFloat(0.3f) * Main.rand.NextBool().ToDirectionInt()) + Main.rand.NextVector2Unit(),
 						owner.beeType(),
-						owner.beeDamage(Projectile.damage / 7),
+						owner.beeDamage(Projectile.damage / 5),
 						owner.beeKB(Projectile.knockBack * 0.05f),
 						Projectile.owner
 					);
