@@ -659,7 +659,7 @@ ACCESSORIES:
 (X) Dial-Up Modem
 (^) Dim Starlight
 (^) Donor Wristband
-(#, ^2) Druidic Bee Cloak !!!
+(☻) Druidic Bee Cloak !!!
 (^) Dryad's Inheritance
 (^) Dysfunctional Endless Explosives Bag
 (#, ^2) E.M.F.I.D. !!!
