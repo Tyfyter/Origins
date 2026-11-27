@@ -13,7 +13,7 @@ Arabel: {
 		[header:Shimmerstar Staff (1/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
 		*****
-		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. Even when the stars do die, they only transform into something new. They truly are such magical constructs of the universe.
+		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. Even when the stars do die, they transform into something new. They truly are magical constructs of the universe.
 		'''
 
 	Fallen_Star: {
@@ -24,7 +24,7 @@ Arabel: {
 			[jimage/sc2dfr0,104,22,26:Terraria/Images/Item_75]
 
 			*****
-			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana". It is a natural resource that we use for magical abilities. It is because of this mana that Terraria can be alive.
+			It is because of the stars that I even have my magic. The stars that fall at night crash into the ground and emanate an energy you can only find in the cosmos. We call it "mana". It is a natural resource that we use for magic. It is also because of this mana that Terraria can be alive.
 			'''
 	}
 
@@ -33,14 +33,14 @@ Arabel: {
 		[header:Constellation (3/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Ranged/Constellation]
 		*****
-		There are many forces of evil in this world that are trying to take it for themselves. It is all in steady balance, an equal hold on magic from both the light and dark. It is up to everyone's sole responsibility to uphold the balance so that this starpower can be shared amongst all.
+		Many forces of evil in this world are trying to take it for themselves. It is all in steady balance, an equal hold on magic from both light and dark, and it is up to everyone's responsibility to uphold the balance so that this starpower can be shared.
 		'''
 	Lazy_Cloak.Text:
 		'''
 		[header:Lazy Cloak (4/{$SeriesLength})]
 		[jimage/sc2.2d:Origins/Items/Accessories/Lazy_Cloak]
 		*****
-		My son, one day you will get to wear this in my stead. I see great potential for good in you... but it will not be without hardship. You will become strong and better than your mother ever could. It's enough for people to tell tales of you, to be the one Terraria needs.
+		My son, one day you will get to wear this in my stead. I see great potential in you... but it will not be without hardship. You will become strong and better than your mother ever could be. People will tell tales of you, and you will be the one Terraria needs.
 		'''
 
 	Shimmer_Construct: {
@@ -63,7 +63,7 @@ Arabel: {
 			[header:{$Items.Aetherite_Ore_Item.DisplayName} (6/{$SeriesLength})]
 			[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
 			*****
-			I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
+			I've imprisoned myself in hopes of never being found. This guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts from voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
 			'''
 	}
 }
@@ -608,11 +608,11 @@ The_Ashen: {
 		Name: Fierce Competition
 		Text:
 			'''
-			Two of the Mechanicus’ smartest tinkerers, aside from M.T. Neferly himself, put up against each other to not only construct a reliable space launch vehicle but also construct a self-sustaining, god-killing machine. The assignment was not simple, but he emplaced no other requirements other than that it be unlinked from the rest of the grid; he wanted these to be disconnected and fully autonomous from the Mother Unit in-case of emergency. He was smart about that.
+			Two of the Mechanicus’ smartest tinkerers, aside from M.T. Neferly himself, put up against each other to not only construct a reliable space launch vehicle but also a self-sustaining, god-killing machine. The assignment was not simple, but he emplaced no other requirements other than that it be unlinked from the rest of the grid; he wanted these to be disconnected and fully autonomous from the Mother Unit in-case of emergency. He was smart about that.
 
 			My opponent was M.T. Ailah, known for her extensive research into Cubekonian technology. Her project was the I.C.A.R.U.S. Protocol, utilizing her signature reverse-engineered Cubekonian tech to make the system more powerful. Her idea was to launch a satellite at a heliocentric orbit around the sun such that it could collect from the solar storms for power.
 
-			My own was known as “Project STAR SOLDIER”, it would be in orbit around Terraria and utilize resources from the asteroid belt to continuously fabricate more units; not too distant of an idea from what Ailah had in mind. There was only one crux that Ailah had that I didn’t: I wasn’t as well-versed in Cubekonian technology as she was. I was just specialized in weapon systems and propulsion technology. When it came to things, I just simply wasn’t comparable to anything Ailah could do. So, I gave up on the STAR SOLDIER Project in its prototyping stage. It’s still functional, but… I only made it functional for my son to one day do something more with it.
+			My own was known as “Project STAR SOLDIER”, it would orbit around Terraria and utilize resources from the asteroid belt to continuously fabricate more units; not too distant of an idea from what Ailah had in mind. There was only one crux that Ailah had that I didn’t: I wasn’t as well-versed in Cubekonian technology as she was. I was just specialized in weapon systems and propulsion technology. When it came to things, I just simply couldn't make anything comparable to what Ailah could do. So, I gave up on the STAR SOLDIER Project in its prototyping stage. It’s still functional, but… I only made it functional for my son to one day do something more with it.
 
 			It’s truly fascinating how such fierce competition brings the most out of people. Neferly knew that well.
 			'''
